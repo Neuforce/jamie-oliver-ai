@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "fresh-tomato-soup",
+    "title": "Fresh Tomato Soup",
+    "description": "Smooth, comforting soup made with ripe tomatoes and basil",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "soup"
+    ],
+    "course": "soup",
+    "cuisine": "mediterranean"
+  },
+  "ingredients": [
+    {
+      "id": "ripe_tomatoes",
+      "name": "ripe tomatoes",
+      "quantity": 1.0,
+      "unit": "kg"
+    },
+    {
+      "id": "1_onion_chopped",
+      "name": "1 onion, chopped",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "cloves",
+      "name": "cloves",
+      "quantity": 3.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "vegetable_stock",
+      "name": "vegetable stock",
+      "quantity": 750.0,
+      "unit": "ml"
+    },
+    {
+      "id": "fresh_basil",
+      "name": "Fresh basil",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "quantity": 1.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "double_cream_to_serve",
+      "name": "Double cream to serve",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Sauté onion and garlic in olive oil until soft",
+      "instructions": "Sauté onion and garlic in olive oil until soft",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's sauté onion and garlic in olive."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Add tomatoes and cook until they break down",
+      "instructions": "Add tomatoes and cook until they break down",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the tomatoes and cook."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Pour in stock, add basil and sugar",
+      "instructions": "Pour in stock, add basil and sugar",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's add basil and sugar."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Simmer for 15 minutes",
+      "instructions": "Simmer for 15 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to simmer the for 15 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Blend until smooth",
+      "instructions": "Blend until smooth",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's blend everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Season with salt and pepper",
+      "instructions": "Season with salt and pepper",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's season the with salt and."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve with a swirl of cream and fresh basil",
+      "instructions": "Serve with a swirl of cream and fresh basil",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use the ripest tomatoes for best flavor\nRoast tomatoes first for deeper flavor\nPerfect with grilled cheese sandwiches"
+  }
+}

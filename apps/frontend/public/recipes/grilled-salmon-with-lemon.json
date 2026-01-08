@@ -1,0 +1,202 @@
+{
+  "recipe": {
+    "id": "grilled-salmon-with-lemon",
+    "title": "Grilled Salmon with Lemon",
+    "description": "Perfectly grilled salmon with fresh herbs and citrus",
+    "estimated_total": "PT20M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "fish"
+    ],
+    "course": "main",
+    "cuisine": "mediterranean"
+  },
+  "ingredients": [
+    {
+      "id": "fillets",
+      "name": "fillets",
+      "quantity": 4.0,
+      "unit": "salmon"
+    },
+    {
+      "id": "2_lemons",
+      "name": "2 lemons",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "quantity": 3.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "quantity": 2.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "fresh_dill",
+      "name": "Fresh dill",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "salt_and_pepper",
+      "name": "Salt and pepper",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "asparagus_for_serving",
+      "name": "Asparagus for serving",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat grill or pan to medium-high heat",
+      "instructions": "Preheat grill or pan to medium-high heat",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the grill or pan."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Mix olive oil, lemon juice, garlic, salt, and pepper",
+      "instructions": "Mix olive oil, lemon juice, garlic, salt, and pepper",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Brush salmon with marinade",
+      "instructions": "Brush salmon with marinade",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's brush salmon with marinade."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Grill skin-side down for 5 minutes",
+      "instructions": "Grill skin-side down for 5 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to grill the skin-side down for."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Flip and cook for another 3-4 minutes",
+      "instructions": "Flip and cook for another 3-4 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's cook for another 3-4."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Top with fresh dill and lemon slices",
+      "instructions": "Top with fresh dill and lemon slices",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's top with fresh dill and lemon."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve with roasted asparagus",
+      "instructions": "Serve with roasted asparagus",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't overcook - salmon should be slightly pink in center\nLet salmon come to room temperature before cooking\nCrispy skin is delicious - don't skip it"
+  }
+}

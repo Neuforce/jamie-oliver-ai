@@ -1,0 +1,210 @@
+{
+  "recipe": {
+    "id": "shrimp-scampi",
+    "title": "Shrimp Scampi",
+    "description": "Garlic butter shrimp with white wine and fresh herbs",
+    "estimated_total": "PT20M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "pasta",
+      "seafood",
+      "italian"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "large_shrimp_peeled",
+      "name": "large shrimp, peeled",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "quantity": 6.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "white_wine",
+      "name": "white wine",
+      "quantity": 100.0,
+      "unit": "ml"
+    },
+    {
+      "id": "juice_of_1_lemon",
+      "name": "Juice of 1 lemon",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "fresh_parsley_chopped",
+      "name": "Fresh parsley, chopped",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "red_pepper_flakes",
+      "name": "Red pepper flakes",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "pasta_or_crusty_bread",
+      "name": "Pasta or crusty bread",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Melt butter in a large pan over medium heat",
+      "instructions": "Melt butter in a large pan over medium heat",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's melt butter in a large pan."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Add garlic and red pepper flakes, cook 1 minute",
+      "instructions": "Add garlic and red pepper flakes, cook 1 minute",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the garlic and red."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Add shrimp and cook until pink (2-3 minutes per side)",
+      "instructions": "Add shrimp and cook until pink (2-3 minutes per side)",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the shrimp and cook."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Pour in wine and lemon juice",
+      "instructions": "Pour in wine and lemon juice",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pour in wine and lemon juice."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Simmer until sauce reduces slightly",
+      "instructions": "Simmer until sauce reduces slightly",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to simmer the until sauce reduces."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Stir in fresh parsley",
+      "instructions": "Stir in fresh parsley",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve over pasta or with bread for dipping",
+      "instructions": "Serve over pasta or with bread for dipping",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't overcook shrimp - they cook quickly\nUse good quality white wine\nExtra lemon juice brightens the dish"
+  }
+}

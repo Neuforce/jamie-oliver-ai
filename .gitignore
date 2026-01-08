@@ -1,0 +1,11 @@
+node_modules/
+.venv/
+venv/
+*.so
+*.dylib
+*.node
+*.pyc
+.env
+dist/
+build/
+.DS_Store

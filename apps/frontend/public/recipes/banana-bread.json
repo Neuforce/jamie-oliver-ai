@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "banana-bread",
+    "title": "Banana Bread",
+    "description": "Moist, sweet bread perfect for breakfast or snacking",
+    "estimated_total": "PT1H",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 10,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "quick",
+      "breakfast"
+    ],
+    "course": "breakfast"
+  },
+  "ingredients": [
+    {
+      "id": "bananas_mashed",
+      "name": "bananas, mashed",
+      "quantity": 3.0,
+      "unit": "ripe"
+    },
+    {
+      "id": "melted_butter",
+      "name": "melted butter",
+      "quantity": 75.0,
+      "unit": "g"
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "quantity": 150.0,
+      "unit": "g"
+    },
+    {
+      "id": "1_egg",
+      "name": "1 egg",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "vanilla",
+      "name": "vanilla",
+      "quantity": 1.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "baking_soda",
+      "name": "baking soda",
+      "quantity": 1.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "pinch_of_salt",
+      "name": "Pinch of salt",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "plain_flour",
+      "name": "plain flour",
+      "quantity": 190.0,
+      "unit": "g"
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 175°C (350°F), grease a loaf tin",
+      "instructions": "Preheat oven to 175°C (350°F), grease a loaf tin",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 175°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Mix mashed banana with melted butter",
+      "instructions": "Mix mashed banana with melted butter",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Stir in sugar, egg, and vanilla",
+      "instructions": "Stir in sugar, egg, and vanilla",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Add baking soda and salt",
+      "instructions": "Add baking soda and salt",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the baking soda and."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Fold in flour until just combined",
+      "instructions": "Fold in flour until just combined",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's fold in flour until just combined."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Pour into tin and bake 50-60 minutes",
+      "instructions": "Pour into tin and bake 50-60 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pour into tin and bake 50-60."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Cool in tin 10 minutes, then on a wire rack",
+      "instructions": "Cool in tin 10 minutes, then on a wire rack",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's cool in tin 10 minutes, then."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "The riper the bananas, the better\nAdd walnuts or chocolate chips for variety\nTest with a skewer - it should come out clean"
+  }
+}

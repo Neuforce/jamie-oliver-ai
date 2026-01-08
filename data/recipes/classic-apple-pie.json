@@ -1,0 +1,201 @@
+{
+  "recipe": {
+    "id": "classic-apple-pie",
+    "title": "Classic Apple Pie",
+    "description": "Traditional American dessert with flaky crust and cinnamon apples",
+    "estimated_total": "PT1H30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 8,
+    "difficulty": "Medium",
+    "tags": [
+      "dessert"
+    ],
+    "course": "dessert"
+  },
+  "ingredients": [
+    {
+      "id": "smith_apples_peeled_and_sliced",
+      "name": "Smith apples, peeled and sliced",
+      "quantity": 6.0,
+      "unit": "Granny"
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "cinnamon",
+      "name": "cinnamon",
+      "quantity": 2.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "shortcrust_pastry",
+      "name": "shortcrust pastry",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "cornstarch",
+      "name": "cornstarch",
+      "quantity": 1.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "juice_of_1_lemon",
+      "name": "Juice of 1 lemon",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "1_egg_beaten",
+      "name": "1 egg, beaten",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 200°C (400°F)",
+      "instructions": "Preheat oven to 200°C (400°F)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 200°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Mix apples with sugar, cinnamon, cornstarch, and lemon juice",
+      "instructions": "Mix apples with sugar, cinnamon, cornstarch, and lemon juice",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Roll out half the pastry and line a pie dish",
+      "instructions": "Roll out half the pastry and line a pie dish",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's roll out half the pastry and."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Fill with apple mixture",
+      "instructions": "Fill with apple mixture",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's fill with apple mixture."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Cover with remaining pastry, seal edges",
+      "instructions": "Cover with remaining pastry, seal edges",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's cover with remaining pastry, seal edges."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Brush with beaten egg, make slits for steam",
+      "instructions": "Brush with beaten egg, make slits for steam",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's make slits for steam."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Bake 45 minutes until golden, cool before serving",
+      "instructions": "Bake 45 minutes until golden, cool before serving",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to bake the 45 minutes until."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use a mix of sweet and tart apples\nChill pastry before rolling for easier handling\nServe warm with vanilla ice cream"
+  }
+}

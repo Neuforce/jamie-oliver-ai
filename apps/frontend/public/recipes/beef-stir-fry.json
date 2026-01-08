@@ -1,0 +1,210 @@
+{
+  "recipe": {
+    "id": "beef-stir-fry",
+    "title": "Beef Stir Fry",
+    "description": "Quick Asian-style stir fry with tender beef and crisp vegetables",
+    "estimated_total": "PT20M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "beef",
+      "quick",
+      "chinese"
+    ],
+    "course": "main",
+    "cuisine": "chinese"
+  },
+  "ingredients": [
+    {
+      "id": "beef_sirloin_sliced_thin",
+      "name": "beef sirloin, sliced thin",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "soy_sauce",
+      "name": "soy sauce",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "oyster_sauce",
+      "name": "oyster sauce",
+      "quantity": 1.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "pepper_sliced",
+      "name": "pepper, sliced",
+      "quantity": 1.0,
+      "unit": "bell"
+    },
+    {
+      "id": "1_onion_sliced",
+      "name": "1 onion, sliced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "broccoli_florets",
+      "name": "broccoli florets",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "quantity": 2.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "cornstarch",
+      "name": "cornstarch",
+      "quantity": 1.0,
+      "unit": "tsp"
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Marinate beef in soy sauce and cornstarch for 10 minutes",
+      "instructions": "Marinate beef in soy sauce and cornstarch for 10 minutes",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's marinate beef in soy sauce and."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Heat wok or large pan on high heat",
+      "instructions": "Heat wok or large pan on high heat",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat the wok or large."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Stir-fry beef in batches until browned, set aside",
+      "instructions": "Stir-fry beef in batches until browned, set aside",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Add vegetables and garlic, stir-fry for 3 minutes",
+      "instructions": "Add vegetables and garlic, stir-fry for 3 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the vegetables and garlic,."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Return beef to wok",
+      "instructions": "Return beef to wok",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's return beef to wok."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Add oyster sauce and a splash of water",
+      "instructions": "Add oyster sauce and a splash of water",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the oyster sauce and."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Toss everything together and serve over rice",
+      "instructions": "Toss everything together and serve over rice",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's toss everything together."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Slice beef against the grain for tenderness\nCook on very high heat for best results\nDon't overcrowd the wok"
+  }
+}

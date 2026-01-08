@@ -1,0 +1,224 @@
+{
+    "recipe": {
+      "id": "quick-green-pasta",
+      "title": "Quick Green Pasta",
+      "servings": 6,
+      "estimated_total": "PT20M",
+      "difficulty": "super-easy",
+      "locale": "en",
+      "description": "A fast, vibrant green pasta packed with spinach, peas, tenderstem broccoli, and Parmesan.",
+      "tags": ["pasta", "quick", "vegetarian"],
+      "course": "main",
+      "cuisine": "italian-inspired",
+      "source": "cookbook"
+    },
+    "ingredients": [
+      {
+        "id": "spring_onions",
+        "name": "spring onions",
+        "quantity": 6,
+        "unit": "whole"
+      },
+      {
+        "id": "leek",
+        "name": "leek",
+        "quantity": 1,
+        "unit": "whole"
+      },
+      {
+        "id": "tenderstem_broccoli",
+        "name": "tenderstem broccoli",
+        "quantity": 1,
+        "unit": "large handful",
+        "note": "slice stalks, reserve tips"
+      },
+      {
+        "id": "olive_oil",
+        "name": "olive oil",
+        "quantity": 1,
+        "unit": "tbsp"
+      },
+      {
+        "id": "garlic",
+        "name": "garlic",
+        "quantity": 2,
+        "unit": "cloves"
+      },
+      {
+        "id": "frozen_spinach",
+        "name": "frozen spinach",
+        "quantity": 100,
+        "unit": "g"
+      },
+      {
+        "id": "frozen_peas",
+        "name": "frozen peas",
+        "quantity": 2,
+        "unit": "large handfuls"
+      },
+      {
+        "id": "dried_pasta",
+        "name": "dried pasta",
+        "quantity": 450,
+        "unit": "g"
+      },
+      {
+        "id": "parmesan",
+        "name": "Parmesan cheese or Grana Padano",
+        "quantity": 50,
+        "unit": "g",
+        "note": "plus extra to serve"
+      },
+      {
+        "id": "extra_virgin_olive_oil",
+        "name": "extra virgin olive oil",
+        "quantity": 1,
+        "unit": "tbsp"
+      },
+      {
+        "id": "fresh_herbs",
+        "name": "fresh herbs",
+        "quantity": null,
+        "unit": null,
+        "note": "parsley, basil or mint; optional"
+      }
+    ],
+    "utensils": [
+      "large non-stick shallow casserole pan",
+      "large saucepan",
+      "colander",
+      "chopping board",
+      "sharp knife",
+      "grater",
+      "wooden spoon",
+      "blender or hand blender (optional)"
+    ],
+    "steps": [
+      {
+        "id": "prep_veg",
+        "descr": "Trim and slice veg",
+        "instructions": "Trim and slice the spring onions. Trim the leek, halve it lengthways, wash it, then finely slice. Finely slice the tenderstem broccoli stalks and reserve the tips.",
+        "type": "immediate",
+        "auto_start": true,
+        "requires_confirm": true,
+        "next": ["heat_pan"],
+        "on_enter": [
+          { "say": "Let's start by prepping the veg: slice spring onions, leeks, and broccoli stalks." }
+        ]
+      },
+      {
+        "id": "heat_pan",
+        "descr": "Heat the pan over medium heat",
+        "instructions": "Place a large non-stick shallow casserole pan on a medium heat to warm up.",
+        "type": "immediate",
+        "auto_start": true,
+        "requires_confirm": true,
+        "depends_on": ["prep_veg"],
+        "next": ["start_base"],
+        "on_enter": [
+          { "say": "Heat your large pan over medium heat." }
+        ]
+      },
+      {
+        "id": "start_base",
+        "descr": "Cook spring onions, leek, broccoli stalks and garlic",
+        "instructions": "Add 1 tablespoon of olive oil to the pan along with the spring onions, leeks and broccoli stalks. Peel and finely chop the garlic and add it to the pan.",
+        "type": "timer",
+        "auto_start": false,
+        "duration": "PT2M",
+        "reminder": { "every": "PT30S" },
+        "requires_confirm": true,
+        "depends_on": ["heat_pan"],
+        "next": ["add_greens"],
+        "on_enter": [
+          { "say": "Add the veg to the pan with a tablespoon of olive oil and stir in the garlic." }
+        ]
+      },
+      {
+        "id": "add_greens",
+        "descr": "Add frozen spinach and peas",
+        "instructions": "Add the frozen spinach and frozen peas to the pan, along with a pinch of sea salt and black pepper.",
+        "type": "immediate",
+        "auto_start": true,
+        "requires_confirm": true,
+        "depends_on": ["start_base"],
+        "next": ["simmer_greens"],
+        "on_enter": [
+          { "say": "Add the spinach and peas, plus a pinch of salt and pepper." }
+        ]
+      },
+      {
+        "id": "simmer_greens",
+        "descr": "Cook greens until soft but not coloured",
+        "instructions": "Cook for 10 to 15 minutes, stirring regularly, until the vegetables are soft, the spinach is fully defrosted, and nothing has taken on colour.",
+        "type": "timer",
+        "auto_start": false,
+        "duration": "PT12M",
+        "reminder": { "every": "PT1M" },
+        "requires_confirm": true,
+        "depends_on": ["add_greens"],
+        "next": ["cook_pasta"],
+        "on_enter": [
+          { "say": "Let the greens cook down until soft, stirring regularly." }
+        ]
+      },
+      {
+        "id": "cook_pasta",
+        "descr": "Cook pasta and broccoli tips",
+        "instructions": "Cook the pasta in a large pan of boiling salted water according to the packet instructions. Add the reserved broccoli florets for the last 2 minutes.",
+        "type": "timer",
+        "auto_start": false,
+        "duration": "PT10M",
+        "reminder": { "every": "PT1M" },
+        "requires_confirm": true,
+        "depends_on": ["simmer_greens"],
+        "next": ["prepare_sauce"],
+        "on_enter": [
+          { "say": "Boil your pasta according to the packet and add the broccoli tips for the last 2 minutes." }
+        ]
+      },
+      {
+        "id": "prepare_sauce",
+        "descr": "Add pasta water and optionally blitz sauce",
+        "instructions": "Finely grate the Parmesan. Scoop out about 200ml of the pasta cooking water and pour it into the veg pan. Choose whether to keep the sauce chunky, blitz it smooth in a blender, or use a hand blender for a semi-smooth texture.",
+        "type": "immediate",
+        "auto_start": true,
+        "requires_confirm": true,
+        "depends_on": ["cook_pasta"],
+        "next": ["combine"],
+        "on_enter": [
+          { "say": "Add a ladle of pasta water to the veg and choose your sauce texture—chunky or smooth." }
+        ]
+      },
+      {
+        "id": "combine",
+        "descr": "Combine pasta with sauce and finish",
+        "instructions": "Drain the pasta and broccoli, then tip into the sauce. Add 1 tablespoon of extra virgin olive oil and the grated Parmesan. Toss everything together until coated.",
+        "type": "immediate",
+        "auto_start": true,
+        "requires_confirm": true,
+        "depends_on": ["prepare_sauce"],
+        "next": ["garnish"],
+        "on_enter": [
+          { "say": "Mix the pasta into the sauce with Parmesan and a little extra virgin olive oil." }
+        ]
+      },
+      {
+        "id": "garnish",
+        "descr": "Finish with herbs and extra Parmesan",
+        "instructions": "Finish with fresh herbs such as parsley or basil, and grate over a little extra Parmesan to serve. Enjoy with a big side salad if you like.",
+        "type": "immediate",
+        "depends_on": ["combine"],
+        "requires_confirm": false
+      }
+    ],
+    "events": {
+      "tts_voice": "chef_friendly",
+      "reminder_default": {
+        "every": "PT30S"
+      }
+    },
+    "notes": {
+      "leftovers_tip": "This recipe serves 6 — leftover portions keep well for lunch the next day."
+    }
+  }  

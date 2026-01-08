@@ -1,0 +1,202 @@
+{
+  "recipe": {
+    "id": "gourmet-beef-burger",
+    "title": "Gourmet Beef Burger",
+    "description": "Juicy homemade burger with caramelized onions and special sauce",
+    "estimated_total": "PT25M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "beef",
+      "breakfast"
+    ],
+    "course": "breakfast"
+  },
+  "ingredients": [
+    {
+      "id": "ground_beef_(20%_fat)",
+      "name": "ground beef (20% fat)",
+      "quantity": 600.0,
+      "unit": "g"
+    },
+    {
+      "id": "buns",
+      "name": "buns",
+      "quantity": 4.0,
+      "unit": "burger"
+    },
+    {
+      "id": "cheddar_cheese",
+      "name": "cheddar cheese",
+      "quantity": 4.0,
+      "unit": "slices"
+    },
+    {
+      "id": "2_onions_sliced",
+      "name": "2 onions, sliced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "lettuce_tomato_pickles",
+      "name": "Lettuce, tomato, pickles",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "mayonnaise_ketchup_mustard",
+      "name": "Mayonnaise, ketchup, mustard",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "salt_and_pepper",
+      "name": "Salt and pepper",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Form beef into 4 patties, season generously",
+      "instructions": "Form beef into 4 patties, season generously",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's form beef into 4 patties, season."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Caramelize onions in a pan over low heat",
+      "instructions": "Caramelize onions in a pan over low heat",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's caramelize onions in a pan over."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Heat grill or pan to high, cook burgers 3-4 minutes per side",
+      "instructions": "Heat grill or pan to high, cook burgers 3-4 minutes per side",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat the grill or pan."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Add cheese in last minute, cover to melt",
+      "instructions": "Add cheese in last minute, cover to melt",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the cheese in last."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Toast burger buns lightly",
+      "instructions": "Toast burger buns lightly",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's toast burger buns lightly."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Mix mayo, ketchup, and mustard for special sauce",
+      "instructions": "Mix mayo, ketchup, and mustard for special sauce",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Assemble burgers with all toppings and serve",
+      "instructions": "Assemble burgers with all toppings and serve",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's assemble burgers with all toppings and."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't overwork the meat when forming patties\nMake a small indent in center to prevent puffing\nLet burgers rest for 2 minutes before serving"
+  }
+}

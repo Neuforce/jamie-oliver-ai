@@ -1,0 +1,202 @@
+{
+  "recipe": {
+    "id": "margherita-pizza",
+    "title": "Margherita Pizza",
+    "description": "Classic Italian pizza with fresh mozzarella, tomato, and basil",
+    "estimated_total": "PT90M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 2,
+    "difficulty": "Medium",
+    "tags": [
+      "italian"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "pizza_dough",
+      "name": "pizza dough",
+      "quantity": 300.0,
+      "unit": "g"
+    },
+    {
+      "id": "passata",
+      "name": "passata",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "fresh_mozzarella",
+      "name": "fresh mozzarella",
+      "quantity": 250.0,
+      "unit": "g"
+    },
+    {
+      "id": "fresh_basil_leaves",
+      "name": "Fresh basil leaves",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "quantity": 2.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "salt_to_taste",
+      "name": "Salt to taste",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 240°C (475°F)",
+      "instructions": "Preheat oven to 240°C (475°F)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 240°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Roll out pizza dough on a floured surface",
+      "instructions": "Roll out pizza dough on a floured surface",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's roll out pizza dough on a."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Mix passata with garlic, olive oil, and salt",
+      "instructions": "Mix passata with garlic, olive oil, and salt",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Spread sauce over dough, leaving a border",
+      "instructions": "Spread sauce over dough, leaving a border",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's spread sauce over dough, leaving a."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Tear mozzarella and distribute over pizza",
+      "instructions": "Tear mozzarella and distribute over pizza",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's tear mozzarella and distribute over pizza."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Bake for 10-12 minutes until crust is golden",
+      "instructions": "Bake for 10-12 minutes until crust is golden",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the for 10-12 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Top with fresh basil and drizzle with olive oil",
+      "instructions": "Top with fresh basil and drizzle with olive oil",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's top with fresh basil and drizzle."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "A pizza stone gives the best crust\nLet dough come to room temperature before rolling\nLess is more - don't overload with toppings"
+  }
+}

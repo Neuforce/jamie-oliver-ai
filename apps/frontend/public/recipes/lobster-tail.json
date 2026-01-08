@@ -1,0 +1,201 @@
+{
+  "recipe": {
+    "id": "lobster-tail",
+    "title": "Lobster Tail",
+    "description": "Butter-poached lobster tail with garlic and herbs",
+    "estimated_total": "PT25M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 2,
+    "difficulty": "Medium",
+    "tags": [
+      "seafood"
+    ],
+    "course": "main"
+  },
+  "ingredients": [
+    {
+      "id": "tails",
+      "name": "tails",
+      "quantity": 2.0,
+      "unit": "lobster"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "quantity": 4.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "fresh_parsley",
+      "name": "Fresh parsley",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "lemon_juice",
+      "name": "Lemon juice",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "salt_and_paprika",
+      "name": "Salt and paprika",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "lemon_wedges_to_serve",
+      "name": "Lemon wedges to serve",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 200°C (400°F)",
+      "instructions": "Preheat oven to 200°C (400°F)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 200°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Cut lobster shells down the middle with scissors",
+      "instructions": "Cut lobster shells down the middle with scissors",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by cut."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Gently pull meat up and rest on top of shell",
+      "instructions": "Gently pull meat up and rest on top of shell",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's gently pull meat up and rest."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Melt butter with garlic and parsley",
+      "instructions": "Melt butter with garlic and parsley",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's melt butter with garlic and parsley."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Brush lobster with garlic butter, sprinkle with paprika",
+      "instructions": "Brush lobster with garlic butter, sprinkle with paprika",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's brush lobster with garlic butter, sprinkle."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Bake 12-15 minutes until meat is opaque",
+      "instructions": "Bake 12-15 minutes until meat is opaque",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the 12-15 minutes until."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve with remaining butter and lemon wedges",
+      "instructions": "Serve with remaining butter and lemon wedges",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't overcook - lobster becomes rubbery\nButterflying makes for impressive presentation\nSave this for special occasions"
+  }
+}

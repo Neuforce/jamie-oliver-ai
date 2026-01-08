@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  backend-voice:
+    build:
+      context: ..
+      dockerfile: apps/backend-voice/Dockerfile.dev
+    container_name: jamie-backend-voice
+    ports:
+      - "8100:8100"
+    # Cargar variables de entorno desde apps/backend-voice/.env
+    # También se pueden pasar desde el shell o desde .env en la raíz
+    env_file:
+      - ../apps/backend-voice/.env
+    environment:
+      # API keys are loaded from env_file (apps/backend-voice/.env)
+      - RECIPES_DIR=/app/data/recipes
+      - RECIPES_SOURCE=local
+      - ENVIRONMENT=development
+      - HOST=0.0.0.0
+      - PORT=8100
+    volumes:
+      - ../apps/backend-voice/src:/app/apps/backend-voice/src
+      - ../packages/ccai:/app/packages/ccai
+      - ../data/recipes:/app/data/recipes
+      # Mount .env file so Python can read it directly if needed
+      - ../apps/backend-voice/.env:/app/apps/backend-voice/.env:ro
+    networks:
+      - jamie-network
+    restart: unless-stopped
+
+  backend-search:
+    build:
+      context: ../apps/backend-search
+      dockerfile: Dockerfile
+    container_name: jamie-backend-search
+    ports:
+      - "8000:8000"
+    environment:
+      - SUPABASE_URL=${SUPABASE_URL}
+      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
+      - PYTHON_VERSION=3.11
+    volumes:
+      - ../apps/backend-search:/app
+      - ../data:/app/data
+    networks:
+      - jamie-network
+    restart: unless-stopped
+    command: python -m uvicorn recipe_search_agent.api:app --host 0.0.0.0 --port 8000 --reload
+
+networks:
+  jamie-network:
+    driver: bridge

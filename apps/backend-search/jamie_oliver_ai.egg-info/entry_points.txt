@@ -1,0 +1,3 @@
+[console_scripts]
+recipe-llama = recipe_pdf_agent_llama.cli:main
+recipe-pdf = recipe_pdf_agent.cli:main

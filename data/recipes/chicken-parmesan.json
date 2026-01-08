@@ -1,0 +1,211 @@
+{
+  "recipe": {
+    "id": "chicken-parmesan",
+    "title": "Chicken Parmesan",
+    "description": "Breaded chicken topped with marinara and melted cheese",
+    "estimated_total": "PT45M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Medium",
+    "tags": [
+      "pasta",
+      "chicken",
+      "italian",
+      "breakfast"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "breasts",
+      "name": "breasts",
+      "quantity": 4.0,
+      "unit": "chicken"
+    },
+    {
+      "id": "breadcrumbs",
+      "name": "breadcrumbs",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "parmesan_grated",
+      "name": "Parmesan, grated",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "2_eggs_beaten",
+      "name": "2 eggs, beaten",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "marinara_sauce",
+      "name": "marinara sauce",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "mozzarella_sliced",
+      "name": "mozzarella, sliced",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "fresh_basil",
+      "name": "Fresh basil",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "spaghetti_to_serve",
+      "name": "Spaghetti to serve",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Flatten chicken breasts between plastic wrap",
+      "instructions": "Flatten chicken breasts between plastic wrap",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's flatten chicken breasts between plastic wrap."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Mix breadcrumbs with Parmesan",
+      "instructions": "Mix breadcrumbs with Parmesan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Dip chicken in egg, then breadcrumb mixture",
+      "instructions": "Dip chicken in egg, then breadcrumb mixture",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's dip chicken in egg, then breadcrumb."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Fry in oil until golden on both sides",
+      "instructions": "Fry in oil until golden on both sides",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to fry the in oil until."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Top with marinara and mozzarella",
+      "instructions": "Top with marinara and mozzarella",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's top with marinara and mozzarella."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Bake at 180°C until cheese melts",
+      "instructions": "Bake at 180°C until cheese melts",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the at 180°c until."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve over spaghetti with fresh basil",
+      "instructions": "Serve over spaghetti with fresh basil",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Pound chicken to even thickness\nDon't overcrowd the pan when frying\nUse good quality marinara sauce"
+  }
+}

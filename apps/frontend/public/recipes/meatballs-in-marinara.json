@@ -1,0 +1,210 @@
+{
+  "recipe": {
+    "id": "meatballs-in-marinara",
+    "title": "Meatballs in Marinara",
+    "description": "Tender Italian meatballs in rich tomato sauce",
+    "estimated_total": "PT45M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "pasta",
+      "beef",
+      "italian"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "ground_beef",
+      "name": "ground beef",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "1_egg",
+      "name": "1 egg",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "breadcrumbs",
+      "name": "breadcrumbs",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "parmesan_grated",
+      "name": "Parmesan, grated",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "quantity": 2.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "tinned_tomatoes",
+      "name": "tinned tomatoes",
+      "quantity": 800.0,
+      "unit": "g"
+    },
+    {
+      "id": "fresh_basil",
+      "name": "Fresh basil",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "spaghetti_to_serve",
+      "name": "Spaghetti to serve",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Mix beef, egg, breadcrumbs, Parmesan, and garlic",
+      "instructions": "Mix beef, egg, breadcrumbs, Parmesan, and garlic",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Form into golf ball-sized meatballs",
+      "instructions": "Form into golf ball-sized meatballs",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's form into golf ball-sized meatballs."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Brown meatballs in a pan on all sides",
+      "instructions": "Brown meatballs in a pan on all sides",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's brown meatballs in a pan on."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Add tinned tomatoes and basil to pan",
+      "instructions": "Add tinned tomatoes and basil to pan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the tinned tomatoes and."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Simmer gently for 25-30 minutes",
+      "instructions": "Simmer gently for 25-30 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to simmer the gently for 25-30."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Cook spaghetti according to package",
+      "instructions": "Cook spaghetti according to package",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to cook the spaghetti according to."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve meatballs and sauce over pasta",
+      "instructions": "Serve meatballs and sauce over pasta",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't overwork the meat mixture\nBrowning adds flavor to the sauce\nAdd a pinch of sugar to balance acidity"
+  }
+}

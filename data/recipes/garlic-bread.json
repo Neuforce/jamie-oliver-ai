@@ -1,0 +1,196 @@
+{
+  "recipe": {
+    "id": "garlic-bread",
+    "title": "Garlic Bread",
+    "description": "Crispy, buttery bread loaded with garlic and herbs",
+    "estimated_total": "PT20M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "italian"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "baguette",
+      "name": "baguette",
+      "quantity": 1.0,
+      "unit": "French"
+    },
+    {
+      "id": "butter_softened",
+      "name": "butter, softened",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "quantity": 4.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "fresh_parsley_chopped",
+      "name": "fresh parsley, chopped",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "parmesan_grated",
+      "name": "Parmesan, grated",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "salt_to_taste",
+      "name": "Salt to taste",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 200°C (400°F)",
+      "instructions": "Preheat oven to 200°C (400°F)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 200°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Mix butter with garlic, parsley, Parmesan, and salt",
+      "instructions": "Mix butter with garlic, parsley, Parmesan, and salt",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Slice baguette diagonally, not cutting all the way through",
+      "instructions": "Slice baguette diagonally, not cutting all the way through",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by slice."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Spread garlic butter between slices",
+      "instructions": "Spread garlic butter between slices",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's spread garlic butter between slices."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Wrap in foil",
+      "instructions": "Wrap in foil",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's wrap in foil."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Bake for 15 minutes",
+      "instructions": "Bake for 15 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the for 15 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Open foil for last 5 minutes to crisp",
+      "instructions": "Open foil for last 5 minutes to crisp",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's open foil for last 5 minutes."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Make extra - it always disappears fast\nAdd mozzarella for cheesy garlic bread\nPerfect alongside pasta or soup"
+  }
+}

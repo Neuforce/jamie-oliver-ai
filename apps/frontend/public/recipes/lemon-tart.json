@@ -1,0 +1,196 @@
+{
+  "recipe": {
+    "id": "lemon-tart",
+    "title": "Lemon Tart",
+    "description": "Tangy, smooth lemon curd in a buttery pastry shell",
+    "estimated_total": "PT1H30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 8,
+    "difficulty": "Medium",
+    "tags": [
+      "dessert",
+      "breakfast"
+    ],
+    "course": "dessert"
+  },
+  "ingredients": [
+    {
+      "id": "shortcrust_pastry",
+      "name": "shortcrust pastry",
+      "quantity": 250.0,
+      "unit": "g"
+    },
+    {
+      "id": "lemons_(zest_and_juice)",
+      "name": "lemons (zest and juice)",
+      "quantity": 4.0,
+      "unit": "large"
+    },
+    {
+      "id": "caster_sugar",
+      "name": "caster sugar",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "plus_2_yolks",
+      "name": "plus 2 yolks",
+      "quantity": 4.0,
+      "unit": "eggs"
+    },
+    {
+      "id": "double_cream",
+      "name": "double cream",
+      "quantity": 150.0,
+      "unit": "ml"
+    },
+    {
+      "id": "icing_sugar_for_dusting",
+      "name": "Icing sugar for dusting",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Roll out pastry and line a tart tin, chill 30 mins",
+      "instructions": "Roll out pastry and line a tart tin, chill 30 mins",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's roll out pastry and line a."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Blind bake at 180°C for 20 minutes",
+      "instructions": "Blind bake at 180°C for 20 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's blind bake at 180°c for 20."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Whisk eggs, yolks, sugar, lemon zest and juice",
+      "instructions": "Whisk eggs, yolks, sugar, lemon zest and juice",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's whisk everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Stir in cream",
+      "instructions": "Stir in cream",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Pour into pastry case",
+      "instructions": "Pour into pastry case",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pour into pastry case."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Bake at 140°C for 35-40 minutes until just set",
+      "instructions": "Bake at 140°C for 35-40 minutes until just set",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the at 140°c for."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Cool completely, dust with icing sugar",
+      "instructions": "Cool completely, dust with icing sugar",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's cool completely, dust with icing sugar."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "The filling should have a slight wobble\nBest served chilled\nUse unwaxed lemons for the zest"
+  }
+}

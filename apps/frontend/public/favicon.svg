@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="heartStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4FD1C7;stop-opacity:0.95" />
+      <stop offset="50%" style="stop-color:#38B2AC;stop-opacity:0.9" />
+      <stop offset="100%" style="stop-color:#2C7A7B;stop-opacity:0.85" />
+    </linearGradient>
+    <filter id="softBlur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="0.8"/>
+    </filter>
+  </defs>
+  <!-- Heart outline only - transparent center -->
+  <path 
+    d="M50,80 C50,80 20,55 20,38 C20,28 27,22 36,22 C42,22 47,25 50,32 C53,25 58,22 64,22 C73,22 80,28 80,38 C80,55 50,80 50,80 Z" 
+    fill="none" 
+    stroke="url(#heartStroke)" 
+    stroke-width="5" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+    opacity="1"
+    filter="url(#softBlur)"
+  />
+</svg>

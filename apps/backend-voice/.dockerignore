@@ -1,0 +1,26 @@
+# Docker ignore file for backend-voice
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+.env
+.env.local
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Don't ignore packages/ccai - we need it for dependency resolution
+!packages/ccai

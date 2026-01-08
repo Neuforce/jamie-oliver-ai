@@ -1,0 +1,209 @@
+{
+  "recipe": {
+    "id": "fish-tacos",
+    "title": "Fish Tacos",
+    "description": "Crispy fish with fresh slaw in soft tortillas",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "fish",
+      "mexican"
+    ],
+    "course": "main",
+    "cuisine": "mexican"
+  },
+  "ingredients": [
+    {
+      "id": "white_fish_fillets",
+      "name": "white fish fillets",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "tortillas",
+      "name": "tortillas",
+      "quantity": 8.0,
+      "unit": "small"
+    },
+    {
+      "id": "flour",
+      "name": "flour",
+      "quantity": 1.0,
+      "unit": "cup"
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "quantity": 1.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "1/4_cabbage_shredded",
+      "name": "1/4 cabbage, shredded",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "mayonnaise",
+      "name": "mayonnaise",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "lime_juice",
+      "name": "Lime juice",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "fresh_cilantro",
+      "name": "Fresh cilantro",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Mix flour with paprika, salt, and pepper",
+      "instructions": "Mix flour with paprika, salt, and pepper",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Cut fish into strips, coat in flour",
+      "instructions": "Cut fish into strips, coat in flour",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by cut."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Fry in hot oil until golden and crispy",
+      "instructions": "Fry in hot oil until golden and crispy",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to fry the in hot oil."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Mix cabbage with mayo and lime juice for slaw",
+      "instructions": "Mix cabbage with mayo and lime juice for slaw",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Warm tortillas",
+      "instructions": "Warm tortillas",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's warm the tortillas."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Fill with fish and slaw",
+      "instructions": "Fill with fish and slaw",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's fill with fish and slaw."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Top with cilantro and extra lime",
+      "instructions": "Top with cilantro and extra lime",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's top with cilantro and extra lime."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Cod or tilapia work great\nAdd hot sauce for extra kick\nServe with fresh pico de gallo"
+  }
+}

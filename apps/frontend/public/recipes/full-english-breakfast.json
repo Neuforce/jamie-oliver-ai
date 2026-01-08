@@ -1,0 +1,210 @@
+{
+  "recipe": {
+    "id": "full-english-breakfast",
+    "title": "Full English Breakfast",
+    "description": "Classic British breakfast with all the trimmings",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "pork",
+      "quick",
+      "dessert",
+      "breakfast"
+    ],
+    "course": "dessert"
+  },
+  "ingredients": [
+    {
+      "id": "rashers",
+      "name": "rashers",
+      "quantity": 8.0,
+      "unit": "bacon"
+    },
+    {
+      "id": "8_sausages",
+      "name": "8 sausages",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "4_eggs",
+      "name": "4 eggs",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "tinned_baked_beans",
+      "name": "tinned baked beans",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "4_tomatoes_halved",
+      "name": "4 tomatoes, halved",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "mushrooms",
+      "name": "mushrooms",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "bread",
+      "name": "bread",
+      "quantity": 4.0,
+      "unit": "slices"
+    },
+    {
+      "id": "black_pudding_optional",
+      "name": "Black pudding (optional)",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Grill sausages and bacon until cooked",
+      "instructions": "Grill sausages and bacon until cooked",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to grill the sausages and bacon."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Fry mushrooms and tomatoes",
+      "instructions": "Fry mushrooms and tomatoes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to fry the mushrooms and tomatoes."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Heat baked beans in a pan",
+      "instructions": "Heat baked beans in a pan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat the baked beans in."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Fry or scramble eggs to preference",
+      "instructions": "Fry or scramble eggs to preference",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to fry the or scramble eggs."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Toast bread",
+      "instructions": "Toast bread",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's toast bread."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Arrange everything on plates",
+      "instructions": "Arrange everything on plates",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to arrange and enjoy!"
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve with tea or coffee",
+      "instructions": "Serve with tea or coffee",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use the oven to keep things warm\nQuality sausages make all the difference\nPerfect weekend treat"
+  }
+}

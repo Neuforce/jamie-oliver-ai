@@ -1,0 +1,44 @@
+[project]
+name = "jamie-oliver-ai"
+version = "0.1.0"
+description = "PDF recipe ingestion + JOAv0 JSON generation + Supabase pgvector indexing"
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "pymupdf>=1.24.0",
+  "onnxruntime>=1.20.0",
+  "fastembed>=0.7.0",
+  "pdfplumber>=0.11.0",
+  "httpx>=0.28.0",
+  "supabase>=2.6.0",
+  "pgvector>=0.3.4",
+  "python-dotenv>=1.0.1",
+  "jsonschema>=4.22.0",
+  "watchdog>=4.0.1",
+  "fastapi>=0.115.0",
+  "uvicorn[standard]>=0.32.0",
+  "mangum>=0.17.0",
+]
+
+[project.scripts]
+recipe-pdf = "recipe_pdf_agent.cli:main"
+recipe-llama = "recipe_pdf_agent_llama.cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["recipe_pdf_agent*", "recipe_pdf_agent_llama*"]
+exclude = ["data*", "db*"]
+
+[tool.uv]
+dev-dependencies = [
+  "pytest>=8.0.0",
+]
+
+

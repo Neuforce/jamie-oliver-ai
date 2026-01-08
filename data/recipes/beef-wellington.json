@@ -1,0 +1,207 @@
+{
+  "recipe": {
+    "id": "beef-wellington",
+    "title": "Beef Wellington",
+    "description": "Luxurious beef fillet wrapped in puff pastry with mushroom duxelles",
+    "estimated_total": "PT2H",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Tricky",
+    "tags": [
+      "beef"
+    ],
+    "course": "main"
+  },
+  "ingredients": [
+    {
+      "id": "beef_fillet",
+      "name": "beef fillet",
+      "quantity": 1.0,
+      "unit": "kg"
+    },
+    {
+      "id": "puff_pastry",
+      "name": "puff pastry",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "mushrooms_finely_chopped",
+      "name": "mushrooms, finely chopped",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "pâté",
+      "name": "pâté",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "parma_ham",
+      "name": "Parma ham",
+      "quantity": 6.0,
+      "unit": "slices"
+    },
+    {
+      "id": "yolks",
+      "name": "yolks",
+      "quantity": 2.0,
+      "unit": "egg"
+    },
+    {
+      "id": "fresh_thyme",
+      "name": "Fresh thyme",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "dijon_mustard",
+      "name": "Dijon mustard",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Sear beef on all sides, brush with mustard, let cool",
+      "instructions": "Sear beef on all sides, brush with mustard, let cool",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's sear beef on all sides, brush."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Cook mushrooms until all liquid evaporates, season well",
+      "instructions": "Cook mushrooms until all liquid evaporates, season well",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to cook the mushrooms until all."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Lay ham on plastic wrap, spread with pâté and mushrooms",
+      "instructions": "Lay ham on plastic wrap, spread with pâté and mushrooms",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's lay ham on plastic wrap, spread."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Wrap beef in ham layer, refrigerate 30 minutes",
+      "instructions": "Wrap beef in ham layer, refrigerate 30 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's wrap beef in ham layer, refrigerate."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Wrap in puff pastry, seal edges, brush with egg",
+      "instructions": "Wrap in puff pastry, seal edges, brush with egg",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's wrap in puff pastry, seal edges,."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Bake at 200°C for 35-40 minutes until golden",
+      "instructions": "Bake at 200°C for 35-40 minutes until golden",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the at 200°c for."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Rest 10 minutes before slicing",
+      "instructions": "Rest 10 minutes before slicing",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's rest 10 minutes before slicing."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use a meat thermometer for perfect doneness\nMake sure mushrooms are completely dry\nThis is a showstopper - perfect for special occasions"
+  }
+}

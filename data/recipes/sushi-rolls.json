@@ -1,0 +1,204 @@
+{
+  "recipe": {
+    "id": "sushi-rolls",
+    "title": "Sushi Rolls",
+    "description": "Fresh homemade sushi with salmon, avocado, and cucumber",
+    "estimated_total": "PT1H",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Tricky",
+    "tags": [
+      "fish",
+      "chinese",
+      "dessert"
+    ],
+    "course": "dessert",
+    "cuisine": "chinese"
+  },
+  "ingredients": [
+    {
+      "id": "sushi_rice",
+      "name": "sushi rice",
+      "quantity": 300.0,
+      "unit": "g"
+    },
+    {
+      "id": "rice_vinegar",
+      "name": "rice vinegar",
+      "quantity": 4.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "sheets",
+      "name": "sheets",
+      "quantity": 4.0,
+      "unit": "nori"
+    },
+    {
+      "id": "fresh_salmon",
+      "name": "fresh salmon",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "1_avocado_sliced",
+      "name": "1 avocado, sliced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "1_cucumber_julienned",
+      "name": "1 cucumber, julienned",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "soy_sauce_wasabi_pickled_ginger",
+      "name": "Soy sauce, wasabi, pickled ginger",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Cook sushi rice, mix with rice vinegar while warm",
+      "instructions": "Cook sushi rice, mix with rice vinegar while warm",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to cook the sushi rice, mix."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Let rice cool to room temperature",
+      "instructions": "Let rice cool to room temperature",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's let rice cool to room temperature."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Place nori on bamboo mat",
+      "instructions": "Place nori on bamboo mat",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Now place the nori on bamboo."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Spread rice over nori, leaving 2cm at top",
+      "instructions": "Spread rice over nori, leaving 2cm at top",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's spread rice over nori, leaving 2cm."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Add salmon, avocado, cucumber in a line",
+      "instructions": "Add salmon, avocado, cucumber in a line",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the salmon, avocado, cucumber."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Roll tightly using the mat",
+      "instructions": "Roll tightly using the mat",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's roll tightly using the mat."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Slice into pieces and serve with condiments",
+      "instructions": "Slice into pieces and serve with condiments",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's start by slice."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use very fresh, sushi-grade fish\nWet hands when handling rice\nSharp knife is essential for clean cuts"
+  }
+}

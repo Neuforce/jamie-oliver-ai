@@ -1,0 +1,50 @@
+ARG PYTHON_VERSION=3.11
+FROM python:${PYTHON_VERSION}-slim-bullseye
+
+ENV PYTHONUNBUFFERED=1
+ENV POETRY_VERSION=2.1.1
+ENV POETRY_HOME=/opt/poetry
+ENV PATH="$POETRY_HOME/bin:$PATH"
+
+WORKDIR /app
+
+# Install all dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq-dev \
+    gcc \
+    python3-dev \
+    netcat-traditional \
+    bash \
+    build-essential \
+    curl \
+    libportaudio2 \
+    portaudio19-dev \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip install poetry==$POETRY_VERSION
+
+# Copy files needed for dependency installation
+COPY apps/backend-voice/pyproject.toml ./apps/backend-voice/
+COPY packages/ccai ./packages/
+
+# Install backend dependencies
+WORKDIR /app/apps/backend-voice
+RUN poetry config virtualenvs.create false && \
+    poetry install --no-root --only main
+
+# Copy backend source
+COPY apps/backend-voice/src apps/backend-voice/src
+
+# Copy data/recipes directory
+COPY data/recipes /app/data/recipes
+
+# Copy and set up startup script
+COPY apps/backend-voice/startup.sh /app/startup.sh
+RUN sed -i 's/\r$//' /app/startup.sh \
+    && chmod +x /app/startup.sh
+
+WORKDIR /app/apps/backend-voice
+ENV PYTHONPATH="/app/apps/backend-voice/src:/app/packages"
+
+ENTRYPOINT ["/app/startup.sh"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8100", "--reload", "--reload-dir", "/app/apps/backend-voice/src", "--reload-dir", "/app/packages/ccai"]
+

@@ -1,0 +1,202 @@
+{
+  "recipe": {
+    "id": "pulled-pork-sandwich",
+    "title": "Pulled Pork Sandwich",
+    "description": "Slow-cooked tender pork with BBQ sauce on a soft bun",
+    "estimated_total": "PT6H",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 8,
+    "difficulty": "Medium",
+    "tags": [
+      "pork",
+      "breakfast"
+    ],
+    "course": "breakfast"
+  },
+  "ingredients": [
+    {
+      "id": "pork_shoulder",
+      "name": "pork shoulder",
+      "quantity": 2.0,
+      "unit": "kg"
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "brown_sugar",
+      "name": "brown sugar",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "garlic_powder",
+      "name": "garlic powder",
+      "quantity": 1.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "bbq_sauce",
+      "name": "BBQ sauce",
+      "quantity": 300.0,
+      "unit": "ml"
+    },
+    {
+      "id": "buns",
+      "name": "buns",
+      "quantity": 8.0,
+      "unit": "burger"
+    },
+    {
+      "id": "coleslaw_for_topping",
+      "name": "Coleslaw for topping",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Mix paprika, brown sugar, garlic powder, salt, pepper for rub",
+      "instructions": "Mix paprika, brown sugar, garlic powder, salt, pepper for rub",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Rub spice mix all over pork shoulder",
+      "instructions": "Rub spice mix all over pork shoulder",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix all over pork."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Slow cook at 120°C for 5-6 hours until tender",
+      "instructions": "Slow cook at 120°C for 5-6 hours until tender",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's cook at 120°c for."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Shred pork with two forks",
+      "instructions": "Shred pork with two forks",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's shred pork with two forks."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Mix with BBQ sauce",
+      "instructions": "Mix with BBQ sauce",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Pile onto toasted buns",
+      "instructions": "Pile onto toasted buns",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pile onto toasted buns."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Top with coleslaw and serve",
+      "instructions": "Top with coleslaw and serve",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's top with coleslaw and serve."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Low and slow is the secret\nCan also use a slow cooker\nLeftovers freeze beautifully"
+  }
+}

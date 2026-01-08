@@ -1,0 +1,210 @@
+{
+  "recipe": {
+    "id": "chicken-tikka-masala",
+    "title": "Chicken Tikka Masala",
+    "description": "Tender chicken in a rich, creamy tomato-based curry sauce",
+    "estimated_total": "PT45M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Medium",
+    "tags": [
+      "chicken",
+      "thai",
+      "indian"
+    ],
+    "course": "main",
+    "cuisine": "indian"
+  },
+  "ingredients": [
+    {
+      "id": "chicken_breast_cubed",
+      "name": "chicken breast, cubed",
+      "quantity": 800.0,
+      "unit": "g"
+    },
+    {
+      "id": "natural_yogurt",
+      "name": "natural yogurt",
+      "quantity": 200.0,
+      "unit": "ml"
+    },
+    {
+      "id": "tikka_masala_paste",
+      "name": "tikka masala paste",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "tinned_tomatoes",
+      "name": "tinned tomatoes",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "double_cream",
+      "name": "double cream",
+      "quantity": 200.0,
+      "unit": "ml"
+    },
+    {
+      "id": "2_onions_finely_chopped",
+      "name": "2 onions, finely chopped",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "quantity": 4.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "fresh_coriander_to_garnish",
+      "name": "Fresh coriander to garnish",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Marinate chicken in yogurt and half the tikka paste for 30 minutes",
+      "instructions": "Marinate chicken in yogurt and half the tikka paste for 30 minutes",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's marinate chicken in yogurt and half."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Grill or pan-fry chicken until charred and cooked through",
+      "instructions": "Grill or pan-fry chicken until charred and cooked through",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to grill the or pan-fry chicken."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "In a large pan, sauté onions until golden, add garlic",
+      "instructions": "In a large pan, sauté onions until golden, add garlic",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's in a large pan, sauté onions."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Stir in remaining tikka paste and cook for 1 minute",
+      "instructions": "Stir in remaining tikka paste and cook for 1 minute",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Add tinned tomatoes and simmer for 10 minutes",
+      "instructions": "Add tinned tomatoes and simmer for 10 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the tinned tomatoes and."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Stir in cream and cooked chicken, simmer for 5 minutes",
+      "instructions": "Stir in cream and cooked chicken, simmer for 5 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Garnish with fresh coriander and serve with rice or naan",
+      "instructions": "Garnish with fresh coriander and serve with rice or naan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to garnish and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Marinating overnight gives better flavor\nDon't skip the charring step - it adds smoky depth\nAdjust spice level to your taste"
+  }
+}

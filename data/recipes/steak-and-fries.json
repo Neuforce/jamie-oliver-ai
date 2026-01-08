@@ -1,0 +1,201 @@
+{
+  "recipe": {
+    "id": "steak-and-fries",
+    "title": "Steak and Fries",
+    "description": "Perfect medium-rare steak with crispy golden fries",
+    "estimated_total": "PT40M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 2,
+    "difficulty": "Medium",
+    "tags": [
+      "beef"
+    ],
+    "course": "main"
+  },
+  "ingredients": [
+    {
+      "id": "steaks_(300g_each)",
+      "name": "steaks (300g each)",
+      "quantity": 2.0,
+      "unit": "ribeye"
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 4.0,
+      "unit": "large"
+    },
+    {
+      "id": "oil_for_frying",
+      "name": "Oil for frying",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "cloves",
+      "name": "cloves",
+      "quantity": 2.0,
+      "unit": "garlic"
+    },
+    {
+      "id": "fresh_rosemary",
+      "name": "Fresh rosemary",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "sea_salt_and_black_pepper",
+      "name": "Sea salt and black pepper",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Cut potatoes into fries, soak in cold water",
+      "instructions": "Cut potatoes into fries, soak in cold water",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by cut."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Heat oil to 160°C, fry chips until soft, drain",
+      "instructions": "Heat oil to 160°C, fry chips until soft, drain",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat the oil to 160°c,."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Season steaks generously, let come to room temp",
+      "instructions": "Season steaks generously, let come to room temp",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's season the steaks generously, let."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Heat pan until smoking, cook steaks 3-4 mins per side",
+      "instructions": "Heat pan until smoking, cook steaks 3-4 mins per side",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat the pan until smoking,."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Add butter, garlic, rosemary, baste steaks",
+      "instructions": "Add butter, garlic, rosemary, baste steaks",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the butter, garlic, rosemary,."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Rest steaks 5 minutes",
+      "instructions": "Rest steaks 5 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's rest steaks 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Fry chips again at 180°C until crispy, serve together",
+      "instructions": "Fry chips again at 180°C until crispy, serve together",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to fry the chips again at."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Room temperature steak cooks more evenly\nDouble frying makes the crispiest chips\nDon't skip the resting time"
+  }
+}

@@ -1,0 +1,189 @@
+{
+  "recipe": {
+    "id": "creme-brulee",
+    "title": "Crème Brûlée",
+    "description": "Silky vanilla custard with caramelized sugar crust",
+    "estimated_total": "PT1H",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Medium",
+    "tags": [
+      "breakfast"
+    ],
+    "course": "main"
+  },
+  "ingredients": [
+    {
+      "id": "double_cream",
+      "name": "double cream",
+      "quantity": 600.0,
+      "unit": "ml"
+    },
+    {
+      "id": "pod",
+      "name": "pod",
+      "quantity": 1.0,
+      "unit": "vanilla"
+    },
+    {
+      "id": "yolks",
+      "name": "yolks",
+      "quantity": 6.0,
+      "unit": "egg"
+    },
+    {
+      "id": "caster_sugar",
+      "name": "caster sugar",
+      "quantity": 75.0,
+      "unit": "g"
+    },
+    {
+      "id": "extra_sugar_for_topping",
+      "name": "Extra sugar for topping",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 140°C (275°F)",
+      "instructions": "Preheat oven to 140°C (275°F)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 140°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Heat cream with vanilla pod until just boiling",
+      "instructions": "Heat cream with vanilla pod until just boiling",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat the cream with vanilla."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Whisk egg yolks with sugar until pale",
+      "instructions": "Whisk egg yolks with sugar until pale",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's whisk everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Pour hot cream over eggs, whisking constantly",
+      "instructions": "Pour hot cream over eggs, whisking constantly",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pour hot cream over eggs, whisking."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Strain into ramekins",
+      "instructions": "Strain into ramekins",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's strain into ramekins."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Bake in water bath for 30-35 minutes",
+      "instructions": "Bake in water bath for 30-35 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the in water bath."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Chill 4 hours, sprinkle with sugar and blowtorch",
+      "instructions": "Chill 4 hours, sprinkle with sugar and blowtorch",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's chill 4 hours, sprinkle with sugar."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't skip the water bath - it ensures smooth custard\nThe custard should wobble slightly\nChill thoroughly before brûléeing"
+  }
+}

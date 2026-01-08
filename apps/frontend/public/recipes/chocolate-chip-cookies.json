@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "chocolate-chip-cookies",
+    "title": "Chocolate Chip Cookies",
+    "description": "Classic chewy cookies loaded with chocolate chips",
+    "estimated_total": "PT25M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 24,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "dessert",
+      "breakfast"
+    ],
+    "course": "dessert"
+  },
+  "ingredients": [
+    {
+      "id": "butter_softened",
+      "name": "butter, softened",
+      "quantity": 225.0,
+      "unit": "g"
+    },
+    {
+      "id": "brown_sugar",
+      "name": "brown sugar",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "white_sugar",
+      "name": "white sugar",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "2_eggs",
+      "name": "2 eggs",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "plain_flour",
+      "name": "plain flour",
+      "quantity": 300.0,
+      "unit": "g"
+    },
+    {
+      "id": "baking_soda",
+      "name": "baking soda",
+      "quantity": 1.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "chocolate_chips",
+      "name": "chocolate chips",
+      "quantity": 300.0,
+      "unit": "g"
+    },
+    {
+      "id": "vanilla_extract",
+      "name": "vanilla extract",
+      "quantity": 1.0,
+      "unit": "tsp"
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 180°C (350°F)",
+      "instructions": "Preheat oven to 180°C (350°F)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 180°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Cream butter and sugars until fluffy",
+      "instructions": "Cream butter and sugars until fluffy",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's cream butter and sugars until fluffy."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Beat in eggs and vanilla",
+      "instructions": "Beat in eggs and vanilla",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's beat in eggs and vanilla."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Mix in flour and baking soda",
+      "instructions": "Mix in flour and baking soda",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Fold in chocolate chips",
+      "instructions": "Fold in chocolate chips",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's fold in chocolate chips."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Drop spoonfuls onto baking sheet",
+      "instructions": "Drop spoonfuls onto baking sheet",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's drop spoonfuls onto baking sheet."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Bake 10-12 minutes until golden at edges",
+      "instructions": "Bake 10-12 minutes until golden at edges",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to bake the 10-12 minutes until."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Chill dough for thicker cookies\nDon't overbake - they continue cooking on the tray\nUse a mix of dark and milk chocolate"
+  }
+}

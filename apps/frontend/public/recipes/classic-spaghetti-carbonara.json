@@ -1,0 +1,198 @@
+{
+  "recipe": {
+    "id": "classic-spaghetti-carbonara",
+    "title": "Classic Spaghetti Carbonara",
+    "description": "Creamy, rich Italian pasta with crispy pancetta and parmesan",
+    "estimated_total": "PT25M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Medium",
+    "tags": [
+      "pasta",
+      "quick",
+      "italian"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "spaghetti",
+      "name": "spaghetti",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "pancetta_or_guanciale_diced",
+      "name": "pancetta or guanciale, diced",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "large_egg_yolks",
+      "name": "large egg yolks",
+      "quantity": 4.0,
+      "unit": null
+    },
+    {
+      "id": "parmesan_cheese_grated",
+      "name": "Parmesan cheese, grated",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "black_pepper",
+      "name": "Black pepper",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "salt",
+      "name": "Salt",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Bring a large pot of salted water to boil and cook spaghetti according to package directions",
+      "instructions": "Bring a large pot of salted water to boil and cook spaghetti according to package directions",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's bring a large pot of salted."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "While pasta cooks, fry pancetta in a large pan until crispy",
+      "instructions": "While pasta cooks, fry pancetta in a large pan until crispy",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's cooks, fry pancetta in."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "In a bowl, whisk together egg yolks, grated Parmesan, and lots of black pepper",
+      "instructions": "In a bowl, whisk together egg yolks, grated Parmesan, and lots of black pepper",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's in a bowl, whisk together egg."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Reserve 1 cup of pasta water, then drain pasta",
+      "instructions": "Reserve 1 cup of pasta water, then drain pasta",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's reserve the 1 cup of for later."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Remove pan from heat, add hot pasta to pancetta",
+      "instructions": "Remove pan from heat, add hot pasta to pancetta",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's remove the pan from heat,."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Quickly stir in egg mixture, adding pasta water gradually until creamy",
+      "instructions": "Quickly stir in egg mixture, adding pasta water gradually until creamy",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mixture, adding pasta water."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve immediately with extra Parmesan and black pepper",
+      "instructions": "Serve immediately with extra Parmesan and black pepper",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "The key is to work quickly so the eggs don't scramble\nUse the pasta water to create a silky sauce\nAlways remove from heat before adding the egg mixture"
+  }
+}

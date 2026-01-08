@@ -1,0 +1,104 @@
+{
+  "recipe": {
+    "id": "smoked-salmon-pasta-jamie-oliver-recipes",
+    "title": "Smoked Salmon Pasta",
+    "description": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
+    "estimated_total": "PT8M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 1,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "pasta",
+      "fish",
+      "italian"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "boil_kettle_cut_pasta",
+      "descr": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
+      "instructions": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "heat_pan_add_ingredients"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to boil the kettle. cut."
+        }
+      ]
+    },
+    {
+      "id": "heat_pan_add_ingredients",
+      "descr": "Put a 28cm frying pan on a high heat. Once hot, put a little drizzle of olive oil into the pan with the spring onions, spinach, chopped salmon and lemon zest.",
+      "instructions": "Put a 28cm frying pan on a high heat. Once hot, put a little drizzle of olive oil into the pan with the spring onions, spinach, chopped salmon and lemon zest.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "boil_kettle_cut_pasta"
+      ],
+      "next": [
+        "cook_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Now put the 28cm frying pan."
+        }
+      ]
+    },
+    {
+      "id": "cook_pasta",
+      "descr": "Let it bubble away for 4 minutes, or until the pasta has absorbed most of the water and you've got a nice sauce.",
+      "instructions": "Let it bubble away for 4 minutes, or until the pasta has absorbed most of the water and you've got a nice sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_pan_add_ingredients"
+      ],
+      "next": [
+        "finish_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's let it bubble away for 4."
+        }
+      ]
+    },
+    {
+      "id": "finish_sauce",
+      "descr": "Turn the heat off, squeeze in the lemon juice, stir in the cottage cheese and Parmesan, then season to perfection.",
+      "instructions": "Turn the heat off, squeeze in the lemon juice, stir in the cottage cheese and Parmesan, then season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "cook_pasta"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's heat off, squeeze in."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": ""
+  }
+}

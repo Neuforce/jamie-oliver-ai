@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "jamie-oliver-backend"
+version = "0.1.0"
+description = "Jamie Oliver AI Cooking Assistant Backend"
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.115.12"
+uvicorn = {extras = ["standard"], version = "^0.34.0"}
+python-dotenv = "^1.0.1"
+websockets = "^14.1"
+openai = "^1.51.2"
+ccai = {path = "../../packages/ccai", develop = true}
+pydantic = "^2.10.6"
+python-multipart = "^0.0.20"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+pytest-asyncio = "^0.23.0"
+pytest-mock = "^3.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+

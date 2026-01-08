@@ -1,0 +1,203 @@
+{
+  "recipe": {
+    "id": "beef-tacos",
+    "title": "Beef Tacos",
+    "description": "Mexican street-style tacos with seasoned ground beef and fresh toppings",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "beef",
+      "mexican"
+    ],
+    "course": "main",
+    "cuisine": "mexican"
+  },
+  "ingredients": [
+    {
+      "id": "ground_beef",
+      "name": "ground beef",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "1_onion_diced",
+      "name": "1 onion, diced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "cumin",
+      "name": "cumin",
+      "quantity": 2.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "quantity": 2.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "chili_powder",
+      "name": "chili powder",
+      "quantity": 1.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "tortillas",
+      "name": "tortillas",
+      "quantity": 8.0,
+      "unit": "small"
+    },
+    {
+      "id": "lettuce_tomatoes_cheese_sour_cream_for_topping",
+      "name": "Lettuce, tomatoes, cheese, sour cream for topping",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Cook onion in a large pan until soft",
+      "instructions": "Cook onion in a large pan until soft",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to cook the onion in large."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Add ground beef and cook until browned",
+      "instructions": "Add ground beef and cook until browned",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the ground beef and."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Stir in cumin, paprika, chili powder, salt and pepper",
+      "instructions": "Stir in cumin, paprika, chili powder, salt and pepper",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Add a splash of water and simmer for 5 minutes",
+      "instructions": "Add a splash of water and simmer for 5 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the splash of water."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Warm tortillas in a dry pan",
+      "instructions": "Warm tortillas in a dry pan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's warm the tortillas in dry."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Fill tortillas with beef and your favorite toppings",
+      "instructions": "Fill tortillas with beef and your favorite toppings",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's fill tortillas with beef and your."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve with lime wedges",
+      "instructions": "Serve with lime wedges",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Warm tortillas make all the difference\nSet up a taco bar for fun family dining\nTry adding pickled jalapeños for extra kick"
+  }
+}

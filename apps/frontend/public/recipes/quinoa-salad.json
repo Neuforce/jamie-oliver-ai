@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "quinoa-salad",
+    "title": "Quinoa Salad",
+    "description": "Nutritious salad with quinoa, vegetables, and lemon dressing",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "salad"
+    ],
+    "course": "salad",
+    "cuisine": "greek"
+  },
+  "ingredients": [
+    {
+      "id": "quinoa",
+      "name": "quinoa",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "1_cucumber_diced",
+      "name": "1 cucumber, diced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "cherry_tomatoes_halved",
+      "name": "cherry tomatoes, halved",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "onion_finely_chopped",
+      "name": "onion, finely chopped",
+      "quantity": 1.0,
+      "unit": "red"
+    },
+    {
+      "id": "feta_cheese_crumbled",
+      "name": "feta cheese, crumbled",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "quantity": 3.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "juice_of_2_lemons",
+      "name": "Juice of 2 lemons",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "fresh_mint_and_parsley",
+      "name": "Fresh mint and parsley",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Cook quinoa according to package, let cool",
+      "instructions": "Cook quinoa according to package, let cool",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to cook the quinoa according to."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Chop all vegetables",
+      "instructions": "Chop all vegetables",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by chop."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Mix olive oil and lemon juice for dressing",
+      "instructions": "Mix olive oil and lemon juice for dressing",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Combine quinoa with vegetables",
+      "instructions": "Combine quinoa with vegetables",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's combine everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Add feta and fresh herbs",
+      "instructions": "Add feta and fresh herbs",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the feta and fresh."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Pour dressing over salad and toss",
+      "instructions": "Pour dressing over salad and toss",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pour dressing over salad and toss."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Chill before serving if desired",
+      "instructions": "Chill before serving if desired",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's chill before serving if desired."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Rinse quinoa before cooking to remove bitterness\nThis salad keeps well in the fridge\nAdd chickpeas for extra protein"
+  }
+}

@@ -1,0 +1,212 @@
+{
+  "recipe": {
+    "id": "beef-ramen",
+    "title": "Beef Ramen",
+    "description": "Rich, flavorful Japanese noodle soup with tender beef",
+    "estimated_total": "PT45M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Medium",
+    "tags": [
+      "beef",
+      "quick",
+      "chinese",
+      "soup",
+      "breakfast"
+    ],
+    "course": "soup",
+    "cuisine": "chinese"
+  },
+  "ingredients": [
+    {
+      "id": "ramen_noodles",
+      "name": "ramen noodles",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "beef_sirloin_sliced",
+      "name": "beef sirloin, sliced",
+      "quantity": 300.0,
+      "unit": "g"
+    },
+    {
+      "id": "beef_stock",
+      "name": "beef stock",
+      "quantity": 1.5,
+      "unit": "L"
+    },
+    {
+      "id": "soy_sauce",
+      "name": "soy sauce",
+      "quantity": 3.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "miso_paste",
+      "name": "miso paste",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "4_soft-boiled_eggs",
+      "name": "4 soft-boiled eggs",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "spring_onions_sliced",
+      "name": "Spring onions, sliced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "nori_sheets",
+      "name": "Nori sheets",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Bring beef stock to simmer, add soy sauce and miso",
+      "instructions": "Bring beef stock to simmer, add soy sauce and miso",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's bring beef stock to simmer, add."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Cook noodles according to package",
+      "instructions": "Cook noodles according to package",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to cook the noodles according to."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Sear beef slices quickly in a hot pan",
+      "instructions": "Sear beef slices quickly in a hot pan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's sear beef slices quickly in a."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Divide noodles between bowls",
+      "instructions": "Divide noodles between bowls",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's divide noodles between bowls."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Ladle hot broth over noodles",
+      "instructions": "Ladle hot broth over noodles",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's ladle hot broth over noodles."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Top with beef, halved eggs, spring onions, nori",
+      "instructions": "Top with beef, halved eggs, spring onions, nori",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's top with beef, halved eggs, spring."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve immediately while hot",
+      "instructions": "Serve immediately while hot",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't overcook the eggs - yolks should be jammy\nAdd chili oil for extra heat\nGarnish generously"
+  }
+}

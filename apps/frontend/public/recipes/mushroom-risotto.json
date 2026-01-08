@@ -1,0 +1,210 @@
+{
+  "recipe": {
+    "id": "mushroom-risotto",
+    "title": "Mushroom Risotto",
+    "description": "Creamy Italian rice with earthy mushrooms and Parmesan",
+    "estimated_total": "PT40M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Medium",
+    "tags": [
+      "chicken",
+      "italian",
+      "breakfast"
+    ],
+    "course": "breakfast",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "arborio_rice",
+      "name": "Arborio rice",
+      "quantity": 300.0,
+      "unit": "g"
+    },
+    {
+      "id": "mixed_mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 300.0,
+      "unit": "g"
+    },
+    {
+      "id": "hot_chicken_stock",
+      "name": "hot chicken stock",
+      "quantity": 1.2,
+      "unit": "L"
+    },
+    {
+      "id": "1_onion_finely_chopped",
+      "name": "1 onion, finely chopped",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "white_wine",
+      "name": "white wine",
+      "quantity": 100.0,
+      "unit": "ml"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "parmesan_grated",
+      "name": "Parmesan, grated",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "fresh_parsley",
+      "name": "Fresh parsley",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Sauté mushrooms until golden, set aside",
+      "instructions": "Sauté mushrooms until golden, set aside",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's sauté mushrooms until golden, set aside."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Soften onion in butter, add rice and toast for 2 minutes",
+      "instructions": "Soften onion in butter, add rice and toast for 2 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's add rice and toast."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Add wine and stir until absorbed",
+      "instructions": "Add wine and stir until absorbed",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the wine and stir."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Add stock one ladle at a time, stirring constantly",
+      "instructions": "Add stock one ladle at a time, stirring constantly",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the stock one ladle."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Continue until rice is creamy but al dente (20-25 mins)",
+      "instructions": "Continue until rice is creamy but al dente (20-25 mins)",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's continue until rice is creamy but."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Stir in mushrooms, butter, and Parmesan",
+      "instructions": "Stir in mushrooms, butter, and Parmesan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Garnish with parsley and serve immediately",
+      "instructions": "Garnish with parsley and serve immediately",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to garnish and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Keep stirring for the creamiest texture\nDon't rush - good risotto takes time\nUse hot stock for even cooking"
+  }
+}

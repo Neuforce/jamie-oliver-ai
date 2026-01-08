@@ -1,0 +1,286 @@
+{
+  "recipe": {
+    "id": "happy-fish-pie",
+    "title": "Happy fish pie",
+    "description": "Preheat the oven to 180°C/350°F/gas 4.",
+    "estimated_total": "PT1H5M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 1,
+    "difficulty": "Tricky",
+    "tags": [
+      "fish",
+      "dessert",
+      "breakfast"
+    ],
+    "course": "dessert",
+    "cuisine": "mediterranean"
+  },
+  "ingredients": [
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 1000.0,
+      "unit": "kg"
+    },
+    {
+      "id": "broccoli",
+      "name": "broccoli",
+      "quantity": 480.0,
+      "unit": "g"
+    },
+    {
+      "id": "leeks",
+      "name": "leeks",
+      "quantity": 480.0,
+      "unit": "g"
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 600.0,
+      "unit": "ml"
+    },
+    {
+      "id": "mixed_frozen_fish_chunks",
+      "name": "mixed frozen fish chunks",
+      "quantity": 800.0,
+      "unit": "g"
+    },
+    {
+      "id": "chives",
+      "name": "chives",
+      "quantity": 20.0,
+      "unit": "g"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "cheddar_cheese",
+      "name": "Cheddar cheese",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180°C/350°F/gas 4.",
+      "instructions": "Preheat the oven to 180°C/350°F/gas 4.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "cook_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by preheating the oven to 180 degrees Celsius."
+        }
+      ]
+    },
+    {
+      "id": "cook_potatoes",
+      "descr": "Peel the potatoes, halving any larger ones, then cook in a pan of boiling salted water for 20 minutes, or until tender.",
+      "instructions": "Peel the potatoes, halving any larger ones, then cook in a pan of boiling salted water for 20 minutes, or until tender.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "trim_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by peel."
+        }
+      ]
+    },
+    {
+      "id": "trim_broccoli",
+      "descr": "Trim, finely chop and reserve the broccoli stalk. Chop the head into florets and add to the pan with the eggs, if using, for the last 7 minutes.",
+      "instructions": "Trim, finely chop and reserve the broccoli stalk. Chop the head into florets and add to the pan with the eggs, if using, for the last 7 minutes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "cook_potatoes"
+      ],
+      "next": [
+        "cool_potatoes_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by trim."
+        }
+      ]
+    },
+    {
+      "id": "cool_potatoes_broccoli",
+      "descr": "Cool the potatoes and broccoli, and steam dry.",
+      "instructions": "Cool the potatoes and broccoli, and steam dry.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "trim_broccoli"
+      ],
+      "next": [
+        "trim_leeks"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's cool the potatoes and broccoli, and."
+        }
+      ]
+    },
+    {
+      "id": "trim_leeks",
+      "descr": "Meanwhile, trim the leeks, halve lengthways, then wash and finely slice.",
+      "instructions": "Meanwhile, trim the leeks, halve lengthways, then wash and finely slice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "cool_potatoes_broccoli"
+      ],
+      "next": [
+        "cook_leeks"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's meanwhile, trim the leeks, halve lengthways,."
+        }
+      ]
+    },
+    {
+      "id": "cook_leeks",
+      "descr": "Place in a large shallow casserole pan on a medium heat with olive oil and the chopped broccoli stalk. Cook for 10 minutes, or until soft, stirring regularly.",
+      "instructions": "Place in a large shallow casserole pan on a medium heat with olive oil and the chopped broccoli stalk. Cook for 10 minutes, or until soft, stirring regularly.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "trim_leeks"
+      ],
+      "next": [
+        "make_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Now place the in large shallow."
+        }
+      ]
+    },
+    {
+      "id": "make_sauce",
+      "descr": "Stir in the flour and mustard, then gradually stir in the milk. Simmer for 5 minutes, stirring occasionally, then season to perfection.",
+      "instructions": "Stir in the flour and mustard, then gradually stir in the milk. Simmer for 5 minutes, stirring occasionally, then season to perfection.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "cook_leeks"
+      ],
+      "next": [
+        "add_fish_cheese"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "add_fish_cheese",
+      "descr": "Add the fish chunks and simmer for another 5 minutes, then grate in most of the cheese.",
+      "instructions": "Add the fish chunks and simmer for another 5 minutes, then grate in most of the cheese.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "make_sauce"
+      ],
+      "next": [
+        "mash_potato_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the fish chunks and."
+        }
+      ]
+    },
+    {
+      "id": "mash_potato_broccoli",
+      "descr": "Mash the potato and broccoli – rustic or smooth, the choice is yours.",
+      "instructions": "Mash the potato and broccoli – rustic or smooth, the choice is yours.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_fish_cheese"
+      ],
+      "next": [
+        "season_and_top"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mash the potato and broccoli –."
+        }
+      ]
+    },
+    {
+      "id": "season_and_top",
+      "descr": "Season to perfection, then spoon over the dish, fork from sustainable sources up the top for added texture, grate over the last bit of cheese and spritz with oil.",
+      "instructions": "Season to perfection, then spoon over the dish, fork from sustainable sources up the top for added texture, grate over the last bit of cheese and spritz with oil.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "mash_potato_broccoli"
+      ],
+      "next": [
+        "bake_and_serve"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's season the to perfection, then."
+        }
+      ]
+    },
+    {
+      "id": "bake_and_serve",
+      "descr": "Bake for 35 minutes, or until golden and bubbling. Rest for 5 minutes, sprinkle over the remaining chives and serve with lemon wedges.",
+      "instructions": "Bake for 35 minutes, or until golden and bubbling. Rest for 5 minutes, sprinkle over the remaining chives and serve with lemon wedges.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "season_and_top"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to bake the for 35 minutes,."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": ""
+  }
+}

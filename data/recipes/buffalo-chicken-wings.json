@@ -1,0 +1,201 @@
+{
+  "recipe": {
+    "id": "buffalo-chicken-wings",
+    "title": "Buffalo Chicken Wings",
+    "description": "Crispy wings tossed in spicy buffalo sauce",
+    "estimated_total": "PT50M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "chicken"
+    ],
+    "course": "main"
+  },
+  "ingredients": [
+    {
+      "id": "chicken_wings",
+      "name": "chicken wings",
+      "quantity": 1.0,
+      "unit": "kg"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "hot_sauce",
+      "name": "hot sauce",
+      "quantity": 150.0,
+      "unit": "ml"
+    },
+    {
+      "id": "garlic_powder",
+      "name": "garlic powder",
+      "quantity": 1.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "blue_cheese_dressing",
+      "name": "Blue cheese dressing",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "celery_sticks",
+      "name": "Celery sticks",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "ranch_dressing",
+      "name": "Ranch dressing",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 200°C (400°F)",
+      "instructions": "Preheat oven to 200°C (400°F)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 200°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Pat wings dry, season with salt and garlic powder",
+      "instructions": "Pat wings dry, season with salt and garlic powder",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pat wings dry, season with salt."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Bake on a wire rack for 45 minutes, turning once",
+      "instructions": "Bake on a wire rack for 45 minutes, turning once",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the on wire rack."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Melt butter and mix with hot sauce",
+      "instructions": "Melt butter and mix with hot sauce",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix with hot sauce."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Toss cooked wings in buffalo sauce",
+      "instructions": "Toss cooked wings in buffalo sauce",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's toss everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Serve with blue cheese dressing and celery",
+      "instructions": "Serve with blue cheese dressing and celery",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Provide plenty of napkins!",
+      "instructions": "Provide plenty of napkins!",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's provide plenty of napkins!."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Drying the wings ensures crispy skin\nAdjust heat level to your preference\nPerfect for game day"
+  }
+}

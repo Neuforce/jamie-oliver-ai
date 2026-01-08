@@ -1,0 +1,209 @@
+{
+  "recipe": {
+    "id": "chicken-fajitas",
+    "title": "Chicken Fajitas",
+    "description": "Sizzling Mexican chicken with peppers and warm tortillas",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "chicken",
+      "mexican"
+    ],
+    "course": "main",
+    "cuisine": "mexican"
+  },
+  "ingredients": [
+    {
+      "id": "chicken_breast_sliced",
+      "name": "chicken breast, sliced",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "peppers_sliced",
+      "name": "peppers, sliced",
+      "quantity": 2.0,
+      "unit": "bell"
+    },
+    {
+      "id": "1_onion_sliced",
+      "name": "1 onion, sliced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "cumin",
+      "name": "cumin",
+      "quantity": 2.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "quantity": 2.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "tortillas",
+      "name": "tortillas",
+      "quantity": 8.0,
+      "unit": "flour"
+    },
+    {
+      "id": "sour_cream_guacamole_salsa",
+      "name": "Sour cream, guacamole, salsa",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "lime_wedges",
+      "name": "Lime wedges",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Mix cumin, paprika, salt, and pepper",
+      "instructions": "Mix cumin, paprika, salt, and pepper",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Toss chicken in spice mix",
+      "instructions": "Toss chicken in spice mix",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's toss everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Heat pan, cook chicken until golden",
+      "instructions": "Heat pan, cook chicken until golden",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat the pan, cook chicken."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Add peppers and onions, cook until soft",
+      "instructions": "Add peppers and onions, cook until soft",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the peppers and onions,."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Warm tortillas in a dry pan",
+      "instructions": "Warm tortillas in a dry pan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's warm the tortillas in dry."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Serve chicken and veg with tortillas and toppings",
+      "instructions": "Serve chicken and veg with tortillas and toppings",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Squeeze lime over everything",
+      "instructions": "Squeeze lime over everything",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's squeeze lime over everything."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "High heat gives the best char\nServe on a sizzling hot plate for drama\nSet up a fajita bar for interactive dining"
+  }
+}

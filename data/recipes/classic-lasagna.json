@@ -1,0 +1,210 @@
+{
+  "recipe": {
+    "id": "classic-lasagna",
+    "title": "Classic Lasagna",
+    "description": "Layered Italian pasta with rich meat sauce and creamy béchamel",
+    "estimated_total": "PT2H",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 8,
+    "difficulty": "Tricky",
+    "tags": [
+      "pasta",
+      "beef",
+      "italian"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "ground_beef",
+      "name": "ground beef",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "tinned_tomatoes",
+      "name": "tinned tomatoes",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "sheets",
+      "name": "sheets",
+      "quantity": 12.0,
+      "unit": "lasagna"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "flour",
+      "name": "flour",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 600.0,
+      "unit": "ml"
+    },
+    {
+      "id": "mozzarella_grated",
+      "name": "mozzarella, grated",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "parmesan_grated",
+      "name": "Parmesan, grated",
+      "quantity": 100.0,
+      "unit": "g"
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Make bolognese: brown beef, add tomatoes, simmer 30 minutes",
+      "instructions": "Make bolognese: brown beef, add tomatoes, simmer 30 minutes",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's make bolognese: brown beef,."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Make béchamel: melt butter, add flour, gradually whisk in milk",
+      "instructions": "Make béchamel: melt butter, add flour, gradually whisk in milk",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's make béchamel: melt butter,."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Preheat oven to 180°C (350°F)",
+      "instructions": "Preheat oven to 180°C (350°F)",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 180°c."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Layer: meat sauce, pasta, béchamel, repeat",
+      "instructions": "Layer: meat sauce, pasta, béchamel, repeat",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's layer: meat sauce, pasta, béchamel, repeat."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Top with remaining béchamel and all the cheese",
+      "instructions": "Top with remaining béchamel and all the cheese",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's top with remaining béchamel and all."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Bake for 40-45 minutes until golden and bubbling",
+      "instructions": "Bake for 40-45 minutes until golden and bubbling",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bake the for 40-45 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Let rest 10 minutes before serving",
+      "instructions": "Let rest 10 minutes before serving",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's let rest 10 minutes before serving."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Make the sauces the day before for easier assembly\nDon't skimp on the béchamel between layers\nCover with foil if top browns too quickly"
+  }
+}

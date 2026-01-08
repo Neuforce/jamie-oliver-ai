@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "chicken-noodle-soup",
+    "title": "Chicken Noodle Soup",
+    "description": "Comforting classic soup with tender chicken and egg noodles",
+    "estimated_total": "PT40M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "chicken",
+      "soup"
+    ],
+    "course": "soup"
+  },
+  "ingredients": [
+    {
+      "id": "breasts",
+      "name": "breasts",
+      "quantity": 2.0,
+      "unit": "chicken"
+    },
+    {
+      "id": "egg_noodles",
+      "name": "egg noodles",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "chicken_stock",
+      "name": "chicken stock",
+      "quantity": 2.0,
+      "unit": "L"
+    },
+    {
+      "id": "2_carrots_sliced",
+      "name": "2 carrots, sliced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "stalks_chopped",
+      "name": "stalks, chopped",
+      "quantity": 2.0,
+      "unit": "celery"
+    },
+    {
+      "id": "1_onion_diced",
+      "name": "1 onion, diced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "fresh_parsley",
+      "name": "Fresh parsley",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "bay_leaves",
+      "name": "Bay leaves",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Bring stock to boil, add chicken and cook for 20 minutes",
+      "instructions": "Bring stock to boil, add chicken and cook for 20 minutes",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's add chicken and cook."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Remove chicken, shred when cool",
+      "instructions": "Remove chicken, shred when cool",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's remove the chicken, shred when."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Add vegetables to stock, simmer for 10 minutes",
+      "instructions": "Add vegetables to stock, simmer for 10 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the vegetables to stock,."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Add noodles and cook until tender",
+      "instructions": "Add noodles and cook until tender",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the noodles and cook."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Return shredded chicken to pot",
+      "instructions": "Return shredded chicken to pot",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's return shredded chicken to pot."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Season with salt, pepper, and fresh parsley",
+      "instructions": "Season with salt, pepper, and fresh parsley",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's season the with salt, pepper,."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve hot with crusty bread",
+      "instructions": "Serve hot with crusty bread",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use homemade stock for best results\nDon't overcook the noodles\nAdd lemon juice for brightness"
+  }
+}

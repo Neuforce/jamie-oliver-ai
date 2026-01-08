@@ -1,0 +1,202 @@
+{
+  "recipe": {
+    "id": "chocolate-brownies",
+    "title": "Chocolate Brownies",
+    "description": "Fudgy, rich chocolate brownies with a crackly top",
+    "estimated_total": "PT35M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 12,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "dessert",
+      "breakfast"
+    ],
+    "course": "dessert"
+  },
+  "ingredients": [
+    {
+      "id": "dark_chocolate",
+      "name": "dark chocolate",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 175.0,
+      "unit": "g"
+    },
+    {
+      "id": "caster_sugar",
+      "name": "caster sugar",
+      "quantity": 325.0,
+      "unit": "g"
+    },
+    {
+      "id": "eggs",
+      "name": "eggs",
+      "quantity": 3.0,
+      "unit": "large"
+    },
+    {
+      "id": "plain_flour",
+      "name": "plain flour",
+      "quantity": 75.0,
+      "unit": "g"
+    },
+    {
+      "id": "cocoa_powder",
+      "name": "cocoa powder",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "pinch_of_salt",
+      "name": "Pinch of salt",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Preheat oven to 180°C (350°F), line a baking tin",
+      "instructions": "Preheat oven to 180°C (350°F), line a baking tin",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the oven to 180°c."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Melt chocolate and butter together",
+      "instructions": "Melt chocolate and butter together",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's melt chocolate and butter together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Whisk in sugar until combined",
+      "instructions": "Whisk in sugar until combined",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's whisk everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Beat in eggs one at a time",
+      "instructions": "Beat in eggs one at a time",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's beat in eggs one at a."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Fold in flour, cocoa, and salt",
+      "instructions": "Fold in flour, cocoa, and salt",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's fold in flour, cocoa, and salt."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Pour into tin and bake for 25-30 minutes",
+      "instructions": "Pour into tin and bake for 25-30 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pour into tin and bake for."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Cool completely before cutting into squares",
+      "instructions": "Cool completely before cutting into squares",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's cool completely before cutting into squares."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't overbake - they should be slightly gooey\nA skewer should come out with moist crumbs\nLet cool fully for clean cuts"
+  }
+}

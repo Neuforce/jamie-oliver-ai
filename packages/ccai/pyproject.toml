@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "ccai"
+version = "0.1.0"
+description = ""
+authors = ["only-username-available <santiagomorillosegovia@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pydantic = "^2.9.2"
+docstring-parser = "^0.16"
+certifi = "^2024.8.30"
+pyaudio = "^0.2.14"
+deepgram-sdk = "^3.7.6"
+mailjet-rest = "^1.4.0"
+langfuse = "^3.3.0"
+
+
+[tool.poetry.group.dev.dependencies]
+openai = "^1.51.2"
+python-dotenv = "^1.0.1"
+groq = "^0.11.0"
+pyaudio = "^0.2.14"
+aioboto3 = "^13.2.0"
+aiofiles = "^24.1.0"
+snakeviz = "^2.2.0"
+aiodebug = "^2.3.0"
+google-api-python-client = "^2.149.0"
+google-auth-httplib2 = "^0.2.0"
+google-auth-oauthlib = "^1.2.1"
+azure-cognitiveservices-speech = "^1.41.1"
+cartesia = "^1.0.14"
+fastapi = "^0.115.4"
+uvicorn = "^0.32.0"
+pydevd-pycharm = "^243.21155.22"
+
+
+[tool.poetry.group.python-dotenv.dependencies]
+openai = "^1.52.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

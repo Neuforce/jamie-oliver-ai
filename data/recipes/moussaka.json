@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "moussaka",
+    "title": "Moussaka",
+    "description": "Layered Greek casserole with eggplant, meat sauce, and béchamel",
+    "estimated_total": "PT2H",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 8,
+    "difficulty": "Tricky",
+    "tags": [
+      "italian"
+    ],
+    "course": "main",
+    "cuisine": "italian"
+  },
+  "ingredients": [
+    {
+      "id": "eggplants_sliced",
+      "name": "eggplants, sliced",
+      "quantity": 3.0,
+      "unit": "large"
+    },
+    {
+      "id": "ground_lamb",
+      "name": "ground lamb",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "1_onion_chopped",
+      "name": "1 onion, chopped",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "tinned_tomatoes",
+      "name": "tinned tomatoes",
+      "quantity": 400.0,
+      "unit": "g"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "flour",
+      "name": "flour",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 500.0,
+      "unit": "ml"
+    },
+    {
+      "id": "parmesan_grated",
+      "name": "Parmesan, grated",
+      "quantity": 100.0,
+      "unit": "g"
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Salt and drain eggplant slices for 30 minutes",
+      "instructions": "Salt and drain eggplant slices for 30 minutes",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's salt the and drain eggplant."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Grill or fry eggplant until golden",
+      "instructions": "Grill or fry eggplant until golden",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to grill the or fry eggplant."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Make meat sauce: brown lamb, add onion and tomatoes, simmer",
+      "instructions": "Make meat sauce: brown lamb, add onion and tomatoes, simmer",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's make meat sauce: brown."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Make béchamel: melt butter, add flour, whisk in milk",
+      "instructions": "Make béchamel: melt butter, add flour, whisk in milk",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's make béchamel: melt butter,."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Layer eggplant, meat sauce, repeat",
+      "instructions": "Layer eggplant, meat sauce, repeat",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's layer eggplant, meat sauce, repeat."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Top with béchamel and Parmesan",
+      "instructions": "Top with béchamel and Parmesan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's top with béchamel and parmesan."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Bake at 180°C for 45 minutes until golden",
+      "instructions": "Bake at 180°C for 45 minutes until golden",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to bake the at 180°c for."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Salting eggplant removes bitterness\nLet rest 15 minutes before cutting\nEven better the next day"
+  }
+}

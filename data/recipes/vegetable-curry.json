@@ -1,0 +1,209 @@
+{
+  "recipe": {
+    "id": "vegetable-curry",
+    "title": "Vegetable Curry",
+    "description": "Hearty Indian curry packed with seasonal vegetables",
+    "estimated_total": "PT35M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "thai",
+      "indian"
+    ],
+    "course": "main",
+    "cuisine": "thai"
+  },
+  "ingredients": [
+    {
+      "id": "2_potatoes_cubed",
+      "name": "2 potatoes, cubed",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "1_cauliflower_florets",
+      "name": "1 cauliflower, florets",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "2_carrots_sliced",
+      "name": "2 carrots, sliced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "chickpeas",
+      "name": "chickpeas",
+      "quantity": 1.0,
+      "unit": "can"
+    },
+    {
+      "id": "coconut_milk",
+      "name": "coconut milk",
+      "quantity": 400.0,
+      "unit": "ml"
+    },
+    {
+      "id": "curry_powder",
+      "name": "curry powder",
+      "quantity": 3.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "1_onion_chopped",
+      "name": "1 onion, chopped",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "fresh_coriander",
+      "name": "Fresh coriander",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Sauté onion until soft, add curry powder",
+      "instructions": "Sauté onion until soft, add curry powder",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's add curry powder."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Add all vegetables, stir to coat in spices",
+      "instructions": "Add all vegetables, stir to coat in spices",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the all vegetables, stir."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Pour in coconut milk and 200ml water",
+      "instructions": "Pour in coconut milk and 200ml water",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pour in coconut milk and 200ml."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Simmer for 20 minutes until vegetables are tender",
+      "instructions": "Simmer for 20 minutes until vegetables are tender",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to simmer the for 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Add chickpeas and cook 5 more minutes",
+      "instructions": "Add chickpeas and cook 5 more minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the chickpeas and cook."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Season with salt to taste",
+      "instructions": "Season with salt to taste",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's season the with salt to."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Garnish with fresh coriander, serve with rice or naan",
+      "instructions": "Garnish with fresh coriander, serve with rice or naan",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to garnish and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use whatever vegetables you have on hand\nAdd spinach at the end for extra nutrition\nMake it spicy with fresh chilies"
+  }
+}

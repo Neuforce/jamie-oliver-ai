@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neuforce.local/schemas/joav0-recipe.schema.json",
+  "title": "JOAv0 Recipe Document",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["recipe", "ingredients", "utensils", "steps"],
+  "properties": {
+    "recipe": { "$ref": "#/$defs/RecipeMeta" },
+    "ingredients": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Ingredient" }
+    },
+    "utensils": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/Step" }
+    },
+    "events": { "$ref": "#/$defs/Events" },
+    "notes": {
+      "type": "object",
+      "additionalProperties": {
+        "type": ["string", "number", "boolean", "null", "object", "array"]
+      }
+    }
+  },
+  "$defs": {
+    "Iso8601Duration": {
+      "type": "string",
+      "description": "ISO-8601 duration used by JOAv0 recipes (time portion only). Examples: PT20M, PT1H30M, PT90S",
+      "pattern": "^PT(?=\\d)(?:\\d+H)?(?:\\d+M)?(?:\\d+S)?$"
+    },
+    "RecipeMeta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "servings", "estimated_total", "difficulty", "locale"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "servings": { "type": "integer", "minimum": 1 },
+        "estimated_total": { "$ref": "#/$defs/Iso8601Duration" },
+        "difficulty": { "type": "string", "minLength": 1 },
+        "locale": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        },
+        "course": { "type": "string" },
+        "cuisine": { "type": "string" },
+        "source": { "type": "string" }
+      }
+    },
+    "Ingredient": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "quantity": { "type": ["number", "null"] },
+        "unit": { "type": ["string", "null"] },
+        "note": { "type": "string" }
+      }
+    },
+    "Reminder": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["every"],
+      "properties": {
+        "every": { "$ref": "#/$defs/Iso8601Duration" }
+      }
+    },
+    "OnEnterAction": {
+      "type": "object",
+      "description": "JOAv0 currently uses on_enter actions like {\"say\": \"...\"}.",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "say": { "type": "string", "minLength": 1 }
+      }
+    },
+    "Step": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "descr", "instructions", "type"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "descr": { "type": "string", "minLength": 1 },
+        "instructions": { "type": "string", "minLength": 1 },
+        "type": { "type": "string", "enum": ["immediate", "timer"] },
+        "auto_start": { "type": "boolean", "default": true },
+        "requires_confirm": { "type": "boolean", "default": false },
+        "depends_on": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        },
+        "next": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "default": []
+        },
+        "unlock_when": { "type": "string", "enum": ["all", "any"], "default": "all" },
+        "duration": { "$ref": "#/$defs/Iso8601Duration" },
+        "reminder": { "$ref": "#/$defs/Reminder" },
+        "on_enter": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/OnEnterAction" },
+          "default": []
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "type": { "const": "timer" } },
+            "required": ["type"]
+          },
+          "then": {
+            "properties": {
+              "duration": { "$ref": "#/$defs/Iso8601Duration" }
+            }
+          }
+        }
+      ]
+    },
+    "Events": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tts_voice": { "type": "string", "minLength": 1 },
+        "reminder_default": { "$ref": "#/$defs/Reminder" }
+      }
+    }
+  }
+}
+
+

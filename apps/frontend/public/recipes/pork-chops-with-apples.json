@@ -1,0 +1,201 @@
+{
+  "recipe": {
+    "id": "pork-chops-with-apples",
+    "title": "Pork Chops with Apples",
+    "description": "Pan-seared pork chops with caramelized apples and sage",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "pork"
+    ],
+    "course": "main"
+  },
+  "ingredients": [
+    {
+      "id": "pork_chops",
+      "name": "pork chops",
+      "quantity": 4.0,
+      "unit": "thick"
+    },
+    {
+      "id": "2_apples_sliced",
+      "name": "2 apples, sliced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "fresh_sage_leaves",
+      "name": "Fresh sage leaves",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "apple_cider",
+      "name": "apple cider",
+      "quantity": 100.0,
+      "unit": "ml"
+    },
+    {
+      "id": "honey",
+      "name": "honey",
+      "quantity": 1.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "salt_and_pepper",
+      "name": "Salt and pepper",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Season pork chops generously with salt and pepper",
+      "instructions": "Season pork chops generously with salt and pepper",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's season the pork chops generously."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Pan-fry chops 4-5 minutes per side, set aside",
+      "instructions": "Pan-fry chops 4-5 minutes per side, set aside",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's pan-fry chops 4-5 minutes per side,."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "In same pan, add butter and apple slices",
+      "instructions": "In same pan, add butter and apple slices",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's add butter and apple."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Cook apples until caramelized",
+      "instructions": "Cook apples until caramelized",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to cook the apples until caramelized."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Add sage, cider, and honey, simmer",
+      "instructions": "Add sage, cider, and honey, simmer",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the sage, cider, and."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Return chops to pan, coat with sauce",
+      "instructions": "Return chops to pan, coat with sauce",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's return chops to pan, coat with."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve with mashed potatoes",
+      "instructions": "Serve with mashed potatoes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Don't overcook pork - it should be slightly pink\nLet chops rest before serving\nGranny Smith apples work wonderfully"
+  }
+}

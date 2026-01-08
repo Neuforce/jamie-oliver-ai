@@ -1,0 +1,10 @@
+[91mError understanding recipe: Failed to call Ollama at http://localhost:11434/api/chat. Is Ollama running and is 'llama3.1' pulled?[0m
+
+[1m[95m============================================================[0m
+[1m[95mProcessing: beef-quince-stew-beef-recipes-jamie-oliver.pdf[0m
+[1m[95m============================================================[0m
+
+[1mStep 1: Extracting text from PDF...[0m
+[92m✓ Extracted 1551 characters[0m
+
+[1mStep 2: Understanding recipe with Llama...[0m

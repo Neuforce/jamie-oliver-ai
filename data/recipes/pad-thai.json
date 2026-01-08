@@ -1,0 +1,212 @@
+{
+  "recipe": {
+    "id": "pad-thai",
+    "title": "Pad Thai",
+    "description": "Sweet and tangy Thai rice noodles with peanuts and lime",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Medium",
+    "tags": [
+      "chicken",
+      "fish",
+      "seafood",
+      "thai",
+      "breakfast"
+    ],
+    "course": "main",
+    "cuisine": "thai"
+  },
+  "ingredients": [
+    {
+      "id": "rice_noodles",
+      "name": "rice noodles",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "2_eggs",
+      "name": "2 eggs",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "prawns_or_chicken",
+      "name": "prawns or chicken",
+      "quantity": 200.0,
+      "unit": "g"
+    },
+    {
+      "id": "tamarind_paste",
+      "name": "tamarind paste",
+      "quantity": 3.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "fish_sauce",
+      "name": "fish sauce",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "palm_sugar",
+      "name": "palm sugar",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "beansprouts",
+      "name": "beansprouts",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "crushed_peanuts_and_lime_wedges",
+      "name": "Crushed peanuts and lime wedges",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Soak rice noodles in hot water until soft, drain",
+      "instructions": "Soak rice noodles in hot water until soft, drain",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's soak the rice noodles in."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Mix tamarind paste, fish sauce, and palm sugar",
+      "instructions": "Mix tamarind paste, fish sauce, and palm sugar",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Heat wok, scramble eggs, set aside",
+      "instructions": "Heat wok, scramble eggs, set aside",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat the wok, scramble eggs,."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Stir-fry prawns or chicken until cooked",
+      "instructions": "Stir-fry prawns or chicken until cooked",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Add noodles and sauce, toss to combine",
+      "instructions": "Add noodles and sauce, toss to combine",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the noodles and sauce,."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Add beansprouts and eggs, cook for 1 minute",
+      "instructions": "Add beansprouts and eggs, cook for 1 minute",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the beansprouts and eggs,."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve with peanuts, lime, and fresh herbs",
+      "instructions": "Serve with peanuts, lime, and fresh herbs",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Have all ingredients prepared before you start\nCook on high heat for best flavor\nAdjust sweet-sour-salty balance to taste"
+  }
+}

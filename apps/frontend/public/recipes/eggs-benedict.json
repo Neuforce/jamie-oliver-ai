@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "eggs-benedict",
+    "title": "Eggs Benedict",
+    "description": "Classic brunch dish with poached eggs and hollandaise sauce",
+    "estimated_total": "PT30M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Tricky",
+    "tags": [
+      "pork",
+      "breakfast"
+    ],
+    "course": "breakfast"
+  },
+  "ingredients": [
+    {
+      "id": "8_eggs",
+      "name": "8 eggs",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "muffins",
+      "name": "muffins",
+      "quantity": 4.0,
+      "unit": "English"
+    },
+    {
+      "id": "bacon_or_ham",
+      "name": "bacon or ham",
+      "quantity": 8.0,
+      "unit": "slices"
+    },
+    {
+      "id": "yolks",
+      "name": "yolks",
+      "quantity": 3.0,
+      "unit": "egg"
+    },
+    {
+      "id": "melted_butter",
+      "name": "melted butter",
+      "quantity": 125.0,
+      "unit": "g"
+    },
+    {
+      "id": "juice_of_1_lemon",
+      "name": "Juice of 1 lemon",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "white_vinegar",
+      "name": "White vinegar",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "fresh_chives",
+      "name": "Fresh chives",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Make hollandaise: whisk yolks and lemon juice over double boiler",
+      "instructions": "Make hollandaise: whisk yolks and lemon juice over double boiler",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's make hollandaise: whisk yolks."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Slowly drizzle in melted butter while whisking",
+      "instructions": "Slowly drizzle in melted butter while whisking",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's slowly drizzle in melted butter while."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Poach eggs in simmering water with vinegar for 3 minutes",
+      "instructions": "Poach eggs in simmering water with vinegar for 3 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's poach eggs in simmering water with."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Toast muffins and cook bacon",
+      "instructions": "Toast muffins and cook bacon",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's cook bacon."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Assemble: muffin, bacon, poached egg, hollandaise",
+      "instructions": "Assemble: muffin, bacon, poached egg, hollandaise",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's assemble: muffin, bacon, poached egg, hollandaise."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Garnish with chives",
+      "instructions": "Garnish with chives",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to garnish and enjoy!"
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve immediately",
+      "instructions": "Serve immediately",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Keep hollandaise warm but not hot\nFresh eggs poach best\nPractice your poaching technique"
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "recipe": {
+    "id": "greek-salad",
+    "title": "Greek Salad",
+    "description": "Fresh Mediterranean salad with feta, olives, and crisp vegetables",
+    "estimated_total": "PT15M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "dessert",
+      "salad"
+    ],
+    "course": "salad",
+    "cuisine": "greek"
+  },
+  "ingredients": [
+    {
+      "id": "tomatoes_chopped",
+      "name": "tomatoes, chopped",
+      "quantity": 4.0,
+      "unit": "large"
+    },
+    {
+      "id": "1_cucumber_diced",
+      "name": "1 cucumber, diced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "onion_thinly_sliced",
+      "name": "onion, thinly sliced",
+      "quantity": 1.0,
+      "unit": "red"
+    },
+    {
+      "id": "feta_cheese_cubed",
+      "name": "feta cheese, cubed",
+      "quantity": 150.0,
+      "unit": "g"
+    },
+    {
+      "id": "kalamata_olives",
+      "name": "Kalamata olives",
+      "quantity": 100.0,
+      "unit": "g"
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "quantity": 3.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "red_wine_vinegar",
+      "name": "red wine vinegar",
+      "quantity": 1.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "dried_oregano",
+      "name": "Dried oregano",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Chop all vegetables into bite-sized pieces",
+      "instructions": "Chop all vegetables into bite-sized pieces",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by chop."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Combine tomatoes, cucumber, and red onion in a bowl",
+      "instructions": "Combine tomatoes, cucumber, and red onion in a bowl",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's combine everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Add olives and feta cheese",
+      "instructions": "Add olives and feta cheese",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Now add the olives and feta."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Drizzle with olive oil and red wine vinegar",
+      "instructions": "Drizzle with olive oil and red wine vinegar",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's drizzle with olive oil and red."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Sprinkle with oregano, salt, and pepper",
+      "instructions": "Sprinkle with oregano, salt, and pepper",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's sprinkle with oregano, salt, and pepper."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Toss gently and serve immediately",
+      "instructions": "Toss gently and serve immediately",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Let's toss everything together."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use the ripest tomatoes you can find\nDon't overdress - let the ingredients shine\nServe with warm pita bread"
+  }
+}

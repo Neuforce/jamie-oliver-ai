@@ -1,0 +1,207 @@
+{
+  "recipe": {
+    "id": "shepherds-pie",
+    "title": "Shepherd's Pie",
+    "description": "Comforting British classic with lamb mince and mashed potato",
+    "estimated_total": "PT1H",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Medium",
+    "tags": [
+      "dessert"
+    ],
+    "course": "dessert"
+  },
+  "ingredients": [
+    {
+      "id": "lamb_mince",
+      "name": "lamb mince",
+      "quantity": 500.0,
+      "unit": "g"
+    },
+    {
+      "id": "1_onion_diced",
+      "name": "1 onion, diced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "2_carrots_diced",
+      "name": "2 carrots, diced",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "tomato_purée",
+      "name": "tomato purée",
+      "quantity": 2.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "lamb_stock",
+      "name": "lamb stock",
+      "quantity": 300.0,
+      "unit": "ml"
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 1.0,
+      "unit": "kg"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 50.0,
+      "unit": "g"
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 100.0,
+      "unit": "ml"
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Brown lamb mince, add onion and carrots",
+      "instructions": "Brown lamb mince, add onion and carrots",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's add onion and carrots."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Stir in tomato purée and stock, simmer 20 mins",
+      "instructions": "Stir in tomato purée and stock, simmer 20 mins",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's stir everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Boil potatoes until tender",
+      "instructions": "Boil potatoes until tender",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to boil the potatoes until tender."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Mash with butter and milk until smooth",
+      "instructions": "Mash with butter and milk until smooth",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mash with butter and milk until."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Transfer meat to baking dish",
+      "instructions": "Transfer meat to baking dish",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Now transfer the meat to baking."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Top with mashed potato, fork patterns on top",
+      "instructions": "Top with mashed potato, fork patterns on top",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's top with mashed potato, fork patterns."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Bake at 200°C for 25 minutes until golden",
+      "instructions": "Bake at 200°C for 25 minutes until golden",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to bake the at 200°c for."
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Use beef mince for cottage pie\nAdd worcestershire sauce for depth\nFreeze individual portions for easy meals"
+  }
+}

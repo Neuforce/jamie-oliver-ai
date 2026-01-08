@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "beef-kebabs",
+    "title": "Beef Kebabs",
+    "description": "Marinated beef skewers grilled to perfection",
+    "estimated_total": "PT40M",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "tags": [
+      "beef"
+    ],
+    "course": "main",
+    "cuisine": "greek"
+  },
+  "ingredients": [
+    {
+      "id": "beef_sirloin_cubed",
+      "name": "beef sirloin, cubed",
+      "quantity": 600.0,
+      "unit": "g"
+    },
+    {
+      "id": "peppers_chunked",
+      "name": "peppers, chunked",
+      "quantity": 2.0,
+      "unit": "bell"
+    },
+    {
+      "id": "onion_chunked",
+      "name": "onion, chunked",
+      "quantity": 1.0,
+      "unit": "red"
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "quantity": 3.0,
+      "unit": "tbsp"
+    },
+    {
+      "id": "cumin",
+      "name": "cumin",
+      "quantity": 2.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "quantity": 2.0,
+      "unit": "tsp"
+    },
+    {
+      "id": "lemon_juice",
+      "name": "Lemon juice",
+      "quantity": null,
+      "unit": null
+    },
+    {
+      "id": "flatbread_and_tzatziki",
+      "name": "Flatbread and tzatziki",
+      "quantity": null,
+      "unit": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "step_1",
+      "descr": "Mix olive oil, cumin, paprika, lemon juice",
+      "instructions": "Mix olive oil, cumin, paprika, lemon juice",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [],
+      "next": [
+        "step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_2",
+      "descr": "Marinate beef for at least 2 hours",
+      "instructions": "Marinate beef for at least 2 hours",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_1"
+      ],
+      "next": [
+        "step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's marinate beef for at least 2."
+        }
+      ]
+    },
+    {
+      "id": "step_3",
+      "descr": "Thread beef, peppers, and onion onto skewers",
+      "instructions": "Thread beef, peppers, and onion onto skewers",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_2"
+      ],
+      "next": [
+        "step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's thread beef, peppers, and onion onto."
+        }
+      ]
+    },
+    {
+      "id": "step_4",
+      "descr": "Preheat grill to high",
+      "instructions": "Preheat grill to high",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_3"
+      ],
+      "next": [
+        "step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's preheat the grill to high."
+        }
+      ]
+    },
+    {
+      "id": "step_5",
+      "descr": "Grill kebabs 10-12 minutes, turning often",
+      "instructions": "Grill kebabs 10-12 minutes, turning often",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_4"
+      ],
+      "next": [
+        "step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to grill the kebabs 10-12 minutes,."
+        }
+      ]
+    },
+    {
+      "id": "step_6",
+      "descr": "Let rest 5 minutes",
+      "instructions": "Let rest 5 minutes",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_5"
+      ],
+      "next": [
+        "step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's let rest 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_7",
+      "descr": "Serve with flatbread and tzatziki",
+      "instructions": "Serve with flatbread and tzatziki",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_6"
+      ],
+      "next": [],
+      "on_enter": [
+        {
+          "say": "Time to serve and enjoy!"
+        }
+      ]
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "notes": {
+    "text": "Soak wooden skewers to prevent burning\nCut everything the same size for even cooking\nDon't overcook the beef"
+  }
+}
