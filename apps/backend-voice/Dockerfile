@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Copy files needed for dependency installation
 COPY apps/backend-voice/pyproject.toml ./apps/backend-voice/
 COPY apps/backend-voice/README.md ./apps/backend-voice/
-COPY packages/ccai ./packages/
+COPY packages/ccai /app/packages/ccai
 
 WORKDIR /app/apps/backend-voice
 RUN poetry config virtualenvs.create false && \
