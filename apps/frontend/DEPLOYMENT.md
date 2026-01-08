@@ -174,3 +174,79 @@ PYTHON_VERSION=3.11
 - For long-running operations, consider using background jobs
 - WebSocket connections from Vercel frontend work fine (client-side)
 - FastAPI on Vercel uses serverless functions, not a persistent server
+
+---
+
+## 8. Railway Deployment (Backend Voice + Backend Search)
+
+### Backend Voice (`apps/backend-voice`)
+
+1. **Crear servicio**
+   - En Railway → “New” → “Deploy from GitHub repo”.
+   - Elige `Neuforce/jamie-oliver-ai` y establece el **root directory** en `apps/backend-voice`.
+   - Usa el `Dockerfile` incluido (Railway lo detecta).
+
+2. **Variables de entorno**
+   Configura todas las claves que tenías en `.env`:
+   ```
+   OPENAI_API_KEY=...
+   DEEPGRAM_API_KEY=...
+   ELEVENLABS_API_KEY=...
+   ELEVENLABS_VOICE_ID=...
+   SUPABASE_URL=...
+   SUPABASE_SERVICE_ROLE_KEY=...
+   LANGFUSE_PUBLIC_KEY=...
+   LANGFUSE_SECRET_KEY=...
+   ENVIRONMENT=production
+   PORT=8100
+   ```
+   Ajusta la lista según las integraciones que estés usando.
+
+3. **Networking**
+   - Activa HTTP en la pestaña Networking. Railway asigna una URL `https://<service>.railway.app`.
+   - Tu WebSocket quedará en `wss://<service>.railway.app/ws/voice`.
+   - Si necesitas un dominio propio, agrégalo en esta pestaña.
+
+4. **Deploy**
+   - Guarda los cambios, haz deploy y revisa los logs.
+   - Verifica que el servidor escucha en `PORT` (Railway inyecta este valor).
+   - Actualiza el frontend (`VITE_WS_URL`) con la nueva URL.
+
+### Backend Search (`apps/backend-search`)
+
+1. **Crear servicio**
+   - Repite “New → Deploy from GitHub repo”.
+   - Root directory: `apps/backend-search`.
+   - Puedes usar un Dockerfile propio o el buildpack de Python.
+     - Buildpack: define `PYTHON_VERSION=3.11` y Start Command `uvicorn recipe_search_agent.api:app --host 0.0.0.0 --port $PORT`.
+
+2. **Variables de entorno**
+   ```
+   SUPABASE_URL=...
+   SUPABASE_SERVICE_ROLE_KEY=...
+   PYTHON_VERSION=3.11   # si usas buildpack
+   ```
+   Agrega cualquier otra configuración necesaria.
+
+3. **Dependencias**
+   - Railway permite dependencias pesadas (ej. `fastembed`, `onnxruntime`), así que puedes mantenerlas.
+   - Si necesitas archivos bajo `data/recipes`, vendrán con el repo; si quieres modificarlos sin redeploy, monta un volumen.
+
+4. **Networking**
+   - Activa HTTP. La API quedará en `https://<search-service>.railway.app`.
+   - En el frontend, establece `VITE_API_BASE_URL` a esa URL.
+
+5. **Pruebas**
+   - Usa `curl https://<search-service>.railway.app/health` para validar.
+   - Revisa CORS en `recipe_search_agent/api.py` si el frontend vive en otro dominio.
+
+### Tips Generales para Railway
+
+- Usa la pestaña **Variables** para gestionar secretos (puedes importar/exportar JSON).
+- Revisa los **Logs** en cada servicio para depurar Deepgram, OpenAI o Supabase.
+- Ajusta los planes de CPU/RAM si `onnxruntime` requiere más recursos.
+- Una vez arriba, actualiza el frontend (en Vercel) con:
+  ```
+  VITE_WS_URL = wss://<voice-service>.railway.app/ws/voice
+  VITE_API_BASE_URL = https://<search-service>.railway.app
+  ```

@@ -22,14 +22,42 @@ from recipe_search_agent.search import RecipeSearchAgent, SearchFilters, RecipeM
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Cargar variables de entorno
-# project_root para .env: apps/backend-search/
-project_root_for_env = Path(__file__).resolve().parents[1]
+# Helpers para subir de forma segura en entornos como Railway
+def _safe_parent(path: Path, levels: int) -> Path:
+    current = path
+    for _ in range(levels):
+        if current.parent == current:
+            break
+        current = current.parent
+    return current
+
+
+current_file = Path(__file__).resolve()
+
+# Cargar variables de entorno desde apps/backend-search/.env (si existe)
+project_root_for_env = _safe_parent(current_file, 1)
 load_dotenv(project_root_for_env / ".env")
 
-# project_root para recetas: raíz del monorepo (jamie-oliver-ai/)
-# Desde api.py: parents[0] = recipe_search_agent/, parents[1] = apps/backend-search/, parents[2] = apps/, parents[3] = jamie-oliver-ai/
-project_root = Path(__file__).resolve().parents[3]
+
+def _find_monorepo_root(start: Path) -> Path:
+    """
+    Intentar ubicar la raíz del monorepo (donde viven apps/ y data/).
+    En Railway solo se despliega apps/backend-search, así que debemos
+    tener un fallback si no encontramos los directorios esperados.
+    """
+    current = start
+    for _ in range(5):
+        if (current / "apps").exists() and (current / "data").exists():
+            return current
+        if current.parent == current:
+            break
+        current = current.parent
+    # Fallback: usar la raíz del servicio para que al menos no explote
+    return _safe_parent(start, 1)
+
+
+# project_root para recetas: raíz del monorepo (jamie-oliver-ai/) o fallback
+project_root = _find_monorepo_root(current_file)
 
 # Crear app FastAPI
 app = FastAPI(
