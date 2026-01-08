@@ -1,26 +1,11 @@
 {
-  "rootDirectory": "apps/backend-search",
   "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    }
+    { "src": "api/index.py", "use": "@vercel/python" }
   ],
   "routes": [
-    {
-      "src": "/api/v1/(.*)",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/docs",
-      "dest": "api/index.py"
-    },
-    {
-      "src": "/openapi.json",
-      "dest": "api/index.py"
-    }
+    { "src": "/api/v1/(.*)", "dest": "api/index.py" },
+    { "src": "/docs", "dest": "api/index.py" },
+    { "src": "/openapi.json", "dest": "api/index.py" }
   ],
-  "env": {
-    "PYTHON_VERSION": "3.11"
-  }
+  "env": { "PYTHON_VERSION": "3.11" }
 }
