@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libportaudio2 \
     curl \
     && rm -rf /var/lib/apt/lists/* \
-    && pip install poetry==$POETRY_VERSION
+    && pip install poetry==$POETRY_VERSION && rm -rf /var/lib/apt/lists/*
 
 # Copy files needed for dependency installation
 COPY apps/backend-voice/pyproject.toml ./apps/backend-voice/
