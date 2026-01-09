@@ -30,9 +30,6 @@ RUN poetry config virtualenvs.create false && \
 # Copy backend source
 COPY apps/backend-voice/src ./src
 
-# Copy data/recipes directory
-COPY data/recipes /app/data/recipes
-
 # Copy startup script
 COPY apps/backend-voice/startup.sh /app/startup.sh
 RUN sed -i 's/\r$//' /app/startup.sh && chmod +x /app/startup.sh

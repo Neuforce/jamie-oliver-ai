@@ -68,6 +68,8 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   const [wsRecipeState, setWsRecipeState] = useState(null as RecipeState | null);
   const audioCaptureStartedRef = useRef(false);
   const canStreamAudioRef = useRef(false);
+  const lastAutoTimerStepRef = useRef<number | null>(null);
+  const currentStepRef = useRef(0);
   
   // Prefer backend slug ID when available so the voice agent loads the same recipe
   const backendRecipeId = recipe?.backendId;
@@ -80,11 +82,71 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       recipeId: backendRecipeId || String(recipe.id),
       recipeTitle: recipe.title,
       recipeNumericId: recipe.id,
+      recipePayload: recipe.rawRecipePayload,
+      resumeStepIndex: currentStepRef.current,
     };
   }, [recipe, backendRecipeId]);
   
   // Audio playback hook
   const audioPlayback = useAudioPlayback();
+
+  const parseIsoDurationToSeconds = useCallback((duration?: string | null) => {
+    if (!duration) return 0;
+    const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/i);
+    if (!match) return 0;
+    const hours = parseInt(match[1] || '0', 10);
+    const minutes = parseInt(match[2] || '0', 10);
+    const seconds = parseInt(match[3] || '0', 10);
+    return hours * 3600 + minutes * 60 + seconds;
+  }, []);
+
+  const extractSecondsFromInstruction = useCallback((text?: string) => {
+    if (!text) return 0;
+    const match = text.match(/(\d+(?:\.\d+)?)\s*(minutes?|mins?|seconds?|secs?)/i);
+    if (!match) return 0;
+    const value = parseFloat(match[1]);
+    const unit = match[2].toLowerCase();
+    if (unit.startsWith('sec')) {
+      return Math.round(value);
+    }
+    return Math.round(value * 60);
+  }, []);
+
+  const applyBackendTimerControl = useCallback(
+    (action: string, payload?: { seconds?: number }) => {
+      const parsedSeconds =
+        typeof payload?.seconds === 'number'
+          ? Math.max(0, Math.round(payload.seconds))
+          : null;
+
+      if (action === 'timer_start' || action === 'timer_resume') {
+        setTimerSeconds((prev) => {
+          if (parsedSeconds !== null) {
+            return parsedSeconds;
+          }
+          if (prev > 0) {
+            return prev;
+          }
+          return timerMinutes * 60;
+        });
+        setTimerRunning(true);
+        setShowTimerInfoBanner(true);
+        return;
+      }
+
+      if (action === 'timer_pause') {
+        setTimerRunning(false);
+        return;
+      }
+
+      if (action === 'timer_reset') {
+        setTimerRunning(false);
+        setTimerSeconds(parsedSeconds ?? timerMinutes * 60);
+        setShowTimerInfoBanner(false);
+      }
+    },
+    [timerMinutes]
+  );
 
   // Prefer backend-authored instructions so UI matches the recipe engine step-by-step
   const instructions = useMemo(() => {
@@ -104,6 +166,28 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       return map;
     }, new Map<string, number>());
   }, [recipe]);
+
+  const handleControl = useCallback(
+    (action: string, data?: any) => {
+      if (action === 'clear') {
+        audioPlayback.stopAllAudio();
+        return;
+      }
+
+      if (action?.startsWith('timer_')) {
+        applyBackendTimerControl(action, data);
+        return;
+      }
+
+      if (action === 'focus_step' && data?.step_id) {
+        const stepIndex = stepIdToIndex.get(String(data.step_id));
+        if (typeof stepIndex === 'number') {
+          setCurrentStep(stepIndex);
+        }
+      }
+    },
+    [audioPlayback, applyBackendTimerControl, stepIdToIndex]
+  );
 
   // WebSocket hook - auto-connect when component mounts
   const {
@@ -149,12 +233,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         console.warn('Received empty audio data');
       }
     },
-    onControl: (action) => {
-      if (action === 'clear') {
-        console.log('🧹 Received clear control action, stopping queued audio playback');
-        audioPlayback.stopAllAudio();
-      }
-    },
+    onControl: handleControl,
     onStop: () => {
       // Backend requested stop
       handleSaveAndExit();
@@ -182,6 +261,32 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   useEffect(() => {
     canStreamAudioRef.current = isWebSocketConnected && !isMicMuted;
   }, [isWebSocketConnected, isMicMuted]);
+
+  useEffect(() => {
+    if (!recipe) return;
+    const backendStep = recipe.backendSteps?.[currentStep];
+    const candidateSeconds =
+      parseIsoDurationToSeconds(backendStep?.duration) ||
+      extractSecondsFromInstruction(backendStep?.instructions) ||
+      extractSecondsFromInstruction(instructions[currentStep]);
+
+    if (
+      candidateSeconds > 0 &&
+      lastAutoTimerStepRef.current !== currentStep
+    ) {
+      setTimerSeconds(candidateSeconds);
+      setTimerMinutes(Math.max(1, Math.round(candidateSeconds / 60) || 1));
+      setTimerRunning(false);
+      setShowTimerInfoBanner(false);
+      lastAutoTimerStepRef.current = currentStep;
+    }
+  }, [
+    recipe,
+    currentStep,
+    instructions,
+    parseIsoDurationToSeconds,
+    extractSecondsFromInstruction,
+  ]);
   
   // Sync recipe state from backend WebSocket
   const syncRecipeStateFromBackend = useCallback((state: RecipeState) => {
@@ -221,7 +326,12 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       if (activeStep) {
         const stepIndex = resolveStepIndex(activeStep.id, activeStep.descr);
         if (stepIndex !== null) {
-          setCurrentStep(stepIndex);
+          setCurrentStep((prev) => {
+            if (prev === 0 || stepIndex > prev) {
+              return stepIndex;
+            }
+            return prev;
+          });
         }
       }
       
@@ -261,7 +371,12 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       const boundedIndex = instructions.length > 0
         ? Math.min(state.current_step, instructions.length - 1)
         : 0;
-      setCurrentStep(boundedIndex);
+      setCurrentStep((prev) => {
+        if (prev === 0 || boundedIndex > prev) {
+          return boundedIndex;
+        }
+        return prev;
+      });
     }
     
     if (state.timers && state.timers.length > 0) {
@@ -272,6 +387,10 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       }
     }
   }, [instructions, recipe, stepIdToIndex]);
+
+  useEffect(() => {
+    currentStepRef.current = currentStep;
+  }, [currentStep]);
 
   // Load saved session on mount
   useEffect(() => {

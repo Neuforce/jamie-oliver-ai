@@ -7,7 +7,7 @@ Este documento lista todas las variables de entorno necesarias para cada aplicac
 | App | Variables Requeridas | Variables Opcionales |
 |-----|---------------------|---------------------|
 | **Frontend** | `VITE_WS_URL`, `VITE_API_BASE_URL` | - |
-| **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS`, `RECIPES_SOURCE`, `RECIPES_DIR` |
+| **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS` |
 | **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `RECIPE_*` (varias) |
 
 ---
@@ -64,11 +64,6 @@ ENVIRONMENT=development         # development, staging, production
 
 # CORS Origins (lista separada por comas)
 CORS_ORIGINS=http://localhost:3000,http://localhost:3100,https://your-frontend.vercel.app
-
-# Configuración de recetas
-RECIPES_SOURCE=local            # "local" o "remote" (default: local)
-RECIPES_DIR=../../data/recipes  # Ruta a recetas (default: resuelto automáticamente)
-RECIPES_MANIFEST_URL=           # URL del manifest remoto (si RECIPES_SOURCE=remote)
 ```
 
 ### Descripción
@@ -163,8 +158,6 @@ VITE_API_BASE_URL=http://localhost:8000
 ENVIRONMENT=development
 HOST=0.0.0.0
 PORT=8100
-RECIPES_SOURCE=local
-RECIPES_DIR=../../data/recipes
 ```
 
 **Backend-Search:**
@@ -186,8 +179,6 @@ VITE_API_BASE_URL=https://your-backend-search.vercel.app
 ENVIRONMENT=production
 HOST=0.0.0.0
 PORT=8100
-RECIPES_SOURCE=local
-RECIPES_DIR=/app/data/recipes
 ```
 
 **Backend-Search (Vercel):**

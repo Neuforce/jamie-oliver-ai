@@ -14,15 +14,12 @@ services:
       - ../apps/backend-voice/.env
     environment:
       # API keys are loaded from env_file (apps/backend-voice/.env)
-      - RECIPES_DIR=/app/data/recipes
-      - RECIPES_SOURCE=local
       - ENVIRONMENT=development
       - HOST=0.0.0.0
       - PORT=8100
     volumes:
       - ../apps/backend-voice/src:/app/apps/backend-voice/src
       - ../packages/ccai:/app/packages/ccai
-      - ../data/recipes:/app/data/recipes
       # Mount .env file so Python can read it directly if needed
       - ../apps/backend-voice/.env:/app/apps/backend-voice/.env:ro
     networks:

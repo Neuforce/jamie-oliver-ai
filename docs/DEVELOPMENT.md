@@ -41,8 +41,6 @@ OPENAI_API_KEY=your-key
 DEEPGRAM_API_KEY=your-key
 ELEVENLABS_API_KEY=your-key
 ELEVENLABS_VOICE_ID=your-voice-id
-RECIPES_DIR=../../data/recipes
-RECIPES_SOURCE=local
 HOST=0.0.0.0
 PORT=8100
 ENVIRONMENT=development
@@ -193,7 +191,6 @@ pytest  # o poetry run pytest
 - Verifica rutas en `apps/frontend/src/data/recipeLoader.ts` (debe ser `../../../data/recipes/`)
 
 ### Backend-Voice no carga recetas
-- Verifica `RECIPES_DIR` en `.env` (debe ser `../../data/recipes`)
 - Verifica que Docker tenga acceso a `data/recipes/` (volumen montado)
 
 ### Backend-Search no encuentra recetas

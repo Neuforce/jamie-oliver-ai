@@ -120,7 +120,8 @@
       "id": "step_4",
       "descr": "Add a splash of water and simmer for 5 minutes",
       "instructions": "Add a splash of water and simmer for 5 minutes",
-      "type": "immediate",
+      "type": "timer",
+      "duration": "PT5M",
       "auto_start": true,
       "requires_confirm": false,
       "depends_on": [
@@ -139,7 +140,8 @@
       "id": "step_5",
       "descr": "Warm tortillas in a dry pan",
       "instructions": "Warm tortillas in a dry pan",
-      "type": "immediate",
+      "type": "timer",
+      "duration": "PT3M",
       "auto_start": true,
       "requires_confirm": false,
       "depends_on": [

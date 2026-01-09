@@ -72,6 +72,9 @@ class RecipeEventHandler:
             
             elif event.type == EventType.ERROR:
                 await self._handle_error(event)
+
+            if event.type == EventType.STEP_START:
+                await self._send_control_event("focus_step", {"step_id": event.payload.get("step_id")})
                 
         except Exception as e:
             logger.error(f"❌ Error in recipe event handler: {e}", exc_info=True)
@@ -88,6 +91,17 @@ class RecipeEventHandler:
             logger.info("✅ Recipe state sent to frontend")
         else:
             logger.warning(f"⚠️  No engine found for session {self.session_id}")
+
+    async def _send_control_event(self, action: str, data: Optional[dict] = None) -> None:
+        """Send a control event to the frontend (best-effort)."""
+        try:
+            payload = {"action": action}
+            if data:
+                payload["data"] = data
+            await self.output_channel.send_event("control", payload)
+            logger.info(f"📡 Sent control event: {payload}")
+        except Exception as exc:
+            logger.error(f"Failed to send control event {action}: {exc}")
     
     async def _handle_timer_done(self, event: Event) -> None:
         """Handle timer completion event."""
@@ -130,7 +144,7 @@ class RecipeEventHandler:
     async def _handle_all_completed(self, event: Event) -> None:
         """Handle recipe completion event."""
         completion_msg = (
-            "Brilliant! Your Sumptuous Squash Risotto is ready to serve. Enjoy!"
+            f"Brilliant! Your {event.payload.get('recipe_title')} is ready to serve. Enjoy!"
         )
         if self.assistant:
             await self.assistant.inject_system_message(completion_msg)

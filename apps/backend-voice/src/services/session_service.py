@@ -16,7 +16,10 @@ class SessionService:
         self._session_manager = RecipeSessionManager()
         self._event_callbacks: Dict[str, Callable] = {}
         self._session_recipes: Dict[str, str] = {}
+        self._session_recipe_payloads: Dict[str, Dict[str, Any]] = {}
         self._assistants: Dict[str, Any] = {}
+        self._output_channels: Dict[str, Any] = {}
+        self._kitchen_timers: Dict[str, Dict[str, Any]] = {}
     
     def get_session_manager(self) -> RecipeSessionManager:
         """Get the recipe session manager."""
@@ -56,6 +59,17 @@ class SessionService:
     def get_session_recipe(self, session_id: str) -> Optional[str]:
         """Get the recipe id currently linked to a session."""
         return self._session_recipes.get(session_id)
+
+    def set_session_recipe_payload(self, session_id: str, payload: Dict[str, Any] | None) -> None:
+        """Store the raw recipe payload for a session."""
+        if payload:
+            self._session_recipe_payloads[session_id] = payload
+        elif session_id in self._session_recipe_payloads:
+            del self._session_recipe_payloads[session_id]
+
+    def get_session_recipe_payload(self, session_id: str) -> Optional[Dict[str, Any]]:
+        """Retrieve the raw recipe payload for a session."""
+        return self._session_recipe_payloads.get(session_id)
     
     def get_engine(self, session_id: str):
         """
@@ -91,6 +105,38 @@ class SessionService:
             Voice assistant instance or None
         """
         return self._assistants.get(session_id)
+
+    def register_output_channel(self, session_id: str, output_channel: Any) -> None:
+        """Store the output channel so tools can send UI events."""
+        self._output_channels[session_id] = output_channel
+        logger.info(f"Registered output channel for session: {session_id}")
+
+    def get_output_channel(self, session_id: str) -> Optional[Any]:
+        """Retrieve the output channel for a session."""
+        return self._output_channels.get(session_id)
+
+    async def send_control_event(self, session_id: str, action: str, data: Optional[Dict[str, Any]] = None) -> None:
+        """Send a control event (e.g., timer actions) to the frontend."""
+        output_channel = self._output_channels.get(session_id)
+        if not output_channel:
+            raise RuntimeError(f"No output channel registered for session {session_id}")
+
+        payload = {"action": action}
+        if data:
+            payload["data"] = data
+
+        await output_channel.send_event("control", payload)
+
+    def set_kitchen_timer_state(self, session_id: str, *, running: bool, seconds: Optional[int] = None) -> None:
+        """Persist current kitchen timer state so tools can reason about it."""
+        state = self._kitchen_timers.setdefault(session_id, {})
+        state["running"] = running
+        if seconds is not None:
+            state["seconds"] = seconds
+
+    def get_kitchen_timer_state(self, session_id: str) -> Dict[str, Any]:
+        """Return current timer state for a session."""
+        return self._kitchen_timers.get(session_id, {"running": False, "seconds": 0})
     
     async def cleanup_session(self, session_id: str) -> None:
         """
@@ -103,6 +149,12 @@ class SessionService:
             del self._event_callbacks[session_id]
         if session_id in self._session_recipes:
             del self._session_recipes[session_id]
+        if session_id in self._session_recipe_payloads:
+            del self._session_recipe_payloads[session_id]
+        if session_id in self._output_channels:
+            del self._output_channels[session_id]
+        if session_id in self._kitchen_timers:
+            del(self._kitchen_timers[session_id])
         if session_id in self._assistants:
             del self._assistants[session_id]
         

@@ -11,9 +11,8 @@ from ccai.core.function_manager.decorators import register_function
 from ccai.core.logger import configure_logger
 from ccai.core import context_variables
 
-from src.recipe_engine import Recipe, RecipeEngine, parse_iso_duration
+from src.recipe_engine import Recipe, RecipeEngine, RecipeStep, parse_iso_duration, StepStatus
 from src.services.session_service import session_service
-from src.services.recipe_registry import recipe_registry
 
 logger = configure_logger(__name__)
 
@@ -50,13 +49,58 @@ def set_event_callback(session_id: str, callback: callable):
     session_service.register_event_callback(session_id, callback)
 
 
+async def _fast_forward_engine(engine: RecipeEngine, resume_index: int) -> None:
+    """Mark steps before resume_index as completed so the engine continues from that step."""
+    if resume_index <= 0:
+        return
+
+    step_ids = list(engine.recipe.steps.keys())
+    target = min(resume_index, len(step_ids))
+
+    for idx in range(target):
+        step_id = step_ids[idx]
+        step = engine.recipe.steps[step_id]
+
+        if step.status == StepStatus.COMPLETED:
+            continue
+
+        if step.status == StepStatus.PENDING:
+            await engine.start_step(step_id)
+
+        if step.status == StepStatus.READY:
+            await engine.start_step(step_id)
+
+        if step.status in (StepStatus.ACTIVE, StepStatus.WAITING_ACK):
+            await engine.confirm_step_done(step_id)
+
+def _format_duration(seconds: int) -> str:
+    """Return a human-friendly description for a duration in seconds."""
+    if seconds <= 0:
+        return "a moment"
+    minutes, secs = divmod(seconds, 60)
+    parts = []
+    if minutes:
+        parts.append(f"{minutes} minute{'s' if minutes != 1 else ''}")
+    if secs:
+        parts.append(f"{secs} second{'s' if secs != 1 else ''}")
+    return " ".join(parts)
+
+
 @register_function(recipe_function_manager)
-async def start_recipe(recipe_id: str = "") -> str:
+async def start_recipe(
+    recipe_id: str = "",
+    recipe_payload: dict = None,
+    resume_step_index: int = -1,
+) -> str:
     """
     Start a recipe for this session.
     
     Args:
-        recipe_id: Optional id of the recipe to start.
+        recipe_id: Optional id (slug) of the recipe to start.
+        recipe_payload: Full backend recipe JSON (same structure as /public/recipes/*.json).
+            Required when launching from the cooking UI so the agent loads identical steps.
+        resume_step_index: When provided, indicates which zero-based step index the user
+            last completed so the agent can continue from there.
     
     Returns:
         A summary of the recipe and confirmation that it's starting
@@ -66,16 +110,27 @@ async def start_recipe(recipe_id: str = "") -> str:
         return "Sorry, I couldn't determine your session. Please reconnect and try again."
 
     logger.info(f"Starting recipe for session {session_id}")
-    target_recipe_id = recipe_id or session_service.get_session_recipe(session_id)
+    payload_recipe_id = recipe_payload.get("recipe", {}).get("id") if recipe_payload else None
+    target_recipe_id = recipe_id or payload_recipe_id or session_service.get_session_recipe(session_id)
     if not target_recipe_id:
         return (
             "I need a specific recipe_id to start cooking. "
             "Ask me for the recipe list and then call start_recipe with your choice."
         )
 
+    session_service.set_session_recipe(session_id, target_recipe_id)
+    if recipe_payload:
+        session_service.set_session_recipe_payload(session_id, recipe_payload)
+
+    payload = recipe_payload or session_service.get_session_recipe_payload(session_id)
+    if not payload:
+        return (
+            "I don't have the full recipe details yet. Please open the recipe in the app "
+            "and start cooking from there so I can receive the complete instructions."
+        )
+
     try:
-        recipe_payload = recipe_registry.get_recipe_payload(target_recipe_id)
-        recipe = Recipe.from_dict(recipe_payload)
+        recipe = Recipe.from_dict(payload)
         logger.info(f"Recipe loaded: {recipe.title} with {len(recipe.steps)} steps")
         
         # Get the event callback for this session
@@ -90,7 +145,29 @@ async def start_recipe(recipe_id: str = "") -> str:
         logger.info(f"Recipe engine created for session {session_id}")
         
         # Start the recipe engine (this will trigger initial steps)
+        # Apply completed steps or resume index if provided
         await engine.start()
+
+        if resume_step_index > 0:
+            step_ids = list(recipe.steps.keys())
+            target = min(resume_step_index, len(step_ids))
+            logger.info(f"Fast-forwarding to step index {resume_step_index} (target {target})")
+
+            for idx in range(target):
+                step_id = step_ids[idx]
+                step = engine.recipe.steps[step_id]
+
+                if step.status == StepStatus.COMPLETED:
+                    continue
+
+                if step.status == StepStatus.PENDING:
+                    await engine.start_step(step_id)
+
+                if step.status == StepStatus.READY:
+                    await engine.start_step(step_id)
+
+                if step.status in (StepStatus.ACTIVE, StepStatus.WAITING_ACK):
+                    await engine.confirm_step_done(step_id)
         logger.info(f"Recipe engine started for session {session_id}")
         
         # Build internal reference of all steps with IDs for the agent
@@ -109,25 +186,15 @@ Remember: Guide naturally, don't expose technical details. I'll walk the user th
 @register_function(recipe_function_manager)
 async def list_available_recipes() -> str:
     """
-    Provide the agent with a list of available recipes.
+    Provide guidance when the agent asks for recipes.
 
-    Returns:
-        Human readable list of recipes with their ids.
+    Since the UI controls which recipe is active, the agent simply instructs
+    the user to pick the recipe from the app.
     """
-    recipes = recipe_registry.list_recipes()
-    if not recipes:
-        return "I couldn't find any recipes at the moment."
-
-    lines = [
-        "Here are the recipes I can help you cook. When you're ready, call start_recipe with the recipe_id."
-    ]
-    for recipe in recipes:
-        duration = recipe.get("estimated_total") or "time varies"
-        lines.append(
-            f"- {recipe.get('title')} (about {duration}) — recipe_id={recipe.get('id')}"
-        )
-    lines.append("Ask me to start one by saying the recipe name or by referencing the recipe_id.")
-    return "\n".join(lines)
+    return (
+        "Browse the recipe gallery in the Jamie Oliver app and let me know which one you'd like to cook. "
+        "Once you open a recipe there, I'll automatically receive the full instructions."
+    )
 
 
 @register_function(recipe_function_manager)
@@ -146,6 +213,111 @@ async def stop_recipe_session() -> str:
     await session_service.cleanup_session(session_id)
     return "Okay, I stopped the current recipe session. Let me know which recipe you'd like to cook next."
 
+
+@register_function(recipe_function_manager)
+async def start_kitchen_timer(duration_seconds: int = 0) -> str:
+    """
+    Start or resume the global kitchen timer in the UI.
+
+    Args:
+        duration_seconds: Optional duration in seconds. If omitted, the existing timer value is used.
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "I couldn't determine your session. Please reconnect and try again."
+
+    seconds = max(0, int(duration_seconds))
+    try:
+        await session_service.send_control_event(
+            session_id,
+            "timer_start",
+            {"seconds": seconds} if seconds else None,
+        )
+        session_service.set_kitchen_timer_state(
+            session_id, running=True, seconds=seconds if seconds else None
+        )
+        if seconds:
+            return f"Starting a timer for {_format_duration(seconds)}."
+        return "Starting the kitchen timer now."
+    except Exception as exc:
+        logger.error(f"Failed to start kitchen timer: {exc}", exc_info=True)
+        return "Sorry, I couldn't start the timer."
+
+
+@register_function(recipe_function_manager)
+async def pause_kitchen_timer() -> str:
+    """Pause the global kitchen timer in the UI."""
+    session_id = _get_session_id()
+    if not session_id:
+        return "I couldn't determine your session. Please reconnect and try again."
+
+    try:
+        await session_service.send_control_event(session_id, "timer_pause")
+        session_service.set_kitchen_timer_state(session_id, running=False)
+        return "Pausing the timer."
+    except Exception as exc:
+        logger.error(f"Failed to pause kitchen timer: {exc}", exc_info=True)
+        return "Sorry, I couldn't pause the timer."
+
+
+@register_function(recipe_function_manager)
+async def resume_kitchen_timer(duration_seconds: int = 0) -> str:
+    """
+    Resume the global kitchen timer in the UI.
+
+    Args:
+        duration_seconds: Optional duration override if the timer needs a new value.
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "I couldn't determine your session. Please reconnect and try again."
+
+    seconds = max(0, int(duration_seconds))
+    try:
+        await session_service.send_control_event(
+            session_id,
+            "timer_resume",
+            {"seconds": seconds} if seconds else None,
+        )
+        session_service.set_kitchen_timer_state(
+            session_id, running=True, seconds=seconds if seconds else None
+        )
+        if seconds:
+            return f"Resuming the timer with {_format_duration(seconds)} remaining."
+        return "Resuming the kitchen timer."
+    except Exception as exc:
+        logger.error(f"Failed to resume kitchen timer: {exc}", exc_info=True)
+        return "Sorry, I couldn't resume the timer."
+
+
+@register_function(recipe_function_manager)
+async def reset_kitchen_timer(duration_seconds: int = 0) -> str:
+    """
+    Reset or stop the global kitchen timer in the UI.
+
+    Args:
+        duration_seconds: Optional duration to set after resetting.
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "I couldn't determine your session. Please reconnect and try again."
+
+    seconds = max(0, int(duration_seconds))
+    try:
+        await session_service.send_control_event(
+            session_id,
+            "timer_reset",
+            {"seconds": seconds} if seconds else None,
+        )
+        session_service.set_kitchen_timer_state(
+            session_id, running=False, seconds=seconds if seconds else None
+        )
+        if seconds:
+            return f"Resetting the timer to {_format_duration(seconds)}."
+        return "Timer reset."
+    except Exception as exc:
+        logger.error(f"Failed to reset kitchen timer: {exc}", exc_info=True)
+        return "Sorry, I couldn't reset the timer."
 
 
 def _build_steps_summary(recipe: Recipe) -> list[str]:
@@ -198,7 +370,9 @@ async def get_current_step() -> str:
     engine = _get_engine(session_id)
     
     if not engine:
-        return "No recipe has been started yet. Ask me to start the Sumptuous Squash Risotto!"
+        return (
+            "There's no active recipe yet. Open a recipe in the app and tell me when you're ready to cook it."
+        )
     
     active_steps = engine.get_active_steps()
     state = engine.get_state()
@@ -208,7 +382,8 @@ async def get_current_step() -> str:
     
     if not active_steps and not ready_steps:
         if len(state["completed_steps"]) == len(state["steps"]):
-            return "All steps completed! Your Sumptuous Squash Risotto is ready to serve. Enjoy!"
+            recipe_title = getattr(engine.recipe, "title", "Your dish")
+            return f"All steps completed! {recipe_title} is ready to serve. Enjoy!"
         else:
             return "No active or ready steps right now. All current steps are either completed or waiting for dependencies."
     
@@ -461,8 +636,31 @@ async def start_step(step_id: str = "", step_description: str = "") -> str:
     step_id = target["id"]
     await engine.start_step(step_id)
     
+    recipe_step = engine.recipe.steps.get(step_id)
+
+    timer_started = False
+    # Auto-start UI timer if backend step has duration, auto_start is enabled, and timer isn't already running
+    if (
+        recipe_step
+        and recipe_step.type == "timer"
+        and recipe_step.duration
+        and recipe_step.auto_start
+    ):
+        timer_state = session_service.get_kitchen_timer_state(session_id)
+        step_seconds = parse_iso_duration(recipe_step.duration)
+
+        if not timer_state.get("running"):
+            await start_kitchen_timer(step_seconds)
+            timer_started = True
+        elif step_seconds and timer_state.get("seconds"):
+            current_secs = timer_state.get("seconds")
+            if abs(current_secs - step_seconds) > 5:
+                await reset_kitchen_timer(step_seconds)
+                await start_kitchen_timer(step_seconds)
+                timer_started = True
+
     # Build confirmation message
-    return _build_start_confirmation(target, engine.recipe.steps.get(step_id))
+    return _build_start_confirmation(target, recipe_step, timer_started)
 
 
 def _find_step_to_start(
@@ -501,7 +699,7 @@ def _find_step_to_start(
     return None
 
 
-def _build_start_confirmation(target: dict, recipe_step) -> str:
+def _build_start_confirmation(target: dict, recipe_step, timer_started: bool) -> str:
     """Build the confirmation message for starting a step."""
     is_timer = target.get("type") == "timer"
     
@@ -513,12 +711,17 @@ def _build_start_confirmation(target: dict, recipe_step) -> str:
         if mins > 0 and secs > 0:
             duration_str = f"{mins}m {secs}s"
         elif mins > 0:
-            duration_str = f"{mins} minutes"
+            duration_str = f"{mins} minute{'s' if mins != 1 else ''}"
         else:
-            duration_str = f"{secs} seconds"
+            duration_str = f"{secs} second{'s' if secs != 1 else ''}"
         
-        return f"✓ Started! Timer set for {duration_str}. I'll let you know when it's done."
+        if timer_started:
+            return f"✓ Timer running for {duration_str}. I'll let you know when it's done."
+        return (
+            f"✓ Got it. This step takes about {duration_str}. "
+            "Tell me when to start the timer and I'll keep track for you."
+        )
     elif is_timer:
-        return "✓ Started with timer! I'll notify you when it's done."
+        return "✓ Started with timer instructions noted. Let me know when you want the timer to begin."
     else:
         return "✓ Started! Let me know when you're done with this step."

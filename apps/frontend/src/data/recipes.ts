@@ -1,3 +1,5 @@
+import type { BackendRecipePayload } from './recipeLoader';
+
 export interface BackendRecipeStep {
   id: string;
   descr: string;
@@ -32,6 +34,10 @@ export interface Recipe {
    * Full fidelity copy of backend steps so the UI can stay in sync with voice.
    */
   backendSteps?: BackendRecipeStep[];
+  /**
+   * Full backend recipe payload (as authored in JSON) so we can send it to the voice agent.
+   */
+  rawRecipePayload?: BackendRecipePayload;
 }
 
 import { loadRecipes, loadRecipesSync } from './recipeLoader';

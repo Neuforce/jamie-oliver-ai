@@ -1,7 +1,7 @@
 import type { Recipe, BackendRecipeStep } from './recipes';
 
 // Recipe data from jamie-oliver-ai format
-interface JamieOliverRecipe {
+export interface BackendRecipePayload {
   recipe: {
     id: string;
     title: string;
@@ -125,7 +125,7 @@ function mapDifficulty(difficulty: string): 'Easy' | 'Medium' | 'Hard' {
 }
 
 // Transform ingredients array to string array
-function transformIngredients(ingredients: JamieOliverRecipe['ingredients']): string[] {
+function transformIngredients(ingredients: BackendRecipePayload['ingredients']): string[] {
   return ingredients.map(ing => {
     const parts: string[] = [];
     if (ing.quantity !== null) {
@@ -140,12 +140,12 @@ function transformIngredients(ingredients: JamieOliverRecipe['ingredients']): st
 }
 
 // Transform steps to instructions array
-function transformInstructions(steps: JamieOliverRecipe['steps']): string[] {
+function transformInstructions(steps: BackendRecipePayload['steps']): string[] {
   return steps.map(step => step.instructions);
 }
 
 // Capture backend step metadata so the UI can stay in sync with the engine
-function transformBackendSteps(steps: JamieOliverRecipe['steps']): BackendRecipeStep[] {
+function transformBackendSteps(steps: BackendRecipePayload['steps']): BackendRecipeStep[] {
   return steps.map(step => ({
     id: step.id,
     descr: step.descr,
@@ -171,7 +171,7 @@ function extractCategory(title: string): string {
 }
 
 // Transform jamie-oliver-ai recipe to joui format
-function transformRecipe(jamieRecipe: JamieOliverRecipe, index: number): Recipe {
+function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Recipe {
   const recipe = jamieRecipe.recipe;
   const backendSteps = transformBackendSteps(jamieRecipe.steps);
   
@@ -191,6 +191,7 @@ function transformRecipe(jamieRecipe: JamieOliverRecipe, index: number): Recipe 
       ? jamieRecipe.notes.text.split('\n').filter(line => line.trim().length > 0)
       : [],
     backendSteps,
+    rawRecipePayload: jamieRecipe,
   };
 }
 
@@ -224,7 +225,7 @@ export async function loadRecipes(): Promise<Recipe[]> {
         try {
           const response = await fetch(`/recipes/${name}.json`);
           if (response.ok) {
-            return await response.json() as JamieOliverRecipe;
+            return await response.json() as BackendRecipePayload;
           }
           console.warn(`Failed to load recipe ${name}: ${response.statusText}`);
           return null;

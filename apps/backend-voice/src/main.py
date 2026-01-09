@@ -19,7 +19,6 @@ from ccai.core import context_variables
 from src.config import settings
 from src.services import AssistantFactory, RecipeEventHandler
 from src.services.session_service import session_service
-from src.services.recipe_registry import recipe_registry
 from src.services.tool_runner import run_recipe_tool
 from src.tools.recipe_tools import (
     start_recipe as start_recipe_tool,
@@ -86,29 +85,6 @@ async def health_check():
         "environment": settings.ENVIRONMENT
     }
 
-
-def _load_recipe_or_404(recipe_id: str) -> dict:
-    try:
-        return recipe_registry.get_recipe_payload(recipe_id)
-    except KeyError:
-        raise HTTPException(status_code=404, detail="Recipe not found")
-    except RuntimeError as exc:
-        logger.error(f"Failed to load recipe {recipe_id}: {exc}", exc_info=True)
-        raise HTTPException(status_code=500, detail=str(exc))
-
-
-@app.get("/recipes")
-async def list_recipes():
-    """Return available recipe metadata."""
-    return recipe_registry.list_recipes()
-
-
-@app.get("/recipes/{recipe_id}")
-async def get_recipe(recipe_id: str):
-    """Return a specific recipe payload."""
-    return _load_recipe_or_404(recipe_id)
-
-
 @app.post("/sessions/{session_id}/steps/{step_id}/confirm")
 async def confirm_step_for_session(session_id: str, step_id: str):
     """
@@ -152,42 +128,6 @@ async def confirm_step_for_session(session_id: str, step_id: str):
     return {"state": state, "message": tool_message}
 
 
-@app.post("/sessions/{session_id}/recipes/{recipe_id}/start")
-async def start_recipe_for_session(session_id: str, recipe_id: str):
-    """
-    Start or switch the active recipe for an existing session.
-    Mirrors the start_recipe tool for UI-driven interactions.
-    """
-    event_callback = session_service.get_event_callback(session_id)
-    if not event_callback:
-        raise HTTPException(status_code=404, detail="Session not found")
-
-    try:
-        payload = recipe_registry.get_recipe_payload(recipe_id)
-    except KeyError:
-        raise HTTPException(status_code=404, detail="Recipe not found")
-    except RuntimeError as exc:
-        logger.error(f"Failed to load recipe {recipe_id}: {exc}")
-        raise HTTPException(status_code=500, detail=str(exc))
-
-    try:
-        start_message = await run_recipe_tool(
-            session_id,
-            start_recipe_tool,
-            recipe_id=recipe_id,
-        )
-    except Exception as exc:
-        logger.error(f"Failed to start recipe via tool {recipe_id}: {exc}", exc_info=True)
-        raise HTTPException(status_code=500, detail="Unable to start recipe session")
-    
-    engine = session_service.get_engine(session_id)
-    if not engine:
-        raise HTTPException(status_code=500, detail="Recipe engine not initialized")
-    
-    state = engine.get_state()
-    state["has_recipe"] = True
-    return {"message": start_message, "state": state, "recipe": payload}
-
 @app.websocket("/ws/voice")
 async def voice_websocket_endpoint(websocket: WebSocket):
     """
@@ -220,6 +160,7 @@ async def voice_websocket_endpoint(websocket: WebSocket):
         
         input_channel = audio_interface.get_input_service()
         output_channel = audio_interface.get_output_service()
+        session_service.register_output_channel(session_id, output_channel)
         
         # Create voice assistant
         assistant = AssistantFactory.create_voice_assistant(
@@ -348,25 +289,52 @@ async def _prepare_initial_context(
         Tuple containing the greeting the assistant should use and the active recipe id.
     """
     mode = (custom_parameters or {}).get("mode")
-    recipe_id = _extract_recipe_id(custom_parameters)
-    
-    if mode != "cooking" or not recipe_id:
+    recipe_payload = _extract_recipe_payload(custom_parameters)
+    if recipe_payload:
+        session_service.set_session_recipe_payload(session_id, recipe_payload)
+
+    recipe_id = _extract_recipe_id(custom_parameters) or (
+        recipe_payload.get("recipe", {}).get("id") if recipe_payload else None
+    )
+
+    if recipe_id:
+        session_service.set_session_recipe(session_id, recipe_id)
+
+    if mode != "cooking":
         return DEFAULT_HELLO_MESSAGE, None
-    
+
+    if not recipe_id or not recipe_payload:
+        logger.warning(
+            "Cooking mode requested without complete recipe context "
+            "(recipe_id=%s, payload_present=%s). Session=%s",
+            recipe_id,
+            bool(recipe_payload),
+            session_id,
+        )
+        return (
+            "I'm ready to help, but I didn't receive the recipe details. "
+            "Please reopen the recipe in the app so I can guide you step by step.",
+            None,
+        )
+
+    resume_index = int(custom_parameters.get("resumeStepIndex") or -1)
+
     try:
         logger.info(
-            f"Auto-start requested from frontend context. "
-            f"Session={session_id}, recipe_id={recipe_id}"
+            "Auto-start requested from frontend context. Session=%s, recipe_id=%s, resume_index=%s",
+            session_id,
+            recipe_id,
+            resume_index,
         )
-        session_service.set_session_recipe(session_id, recipe_id)
         await run_recipe_tool(
             session_id=session_id,
             tool_fn=start_recipe_tool,
             recipe_id=recipe_id,
+            recipe_payload=recipe_payload,
+            resume_step_index=resume_index,
         )
-        recipe_payload = recipe_registry.get_recipe_payload(recipe_id)
         greeting = _build_cooking_greeting(recipe_payload)
-        logger.info(f"✅ Recipe {recipe_id} started automatically for session {session_id}")
+        logger.info("✅ Recipe %s started automatically for session %s", recipe_id, session_id)
         return greeting, recipe_id
     except Exception as exc:
         logger.error(f"Failed to auto-start recipe {recipe_id}: {exc}", exc_info=True)
@@ -386,8 +354,11 @@ def _extract_recipe_id(custom_parameters: Dict[str, Any]) -> Optional[str]:
     return recipe_id or None
 
 
-def _build_cooking_greeting(recipe_payload: Dict[str, Any]) -> str:
+def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
     """Generate a friendly greeting that jumps straight into the first step."""
+    if not recipe_payload:
+        return DEFAULT_HELLO_MESSAGE
+
     recipe_meta = recipe_payload.get("recipe", {})
     title = recipe_meta.get("title") or "this recipe"
     first_step = _get_first_step_description(recipe_payload)
@@ -420,6 +391,16 @@ def _get_first_step_description(recipe_payload: Dict[str, Any]) -> Optional[str]
     # Fallback to the first step if all have dependencies defined
     step = steps[0]
     return step.get("instructions") or step.get("descr")
+
+
+def _extract_recipe_payload(custom_parameters: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    """Extract raw recipe payload if provided by the frontend."""
+    payload = (
+        custom_parameters.get("recipePayload")
+        or custom_parameters.get("recipe_payload")
+        or custom_parameters.get("recipe_json")
+    )
+    return payload if isinstance(payload, dict) else None
 
 
 if __name__ == "__main__":

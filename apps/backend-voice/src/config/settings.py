@@ -91,14 +91,6 @@ class Settings:
     APP_DESCRIPTION: str = "Voice-powered cooking assistant backend"
     APP_VERSION: str = "0.1.0"
 
-    # Recipe configuration
-    RECIPES_SOURCE: str = os.getenv("RECIPES_SOURCE", "local").lower()
-    RECIPES_DIR: str = os.getenv(
-        "RECIPES_DIR",
-        str(Path(__file__).resolve().parent.parent.parent.parent / "data" / "recipes")
-    )
-    RECIPES_MANIFEST_URL: str = os.getenv("RECIPES_MANIFEST_URL", "")
-    
     def validate(self) -> bool:
         """Validate that required settings are present."""
         required = [
