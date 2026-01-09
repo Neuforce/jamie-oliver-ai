@@ -69,7 +69,6 @@ CORS_ORIGINS=http://localhost:3000,http://localhost:3100,https://your-frontend.v
 RECIPES_SOURCE=local            # "local" o "remote" (default: local)
 RECIPES_DIR=../../data/recipes  # Ruta a recetas (default: resuelto automáticamente)
 RECIPES_MANIFEST_URL=           # URL del manifest remoto (si RECIPES_SOURCE=remote)
-RECIPES_DEFAULT_ID=             # ID de receta por defecto (opcional)
 ```
 
 ### Descripción

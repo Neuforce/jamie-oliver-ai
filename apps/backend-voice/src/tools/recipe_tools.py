@@ -53,8 +53,7 @@ def set_event_callback(session_id: str, callback: callable):
 @register_function(recipe_function_manager)
 async def start_recipe(recipe_id: str = "") -> str:
     """
-    Start a recipe for this session. If no recipe_id is provided, the default
-    recipe configured on the server will be used.
+    Start a recipe for this session.
     
     Args:
         recipe_id: Optional id of the recipe to start.
@@ -69,10 +68,9 @@ async def start_recipe(recipe_id: str = "") -> str:
     logger.info(f"Starting recipe for session {session_id}")
     target_recipe_id = recipe_id or session_service.get_session_recipe(session_id)
     if not target_recipe_id:
-        default_option = recipe_registry.default_recipe_title or "a few options"
         return (
-            f"I can cook {default_option}, but please ask me for the recipe list "
-            "and tell me which one you'd like to start."
+            "I need a specific recipe_id to start cooking. "
+            "Ask me for the recipe list and then call start_recipe with your choice."
         )
 
     try:

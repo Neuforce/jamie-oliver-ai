@@ -34,9 +34,9 @@ def _safe_parent(path: Path, levels: int) -> Path:
 
 current_file = Path(__file__).resolve()
 
-# Cargar variables de entorno desde apps/backend-search/.env (si existe)
-project_root_for_env = _safe_parent(current_file, 1)
-load_dotenv(project_root_for_env / ".env")
+# Load variables from apps/backend-search/.env (two levels up from this file)
+service_root = _safe_parent(current_file, 2)
+load_dotenv(service_root / ".env")
 
 
 def _find_monorepo_root(start: Path) -> Path:

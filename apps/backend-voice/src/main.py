@@ -103,18 +103,6 @@ async def list_recipes():
     return recipe_registry.list_recipes()
 
 
-@app.get("/recipes/current")
-async def get_current_recipe():
-    """
-    Return the default recipe metadata, ingredients, utensils, and steps
-    so the frontend can render the guided experience.
-    """
-    default_id = recipe_registry.default_recipe_id
-    if not default_id:
-        raise HTTPException(status_code=404, detail="No recipes available")
-    return _load_recipe_or_404(default_id)
-
-
 @app.get("/recipes/{recipe_id}")
 async def get_recipe(recipe_id: str):
     """Return a specific recipe payload."""

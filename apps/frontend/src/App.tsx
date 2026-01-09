@@ -586,18 +586,18 @@ export default function App() {
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>
-                ¿Cambiar a {pendingRecipe?.title}?
+                Switch to {pendingRecipe?.title}?
               </AlertDialogTitle>
               <AlertDialogDescription>
-                Tu progreso se guardará automáticamente
+                Your current progress will be saved automatically.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="gap-2">
               <AlertDialogCancel onClick={handleReturnToActiveSession}>
-                Cancelar
+                Cancel
               </AlertDialogCancel>
               <AlertDialogAction onClick={handleContinueWithNewRecipe}>
-                Cambiar
+                Switch
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

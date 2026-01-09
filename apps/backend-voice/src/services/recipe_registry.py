@@ -101,28 +101,6 @@ class RecipeRegistry:
         payload = self.get_recipe_payload(recipe_id)
         return Recipe.from_dict(payload)
 
-    @property
-    def default_recipe_id(self) -> Optional[str]:
-        """Determine the default recipe id (config override or first item)."""
-        configured = getattr(settings, "RECIPES_DEFAULT_ID", "") or None
-        if configured and configured in self._records:
-            return configured
-
-        with self._lock:
-            if self._records:
-                return next(iter(self._records.keys()))
-        return None
-
-    @property
-    def default_recipe_title(self) -> Optional[str]:
-        """Friendly title for default recipe."""
-        default_id = self.default_recipe_id
-        if default_id:
-            record = self._records.get(default_id)
-            if record:
-                return record.title
-        return None
-
     # ----------------------------------------------------------------- loaders
     def _load_local_directory(self) -> None:
         """Scan local recipes directory."""

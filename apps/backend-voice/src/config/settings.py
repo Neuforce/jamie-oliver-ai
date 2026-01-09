@@ -98,7 +98,6 @@ class Settings:
         str(Path(__file__).resolve().parent.parent.parent.parent / "data" / "recipes")
     )
     RECIPES_MANIFEST_URL: str = os.getenv("RECIPES_MANIFEST_URL", "")
-    RECIPES_DEFAULT_ID: str = os.getenv("RECIPES_DEFAULT_ID", "")
     
     def validate(self) -> bool:
         """Validate that required settings are present."""
