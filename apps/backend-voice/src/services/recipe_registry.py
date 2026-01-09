@@ -70,7 +70,21 @@ class RecipeRegistry:
                 self._load_local_directory()
 
             if not self._records:
-                logger.warning("No recipes discovered in registry")
+                logger.warning(
+                    "Recipe registry is empty (source=%s, dir=%s, manifest=%s)",
+                    self._source,
+                    self._recipes_dir,
+                    self._manifest_url,
+                )
+            else:
+                sample_ids = list(self._records.keys())[:5]
+                logger.info(
+                    "Recipe registry loaded %d recipes from source=%s (%s). Sample IDs: %s",
+                    len(self._records),
+                    self._source,
+                    self._recipes_dir if self._source == "local" else self._manifest_url,
+                    ", ".join(sample_ids),
+                )
 
     def list_recipes(self) -> List[Dict[str, Optional[str]]]:
         """Return recipes as serialisable dictionaries."""
