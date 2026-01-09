@@ -22,9 +22,8 @@ COPY apps/backend-search /app/apps/backend-search
 COPY data/recipes /app/data/recipes
 
 WORKDIR /app/apps/backend-search
-ENV PYTHONPATH="/app/apps/backend-search" \
-    PORT=8000
+ENV PYTHONPATH="/app/apps/backend-search"
 
-EXPOSE 8000
+EXPOSE 8080
 
-CMD ["sh", "-c", "uvicorn recipe_search_agent.api:app --host 0.0.0.0 --port ${PORT}"]
+CMD ["sh", "-c", "uvicorn recipe_search_agent.api:app --host 0.0.0.0 --port ${PORT:-8080}"]
