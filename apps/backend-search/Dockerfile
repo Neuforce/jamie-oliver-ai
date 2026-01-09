@@ -12,8 +12,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies first to leverage Docker layer caching
+# Copy requirements (if present) and install dependencies
 COPY apps/backend-search/requirements.txt /app/apps/backend-search/requirements.txt
-RUN pip install --upgrade pip && pip install -r /app/apps/backend-search/requirements.txt
+RUN if [ -f /app/apps/backend-search/requirements.txt ]; then \
+      pip install --upgrade pip && \
+      pip install -r /app/apps/backend-search/requirements.txt; \
+    else \
+      pip install --upgrade pip; \
+    fi
 
 # Copy application source
 COPY apps/backend-search /app/apps/backend-search
