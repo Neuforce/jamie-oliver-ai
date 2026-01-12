@@ -13,6 +13,7 @@ from ccai.core import context_variables
 
 from src.recipe_engine import Recipe, RecipeEngine, RecipeStep, parse_iso_duration, StepStatus
 from src.services.session_service import session_service
+from src.services.recipe_service import get_recipe_service
 
 logger = configure_logger(__name__)
 
@@ -122,7 +123,18 @@ async def start_recipe(
     if recipe_payload:
         session_service.set_session_recipe_payload(session_id, recipe_payload)
 
+    # Try to get recipe payload from multiple sources
     payload = recipe_payload or session_service.get_session_recipe_payload(session_id)
+    
+    # If no payload from frontend, try fetching from Supabase
+    if not payload:
+        logger.info(f"No frontend payload, fetching recipe '{target_recipe_id}' from Supabase")
+        recipe_service = get_recipe_service()
+        payload = await recipe_service.get_recipe(target_recipe_id)
+        if payload:
+            logger.info(f"Successfully fetched recipe from Supabase")
+            session_service.set_session_recipe_payload(session_id, payload)
+    
     if not payload:
         return (
             "I don't have the full recipe details yet. Please open the recipe in the app "
