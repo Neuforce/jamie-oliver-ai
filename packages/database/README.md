@@ -11,12 +11,20 @@ Database schema and migrations for Jamie Oliver AI, managed with Prisma.
    ```
 
 2. **Configure environment**
+   
+   Create a `.env` file in this directory with your Supabase connection string:
+   
    ```bash
-   cp .env.example .env
-   # Edit .env with your Supabase connection strings
+   # packages/database/.env
+   DATABASE_URL="postgresql://postgres.pvwavnoxjykokarimiuo:[PASSWORD]@aws-0-us-east-1.pooler.supabase.com:5432/postgres"
    ```
-
-   Get connection strings from: **Supabase Dashboard > Project Settings > Database > Connection string**
+   
+   **To get your connection string:**
+   1. Go to [Supabase Dashboard](https://supabase.com/dashboard)
+   2. Select the Jamie Oliver AI project
+   3. Navigate to **Project Settings > Database > Connection string**
+   4. Copy the **Transaction pooler** connection string (Mode: Transaction)
+   5. Replace `[PASSWORD]` with your database password
 
 3. **Generate Prisma client**
    ```bash
