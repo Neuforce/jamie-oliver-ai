@@ -1,0 +1,161 @@
+%% Recipe Data Platform Architecture
+%% Use with Mermaid.js or Mermaid Live Editor (https://mermaid.live)
+
+---
+title: Current State (Problematic)
+---
+flowchart TB
+    subgraph Frontend
+        FE[React Frontend]
+        LocalJSON[/public/recipes/*.json/]
+    end
+    
+    subgraph Backend
+        BV[backend-voice]
+        BS[backend-search]
+    end
+    
+    subgraph Supabase
+        RI[(recipe_index<br/>metadata only)]
+        RC[(recipe_chunks<br/>embeddings)]
+    end
+    
+    FE -->|loads| LocalJSON
+    FE -->|sends recipePayload via WS| BV
+    BS -->|file_path reference| LocalJSON
+    BS -->|read/write| RI
+    BS -->|read/write| RC
+    
+    BV -.->|NO direct access| Supabase
+    
+    style LocalJSON fill:#f99,stroke:#900
+    style BV fill:#ff9,stroke:#990
+
+---
+title: Target State (Proper Architecture)
+---
+flowchart TB
+    subgraph Pipeline["Recipe Enhancement Pipeline"]
+        CR[Web Crawler]
+        ST[LLM Structurer]
+        VA[Quality Validator]
+        UP[Supabase Uploader]
+        
+        CR --> ST --> VA --> UP
+    end
+    
+    subgraph Supabase["Supabase (Source of Truth)"]
+        R[(recipes<br/>full JSON + metadata)]
+        RV[(recipe_versions<br/>history)]
+        RI[(recipe_index<br/>search metadata)]
+        RC[(recipe_chunks<br/>embeddings)]
+        
+        R --> RV
+        R --> RI
+        R --> RC
+    end
+    
+    subgraph Services
+        FE[React Frontend]
+        BS[backend-search<br/>Recipe API v2]
+        BV[backend-voice]
+    end
+    
+    UP --> R
+    
+    FE <-->|REST API| BS
+    BS <-->|Supabase Client| Supabase
+    BV <-->|Supabase Client| Supabase
+    
+    style R fill:#9f9,stroke:#090
+    style BS fill:#9cf,stroke:#069
+    style BV fill:#9cf,stroke:#069
+
+---
+title: Recipe Enhancement Pipeline Detail
+---
+flowchart LR
+    subgraph Input
+        URL[Recipe URL]
+        PDF[PDF File]
+        JSON[Manual JSON]
+    end
+    
+    subgraph Crawler
+        C1[HTTP Request]
+        C2[HTML Parser]
+        C3[Data Extractor]
+        C1 --> C2 --> C3
+    end
+    
+    subgraph Structurer
+        S1[Clean Text]
+        S2[LLM: GPT-4]
+        S3[JOAv0 Format]
+        S1 --> S2 --> S3
+    end
+    
+    subgraph Validator
+        V1[Schema Check]
+        V2[Quality Rules]
+        V3[Score Calculator]
+        V1 --> V2 --> V3
+    end
+    
+    subgraph Uploader
+        U1[Compute Metadata]
+        U2[Version Control]
+        U3[Sync Index]
+        U4[Generate Embeddings]
+        U1 --> U2 --> U3 --> U4
+    end
+    
+    URL --> Crawler
+    PDF --> Structurer
+    JSON --> Validator
+    
+    Crawler -->|RawRecipe| Structurer
+    Structurer -->|JOAv0 JSON| Validator
+    Validator -->|Validated + Score| Uploader
+    Uploader --> DB[(Supabase)]
+
+---
+title: Data Flow - Get Recipe
+---
+sequenceDiagram
+    participant FE as Frontend
+    participant API as backend-search
+    participant DB as Supabase
+    participant BV as backend-voice
+    
+    %% Frontend fetches recipe
+    FE->>API: GET /api/v2/recipes/mushroom-risotto
+    API->>DB: SELECT * FROM recipes WHERE slug='mushroom-risotto'
+    DB-->>API: recipe_json, metadata
+    API-->>FE: Recipe JSON
+    
+    %% User starts cooking
+    FE->>BV: WebSocket: {mode: 'cooking', recipeId: 'mushroom-risotto'}
+    BV->>DB: SELECT recipe_json FROM recipes WHERE slug='mushroom-risotto'
+    DB-->>BV: recipe_json
+    BV-->>FE: Ready with recipe context
+    
+    Note over BV: Agent has full recipe context<br/>independently of frontend
+
+---
+title: Data Flow - Step Completion
+---
+sequenceDiagram
+    participant User
+    participant FE as Frontend
+    participant BV as backend-voice
+    participant Engine as Recipe Engine
+    
+    User->>FE: Marks step as complete
+    FE->>FE: Update local state
+    FE->>BV: {type: 'control', action: 'step_completed', data: {stepIndex: 2}}
+    BV->>Engine: confirm_step_done(step_index=2)
+    Engine-->>BV: Step 2 confirmed, proceeding to step 3
+    BV-->>FE: {type: 'control', action: 'focus_step', data: {stepIndex: 3}}
+    BV-->>FE: TTS: "Brilliant! Now let's move on to..."
+    FE->>FE: Update UI to step 3
