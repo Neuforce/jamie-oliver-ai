@@ -380,11 +380,17 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           }
           break;
 
-        case 'control':
+        case 'control': {
           if (onControl) {
-            onControl(action || '', message.data);
+            const controlAction = (data && data.action) || action || '';
+            const controlPayload =
+              (data && data.data !== undefined ? data.data : data) ?? message.data;
+            if (controlAction) {
+              onControl(controlAction, controlPayload);
+            }
           }
           break;
+        }
 
         case 'session_info':
           if (data) {

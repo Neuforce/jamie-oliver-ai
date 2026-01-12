@@ -16,7 +16,6 @@ import {
   X,
   AlertCircle,
   RefreshCw,
-  Info,
   Save,
   Trash2,
   MicOff
@@ -25,7 +24,6 @@ import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
-import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -61,7 +59,6 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   const [voiceError, setVoiceError] = useState('');
   const [voiceSupported, setVoiceSupported] = useState(true);
   const recognitionRef = useRef(null as any);
-  const [showTimerInfoBanner, setShowTimerInfoBanner] = useState(false);
   
   // WebSocket and Audio states
   const [isMicMuted, setIsMicMuted] = useState(false);
@@ -130,7 +127,6 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           return timerMinutes * 60;
         });
         setTimerRunning(true);
-        setShowTimerInfoBanner(true);
         return;
       }
 
@@ -142,7 +138,6 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       if (action === 'timer_reset') {
         setTimerRunning(false);
         setTimerSeconds(parsedSeconds ?? timerMinutes * 60);
-        setShowTimerInfoBanner(false);
       }
     },
     [timerMinutes]
@@ -277,7 +272,6 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       setTimerSeconds(candidateSeconds);
       setTimerMinutes(Math.max(1, Math.round(candidateSeconds / 60) || 1));
       setTimerRunning(false);
-      setShowTimerInfoBanner(false);
       lastAutoTimerStepRef.current = currentStep;
     }
   }, [
@@ -573,23 +567,6 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       }, 1000);
     }
     return () => clearInterval(interval);
-  }, [timerRunning, timerSeconds]);
-
-  // Show helpful banner when timer starts running (first time in session)
-  useEffect(() => {
-    if (timerRunning && timerSeconds > 0) {
-      // Check if user has seen this tip before
-      const hasSeenTimerTip = localStorage.getItem('has-seen-timer-tip');
-      if (!hasSeenTimerTip) {
-        setShowTimerInfoBanner(true);
-        localStorage.setItem('has-seen-timer-tip', 'true');
-        
-        // Auto-hide after 8 seconds
-        setTimeout(() => {
-          setShowTimerInfoBanner(false);
-        }, 8000);
-      }
-    }
   }, [timerRunning, timerSeconds]);
 
   // Initialize Web Speech API
@@ -992,40 +969,6 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
 
       {/* Main Content */}
       <div className="p-6">
-        {/* Timer Info Banner */}
-        <AnimatePresence>
-          {showTimerInfoBanner && (
-            <motion.div
-              initial={{ opacity: 0, y: -20, height: 0 }}
-              animate={{ opacity: 1, y: 0, height: 'auto' }}
-              exit={{ opacity: 0, y: -20, height: 0 }}
-              className="mb-6"
-            >
-              <Alert className="bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-900/50">
-                <div className="flex items-start gap-3">
-                  <Info className="size-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
-                  <div className="flex-1">
-                    <AlertTitle className="text-green-900 dark:text-green-100 mb-1">
-                      💡 Tip: Your session continues in the background
-                    </AlertTitle>
-                    <AlertDescription className="text-green-800 dark:text-green-200 text-sm">
-                      You can freely exit to view other recipes. Your progress and timer are automatically saved and continue running.
-                    </AlertDescription>
-                  </div>
-                  <button
-                    onClick={() => setShowTimerInfoBanner(false)}
-                    className="p-1 hover:bg-green-100 dark:hover:bg-green-900/50 rounded transition-colors flex-shrink-0"
-                    aria-label="Close"
-                  >
-                    <X className="size-4 text-green-600 dark:text-green-400" />
-                  </button>
-                </div>
-              </Alert>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-
         {/* Current Step - Editorial redesign */}
         <div className="max-w-3xl mx-auto mb-12">
           <AnimatePresence mode="wait">
