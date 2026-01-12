@@ -28,17 +28,17 @@ services:
 
   backend-search:
     build:
-      context: ../apps/backend-search
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: apps/backend-search/Dockerfile
     container_name: jamie-backend-search
     ports:
       - "8000:8000"
+    env_file:
+      - ../apps/backend-search/.env
     environment:
-      - SUPABASE_URL=${SUPABASE_URL}
-      - SUPABASE_SERVICE_ROLE_KEY=${SUPABASE_SERVICE_ROLE_KEY}
       - PYTHON_VERSION=3.11
     volumes:
-      - ../apps/backend-search:/app
+      - ../apps/backend-search:/app/apps/backend-search
       - ../data:/app/data
     networks:
       - jamie-network
