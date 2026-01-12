@@ -89,7 +89,8 @@ class RecipeValidator:
         
         if steps:
             # Check for semantic step IDs (not step_1, step_2, etc.)
-            generic_ids = [s for s in steps if self._is_generic_step_id(s.get("step_id", ""))]
+            # JOAv0 format uses "id", older format uses "step_id"
+            generic_ids = [s for s in steps if self._is_generic_step_id(s.get("id", s.get("step_id", "")))]
             if generic_ids:
                 warnings.append(f"{len(generic_ids)} steps have generic IDs (e.g., 'step_1')")
                 breakdown["semantic_step_ids"] = max(0, 15 - len(generic_ids) * 2)
@@ -182,10 +183,36 @@ class RecipeValidator:
             return True
         return bool(re.match(r"^step[_-]?\d+$", step_id.lower()))
     
+    def _get_say_from_on_enter(self, step: dict) -> str:
+        """
+        Extract say message from on_enter.
+        
+        Handles both formats:
+        - JOAv0: on_enter is a list of actions: [{"say": "..."}]
+        - Flat: on_enter is a dict: {"say": "..."}
+        """
+        on_enter = step.get("on_enter")
+        
+        if not on_enter:
+            # Fallback to instructions or descr
+            return step.get("instructions", "") or step.get("descr", "")
+        
+        # JOAv0 format: list of actions
+        if isinstance(on_enter, list):
+            for action in on_enter:
+                if isinstance(action, dict) and "say" in action:
+                    return action.get("say", "")
+            return ""
+        
+        # Flat dict format
+        if isinstance(on_enter, dict):
+            return on_enter.get("say", "")
+        
+        return ""
+    
     def _has_on_enter_say(self, step: dict) -> bool:
         """Check if step has a non-empty on_enter.say message."""
-        on_enter = step.get("on_enter", {})
-        say = on_enter.get("say", "")
+        say = self._get_say_from_on_enter(step)
         return bool(say and len(say.strip()) > 10)
     
     def _find_potential_timer_steps(self, steps: list[dict]) -> list[dict]:
@@ -195,8 +222,8 @@ class RecipeValidator:
             if step.get("type") == "timer":
                 continue  # Already a timer
             
-            say = step.get("on_enter", {}).get("say", "").lower()
-            instruction = step.get("instruction", "").lower()
+            say = self._get_say_from_on_enter(step).lower()
+            instruction = (step.get("instructions", "") or step.get("instruction", "")).lower()
             text = f"{say} {instruction}"
             
             if any(kw in text for kw in self.TIMER_KEYWORDS):
@@ -208,7 +235,7 @@ class RecipeValidator:
         """Count steps with very short say messages."""
         count = 0
         for step in steps:
-            say = step.get("on_enter", {}).get("say", "")
+            say = self._get_say_from_on_enter(step)
             if say and len(say.strip()) < min_length:
                 count += 1
         return count
