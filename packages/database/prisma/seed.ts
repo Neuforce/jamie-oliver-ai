@@ -5,6 +5,9 @@
  * Run with: npm run db:seed
  */
 
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import { PrismaClient, RecipeStatus, SourceType } from '@prisma/client';
 import * as fs from 'fs';
 import * as path from 'path';
