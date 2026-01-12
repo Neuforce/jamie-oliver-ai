@@ -144,12 +144,14 @@ class RecipeUploader:
         timer_steps = [s for s in steps if s.get("type") == "timer"]
         
         # Check quality indicators
+        # Handle JOAv0 format where on_enter is a list: [{"say": "..."}]
         has_on_enter_say = all(
-            s.get("on_enter", {}).get("say") 
+            self._has_on_enter_say(s)
             for s in steps
         )
+        # JOAv0 format uses "id", older format uses "step_id"
         has_semantic_ids = not any(
-            self._is_generic_step_id(s.get("step_id", ""))
+            self._is_generic_step_id(s.get("id", s.get("step_id", "")))
             for s in steps
         )
         
@@ -209,6 +211,29 @@ class RecipeUploader:
         if not step_id:
             return True
         return bool(re.match(r"^step[_-]?\d+$", step_id.lower()))
+    
+    def _has_on_enter_say(self, step: dict) -> bool:
+        """
+        Check if step has a non-empty on_enter say message.
+        Handles both JOAv0 list format and flat dict format.
+        """
+        on_enter = step.get("on_enter")
+        if not on_enter:
+            # Check for fallback fields
+            return bool(step.get("instructions") or step.get("descr"))
+        
+        # JOAv0 format: list of actions [{"say": "..."}]
+        if isinstance(on_enter, list):
+            for action in on_enter:
+                if isinstance(action, dict) and action.get("say"):
+                    return True
+            return False
+        
+        # Flat dict format: {"say": "..."}
+        if isinstance(on_enter, dict):
+            return bool(on_enter.get("say"))
+        
+        return False
     
     def get_recipe(self, slug: str) -> dict | None:
         """Fetch a recipe by slug."""
