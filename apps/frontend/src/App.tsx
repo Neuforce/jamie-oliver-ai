@@ -34,7 +34,7 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [cookingRecipe, setCookingRecipe] = useState<Recipe | null>(null);
-  const [viewMode, setViewMode] = useState<'grid' | 'feed'>('grid');
+  const [viewMode, setViewMode] = useState<'grid' | 'feed'>('feed');
   const [filtersExpanded, setFiltersExpanded] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [recipesInProgress, setRecipesInProgress] = useState<Recipe[]>([]);
@@ -240,12 +240,32 @@ export default function App() {
               className="text-center mt-4"
             >
               <h1
-                className="text-[#327179] text-center font-extrabold text-[32px] leading-[0.99] tracking-wide"
-                style={{ fontFamily: 'Poppins, sans-serif', fontStyle: 'normal' }}
+                className="text-center"
+                style={{
+                  fontFamily: 'Poppins, sans-serif',
+                  fontStyle: 'normal',
+                  fontWeight: 800,
+                  fontSize: '32px',
+                  lineHeight: '0.99',
+                  letterSpacing: '0px',
+                  textTransform: 'uppercase',
+                  color: '#327179',
+                }}
               >
-                Cook with Jamie
+                COOK WITH JAMIE
               </h1>
-              <p className="text-[#234252] max-w-2xl mx-auto leading-relaxed text-[16px] sm:text-lg">
+              <p
+                className="text-center"
+                style={{
+                  fontFamily: 'Poppins, sans-serif',
+                  fontStyle: 'normal',
+                  fontWeight: 400,
+                  fontSize: '16px',
+                  lineHeight: '1.5',
+                  letterSpacing: '0px',
+                  color: '#234252',
+                }}
+              >
                 Cook amazing recipes, step by step
               </p>
             </motion.div>
@@ -369,20 +389,20 @@ export default function App() {
             {/* View Mode Toggle */}
             <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1 flex-1">
               <Button
-                onClick={() => setViewMode('grid')}
-                variant={viewMode === 'grid' ? "default" : "ghost"}
-                size="sm"
-                className="rounded-full h-8 flex-1"
-              >
-                <Grid3x3 className="size-4" />
-              </Button>
-              <Button
                 onClick={() => setViewMode('feed')}
                 variant={viewMode === 'feed' ? "default" : "ghost"}
                 size="sm"
                 className="rounded-full h-8 flex-1"
               >
                 <LayoutList className="size-4" />
+              </Button>
+              <Button
+                onClick={() => setViewMode('grid')}
+                variant={viewMode === 'grid' ? "default" : "ghost"}
+                size="sm"
+                className="rounded-full h-8 flex-1"
+              >
+                <Grid3x3 className="size-4" />
               </Button>
             </div>
 
@@ -437,55 +457,62 @@ export default function App() {
         </motion.div>
 
         {/* Recipe Grid View */}
-        {viewMode === 'grid' && (
-          <motion.div
-            key={`grid-${recipesInProgress.length}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-[1px] mb-12"
-          >
-            {filteredRecipes.map((recipe, index) => (
-              <motion.div
-                key={recipe.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 * (index % 12), duration: 0.3 }}
-              >
-                <RecipeCard
-                  recipe={recipe}
-                  onClick={() => handleRecipeClick(recipe)}
-                  variant="grid"
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+          {viewMode === 'grid' && (
+            <motion.div
+              key={`grid-${recipesInProgress.length}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="px-5 mb-12"
+            >
+              <div className="grid grid-cols-2 gap-4">
+                {filteredRecipes.map((recipe, index) => (
+                  <motion.div
+                    key={recipe.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 * (index % 8), duration: 0.3 }}
+                  >
+                    <RecipeCard
+                      recipe={recipe}
+                      onClick={() => handleRecipeClick(recipe)}
+                      variant="grid"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
         {/* Recipe Feed View */}
-        {viewMode === 'feed' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="max-w-2xl mx-auto space-y-8 mb-12"
-          >
-            {filteredRecipes.map((recipe, index) => (
-              <motion.div
-                key={recipe.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 * (index % 8), duration: 0.3 }}
+          {viewMode === 'feed' && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="px-5 mb-12"
+            >
+              <div
+                className="max-w-3xl mx-auto flex flex-col"
+                style={{ gap: '38px' }}
               >
-                <RecipeCard
-                  recipe={recipe}
-                  onClick={() => handleRecipeClick(recipe)}
-                  variant="feed"
-                />
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
+                {filteredRecipes.map((recipe, index) => (
+                  <motion.div
+                    key={recipe.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 * (index % 8), duration: 0.3 }}
+                  >
+                    <RecipeCard
+                      recipe={recipe}
+                      onClick={() => handleRecipeClick(recipe)}
+                      variant="feed"
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
 
         {/* No Results */}
         {filteredRecipes.length === 0 && (

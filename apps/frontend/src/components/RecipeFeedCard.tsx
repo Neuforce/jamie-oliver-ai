@@ -1,9 +1,9 @@
+import React, { useState } from 'react';
 import { Recipe } from '../data/recipes';
 import { Clock, Users, ChefHat, Heart, Bookmark, MessageCircle, Share2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Button } from './ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
-import { useState } from 'react';
 
 interface RecipeFeedCardProps {
   recipe: Recipe;
@@ -23,7 +23,7 @@ const getRecipeImages = (recipe: Recipe) => {
   // Use recipe ID to consistently pick 2-3 additional images
   const imageCount = (recipe.id % 2) + 2; // 2 or 3 images
   const startIndex = recipe.id % supplementaryImages.length;
-  const additionalImages = [];
+  const additionalImages: string[] = [];
   
   for (let i = 0; i < imageCount; i++) {
     additionalImages.push(supplementaryImages[(startIndex + i) % supplementaryImages.length]);

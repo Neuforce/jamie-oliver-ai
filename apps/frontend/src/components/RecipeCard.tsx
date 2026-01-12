@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from 'react';
 import { Recipe } from '../data/recipes';
 import { Clock, Users, ChefHat } from 'lucide-react';
 import { motion } from 'motion/react';
-import { useEffect, useState } from 'react';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -55,7 +55,10 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
         className="cursor-pointer"
         onClick={onClick}
       >
-        <div className="relative overflow-hidden bg-white h-full rounded-[24px] shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)]">
+        <div
+          className="relative overflow-hidden bg-white h-full shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)]"
+          style={{ borderRadius: '24px' }}
+        >
           {/* Edge-to-edge Image Container for Grid - Matching Figma Mock */}
           <div className="relative aspect-[196/245] overflow-hidden">
             <img
@@ -68,42 +71,63 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 via-50% to-transparent" />
             
             {/* Badges at top */}
-            <div className="absolute top-2 left-2 right-2 flex items-start justify-between gap-2 z-10">
+            <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
               {/* Category/Session Badge on left */}
               {hasSession ? (
-                <span className="inline-flex items-center gap-1.5 px-2 py-1 rounded-full text-xs bg-[#81EB67] text-white whitespace-nowrap">
+                <span
+                  className="inline-flex items-center gap-1.5 text-white text-xs font-semibold"
+                  style={{
+                    height: '27px',
+                    padding: '6px 12px',
+                    alignItems: 'flex-start',
+                    borderRadius: '33554400px',
+                    background: '#3D6E6C',
+                    boxShadow:
+                      '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
+                  }}
+                >
                   <Clock className="size-3" />
                   In Progress
                 </span>
               ) : (
-                <span className="px-2 py-1 rounded-full text-xs bg-[rgba(3,2,19,0.9)] text-white whitespace-nowrap">
-                  {recipe.category}
+                <span
+                  className="inline-flex items-center text-white text-xs font-semibold"
+                  style={{
+                    height: '27px',
+                    padding: '6px 12px',
+                    alignItems: 'flex-start',
+                    borderRadius: '33554400px',
+                    background: '#3D6E6C',
+                    boxShadow:
+                      '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
+                  }}
+                >
+                  {recipe.category.toUpperCase()}
                 </span>
               )}
             </div>
 
             {/* Content at bottom - matching Figma */}
-            <div className="absolute bottom-0 left-0 right-0 p-3 flex flex-col gap-1.5 z-10">
+            <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-1.5 z-10">
               {/* Title */}
-              <h3 className="text-sm leading-5 text-white line-clamp-2 tracking-[-0.15px]">
+              <h3
+                className="text-white"
+                style={{
+                  textTransform: 'uppercase',
+                  fontFamily: 'Poppins, sans-serif',
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  lineHeight: '20px',
+                  letterSpacing: '0.2px',
+                  paddingLeft: '16px',
+                  paddingBottom: '16px',
+                }}
+              >
                 {recipe.title}
               </h3>
               
               {/* Meta Info */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1">
-                  <Clock className="size-3 text-white/90" strokeWidth={1.5} />
-                  <span className="text-xs leading-4 text-white/90">{recipe.time}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <Users className="size-3 text-white/90" strokeWidth={1.5} />
-                  <span className="text-xs leading-4 text-white/90">{recipe.servings}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <ChefHat className="size-3 text-white/90" strokeWidth={1.5} />
-                  <span className="text-xs leading-4 text-white/90">{recipe.difficulty}</span>
-                </div>
-              </div>
+
               
               {/* Progress Bar */}
               {hasSession && (
@@ -121,52 +145,132 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
     );
   }
 
-  // Feed variant: full card with description
+  // Feed variant: editorial card
   return (
     <motion.div
       whileTap={{ scale: 0.98 }}
       className="cursor-pointer"
       onClick={onClick}
+      style={{
+        width: 'clamp(320px, 92vw, 640px)',
+        margin: '0 auto',
+      }}
     >
-      <div className="relative overflow-hidden bg-white rounded-[24px] shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)]">
-        {/* Title at the top */}
-        <div className="p-4 pb-3">
-          <h3 className="line-clamp-1">{recipe.title}</h3>
-        </div>
-
-        {/* Image Container */}
-        <div className="relative aspect-square overflow-hidden">
+      <div
+        className="overflow-hidden border border-[#E4E7EC] bg-white"
+        style={{
+          borderRadius: '24px',
+          boxShadow:
+            '0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10)',
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '360px',
+          height: 'min(78vw, 420px)',
+        }}
+      >
+        {/* Image */}
+        <div
+          className="relative overflow-hidden"
+          style={{
+            flex: '0 0 75%',
+            minHeight: 0,
+          }}
+        >
           <img
             src={recipe.image}
             alt={recipe.title}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            className="h-full w-full object-cover"
           />
-          {/* Category Badge */}
-          <div className="absolute top-3 left-3">
-            <span className="px-3 py-1 rounded-full text-sm bg-primary/80 text-primary-foreground backdrop-blur-md">
-              {recipe.category}
-            </span>
-          </div>
+          <span
+            className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
+            style={{
+              height: '27px',
+              padding: '6px 12px',
+              alignItems: 'flex-start',
+              borderRadius: '33554400px',
+              background: '#3D6E6C',
+              boxShadow:
+                '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
+              letterSpacing: '0.2em',
+            }}
+          >
+            {recipe.category.toUpperCase()}
+          </span>
         </div>
 
         {/* Content */}
-        <div className="p-4 pt-3">
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-            {recipe.description}
-          </p>
+        <div
+          style={{
+            padding: '20px',
+            boxSizing: 'border-box',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '12px',
+            backgroundColor: '#FFFFFF',
+            position: 'relative',
+            zIndex: 1,
+            flex: '0 0 25%',
+            minHeight: 0,
+          }}
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <h3
+              style={{
+                color: '#2C5F5D',
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: '18px',
+                fontWeight: 600,
+                letterSpacing: '0.087px',
+                lineHeight: '20px',
+                textTransform: 'uppercase',
+                opacity: 1,
+              }}
+            >
+              {recipe.title}
+            </h3>
+            <p
+              style={{
+                margin: 0,
+                color: '#234252',
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: '14px',
+                lineHeight: '22.75px',
+                letterSpacing: '-0.15px',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                opacity: 1,
+              }}
+            >
+              {recipe.description}
+            </p>
+          </div>
 
-          {/* Meta Info */}
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <div className="flex items-center gap-1">
-              <Clock className="size-4" />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '24px',
+              marginTop: 'auto',
+              fontFamily: 'Poppins, sans-serif',
+              fontSize: '14px',
+              lineHeight: '20px',
+              letterSpacing: '0.087px',
+              color: '#717182',
+              opacity: 1,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Clock className="size-4 text-[#3D6E6C]" />
               <span>{recipe.time}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <Users className="size-4" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Users className="size-4 text-[#3D6E6C]" />
               <span>{recipe.servings}</span>
             </div>
-            <div className="flex items-center gap-1">
-              <ChefHat className="size-4" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <ChefHat className="size-4 text-[#3D6E6C]" />
               <span>{recipe.difficulty}</span>
             </div>
           </div>

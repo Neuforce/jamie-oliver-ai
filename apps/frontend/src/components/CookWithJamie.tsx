@@ -761,11 +761,17 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     setTimerSeconds(prev => Math.max(0, prev - 60));
   };
 
+  const [shouldShowTimer, setShouldShowTimer] = useState(false);
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
+
+  useEffect(() => {
+    setShouldShowTimer(timerSeconds > 0 || timerRunning);
+  }, [timerSeconds, timerRunning]);
 
   const handleExitClick = () => {
     console.log('Exit clicked - currentStep:', currentStep, 'completedSteps:', completedSteps, 'timerRunning:', timerRunning, 'timerSeconds:', timerSeconds);
@@ -907,8 +913,9 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       </div>
 
       {/* Timer Section - Redesigned */}
-      <div className="px-6 py-8 border-b border-border/50">
-        <div className="max-w-2xl mx-auto">
+      {shouldShowTimer && (
+        <div className="px-6 py-8 border-b border-border/50">
+          <div className="max-w-2xl mx-auto">
           {/* Timer Display */}
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-2 mb-3">
@@ -979,8 +986,9 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           <p className="text-center text-sm text-muted-foreground mt-4">
             Tap +/− to adjust time by minute
           </p>
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Main Content */}
       <div className="p-6">
