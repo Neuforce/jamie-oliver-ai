@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Recipe } from '../data/recipes';
-import { 
-  ArrowLeft, 
-  ChevronLeft, 
-  ChevronRight, 
-  CheckCircle2, 
-  Timer, 
-  Play, 
-  Pause, 
+import {
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
+  Timer,
+  Play,
+  Pause,
   RotateCcw,
   Plus,
   Minus,
@@ -37,6 +37,13 @@ import {
 import { useWebSocket, type RecipeState } from '../hooks/useWebSocket';
 import { useAudioCapture } from '../hooks/useAudioCapture';
 import { useAudioPlayback } from '../hooks/useAudioPlayback';
+import { RecipeCard } from './RecipeCard';
+// @ts-ignore - handled by Vite
+import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
+// @ts-ignore - handled by Vite
+import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
+const jamieLogo = typeof jamieLogoImport === 'string' ? jamieLogoImport : (jamieLogoImport as any).src || jamieLogoImport;
+const jamieAvatar = typeof jamieAvatarImport === 'string' ? jamieAvatarImport : (jamieAvatarImport as any).src || jamieAvatarImport;
 
 interface CookWithJamieProps {
   recipe: Recipe | null;
@@ -47,19 +54,19 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState([] as number[]);
   const [showExitConfirmation, setShowExitConfirmation] = useState(false);
-  
+
   // Timer states
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(10); // Default timer
-  
+
   // Voice states
   const [isListening, setIsListening] = useState(false);
   const [voiceText, setVoiceText] = useState('');
   const [voiceError, setVoiceError] = useState('');
   const [voiceSupported, setVoiceSupported] = useState(true);
   const recognitionRef = useRef(null as any);
-  
+
   // WebSocket and Audio states
   const [isMicMuted, setIsMicMuted] = useState(false);
   const [wsRecipeState, setWsRecipeState] = useState(null as RecipeState | null);
@@ -67,7 +74,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   const canStreamAudioRef = useRef(false);
   const lastAutoTimerStepRef = useRef<number | null>(null);
   const currentStepRef = useRef(0);
-  
+
   // Prefer backend slug ID when available so the voice agent loads the same recipe
   const backendRecipeId = recipe?.backendId;
   // Fallback to numeric ID if slug is missing (e.g., legacy sessions)
@@ -83,18 +90,18 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       resumeStepIndex: currentStepRef.current,
     };
   }, [recipe, backendRecipeId]);
-  
+
   // Audio playback hook
   const audioPlayback = useAudioPlayback();
 
   const parseIsoDurationToSeconds = useCallback((duration?: string | number | null) => {
     if (!duration) return 0;
-    
+
     // If duration is already a number, return it directly (it's in seconds)
     if (typeof duration === 'number') {
       return Math.round(duration);
     }
-    
+
     // Otherwise, parse ISO 8601 duration string (e.g., "PT50M", "PT1H30M")
     const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/i);
     if (!match) return 0;
@@ -247,7 +254,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       console.log('[WebSocket] Session info received:', sessionInfo);
     }
   }, [sessionInfo]);
-  
+
   // Audio capture hook - only send audio when mic is active
   const audioCapture = useAudioCapture({
     sampleRate: 16000,
@@ -288,7 +295,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     parseIsoDurationToSeconds,
     extractSecondsFromInstruction,
   ]);
-  
+
   // Sync recipe state from backend WebSocket
   const syncRecipeStateFromBackend = useCallback((state: RecipeState) => {
     if (!state || !recipe) return;
@@ -318,12 +325,12 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
 
       return fallbackIndex >= 0 ? fallbackIndex : null;
     };
-    
+
     if (state.steps) {
       const stepsArray = Object.values(state.steps);
       const activeStep = stepsArray.find(step => step.status === 'active' || step.status === 'waiting_ack')
         || stepsArray.find(step => step.status === 'ready');
-      
+
       if (activeStep) {
         const stepIndex = resolveStepIndex(activeStep.id, activeStep.descr);
         if (stepIndex !== null) {
@@ -335,14 +342,14 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           });
         }
       }
-      
+
       const completedIndices = stepsArray
         .filter(step => step.status === 'completed')
         .map(step => resolveStepIndex(step.id, step.descr))
         .filter((idx): idx is number => idx !== null);
-      
+
       setCompletedSteps(completedIndices);
-      
+
       const stepWithTimer = stepsArray.find(step => step.timer && (step.status === 'active' || step.status === 'waiting_ack'));
       if (stepWithTimer?.timer) {
         const { remaining_secs, end_ts, duration_secs } = stepWithTimer.timer;
@@ -367,7 +374,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         .filter((idx): idx is number => typeof idx === 'number' && idx >= 0);
       setCompletedSteps(completedIndices);
     }
-    
+
     if (state.current_step !== undefined && state.current_step >= 0) {
       const boundedIndex = instructions.length > 0
         ? Math.min(state.current_step, instructions.length - 1)
@@ -379,7 +386,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         return prev;
       });
     }
-    
+
     if (state.timers && state.timers.length > 0) {
       const activeTimer = state.timers[0];
       if (activeTimer.remaining !== undefined) {
@@ -401,13 +408,13 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         const session = JSON.parse(savedSession);
         const now = new Date().getTime();
         const sessionAge = now - session.timestamp;
-        
+
         // Only restore if session is less than 24 hours old
         if (sessionAge < 24 * 60 * 60 * 1000) {
           // Automatically restore session without toast - user already clicked "Continue Cooking"
           setCurrentStep(session.currentStep);
           setCompletedSteps(session.completedSteps);
-          
+
           // Handle timer restoration - check if timer was kept active
           if (session.timerEndTime && session.timerEndTime > now) {
             // Timer was running in background and still has time left
@@ -443,11 +450,11 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   useEffect(() => {
     if (recipe) {
       // Check if there's any progress worth saving
-      const hasProgress = currentStep > 0 || 
-                         completedSteps.length > 0 || 
-                         timerRunning || 
+      const hasProgress = currentStep > 0 ||
+                         completedSteps.length > 0 ||
+                         timerRunning ||
                          timerSeconds > 0;
-      
+
       if (hasProgress) {
         const session = {
           recipeId: recipe.id,
@@ -468,7 +475,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   // This runs immediately when component mounts, which happens after user clicks "Cook with Jamie"
   useEffect(() => {
     if (!recipe || audioCaptureStartedRef.current) return;
-    
+
     // WebSocket will auto-connect via useWebSocket hook
     // Request microphone permission and start audio capture silently
     const initializeAudio = async () => {
@@ -477,7 +484,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         // Request permission silently (no UI blocking)
         await navigator.mediaDevices.getUserMedia({ audio: true });
         console.log('✅ Microphone permission granted');
-        
+
         // Initialize and resume AudioContext for playback BEFORE starting capture
         // This is critical - AudioContext must be resumed after user interaction
         // Since this runs in useEffect after mount (which happens after user click), it should work
@@ -495,7 +502,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         } catch (err: any) {
           console.error('❌ Error initializing AudioContext for playback:', err);
         }
-        
+
         // Start audio capture automatically
         try {
           console.log('🎙️ Starting audio capture...');
@@ -514,7 +521,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
             error: wsError,
             recipeId: recipeId,
           });
-          
+
           // If WebSocket is not connected, try to connect manually
           if (!isWebSocketConnected && !isWebSocketConnecting) {
             console.log('⚠️ WebSocket not connected, attempting manual connection...');
@@ -532,13 +539,13 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         setIsMicMuted(true);
       }
     };
-    
+
     // Use a small timeout to ensure the component is fully mounted
     // This helps ensure the AudioContext can be resumed after user interaction
     const timeoutId = setTimeout(() => {
       initializeAudio();
     }, 100);
-    
+
     // Cleanup on unmount
     return () => {
       clearTimeout(timeoutId);
@@ -550,7 +557,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recipe]); // Only depend on recipe, not on hooks to avoid loops
-  
+
   // Update mic mute state (also mute when WS disconnects to avoid spam)
   useEffect(() => {
     if (!audioCaptureStartedRef.current) return;
@@ -598,7 +605,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           setVoiceError('');
           return;
         }
-        
+
         // Only show error for other types
         console.warn('Speech recognition error:', event.error);
         setIsListening(false);
@@ -636,7 +643,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       toast.info('Microphone active', { duration: 2000 });
     }
   };
-  
+
   const toggleVoiceListening = async () => {
     // If WebSocket is not connected, try to connect first
     if (!isWebSocketConnected && !isWebSocketConnecting) {
@@ -654,14 +661,14 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       }, 2000);
       return;
     }
-    
+
     // This now controls mic mute/unmute for WebSocket audio
     toggleMicMute();
   };
 
   const handleVoiceCommand = (command: string) => {
     const lowerCommand = command.toLowerCase();
-    
+
     // Navigation commands
     if (lowerCommand.includes('siguiente') || lowerCommand.includes('next')) {
       handleNext();
@@ -672,7 +679,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     } else if (lowerCommand.includes('repetir') || lowerCommand.includes('repeat')) {
       speakText(instructions[currentStep]);
     }
-    
+
     // Timer commands
     else if (lowerCommand.includes('iniciar timer') || lowerCommand.includes('start timer')) {
       startTimer();
@@ -687,7 +694,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       addMinute();
       speakText('Un minuto agregado');
     }
-    
+
     // Other voice commands - just speak a response
     else {
       // For now, just acknowledge the command
@@ -700,6 +707,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
 
   const totalSteps = instructions.length;
   const progress = totalSteps > 0 ? ((currentStep + 1) / totalSteps) * 100 : 0;
+  const isCurrentStepCompleted = completedSteps.includes(currentStep);
 
   const handleNext = () => {
     if (currentStep < totalSteps - 1) {
@@ -715,20 +723,20 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
 
   const toggleStepComplete = async () => {
     const wasCompleted = completedSteps.includes(currentStep);
-    
+
     // Update local state first for immediate feedback
     if (wasCompleted) {
       setCompletedSteps(completedSteps.filter(s => s !== currentStep));
     } else {
       setCompletedSteps([...completedSteps, currentStep]);
     }
-    
+
     // Notify backend when marking a step as complete (not when unmarking)
     if (!wasCompleted && sessionInfo?.session_id) {
       // Get the backend step ID for the current step
       const backendStep = recipe?.backendSteps?.[currentStep];
       const stepId = backendStep?.id;
-      
+
       if (stepId) {
         try {
           // @ts-expect-error - Vite provides import.meta.env
@@ -738,12 +746,12 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
             .replace('wss://', 'https://')
             .replace('ws://', 'http://')
             .replace('/ws/voice', '');
-          
+
           const response = await fetch(
             `${apiBaseUrl}/sessions/${sessionInfo.session_id}/steps/${stepId}/confirm`,
             { method: 'POST' }
           );
-          
+
           if (response.ok) {
             console.log(`✅ Step ${stepId} confirmed with backend`);
           } else {
@@ -805,19 +813,19 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
 
   const handleExitClick = () => {
     console.log('Exit clicked - currentStep:', currentStep, 'completedSteps:', completedSteps, 'timerRunning:', timerRunning, 'timerSeconds:', timerSeconds);
-    
+
     // Check if there's any progress: moved from step 0, completed steps, or has active/running timer
-    const hasProgress = currentStep > 0 || 
-                       completedSteps.length > 0 || 
-                       timerRunning || 
+    const hasProgress = currentStep > 0 ||
+                       completedSteps.length > 0 ||
+                       timerRunning ||
                        timerSeconds > 0;
-    
+
     if (!hasProgress) {
       console.log('No progress, exiting directly');
       onClose();
       return;
     }
-    
+
     // Otherwise show confirmation
     console.log('Showing exit confirmation dialog - user has progress');
     setShowExitConfirmation(true);
@@ -856,7 +864,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
 
   const handleFinishCooking = () => {
     if (!recipe) return;
-    
+
     // Mark recipe as completed
     const completedRecipe = {
       recipeId: recipe.id,
@@ -865,10 +873,10 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       totalSteps: instructions.length
     };
     localStorage.setItem(`completed-recipe-${recipe.id}`, JSON.stringify(completedRecipe));
-    
+
     // Remove the cooking session so it doesn't show as "in progress"
     localStorage.removeItem(`cooking-session-${recipe.id}`);
-    
+
     // Send finish message to WebSocket if connected
     if (isWebSocketConnected) {
       wsSendMessage({
@@ -876,70 +884,65 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         message: 'I finished the recipe',
       });
     }
-    
+
     toast.success('Recipe completed!', {
       description: `Great job completing ${recipe.title}!`,
       duration: 3000
     });
-    
+
     // Cleanup WebSocket and audio
     audioCapture.stopCapture();
     audioPlayback.cleanup();
     wsDisconnect();
-    
+
     onClose();
   };
 
   return (
     <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
-      {/* Header Image - Full Width */}
-      <div className="relative h-[40vh] min-h-[280px] overflow-hidden">
-        <img
-          src={recipe.image}
-          alt={recipe.title}
-          className="w-full h-full object-cover"
-        />
-        
-        {/* Gradient overlay for readability */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20" />
-        
-        {/* Back Button - Minimalist */}
-        <button
-          onClick={handleExitClick}
-          className="absolute top-6 left-6 p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md transition-all"
-        >
-          <ArrowLeft className="size-5 text-white" />
-        </button>
-
-        {/* Header Content - Over image */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 pb-8">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 mb-3 px-3 py-1.5 rounded-full bg-[#0A7E6C]/90 backdrop-blur-sm">
-              <div className="size-6 rounded-full bg-white/20 overflow-hidden flex items-center justify-center">
-                <img 
-                  src="https://images.unsplash.com/photo-1759521296047-89338c8e083d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxqYW1pZSUyMG9saXZlciUyMGNoZWYlMjBwb3J0cmFpdHxlbnwxfHx8fDE3NjU1NTY4MjF8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral" 
-                  alt="Jamie"
-                  className="w-full h-full object-cover"
-                />
+      {/* Cooking hero */}
+      <div className="px-6 pt-8 pb-6">
+        <div className="max-w-[420px] mx-auto">
+          <div className="flex items-start justify-between mb-6">
+            <button
+              onClick={handleExitClick}
+              className="inline-flex items-center text-[#2C5F5D] hover:text-[#18413f] transition-colors"
+              style={{ marginTop: '16px' }}
+              aria-label="Back"
+            >
+              <ArrowLeft style={{ width: '24px', height: '24px' }} />
+            </button>
+            <div
+              className="flex items-center justify-center h-6"
+              style={{ marginTop: '17px' }}
+            >
+              <img src={jamieLogo} alt="Jamie Oliver" className="h-full w-auto object-contain" />
+            </div>
+            <button
+              onClick={toggleVoiceListening}
+              className="inline-flex items-center gap-2 rounded-full border border-[#E4E7EC] bg-white px-3 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.1)] hover:bg-[#F2F5F6] transition-colors"
+              style={{ marginTop: '7px' }}
+              title={
+                !isWebSocketConnected
+                  ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
+                  : isMicMuted
+                    ? 'Microphone muted - tap to enable'
+                    : 'Microphone active - tap to mute'
+              }
+            >
+              <Mic className={`size-4 ${isMicMuted ? 'text-[#717182]' : 'text-[#3D6E6C]'}`} />
+              <div
+                className="rounded-full overflow-hidden border border-white shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
+                style={{ width: '42px', height: '42px' }}
+              >
+                <img src={jamieAvatar} alt="Jamie Oliver" className="w-full h-full object-cover" />
               </div>
-              <span className="text-white/90 text-sm">Cooking with Jamie</span>
-            </div>
-            <h1 className="text-white text-4xl mb-3">{recipe.title}</h1>
-            <div className="flex items-center gap-2 text-white/80 text-sm">
-              <span>Step {currentStep + 1} of {totalSteps}</span>
-              <span className="text-white/40">•</span>
-              <span>{Math.round(progress)}% complete</span>
-            </div>
+            </button>
+          </div>
+          <div className="pointer-events-none select-none">
+            <RecipeCard recipe={recipe} onClick={() => {}} variant="cooking" />
           </div>
         </div>
-      </div>
-
-      {/* Progress Bar - Minimal */}
-      <div className="h-1 bg-black/5">
-        <div 
-          className="h-full bg-gradient-to-r from-[#0A7E6C] to-[#81EB67] transition-all duration-300"
-          style={{ width: `${progress}%` }}
-        />
       </div>
 
       {/* Timer Section - Redesigned */}
@@ -972,28 +975,28 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
             >
               <Minus className="size-4" />
             </Button>
-            
+
             {!timerRunning ? (
-              <Button 
-                onClick={startTimer} 
-                size="lg" 
+              <Button
+                onClick={startTimer}
+                size="lg"
                 className="gap-2 bg-[#0A7E6C] hover:bg-[#0A7E6C]/90"
               >
                 <Play className="size-5" />
                 {timerSeconds === 0 ? 'Start Timer' : 'Resume'}
               </Button>
             ) : (
-              <Button 
-                onClick={pauseTimer} 
-                size="lg" 
-                className="gap-2" 
+              <Button
+                onClick={pauseTimer}
+                size="lg"
+                className="gap-2"
                 variant="outline"
               >
                 <Pause className="size-5" />
                 Pause
               </Button>
             )}
-            
+
             <Button
               onClick={addMinute}
               variant="ghost"
@@ -1002,7 +1005,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
             >
               <Plus className="size-4" />
             </Button>
-            
+
             <Button
               onClick={resetTimer}
               variant="ghost"
@@ -1032,11 +1035,41 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="mb-8">
-                <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 rounded-full bg-[#0A7E6C]/10">
-                  <span className="text-sm text-[#0A7E6C]">Step {currentStep + 1} of {totalSteps}</span>
+              <div className="mb-8 flex flex-col items-center">
+                <div className="w-full max-w-[420px]">
+                  <div
+                    className="rounded-full bg-[#0A7E6C]/10 px-4 py-3"
+                    style={{ width: '100%', textAlign: 'center' }}
+                  >
+                    <span className="text-sm font-medium text-[#0A7E6C]">
+                      Step {currentStep + 1} of {totalSteps}
+                    </span>
+                  </div>
                 </div>
-                <p className="text-2xl leading-relaxed text-foreground">{instructions[currentStep]}</p>
+                <div
+                  className="w-full max-w-[420px] flex gap-2"
+                  style={{ marginTop: '24px' }}
+                >
+                  {instructions.map((_, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => setCurrentStep(idx)}
+                      className={`h-1 flex-1 rounded-full transition-colors ${
+                        idx === currentStep
+                          ? 'bg-[#0A7E6C]'
+                          : completedSteps.includes(idx)
+                          ? 'bg-[#81EB67]'
+                          : 'bg-muted-foreground/20'
+                      }`}
+                      aria-label={`Go to step ${idx + 1}`}
+                    />
+                  ))}
+                </div>
+                <div className="w-full max-w-[420px]" style={{ marginTop: '24px' }}>
+                  <p className="text-2xl leading-relaxed text-foreground">
+                    {instructions[currentStep]}
+                  </p>
+                </div>
               </div>
             </motion.div>
           </AnimatePresence>
@@ -1044,61 +1077,90 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           {/* Mark Complete */}
           <Button
             onClick={toggleStepComplete}
-            variant={completedSteps.includes(currentStep) ? "default" : "outline"}
+            variant="ghost"
             size="lg"
-            className={`gap-2 mb-8 ${
-              completedSteps.includes(currentStep) ? 'bg-[#81EB67] hover:bg-[#81EB67]/90 text-white' : ''
-            }`}
+            className="mb-8 flex items-center justify-center gap-2"
+            style={{
+              height: '48px',
+              padding: '14px 26px',
+              gap: '9px',
+              borderRadius: '33554400px',
+              border: isCurrentStepCompleted ? '2px solid #007AFF' : '2px solid #3D6E6C',
+              backgroundColor: isCurrentStepCompleted ? 'rgba(0, 122, 255, 0.1)' : 'transparent',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
           >
-            <CheckCircle2 className="size-5" />
-            {completedSteps.includes(currentStep) ? "Completed" : "Mark complete"}
+            <CheckCircle2
+              className="size-5"
+                style={{ color: isCurrentStepCompleted ? '#007AFF' : '#3D6E6C' }}
+            />
+              <span style={{ color: isCurrentStepCompleted ? '#007AFF' : '#3D6E6C' }}>
+                {isCurrentStepCompleted ? 'COMPLETED' : 'MARK COMPLETE'}
+              </span>
           </Button>
 
-          {/* Step Indicators - Minimal */}
-          <div className="flex justify-center gap-2 mb-8">
-            {instructions.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentStep(idx)}
-                className={`h-1 rounded-full transition-all ${
-                  idx === currentStep
-                    ? 'bg-[#0A7E6C] w-12'
-                    : completedSteps.includes(idx)
-                    ? 'bg-[#81EB67] w-8'
-                    : 'bg-muted-foreground/20 w-8'
-                }`}
-                aria-label={`Go to step ${idx + 1}`}
-              />
-            ))}
-          </div>
-
           {/* Navigation Buttons - Clean */}
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-3">
             <Button
               onClick={handlePrevious}
               disabled={currentStep === 0}
               variant="ghost"
               size="lg"
-              className="gap-2"
+              className="gap-2 text-[14px]"
+              style={{
+                display: 'flex',
+                height: '48px',
+                padding: '14px 24px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '9px',
+                borderRadius: '33554400px',
+                opacity: 0.5,
+              }}
             >
               <ChevronLeft className="size-5" />
               Previous
             </Button>
 
             {currentStep === totalSteps - 1 ? (
-              <Button 
-                onClick={handleFinishCooking} 
-                size="lg" 
-                className="gap-2 bg-[#0A7E6C] hover:bg-[#0A7E6C]/90"
+              <Button
+                onClick={handleFinishCooking}
+                size="lg"
+                className="gap-2 bg-[#3D6E6C] hover:bg-[#2c5654] text-[14px]"
+                style={{
+                  display: 'flex',
+                  height: '48px',
+                  padding: '14px 25px 14px 24px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '8px',
+                  borderRadius: '33554400px',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                  backgroundColor: '#3D6E6C',
+                  color: '#FFFFFF',
+                }}
               >
                 Finish Cooking
                 <CheckCircle2 className="size-5" />
               </Button>
             ) : (
-              <Button 
-                onClick={handleNext} 
+              <Button
+                onClick={handleNext}
                 size="lg"
-                className="gap-2 bg-[#0A7E6C] hover:bg-[#0A7E6C]/90"
+                className="gap-2 bg-[#3D6E6C] hover:bg-[#2c5654] text-[14px]"
+                style={{
+                  display: 'flex',
+                  height: '48px',
+                  padding: '14px 25px 14px 24px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '8px',
+                  borderRadius: '33554400px',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                  backgroundColor: '#3D6E6C',
+                  color: '#FFFFFF',
+                }}
               >
                 Next Step
                 <ChevronRight className="size-5" />
@@ -1120,12 +1182,12 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           variant={!isMicMuted && isWebSocketConnected ? "default" : "secondary"}
           disabled={isWebSocketConnecting}
           title={
-            !isWebSocketConnected 
+            !isWebSocketConnected
               ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
               : isWebSocketConnecting
                 ? 'Connecting to backend...'
-                : isMicMuted 
-                  ? 'Microphone muted - Click to unmute (text mode)' 
+                : isMicMuted
+                  ? 'Microphone muted - Click to unmute (text mode)'
                   : 'Microphone active - Click to mute (audio mode)'
           }
         >
@@ -1165,8 +1227,8 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              {timerRunning && timerSeconds > 0 
-                ? `Active timer: ${formatTime(timerSeconds)}` 
+              {timerRunning && timerSeconds > 0
+                ? `Active timer: ${formatTime(timerSeconds)}`
                 : 'Exit?'}
             </AlertDialogTitle>
             <AlertDialogDescription>
@@ -1177,16 +1239,16 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
             <AlertDialogCancel onClick={() => setShowExitConfirmation(false)}>
               Keep cooking
             </AlertDialogCancel>
-            
+
             {timerRunning && timerSeconds > 0 ? (
               <>
-                <Button 
+                <Button
                   onClick={handleSaveAndExit}
                   variant="outline"
                 >
                   Pause timer
                 </Button>
-                <Button 
+                <Button
                   onClick={handleExitKeepTimerActive}
                   className="bg-green-600 hover:bg-green-700"
                 >
@@ -1194,7 +1256,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                 </Button>
               </>
             ) : (
-              <Button 
+              <Button
                 onClick={handleSaveAndExit}
               >
                 Save & exit
