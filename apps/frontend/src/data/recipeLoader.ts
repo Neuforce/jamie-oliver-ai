@@ -205,6 +205,14 @@ let cachedRecipes: Recipe[] | null = null;
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 /**
+ * Clear the recipe cache to force a fresh load from API
+ */
+export function clearRecipeCache(): void {
+  cachedRecipes = null;
+  console.log('Recipe cache cleared');
+}
+
+/**
  * Load recipes from Supabase via backend-search API
  */
 async function loadRecipesFromAPI(): Promise<Recipe[]> {
@@ -212,7 +220,10 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
   
   try {
     // Fetch all recipes with full JSON from API
-    const response = await fetch(`${API_BASE_URL}/api/v1/recipes?include_full=true&limit=100`);
+    const url = `${API_BASE_URL}/api/v1/recipes?include_full=true&limit=100`;
+    console.log(`[RecipeLoader] Fetching from API: ${url}`);
+    
+    const response = await fetch(url);
     
     if (!response.ok) {
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
@@ -220,24 +231,38 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
     
     const data = await response.json();
     
+    console.log(`[RecipeLoader] API response:`, {
+      source: data.source,
+      total: data.total,
+      recipesCount: data.recipes?.length || 0,
+    });
+    
     if (!data.recipes || data.recipes.length === 0) {
       throw new Error('No recipes returned from API');
     }
     
-    console.log(`Loaded ${data.recipes.length} recipes from Supabase (source: ${data.source})`);
-    
     // Transform API response to Recipe format
     let index = 0;
+    let skipped = 0;
     for (const apiRecipe of data.recipes) {
       if (apiRecipe.full_recipe && 'recipe' in apiRecipe.full_recipe) {
         recipes.push(transformRecipe(apiRecipe.full_recipe as BackendRecipePayload, index));
         index++;
+      } else {
+        console.warn(`[RecipeLoader] Skipping recipe without full_recipe:`, apiRecipe.recipe_id || apiRecipe.title);
+        skipped++;
       }
+    }
+    
+    console.log(`[RecipeLoader] ✅ Loaded ${recipes.length} recipes from Supabase (skipped: ${skipped})`);
+    
+    if (recipes.length === 0) {
+      throw new Error('All recipes were skipped - no valid full_recipe data');
     }
     
     return recipes;
   } catch (error) {
-    console.warn('Failed to load recipes from API, will try local fallback:', error);
+    console.error('[RecipeLoader] ❌ Failed to load from API:', error);
     throw error;
   }
 }

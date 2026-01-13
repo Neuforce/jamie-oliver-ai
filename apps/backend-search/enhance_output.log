@@ -1,0 +1,907 @@
+2026-01-12 16:36:10 [INFO] LLM enhancement enabled
+2026-01-12 16:36:10 [INFO] Found 55 recipe files
+2026-01-12 16:36:10 [INFO] Processing: avocado-toast.json
+2026-01-12 16:36:10 [INFO]   Title: Avocado Toast
+2026-01-12 16:36:10 [INFO]   Pre-enhancement score: 75/100
+2026-01-12 16:36:10 [INFO]   Enhancing with LLM...
+2026-01-12 16:36:10 [INFO] Enhancing recipe: Avocado Toast
+2026-01-12 16:36:32 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:36:32 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:36:32 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:36:32 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:36:32 [INFO] Uploading recipe: avocado-toast
+2026-01-12 16:36:32 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.avocado-toast "HTTP/2 200 OK"
+2026-01-12 16:36:32 [INFO] Recipe avocado-toast exists (version 1), updating...
+2026-01-12 16:36:32 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:36:32 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.avocado-toast "HTTP/2 200 OK"
+2026-01-12 16:36:32 [INFO] ✅ Updated recipe avocado-toast
+2026-01-12 16:36:32 [INFO]   ✅ Uploaded: avocado-toast (score: 100)
+2026-01-12 16:36:32 [INFO] Processing: banana-bread.json
+2026-01-12 16:36:32 [INFO]   Title: Banana Bread
+2026-01-12 16:36:32 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:36:32 [INFO]   Enhancing with LLM...
+2026-01-12 16:36:32 [INFO] Enhancing recipe: Banana Bread
+2026-01-12 16:36:47 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:36:47 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:36:47 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:36:47 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:36:47 [INFO] Uploading recipe: banana-bread
+2026-01-12 16:36:48 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.banana-bread "HTTP/2 200 OK"
+2026-01-12 16:36:48 [INFO] Recipe banana-bread exists (version 1), updating...
+2026-01-12 16:36:48 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:36:48 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.banana-bread "HTTP/2 200 OK"
+2026-01-12 16:36:48 [INFO] ✅ Updated recipe banana-bread
+2026-01-12 16:36:48 [INFO]   ✅ Uploaded: banana-bread (score: 100)
+2026-01-12 16:36:48 [INFO] Processing: beef-kebabs.json
+2026-01-12 16:36:48 [INFO]   Title: Beef Kebabs
+2026-01-12 16:36:48 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:36:48 [INFO]   Enhancing with LLM...
+2026-01-12 16:36:48 [INFO] Enhancing recipe: Beef Kebabs
+2026-01-12 16:36:58 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:36:58 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:36:58 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:36:58 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:36:58 [INFO] Uploading recipe: beef-kebabs
+2026-01-12 16:36:58 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.beef-kebabs "HTTP/2 200 OK"
+2026-01-12 16:36:58 [INFO] Recipe beef-kebabs exists (version 1), updating...
+2026-01-12 16:36:58 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:36:58 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.beef-kebabs "HTTP/2 200 OK"
+2026-01-12 16:36:58 [INFO] ✅ Updated recipe beef-kebabs
+2026-01-12 16:36:58 [INFO]   ✅ Uploaded: beef-kebabs (score: 100)
+2026-01-12 16:36:58 [INFO] Processing: beef-ramen.json
+2026-01-12 16:36:58 [INFO]   Title: Beef Ramen
+2026-01-12 16:36:58 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:36:58 [INFO]   Enhancing with LLM...
+2026-01-12 16:36:58 [INFO] Enhancing recipe: Beef Ramen
+2026-01-12 16:37:10 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:37:10 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:37:10 [INFO]   Post-enhancement score: 93/100
+2026-01-12 16:37:10 [WARNING]   ⚠️  1 steps might need timer type
+2026-01-12 16:37:10 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:37:10 [INFO] Uploading recipe: beef-ramen
+2026-01-12 16:37:10 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.beef-ramen "HTTP/2 200 OK"
+2026-01-12 16:37:10 [INFO] Recipe beef-ramen exists (version 1), updating...
+2026-01-12 16:37:10 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:37:10 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.beef-ramen "HTTP/2 200 OK"
+2026-01-12 16:37:10 [INFO] ✅ Updated recipe beef-ramen
+2026-01-12 16:37:10 [INFO]   ✅ Uploaded: beef-ramen (score: 93)
+2026-01-12 16:37:10 [INFO] Processing: beef-stir-fry.json
+2026-01-12 16:37:10 [INFO]   Title: Beef Stir Fry
+2026-01-12 16:37:10 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:37:10 [INFO]   Enhancing with LLM...
+2026-01-12 16:37:10 [INFO] Enhancing recipe: Beef Stir Fry
+2026-01-12 16:37:26 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:37:26 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:37:26 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:37:26 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:37:26 [INFO] Uploading recipe: beef-stir-fry
+2026-01-12 16:37:26 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.beef-stir-fry "HTTP/2 200 OK"
+2026-01-12 16:37:26 [INFO] Recipe beef-stir-fry exists (version 1), updating...
+2026-01-12 16:37:26 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:37:26 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.beef-stir-fry "HTTP/2 200 OK"
+2026-01-12 16:37:26 [INFO] ✅ Updated recipe beef-stir-fry
+2026-01-12 16:37:26 [INFO]   ✅ Uploaded: beef-stir-fry (score: 100)
+2026-01-12 16:37:26 [INFO] Processing: beef-tacos.json
+2026-01-12 16:37:26 [INFO]   Title: Beef Tacos
+2026-01-12 16:37:26 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:37:26 [INFO]   Enhancing with LLM...
+2026-01-12 16:37:26 [INFO] Enhancing recipe: Beef Tacos
+2026-01-12 16:37:38 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:37:38 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:37:38 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:37:38 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:37:38 [INFO] Uploading recipe: beef-tacos
+2026-01-12 16:37:38 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.beef-tacos "HTTP/2 200 OK"
+2026-01-12 16:37:38 [INFO] Recipe beef-tacos exists (version 1), updating...
+2026-01-12 16:37:39 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:37:39 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.beef-tacos "HTTP/2 200 OK"
+2026-01-12 16:37:39 [INFO] ✅ Updated recipe beef-tacos
+2026-01-12 16:37:39 [INFO]   ✅ Uploaded: beef-tacos (score: 100)
+2026-01-12 16:37:39 [INFO] Processing: beef-wellington.json
+2026-01-12 16:37:39 [INFO]   Title: Beef Wellington
+2026-01-12 16:37:39 [INFO]   Pre-enhancement score: 74/100
+2026-01-12 16:37:39 [INFO]   Enhancing with LLM...
+2026-01-12 16:37:39 [INFO] Enhancing recipe: Beef Wellington
+2026-01-12 16:37:56 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:37:56 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:37:56 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:37:56 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:37:56 [INFO] Uploading recipe: beef-wellington
+2026-01-12 16:37:56 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.beef-wellington "HTTP/2 200 OK"
+2026-01-12 16:37:56 [INFO] Recipe beef-wellington exists (version 1), updating...
+2026-01-12 16:37:56 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:37:56 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.beef-wellington "HTTP/2 400 Bad Request"
+2026-01-12 16:37:56 [ERROR]   ❌ Upload failed: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+2026-01-12 16:37:56 [INFO] Processing: buffalo-chicken-wings.json
+2026-01-12 16:37:56 [INFO]   Title: Buffalo Chicken Wings
+2026-01-12 16:37:56 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:37:56 [INFO]   Enhancing with LLM...
+2026-01-12 16:37:56 [INFO] Enhancing recipe: Buffalo Chicken Wings
+2026-01-12 16:38:12 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:38:12 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:38:12 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:38:12 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:38:12 [INFO] Uploading recipe: buffalo-chicken-wings
+2026-01-12 16:38:12 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.buffalo-chicken-wings "HTTP/2 200 OK"
+2026-01-12 16:38:12 [INFO] Recipe buffalo-chicken-wings exists (version 1), updating...
+2026-01-12 16:38:12 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:38:12 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.buffalo-chicken-wings "HTTP/2 400 Bad Request"
+2026-01-12 16:38:12 [ERROR]   ❌ Upload failed: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+2026-01-12 16:38:12 [INFO] Processing: chicken-caesar-salad.json
+2026-01-12 16:38:12 [INFO]   Title: Chicken Caesar Salad
+2026-01-12 16:38:12 [INFO]   Pre-enhancement score: 75/100
+2026-01-12 16:38:12 [INFO]   Enhancing with LLM...
+2026-01-12 16:38:12 [INFO] Enhancing recipe: Chicken Caesar Salad
+2026-01-12 16:38:27 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:38:27 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:38:27 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:38:27 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:38:27 [INFO] Uploading recipe: chicken-caesar-salad
+2026-01-12 16:38:28 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.chicken-caesar-salad "HTTP/2 200 OK"
+2026-01-12 16:38:28 [INFO] Recipe chicken-caesar-salad exists (version 1), updating...
+2026-01-12 16:38:28 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:38:28 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.chicken-caesar-salad "HTTP/2 200 OK"
+2026-01-12 16:38:28 [INFO] ✅ Updated recipe chicken-caesar-salad
+2026-01-12 16:38:28 [INFO]   ✅ Uploaded: chicken-caesar-salad (score: 100)
+2026-01-12 16:38:28 [INFO] Processing: chicken-fajitas.json
+2026-01-12 16:38:28 [INFO]   Title: Chicken Fajitas
+2026-01-12 16:38:28 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:38:28 [INFO]   Enhancing with LLM...
+2026-01-12 16:38:28 [INFO] Enhancing recipe: Chicken Fajitas
+2026-01-12 16:38:41 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:38:41 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:38:41 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:38:41 [WARNING]   ⚠️  2 steps might need timer type
+2026-01-12 16:38:41 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:38:41 [INFO] Uploading recipe: chicken-fajitas
+2026-01-12 16:38:41 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.chicken-fajitas "HTTP/2 200 OK"
+2026-01-12 16:38:41 [INFO] Recipe chicken-fajitas exists (version 1), updating...
+2026-01-12 16:38:41 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:38:41 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.chicken-fajitas "HTTP/2 200 OK"
+2026-01-12 16:38:41 [INFO] ✅ Updated recipe chicken-fajitas
+2026-01-12 16:38:41 [INFO]   ✅ Uploaded: chicken-fajitas (score: 98)
+2026-01-12 16:38:41 [INFO] Processing: chicken-noodle-soup.json
+2026-01-12 16:38:41 [INFO]   Title: Chicken Noodle Soup
+2026-01-12 16:38:41 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:38:41 [INFO]   Enhancing with LLM...
+2026-01-12 16:38:41 [INFO] Enhancing recipe: Chicken Noodle Soup
+2026-01-12 16:38:53 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:38:53 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:38:53 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:38:53 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:38:53 [INFO] Uploading recipe: chicken-noodle-soup
+2026-01-12 16:38:53 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.chicken-noodle-soup "HTTP/2 200 OK"
+2026-01-12 16:38:53 [INFO] Recipe chicken-noodle-soup exists (version 1), updating...
+2026-01-12 16:38:53 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:38:53 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.chicken-noodle-soup "HTTP/2 200 OK"
+2026-01-12 16:38:53 [INFO] ✅ Updated recipe chicken-noodle-soup
+2026-01-12 16:38:53 [INFO]   ✅ Uploaded: chicken-noodle-soup (score: 100)
+2026-01-12 16:38:53 [INFO] Processing: chicken-parmesan.json
+2026-01-12 16:38:53 [INFO]   Title: Chicken Parmesan
+2026-01-12 16:38:53 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:38:53 [INFO]   Enhancing with LLM...
+2026-01-12 16:38:53 [INFO] Enhancing recipe: Chicken Parmesan
+2026-01-12 16:39:08 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:39:08 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:39:08 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:39:08 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:39:08 [INFO] Uploading recipe: chicken-parmesan
+2026-01-12 16:39:08 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.chicken-parmesan "HTTP/2 200 OK"
+2026-01-12 16:39:08 [INFO] Recipe chicken-parmesan exists (version 1), updating...
+2026-01-12 16:39:08 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:39:09 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.chicken-parmesan "HTTP/2 200 OK"
+2026-01-12 16:39:09 [INFO] ✅ Updated recipe chicken-parmesan
+2026-01-12 16:39:09 [INFO]   ✅ Uploaded: chicken-parmesan (score: 100)
+2026-01-12 16:39:09 [INFO] Processing: chicken-tikka-masala.json
+2026-01-12 16:39:09 [INFO]   Title: Chicken Tikka Masala
+2026-01-12 16:39:09 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:39:09 [INFO]   Enhancing with LLM...
+2026-01-12 16:39:09 [INFO] Enhancing recipe: Chicken Tikka Masala
+2026-01-12 16:39:28 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:39:28 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:39:28 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:39:28 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:39:28 [INFO] Uploading recipe: chicken-tikka-masala
+2026-01-12 16:39:28 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.chicken-tikka-masala "HTTP/2 200 OK"
+2026-01-12 16:39:28 [INFO] Recipe chicken-tikka-masala exists (version 1), updating...
+2026-01-12 16:39:28 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:39:28 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.chicken-tikka-masala "HTTP/2 200 OK"
+2026-01-12 16:39:28 [INFO] ✅ Updated recipe chicken-tikka-masala
+2026-01-12 16:39:28 [INFO]   ✅ Uploaded: chicken-tikka-masala (score: 100)
+2026-01-12 16:39:28 [INFO] Processing: chocolate-brownies.json
+2026-01-12 16:39:28 [INFO]   Title: Chocolate Brownies
+2026-01-12 16:39:28 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:39:28 [INFO]   Enhancing with LLM...
+2026-01-12 16:39:28 [INFO] Enhancing recipe: Chocolate Brownies
+2026-01-12 16:39:42 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:39:42 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:39:42 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:39:42 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:39:42 [INFO] Uploading recipe: chocolate-brownies
+2026-01-12 16:39:42 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.chocolate-brownies "HTTP/2 200 OK"
+2026-01-12 16:39:42 [INFO] Recipe chocolate-brownies exists (version 1), updating...
+2026-01-12 16:39:42 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:39:42 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.chocolate-brownies "HTTP/2 200 OK"
+2026-01-12 16:39:42 [INFO] ✅ Updated recipe chocolate-brownies
+2026-01-12 16:39:42 [INFO]   ✅ Uploaded: chocolate-brownies (score: 100)
+2026-01-12 16:39:42 [INFO] Processing: chocolate-chip-cookies.json
+2026-01-12 16:39:42 [INFO]   Title: Chocolate Chip Cookies
+2026-01-12 16:39:42 [INFO]   Pre-enhancement score: 74/100
+2026-01-12 16:39:42 [INFO]   Enhancing with LLM...
+2026-01-12 16:39:42 [INFO] Enhancing recipe: Chocolate Chip Cookies
+2026-01-12 16:39:56 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:39:56 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:39:56 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:39:56 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:39:56 [INFO] Uploading recipe: chocolate-chip-cookies
+2026-01-12 16:39:56 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.chocolate-chip-cookies "HTTP/2 200 OK"
+2026-01-12 16:39:56 [INFO] Recipe chocolate-chip-cookies exists (version 1), updating...
+2026-01-12 16:39:56 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:39:56 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.chocolate-chip-cookies "HTTP/2 200 OK"
+2026-01-12 16:39:56 [INFO] ✅ Updated recipe chocolate-chip-cookies
+2026-01-12 16:39:56 [INFO]   ✅ Uploaded: chocolate-chip-cookies (score: 100)
+2026-01-12 16:39:56 [INFO] Processing: christmas-salad-jamie-oliver-recipes.json
+2026-01-12 16:39:56 [INFO]   Title: Christmas salad
+2026-01-12 16:39:56 [INFO]   Pre-enhancement score: 87/100
+2026-01-12 16:39:56 [INFO]   Enhancing with LLM...
+2026-01-12 16:39:56 [INFO] Enhancing recipe: Christmas salad
+2026-01-12 16:40:14 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:40:14 [INFO] Successfully enhanced recipe with 6 steps
+2026-01-12 16:40:14 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:40:14 [WARNING]   ⚠️  1 steps might need timer type
+2026-01-12 16:40:14 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:40:14 [INFO] Uploading recipe: christmas-salad-jamie-oliver-recipes
+2026-01-12 16:40:14 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.christmas-salad-jamie-oliver-recipes "HTTP/2 200 OK"
+2026-01-12 16:40:14 [INFO] Recipe christmas-salad-jamie-oliver-recipes exists (version 1), updating...
+2026-01-12 16:40:14 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:40:14 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.christmas-salad-jamie-oliver-recipes "HTTP/2 200 OK"
+2026-01-12 16:40:14 [INFO] ✅ Updated recipe christmas-salad-jamie-oliver-recipes
+2026-01-12 16:40:14 [INFO]   ✅ Uploaded: christmas-salad-jamie-oliver-recipes (score: 98)
+2026-01-12 16:40:14 [INFO] Processing: classic-apple-pie.json
+2026-01-12 16:40:14 [INFO]   Title: Classic Apple Pie
+2026-01-12 16:40:14 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:40:14 [INFO]   Enhancing with LLM...
+2026-01-12 16:40:14 [INFO] Enhancing recipe: Classic Apple Pie
+2026-01-12 16:40:28 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:40:28 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:40:28 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:40:28 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:40:28 [INFO] Uploading recipe: classic-apple-pie
+2026-01-12 16:40:28 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.classic-apple-pie "HTTP/2 200 OK"
+2026-01-12 16:40:28 [INFO] Recipe classic-apple-pie exists (version 1), updating...
+2026-01-12 16:40:28 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:40:28 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.classic-apple-pie "HTTP/2 400 Bad Request"
+2026-01-12 16:40:28 [ERROR]   ❌ Upload failed: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+2026-01-12 16:40:28 [INFO] Processing: classic-lasagna.json
+2026-01-12 16:40:28 [INFO]   Title: Classic Lasagna
+2026-01-12 16:40:28 [INFO]   Pre-enhancement score: 74/100
+2026-01-12 16:40:28 [INFO]   Enhancing with LLM...
+2026-01-12 16:40:28 [INFO] Enhancing recipe: Classic Lasagna
+2026-01-12 16:40:43 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:40:43 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:40:43 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:40:43 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:40:43 [INFO] Uploading recipe: classic-lasagna
+2026-01-12 16:40:44 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.classic-lasagna "HTTP/2 200 OK"
+2026-01-12 16:40:44 [INFO] Recipe classic-lasagna exists (version 1), updating...
+2026-01-12 16:40:44 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:40:44 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.classic-lasagna "HTTP/2 200 OK"
+2026-01-12 16:40:44 [INFO] ✅ Updated recipe classic-lasagna
+2026-01-12 16:40:44 [INFO]   ✅ Uploaded: classic-lasagna (score: 100)
+2026-01-12 16:40:44 [INFO] Processing: classic-spaghetti-carbonara.json
+2026-01-12 16:40:44 [INFO]   Title: Classic Spaghetti Carbonara
+2026-01-12 16:40:44 [INFO]   Pre-enhancement score: 75/100
+2026-01-12 16:40:44 [INFO]   Enhancing with LLM...
+2026-01-12 16:40:44 [INFO] Enhancing recipe: Classic Spaghetti Carbonara
+2026-01-12 16:41:07 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:41:07 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:41:07 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:41:07 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:41:07 [INFO] Uploading recipe: classic-spaghetti-carbonara
+2026-01-12 16:41:07 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.classic-spaghetti-carbonara "HTTP/2 200 OK"
+2026-01-12 16:41:07 [INFO] Recipe classic-spaghetti-carbonara exists (version 1), updating...
+2026-01-12 16:41:07 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:41:08 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.classic-spaghetti-carbonara "HTTP/2 200 OK"
+2026-01-12 16:41:08 [INFO] ✅ Updated recipe classic-spaghetti-carbonara
+2026-01-12 16:41:08 [INFO]   ✅ Uploaded: classic-spaghetti-carbonara (score: 100)
+2026-01-12 16:41:08 [INFO] Processing: creme-brulee.json
+2026-01-12 16:41:08 [INFO]   Title: Crème Brûlée
+2026-01-12 16:41:08 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:41:08 [INFO]   Enhancing with LLM...
+2026-01-12 16:41:08 [INFO] Enhancing recipe: Crème Brûlée
+2026-01-12 16:41:22 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:41:22 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:41:22 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:41:22 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:41:22 [INFO] Uploading recipe: creme-brulee
+2026-01-12 16:41:22 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.creme-brulee "HTTP/2 200 OK"
+2026-01-12 16:41:22 [INFO] Recipe creme-brulee exists (version 1), updating...
+2026-01-12 16:41:22 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:41:22 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.creme-brulee "HTTP/2 200 OK"
+2026-01-12 16:41:22 [INFO] ✅ Updated recipe creme-brulee
+2026-01-12 16:41:22 [INFO]   ✅ Uploaded: creme-brulee (score: 100)
+2026-01-12 16:41:22 [INFO] Processing: eggs-benedict.json
+2026-01-12 16:41:22 [INFO]   Title: Eggs Benedict
+2026-01-12 16:41:22 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:41:22 [INFO]   Enhancing with LLM...
+2026-01-12 16:41:22 [INFO] Enhancing recipe: Eggs Benedict
+2026-01-12 16:41:45 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:41:45 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:41:45 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:41:45 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:41:45 [INFO] Uploading recipe: eggs-benedict
+2026-01-12 16:41:45 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.eggs-benedict "HTTP/2 200 OK"
+2026-01-12 16:41:45 [INFO] Recipe eggs-benedict exists (version 1), updating...
+2026-01-12 16:41:45 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:41:45 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.eggs-benedict "HTTP/2 200 OK"
+2026-01-12 16:41:45 [INFO] ✅ Updated recipe eggs-benedict
+2026-01-12 16:41:45 [INFO]   ✅ Uploaded: eggs-benedict (score: 100)
+2026-01-12 16:41:45 [INFO] Processing: fish-and-chips.json
+2026-01-12 16:41:45 [INFO]   Title: Fish and Chips
+2026-01-12 16:41:45 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:41:45 [INFO]   Enhancing with LLM...
+2026-01-12 16:41:45 [INFO] Enhancing recipe: Fish and Chips
+2026-01-12 16:41:58 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:41:58 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:41:58 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:41:58 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:41:58 [INFO] Uploading recipe: fish-and-chips
+2026-01-12 16:41:58 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.fish-and-chips "HTTP/2 200 OK"
+2026-01-12 16:41:58 [INFO] Recipe fish-and-chips exists (version 1), updating...
+2026-01-12 16:41:58 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:41:58 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.fish-and-chips "HTTP/2 200 OK"
+2026-01-12 16:41:58 [INFO] ✅ Updated recipe fish-and-chips
+2026-01-12 16:41:58 [INFO]   ✅ Uploaded: fish-and-chips (score: 100)
+2026-01-12 16:41:58 [INFO] Processing: fish-tacos.json
+2026-01-12 16:41:58 [INFO]   Title: Fish Tacos
+2026-01-12 16:41:58 [INFO]   Pre-enhancement score: 73/100
+2026-01-12 16:41:58 [INFO]   Enhancing with LLM...
+2026-01-12 16:41:58 [INFO] Enhancing recipe: Fish Tacos
+2026-01-12 16:42:16 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:42:16 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:42:16 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:42:16 [WARNING]   ⚠️  2 steps might need timer type
+2026-01-12 16:42:16 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:42:16 [INFO] Uploading recipe: fish-tacos
+2026-01-12 16:42:16 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.fish-tacos "HTTP/2 200 OK"
+2026-01-12 16:42:16 [INFO] Recipe fish-tacos exists (version 1), updating...
+2026-01-12 16:42:16 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:42:17 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.fish-tacos "HTTP/2 200 OK"
+2026-01-12 16:42:17 [INFO] ✅ Updated recipe fish-tacos
+2026-01-12 16:42:17 [INFO]   ✅ Uploaded: fish-tacos (score: 98)
+2026-01-12 16:42:17 [INFO] Processing: fluffy-pancakes.json
+2026-01-12 16:42:17 [INFO]   Title: Fluffy Pancakes
+2026-01-12 16:42:17 [INFO]   Pre-enhancement score: 75/100
+2026-01-12 16:42:17 [INFO]   Enhancing with LLM...
+2026-01-12 16:42:17 [INFO] Enhancing recipe: Fluffy Pancakes
+2026-01-12 16:42:36 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:42:36 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:42:36 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:42:36 [WARNING]   ⚠️  1 steps might need timer type
+2026-01-12 16:42:36 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:42:36 [INFO] Uploading recipe: fluffy-pancakes
+2026-01-12 16:42:36 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.fluffy-pancakes "HTTP/2 200 OK"
+2026-01-12 16:42:36 [INFO] Recipe fluffy-pancakes exists (version 1), updating...
+2026-01-12 16:42:37 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:42:37 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.fluffy-pancakes "HTTP/2 200 OK"
+2026-01-12 16:42:37 [INFO] ✅ Updated recipe fluffy-pancakes
+2026-01-12 16:42:37 [INFO]   ✅ Uploaded: fluffy-pancakes (score: 98)
+2026-01-12 16:42:37 [INFO] Processing: french-onion-soup.json
+2026-01-12 16:42:37 [INFO]   Title: French Onion Soup
+2026-01-12 16:42:37 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:42:37 [INFO]   Enhancing with LLM...
+2026-01-12 16:42:37 [INFO] Enhancing recipe: French Onion Soup
+2026-01-12 16:42:57 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:42:57 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:42:57 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:42:57 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:42:57 [INFO] Uploading recipe: french-onion-soup
+2026-01-12 16:42:57 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.french-onion-soup "HTTP/2 200 OK"
+2026-01-12 16:42:57 [INFO] Recipe french-onion-soup exists (version 1), updating...
+2026-01-12 16:42:57 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:42:57 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.french-onion-soup "HTTP/2 400 Bad Request"
+2026-01-12 16:42:57 [ERROR]   ❌ Upload failed: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+2026-01-12 16:42:57 [INFO] Processing: french-toast.json
+2026-01-12 16:42:57 [INFO]   Title: French Toast
+2026-01-12 16:42:57 [INFO]   Pre-enhancement score: 75/100
+2026-01-12 16:42:57 [INFO]   Enhancing with LLM...
+2026-01-12 16:42:57 [INFO] Enhancing recipe: French Toast
+2026-01-12 16:43:14 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:43:14 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:43:14 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:43:14 [WARNING]   ⚠️  1 steps might need timer type
+2026-01-12 16:43:14 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:43:14 [INFO] Uploading recipe: french-toast
+2026-01-12 16:43:14 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.french-toast "HTTP/2 200 OK"
+2026-01-12 16:43:14 [INFO] Recipe french-toast exists (version 1), updating...
+2026-01-12 16:43:14 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:43:14 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.french-toast "HTTP/2 200 OK"
+2026-01-12 16:43:14 [INFO] ✅ Updated recipe french-toast
+2026-01-12 16:43:14 [INFO]   ✅ Uploaded: french-toast (score: 98)
+2026-01-12 16:43:14 [INFO] Processing: fresh-tomato-soup.json
+2026-01-12 16:43:14 [INFO]   Title: Fresh Tomato Soup
+2026-01-12 16:43:14 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:43:14 [INFO]   Enhancing with LLM...
+2026-01-12 16:43:14 [INFO] Enhancing recipe: Fresh Tomato Soup
+2026-01-12 16:43:30 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:43:30 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:43:30 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:43:30 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:43:30 [INFO] Uploading recipe: fresh-tomato-soup
+2026-01-12 16:43:30 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.fresh-tomato-soup "HTTP/2 200 OK"
+2026-01-12 16:43:30 [INFO] Recipe fresh-tomato-soup exists (version 1), updating...
+2026-01-12 16:43:30 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:43:30 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.fresh-tomato-soup "HTTP/2 200 OK"
+2026-01-12 16:43:30 [INFO] ✅ Updated recipe fresh-tomato-soup
+2026-01-12 16:43:30 [INFO]   ✅ Uploaded: fresh-tomato-soup (score: 100)
+2026-01-12 16:43:30 [INFO] Processing: full-english-breakfast.json
+2026-01-12 16:43:30 [INFO]   Title: Full English Breakfast
+2026-01-12 16:43:30 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:43:30 [INFO]   Enhancing with LLM...
+2026-01-12 16:43:30 [INFO] Enhancing recipe: Full English Breakfast
+2026-01-12 16:43:46 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:43:46 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:43:46 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:43:46 [WARNING]   ⚠️  2 steps might need timer type
+2026-01-12 16:43:46 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:43:46 [INFO] Uploading recipe: full-english-breakfast
+2026-01-12 16:43:46 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.full-english-breakfast "HTTP/2 200 OK"
+2026-01-12 16:43:46 [INFO] Recipe full-english-breakfast exists (version 1), updating...
+2026-01-12 16:43:46 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:43:46 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.full-english-breakfast "HTTP/2 200 OK"
+2026-01-12 16:43:46 [INFO] ✅ Updated recipe full-english-breakfast
+2026-01-12 16:43:46 [INFO]   ✅ Uploaded: full-english-breakfast (score: 98)
+2026-01-12 16:43:46 [INFO] Processing: garlic-bread.json
+2026-01-12 16:43:46 [INFO]   Title: Garlic Bread
+2026-01-12 16:43:46 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:43:46 [INFO]   Enhancing with LLM...
+2026-01-12 16:43:46 [INFO] Enhancing recipe: Garlic Bread
+2026-01-12 16:44:02 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:44:02 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:44:02 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:44:02 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:44:02 [INFO] Uploading recipe: garlic-bread
+2026-01-12 16:44:03 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.garlic-bread "HTTP/2 200 OK"
+2026-01-12 16:44:03 [INFO] Recipe garlic-bread exists (version 1), updating...
+2026-01-12 16:44:03 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:44:03 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.garlic-bread "HTTP/2 200 OK"
+2026-01-12 16:44:03 [INFO] ✅ Updated recipe garlic-bread
+2026-01-12 16:44:03 [INFO]   ✅ Uploaded: garlic-bread (score: 100)
+2026-01-12 16:44:03 [INFO] Processing: gourmet-beef-burger.json
+2026-01-12 16:44:03 [INFO]   Title: Gourmet Beef Burger
+2026-01-12 16:44:03 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:44:03 [INFO]   Enhancing with LLM...
+2026-01-12 16:44:03 [INFO] Enhancing recipe: Gourmet Beef Burger
+2026-01-12 16:44:23 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:44:23 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:44:23 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:44:23 [WARNING]   ⚠️  4 steps might need timer type
+2026-01-12 16:44:23 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:44:23 [INFO] Uploading recipe: gourmet-beef-burger
+2026-01-12 16:44:24 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.gourmet-beef-burger "HTTP/2 200 OK"
+2026-01-12 16:44:24 [INFO] Recipe gourmet-beef-burger exists (version 1), updating...
+2026-01-12 16:44:24 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:44:24 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.gourmet-beef-burger "HTTP/2 200 OK"
+2026-01-12 16:44:24 [INFO] ✅ Updated recipe gourmet-beef-burger
+2026-01-12 16:44:24 [INFO]   ✅ Uploaded: gourmet-beef-burger (score: 98)
+2026-01-12 16:44:24 [INFO] Processing: greek-salad.json
+2026-01-12 16:44:24 [INFO]   Title: Greek Salad
+2026-01-12 16:44:24 [INFO]   Pre-enhancement score: 77/100
+2026-01-12 16:44:24 [INFO]   Enhancing with LLM...
+2026-01-12 16:44:24 [INFO] Enhancing recipe: Greek Salad
+2026-01-12 16:44:38 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:44:38 [INFO] Successfully enhanced recipe with 6 steps
+2026-01-12 16:44:38 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:44:38 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:44:38 [INFO] Uploading recipe: greek-salad
+2026-01-12 16:44:38 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.greek-salad "HTTP/2 200 OK"
+2026-01-12 16:44:38 [INFO] Recipe greek-salad exists (version 1), updating...
+2026-01-12 16:44:38 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:44:38 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.greek-salad "HTTP/2 200 OK"
+2026-01-12 16:44:38 [INFO] ✅ Updated recipe greek-salad
+2026-01-12 16:44:38 [INFO]   ✅ Uploaded: greek-salad (score: 100)
+2026-01-12 16:44:38 [INFO] Processing: grilled-salmon-with-lemon.json
+2026-01-12 16:44:38 [INFO]   Title: Grilled Salmon with Lemon
+2026-01-12 16:44:38 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:44:38 [INFO]   Enhancing with LLM...
+2026-01-12 16:44:38 [INFO] Enhancing recipe: Grilled Salmon with Lemon
+2026-01-12 16:44:56 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:44:56 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:44:56 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:44:56 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:44:56 [INFO] Uploading recipe: grilled-salmon-with-lemon
+2026-01-12 16:44:56 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.grilled-salmon-with-lemon "HTTP/2 200 OK"
+2026-01-12 16:44:56 [INFO] Recipe grilled-salmon-with-lemon exists (version 1), updating...
+2026-01-12 16:44:56 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:44:56 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.grilled-salmon-with-lemon "HTTP/2 200 OK"
+2026-01-12 16:44:56 [INFO] ✅ Updated recipe grilled-salmon-with-lemon
+2026-01-12 16:44:56 [INFO]   ✅ Uploaded: grilled-salmon-with-lemon (score: 100)
+2026-01-12 16:44:56 [INFO] Processing: happy-fish-pie.json
+2026-01-12 16:44:56 [INFO]   Title: Happy fish pie
+2026-01-12 16:44:56 [INFO]   Pre-enhancement score: 82/100
+2026-01-12 16:44:56 [INFO]   Enhancing with LLM...
+2026-01-12 16:44:56 [INFO] Enhancing recipe: Happy fish pie
+2026-01-12 16:45:26 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:45:26 [INFO] Successfully enhanced recipe with 11 steps
+2026-01-12 16:45:26 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:45:26 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:45:26 [INFO] Uploading recipe: happy-fish-pie
+2026-01-12 16:45:26 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.happy-fish-pie "HTTP/2 200 OK"
+2026-01-12 16:45:26 [INFO] Recipe happy-fish-pie exists (version 1), updating...
+2026-01-12 16:45:26 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:45:26 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.happy-fish-pie "HTTP/2 200 OK"
+2026-01-12 16:45:26 [INFO] ✅ Updated recipe happy-fish-pie
+2026-01-12 16:45:26 [INFO]   ✅ Uploaded: happy-fish-pie (score: 100)
+2026-01-12 16:45:26 [INFO] Processing: lemon-tart.json
+2026-01-12 16:45:26 [INFO]   Title: Lemon Tart
+2026-01-12 16:45:26 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:45:26 [INFO]   Enhancing with LLM...
+2026-01-12 16:45:26 [INFO] Enhancing recipe: Lemon Tart
+2026-01-12 16:45:42 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:45:42 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:45:42 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:45:42 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:45:42 [INFO] Uploading recipe: lemon-tart
+2026-01-12 16:45:42 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.lemon-tart "HTTP/2 200 OK"
+2026-01-12 16:45:42 [INFO] Recipe lemon-tart exists (version 1), updating...
+2026-01-12 16:45:42 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:45:42 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.lemon-tart "HTTP/2 200 OK"
+2026-01-12 16:45:42 [INFO] ✅ Updated recipe lemon-tart
+2026-01-12 16:45:42 [INFO]   ✅ Uploaded: lemon-tart (score: 100)
+2026-01-12 16:45:42 [INFO] Processing: lobster-tail.json
+2026-01-12 16:45:42 [INFO]   Title: Lobster Tail
+2026-01-12 16:45:42 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:45:42 [INFO]   Enhancing with LLM...
+2026-01-12 16:45:42 [INFO] Enhancing recipe: Lobster Tail
+2026-01-12 16:45:57 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:45:57 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:45:57 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:45:57 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:45:57 [INFO] Uploading recipe: lobster-tail
+2026-01-12 16:45:57 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.lobster-tail "HTTP/2 200 OK"
+2026-01-12 16:45:57 [INFO] Recipe lobster-tail exists (version 1), updating...
+2026-01-12 16:45:57 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:45:58 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.lobster-tail "HTTP/2 200 OK"
+2026-01-12 16:45:58 [INFO] ✅ Updated recipe lobster-tail
+2026-01-12 16:45:58 [INFO]   ✅ Uploaded: lobster-tail (score: 100)
+2026-01-12 16:45:58 [INFO] Processing: margherita-pizza.json
+2026-01-12 16:45:58 [INFO]   Title: Margherita Pizza
+2026-01-12 16:45:58 [INFO]   Pre-enhancement score: 74/100
+2026-01-12 16:45:58 [INFO]   Enhancing with LLM...
+2026-01-12 16:45:58 [INFO] Enhancing recipe: Margherita Pizza
+2026-01-12 16:46:12 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:46:12 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:46:12 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:46:12 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:46:12 [INFO] Uploading recipe: margherita-pizza
+2026-01-12 16:46:12 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.margherita-pizza "HTTP/2 200 OK"
+2026-01-12 16:46:12 [INFO] Recipe margherita-pizza exists (version 1), updating...
+2026-01-12 16:46:12 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:46:12 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.margherita-pizza "HTTP/2 200 OK"
+2026-01-12 16:46:12 [INFO] ✅ Updated recipe margherita-pizza
+2026-01-12 16:46:12 [INFO]   ✅ Uploaded: margherita-pizza (score: 100)
+2026-01-12 16:46:12 [INFO] Processing: meatballs-in-marinara.json
+2026-01-12 16:46:12 [INFO]   Title: Meatballs in Marinara
+2026-01-12 16:46:12 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:46:12 [INFO]   Enhancing with LLM...
+2026-01-12 16:46:12 [INFO] Enhancing recipe: Meatballs in Marinara
+2026-01-12 16:46:26 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:46:26 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:46:26 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:46:26 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:46:26 [INFO] Uploading recipe: meatballs-in-marinara
+2026-01-12 16:46:26 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.meatballs-in-marinara "HTTP/2 200 OK"
+2026-01-12 16:46:26 [INFO] Recipe meatballs-in-marinara exists (version 1), updating...
+2026-01-12 16:46:26 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:46:26 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.meatballs-in-marinara "HTTP/2 200 OK"
+2026-01-12 16:46:26 [INFO] ✅ Updated recipe meatballs-in-marinara
+2026-01-12 16:46:26 [INFO]   ✅ Uploaded: meatballs-in-marinara (score: 100)
+2026-01-12 16:46:26 [INFO] Processing: moussaka.json
+2026-01-12 16:46:26 [INFO]   Title: Moussaka
+2026-01-12 16:46:26 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:46:26 [INFO]   Enhancing with LLM...
+2026-01-12 16:46:26 [INFO] Enhancing recipe: Moussaka
+2026-01-12 16:46:44 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:46:44 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:46:44 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:46:44 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:46:44 [INFO] Uploading recipe: moussaka
+2026-01-12 16:46:44 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.moussaka "HTTP/2 200 OK"
+2026-01-12 16:46:44 [INFO] Recipe moussaka exists (version 1), updating...
+2026-01-12 16:46:44 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:46:44 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.moussaka "HTTP/2 200 OK"
+2026-01-12 16:46:44 [INFO] ✅ Updated recipe moussaka
+2026-01-12 16:46:44 [INFO]   ✅ Uploaded: moussaka (score: 100)
+2026-01-12 16:46:44 [INFO] Processing: mushroom-risotto.json
+2026-01-12 16:46:44 [INFO]   Title: Mushroom Risotto
+2026-01-12 16:46:44 [INFO]   Pre-enhancement score: 66/100
+2026-01-12 16:46:44 [INFO]   Enhancing with LLM...
+2026-01-12 16:46:44 [INFO] Enhancing recipe: Mushroom Risotto
+2026-01-12 16:47:01 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:47:01 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:47:01 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:47:01 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:47:01 [INFO] Uploading recipe: mushroom-risotto
+2026-01-12 16:47:01 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.mushroom-risotto "HTTP/2 200 OK"
+2026-01-12 16:47:01 [INFO] Recipe mushroom-risotto exists (version 1), updating...
+2026-01-12 16:47:01 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:47:01 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.mushroom-risotto "HTTP/2 200 OK"
+2026-01-12 16:47:01 [INFO] ✅ Updated recipe mushroom-risotto
+2026-01-12 16:47:01 [INFO]   ✅ Uploaded: mushroom-risotto (score: 100)
+2026-01-12 16:47:01 [INFO] Processing: pad-thai.json
+2026-01-12 16:47:01 [INFO]   Title: Pad Thai
+2026-01-12 16:47:01 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:47:01 [INFO]   Enhancing with LLM...
+2026-01-12 16:47:01 [INFO] Enhancing recipe: Pad Thai
+2026-01-12 16:47:20 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:47:20 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:47:20 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:47:20 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:47:20 [INFO] Uploading recipe: pad-thai
+2026-01-12 16:47:20 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.pad-thai "HTTP/2 200 OK"
+2026-01-12 16:47:20 [INFO] Recipe pad-thai exists (version 1), updating...
+2026-01-12 16:47:20 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:47:20 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.pad-thai "HTTP/2 200 OK"
+2026-01-12 16:47:20 [INFO] ✅ Updated recipe pad-thai
+2026-01-12 16:47:20 [INFO]   ✅ Uploaded: pad-thai (score: 100)
+2026-01-12 16:47:20 [INFO] Processing: pesto-pasta.json
+2026-01-12 16:47:20 [INFO]   Title: Pesto Pasta
+2026-01-12 16:47:20 [INFO]   Pre-enhancement score: 77/100
+2026-01-12 16:47:20 [INFO]   Enhancing with LLM...
+2026-01-12 16:47:20 [INFO] Enhancing recipe: Pesto Pasta
+2026-01-12 16:47:35 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:47:35 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:47:35 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:47:35 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:47:35 [INFO] Uploading recipe: pesto-pasta
+2026-01-12 16:47:35 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.pesto-pasta "HTTP/2 200 OK"
+2026-01-12 16:47:35 [INFO] Recipe pesto-pasta exists (version 1), updating...
+2026-01-12 16:47:35 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:47:35 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.pesto-pasta "HTTP/2 200 OK"
+2026-01-12 16:47:35 [INFO] ✅ Updated recipe pesto-pasta
+2026-01-12 16:47:35 [INFO]   ✅ Uploaded: pesto-pasta (score: 100)
+2026-01-12 16:47:35 [INFO] Processing: pork-chops-with-apples.json
+2026-01-12 16:47:35 [INFO]   Title: Pork Chops with Apples
+2026-01-12 16:47:35 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:47:35 [INFO]   Enhancing with LLM...
+2026-01-12 16:47:35 [INFO] Enhancing recipe: Pork Chops with Apples
+2026-01-12 16:47:49 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:47:49 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:47:49 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:47:49 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:47:49 [INFO] Uploading recipe: pork-chops-with-apples
+2026-01-12 16:47:49 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.pork-chops-with-apples "HTTP/2 200 OK"
+2026-01-12 16:47:49 [INFO] Recipe pork-chops-with-apples exists (version 1), updating...
+2026-01-12 16:47:49 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:47:49 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.pork-chops-with-apples "HTTP/2 200 OK"
+2026-01-12 16:47:49 [INFO] ✅ Updated recipe pork-chops-with-apples
+2026-01-12 16:47:49 [INFO]   ✅ Uploaded: pork-chops-with-apples (score: 100)
+2026-01-12 16:47:49 [INFO] Processing: pulled-pork-sandwich.json
+2026-01-12 16:47:49 [INFO]   Title: Pulled Pork Sandwich
+2026-01-12 16:47:49 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:47:49 [INFO]   Enhancing with LLM...
+2026-01-12 16:47:49 [INFO] Enhancing recipe: Pulled Pork Sandwich
+2026-01-12 16:48:02 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:48:02 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:48:02 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:48:02 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:48:02 [INFO] Uploading recipe: pulled-pork-sandwich
+2026-01-12 16:48:03 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.pulled-pork-sandwich "HTTP/2 200 OK"
+2026-01-12 16:48:03 [INFO] Recipe pulled-pork-sandwich exists (version 1), updating...
+2026-01-12 16:48:03 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:48:03 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.pulled-pork-sandwich "HTTP/2 200 OK"
+2026-01-12 16:48:03 [INFO] ✅ Updated recipe pulled-pork-sandwich
+2026-01-12 16:48:03 [INFO]   ✅ Uploaded: pulled-pork-sandwich (score: 100)
+2026-01-12 16:48:03 [INFO] Processing: quinoa-salad.json
+2026-01-12 16:48:03 [INFO]   Title: Quinoa Salad
+2026-01-12 16:48:03 [INFO]   Pre-enhancement score: 75/100
+2026-01-12 16:48:03 [INFO]   Enhancing with LLM...
+2026-01-12 16:48:03 [INFO] Enhancing recipe: Quinoa Salad
+2026-01-12 16:48:16 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:48:16 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:48:16 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:48:16 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:48:16 [INFO] Uploading recipe: quinoa-salad
+2026-01-12 16:48:16 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.quinoa-salad "HTTP/2 200 OK"
+2026-01-12 16:48:16 [INFO] Recipe quinoa-salad exists (version 1), updating...
+2026-01-12 16:48:16 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:48:16 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.quinoa-salad "HTTP/2 200 OK"
+2026-01-12 16:48:16 [INFO] ✅ Updated recipe quinoa-salad
+2026-01-12 16:48:16 [INFO]   ✅ Uploaded: quinoa-salad (score: 100)
+2026-01-12 16:48:16 [INFO] Processing: roast-chicken-dinner.json
+2026-01-12 16:48:16 [INFO]   Title: Roast Chicken Dinner
+2026-01-12 16:48:16 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:48:16 [INFO]   Enhancing with LLM...
+2026-01-12 16:48:16 [INFO] Enhancing recipe: Roast Chicken Dinner
+2026-01-12 16:48:29 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:48:29 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:48:29 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:48:29 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:48:29 [INFO] Uploading recipe: roast-chicken-dinner
+2026-01-12 16:48:29 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.roast-chicken-dinner "HTTP/2 200 OK"
+2026-01-12 16:48:29 [INFO] Recipe roast-chicken-dinner exists (version 1), updating...
+2026-01-12 16:48:29 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:48:29 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.roast-chicken-dinner "HTTP/2 200 OK"
+2026-01-12 16:48:29 [INFO] ✅ Updated recipe roast-chicken-dinner
+2026-01-12 16:48:29 [INFO]   ✅ Uploaded: roast-chicken-dinner (score: 100)
+2026-01-12 16:48:29 [INFO] Processing: shepherds-pie.json
+2026-01-12 16:48:29 [INFO]   Title: Shepherd's Pie
+2026-01-12 16:48:29 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:48:29 [INFO]   Enhancing with LLM...
+2026-01-12 16:48:29 [INFO] Enhancing recipe: Shepherd's Pie
+2026-01-12 16:48:50 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:48:50 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:48:50 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:48:50 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:48:50 [INFO] Uploading recipe: shepherds-pie
+2026-01-12 16:48:50 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.shepherds-pie "HTTP/2 200 OK"
+2026-01-12 16:48:50 [INFO] Recipe shepherds-pie exists (version 1), updating...
+2026-01-12 16:48:50 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:48:50 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.shepherds-pie "HTTP/2 400 Bad Request"
+2026-01-12 16:48:50 [ERROR]   ❌ Upload failed: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+2026-01-12 16:48:50 [INFO] Processing: shrimp-scampi.json
+2026-01-12 16:48:50 [INFO]   Title: Shrimp Scampi
+2026-01-12 16:48:50 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:48:50 [INFO]   Enhancing with LLM...
+2026-01-12 16:48:50 [INFO] Enhancing recipe: Shrimp Scampi
+2026-01-12 16:49:07 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:49:07 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:49:07 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:49:07 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:49:07 [INFO] Uploading recipe: shrimp-scampi
+2026-01-12 16:49:07 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.shrimp-scampi "HTTP/2 200 OK"
+2026-01-12 16:49:07 [INFO] Recipe shrimp-scampi exists (version 1), updating...
+2026-01-12 16:49:07 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:49:07 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.shrimp-scampi "HTTP/2 200 OK"
+2026-01-12 16:49:07 [INFO] ✅ Updated recipe shrimp-scampi
+2026-01-12 16:49:07 [INFO]   ✅ Uploaded: shrimp-scampi (score: 100)
+2026-01-12 16:49:07 [INFO] Processing: smoked-salmon-pasta-jamie-oliver-recipes.json
+2026-01-12 16:49:07 [INFO]   Title: Smoked Salmon Pasta
+2026-01-12 16:49:07 [INFO]   Pre-enhancement score: 72/100
+2026-01-12 16:49:07 [INFO]   Enhancing with LLM...
+2026-01-12 16:49:07 [INFO] Enhancing recipe: Smoked Salmon Pasta
+2026-01-12 16:49:18 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:49:18 [INFO] Successfully enhanced recipe with 4 steps
+2026-01-12 16:49:18 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:49:18 [WARNING]   ⚠️  No ingredients listed
+2026-01-12 16:49:18 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:49:18 [INFO] Uploading recipe: smoked-salmon-pasta-jamie-oliver-recipes
+2026-01-12 16:49:18 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.smoked-salmon-pasta-jamie-oliver-recipes "HTTP/2 200 OK"
+2026-01-12 16:49:18 [INFO] Recipe smoked-salmon-pasta-jamie-oliver-recipes exists (version 1), updating...
+2026-01-12 16:49:18 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:49:18 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.smoked-salmon-pasta-jamie-oliver-recipes "HTTP/2 200 OK"
+2026-01-12 16:49:18 [INFO] ✅ Updated recipe smoked-salmon-pasta-jamie-oliver-recipes
+2026-01-12 16:49:18 [INFO]   ✅ Uploaded: smoked-salmon-pasta-jamie-oliver-recipes (score: 98)
+2026-01-12 16:49:18 [INFO] Processing: somali-beef-stew-jamie-oliver-recipes.json
+2026-01-12 16:49:18 [INFO]   Title: Somali Beef Stew | Jamie Oliver recipes
+2026-01-12 16:49:18 [INFO]   Pre-enhancement score: 84/100
+2026-01-12 16:49:18 [INFO]   Enhancing with LLM...
+2026-01-12 16:49:18 [INFO] Enhancing recipe: Somali Beef Stew | Jamie Oliver recipes
+2026-01-12 16:49:40 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:49:40 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:49:40 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:49:40 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:49:40 [INFO] Uploading recipe: somali-beef-stew-jamie-oliver-recipes
+2026-01-12 16:49:40 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.somali-beef-stew-jamie-oliver-recipes "HTTP/2 200 OK"
+2026-01-12 16:49:40 [INFO] Recipe somali-beef-stew-jamie-oliver-recipes exists (version 1), updating...
+2026-01-12 16:49:40 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:49:41 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.somali-beef-stew-jamie-oliver-recipes "HTTP/2 200 OK"
+2026-01-12 16:49:41 [INFO] ✅ Updated recipe somali-beef-stew-jamie-oliver-recipes
+2026-01-12 16:49:41 [INFO]   ✅ Uploaded: somali-beef-stew-jamie-oliver-recipes (score: 100)
+2026-01-12 16:49:41 [INFO] Processing: steak-and-fries.json
+2026-01-12 16:49:41 [INFO]   Title: Steak and Fries
+2026-01-12 16:49:41 [INFO]   Pre-enhancement score: 68/100
+2026-01-12 16:49:41 [INFO]   Enhancing with LLM...
+2026-01-12 16:49:41 [INFO] Enhancing recipe: Steak and Fries
+2026-01-12 16:49:54 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:49:54 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:49:54 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:49:54 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:49:54 [INFO] Uploading recipe: steak-and-fries
+2026-01-12 16:49:54 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.steak-and-fries "HTTP/2 200 OK"
+2026-01-12 16:49:54 [INFO] Recipe steak-and-fries exists (version 1), updating...
+2026-01-12 16:49:54 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:49:54 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.steak-and-fries "HTTP/2 200 OK"
+2026-01-12 16:49:54 [INFO] ✅ Updated recipe steak-and-fries
+2026-01-12 16:49:54 [INFO]   ✅ Uploaded: steak-and-fries (score: 100)
+2026-01-12 16:49:54 [INFO] Processing: sushi-rolls.json
+2026-01-12 16:49:54 [INFO]   Title: Sushi Rolls
+2026-01-12 16:49:54 [INFO]   Pre-enhancement score: 75/100
+2026-01-12 16:49:54 [INFO]   Enhancing with LLM...
+2026-01-12 16:49:54 [INFO] Enhancing recipe: Sushi Rolls
+2026-01-12 16:50:08 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:50:08 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:50:08 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:50:08 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:50:08 [INFO] Uploading recipe: sushi-rolls
+2026-01-12 16:50:08 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.sushi-rolls "HTTP/2 200 OK"
+2026-01-12 16:50:08 [INFO] Recipe sushi-rolls exists (version 1), updating...
+2026-01-12 16:50:09 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:50:09 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.sushi-rolls "HTTP/2 200 OK"
+2026-01-12 16:50:09 [INFO] ✅ Updated recipe sushi-rolls
+2026-01-12 16:50:09 [INFO]   ✅ Uploaded: sushi-rolls (score: 100)
+2026-01-12 16:50:09 [INFO] Processing: thai-green-curry.json
+2026-01-12 16:50:09 [INFO]   Title: Thai Green Curry
+2026-01-12 16:50:09 [INFO]   Pre-enhancement score: 66/100
+2026-01-12 16:50:09 [INFO]   Enhancing with LLM...
+2026-01-12 16:50:09 [INFO] Enhancing recipe: Thai Green Curry
+2026-01-12 16:50:23 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:50:23 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:50:23 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:50:23 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:50:23 [INFO] Uploading recipe: thai-green-curry
+2026-01-12 16:50:23 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.thai-green-curry "HTTP/2 200 OK"
+2026-01-12 16:50:23 [INFO] Recipe thai-green-curry exists (version 1), updating...
+2026-01-12 16:50:23 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:50:23 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.thai-green-curry "HTTP/2 200 OK"
+2026-01-12 16:50:23 [INFO] ✅ Updated recipe thai-green-curry
+2026-01-12 16:50:23 [INFO]   ✅ Uploaded: thai-green-curry (score: 100)
+2026-01-12 16:50:23 [INFO] Processing: tiramisu.json
+2026-01-12 16:50:23 [INFO]   Title: Tiramisu
+2026-01-12 16:50:23 [INFO]   Pre-enhancement score: 74/100
+2026-01-12 16:50:23 [INFO]   Enhancing with LLM...
+2026-01-12 16:50:23 [INFO] Enhancing recipe: Tiramisu
+2026-01-12 16:50:37 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:50:37 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:50:37 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:50:37 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:50:37 [INFO] Uploading recipe: tiramisu
+2026-01-12 16:50:37 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.tiramisu "HTTP/2 200 OK"
+2026-01-12 16:50:37 [INFO] Recipe tiramisu exists (version 1), updating...
+2026-01-12 16:50:37 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:50:37 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.tiramisu "HTTP/2 200 OK"
+2026-01-12 16:50:37 [INFO] ✅ Updated recipe tiramisu
+2026-01-12 16:50:37 [INFO]   ✅ Uploaded: tiramisu (score: 100)
+2026-01-12 16:50:37 [INFO] Processing: tomato-mussel-pasta.json
+2026-01-12 16:50:37 [INFO]   Title: TOMATO & MUSSEL PASTA
+2026-01-12 16:50:37 [INFO]   Pre-enhancement score: 74/100
+2026-01-12 16:50:37 [INFO]   Enhancing with LLM...
+2026-01-12 16:50:37 [INFO] Enhancing recipe: TOMATO & MUSSEL PASTA
+2026-01-12 16:50:45 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:50:45 [INFO] Successfully enhanced recipe with 4 steps
+2026-01-12 16:50:45 [INFO]   Post-enhancement score: 98/100
+2026-01-12 16:50:45 [WARNING]   ⚠️  No ingredients listed
+2026-01-12 16:50:45 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:50:45 [INFO] Uploading recipe: tomato-mussel-pasta
+2026-01-12 16:50:46 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.tomato-mussel-pasta "HTTP/2 200 OK"
+2026-01-12 16:50:46 [INFO] Recipe tomato-mussel-pasta exists (version 1), updating...
+2026-01-12 16:50:46 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:50:46 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.tomato-mussel-pasta "HTTP/2 200 OK"
+2026-01-12 16:50:46 [INFO] ✅ Updated recipe tomato-mussel-pasta
+2026-01-12 16:50:46 [INFO]   ✅ Uploaded: tomato-mussel-pasta (score: 98)
+2026-01-12 16:50:46 [INFO] Processing: vegetable-curry.json
+2026-01-12 16:50:46 [INFO]   Title: Vegetable Curry
+2026-01-12 16:50:46 [INFO]   Pre-enhancement score: 70/100
+2026-01-12 16:50:46 [INFO]   Enhancing with LLM...
+2026-01-12 16:50:46 [INFO] Enhancing recipe: Vegetable Curry
+2026-01-12 16:50:58 [INFO] HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+2026-01-12 16:50:58 [INFO] Successfully enhanced recipe with 7 steps
+2026-01-12 16:50:58 [INFO]   Post-enhancement score: 100/100
+2026-01-12 16:50:58 [WARNING]   ⚠️  No utensils listed
+2026-01-12 16:50:58 [INFO] Uploading recipe: vegetable-curry
+2026-01-12 16:50:59 [INFO] HTTP Request: GET https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?select=id%2Cversion%2Crecipe_json&slug=eq.vegetable-curry "HTTP/2 200 OK"
+2026-01-12 16:50:59 [INFO] Recipe vegetable-curry exists (version 1), updating...
+2026-01-12 16:50:59 [INFO] HTTP Request: POST https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipe_versions "HTTP/2 201 Created"
+2026-01-12 16:50:59 [INFO] HTTP Request: PATCH https://eplbnjvhvyxcmyogvzpx.supabase.co/rest/v1/recipes?slug=eq.vegetable-curry "HTTP/2 200 OK"
+2026-01-12 16:50:59 [INFO] ✅ Updated recipe vegetable-curry
+2026-01-12 16:50:59 [INFO]   ✅ Uploaded: vegetable-curry (score: 100)
+
+============================================================
+MIGRATION SUMMARY
+============================================================
+✅ Success:  50
+❌ Errors:   5
+⏭️  Skipped:  0
+============================================================
+
+Quality Scores:
+  Average: 99.5
+  Min: 93
+  Max: 100
+
+Errors:
+  - beef-wellington: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+  - buffalo-chicken-wings: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+  - classic-apple-pie: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+  - french-onion-soup: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}
+  - shepherds-pie: {'message': 'unsupported Unicode escape sequence', 'code': '22P05', 'hint': None, 'details': '\\u0000 cannot be converted to text.'}

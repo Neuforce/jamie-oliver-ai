@@ -158,9 +158,9 @@ def main():
     )
     
     parser.add_argument(
-        "--publish",
+        "--no-publish",
         action="store_true",
-        help="Publish recipes after upload (default: draft)",
+        help="Keep recipes as draft instead of publishing",
     )
     
     parser.add_argument(
@@ -253,7 +253,7 @@ def main():
             enhancer=enhancer,
             validator=validator,
             uploader=uploader,
-            publish=args.publish,
+            publish=not args.no_publish,  # Default to publish=True
             dry_run=args.dry_run,
         )
         

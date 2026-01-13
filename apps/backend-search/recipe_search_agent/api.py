@@ -344,9 +344,12 @@ async def list_recipes(
         
         query = agent.client.table("recipes").select(select_fields)
         
-        # Apply status filter
+        # Apply status filter - default to published OR draft (not archived)
         if status:
             query = query.eq("status", status)
+        else:
+            # Include both published and draft by default
+            query = query.in_("status", ["published", "draft"])
         
         query = query.order("updated_at", desc=True).range(offset, offset + limit - 1)
         response = query.execute()
@@ -419,4 +422,44 @@ if __name__ == "__main__":
         reload=True,
         log_level="info",
     )
+
+
+@app.post("/api/v1/recipes/publish-all")
+async def publish_all_recipes():
+    """
+    Publish all draft recipes.
+    This is an admin endpoint to bulk-publish enhanced recipes.
+    """
+    try:
+        agent = get_search_agent()
+        
+        # Get all draft recipes
+        drafts = agent.client.table("recipes") \
+            .select("slug, quality_score") \
+            .eq("status", "draft") \
+            .execute()
+        
+        if not drafts.data:
+            return {"message": "No draft recipes found", "published": 0}
+        
+        # Publish ALL drafts (they're all enhanced and good quality)
+        published_recipes = [r["slug"] for r in drafts.data]
+        
+        agent.client.table("recipes") \
+            .update({
+                "status": "published",
+                "published_at": "now()"
+            }) \
+            .eq("status", "draft") \
+            .execute()
+        
+        return {
+            "message": f"Published {len(published_recipes)} recipes",
+            "published": len(published_recipes),
+            "recipes": published_recipes
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to publish recipes: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 

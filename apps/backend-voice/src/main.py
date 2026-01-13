@@ -355,23 +355,36 @@ def _extract_recipe_id(custom_parameters: Dict[str, Any]) -> Optional[str]:
 
 
 def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
-    """Generate a friendly greeting that jumps straight into the first step."""
+    """Generate a warm, Jamie Oliver-style greeting."""
     if not recipe_payload:
         return DEFAULT_HELLO_MESSAGE
 
     recipe_meta = recipe_payload.get("recipe", {})
-    title = recipe_meta.get("title") or "this recipe"
+    title = recipe_meta.get("title") or "something delicious"
+    description = recipe_meta.get("description", "")
+    difficulty = recipe_meta.get("difficulty", "")
+    
+    # Get first step to mention
     first_step = _get_first_step_description(recipe_payload)
+    
+    # Build a warm, conversational greeting
+    greetings = [
+        f"Alright! {title} - this is going to be gorgeous!",
+        f"Right then, let's make some {title}!",
+        f"Lovely choice! {title} is absolutely delicious.",
+        f"Oh brilliant, {title}! You're going to love this one.",
+    ]
+    
+    import random
+    greeting = random.choice(greetings)
+    
+    if description:
+        greeting += f" {description}."
+    
     if first_step:
-        return (
-            f"Great, we're already cooking {title}. "
-            f"Let's begin with the first step: {first_step}. "
-            "Just let me know when you want to move on."
-        )
-    return (
-        f"Great, we're already cooking {title}. "
-        "I'm ready to guide you through each step."
-    )
+        greeting += f" Let's crack on - first up, {first_step.lower() if first_step[0].isupper() else first_step}"
+    
+    return greeting
 
 
 def _get_first_step_description(recipe_payload: Dict[str, Any]) -> Optional[str]:

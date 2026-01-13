@@ -87,8 +87,15 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   // Audio playback hook
   const audioPlayback = useAudioPlayback();
 
-  const parseIsoDurationToSeconds = useCallback((duration?: string | null) => {
+  const parseIsoDurationToSeconds = useCallback((duration?: string | number | null) => {
     if (!duration) return 0;
+    
+    // If duration is already a number, return it directly (it's in seconds)
+    if (typeof duration === 'number') {
+      return Math.round(duration);
+    }
+    
+    // Otherwise, parse ISO 8601 duration string (e.g., "PT50M", "PT1H30M")
     const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/i);
     if (!match) return 0;
     const hours = parseInt(match[1] || '0', 10);

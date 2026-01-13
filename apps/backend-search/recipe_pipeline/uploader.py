@@ -39,7 +39,7 @@ class RecipeUploader:
         validation: ValidationResult,
         source_url: str | None = None,
         source_type: str = "enhanced",
-        publish: bool = False,
+        publish: bool = True,  # Default to published - enhanced recipes should be live
     ) -> dict:
         """
         Upload recipe to Supabase.

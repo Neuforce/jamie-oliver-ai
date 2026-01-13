@@ -117,6 +117,39 @@ python -m uvicorn recipe_search_agent.api:app --reload
 
 ---
 
+### `publish_now.py`
+Publica todas las recetas en draft a published status.
+
+```bash
+python scripts/publish_now.py
+```
+
+**Qué hace:**
+- Conecta a Supabase usando credenciales de `apps/backend-search/.env`
+- Actualiza todas las recetas con `status != 'published'` a `published`
+- Muestra resumen de recetas por status
+
+**Alternativa vía API:**
+```bash
+curl -X POST http://localhost:8000/api/v1/recipes/publish-all
+```
+
+---
+
+### `session_cleanup.sh`
+Script para hacer commit de cambios de sesión con mensajes apropiados.
+
+```bash
+./scripts/session_cleanup.sh
+```
+
+**Qué hace:**
+- Agrupa cambios en commits lógicos
+- Usa conventional commits format
+- Muestra resumen de commits realizados
+
+---
+
 ## Uso Recomendado
 
 ### Primera vez
