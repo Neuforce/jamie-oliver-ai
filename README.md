@@ -15,7 +15,7 @@ Jamie Oliver AI is a full-stack application that provides an interactive cooking
 └─────────────────────┬───────────────────────┬───────────────────┘
                       │                       │
                       │ WebSocket             │ REST API
-                      │ (Voice)               │ (Search)
+                      │ (Voice)               │ (Search + Recipes)
                       ▼                       ▼
 ┌─────────────────────────────┐   ┌─────────────────────────────┐
 │     Backend-Voice           │   │     Backend-Search          │
@@ -23,12 +23,31 @@ Jamie Oliver AI is a full-stack application that provides an interactive cooking
 │     ws://localhost:8100     │   │     http://localhost:8000   │
 │                             │   │                             │
 │  ┌─────────────────────┐    │   │  ┌─────────────────────┐    │
-│  │ Deepgram (STT)      │    │   │  │ Supabase pgvector   │    │
-│  │ OpenAI GPT-4        │    │   │  │ Semantic Search     │    │
-│  │ ElevenLabs (TTS)    │    │   │  │ Recipe Index        │    │
+│  │ Deepgram (STT)      │    │   │  │ Supabase (Source)   │    │
+│  │ OpenAI GPT-4        │    │   │  │ - recipes table     │    │
+│  │ ElevenLabs (TTS)    │    │   │  │ - recipe_index      │    │
+│  │ Recipe Engine       │    │   │  │ - recipe_chunks     │    │
 │  └─────────────────────┘    │   │  └─────────────────────┘    │
 └─────────────────────────────┘   └─────────────────────────────┘
+
+                    ┌─────────────────────────────────────┐
+                    │         Supabase (PostgreSQL)        │
+                    │     Single Source of Truth           │
+                    │                                      │
+                    │  recipes          - Full recipe JSON │
+                    │  recipe_versions  - Version history  │
+                    │  recipe_index     - Search metadata  │
+                    │  recipe_chunks    - Embeddings       │
+                    └─────────────────────────────────────┘
 ```
+
+### Data Flow
+
+1. **Recipe Management**: Recipes are stored in Supabase `recipes` table with full JSON
+2. **Recipe Enhancement**: LLM pipeline enriches recipes with semantic step IDs, timer detection, conversational messages
+3. **Search**: `recipe_index` and `recipe_chunks` tables enable semantic search via pgvector
+4. **Frontend**: Fetches recipes from Backend-Search API, streams voice through Backend-Voice WebSocket
+5. **Voice Agent**: Recipe Engine manages step progression, timers, and state
 
 ## Tech Stack
 
@@ -167,6 +186,33 @@ docker-compose restart backend-voice
 docker-compose build --no-cache backend-voice
 ```
 
+## Recipe Data Management
+
+### Enhancement Pipeline
+
+Recipes go through an LLM-powered enhancement pipeline that:
+- Converts generic step IDs (`step_1`) to semantic IDs (`preheat_oven`)
+- Detects timer steps and extracts durations
+- Adds `requires_confirm: true` for active cooking steps
+- Generates conversational `on_enter.say` messages in Jamie Oliver's style
+
+```bash
+# Enhance and upload recipes to Supabase
+cd apps/backend-search
+python -m recipe_pipeline.migrate --source-dir ../../data/recipes --enhance
+
+# Publish all draft recipes
+curl -X POST http://localhost:8000/api/v1/recipes/publish-all
+```
+
+### Recipe Quality Scoring
+
+| Score | Quality Level |
+|-------|---------------|
+| 90-100 | Excellent - Ready for production |
+| 70-89 | Good - May need minor improvements |
+| < 70 | Needs enhancement |
+
 ## API Endpoints
 
 ### Backend-Search
@@ -176,6 +222,7 @@ docker-compose build --no-cache backend-voice
 | `POST` | `/api/v1/recipes/search` | Semantic recipe search |
 | `GET` | `/api/v1/recipes/{id}` | Get recipe by ID |
 | `GET` | `/api/v1/recipes` | List recipes with filters |
+| `POST` | `/api/v1/recipes/publish-all` | Publish all draft recipes |
 | `GET` | `/health` | Health check |
 
 ### Backend-Voice

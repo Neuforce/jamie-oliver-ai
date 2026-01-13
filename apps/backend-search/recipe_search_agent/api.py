@@ -247,36 +247,51 @@ async def search_recipes(request: SearchRequest):
 @app.get("/api/v1/recipes/{recipe_id}")
 async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
     """
-    Obtener receta completa por ID.
+    Obtener receta completa por ID (slug).
     
     Args:
-        recipe_id: ID de la receta (ej: "christmas-salad-jamie-oliver-recipes")
+        recipe_id: Slug de la receta (ej: "christmas-salad-jamie-oliver-recipes")
         include_chunks: Si True, incluye todos los chunks de la receta
     """
     try:
         agent = get_search_agent()
         
-        # Buscar en recipe_index
-        response = agent.client.table("recipe_index").select("*").eq("id", recipe_id).execute()
+        # First try the new `recipes` table (source of truth)
+        recipes_response = agent.client.table("recipes").select("*").eq("slug", recipe_id).execute()
         
-        if not response.data:
-            raise HTTPException(status_code=404, detail=f"Recipe not found: {recipe_id}")
-        
-        recipe_data = response.data[0]
-        
-        # Cargar JSON completo
-        full_recipe = agent._load_recipe_json(recipe_data["file_path"])
-        
-        result = {
-            "recipe_id": recipe_id,
-            "title": recipe_data["title"],
-            "category": recipe_data.get("category"),
-            "mood": recipe_data.get("mood"),
-            "complexity": recipe_data.get("complexity"),
-            "cost": recipe_data.get("cost"),
-            "file_path": recipe_data["file_path"],
-            "full_recipe": full_recipe,
-        }
+        if recipes_response.data:
+            recipe_row = recipes_response.data[0]
+            result = {
+                "recipe_id": recipe_row["slug"],
+                "title": recipe_row.get("metadata", {}).get("title", recipe_row["slug"]),
+                "category": recipe_row.get("metadata", {}).get("categories", [None])[0] if recipe_row.get("metadata", {}).get("categories") else None,
+                "mood": recipe_row.get("metadata", {}).get("moods", [None])[0] if recipe_row.get("metadata", {}).get("moods") else None,
+                "complexity": recipe_row.get("metadata", {}).get("difficulty"),
+                "cost": None,
+                "quality_score": recipe_row.get("quality_score"),
+                "status": recipe_row.get("status"),
+                "full_recipe": recipe_row.get("recipe_json"),
+            }
+        else:
+            # Fallback to recipe_index for backward compatibility
+            response = agent.client.table("recipe_index").select("*").eq("id", recipe_id).execute()
+            
+            if not response.data:
+                raise HTTPException(status_code=404, detail=f"Recipe not found: {recipe_id}")
+            
+            recipe_data = response.data[0]
+            full_recipe = agent._load_recipe_json(recipe_data["file_path"])
+            
+            result = {
+                "recipe_id": recipe_id,
+                "title": recipe_data["title"],
+                "category": recipe_data.get("category"),
+                "mood": recipe_data.get("mood"),
+                "complexity": recipe_data.get("complexity"),
+                "cost": recipe_data.get("cost"),
+                "file_path": recipe_data["file_path"],
+                "full_recipe": full_recipe,
+            }
         
         # Incluir chunks si se solicita
         if include_chunks:
@@ -300,23 +315,77 @@ async def list_recipes(
     category: Optional[str] = None,
     mood: Optional[str] = None,
     complexity: Optional[str] = None,
+    status: Optional[str] = Query(None, description="Filter by status: draft, published, archived"),
+    include_full: bool = Query(False, description="Include full recipe JSON in response"),
     limit: int = Query(50, ge=1, le=100),
     offset: int = Query(0, ge=0)
 ):
     """
     Listar recetas con filtros opcionales.
     
+    Fetches from the `recipes` table (source of truth) with fallback to `recipe_index`.
+    
     Args:
         category: Filtro por categoría
         mood: Filtro por mood
         complexity: Filtro por complejidad
+        status: Filter by recipe status (draft, published, archived)
+        include_full: Include full recipe_json in response (default: False for performance)
         limit: Número de resultados (max 100)
         offset: Offset para paginación
     """
     try:
         agent = get_search_agent()
         
-        # Construir query
+        # Try the new `recipes` table first
+        select_fields = "slug, metadata, quality_score, status, created_at, updated_at"
+        if include_full:
+            select_fields += ", recipe_json"
+        
+        query = agent.client.table("recipes").select(select_fields)
+        
+        # Apply status filter - default to published OR draft (not archived)
+        if status:
+            query = query.eq("status", status)
+        else:
+            # Include both published and draft by default
+            query = query.in_("status", ["published", "draft"])
+        
+        query = query.order("updated_at", desc=True).range(offset, offset + limit - 1)
+        response = query.execute()
+        
+        if response.data:
+            # Transform to consistent response format
+            recipes = []
+            for row in response.data:
+                metadata = row.get("metadata", {})
+                recipe_item = {
+                    "recipe_id": row["slug"],
+                    "title": metadata.get("title", row["slug"]),
+                    "description": metadata.get("description"),
+                    "category": metadata.get("categories", [None])[0] if metadata.get("categories") else None,
+                    "mood": metadata.get("moods", [None])[0] if metadata.get("moods") else None,
+                    "complexity": metadata.get("difficulty"),
+                    "servings": metadata.get("servings"),
+                    "step_count": metadata.get("step_count"),
+                    "has_timers": metadata.get("has_timers"),
+                    "image_url": metadata.get("image_url"),
+                    "quality_score": row.get("quality_score"),
+                    "status": row.get("status"),
+                }
+                if include_full:
+                    recipe_item["full_recipe"] = row.get("recipe_json")
+                recipes.append(recipe_item)
+            
+            return {
+                "recipes": recipes,
+                "total": len(recipes),
+                "limit": limit,
+                "offset": offset,
+                "source": "recipes_table",
+            }
+        
+        # Fallback to recipe_index for backward compatibility
         query = agent.client.table("recipe_index").select("*")
         
         if category:
@@ -334,6 +403,7 @@ async def list_recipes(
             "total": len(response.data),
             "limit": limit,
             "offset": offset,
+            "source": "recipe_index_fallback",
         }
         
     except Exception as e:
@@ -352,4 +422,44 @@ if __name__ == "__main__":
         reload=True,
         log_level="info",
     )
+
+
+@app.post("/api/v1/recipes/publish-all")
+async def publish_all_recipes():
+    """
+    Publish all draft recipes.
+    This is an admin endpoint to bulk-publish enhanced recipes.
+    """
+    try:
+        agent = get_search_agent()
+        
+        # Get all draft recipes
+        drafts = agent.client.table("recipes") \
+            .select("slug, quality_score") \
+            .eq("status", "draft") \
+            .execute()
+        
+        if not drafts.data:
+            return {"message": "No draft recipes found", "published": 0}
+        
+        # Publish ALL drafts (they're all enhanced and good quality)
+        published_recipes = [r["slug"] for r in drafts.data]
+        
+        agent.client.table("recipes") \
+            .update({
+                "status": "published",
+                "published_at": "now()"
+            }) \
+            .eq("status", "draft") \
+            .execute()
+        
+        return {
+            "message": f"Published {len(published_recipes)} recipes",
+            "published": len(published_recipes),
+            "recipes": published_recipes
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to publish recipes: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 

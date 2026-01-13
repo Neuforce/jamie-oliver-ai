@@ -41,3 +41,18 @@
 - [ ] I have made corresponding changes to the documentation
 - [ ] My changes generate no new warnings
 - [ ] Any dependent changes have been merged and published
+
+---
+
+## Recipe Data Platform (RDP) PRs
+
+<!-- Only fill this section if this PR is part of the Recipe Data Platform epic -->
+
+If this PR is part of the Recipe Data Platform epic (RDP-XX issues):
+
+- [ ] Branch created from `feature/recipe-data-platform` (not `main`)
+- [ ] PR targets `feature/recipe-data-platform` branch
+- [ ] New behavior is behind a feature flag
+- [ ] Backward compatibility is maintained (app works with flag OFF)
+- [ ] Tests added for both flag ON and OFF states
+- [ ] No deletion of existing code (cleanup comes later)

@@ -87,8 +87,15 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   // Audio playback hook
   const audioPlayback = useAudioPlayback();
 
-  const parseIsoDurationToSeconds = useCallback((duration?: string | null) => {
+  const parseIsoDurationToSeconds = useCallback((duration?: string | number | null) => {
     if (!duration) return 0;
+    
+    // If duration is already a number, return it directly (it's in seconds)
+    if (typeof duration === 'number') {
+      return Math.round(duration);
+    }
+    
+    // Otherwise, parse ISO 8601 duration string (e.g., "PT50M", "PT1H30M")
     const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/i);
     if (!match) return 0;
     const hours = parseInt(match[1] || '0', 10);
@@ -706,11 +713,57 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     }
   };
 
-  const toggleStepComplete = () => {
-    if (completedSteps.includes(currentStep)) {
+  const toggleStepComplete = async () => {
+    const wasCompleted = completedSteps.includes(currentStep);
+    
+    // Update local state first for immediate feedback
+    if (wasCompleted) {
       setCompletedSteps(completedSteps.filter(s => s !== currentStep));
     } else {
       setCompletedSteps([...completedSteps, currentStep]);
+    }
+    
+    // Notify backend when marking a step as complete (not when unmarking)
+    if (!wasCompleted && sessionInfo?.session_id) {
+      // Get the backend step ID for the current step
+      const backendStep = recipe?.backendSteps?.[currentStep];
+      const stepId = backendStep?.id;
+      
+      if (stepId) {
+        try {
+          // @ts-expect-error - Vite provides import.meta.env
+          const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
+          // Derive API base URL from WebSocket URL
+          const apiBaseUrl = wsUrl
+            .replace('wss://', 'https://')
+            .replace('ws://', 'http://')
+            .replace('/ws/voice', '');
+          
+          const response = await fetch(
+            `${apiBaseUrl}/sessions/${sessionInfo.session_id}/steps/${stepId}/confirm`,
+            { method: 'POST' }
+          );
+          
+          if (response.ok) {
+            console.log(`✅ Step ${stepId} confirmed with backend`);
+          } else {
+            console.warn(`⚠️ Failed to confirm step ${stepId} with backend:`, response.status);
+          }
+        } catch (error) {
+          console.error('Error confirming step with backend:', error);
+          // Don't revert local state - the user action should still "feel" complete
+        }
+      } else {
+        // If no backend step ID, try sending via WebSocket as a text message
+        if (isWebSocketConnected) {
+          const stepDesc = instructions[currentStep];
+          wsSendMessage({
+            event: 'text',
+            message: `I completed the current step: ${stepDesc}`,
+          });
+          console.log('📤 Sent step completion via WebSocket text message');
+        }
+      }
     }
   };
 

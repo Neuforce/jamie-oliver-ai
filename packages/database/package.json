@@ -1,0 +1,25 @@
+{
+  "name": "@jamie-oliver-ai/database",
+  "version": "1.0.0",
+  "description": "Database schema and migrations for Jamie Oliver AI",
+  "private": true,
+  "scripts": {
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:reset": "prisma migrate reset",
+    "db:studio": "prisma studio",
+    "db:seed": "ts-node prisma/seed.ts",
+    "db:format": "prisma format"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.8.0",
+    "dotenv": "^17.2.3"
+  },
+  "devDependencies": {
+    "prisma": "^5.8.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

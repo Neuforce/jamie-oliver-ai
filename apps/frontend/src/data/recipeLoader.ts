@@ -195,17 +195,82 @@ function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Reci
   };
 }
 
-// Load recipes from /recipes/ directory (works in both development and production)
-// Recipes are served from public/recipes/ which is available at /recipes/ in both environments
+// Load recipes from Supabase API with fallback to local files
+// API endpoint: /api/v1/recipes (backend-search service)
+// Local fallback: public/recipes/ (development mode)
 
 let cachedRecipes: Recipe[] | null = null;
 
-export async function loadRecipes(): Promise<Recipe[]> {
-  // Return cached recipes if available
-  if (cachedRecipes) {
-    return cachedRecipes;
-  }
+// @ts-expect-error - Vite provides import.meta.env
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
+/**
+ * Clear the recipe cache to force a fresh load from API
+ */
+export function clearRecipeCache(): void {
+  cachedRecipes = null;
+  console.log('Recipe cache cleared');
+}
+
+/**
+ * Load recipes from Supabase via backend-search API
+ */
+async function loadRecipesFromAPI(): Promise<Recipe[]> {
+  const recipes: Recipe[] = [];
+  
+  try {
+    // Fetch all recipes with full JSON from API
+    const url = `${API_BASE_URL}/api/v1/recipes?include_full=true&limit=100`;
+    console.log(`[RecipeLoader] Fetching from API: ${url}`);
+    
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+    }
+    
+    const data = await response.json();
+    
+    console.log(`[RecipeLoader] API response:`, {
+      source: data.source,
+      total: data.total,
+      recipesCount: data.recipes?.length || 0,
+    });
+    
+    if (!data.recipes || data.recipes.length === 0) {
+      throw new Error('No recipes returned from API');
+    }
+    
+    // Transform API response to Recipe format
+    let index = 0;
+    let skipped = 0;
+    for (const apiRecipe of data.recipes) {
+      if (apiRecipe.full_recipe && 'recipe' in apiRecipe.full_recipe) {
+        recipes.push(transformRecipe(apiRecipe.full_recipe as BackendRecipePayload, index));
+        index++;
+      } else {
+        console.warn(`[RecipeLoader] Skipping recipe without full_recipe:`, apiRecipe.recipe_id || apiRecipe.title);
+        skipped++;
+      }
+    }
+    
+    console.log(`[RecipeLoader] ✅ Loaded ${recipes.length} recipes from Supabase (skipped: ${skipped})`);
+    
+    if (recipes.length === 0) {
+      throw new Error('All recipes were skipped - no valid full_recipe data');
+    }
+    
+    return recipes;
+  } catch (error) {
+    console.error('[RecipeLoader] ❌ Failed to load from API:', error);
+    throw error;
+  }
+}
+
+/**
+ * Load recipes from local JSON files (fallback)
+ */
+async function loadRecipesFromLocal(): Promise<Recipe[]> {
   const recipes: Recipe[] = [];
   let index = 0;
 
@@ -243,9 +308,28 @@ export async function loadRecipes(): Promise<Recipe[]> {
         index++;
       }
     }
+    
+    console.log(`Loaded ${recipes.length} recipes from local files (fallback)`);
+    return recipes;
   } catch (e) {
-    console.error('Failed to load recipes:', e);
+    console.error('Failed to load recipes from local files:', e);
     return [];
+  }
+}
+
+export async function loadRecipes(): Promise<Recipe[]> {
+  // Return cached recipes if available
+  if (cachedRecipes) {
+    return cachedRecipes;
+  }
+
+  let recipes: Recipe[] = [];
+
+  // Try API first, fallback to local files
+  try {
+    recipes = await loadRecipesFromAPI();
+  } catch {
+    recipes = await loadRecipesFromLocal();
   }
   
   // Sort by title for consistency and cache

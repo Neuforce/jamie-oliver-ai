@@ -1,0 +1,172 @@
+// Jamie Oliver AI Database Schema
+// Managed by Prisma - https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// =============================================================================
+// RECIPES - Single source of truth for all recipe data
+// =============================================================================
+
+model Recipe {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique @db.VarChar(255)
+  version   Int      @default(1)
+  
+  // Full JOAv0 recipe document
+  recipeJson Json    @map("recipe_json")
+  
+  // Computed metadata for fast queries
+  metadata   Json    @default("{}")
+  
+  // Lifecycle
+  status       RecipeStatus @default(draft)
+  qualityScore Int?         @map("quality_score") @db.SmallInt
+  
+  // Provenance
+  sourceUrl  String?      @map("source_url")
+  sourceType SourceType   @default(manual) @map("source_type")
+  
+  // Timestamps
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  publishedAt DateTime? @map("published_at")
+  
+  // Relations
+  versions RecipeVersion[]
+  chunks   RecipeChunk[]
+  
+  @@index([status])
+  @@index([qualityScore(sort: Desc)])
+  @@index([publishedAt(sort: Desc)])
+  @@map("recipes")
+}
+
+model RecipeVersion {
+  id        String @id @default(uuid()) @db.Uuid
+  
+  // Reference to recipe
+  recipeId  String @map("recipe_id") @db.Uuid
+  recipe    Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  version   Int
+  
+  // Snapshot
+  recipeJson Json @map("recipe_json")
+  metadata   Json
+  
+  // Change tracking
+  changeSummary String? @map("change_summary")
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  @@unique([recipeId, version])
+  @@index([recipeId])
+  @@index([createdAt(sort: Desc)])
+  @@map("recipe_versions")
+}
+
+// =============================================================================
+// RECIPE INDEX - Denormalized for fast search queries
+// =============================================================================
+
+model RecipeIndex {
+  id              String  @id @db.VarChar(255)
+  title           String
+  
+  // Exact match filters
+  category        String? @db.VarChar(100)
+  mood            String? @db.VarChar(100)
+  complexity      String? @db.VarChar(50)
+  cost            String? @db.VarChar(50)
+  
+  // Text search
+  ingredientsText String? @map("ingredients_text")
+  
+  // For embedding search
+  fullContentForEmbedding String? @map("full_content_for_embedding")
+  
+  // Vector embedding (384 dimensions for MiniLM)
+  // Note: Prisma doesn't natively support pgvector, we'll handle this with raw SQL
+  // embedding Vector(384)?
+  
+  // Reference to source
+  filePath    String   @map("file_path") @db.VarChar(500)
+  fileHash    String?  @map("file_hash") @db.VarChar(64)
+  lastIndexed DateTime @default(now()) @map("last_indexed")
+  createdAt   DateTime @default(now()) @map("created_at")
+  
+  // Optional link to recipes table
+  recipeUuid String? @map("recipe_uuid") @db.Uuid
+  
+  @@index([category])
+  @@index([mood])
+  @@index([complexity])
+  @@index([cost])
+  @@map("recipe_index")
+}
+
+// =============================================================================
+// RECIPE CHUNKS - Semantic search embeddings
+// =============================================================================
+
+model RecipeChunk {
+  id        String @id @default(uuid()) @db.Uuid
+  
+  // Link to recipe
+  recipeId  String @map("recipe_id")
+  
+  // Optional link to recipes table
+  recipeUuid String? @map("recipe_uuid") @db.Uuid
+  recipe     Recipe? @relation(fields: [recipeUuid], references: [id], onDelete: SetNull)
+  
+  // Chunk content
+  chunkText String @map("chunk_text")
+  chunkHash String @map("chunk_hash")
+  
+  // LLM metadata
+  searchIntent String? @map("search_intent")
+  llmAnalysis  Json?   @map("llm_analysis")
+  
+  // Vector embedding - handled via raw SQL for pgvector
+  // embedding Vector(384)?
+  
+  // Provenance
+  filePath String? @map("file_path")
+  fileHash String? @map("file_hash") @db.VarChar(64)
+  
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  
+  @@unique([recipeId, chunkHash])
+  @@index([recipeId])
+  @@index([searchIntent])
+  @@map("intelligent_recipe_chunks")
+}
+
+// =============================================================================
+// ENUMS
+// =============================================================================
+
+enum RecipeStatus {
+  draft
+  published
+  archived
+  
+  @@map("recipe_status")
+}
+
+enum SourceType {
+  manual
+  scraped
+  imported
+  enhanced
+  
+  @@map("source_type")
+}

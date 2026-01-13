@@ -13,6 +13,7 @@ from ccai.core import context_variables
 
 from src.recipe_engine import Recipe, RecipeEngine, RecipeStep, parse_iso_duration, StepStatus
 from src.services.session_service import session_service
+from src.services.recipe_service import get_recipe_service
 
 logger = configure_logger(__name__)
 
@@ -122,7 +123,18 @@ async def start_recipe(
     if recipe_payload:
         session_service.set_session_recipe_payload(session_id, recipe_payload)
 
+    # Try to get recipe payload from multiple sources
     payload = recipe_payload or session_service.get_session_recipe_payload(session_id)
+    
+    # If no payload from frontend, try fetching from Supabase
+    if not payload:
+        logger.info(f"No frontend payload, fetching recipe '{target_recipe_id}' from Supabase")
+        recipe_service = get_recipe_service()
+        payload = await recipe_service.get_recipe(target_recipe_id)
+        if payload:
+            logger.info(f"Successfully fetched recipe from Supabase")
+            session_service.set_session_recipe_payload(session_id, payload)
+    
     if not payload:
         return (
             "I don't have the full recipe details yet. Please open the recipe in the app "
@@ -211,7 +223,7 @@ async def stop_recipe_session() -> str:
         return "There is no active recipe session right now."
 
     await session_service.cleanup_session(session_id)
-    return "Okay, I stopped the current recipe session. Let me know which recipe you'd like to cook next."
+    return "Okay, I stopped the current cooking session. Head back to the recipe gallery in the app to choose your next dish!"
 
 
 @register_function(recipe_function_manager)
@@ -455,21 +467,80 @@ async def confirm_step_done(
     if not engine:
         return "No recipe is in progress."
     
+    state = engine.get_state()
     active_steps = engine.get_active_steps()
     
-    if not active_steps:
-        return "There are no active steps to confirm right now."
+    # First, try to find the step to confirm by ID or description
+    step_to_confirm = None
     
-    # Find the step to confirm
-    step_to_confirm = _find_step_to_confirm(
-        step_id, step_description, active_steps, engine.get_state()
-    )
+    # Check if a specific step_id was provided and find it
+    if step_id:
+        step_info = state["steps"].get(step_id)
+        if step_info:
+            step_status = step_info["status"]
+            
+            # If the step is READY, we need to start it first, then complete it
+            if step_status == "ready":
+                logger.info(f"Step '{step_id}' is ready - starting and completing it")
+                await engine.start_step(step_id)
+                # Now it should be active
+            
+            # If step is now ACTIVE, we can find it
+            for step in engine.get_active_steps():
+                if step.id == step_id:
+                    step_to_confirm = step
+                    break
     
+    # If no specific step found yet, check active steps
     if not step_to_confirm:
-        return "No steps ready to confirm right now."
+        active_steps = engine.get_active_steps()
+        
+        if active_steps:
+            step_to_confirm = _find_step_to_confirm(
+                step_id, step_description, active_steps, state
+            )
+            if not step_to_confirm:
+                # Default to first active step
+                step_to_confirm = active_steps[0]
+    
+    # If still no step to confirm, check for ready steps
+    if not step_to_confirm:
+        ready_steps = [s for s in state["steps"].values() if s["status"] == "ready"]
+        
+        if ready_steps:
+            # Find the best match among ready steps
+            target = None
+            if step_id:
+                for s in ready_steps:
+                    if s["id"] == step_id:
+                        target = s
+                        break
+            if not target and step_description:
+                desc_norm = step_description.lower()
+                for s in ready_steps:
+                    if desc_norm in s.get("descr", "").lower():
+                        target = s
+                        break
+            if not target:
+                target = ready_steps[0]
+            
+            # Start the step and then complete it
+            logger.info(f"Step '{target['id']}' is ready - starting and completing it")
+            await engine.start_step(target["id"])
+            
+            # Get the step object from the recipe
+            step_to_confirm = engine.recipe.steps.get(target["id"])
+        else:
+            # Check if recipe is complete
+            if len(state["completed_steps"]) == len(state["steps"]):
+                return "[DONE] All steps completed - recipe finished!"
+            
+            return "[INFO] No steps are ready to confirm right now."
     
     # Confirm the step
-    await engine.confirm_step_done(step_to_confirm.id)
+    if step_to_confirm:
+        logger.info(f"Confirming step: {step_to_confirm.id}")
+        await engine.confirm_step_done(step_to_confirm.id)
     
     # Check what's available next
     state = engine.get_state()
@@ -538,21 +609,20 @@ def _build_confirmation_response(state: dict, ready_steps: list) -> str:
         if len(ready_steps) == 1:
             next_step = ready_steps[0]
             return (
-                f"✓ Step complete! Next up: {next_step['descr']} "
-                f"(step_id: {next_step['id']}). Ready to start?"
+                f"[DONE] Next: {next_step['descr']} (step_id: {next_step['id']})"
             )
         else:
             options = [
                 f"{s['descr']} (step_id: {s['id']})" 
                 for s in ready_steps[:3]
             ]
-            return f"✓ Step complete! You can now do: {' OR '.join(options)}. Which one?"
+            return f"[DONE] Options available: {' / '.join(options)}"
     else:
         # Check if everything is done
         if len(state["completed_steps"]) == len(state["steps"]):
-            return "✓ Step complete! That was the final step - recipe is done! 🎉"
+            return "[DONE] All steps completed - recipe finished!"
         else:
-            return "✓ Step complete! Waiting for other parallel steps to finish before we can continue."
+            return "[DONE] Waiting for parallel steps to complete."
 
 
 @register_function(recipe_function_manager)
@@ -716,12 +786,9 @@ def _build_start_confirmation(target: dict, recipe_step, timer_started: bool) ->
             duration_str = f"{secs} second{'s' if secs != 1 else ''}"
         
         if timer_started:
-            return f"✓ Timer running for {duration_str}. I'll let you know when it's done."
-        return (
-            f"✓ Got it. This step takes about {duration_str}. "
-            "Tell me when to start the timer and I'll keep track for you."
-        )
+            return f"[STARTED] Timer running: {duration_str}"
+        return f"[STARTED] Timed step: {duration_str}"
     elif is_timer:
-        return "✓ Started with timer instructions noted. Let me know when you want the timer to begin."
+        return "[STARTED] Timed step in progress"
     else:
-        return "✓ Started! Let me know when you're done with this step."
+        return "[STARTED] Step in progress"
