@@ -43,7 +43,7 @@ export interface Recipe {
 import { loadRecipes, loadRecipesSync } from './recipeLoader';
 
 // Load recipes from JSON files
-// Recipes are loaded asynchronously from /recipes/ directory
+// Recipes are loaded asynchronously from /recipes-json/ directory
 // This array will be empty initially and populated after initializeRecipes() is called
 export const recipes: Recipe[] = [];
 

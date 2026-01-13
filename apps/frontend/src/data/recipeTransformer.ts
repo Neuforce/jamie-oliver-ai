@@ -189,9 +189,9 @@ export function transformRecipeMatch(
 }
 
 /**
- * Load recipe JSON from /recipes/ directory
+ * Load recipe JSON from /recipes-json/ directory
  * This is used as fallback when full_recipe is not included in the API response
- * Recipes are served from public/recipes/ which is available at /recipes/ in both dev and prod
+ * Recipes are served from public/recipes-json/ which is available at /recipes-json/ in both dev and prod
  */
 export async function loadRecipeFromLocal(recipeId: string): Promise<JamieOliverRecipe | null> {
   try {
@@ -207,7 +207,7 @@ export async function loadRecipeFromLocal(recipeId: string): Promise<JamieOliver
     
     for (const name of possibleNames) {
       try {
-        const response = await fetch(`/recipes/${name}.json`);
+        const response = await fetch(`/recipes-json/${name}.json`);
         if (response.ok) {
           const recipe = await response.json() as JamieOliverRecipe;
           if (recipe && recipe.recipe && recipe.recipe.id === recipeId) {
