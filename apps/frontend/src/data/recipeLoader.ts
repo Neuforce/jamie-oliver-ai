@@ -93,7 +93,7 @@ function getImagePath(recipeId: string): string {
   };
 
   const mappedName = imageMap[recipeId] || imageMap[imageName] || imageName;
-  return `/${mappedName}.webp`;
+  return `/recipes-img/${mappedName}.webp`;
 }
 
 // Parse ISO 8601 duration (PT20M, PT1H5M) to "20 mins" format

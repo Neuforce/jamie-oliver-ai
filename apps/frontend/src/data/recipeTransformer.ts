@@ -50,7 +50,7 @@ function getImagePath(recipeId: string): string {
   const imageName = recipeId
     .replace(/-jamie-oliver-recipes$/, '')
     .toLowerCase();
-  
+
   const imageMap: Record<string, string> = {
     'christmas-salad-jamie-oliver-recipes': 'christmas-salad',
     'christmas-salad': 'christmas-salad',
@@ -90,19 +90,19 @@ function getImagePath(recipeId: string): string {
     'tiramisu': 'tiramisu',
     'vegetable-curry': 'vegetable-curry',
   };
-  
+
   const mappedName = imageMap[recipeId] || imageMap[imageName] || imageName;
-  return `/${mappedName}.webp`;
+  return `/recipes-img/${mappedName}.webp`;
 }
 
 // Parse ISO 8601 duration (PT20M, PT1H5M) to "20 mins" format
 function parseDuration(duration: string): string {
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
   if (!match) return '30 mins';
-  
+
   const hours = parseInt(match[1] || '0', 10);
   const minutes = parseInt(match[2] || '0', 10);
-  
+
   if (hours > 0 && minutes > 0) {
     return `${hours}h ${minutes}m`;
   } else if (hours > 0) {
@@ -165,12 +165,12 @@ export function transformRecipeMatch(
   index?: number
 ): Recipe {
   const recipe = fullRecipe.recipe;
-  
+
   // Generate numeric ID from recipe_id if index not provided
-  const numericId = index !== undefined 
-    ? index + 1 
+  const numericId = index !== undefined
+    ? index + 1
     : match.recipe_id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 10000;
-  
+
   return {
     id: numericId,
     title: match.title || recipe.title,
@@ -182,7 +182,7 @@ export function transformRecipeMatch(
     image: getImagePath(match.recipe_id),
     ingredients: transformIngredients(fullRecipe.ingredients),
     instructions: transformInstructions(fullRecipe.steps),
-    tips: fullRecipe.notes?.text 
+    tips: fullRecipe.notes?.text
       ? fullRecipe.notes.text.split('\n').filter(line => line.trim().length > 0)
       : [],
   };
@@ -197,14 +197,14 @@ export async function loadRecipeFromLocal(recipeId: string): Promise<JamieOliver
   try {
     // Try to get the recipe name from the ID
     const recipeName = recipeId.replace(/-jamie-oliver-recipes$/, '');
-    
+
     // Try common patterns to find the recipe file
     const possibleNames = [
       recipeId,
       recipeName,
       recipeId.replace(/\.json$/, ''),
     ];
-    
+
     for (const name of possibleNames) {
       try {
         const response = await fetch(`/recipes-json/${name}.json`);
@@ -218,7 +218,7 @@ export async function loadRecipeFromLocal(recipeId: string): Promise<JamieOliver
         // Continue to next name
       }
     }
-    
+
     return null;
   } catch (error) {
     console.error(`Failed to load recipe ${recipeId} from local files:`, error);
