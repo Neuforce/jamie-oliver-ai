@@ -235,16 +235,19 @@ async def start_kitchen_timer(duration_seconds: int = 0) -> str:
         duration_seconds: Optional duration in seconds. If omitted, the existing timer value is used.
     """
     session_id = _get_session_id()
+    logger.info(f"🕐 [TIMER] start_kitchen_timer called with duration_seconds={duration_seconds}, session={session_id}")
     if not session_id:
         return "I couldn't determine your session. Please reconnect and try again."
 
     seconds = max(0, int(duration_seconds))
     try:
+        logger.info(f"🕐 [TIMER] Sending timer_start control event with seconds={seconds}")
         await session_service.send_control_event(
             session_id,
             "timer_start",
             {"seconds": seconds} if seconds else None,
         )
+        logger.info(f"🕐 [TIMER] Control event sent successfully")
         session_service.set_kitchen_timer_state(
             session_id, running=True, seconds=seconds if seconds else None
         )
@@ -252,7 +255,7 @@ async def start_kitchen_timer(duration_seconds: int = 0) -> str:
             return f"Starting a timer for {_format_duration(seconds)}."
         return "Starting the kitchen timer now."
     except Exception as exc:
-        logger.error(f"Failed to start kitchen timer: {exc}", exc_info=True)
+        logger.error(f"🕐 [TIMER] Failed to start kitchen timer: {exc}", exc_info=True)
         return "Sorry, I couldn't start the timer."
 
 
@@ -478,14 +481,19 @@ async def confirm_step_done(
         step_info = state["steps"].get(step_id)
         if step_info:
             step_status = step_info["status"]
+            step_type = step_info.get("type", "immediate")
             
-            # If the step is READY, we need to start it first, then complete it
+            # If the step is READY - DON'T auto-complete! User needs to do it first.
             if step_status == "ready":
-                logger.info(f"Step '{step_id}' is ready - starting and completing it")
-                await engine.start_step(step_id)
-                # Now it should be active
+                step_descr = step_info.get("descr", step_id)
+                if step_type == "timer":
+                    logger.info(f"Step '{step_id}' is a READY timer step - agent should call start_step() first")
+                    return f"[WAIT] '{step_descr}' is ready but not started. Call start_step('{step_id}') to begin."
+                else:
+                    logger.info(f"Step '{step_id}' is READY but not started - agent should call start_step() first")
+                    return f"[WAIT] '{step_descr}' is ready but not started. Call start_step('{step_id}') first."
             
-            # If step is now ACTIVE, we can find it
+            # If step is ACTIVE, we can find it
             for step in engine.get_active_steps():
                 if step.id == step_id:
                     step_to_confirm = step
@@ -524,12 +532,12 @@ async def confirm_step_done(
             if not target:
                 target = ready_steps[0]
             
-            # Start the step and then complete it
-            logger.info(f"Step '{target['id']}' is ready - starting and completing it")
-            await engine.start_step(target["id"])
-            
-            # Get the step object from the recipe
-            step_to_confirm = engine.recipe.steps.get(target["id"])
+            # DON'T auto-complete ready steps! User needs to do them first.
+            step_descr = target.get("descr", target["id"])
+            if target.get("type") == "timer":
+                return f"[WAIT] '{step_descr}' hasn't started yet. Explain what to do, ask if ready, then call start_step('{target['id']}')."
+            else:
+                return f"[WAIT] '{step_descr}' hasn't been done yet. Guide the user through it, then confirm when THEY say done."
         else:
             # Check if recipe is complete
             if len(state["completed_steps"]) == len(state["steps"]):
@@ -608,21 +616,29 @@ def _build_confirmation_response(state: dict, ready_steps: list) -> str:
     if ready_steps:
         if len(ready_steps) == 1:
             next_step = ready_steps[0]
-            return (
-                f"[DONE] Next: {next_step['descr']} (step_id: {next_step['id']})"
-            )
+            step_type = next_step.get("type", "immediate")
+            if step_type == "timer":
+                return (
+                    f"[DONE] Next is a TIMER step: {next_step['descr']}. "
+                    f"Explain what to do, ASK if ready, then call start_step('{next_step['id']}')."
+                )
+            else:
+                return (
+                    f"[DONE] Next step: {next_step['descr']}. "
+                    f"Call start_step('{next_step['id']}') to begin, guide user, then confirm_step_done when THEY say done."
+                )
         else:
             options = [
-                f"{s['descr']} (step_id: {s['id']})" 
+                f"{s['descr']} (step_id: {s['id']}, type: {s.get('type', 'immediate')})" 
                 for s in ready_steps[:3]
             ]
-            return f"[DONE] Options available: {' / '.join(options)}"
+            return f"[DONE] Multiple steps ready - let user choose: {' / '.join(options)}"
     else:
         # Check if everything is done
         if len(state["completed_steps"]) == len(state["steps"]):
             return "[DONE] All steps completed - recipe finished!"
         else:
-            return "[DONE] Waiting for parallel steps to complete."
+            return "[DONE] Waiting for other steps (parallel timers) to complete."
 
 
 @register_function(recipe_function_manager)
@@ -708,29 +724,13 @@ async def start_step(step_id: str = "", step_description: str = "") -> str:
     
     recipe_step = engine.recipe.steps.get(step_id)
 
-    timer_started = False
-    # Auto-start UI timer if backend step has duration, auto_start is enabled, and timer isn't already running
-    if (
-        recipe_step
-        and recipe_step.type == "timer"
-        and recipe_step.duration
-        and recipe_step.auto_start
-    ):
-        timer_state = session_service.get_kitchen_timer_state(session_id)
-        step_seconds = parse_iso_duration(recipe_step.duration)
+    # NOTE: We do NOT auto-start the UI timer here anymore.
+    # The agent should ask the user "Ready for me to start the timer?" first,
+    # and only call start_kitchen_timer() when the user confirms.
+    # This creates a more natural, conversational flow.
 
-        if not timer_state.get("running"):
-            await start_kitchen_timer(step_seconds)
-            timer_started = True
-        elif step_seconds and timer_state.get("seconds"):
-            current_secs = timer_state.get("seconds")
-            if abs(current_secs - step_seconds) > 5:
-                await reset_kitchen_timer(step_seconds)
-                await start_kitchen_timer(step_seconds)
-                timer_started = True
-
-    # Build confirmation message
-    return _build_start_confirmation(target, recipe_step, timer_started)
+    # Build confirmation message (includes timer duration info for agent to use)
+    return _build_start_confirmation(target, recipe_step)
 
 
 def _find_step_to_start(
@@ -769,8 +769,12 @@ def _find_step_to_start(
     return None
 
 
-def _build_start_confirmation(target: dict, recipe_step, timer_started: bool) -> str:
-    """Build the confirmation message for starting a step."""
+def _build_start_confirmation(target: dict, recipe_step) -> str:
+    """Build the confirmation message for starting a step.
+    
+    When start_step() is called on a timer step, the timer has ALREADY started.
+    The agent should have asked the user BEFORE calling start_step().
+    """
     is_timer = target.get("type") == "timer"
     
     if is_timer and recipe_step and recipe_step.duration:
@@ -779,16 +783,15 @@ def _build_start_confirmation(target: dict, recipe_step, timer_started: bool) ->
         secs = duration_secs % 60
         
         if mins > 0 and secs > 0:
-            duration_str = f"{mins}m {secs}s"
+            duration_str = f"{mins} minutes and {secs} seconds"
         elif mins > 0:
             duration_str = f"{mins} minute{'s' if mins != 1 else ''}"
         else:
             duration_str = f"{secs} second{'s' if secs != 1 else ''}"
         
-        if timer_started:
-            return f"[STARTED] Timer running: {duration_str}"
-        return f"[STARTED] Timed step: {duration_str}"
+        # Timer is NOW running. Tell the agent clearly.
+        return f"[TIMER RUNNING] {duration_str} timer started. Wait for timer to finish, then confirm when user is done."
     elif is_timer:
-        return "[STARTED] Timed step in progress"
+        return "[TIMER RUNNING] Timer started. Wait for timer to finish, then confirm when user is done."
     else:
-        return "[STARTED] Step in progress"
+        return "[STARTED] Step in progress. Wait for user to say they're done before confirming."

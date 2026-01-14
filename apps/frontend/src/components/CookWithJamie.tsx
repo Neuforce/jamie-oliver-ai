@@ -118,31 +118,32 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
 
   const applyBackendTimerControl = useCallback(
     (action: string, payload?: { seconds?: number }) => {
+      console.log('🕐 [TIMER-FE] applyBackendTimerControl called:', { action, payload });
       const parsedSeconds =
         typeof payload?.seconds === 'number'
           ? Math.max(0, Math.round(payload.seconds))
           : null;
 
       if (action === 'timer_start' || action === 'timer_resume') {
+        console.log('🕐 [TIMER-FE] Starting timer with seconds:', parsedSeconds ?? 'using previous/default');
         setTimerSeconds((prev) => {
-          if (parsedSeconds !== null) {
-            return parsedSeconds;
-          }
-          if (prev > 0) {
-            return prev;
-          }
-          return timerMinutes * 60;
+          const newValue = parsedSeconds !== null ? parsedSeconds : (prev > 0 ? prev : timerMinutes * 60);
+          console.log('🕐 [TIMER-FE] Setting timer seconds:', newValue);
+          return newValue;
         });
         setTimerRunning(true);
+        console.log('🕐 [TIMER-FE] Timer is now running');
         return;
       }
 
       if (action === 'timer_pause') {
+        console.log('🕐 [TIMER-FE] Pausing timer');
         setTimerRunning(false);
         return;
       }
 
       if (action === 'timer_reset') {
+        console.log('🕐 [TIMER-FE] Resetting timer to:', parsedSeconds ?? timerMinutes * 60);
         setTimerRunning(false);
         setTimerSeconds(parsedSeconds ?? timerMinutes * 60);
       }
@@ -171,12 +172,14 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
 
   const handleControl = useCallback(
     (action: string, data?: any) => {
+      console.log('🕐 [CONTROL-FE] handleControl received:', { action, data });
       if (action === 'clear') {
         audioPlayback.stopAllAudio();
         return;
       }
 
       if (action?.startsWith('timer_')) {
+        console.log('🕐 [CONTROL-FE] Routing to applyBackendTimerControl');
         applyBackendTimerControl(action, data);
         return;
       }
@@ -565,8 +568,9 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         setTimerSeconds((prev) => {
           if (prev <= 1) {
             setTimerRunning(false);
-            // Timer finished - could add sound/notification
-            speakText("Time's up! Your timer is done.");
+            // Timer finished - backend agent will announce via voice
+            // Don't use speakText here to avoid audio clash with ElevenLabs
+            console.log('⏰ Frontend timer finished');
             return 0;
           }
           return prev - 1;
@@ -799,9 +803,16 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Only show timer when:
+  // 1. A timer is actively running, OR
+  // 2. The current step is a timer step (type='timer' or has duration)
   useEffect(() => {
-    setShouldShowTimer(timerSeconds > 0 || timerRunning);
-  }, [timerSeconds, timerRunning]);
+    const backendStep = recipe?.backendSteps?.[currentStep];
+    const isTimerStep = backendStep?.type === 'timer' || 
+                       (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0);
+    
+    setShouldShowTimer(timerRunning || isTimerStep);
+  }, [timerSeconds, timerRunning, recipe, currentStep, parseIsoDurationToSeconds]);
 
   const handleExitClick = () => {
     console.log('Exit clicked - currentStep:', currentStep, 'completedSteps:', completedSteps, 'timerRunning:', timerRunning, 'timerSeconds:', timerSeconds);

@@ -90,7 +90,11 @@ async def confirm_step_for_session(session_id: str, step_id: str):
     """
     Confirm a recipe step for a given session.
     Allows the frontend to mark a step as done without voice input.
+    
+    If the step is in READY status, it will be started first then completed.
     """
+    from src.tools.recipe_tools import start_step as start_step_tool
+    
     engine = session_service.get_engine(session_id)
     if not engine:
         raise HTTPException(status_code=404, detail="Session not found")
@@ -99,7 +103,24 @@ async def confirm_step_for_session(session_id: str, step_id: str):
     if not step:
         raise HTTPException(status_code=404, detail="Step not found for current recipe")
 
+    # Check current step status
+    state = engine.get_state()
+    step_info = state["steps"].get(step_id, {})
+    step_status = step_info.get("status", "unknown")
+    
+    logger.info(f"Manual completion requested for step '{step_id}' with status '{step_status}'")
+
     try:
+        # If step is READY, start it first so we can complete it
+        if step_status == "ready":
+            logger.info(f"Step '{step_id}' is READY - starting it first before completion")
+            await run_recipe_tool(
+                session_id,
+                start_step_tool,
+                step_id=step_id,
+            )
+        
+        # Now complete the step
         tool_message = await run_recipe_tool(
             session_id,
             confirm_step_tool,
@@ -109,8 +130,12 @@ async def confirm_step_for_session(session_id: str, step_id: str):
         logger.error(f"Failed to confirm step {step_id} for {session_id}: {exc}", exc_info=True)
         raise HTTPException(status_code=400, detail=f"Unable to confirm step: {exc}")
 
+    # Only inject success message if step was actually completed
+    # Check the tool_message - if it starts with [DONE] or contains "completed", it succeeded
+    step_completed = tool_message.startswith("[DONE]") or "completed" in tool_message.lower()
+    
     assistant = session_service.get_assistant(session_id)
-    if assistant:
+    if assistant and step_completed:
         try:
             system_message = (
                 f"[SYSTEM: Step '{step.descr}' (step_id: {step_id}) has been marked as complete "
@@ -120,6 +145,8 @@ async def confirm_step_for_session(session_id: str, step_id: str):
             logger.info(f"✅ Injected system message to assistant for step confirmation: {step_id}")
         except Exception as e:
             logger.warning(f"Failed to inject system message to assistant: {e}")
+    elif assistant and not step_completed:
+        logger.warning(f"Step '{step_id}' was NOT completed (response: {tool_message}), skipping success message")
     else:
         logger.debug(f"No assistant registered for session {session_id}, skipping system message injection")
     
@@ -362,10 +389,6 @@ def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
     recipe_meta = recipe_payload.get("recipe", {})
     title = recipe_meta.get("title") or "something delicious"
     description = recipe_meta.get("description", "")
-    difficulty = recipe_meta.get("difficulty", "")
-    
-    # Get first step to mention
-    first_step = _get_first_step_description(recipe_payload)
     
     # Build a warm, conversational greeting
     greetings = [
@@ -381,14 +404,47 @@ def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
     if description:
         greeting += f" {description}."
     
-    if first_step:
-        greeting += f" Let's crack on - first up, {first_step.lower() if first_step[0].isupper() else first_step}"
+    # Get the first step's on_enter.say text (already TTS-friendly)
+    # This avoids symbols like °C that don't pronounce well
+    first_step_say = _get_first_step_say_text(recipe_payload)
+    if first_step_say:
+        greeting += f" {first_step_say}"
+    else:
+        greeting += " Let's get started!"
     
     return greeting
 
 
+def _get_first_step_say_text(recipe_payload: Dict[str, Any]) -> Optional[str]:
+    """Get the TTS-friendly on_enter.say text from the first step."""
+    steps = recipe_payload.get("steps") or []
+    if not steps:
+        return None
+    
+    # Find first step without dependencies
+    prioritized = sorted(
+        steps,
+        key=lambda step: len(step.get("depends_on") or []),
+    )
+    
+    for step in prioritized:
+        if not step.get("depends_on"):
+            # Prefer on_enter.say (TTS-friendly) over descr/instructions
+            on_enter = step.get("on_enter", [])
+            if isinstance(on_enter, list):
+                for action in on_enter:
+                    if isinstance(action, dict) and action.get("say"):
+                        return action["say"]
+            elif isinstance(on_enter, dict) and on_enter.get("say"):
+                return on_enter["say"]
+            # Fallback: don't use descr/instructions as they may have symbols
+            return None
+    
+    return None
+
+
 def _get_first_step_description(recipe_payload: Dict[str, Any]) -> Optional[str]:
-    """Pick the first actionable step description."""
+    """Pick the first actionable step description (raw text, may have symbols)."""
     steps = recipe_payload.get("steps") or []
     if not steps:
         return None

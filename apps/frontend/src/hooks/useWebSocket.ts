@@ -381,13 +381,17 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           break;
 
         case 'control': {
+          console.log('🕐 [WS] Control event received:', { data, action, message });
           if (onControl) {
             const controlAction = (data && data.action) || action || '';
             const controlPayload =
               (data && data.data !== undefined ? data.data : data) ?? message.data;
+            console.log('🕐 [WS] Calling onControl with:', { controlAction, controlPayload });
             if (controlAction) {
               onControl(controlAction, controlPayload);
             }
+          } else {
+            console.warn('🕐 [WS] Control event received but no onControl handler');
           }
           break;
         }
