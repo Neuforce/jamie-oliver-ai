@@ -117,15 +117,19 @@ class SessionService:
 
     async def send_control_event(self, session_id: str, action: str, data: Optional[Dict[str, Any]] = None) -> None:
         """Send a control event (e.g., timer actions) to the frontend."""
+        logger.info(f"🕐 [CONTROL] send_control_event: session={session_id}, action={action}, data={data}")
         output_channel = self._output_channels.get(session_id)
         if not output_channel:
+            logger.error(f"🕐 [CONTROL] No output channel for session {session_id}")
             raise RuntimeError(f"No output channel registered for session {session_id}")
 
         payload = {"action": action}
         if data:
             payload["data"] = data
 
+        logger.info(f"🕐 [CONTROL] Sending event via output channel: {payload}")
         await output_channel.send_event("control", payload)
+        logger.info(f"🕐 [CONTROL] Event sent successfully")
 
     def set_kitchen_timer_state(self, session_id: str, *, running: bool, seconds: Optional[int] = None) -> None:
         """Persist current kitchen timer state so tools can reason about it."""

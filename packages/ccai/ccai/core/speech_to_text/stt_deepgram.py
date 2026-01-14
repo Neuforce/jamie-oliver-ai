@@ -214,8 +214,17 @@ class DeepgramSTTService(BaseSpeechToText):
         Preprocess the transcription result.
 
         Args:
-            transcript (str): Transcription result.
+            transcript: Transcription result from Deepgram (object with .type attribute)
         """
+        # Guard against error strings or unexpected types
+        if isinstance(transcript, str):
+            if transcript.startswith("ERROR:"):
+                logger.warning(f"Received error in transcript queue: {transcript}")
+            return None
+        
+        if not hasattr(transcript, 'type'):
+            logger.warning(f"Received transcript without type attribute: {type(transcript)}")
+            return None
 
         # Perform any necessary preprocessing here
         if transcript.type == "Results" and not transcript.is_final:

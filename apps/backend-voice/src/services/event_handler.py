@@ -57,6 +57,13 @@ class RecipeEventHandler:
             ):
                 await self._send_recipe_state()
             
+            # When a timer is set, also send timer_start to frontend to sync the UI timer
+            if event.type == EventType.TIMER_SET:
+                duration_secs = event.payload.get("duration_secs", 0)
+                step_id = event.payload.get("step_id")
+                logger.info(f"🕐 TIMER_SET received for {step_id}, sending timer_start to frontend with {duration_secs}s")
+                await self._send_control_event("timer_start", {"seconds": duration_secs})
+            
             # Handle specific event types
             if event.type == EventType.TIMER_DONE:
                 await self._handle_timer_done(event)
