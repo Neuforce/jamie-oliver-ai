@@ -40,10 +40,7 @@ import { useAudioPlayback } from '../hooks/useAudioPlayback';
 import { RecipeCard } from './RecipeCard';
 // @ts-ignore - handled by Vite
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
-// @ts-ignore - handled by Vite
-import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 const jamieLogo = typeof jamieLogoImport === 'string' ? jamieLogoImport : (jamieLogoImport as any).src || jamieLogoImport;
-const jamieAvatar = typeof jamieAvatarImport === 'string' ? jamieAvatarImport : (jamieAvatarImport as any).src || jamieAvatarImport;
 
 interface CookWithJamieProps {
   recipe: Recipe | null;
@@ -931,8 +928,20 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
             </div>
             <button
               onClick={toggleVoiceListening}
-              className="inline-flex items-center gap-2 rounded-full border border-[#E4E7EC] bg-white px-3 py-1.5 shadow-[0_1px_2px_rgba(0,0,0,0.1)] hover:bg-[#F2F5F6] transition-colors"
-              style={{ marginTop: '7px' }}
+              className="inline-flex rounded-full transition-colors"
+              style={{
+                marginTop: '7px',
+                padding: '0 0 0 12px',
+                height: '42px',
+                width: '93px',
+                borderRadius: '999px',
+                boxShadow: '0 2px 9px rgba(0, 0, 0, 0.08)',
+                border: '1px solid rgba(0, 0, 0, 0.08)',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: 0,
+                backgroundColor: '#F9FAFB',
+              }}
               title={
                 !isWebSocketConnected
                   ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
@@ -941,12 +950,37 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                     : 'Microphone active - tap to mute'
               }
             >
-              <Mic className={`size-4 ${isMicMuted ? 'text-[#717182]' : 'text-[#3D6E6C]'}`} />
               <div
-                className="rounded-full overflow-hidden border border-white shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
-                style={{ width: '42px', height: '42px' }}
+                style={{
+                  width: '24px',
+                  height: '24px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
               >
-                <img src={jamieAvatar} alt="Jamie Oliver" className="w-full h-full object-cover" />
+                <img
+                  src="/assets/tabler-icon-microphone-off.svg"
+                  alt="Mic off"
+                  style={{ width: '18px', height: '18px' }}
+                />
+              </div>
+              <div
+                style={{
+                  width: '42px',
+                  height: '42px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginLeft: 'auto',
+                  flexShrink: 0,
+                }}
+              >
+                <img
+                  src="/assets/Ellipse-red.svg"
+                  alt="Jamie Oliver"
+                  style={{ display: 'block' }}
+                />
               </div>
             </button>
           </div>
@@ -1180,38 +1214,6 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           </div>
         </div>
       </div>
-
-      {/* Floating Action Buttons - Right side at bottom */}
-      <div className="fixed bottom-6 right-6 flex items-center gap-3 z-40">
-        {/* Voice Button - Controls mic mute/unmute */}
-        <Button
-          onClick={toggleVoiceListening}
-          size="lg"
-          className={`size-14 rounded-full shadow-lg ${
-            !isMicMuted && isWebSocketConnected ? 'bg-red-500 hover:bg-red-600 animate-pulse' : ''
-          } ${!isWebSocketConnected ? 'bg-yellow-500 hover:bg-yellow-600' : ''}`}
-          variant={!isMicMuted && isWebSocketConnected ? "default" : "secondary"}
-          disabled={isWebSocketConnecting}
-          title={
-            !isWebSocketConnected
-              ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
-              : isWebSocketConnecting
-                ? 'Connecting to backend...'
-                : isMicMuted
-                  ? 'Microphone muted - Click to unmute (text mode)'
-                  : 'Microphone active - Click to mute (audio mode)'
-          }
-        >
-          {!isWebSocketConnected ? (
-            <MicOff className="size-6" />
-          ) : isMicMuted ? (
-            <MicOff className="size-6" />
-          ) : (
-            <Mic className="size-6" />
-          )}
-        </Button>
-      </div>
-
 
       {/* Completion Celebration */}
       {currentStep === totalSteps - 1 && completedSteps.length === totalSteps && (

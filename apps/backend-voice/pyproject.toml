@@ -15,7 +15,7 @@ openai = "^1.51.2"
 ccai = {path = "../../packages/ccai", develop = true}
 pydantic = "^2.10.6"
 python-multipart = "^0.0.20"
-supabase = "^2.0.0"
+supabase = ">=2.6.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"

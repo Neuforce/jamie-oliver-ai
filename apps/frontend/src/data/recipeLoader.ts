@@ -50,7 +50,7 @@ function getImagePath(recipeId: string): string {
   let imageName = recipeId
     .replace(/-jamie-oliver-recipes$/, '')
     .toLowerCase();
-
+  
   // Map known recipe IDs to image filenames
   const imageMap: Record<string, string> = {
     'christmas-salad-jamie-oliver-recipes': 'christmas-salad',
@@ -91,7 +91,7 @@ function getImagePath(recipeId: string): string {
     'tiramisu': 'tiramisu',
     'vegetable-curry': 'vegetable-curry',
   };
-
+  
   const mappedName = imageMap[recipeId] || imageMap[imageName] || imageName;
   return `/recipes-img/${mappedName}.webp`;
 }
@@ -100,10 +100,10 @@ function getImagePath(recipeId: string): string {
 function parseDuration(duration: string): string {
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
   if (!match) return '30 mins';
-
+  
   const hours = parseInt(match[1] || '0', 10);
   const minutes = parseInt(match[2] || '0', 10);
-
+  
   if (hours > 0 && minutes > 0) {
     return `${hours}h ${minutes}m`;
   } else if (hours > 0) {
@@ -174,7 +174,7 @@ function extractCategory(title: string): string {
 function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Recipe {
   const recipe = jamieRecipe.recipe;
   const backendSteps = transformBackendSteps(jamieRecipe.steps);
-
+  
   return {
     id: index + 1, // Use index as numeric ID
     backendId: recipe.id,
@@ -187,7 +187,7 @@ function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Reci
     image: getImagePath(recipe.id),
     ingredients: transformIngredients(jamieRecipe.ingredients),
     instructions: transformInstructions(jamieRecipe.steps),
-    tips: jamieRecipe.notes?.text
+    tips: jamieRecipe.notes?.text 
       ? jamieRecipe.notes.text.split('\n').filter(line => line.trim().length > 0)
       : [],
     backendSteps,
@@ -217,30 +217,30 @@ export function clearRecipeCache(): void {
  */
 async function loadRecipesFromAPI(): Promise<Recipe[]> {
   const recipes: Recipe[] = [];
-
+  
   try {
     // Fetch all recipes with full JSON from API
     const url = `${API_BASE_URL}/api/v1/recipes?include_full=true&limit=100`;
     console.log(`[RecipeLoader] Fetching from API: ${url}`);
-
+    
     const response = await fetch(url);
-
+    
     if (!response.ok) {
       throw new Error(`API request failed: ${response.status} ${response.statusText}`);
     }
-
+    
     const data = await response.json();
-
+    
     console.log(`[RecipeLoader] API response:`, {
       source: data.source,
       total: data.total,
       recipesCount: data.recipes?.length || 0,
     });
-
+    
     if (!data.recipes || data.recipes.length === 0) {
       throw new Error('No recipes returned from API');
     }
-
+    
     // Transform API response to Recipe format
     let index = 0;
     let skipped = 0;
@@ -253,13 +253,13 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
         skipped++;
       }
     }
-
+    
     console.log(`[RecipeLoader] ✅ Loaded ${recipes.length} recipes from Supabase (skipped: ${skipped})`);
-
+    
     if (recipes.length === 0) {
       throw new Error('All recipes were skipped - no valid full_recipe data');
     }
-
+    
     return recipes;
   } catch (error) {
     console.error('[RecipeLoader] ❌ Failed to load from API:', error);
@@ -283,7 +283,7 @@ async function loadRecipesFromLocal(): Promise<Recipe[]> {
     }
 
     const recipeNames: string[] = await listResponse.json();
-
+    
     // Fetch all recipes in parallel
     const loadedRecipes = await Promise.all(
       recipeNames.map(async (name) => {
@@ -300,7 +300,7 @@ async function loadRecipesFromLocal(): Promise<Recipe[]> {
         }
       })
     );
-
+    
     // Transform and add recipes
     for (const recipe of loadedRecipes) {
       if (recipe && 'recipe' in recipe) {
@@ -308,7 +308,7 @@ async function loadRecipesFromLocal(): Promise<Recipe[]> {
         index++;
       }
     }
-
+    
     console.log(`Loaded ${recipes.length} recipes from local files (fallback)`);
     return recipes;
   } catch (e) {
@@ -331,7 +331,7 @@ export async function loadRecipes(): Promise<Recipe[]> {
   } catch {
     recipes = await loadRecipesFromLocal();
   }
-
+  
   // Sort by title for consistency and cache
   cachedRecipes = recipes.sort((a, b) => a.title.localeCompare(b.title));
   return cachedRecipes;
