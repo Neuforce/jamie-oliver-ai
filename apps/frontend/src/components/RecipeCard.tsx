@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 interface RecipeCardProps {
   recipe: Recipe;
   onClick: () => void;
-  variant?: 'grid' | 'feed';
+  variant?: 'grid' | 'feed' | 'cooking';
 }
 
 export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProps) {
@@ -21,14 +21,14 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
         setHasSession(false);
         return;
       }
-      
+
       const session = localStorage.getItem(`cooking-session-${recipe.id}`);
       if (session) {
         try {
           const parsed = JSON.parse(session);
           const now = new Date().getTime();
           const sessionAge = now - parsed.timestamp;
-          
+
           if (sessionAge < 24 * 60 * 60 * 1000) {
             setHasSession(true);
             setSessionProgress(((parsed.currentStep + 1) / recipe.instructions.length) * 100);
@@ -46,6 +46,64 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
 
     checkSession();
   }, [recipe.id, recipe.instructions.length]); // Only run on mount
+
+  // Cooking variant: hero card used inside cooking mode
+  if (variant === 'cooking') {
+    return (
+      <>
+        <motion.div
+          whileTap={{ scale: 0.98 }}
+          className="cursor-pointer"
+          onClick={onClick}
+        >
+          <div
+            className="overflow-hidden border border-[#E4E7EC] bg-white shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]"
+            style={{ borderRadius: '32px' }}
+          >
+            <div className="relative h-[350px] overflow-hidden">
+              <img
+                src={recipe.image}
+                alt={recipe.title}
+                className="h-full w-full object-cover"
+              />
+              <span
+                className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
+                style={{
+                  height: '27px',
+                  padding: '6px 12px',
+                  alignItems: 'flex-start',
+                  borderRadius: '33554400px',
+                  background: '#3D6E6C',
+                  boxShadow:
+                    '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
+                }}
+              >
+                {recipe.category.toUpperCase()}
+              </span>
+            </div>
+          </div>
+        </motion.div>
+        <div
+          className="px-6 py-5 space-y-4"
+          style={{ marginTop: '24px' }}
+        >
+          <h3
+            style={{
+              color: '#2C5F5D',
+              fontFamily: 'Poppins, sans-serif',
+              fontSize: '26px',
+              fontWeight: 700,
+              letterSpacing: '0.087px',
+              lineHeight: '24px',
+              textTransform: 'uppercase',
+            }}
+          >
+            {recipe.title}
+          </h3>
+        </div>
+      </>
+    );
+  }
 
   // Grid variant: compact with cropped image
   if (variant === 'grid') {
@@ -66,10 +124,10 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
               alt={recipe.title}
               className="w-full h-full object-cover transition-opacity duration-300 hover:opacity-95"
             />
-            
+
             {/* Gradient Overlay - matching Figma design */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 via-50% to-transparent" />
-            
+
             {/* Badges at top */}
             <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
               {/* Category/Session Badge on left */}
@@ -125,10 +183,10 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
               >
                 {recipe.title}
               </h3>
-              
+
               {/* Meta Info */}
 
-              
+
               {/* Progress Bar */}
               {hasSession && (
                 <div className="mt-1 w-full bg-white/20 rounded-full h-1.5 overflow-hidden">
