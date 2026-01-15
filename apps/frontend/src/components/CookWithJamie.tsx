@@ -1159,30 +1159,9 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                   </div>
                 </div>
 
-                {/* Step Title - Shows the step description prominently */}
-                {(() => {
-                  // Get step title from backend state or derive from instruction
-                  const backendSteps = wsRecipeState?.steps ? Object.values(wsRecipeState.steps) : [];
-                  const orderedIds = Object.keys(wsRecipeState?.steps || {});
-                  const currentStepId = orderedIds[currentStep];
-                  const backendStep = currentStepId ? wsRecipeState?.steps?.[currentStepId] : null;
-                  const stepTitle = backendStep?.descr;
-                  
-                  // Only show if we have a distinct title from backend
-                  if (stepTitle && stepTitle !== instructions[currentStep]) {
-                    return (
-                      <div className="w-full max-w-[420px] text-center">
-                        <h2 className="text-xl font-semibold text-[#0A7E6C] mb-2">
-                          {stepTitle}
-                        </h2>
-                      </div>
-                    );
-                  }
-                  return null;
-                })()}
-
+                {/* Step Instructions - Clean and prominent */}
                 <div className="w-full max-w-[420px]">
-                  <p className="text-2xl leading-relaxed text-foreground">
+                  <p className="text-xl leading-relaxed text-foreground/90">
                     {instructions[currentStep]}
                   </p>
                 </div>
@@ -1290,20 +1269,44 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       {/* Completion Celebration */}
       {currentStep === totalSteps - 1 && completedSteps.length === totalSteps && (
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="fixed inset-0 flex items-center justify-center bg-black/60 backdrop-blur-sm z-50 p-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 p-6"
         >
-          <div className="text-center text-white p-8 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 max-w-md">
-            <CheckCircle2 className="size-24 mx-auto mb-4" />
-            <h2 className="text-white mb-4">Brilliant! You Did It!</h2>
-            <p className="text-white/90 mb-6">
-              Your {recipe.title} is ready to serve. Enjoy your delicious creation!
+          <motion.div
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
+          >
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#0A7E6C]/10 flex items-center justify-center">
+              <CheckCircle2 className="w-12 h-12 text-[#0A7E6C]" />
+            </div>
+            <h2 className="text-2xl font-bold text-[#2C5F5D] mb-2">
+              Brilliant! You Did It!
+            </h2>
+            <p className="text-gray-600 mb-8 leading-relaxed">
+              Your <span className="font-medium">{recipe.title}</span> is ready to serve.
+              Enjoy your delicious creation!
             </p>
-            <Button onClick={onClose} size="lg" className="bg-white text-green-600 hover:bg-white/90">
-              Close
-            </Button>
-          </div>
+            <div className="flex flex-col gap-3">
+              <Button 
+                onClick={onClose} 
+                size="lg" 
+                className="w-full bg-[#3D6E6C] hover:bg-[#2c5654] rounded-full h-12"
+              >
+                Done
+              </Button>
+              <Button 
+                onClick={onClose} 
+                variant="ghost" 
+                size="lg" 
+                className="w-full text-gray-500 rounded-full h-12"
+              >
+                Cook again
+              </Button>
+            </div>
+          </motion.div>
         </motion.div>
       )}
 

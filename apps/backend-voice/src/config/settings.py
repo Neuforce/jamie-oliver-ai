@@ -61,9 +61,14 @@ class Settings:
     # CORS Configuration
     _default_cors = ",".join(
         [
+            "http://localhost:3000",
             "http://localhost:3100",
+            "http://localhost:5173",
+            "https://localhost:3000",
             "https://localhost:3100",
+            "http://127.0.0.1:3000",
             "http://127.0.0.1:3100",
+            "http://127.0.0.1:5173",
             "https://jamie-oliver-agent-v0.vercel.app",
             "https://jamie-frontend.vercel.app",
             "https://jamie.neuforce.ai",
