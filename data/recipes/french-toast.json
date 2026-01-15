@@ -61,131 +61,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "whisk_ingredients",
       "descr": "Whisk eggs, milk, cinnamon, and vanilla",
       "instructions": "Whisk eggs, milk, cinnamon, and vanilla",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "dip_bread"
       ],
       "on_enter": [
         {
-          "say": "Let's whisk everything together."
+          "say": "Right, let's whisk together the eggs, milk, cinnamon, and vanilla until it's all beautifully combined."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "dip_bread",
       "descr": "Dip bread slices in egg mixture",
       "instructions": "Dip bread slices in egg mixture",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "whisk_ingredients"
       ],
       "next": [
-        "step_3"
+        "heat_butter"
       ],
       "on_enter": [
         {
-          "say": "Let's dip bread slices in egg mixture."
+          "say": "Now, let's dip those lovely thick slices of bread into our eggy mixture. Make sure they're nicely coated but not too soggy."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "heat_butter",
       "descr": "Heat butter in a pan",
       "instructions": "Heat butter in a pan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "dip_bread"
       ],
       "next": [
-        "step_4"
+        "fry_bread"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the butter in pan."
+          "say": "Let's get that butter melting in the pan. You want it to sizzle gently, not burn."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "fry_bread",
       "descr": "Fry bread until golden on both sides",
       "instructions": "Fry bread until golden on both sides",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "heat_butter"
       ],
       "next": [
-        "step_5"
+        "keep_warm"
       ],
       "on_enter": [
         {
-          "say": "Time to fry the bread until golden."
+          "say": "Time to fry the bread. We're looking for a gorgeous golden colour on both sides. You'll know it's ready when it smells divine."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "keep_warm",
       "descr": "Keep warm in oven while cooking remaining slices",
       "instructions": "Keep warm in oven while cooking remaining slices",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "fry_bread"
       ],
       "next": [
-        "step_6"
+        "stack_plates"
       ],
       "on_enter": [
         {
-          "say": "Let's keep the warm in oven for later."
+          "say": "Let's pop those golden beauties in the oven to keep warm while we cook the rest."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "stack_plates",
       "descr": "Stack on plates",
       "instructions": "Stack on plates",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "keep_warm"
       ],
       "next": [
-        "step_7"
+        "drizzle_syrup"
       ],
       "on_enter": [
         {
-          "say": "Let's stack on plates."
+          "say": "Right, let's stack those slices up on the plates. Looking good already!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "drizzle_syrup",
       "descr": "Drizzle with maple syrup and top with fresh berries",
       "instructions": "Drizzle with maple syrup and top with fresh berries",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "stack_plates"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's drizzle with maple syrup and top."
+          "say": "Now for the finishing touch - drizzle over some lovely maple syrup and top with fresh berries. Absolutely delicious!"
         }
       ]
     }
@@ -197,6 +197,6 @@
     }
   },
   "notes": {
-    "text": "Stale bread works best\nDon't oversoak or bread will fall apart\nAdd a pinch of nutmeg for extra flavor"
+    "text": "Stale bread works best. Don't oversoak or bread will fall apart. Add a pinch of nutmeg for extra flavor."
   }
 }

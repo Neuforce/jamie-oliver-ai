@@ -60,131 +60,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 200°C (400°F)",
-      "instructions": "Preheat oven to 200°C (400°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 200\u00b0C (400\u00b0F)",
+      "instructions": "Preheat oven to 200\u00b0C (400\u00b0F)",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "season_wings"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 200°c."
+          "say": "Right, let's preheat the oven to two hundred degrees celsius, which is about four hundred degrees fahrenheit. This will get us started on the right foot!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "season_wings",
       "descr": "Pat wings dry, season with salt and garlic powder",
       "instructions": "Pat wings dry, season with salt and garlic powder",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "bake_wings"
       ],
       "on_enter": [
         {
-          "say": "Let's pat wings dry, season with salt."
+          "say": "Now, let's pat those wings dry and give them a lovely seasoning with salt and garlic powder. This is going to make them extra crispy and flavourful!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "bake_wings",
       "descr": "Bake on a wire rack for 45 minutes, turning once",
       "instructions": "Bake on a wire rack for 45 minutes, turning once",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT45M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "season_wings"
       ],
       "next": [
-        "step_4"
+        "make_sauce"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the on wire rack."
+          "say": "Let's pop those wings onto a wire rack and bake them for forty-five minutes. Remember to turn them once halfway through. They'll be golden and crispy when they're done!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "make_sauce",
       "descr": "Melt butter and mix with hot sauce",
       "instructions": "Melt butter and mix with hot sauce",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "bake_wings"
       ],
       "next": [
-        "step_5"
+        "toss_wings"
       ],
       "on_enter": [
         {
-          "say": "Let's mix with hot sauce."
+          "say": "While the wings are baking, let's melt the butter and mix it with the hot sauce. This is going to be our delicious buffalo sauce!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "toss_wings",
       "descr": "Toss cooked wings in buffalo sauce",
       "instructions": "Toss cooked wings in buffalo sauce",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "make_sauce"
       ],
       "next": [
-        "step_6"
+        "serve_wings"
       ],
       "on_enter": [
         {
-          "say": "Let's toss everything together."
+          "say": "Now, let's toss those beautifully cooked wings in our spicy buffalo sauce. Make sure they're all nicely coated!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "serve_wings",
       "descr": "Serve with blue cheese dressing and celery",
       "instructions": "Serve with blue cheese dressing and celery",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "toss_wings"
       ],
       "next": [
-        "step_7"
+        "provide_napkins"
       ],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "It's time to serve! Arrange the wings with some blue cheese dressing and celery sticks on the side. Perfect for dipping and crunching!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "provide_napkins",
       "descr": "Provide plenty of napkins!",
       "instructions": "Provide plenty of napkins!",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "serve_wings"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's provide plenty of napkins!."
+          "say": "Finally, let's make sure we've got plenty of napkins on hand. These wings are deliciously messy, just the way they should be. Enjoy!"
         }
       ]
     }

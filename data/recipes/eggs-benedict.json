@@ -67,131 +67,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "make_hollandaise",
       "descr": "Make hollandaise: whisk yolks and lemon juice over double boiler",
       "instructions": "Make hollandaise: whisk yolks and lemon juice over double boiler",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "drizzle_butter"
       ],
       "on_enter": [
         {
-          "say": "Let's make hollandaise: whisk yolks."
+          "say": "Right, let's get started on our hollandaise sauce. Whisk those egg yolks with the lemon juice over a double boiler. You want it to be smooth and creamy."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "drizzle_butter",
       "descr": "Slowly drizzle in melted butter while whisking",
       "instructions": "Slowly drizzle in melted butter while whisking",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "make_hollandaise"
       ],
       "next": [
-        "step_3"
+        "poach_eggs"
       ],
       "on_enter": [
         {
-          "say": "Let's slowly drizzle in melted butter while."
+          "say": "Now, let's slowly drizzle in that melted butter while whisking. This is where the magic happens, so keep it steady and smooth."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "poach_eggs",
       "descr": "Poach eggs in simmering water with vinegar for 3 minutes",
       "instructions": "Poach eggs in simmering water with vinegar for 3 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT3M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "drizzle_butter"
       ],
       "next": [
-        "step_4"
+        "toast_muffins_cook_bacon"
       ],
       "on_enter": [
         {
-          "say": "Let's poach eggs in simmering water with."
+          "say": "Let's poach those eggs. Add a splash of vinegar to simmering water and gently slide in the eggs. We're aiming for three minutes here, for that perfect runny yolk."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "toast_muffins_cook_bacon",
       "descr": "Toast muffins and cook bacon",
       "instructions": "Toast muffins and cook bacon",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "poach_eggs"
       ],
       "next": [
-        "step_5"
+        "assemble_benedict"
       ],
       "on_enter": [
         {
-          "say": "Let's cook bacon."
+          "say": "While the eggs are poaching, let's toast those muffins until they're golden and crispy, and cook the bacon until it's nice and crispy too. The aroma will be irresistible!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "assemble_benedict",
       "descr": "Assemble: muffin, bacon, poached egg, hollandaise",
       "instructions": "Assemble: muffin, bacon, poached egg, hollandaise",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "toast_muffins_cook_bacon"
       ],
       "next": [
-        "step_6"
+        "garnish_chives"
       ],
       "on_enter": [
         {
-          "say": "Let's assemble: muffin, bacon, poached egg, hollandaise."
+          "say": "Now for the fun part! Let's assemble our Eggs Benedict. Start with the muffin, then the crispy bacon, followed by the poached egg, and top it off with that luscious hollandaise sauce."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "garnish_chives",
       "descr": "Garnish with chives",
       "instructions": "Garnish with chives",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "assemble_benedict"
       ],
       "next": [
-        "step_7"
+        "serve_immediately"
       ],
       "on_enter": [
         {
-          "say": "Time to garnish and enjoy!"
+          "say": "Let's finish it off with a sprinkle of fresh chives. It adds a lovely pop of color and a fresh taste."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_immediately",
       "descr": "Serve immediately",
       "instructions": "Serve immediately",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "garnish_chives"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up your beautiful Eggs Benedict. Enjoy every bite, you've earned it!"
         }
       ]
     }

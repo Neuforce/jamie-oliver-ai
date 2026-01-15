@@ -69,131 +69,134 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "melt_butter",
       "descr": "Melt butter in a large pan over medium heat",
       "instructions": "Melt butter in a large pan over medium heat",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "add_garlic_pepper"
       ],
       "on_enter": [
         {
-          "say": "Let's melt butter in a large pan."
+          "say": "Let's melt the butter in a large pan over medium heat. You should see it start to bubble and smell that lovely buttery aroma."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "add_garlic_pepper",
       "descr": "Add garlic and red pepper flakes, cook 1 minute",
       "instructions": "Add garlic and red pepper flakes, cook 1 minute",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT1M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "melt_butter"
       ],
       "next": [
-        "step_3"
+        "cook_shrimp"
       ],
       "on_enter": [
         {
-          "say": "Now add the garlic and red."
+          "say": "Now, let's add the garlic and a pinch of red pepper flakes. Cook for about one minute until the garlic is fragrant and just starting to turn golden."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "cook_shrimp",
       "descr": "Add shrimp and cook until pink (2-3 minutes per side)",
       "instructions": "Add shrimp and cook until pink (2-3 minutes per side)",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "add_garlic_pepper"
       ],
       "next": [
-        "step_4"
+        "add_wine_lemon"
       ],
       "on_enter": [
         {
-          "say": "Now add the shrimp and cook."
+          "say": "Right, let's add the shrimp now. Cook them for about two to three minutes on each side until they turn a lovely pink colour."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "add_wine_lemon",
       "descr": "Pour in wine and lemon juice",
       "instructions": "Pour in wine and lemon juice",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "cook_shrimp"
       ],
       "next": [
-        "step_5"
+        "simmer_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's pour in wine and lemon juice."
+          "say": "Let's pour in the white wine and squeeze in the juice of one lemon. Give it a good stir and enjoy the fresh aroma!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "simmer_sauce",
       "descr": "Simmer until sauce reduces slightly",
       "instructions": "Simmer until sauce reduces slightly",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT3M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "add_wine_lemon"
       ],
       "next": [
-        "step_6"
+        "stir_parsley"
       ],
       "on_enter": [
         {
-          "say": "Time to simmer the until sauce reduces."
+          "say": "Now, let's simmer the sauce for a few minutes until it reduces slightly. You'll notice it thickening up a bit."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "stir_parsley",
       "descr": "Stir in fresh parsley",
       "instructions": "Stir in fresh parsley",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "simmer_sauce"
       ],
       "next": [
-        "step_7"
+        "serve_dish"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Time to stir in that fresh parsley. It adds a lovely pop of colour and freshness."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_dish",
       "descr": "Serve over pasta or with bread for dipping",
       "instructions": "Serve over pasta or with bread for dipping",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "stir_parsley"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Fantastic! Let's serve this beautiful shrimp scampi over some pasta or with crusty bread for dipping. Enjoy your meal!"
         }
       ]
     }

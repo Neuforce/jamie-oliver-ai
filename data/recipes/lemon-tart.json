@@ -55,131 +55,134 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "roll_out_pastry",
       "descr": "Roll out pastry and line a tart tin, chill 30 mins",
       "instructions": "Roll out pastry and line a tart tin, chill 30 mins",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT30M",
       "depends_on": [],
       "next": [
-        "step_2"
+        "blind_bake_pastry"
       ],
       "on_enter": [
         {
-          "say": "Let's roll out pastry and line a."
+          "say": "Let's roll out the pastry and line our tart tin. Then we'll pop it in the fridge to chill for thirty minutes. This helps it hold its shape beautifully."
         }
       ]
     },
     {
-      "id": "step_2",
-      "descr": "Blind bake at 180°C for 20 minutes",
-      "instructions": "Blind bake at 180°C for 20 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "id": "blind_bake_pastry",
+      "descr": "Blind bake at 180\u00b0C for 20 minutes",
+      "instructions": "Blind bake at 180\u00b0C for 20 minutes",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT20M",
       "depends_on": [
-        "step_1"
+        "roll_out_pastry"
       ],
       "next": [
-        "step_3"
+        "whisk_filling"
       ],
       "on_enter": [
         {
-          "say": "Let's blind bake at 180°c for 20."
+          "say": "Right, let's blind bake our pastry. Preheat your oven to one hundred eighty degrees celsius, that's about three hundred fifty degrees fahrenheit, and bake for twenty minutes. You'll know it's ready when it's lightly golden."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "whisk_filling",
       "descr": "Whisk eggs, yolks, sugar, lemon zest and juice",
       "instructions": "Whisk eggs, yolks, sugar, lemon zest and juice",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "blind_bake_pastry"
       ],
       "next": [
-        "step_4"
+        "stir_in_cream"
       ],
       "on_enter": [
         {
-          "say": "Let's whisk everything together."
+          "say": "Now let's whisk together the eggs, yolks, sugar, lemon zest, and juice. You want it to be smooth and well combined. It'll smell wonderfully citrusy!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "stir_in_cream",
       "descr": "Stir in cream",
       "instructions": "Stir in cream",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "whisk_filling"
       ],
       "next": [
-        "step_5"
+        "pour_into_case"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Let's gently stir in the double cream until everything is beautifully mixed. This will make our filling nice and rich."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "pour_into_case",
       "descr": "Pour into pastry case",
       "instructions": "Pour into pastry case",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "stir_in_cream"
       ],
       "next": [
-        "step_6"
+        "bake_filling"
       ],
       "on_enter": [
         {
-          "say": "Let's pour into pastry case."
+          "say": "Now, pour that lovely lemon mixture into the pastry case. Make sure it's evenly spread out."
         }
       ]
     },
     {
-      "id": "step_6",
-      "descr": "Bake at 140°C for 35-40 minutes until just set",
-      "instructions": "Bake at 140°C for 35-40 minutes until just set",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "id": "bake_filling",
+      "descr": "Bake at 140\u00b0C for 35-40 minutes until just set",
+      "instructions": "Bake at 140\u00b0C for 35-40 minutes until just set",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT35M",
       "depends_on": [
-        "step_5"
+        "pour_into_case"
       ],
       "next": [
-        "step_7"
+        "cool_and_dust"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the at 140°c for."
+          "say": "Time to bake our tart. Set your oven to one hundred forty degrees celsius, or two hundred eighty-four degrees fahrenheit, and bake for thirty-five to forty minutes. It should be just set with a slight wobble in the middle."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "cool_and_dust",
       "descr": "Cool completely, dust with icing sugar",
       "instructions": "Cool completely, dust with icing sugar",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "bake_filling"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's cool completely, dust with icing sugar."
+          "say": "Fantastic! Let the tart cool completely before dusting with a bit of icing sugar. It'll look and taste absolutely gorgeous. Well done!"
         }
       ]
     }

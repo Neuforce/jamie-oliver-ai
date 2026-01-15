@@ -63,131 +63,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "cook_rice",
       "descr": "Cook sushi rice, mix with rice vinegar while warm",
       "instructions": "Cook sushi rice, mix with rice vinegar while warm",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "cool_rice"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the sushi rice, mix."
+          "say": "Right, let's get started by cooking the sushi rice. Once it's done, mix it with the rice vinegar while it's still warm. You'll love the aroma!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "cool_rice",
       "descr": "Let rice cool to room temperature",
       "instructions": "Let rice cool to room temperature",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT15M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "cook_rice"
       ],
       "next": [
-        "step_3"
+        "place_nori"
       ],
       "on_enter": [
         {
-          "say": "Let's let rice cool to room temperature."
+          "say": "Now, let's let the rice cool down to room temperature. This will take about fifteen minutes. It's important for the perfect texture."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "place_nori",
       "descr": "Place nori on bamboo mat",
       "instructions": "Place nori on bamboo mat",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "cool_rice"
       ],
       "next": [
-        "step_4"
+        "spread_rice"
       ],
       "on_enter": [
         {
-          "say": "Now place the nori on bamboo."
+          "say": "Great! Now place a sheet of nori on your bamboo mat. We're getting closer to the fun part!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "spread_rice",
       "descr": "Spread rice over nori, leaving 2cm at top",
       "instructions": "Spread rice over nori, leaving 2cm at top",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "place_nori"
       ],
       "next": [
-        "step_5"
+        "add_fillings"
       ],
       "on_enter": [
         {
-          "say": "Let's spread rice over nori, leaving 2cm."
+          "say": "Now, let's spread the rice over the nori, leaving about two centimeters at the top. Use wet hands to prevent sticking."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_fillings",
       "descr": "Add salmon, avocado, cucumber in a line",
       "instructions": "Add salmon, avocado, cucumber in a line",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "spread_rice"
       ],
       "next": [
-        "step_6"
+        "roll_sushi"
       ],
       "on_enter": [
         {
-          "say": "Now add the salmon, avocado, cucumber."
+          "say": "Lovely! Now add the salmon, avocado, and cucumber in a nice line across the rice. This is where the magic happens!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "roll_sushi",
       "descr": "Roll tightly using the mat",
       "instructions": "Roll tightly using the mat",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "add_fillings"
       ],
       "next": [
-        "step_7"
+        "slice_and_serve"
       ],
       "on_enter": [
         {
-          "say": "Let's roll tightly using the mat."
+          "say": "Let's roll it up tightly using the mat. Take your time and enjoy the process. It's all about the technique!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "slice_and_serve",
       "descr": "Slice into pieces and serve with condiments",
       "instructions": "Slice into pieces and serve with condiments",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "roll_sushi"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's start by slice."
+          "say": "Brilliant! Now slice your sushi roll into bite-sized pieces and serve them with soy sauce, wasabi, and pickled ginger. Enjoy your homemade sushi!"
         }
       ]
     }

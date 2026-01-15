@@ -67,131 +67,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Sauté onion and garlic in olive oil until soft",
-      "instructions": "Sauté onion and garlic in olive oil until soft",
+      "id": "saute_onion_garlic",
+      "descr": "Saut\u00e9 onion and garlic in olive oil until soft",
+      "instructions": "Saut\u00e9 onion and garlic in olive oil until soft",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "add_tomatoes"
       ],
       "on_enter": [
         {
-          "say": "Let's sauté onion and garlic in olive."
+          "say": "Right, let's get started by saut\u00e9ing the onion and garlic in olive oil until they're lovely and soft. You'll know they're ready when they smell sweet and look translucent."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "add_tomatoes",
       "descr": "Add tomatoes and cook until they break down",
       "instructions": "Add tomatoes and cook until they break down",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "saute_onion_garlic"
       ],
       "next": [
-        "step_3"
+        "add_stock_basil_sugar"
       ],
       "on_enter": [
         {
-          "say": "Now add the tomatoes and cook."
+          "say": "Now let's add those beautiful ripe tomatoes. Cook them until they break down and release their juices. You'll see them soften and smell that wonderful tomato aroma."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "add_stock_basil_sugar",
       "descr": "Pour in stock, add basil and sugar",
       "instructions": "Pour in stock, add basil and sugar",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "add_tomatoes"
       ],
       "next": [
-        "step_4"
+        "simmer_soup"
       ],
       "on_enter": [
         {
-          "say": "Let's add basil and sugar."
+          "say": "Brilliant! Let's pour in the vegetable stock and add a handful of fresh basil and a tablespoon of sugar. This will balance the flavors beautifully."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "simmer_soup",
       "descr": "Simmer for 15 minutes",
       "instructions": "Simmer for 15 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT15M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "add_stock_basil_sugar"
       ],
       "next": [
-        "step_5"
+        "blend_soup"
       ],
       "on_enter": [
         {
-          "say": "Time to simmer the for 15 minutes."
+          "say": "Now, let's simmer the soup for fifteen minutes. This will bring all those lovely flavors together. You'll know it's ready when it smells rich and inviting."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "blend_soup",
       "descr": "Blend until smooth",
       "instructions": "Blend until smooth",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "simmer_soup"
       ],
       "next": [
-        "step_6"
+        "season_soup"
       ],
       "on_enter": [
         {
-          "say": "Let's blend everything together."
+          "say": "Fantastic! Now let's blend the soup until it's beautifully smooth. Be careful, it's hot, so take your time."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "season_soup",
       "descr": "Season with salt and pepper",
       "instructions": "Season with salt and pepper",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "blend_soup"
       ],
       "next": [
-        "step_7"
+        "serve_soup"
       ],
       "on_enter": [
         {
-          "say": "Let's season the with salt and."
+          "say": "Let's give our soup a taste and season it with a bit of salt and pepper to your liking. This is where you make it your own."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_soup",
       "descr": "Serve with a swirl of cream and fresh basil",
       "instructions": "Serve with a swirl of cream and fresh basil",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "season_soup"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up! Pour the soup into bowls, add a swirl of double cream and a few fresh basil leaves on top. Enjoy your homemade tomato soup!"
         }
       ]
     }

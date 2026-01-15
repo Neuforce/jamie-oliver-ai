@@ -67,131 +67,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "boil_stock_add_chicken",
       "descr": "Bring stock to boil, add chicken and cook for 20 minutes",
       "instructions": "Bring stock to boil, add chicken and cook for 20 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT20M",
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "remove_shred_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's add chicken and cook."
+          "say": "Right, let's bring the stock to a boil and add the chicken. We'll let it cook for twenty minutes. You'll know it's ready when the chicken is tender and cooked through."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "remove_shred_chicken",
       "descr": "Remove chicken, shred when cool",
       "instructions": "Remove chicken, shred when cool",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "boil_stock_add_chicken"
       ],
       "next": [
-        "step_3"
+        "simmer_vegetables"
       ],
       "on_enter": [
         {
-          "say": "Let's remove the chicken, shred when."
+          "say": "Let's carefully remove the chicken from the pot. Once it's cool enough to handle, shred it into lovely bite-sized pieces."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "simmer_vegetables",
       "descr": "Add vegetables to stock, simmer for 10 minutes",
       "instructions": "Add vegetables to stock, simmer for 10 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT10M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "remove_shred_chicken"
       ],
       "next": [
-        "step_4"
+        "cook_noodles"
       ],
       "on_enter": [
         {
-          "say": "Now add the vegetables to stock,."
+          "say": "Now, let's add those lovely vegetables to the stock and let them simmer for ten minutes. You'll smell the wonderful aroma as they soften and release their flavors."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "cook_noodles",
       "descr": "Add noodles and cook until tender",
       "instructions": "Add noodles and cook until tender",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "simmer_vegetables"
       ],
       "next": [
-        "step_5"
+        "return_chicken"
       ],
       "on_enter": [
         {
-          "say": "Now add the noodles and cook."
+          "say": "Let's add the noodles now and cook them until they're perfectly tender. Keep an eye on them so they don't overcook."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "return_chicken",
       "descr": "Return shredded chicken to pot",
       "instructions": "Return shredded chicken to pot",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "cook_noodles"
       ],
       "next": [
-        "step_6"
+        "season_soup"
       ],
       "on_enter": [
         {
-          "say": "Let's return shredded chicken to pot."
+          "say": "Time to return the shredded chicken to the pot. This will warm it through and let all those flavors mingle beautifully."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "season_soup",
       "descr": "Season with salt, pepper, and fresh parsley",
       "instructions": "Season with salt, pepper, and fresh parsley",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "return_chicken"
       ],
       "next": [
-        "step_7"
+        "serve_soup"
       ],
       "on_enter": [
         {
-          "say": "Let's season the with salt, pepper,."
+          "say": "Let's finish off by seasoning the soup with a bit of salt, pepper, and a sprinkle of fresh parsley. Give it a taste and adjust as needed."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_soup",
       "descr": "Serve hot with crusty bread",
       "instructions": "Serve hot with crusty bread",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "season_soup"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Brilliant! It's time to serve up this comforting chicken noodle soup. Enjoy it hot with some crusty bread on the side. Lovely!"
         }
       ]
     }

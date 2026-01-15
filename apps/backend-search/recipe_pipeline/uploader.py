@@ -57,6 +57,9 @@ class RecipeUploader:
         """
         logger.info(f"Uploading recipe: {slug}")
         
+        # Sanitize recipe_json to remove null characters that Supabase can't handle
+        recipe_json = self._sanitize_json(recipe_json)
+        
         # Compute metadata from recipe_json
         metadata = self._compute_metadata(recipe_json, validation)
         
@@ -212,6 +215,23 @@ class RecipeUploader:
             return True
         return bool(re.match(r"^step[_-]?\d+$", step_id.lower()))
     
+    def _sanitize_json(self, obj: Any) -> Any:
+        """
+        Recursively sanitize JSON to remove null characters and other 
+        problematic Unicode that Supabase/PostgreSQL can't handle.
+        """
+        if isinstance(obj, dict):
+            return {k: self._sanitize_json(v) for k, v in obj.items()}
+        elif isinstance(obj, list):
+            return [self._sanitize_json(item) for item in obj]
+        elif isinstance(obj, str):
+            # Remove null characters and other control characters
+            return obj.replace('\x00', '').replace('\u0000', '')\
+                      .replace('\x12', '').replace('\x13', '')\
+                      .replace('\x19', '')
+        else:
+            return obj
+    
     def _has_on_enter_say(self, step: dict) -> bool:
         """
         Check if step has a non-empty on_enter say message.
@@ -302,11 +322,14 @@ def upload_recipe(recipe_json: dict, publish: bool = True) -> dict:
     slug = recipe_meta.get("id", recipe_meta.get("slug", "unknown"))
     source_url = recipe_meta.get("source_url")
     
+    # Valid source_type values: manual, scraped, imported, enhanced
+    source_type = "scraped" if source_url else "manual"
+    
     return uploader.upload(
         slug=slug,
         recipe_json=recipe_json,
         validation=validation,
         source_url=source_url,
-        source_type="crawled" if source_url else "manual",
+        source_type=source_type,
         publish=publish
     )

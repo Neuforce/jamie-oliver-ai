@@ -61,24 +61,27 @@ BAD examples:
 ### 3. TIMER STEPS
 When a step involves waiting (baking, simmering, resting, etc.):
 - Set type: "timer"
-- Include duration in seconds
-- Set auto_start: true if the timer should start automatically
+- Include duration as ISO 8601 string: "PT{seconds}S" or "PT{minutes}M"
+- Set auto_start: false (user should confirm before timer starts)
 - Extract the duration from the instruction text
 
 Examples of timer steps:
-- "Bake for 20 minutes" → type: "timer", duration: 1200, auto_start: true
-- "Let it rest for 5 minutes" → type: "timer", duration: 300
-- "Simmer for 30 minutes" → type: "timer", duration: 1800
+- "Bake for 20 minutes" → type: "timer", duration: "PT20M", auto_start: false
+- "Let it rest for 5 minutes" → type: "timer", duration: "PT5M"
+- "Simmer for 30 minutes" → type: "timer", duration: "PT30M"
+- "Cook for 45 seconds" → type: "timer", duration: "PT45S"
 
 For non-timer steps, use type: "immediate"
 
 ### 4. REQUIRES_CONFIRM
-Set requires_confirm: true for steps where:
-- User needs to complete an action before moving on
-- There's active cooking involved
-- User needs to check if something is done
+Set requires_confirm: true for ALL steps EXCEPT:
+- The FINAL step of the recipe (set requires_confirm: false)
 
-Set requires_confirm: false only for informational steps or automatic transitions.
+The last step should always have requires_confirm: false so the recipe ends naturally.
+
+### 5. AUTO_START
+- Set auto_start: true ONLY for the FIRST step
+- All other steps should have auto_start: false
 
 ## Output Format
 

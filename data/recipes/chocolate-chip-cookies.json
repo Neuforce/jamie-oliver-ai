@@ -67,131 +67,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 180°C (350°F)",
-      "instructions": "Preheat oven to 180°C (350°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 180\u00b0C (350\u00b0F)",
+      "instructions": "Preheat oven to 180\u00b0C (350\u00b0F)",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "cream_butter_sugars"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 180°c."
+          "say": "Right, let's preheat the oven to one hundred eighty degrees celsius, which is about three hundred fifty degrees fahrenheit. This will get our cookies off to a great start!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "cream_butter_sugars",
       "descr": "Cream butter and sugars until fluffy",
       "instructions": "Cream butter and sugars until fluffy",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "beat_eggs_vanilla"
       ],
       "on_enter": [
         {
-          "say": "Let's cream butter and sugars until fluffy."
+          "say": "Now, let's cream the butter and sugars together until they're lovely and fluffy. You'll know it's ready when it's light and airy."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "beat_eggs_vanilla",
       "descr": "Beat in eggs and vanilla",
       "instructions": "Beat in eggs and vanilla",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "cream_butter_sugars"
       ],
       "next": [
-        "step_4"
+        "mix_flour_baking_soda"
       ],
       "on_enter": [
         {
-          "say": "Let's beat in eggs and vanilla."
+          "say": "Let's add the eggs and vanilla extract. Beat them in until everything's well combined and smooth. It should smell delicious already!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "mix_flour_baking_soda",
       "descr": "Mix in flour and baking soda",
       "instructions": "Mix in flour and baking soda",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "beat_eggs_vanilla"
       ],
       "next": [
-        "step_5"
+        "fold_chocolate_chips"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Now, let's gently mix in the flour and baking soda. Take your time here to avoid overmixing. We want a nice, smooth dough."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "fold_chocolate_chips",
       "descr": "Fold in chocolate chips",
       "instructions": "Fold in chocolate chips",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "mix_flour_baking_soda"
       ],
       "next": [
-        "step_6"
+        "drop_onto_sheet"
       ],
       "on_enter": [
         {
-          "say": "Let's fold in chocolate chips."
+          "say": "Let's fold in those chocolate chips. Make sure they're evenly distributed so every bite is a chocolatey delight!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "drop_onto_sheet",
       "descr": "Drop spoonfuls onto baking sheet",
       "instructions": "Drop spoonfuls onto baking sheet",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "fold_chocolate_chips"
       ],
       "next": [
-        "step_7"
+        "bake_cookies"
       ],
       "on_enter": [
         {
-          "say": "Let's drop spoonfuls onto baking sheet."
+          "say": "Now, let's drop spoonfuls of our dough onto the baking sheet. Space them out nicely so they have room to spread."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "bake_cookies",
       "descr": "Bake 10-12 minutes until golden at edges",
       "instructions": "Bake 10-12 minutes until golden at edges",
-      "type": "immediate",
-      "auto_start": true,
+      "type": "timer",
+      "duration": "PT12M",
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "drop_onto_sheet"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to bake the 10-12 minutes until."
+          "say": "Time to bake these beauties! Pop them in the oven for ten to twelve minutes until they're golden at the edges. Keep an eye on them - the smell will be irresistible!"
         }
       ]
     }

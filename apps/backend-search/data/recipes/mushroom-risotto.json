@@ -1,0 +1,304 @@
+{
+  "recipe": {
+    "id": "mushroom-risotto",
+    "title": "Mushroom risotto",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "Comforting and delicious, this risotto recipe celebrating frozen mushrooms is a great one to have up your sleeve.",
+    "tags": [
+      "mushroom-risotto",
+      "vegetarian",
+      "mushroom",
+      "risotto"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/mushroom/mushroom-risotto/",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0370f972037befa38d66d2c0a77d27a3215569df-958x1280.jpg/142770878?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0370f972037befa38d66d2c0a77d27a3215569df-958x1280.jpg/142770878?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0370f972037befa38d66d2c0a77d27a3215569df-958x1280.jpg/142770878?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0370f972037befa38d66d2c0a77d27a3215569df-958x1280.jpg/142770878?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "500g-bag-of-frozen-sliced-mush",
+      "name": "500g bag of frozen sliced mushrooms",
+      "quantity": 500.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "vegetable-stock-cube",
+      "name": "vegetable stock cube",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "dried-thyme",
+      "name": "dried thyme",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "small-onions",
+      "name": "small onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-flat-leaf-parsley",
+      "name": "\u0012 a bunch of flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "risotto-rice",
+      "name": "risotto rice",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mature-cheddar-cheese",
+      "name": "mature Cheddar cheese",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "knife",
+    "ladle",
+    "pan",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "defrost_mushrooms",
+      "descr": "Use a sharp knife to make a small hole in the bag of...",
+      "instructions": "Use a sharp knife to make a small hole in the bag of mushrooms and cook in the microwave on full power (800W) for 2 minutes, or until defrosted. Boil the kettle.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "next": [
+        "make_stock"
+      ],
+      "on_enter": [
+        {
+          "say": "Right, let's start by making a small hole in the bag of mushrooms and popping them in the microwave on full power for two minutes until they're defrosted. And while that's happening, let's get the kettle boiling."
+        }
+      ]
+    },
+    {
+      "id": "make_stock",
+      "descr": "Pour 1 litre of boiling kettle water into a measuring...",
+      "instructions": "Pour 1 litre of boiling kettle water into a measuring jug and crumble in the stock cube, stirring until dissolved. Once the time\u0019s up on the mushrooms, pour any liquid from the bag into the jug and give it a stir (this will give your stock depth of flavour).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "defrost_mushrooms"
+      ],
+      "next": [
+        "cook_garlic_mushrooms"
+      ],
+      "on_enter": [
+        {
+          "say": "Now, pour one litre of boiling water into a jug, crumble in the stock cube, and give it a good stir until it's dissolved. Once the mushrooms are ready, pour any liquid from the bag into the jug for extra flavour."
+        }
+      ]
+    },
+    {
+      "id": "cook_garlic_mushrooms",
+      "descr": "Place a large non-stick frying pan on a medium-high heat...",
+      "instructions": "Place a large non-stick frying pan on a medium-high heat with 1 tablespoon of olive oil. Peel, finely slice and stir in the garlic for 2 minutes, or until lightly golden. Tip in the mushrooms, dried thyme and a pinch of sea salt and black pepper, and cook for 5 minutes, or until the mushrooms start to caramelise and any water has evaporated, stirring occasionally, then remove from the heat.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT420S",
+      "depends_on": [
+        "make_stock"
+      ],
+      "next": [
+        "chop_mushrooms"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat a tablespoon of olive oil in a large frying pan over medium-high heat. Add the garlic, and cook for about two minutes until it's lightly golden. Then, in go the mushrooms, thyme, and a pinch of salt and pepper. Cook for five minutes until the mushrooms are beautifully caramelised and the water has evaporated."
+        }
+      ]
+    },
+    {
+      "id": "chop_mushrooms",
+      "descr": "Remove the contents of the pan to a board and finely...",
+      "instructions": "Remove the contents of the pan to a board and finely chop half of the mushroom mixture, leaving the other half chunky and set aside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cook_garlic_mushrooms"
+      ],
+      "next": [
+        "soften_onions_celery"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer the mushroom mixture to a board. Finely chop half of it, leaving the other half nice and chunky. Set it aside for now."
+        }
+      ]
+    },
+    {
+      "id": "soften_onions_celery",
+      "descr": "Peel the onions and finely chop with the celery",
+      "instructions": "Peel the onions and finely chop with the celery. Return the pan to a medium-high heat with 1 tablespoon of oil. Stir in the onions and celery, then cover and cook for 5 minutes, or until softened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_mushrooms"
+      ],
+      "next": [
+        "chop_parsley_stalks"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the onions and celery. Add another tablespoon of oil to the pan, stir in the onions and celery, cover, and let them soften for about five minutes."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley_stalks",
+      "descr": "Tear off the leafy part of the parsley and set aside,...",
+      "instructions": "Tear off the leafy part of the parsley and set aside, then finely chop the stalks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "soften_onions_celery"
+      ],
+      "next": [
+        "toast_rice"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear off the leafy part of the parsley and set it aside. Finely chop the stalks, ready to add a lovely flavour to our risotto."
+        }
+      ]
+    },
+    {
+      "id": "toast_rice",
+      "descr": "Once the veg has softened, stir in the rice to toast for...",
+      "instructions": "Once the veg has softened, stir in the rice to toast for 2 minutes. Stir in the parsley stalks and finely chopped mushroom mix and cook for 1 minute, then pour in a ladle of stock and stir in a figure-of-eight motion until it\u0019s all absorbed, popping the lid on every now and then for a couple of minutes to trap in the heat. Continue to add ladlefuls of stock until the rice is tender but still holding its shape \u0013 it should take around 15 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1080S",
+      "depends_on": [
+        "chop_parsley_stalks"
+      ],
+      "next": [
+        "make_parsley_oil"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the rice and let it toast for about two minutes. Add the parsley stalks and finely chopped mushrooms, cooking for another minute. Now, let's start adding the stock, one ladle at a time, stirring in a figure-of-eight motion. This should take about fifteen minutes until the rice is tender but still has a lovely shape."
+        }
+      ]
+    },
+    {
+      "id": "make_parsley_oil",
+      "descr": "Meanwhile, roughly chop the parsley leaves and pound...",
+      "instructions": "Meanwhile, roughly chop the parsley leaves and pound them in a pestle and mortar with a pinch of salt and pepper until you have a bright green pulp. Muddle in 3 tablespoons of oil, then set aside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "toast_rice"
+      ],
+      "next": [
+        "finish_risotto"
+      ],
+      "on_enter": [
+        {
+          "say": "While the risotto is cooking, let's make a lovely parsley oil. Roughly chop the parsley leaves and pound them with a pinch of salt and pepper until you have a bright green pulp. Stir in three tablespoons of oil and set it aside."
+        }
+      ]
+    },
+    {
+      "id": "finish_risotto",
+      "descr": "Remove the risotto from the heat, coarsely grate in most...",
+      "instructions": "Remove the risotto from the heat, coarsely grate in most of the cheese (keeping a small handful aside for later), then stir in the reserved mushroom mixture. Cover the pan and leave to relax for 2 minutes until the risotto is creamy and oozy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "make_parsley_oil"
+      ],
+      "next": [
+        "serve_risotto"
+      ],
+      "on_enter": [
+        {
+          "say": "Take the risotto off the heat and grate in most of the cheese, keeping a little back for later. Stir in the reserved mushrooms, cover, and let it rest for two minutes until it's creamy and oozy."
+        }
+      ]
+    },
+    {
+      "id": "serve_risotto",
+      "descr": "Divide between plates, finely grate over the remaining...",
+      "instructions": "Divide between plates, finely grate over the remaining cheese, drizzle over a little parsley oil and serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "finish_risotto"
+      ],
+      "on_enter": [
+        {
+          "say": "Now, let's plate up! Divide the risotto between plates, grate over the remaining cheese, drizzle with a bit of that lovely parsley oil, and serve. Enjoy!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "453 calories",
+    "carbohydrates": "69.6 g",
+    "fat": "15.4 g",
+    "fiber": "3.6 g",
+    "protein": "13.5 g"
+  }
+}

@@ -33,8 +33,8 @@
       "unit": "g"
     },
     {
-      "id": "pâté",
-      "name": "pâté",
+      "id": "p\u0000e2t\u0000e9",
+      "name": "p\u0000e2t\u0000e9",
       "quantity": 100.0,
       "unit": "g"
     },
@@ -66,131 +66,134 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "sear_beef",
       "descr": "Sear beef on all sides, brush with mustard, let cool",
       "instructions": "Sear beef on all sides, brush with mustard, let cool",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "cook_mushrooms"
       ],
       "on_enter": [
         {
-          "say": "Let's sear beef on all sides, brush."
+          "say": "Let's get started by searing the beef on all sides until it's beautifully browned. Then, we'll brush it with a bit of Dijon mustard and let it cool. You'll love the aroma!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "cook_mushrooms",
       "descr": "Cook mushrooms until all liquid evaporates, season well",
       "instructions": "Cook mushrooms until all liquid evaporates, season well",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "sear_beef"
       ],
       "next": [
-        "step_3"
+        "assemble_ham_layer"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the mushrooms until all."
+          "say": "Now, let's cook those mushrooms until all the liquid evaporates. Season them well, and you'll notice a lovely earthy smell filling your kitchen."
         }
       ]
     },
     {
-      "id": "step_3",
-      "descr": "Lay ham on plastic wrap, spread with pâté and mushrooms",
-      "instructions": "Lay ham on plastic wrap, spread with pâté and mushrooms",
+      "id": "assemble_ham_layer",
+      "descr": "Lay ham on plastic wrap, spread with p\u00e2t\u00e9 and mushrooms",
+      "instructions": "Lay ham on plastic wrap, spread with p\u00e2t\u00e9 and mushrooms",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "cook_mushrooms"
       ],
       "next": [
-        "step_4"
+        "wrap_beef"
       ],
       "on_enter": [
         {
-          "say": "Let's lay ham on plastic wrap, spread."
+          "say": "Let's lay out the Parma ham on some plastic wrap. Spread it with the p\u00e2t\u00e9 and then the mushrooms. This is going to add so much flavour!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "wrap_beef",
       "descr": "Wrap beef in ham layer, refrigerate 30 minutes",
       "instructions": "Wrap beef in ham layer, refrigerate 30 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT30M",
       "depends_on": [
-        "step_3"
+        "assemble_ham_layer"
       ],
       "next": [
-        "step_5"
+        "wrap_puff_pastry"
       ],
       "on_enter": [
         {
-          "say": "Let's wrap beef in ham layer, refrigerate."
+          "say": "Now, let's wrap the beef in that lovely ham layer. Once it's snug, pop it in the fridge for thirty minutes. This helps it hold its shape."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "wrap_puff_pastry",
       "descr": "Wrap in puff pastry, seal edges, brush with egg",
       "instructions": "Wrap in puff pastry, seal edges, brush with egg",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "wrap_beef"
       ],
       "next": [
-        "step_6"
+        "bake_wellington"
       ],
       "on_enter": [
         {
-          "say": "Let's wrap in puff pastry, seal edges,."
+          "say": "Let's wrap our beef in the puff pastry now. Make sure to seal the edges well and give it a nice brush with egg yolk. It's going to look stunning!"
         }
       ]
     },
     {
-      "id": "step_6",
-      "descr": "Bake at 200°C for 35-40 minutes until golden",
-      "instructions": "Bake at 200°C for 35-40 minutes until golden",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "id": "bake_wellington",
+      "descr": "Bake at 200\u00b0C for 35-40 minutes until golden",
+      "instructions": "Bake at 200\u00b0C for 35-40 minutes until golden",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT40M",
       "depends_on": [
-        "step_5"
+        "wrap_puff_pastry"
       ],
       "next": [
-        "step_7"
+        "rest_before_slicing"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the at 200°c for."
+          "say": "Time to bake our Wellington! Set the oven to two hundred degrees celsius, that's about three ninety-five fahrenheit, and let it bake for thirty-five to forty minutes until it's beautifully golden."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "rest_before_slicing",
       "descr": "Rest 10 minutes before slicing",
       "instructions": "Rest 10 minutes before slicing",
-      "type": "immediate",
-      "auto_start": true,
+      "type": "timer",
+      "auto_start": false,
       "requires_confirm": false,
+      "duration": "PT10M",
       "depends_on": [
-        "step_6"
+        "bake_wellington"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's rest 10 minutes before slicing."
+          "say": "Brilliant! Let the Wellington rest for ten minutes before slicing. This is really important to let all those lovely juices settle. Then, it's time to enjoy!"
         }
       ]
     }

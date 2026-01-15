@@ -67,131 +67,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "cook_quinoa",
       "descr": "Cook quinoa according to package, let cool",
       "instructions": "Cook quinoa according to package, let cool",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "chop_vegetables"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the quinoa according to."
+          "say": "Right, let's get started by cooking the quinoa according to the package instructions. Once it's done, let it cool down. You'll know it's perfect when it's light and fluffy."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "chop_vegetables",
       "descr": "Chop all vegetables",
       "instructions": "Chop all vegetables",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "cook_quinoa"
       ],
       "next": [
-        "step_3"
+        "mix_dressing"
       ],
       "on_enter": [
         {
-          "say": "Let's start by chop."
+          "say": "Now, let's chop up all those lovely vegetables. Make sure they're nice and even for a beautiful salad."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "mix_dressing",
       "descr": "Mix olive oil and lemon juice for dressing",
       "instructions": "Mix olive oil and lemon juice for dressing",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "chop_vegetables"
       ],
       "next": [
-        "step_4"
+        "combine_quinoa_vegetables"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Let's whip up a quick dressing. Mix together the olive oil and lemon juice. Give it a taste - it should be zesty and fresh!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "combine_quinoa_vegetables",
       "descr": "Combine quinoa with vegetables",
       "instructions": "Combine quinoa with vegetables",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "mix_dressing"
       ],
       "next": [
-        "step_5"
+        "add_feta_herbs"
       ],
       "on_enter": [
         {
-          "say": "Let's combine everything together."
+          "say": "Brilliant! Now, let's combine the cooled quinoa with all those vibrant vegetables. It's coming together nicely!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_feta_herbs",
       "descr": "Add feta and fresh herbs",
       "instructions": "Add feta and fresh herbs",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "combine_quinoa_vegetables"
       ],
       "next": [
-        "step_6"
+        "toss_with_dressing"
       ],
       "on_enter": [
         {
-          "say": "Now add the feta and fresh."
+          "say": "Time to add the crumbled feta and those fresh herbs. This is where the magic happens!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "toss_with_dressing",
       "descr": "Pour dressing over salad and toss",
       "instructions": "Pour dressing over salad and toss",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "add_feta_herbs"
       ],
       "next": [
-        "step_7"
+        "chill_salad"
       ],
       "on_enter": [
         {
-          "say": "Let's pour dressing over salad and toss."
+          "say": "Let's pour that lovely dressing over the salad and give it a good toss. Make sure everything is nicely coated."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "chill_salad",
       "descr": "Chill before serving if desired",
       "instructions": "Chill before serving if desired",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "toss_with_dressing"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's chill before serving if desired."
+          "say": "If you like, you can chill the salad before serving. It'll be even more refreshing!"
         }
       ]
     }

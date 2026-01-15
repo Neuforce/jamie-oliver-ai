@@ -33,8 +33,8 @@
       "unit": null
     },
     {
-      "id": "tomato_purée",
-      "name": "tomato purée",
+      "id": "tomato_pur\u0000e9e",
+      "name": "tomato pur\u0000e9e",
       "quantity": 2.0,
       "unit": "tbsp"
     },
@@ -66,131 +66,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "brown_lamb",
       "descr": "Brown lamb mince, add onion and carrots",
       "instructions": "Brown lamb mince, add onion and carrots",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "simmer_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's add onion and carrots."
+          "say": "Alright, let's get started by browning the lamb mince. Once it's nice and brown, we'll add in the onion and carrots. You'll know it's ready when the kitchen starts to smell amazing!"
         }
       ]
     },
     {
-      "id": "step_2",
-      "descr": "Stir in tomato purée and stock, simmer 20 mins",
-      "instructions": "Stir in tomato purée and stock, simmer 20 mins",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "id": "simmer_sauce",
+      "descr": "Stir in tomato pur\u00e9e and stock, simmer 20 mins",
+      "instructions": "Stir in tomato pur\u00e9e and stock, simmer 20 mins",
+      "type": "timer",
+      "duration": "PT20M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "brown_lamb"
       ],
       "next": [
-        "step_3"
+        "boil_potatoes"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Now, let's stir in the tomato pur\u00e9e and stock. Give it a good mix and then we'll let it simmer for twenty minutes. This is where all those lovely flavors come together!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "boil_potatoes",
       "descr": "Boil potatoes until tender",
       "instructions": "Boil potatoes until tender",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "simmer_sauce"
       ],
       "next": [
-        "step_4"
+        "mash_potatoes"
       ],
       "on_enter": [
         {
-          "say": "Time to boil the potatoes until tender."
+          "say": "Let's get those potatoes boiling until they're nice and tender. You want them soft enough to mash easily."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "mash_potatoes",
       "descr": "Mash with butter and milk until smooth",
       "instructions": "Mash with butter and milk until smooth",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "boil_potatoes"
       ],
       "next": [
-        "step_5"
+        "transfer_meat"
       ],
       "on_enter": [
         {
-          "say": "Let's mash with butter and milk until."
+          "say": "Time to mash those potatoes! Add in the butter and milk, and mash until they're smooth and creamy. This is going to be the perfect topping for our pie."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "transfer_meat",
       "descr": "Transfer meat to baking dish",
       "instructions": "Transfer meat to baking dish",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "mash_potatoes"
       ],
       "next": [
-        "step_6"
+        "top_with_potato"
       ],
       "on_enter": [
         {
-          "say": "Now transfer the meat to baking."
+          "say": "Now, let's transfer that lovely meat mixture into a baking dish. Make sure to spread it out evenly."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "top_with_potato",
       "descr": "Top with mashed potato, fork patterns on top",
       "instructions": "Top with mashed potato, fork patterns on top",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "transfer_meat"
       ],
       "next": [
-        "step_7"
+        "bake_pie"
       ],
       "on_enter": [
         {
-          "say": "Let's top with mashed potato, fork patterns."
+          "say": "Let's spoon the mashed potato over the meat. Use a fork to create some lovely patterns on top. This will help it crisp up beautifully in the oven."
         }
       ]
     },
     {
-      "id": "step_7",
-      "descr": "Bake at 200°C for 25 minutes until golden",
-      "instructions": "Bake at 200°C for 25 minutes until golden",
-      "type": "immediate",
-      "auto_start": true,
+      "id": "bake_pie",
+      "descr": "Bake at 200\u00b0C for 25 minutes until golden",
+      "instructions": "Bake at 200\u00b0C for 25 minutes until golden",
+      "type": "timer",
+      "duration": "PT25M",
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "top_with_potato"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to bake the at 200°c for."
+          "say": "Alright, let's pop that into the oven at two hundred degrees celsius for twenty-five minutes. We're looking for a beautiful golden top. Can't wait to dig in!"
         }
       ]
     }

@@ -1,0 +1,271 @@
+{
+  "recipe": {
+    "id": "sausage-pasta-bake",
+    "title": "Sausage pasta bake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "A Jamie Oliver sausage pasta bake recipe that's packed with flavour. This is like the best sausage pasta recipe kicked up a gear! Topped with Cheddar cheese",
+    "tags": [
+      "method",
+      "main-ingredient",
+      "pasta-amp-risotto",
+      "dish-type",
+      "bread",
+      "occasion",
+      "course",
+      "sausages",
+      "pork",
+      "mains",
+      "tomato",
+      "pasta-bake",
+      "father-s-day",
+      "baking",
+      "pasta"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/sausage-pasta-bake/",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/723df4eabd162efb652fc28495122d4cd006fb9b-973x1300.jpg/46264374?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/723df4eabd162efb652fc28495122d4cd006fb9b-973x1300.jpg/46264374?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/723df4eabd162efb652fc28495122d4cd006fb9b-973x1300.jpg/46264374?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/723df4eabd162efb652fc28495122d4cd006fb9b-973x1300.jpg/46264374?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "mature-cheddar-cheese",
+      "name": "mature Cheddar cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "stale-bread",
+      "name": "stale bread",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-sausages",
+      "name": "higher-welfare sausages",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-chilli-flakes",
+      "name": "dried chilli flakes",
+      "quantity": 1.0,
+      "unit": "pinch",
+      "note": null
+    },
+    {
+      "id": "400g-tins-quality-plum-tomatoe",
+      "name": "400g tins quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-rigatoni",
+      "name": "dried rigatoni",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "bowl",
+    "colander",
+    "food processor",
+    "frying pan",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "prepare_ingredients"
+      ],
+      "on_enter": [
+        {
+          "say": "Right, let's preheat the oven to two hundred degrees celsius, which is about four hundred fahrenheit. This gets us ready for some lovely baking!"
+        }
+      ]
+    },
+    {
+      "id": "prepare_ingredients",
+      "descr": "Peel and finely slice the garlic, grate the Cheddar, and prepare the bread",
+      "instructions": "Peel and finely slice the garlic. Coarsely grate the Cheddar. Tear the stale bread into small chunks or blitz in the food processor.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "make_crumb_mix"
+      ],
+      "on_enter": [
+        {
+          "say": "Now, let's get our ingredients ready. Peel and finely slice the garlic, grate the Cheddar, and either tear the bread into chunks or give it a quick blitz in the food processor. Lovely stuff!"
+        }
+      ]
+    },
+    {
+      "id": "make_crumb_mix",
+      "descr": "Mix breadcrumbs with garlic, oregano, cheese, salt, and pepper",
+      "instructions": "Tip the breadcrumbs into a bowl with one of the sliced garlic cloves, a good pinch of the oregano, the grated cheese and a pinch of sea salt and a sprinkling of black pepper. Drizzle with a little oil and toss to mix it all together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "prepare_ingredients"
+      ],
+      "next": [
+        "prepare_sausages"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's make a lovely crumb mix. Combine the breadcrumbs with a slice of garlic, a pinch of oregano, the grated cheese, and a bit of salt and pepper. Drizzle with some olive oil and give it a good toss. Brilliant!"
+        }
+      ]
+    },
+    {
+      "id": "prepare_sausages",
+      "descr": "Prepare sausage balls and bake",
+      "instructions": "Pop the sausages out of their skins and break each one into 4 equal pieces. Roll each piece into a ball shape and place in an ovenproof dish. Drizzle over a little oil and roll to coat. Bake in the oven for about 10 minutes, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT10M",
+      "depends_on": [
+        "make_crumb_mix"
+      ],
+      "next": [
+        "make_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Now, let's get those sausages ready. Pop them out of their skins, break into four pieces each, and roll them into balls. Place them in an ovenproof dish, drizzle with oil, and bake for about ten minutes until they're golden and cooked through. You'll love the aroma!"
+        }
+      ]
+    },
+    {
+      "id": "make_sauce",
+      "descr": "Cook garlic, oregano, and chilli flakes, then add tomatoes",
+      "instructions": "Heat a little oil in a frying pan over a medium heat. Add the remaining sliced garlic and oregano, and the chilli flakes. Stir until the garlic is coloured, then tip in the tomatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "prepare_sausages"
+      ],
+      "next": [
+        "simmer_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's make a beautiful sauce. Heat some oil in a frying pan, add the garlic, oregano, and chilli flakes. Stir until the garlic is nicely coloured, then add in the tomatoes. It's going to smell fantastic!"
+        }
+      ]
+    },
+    {
+      "id": "simmer_sauce",
+      "descr": "Simmer the sauce",
+      "instructions": "Add a pinch of salt and pepper, bring to the boil, then reduce the heat and simmer for 10 minutes, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT10M",
+      "depends_on": [
+        "make_sauce"
+      ],
+      "next": [
+        "cook_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Add a pinch of salt and pepper, bring it to a boil, then let it simmer for about ten minutes. Give it a stir now and then. This will really bring out those lovely flavours."
+        }
+      ]
+    },
+    {
+      "id": "cook_pasta",
+      "descr": "Cook the rigatoni until al dente",
+      "instructions": "Cook the rigatoni according to the packet instructions, taking it off the heat 2 minutes early, so it\u2019s al dente. Drain in a colander and tip into a large baking dish.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2M",
+      "depends_on": [
+        "simmer_sauce"
+      ],
+      "next": [
+        "assemble_bake"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the rigatoni according to the packet instructions, but take it off the heat two minutes early so it's perfectly al dente. Drain it well and pop it into a large baking dish. Lovely!"
+        }
+      ]
+    },
+    {
+      "id": "assemble_bake",
+      "descr": "Combine all elements and bake",
+      "instructions": "Add the sausage balls, pour over the sauce and toss well. Sprinkle over the cheesy crumb mix and bake for 15 minutes, or until golden on top and bubbling.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT15M",
+      "depends_on": [
+        "cook_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to bring it all together! Add the sausage balls to the pasta, pour over that lovely sauce, and give it a good toss. Sprinkle the cheesy crumb mix on top and bake for fifteen minutes until it's golden and bubbling. Enjoy the magic!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "599 calories",
+    "carbohydrates": "89 g",
+    "fat": "17.5 g",
+    "fiber": "9.5 g",
+    "protein": "26.8 g"
+  }
+}

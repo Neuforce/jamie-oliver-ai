@@ -68,131 +68,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "toast_bread",
       "descr": "Toast sourdough until golden and crispy",
       "instructions": "Toast sourdough until golden and crispy",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "mash_avocado"
       ],
       "on_enter": [
         {
-          "say": "Let's toast sourdough until golden and crispy."
+          "say": "Right, let's toast the sourdough until it's beautifully golden and crispy. You'll know it's ready when you hear that lovely crunch!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "mash_avocado",
       "descr": "Mash avocados with lemon juice and salt",
       "instructions": "Mash avocados with lemon juice and salt",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "toast_bread"
       ],
       "next": [
-        "step_3"
+        "spread_avocado"
       ],
       "on_enter": [
         {
-          "say": "Let's mash avocados with lemon juice and."
+          "say": "Now, let's get those avocados mashed up with a good squeeze of lemon juice and a pinch of sea salt. It should be nice and creamy!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "spread_avocado",
       "descr": "Spread avocado on toast",
       "instructions": "Spread avocado on toast",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "mash_avocado"
       ],
       "next": [
-        "step_4"
+        "add_tomatoes"
       ],
       "on_enter": [
         {
-          "say": "Let's spread avocado on toast."
+          "say": "Brilliant! Now let's spread that creamy avocado mixture over our crispy toast. Make sure it's nice and even."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "add_tomatoes",
       "descr": "Top with halved cherry tomatoes",
       "instructions": "Top with halved cherry tomatoes",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "spread_avocado"
       ],
       "next": [
-        "step_5"
+        "add_egg"
       ],
       "on_enter": [
         {
-          "say": "Let's top with halved cherry tomatoes."
+          "say": "Lovely! Let's add some halved cherry tomatoes on top for a pop of color and freshness."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_egg",
       "descr": "Add a poached or fried egg if desired",
       "instructions": "Add a poached or fried egg if desired",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "add_tomatoes"
       ],
       "next": [
-        "step_6"
+        "drizzle_oil"
       ],
       "on_enter": [
         {
-          "say": "Now add the poached or fried."
+          "say": "If you're feeling a bit cheeky, let's pop a poached or fried egg on top. It'll make it extra special!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "drizzle_oil",
       "descr": "Drizzle with olive oil",
       "instructions": "Drizzle with olive oil",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "add_egg"
       ],
       "next": [
-        "step_7"
+        "add_seasoning"
       ],
       "on_enter": [
         {
-          "say": "Let's drizzle with olive oil."
+          "say": "Now, let's drizzle a bit of extra virgin olive oil over the top. It'll add a lovely richness."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "add_seasoning",
       "descr": "Sprinkle with red pepper flakes and sea salt",
       "instructions": "Sprinkle with red pepper flakes and sea salt",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "drizzle_oil"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's sprinkle with red pepper flakes and."
+          "say": "Finally, let's sprinkle some red pepper flakes and a pinch of sea salt to finish it off. There you go, perfect avocado toast!"
         }
       ]
     }

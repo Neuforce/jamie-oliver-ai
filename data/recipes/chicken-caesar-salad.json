@@ -70,131 +70,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "grill_chicken",
       "descr": "Grill or pan-fry chicken breasts, season well",
       "instructions": "Grill or pan-fry chicken breasts, season well",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "make_dressing"
       ],
       "on_enter": [
         {
-          "say": "Time to grill the or pan-fry chicken."
+          "say": "Right, let's get started by grilling or pan-frying those chicken breasts. Season them well and cook until they're beautifully golden and cooked through."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "make_dressing",
       "descr": "Make dressing: mix mayo, mustard, garlic, lemon juice, Worcestershire",
       "instructions": "Make dressing: mix mayo, mustard, garlic, lemon juice, Worcestershire",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "grill_chicken"
       ],
       "next": [
-        "step_3"
+        "tear_lettuce"
       ],
       "on_enter": [
         {
-          "say": "Let's make dressing: mix mayo,."
+          "say": "Now, let's whip up that dressing. Mix together the mayonnaise, mustard, minced garlic, a squeeze of lemon juice, and a dash of Worcestershire sauce. Give it a good stir until it's smooth and creamy."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "tear_lettuce",
       "descr": "Tear lettuce into bite-sized pieces",
       "instructions": "Tear lettuce into bite-sized pieces",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "make_dressing"
       ],
       "next": [
-        "step_4"
+        "slice_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's tear lettuce into bite-sized pieces."
+          "say": "Let's prepare the lettuce. Tear those lovely romaine leaves into bite-sized pieces. They should look fresh and crisp."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "slice_chicken",
       "descr": "Slice cooked chicken",
       "instructions": "Slice cooked chicken",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "tear_lettuce"
       ],
       "next": [
-        "step_5"
+        "toss_lettuce"
       ],
       "on_enter": [
         {
-          "say": "Let's start by slice."
+          "say": "Time to slice up the chicken. Make sure it's nice and juicy, and slice it into thin, even pieces."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "toss_lettuce",
       "descr": "Toss lettuce with dressing",
       "instructions": "Toss lettuce with dressing",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "slice_chicken"
       ],
       "next": [
-        "step_6"
+        "top_salad"
       ],
       "on_enter": [
         {
-          "say": "Let's toss everything together."
+          "say": "Let's toss the lettuce with that gorgeous dressing. Make sure every leaf is coated for maximum flavour."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "top_salad",
       "descr": "Top with chicken, Parmesan, and croutons",
       "instructions": "Top with chicken, Parmesan, and croutons",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "toss_lettuce"
       ],
       "next": [
-        "step_7"
+        "serve_salad"
       ],
       "on_enter": [
         {
-          "say": "Let's top with chicken, parmesan, and croutons."
+          "say": "Now, let's finish it off by topping the salad with the sliced chicken, some shaved Parmesan, and a handful of croutons. It's looking fantastic!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_salad",
       "descr": "Serve immediately",
       "instructions": "Serve immediately",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "top_salad"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Brilliant! It's time to serve up your Chicken Caesar Salad. Enjoy every bite!"
         }
       ]
     }

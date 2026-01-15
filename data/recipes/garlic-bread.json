@@ -55,131 +55,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 200°C (400°F)",
-      "instructions": "Preheat oven to 200°C (400°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 200\u00b0C (400\u00b0F)",
+      "instructions": "Preheat oven to 200\u00b0C (400\u00b0F)",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "mix_ingredients"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 200°c."
+          "say": "Right, let's preheat the oven to two hundred degrees celsius, which is about four hundred degrees fahrenheit. This will get it nice and hot for our garlic bread."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "mix_ingredients",
       "descr": "Mix butter with garlic, parsley, Parmesan, and salt",
       "instructions": "Mix butter with garlic, parsley, Parmesan, and salt",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "slice_baguette"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Now, let's get mixing! Combine the softened butter with the minced garlic, chopped parsley, grated Parmesan, and a pinch of salt. Mix it until it's all beautifully combined."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "slice_baguette",
       "descr": "Slice baguette diagonally, not cutting all the way through",
       "instructions": "Slice baguette diagonally, not cutting all the way through",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "mix_ingredients"
       ],
       "next": [
-        "step_4"
+        "spread_butter"
       ],
       "on_enter": [
         {
-          "say": "Let's start by slice."
+          "say": "Let's slice the baguette diagonally, but be careful not to cut all the way through. We want to create lovely pockets for our garlic butter."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "spread_butter",
       "descr": "Spread garlic butter between slices",
       "instructions": "Spread garlic butter between slices",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "slice_baguette"
       ],
       "next": [
-        "step_5"
+        "wrap_in_foil"
       ],
       "on_enter": [
         {
-          "say": "Let's spread garlic butter between slices."
+          "say": "Now, let's spread that delicious garlic butter between the slices. Make sure each slice gets a good amount for maximum flavour."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "wrap_in_foil",
       "descr": "Wrap in foil",
       "instructions": "Wrap in foil",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "spread_butter"
       ],
       "next": [
-        "step_6"
+        "bake_bread"
       ],
       "on_enter": [
         {
-          "say": "Let's wrap in foil."
+          "say": "Great! Let's wrap the baguette in foil. This will keep it nice and moist while it bakes."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "bake_bread",
       "descr": "Bake for 15 minutes",
       "instructions": "Bake for 15 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT15M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "wrap_in_foil"
       ],
       "next": [
-        "step_7"
+        "crisp_bread"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the for 15 minutes."
+          "say": "Time to pop it in the oven. We'll bake it for fifteen minutes. This will get the bread lovely and warm."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "crisp_bread",
       "descr": "Open foil for last 5 minutes to crisp",
       "instructions": "Open foil for last 5 minutes to crisp",
-      "type": "immediate",
-      "auto_start": true,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "bake_bread"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's open foil for last 5 minutes."
+          "say": "Alright, let's open up the foil for the last five minutes to get that perfect crispy top. You'll love the sound of that crunch!"
         }
       ]
     }

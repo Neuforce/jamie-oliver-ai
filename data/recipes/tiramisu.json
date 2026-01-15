@@ -63,131 +63,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "whisk_egg_yolks",
       "descr": "Whisk egg yolks with sugar until pale and thick",
       "instructions": "Whisk egg yolks with sugar until pale and thick",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "beat_in_mascarpone"
       ],
       "on_enter": [
         {
-          "say": "Let's whisk everything together."
+          "say": "Right, let's whisk those egg yolks with the sugar until they're lovely and pale and thick. You'll see it become a creamy delight!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "beat_in_mascarpone",
       "descr": "Beat in mascarpone until smooth",
       "instructions": "Beat in mascarpone until smooth",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "whisk_egg_yolks"
       ],
       "next": [
-        "step_3"
+        "whip_egg_whites"
       ],
       "on_enter": [
         {
-          "say": "Let's beat in mascarpone until smooth."
+          "say": "Now, let's beat in that mascarpone until it's smooth as silk. This is going to be the creamy heart of our tiramisu!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "whip_egg_whites",
       "descr": "Whip egg whites to stiff peaks, fold into mascarpone",
       "instructions": "Whip egg whites to stiff peaks, fold into mascarpone",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "beat_in_mascarpone"
       ],
       "next": [
-        "step_4"
+        "mix_espresso_marsala"
       ],
       "on_enter": [
         {
-          "say": "Let's whip egg whites to stiff peaks,."
+          "say": "Let's whip those egg whites until they form stiff peaks. You'll know they're ready when they hold their shape beautifully. Then, gently fold them into the mascarpone mixture."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "mix_espresso_marsala",
       "descr": "Mix espresso with Marsala",
       "instructions": "Mix espresso with Marsala",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "whip_egg_whites"
       ],
       "next": [
-        "step_5"
+        "dip_ladyfingers"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Now, let's mix that strong espresso with a splash of Marsala. This will give our tiramisu that classic Italian kick!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "dip_ladyfingers",
       "descr": "Dip ladyfingers briefly in coffee, layer in dish",
       "instructions": "Dip ladyfingers briefly in coffee, layer in dish",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "mix_espresso_marsala"
       ],
       "next": [
-        "step_6"
+        "layer_mascarpone"
       ],
       "on_enter": [
         {
-          "say": "Let's dip ladyfingers briefly in coffee, layer."
+          "say": "Right, let's dip those ladyfingers briefly in our coffee mixture and layer them in the dish. Just a quick dip, we don't want them too soggy!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "layer_mascarpone",
       "descr": "Spread half the mascarpone cream, repeat layers",
       "instructions": "Spread half the mascarpone cream, repeat layers",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "dip_ladyfingers"
       ],
       "next": [
-        "step_7"
+        "refrigerate_dust_cocoa"
       ],
       "on_enter": [
         {
-          "say": "Let's spread half the mascarpone cream, repeat."
+          "say": "Let's spread half of that luscious mascarpone cream over the ladyfingers, and then repeat the layers. This is where it all comes together!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "refrigerate_dust_cocoa",
       "descr": "Refrigerate 4 hours, dust with cocoa before serving",
       "instructions": "Refrigerate 4 hours, dust with cocoa before serving",
-      "type": "immediate",
-      "auto_start": true,
+      "type": "timer",
+      "duration": "PT4H",
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "layer_mascarpone"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's refrigerate 4 hours, dust with cocoa."
+          "say": "Fantastic! Now, let's pop it in the fridge for four hours to set. Before serving, give it a lovely dusting of cocoa powder. Your tiramisu will be a masterpiece!"
         }
       ]
     }

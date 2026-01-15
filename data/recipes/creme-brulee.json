@@ -1,7 +1,7 @@
 {
   "recipe": {
     "id": "creme-brulee",
-    "title": "Crème Brûlée",
+    "title": "Cr\u00e8me Br\u00fbl\u00e9e",
     "description": "Silky vanilla custard with caramelized sugar crust",
     "estimated_total": "PT1H",
     "locale": "en",
@@ -48,131 +48,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 140°C (275°F)",
-      "instructions": "Preheat oven to 140°C (275°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 140\u00b0C (275\u00b0F)",
+      "instructions": "Preheat oven to 140\u00b0C (275\u00b0F)",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "heat_cream"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 140°c."
+          "say": "Right, let's preheat the oven to one hundred forty degrees celsius, which is about two hundred seventy-five degrees fahrenheit. This will set the stage for our lovely cr\u00e8me br\u00fbl\u00e9e."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "heat_cream",
       "descr": "Heat cream with vanilla pod until just boiling",
       "instructions": "Heat cream with vanilla pod until just boiling",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "whisk_eggs_sugar"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the cream with vanilla."
+          "say": "Now, let's gently heat the cream with the vanilla pod until it's just about to boil. You'll know it's ready when you see those tiny bubbles forming around the edges."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "whisk_eggs_sugar",
       "descr": "Whisk egg yolks with sugar until pale",
       "instructions": "Whisk egg yolks with sugar until pale",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "heat_cream"
       ],
       "next": [
-        "step_4"
+        "combine_cream_eggs"
       ],
       "on_enter": [
         {
-          "say": "Let's whisk everything together."
+          "say": "Brilliant! Now let's whisk the egg yolks with the sugar until they're pale and creamy. This is where the magic begins!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "combine_cream_eggs",
       "descr": "Pour hot cream over eggs, whisking constantly",
       "instructions": "Pour hot cream over eggs, whisking constantly",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "whisk_eggs_sugar"
       ],
       "next": [
-        "step_5"
+        "strain_ramekins"
       ],
       "on_enter": [
         {
-          "say": "Let's pour hot cream over eggs, whisking."
+          "say": "Now, let's carefully pour that hot cream over the egg mixture, whisking constantly. This will create a beautiful, silky custard."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "strain_ramekins",
       "descr": "Strain into ramekins",
       "instructions": "Strain into ramekins",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "combine_cream_eggs"
       ],
       "next": [
-        "step_6"
+        "bake_water_bath"
       ],
       "on_enter": [
         {
-          "say": "Let's strain into ramekins."
+          "say": "Let's strain our lovely custard into ramekins. This will ensure it's smooth and free of any lumps."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "bake_water_bath",
       "descr": "Bake in water bath for 30-35 minutes",
       "instructions": "Bake in water bath for 30-35 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT32M30S",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "strain_ramekins"
       ],
       "next": [
-        "step_7"
+        "chill_and_caramelize"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the in water bath."
+          "say": "Time to bake these beauties in a water bath for about thirty to thirty-five minutes. This gentle cooking will give us that perfect custard texture. Remember, it should have a slight wobble when it's done."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "chill_and_caramelize",
       "descr": "Chill 4 hours, sprinkle with sugar and blowtorch",
       "instructions": "Chill 4 hours, sprinkle with sugar and blowtorch",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "bake_water_bath"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's chill 4 hours, sprinkle with sugar."
+          "say": "Fantastic! Once cooled, let's chill the custard for four hours. Then, sprinkle with sugar and use a blowtorch to create that iconic caramelized crust. Enjoy your cr\u00e8me br\u00fbl\u00e9e!"
         }
       ]
     }
@@ -184,6 +185,6 @@
     }
   },
   "notes": {
-    "text": "Don't skip the water bath - it ensures smooth custard\nThe custard should wobble slightly\nChill thoroughly before brûléeing"
+    "text": "Don't skip the water bath - it ensures smooth custard. The custard should wobble slightly. Chill thoroughly before br\u00fbl\u00e9eing."
   }
 }

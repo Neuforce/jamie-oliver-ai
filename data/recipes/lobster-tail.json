@@ -60,131 +60,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 200°C (400°F)",
-      "instructions": "Preheat oven to 200°C (400°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 200\u00b0C (400\u00b0F)",
+      "instructions": "Preheat oven to 200\u00b0C (400\u00b0F)",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "cut_lobster_shells"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 200°c."
+          "say": "Right, let's preheat the oven to two hundred degrees celsius, which is about four hundred degrees fahrenheit. This will get us ready for some beautiful baking!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "cut_lobster_shells",
       "descr": "Cut lobster shells down the middle with scissors",
       "instructions": "Cut lobster shells down the middle with scissors",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "pull_meat"
       ],
       "on_enter": [
         {
-          "say": "Let's start by cut."
+          "say": "Now, let's carefully cut those lobster shells right down the middle with a pair of scissors. Take your time and be gentle!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "pull_meat",
       "descr": "Gently pull meat up and rest on top of shell",
       "instructions": "Gently pull meat up and rest on top of shell",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "cut_lobster_shells"
       ],
       "next": [
-        "step_4"
+        "melt_butter"
       ],
       "on_enter": [
         {
-          "say": "Let's gently pull meat up and rest."
+          "say": "Brilliant! Now gently pull the meat up and let it rest on top of the shell. This is going to look stunning when it's done."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "melt_butter",
       "descr": "Melt butter with garlic and parsley",
       "instructions": "Melt butter with garlic and parsley",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "pull_meat"
       ],
       "next": [
-        "step_5"
+        "brush_lobster"
       ],
       "on_enter": [
         {
-          "say": "Let's melt butter with garlic and parsley."
+          "say": "Let's melt that lovely butter with the garlic and parsley. The aroma is going to be absolutely divine!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "brush_lobster",
       "descr": "Brush lobster with garlic butter, sprinkle with paprika",
       "instructions": "Brush lobster with garlic butter, sprinkle with paprika",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "melt_butter"
       ],
       "next": [
-        "step_6"
+        "bake_lobster"
       ],
       "on_enter": [
         {
-          "say": "Let's brush lobster with garlic butter, sprinkle."
+          "say": "Now, let's brush that luscious garlic butter over the lobster and give it a sprinkle of paprika for a bit of colour and flavour."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "bake_lobster",
       "descr": "Bake 12-15 minutes until meat is opaque",
       "instructions": "Bake 12-15 minutes until meat is opaque",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT12M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "brush_lobster"
       ],
       "next": [
-        "step_7"
+        "serve_lobster"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the 12-15 minutes until."
+          "say": "Time to pop it in the oven! We'll bake it for twelve to fifteen minutes until the meat is beautifully opaque. Keep an eye on it!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_lobster",
       "descr": "Serve with remaining butter and lemon wedges",
       "instructions": "Serve with remaining butter and lemon wedges",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "bake_lobster"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Fantastic! It's time to serve up this gorgeous lobster with the remaining butter and some fresh lemon wedges. Enjoy every bite!"
         }
       ]
     }

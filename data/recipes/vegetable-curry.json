@@ -68,131 +68,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Sauté onion until soft, add curry powder",
-      "instructions": "Sauté onion until soft, add curry powder",
+      "id": "saute_onion",
+      "descr": "Saut\u00e9 onion until soft, add curry powder",
+      "instructions": "Saut\u00e9 onion until soft, add curry powder",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "add_vegetables"
       ],
       "on_enter": [
         {
-          "say": "Let's add curry powder."
+          "say": "Right, let's get started by saut\u00e9ing the onion until it's nice and soft. Then we'll add the curry powder for that lovely aroma."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "add_vegetables",
       "descr": "Add all vegetables, stir to coat in spices",
       "instructions": "Add all vegetables, stir to coat in spices",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "saute_onion"
       ],
       "next": [
-        "step_3"
+        "add_coconut_milk"
       ],
       "on_enter": [
         {
-          "say": "Now add the all vegetables, stir."
+          "say": "Now, let's add all those beautiful vegetables and give them a good stir to coat them in the spices. They'll start to smell fantastic!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "add_coconut_milk",
       "descr": "Pour in coconut milk and 200ml water",
       "instructions": "Pour in coconut milk and 200ml water",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "add_vegetables"
       ],
       "next": [
-        "step_4"
+        "simmer_vegetables"
       ],
       "on_enter": [
         {
-          "say": "Let's pour in coconut milk and 200ml."
+          "say": "Let's pour in the coconut milk and about two hundred milliliters of water. This will give us a lovely creamy base."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "simmer_vegetables",
       "descr": "Simmer for 20 minutes until vegetables are tender",
       "instructions": "Simmer for 20 minutes until vegetables are tender",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT20M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "add_coconut_milk"
       ],
       "next": [
-        "step_5"
+        "add_chickpeas"
       ],
       "on_enter": [
         {
-          "say": "Time to simmer the for 20 minutes."
+          "say": "Time to let it simmer for about twenty minutes until the vegetables are tender. You'll know it's ready when they are soft and full of flavor."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_chickpeas",
       "descr": "Add chickpeas and cook 5 more minutes",
       "instructions": "Add chickpeas and cook 5 more minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "simmer_vegetables"
       ],
       "next": [
-        "step_6"
+        "season_salt"
       ],
       "on_enter": [
         {
-          "say": "Now add the chickpeas and cook."
+          "say": "Now, let's add the chickpeas and cook for another five minutes. This will warm them through and blend all those lovely flavors together."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "season_salt",
       "descr": "Season with salt to taste",
       "instructions": "Season with salt to taste",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "add_chickpeas"
       ],
       "next": [
-        "step_7"
+        "garnish_and_serve"
       ],
       "on_enter": [
         {
-          "say": "Let's season the with salt to."
+          "say": "Let's season our curry with a pinch of salt to taste. Remember, you can always add more, but you can't take it out!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "garnish_and_serve",
       "descr": "Garnish with fresh coriander, serve with rice or naan",
       "instructions": "Garnish with fresh coriander, serve with rice or naan",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "season_salt"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to garnish and enjoy!"
+          "say": "Time to garnish with some fresh coriander and serve it up with your choice of rice or naan. Enjoy your delicious homemade curry!"
         }
       ]
     }

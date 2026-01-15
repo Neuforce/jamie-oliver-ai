@@ -1,0 +1,261 @@
+{
+  "recipe": {
+    "id": "bbq-pulled-pork",
+    "title": "BBQ pulled pork",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "Soft and crunchy waffles, tender BBQ pork and zingy slaw \u2013 what a combo. This recipe is delicious, moreish food and brilliant for using up leftover pork.",
+    "tags": [
+      "love-your-leftovers",
+      "pork",
+      "vegetable",
+      "save-with-jamie",
+      "coleslaw",
+      "budget-friendly"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/bbq-pulled-pork/",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4b68bbb72b646b94e2bc8830aa39b40065519ed8-958x1280.jpg/46491604?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4b68bbb72b646b94e2bc8830aa39b40065519ed8-958x1280.jpg/46491604?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4b68bbb72b646b94e2bc8830aa39b40065519ed8-958x1280.jpg/46491604?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4b68bbb72b646b94e2bc8830aa39b40065519ed8-958x1280.jpg/46491604?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "a-red-onion",
+      "name": "half a red onion",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "of-a-white-cabbage",
+      "name": "quarter of a white cabbage",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-mint",
+      "name": "half a bunch of fresh mint",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "white-wine-vinegar",
+      "name": "white wine vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 140.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "teaspoon-bicarbonate-of-soda",
+      "name": "half teaspoon bicarbonate of soda",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 185.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "higher-welfare-leftover-cooked",
+      "name": "higher-welfare leftover cooked pork",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-bbq-sauce",
+      "name": "heaped tablespoons BBQ sauce",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-leftover-pork-crackli",
+      "name": "optional: leftover pork crackling",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "prepare_vegetables",
+      "descr": "Prepare the vegetables.",
+      "instructions": "Finely slice the red onion, carrot, and cabbage.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "make_slaw"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's start by finely slicing the red onion, carrot, and cabbage. Take your time to get them nice and thin. This will make our slaw beautifully crunchy!"
+        }
+      ]
+    },
+    {
+      "id": "make_slaw",
+      "descr": "Make the slaw.",
+      "instructions": "Mix the sliced vegetables with mint, chilli, vinegar, and olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "prepare_vegetables"
+      ],
+      "next": [
+        "prepare_waffle_batter"
+      ],
+      "on_enter": [
+        {
+          "say": "Now, let's mix those lovely sliced veggies with some fresh mint, a bit of chilli for a kick, and dress it with white wine vinegar and olive oil. Give it a good toss!"
+        }
+      ]
+    },
+    {
+      "id": "prepare_waffle_batter",
+      "descr": "Prepare the waffle batter.",
+      "instructions": "Melt butter and mix with egg, sugar, flour, bicarbonate of soda, and milk.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "make_slaw"
+      ],
+      "next": [
+        "cook_waffles"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's get the waffle batter going. Melt the butter and mix it with the egg, sugar, flour, bicarbonate of soda, and milk until smooth. It should be a lovely, thick batter."
+        }
+      ]
+    },
+    {
+      "id": "cook_waffles",
+      "descr": "Cook the waffles.",
+      "instructions": "Cook the batter in a waffle iron until golden and crisp.",
+      "type": "timer",
+      "duration": 300,
+      "auto_start": true,
+      "requires_confirm": true,
+      "depends_on": [
+        "prepare_waffle_batter"
+      ],
+      "next": [
+        "heat_pork"
+      ],
+      "on_enter": [
+        {
+          "say": "Time to cook the waffles. Pour the batter into your waffle iron and cook until they're golden and crisp, about five minutes. You'll know they're ready when you smell that delicious aroma!"
+        }
+      ]
+    },
+    {
+      "id": "heat_pork",
+      "descr": "Heat the pork.",
+      "instructions": "Heat the leftover pork with BBQ sauce until hot.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cook_waffles"
+      ],
+      "next": [
+        "serve_dish"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's heat up that leftover pork with some BBQ sauce. Stir it well and heat until it's piping hot and the sauce is bubbling."
+        }
+      ]
+    },
+    {
+      "id": "serve_dish",
+      "descr": "Serve the dish.",
+      "instructions": "Serve the pork on top of the waffles with slaw on the side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_pork"
+      ],
+      "on_enter": [
+        {
+          "say": "Now for the best part, serving it up! Place the hot pork on top of the crispy waffles and add a generous side of slaw. Enjoy your delicious BBQ pulled pork!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "475 calories",
+    "carbohydrates": "46.9 grams",
+    "fat": "19.4 grams",
+    "fiber": "4.2 grams",
+    "protein": "30.8 grams"
+  }
+}

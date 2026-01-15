@@ -71,131 +71,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "soak_noodles",
       "descr": "Soak rice noodles in hot water until soft, drain",
       "instructions": "Soak rice noodles in hot water until soft, drain",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "mix_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's soak the rice noodles in."
+          "say": "Let's start by soaking the rice noodles in hot water until they're nice and soft. Then we'll drain them and set them aside."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "mix_sauce",
       "descr": "Mix tamarind paste, fish sauce, and palm sugar",
       "instructions": "Mix tamarind paste, fish sauce, and palm sugar",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "soak_noodles"
       ],
       "next": [
-        "step_3"
+        "scramble_eggs"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Now, let's mix together the tamarind paste, fish sauce, and palm sugar. Give it a good stir until everything is well combined."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "scramble_eggs",
       "descr": "Heat wok, scramble eggs, set aside",
       "instructions": "Heat wok, scramble eggs, set aside",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "mix_sauce"
       ],
       "next": [
-        "step_4"
+        "stir_fry_protein"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the wok, scramble eggs,."
+          "say": "Let's heat up the wok now. Once it's nice and hot, scramble the eggs until they're just set, then set them aside for later."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "stir_fry_protein",
       "descr": "Stir-fry prawns or chicken until cooked",
       "instructions": "Stir-fry prawns or chicken until cooked",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "scramble_eggs"
       ],
       "next": [
-        "step_5"
+        "combine_noodles_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Time to stir-fry the prawns or chicken. Cook them until they're beautifully golden and cooked through."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "combine_noodles_sauce",
       "descr": "Add noodles and sauce, toss to combine",
       "instructions": "Add noodles and sauce, toss to combine",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "stir_fry_protein"
       ],
       "next": [
-        "step_6"
+        "add_beansprouts_eggs"
       ],
       "on_enter": [
         {
-          "say": "Now add the noodles and sauce,."
+          "say": "Let's add the soaked noodles and our lovely sauce to the wok. Toss everything together so it's well coated."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "add_beansprouts_eggs",
       "descr": "Add beansprouts and eggs, cook for 1 minute",
       "instructions": "Add beansprouts and eggs, cook for 1 minute",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT1M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "combine_noodles_sauce"
       ],
       "next": [
-        "step_7"
+        "serve_dish"
       ],
       "on_enter": [
         {
-          "say": "Now add the beansprouts and eggs,."
+          "say": "Now, let's add the beansprouts and scrambled eggs back into the wok. We'll cook this for about one minute, just to heat everything through."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_dish",
       "descr": "Serve with peanuts, lime, and fresh herbs",
       "instructions": "Serve with peanuts, lime, and fresh herbs",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "add_beansprouts_eggs"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Brilliant! It's time to serve up your delicious Pad Thai. Top it with crushed peanuts, a squeeze of lime, and some fresh herbs. Enjoy!"
         }
       ]
     }

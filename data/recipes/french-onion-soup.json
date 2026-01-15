@@ -54,8 +54,8 @@
       "unit": "slices"
     },
     {
-      "id": "gruyère_cheese_grated",
-      "name": "Gruyère cheese, grated",
+      "id": "gruy\u0000e8re_cheese_grated",
+      "name": "Gruy\u0000e8re cheese, grated",
       "quantity": 200.0,
       "unit": "g"
     },
@@ -69,131 +69,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "caramelize_onions",
       "descr": "Slowly caramelize onions in butter for 30-40 minutes",
       "instructions": "Slowly caramelize onions in butter for 30-40 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT30M",
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "add_flour"
       ],
       "on_enter": [
         {
-          "say": "Let's slowly caramelize onions in butter for."
+          "say": "Right, let's slowly caramelize these onions in butter. We're aiming for a lovely deep golden color, and this will take about thirty to forty minutes. Give it a good stir now and then."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "add_flour",
       "descr": "Sprinkle with flour and stir",
       "instructions": "Sprinkle with flour and stir",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "caramelize_onions"
       ],
       "next": [
-        "step_3"
+        "add_wine"
       ],
       "on_enter": [
         {
-          "say": "Let's sprinkle with flour and stir."
+          "say": "Great job with the onions! Now, let's sprinkle over the flour and give it a good stir. This will help thicken our soup beautifully."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "add_wine",
       "descr": "Add wine and let it bubble",
       "instructions": "Add wine and let it bubble",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "add_flour"
       ],
       "next": [
-        "step_4"
+        "simmer_stock"
       ],
       "on_enter": [
         {
-          "say": "Now add the wine and let."
+          "say": "Now, pour in the white wine and let it bubble away. You'll hear it sizzle and smell that lovely aroma as the alcohol cooks off."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "simmer_stock",
       "descr": "Pour in stock and thyme, simmer for 20 minutes",
       "instructions": "Pour in stock and thyme, simmer for 20 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT20M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "add_wine"
       ],
       "next": [
-        "step_5"
+        "toast_bread"
       ],
       "on_enter": [
         {
-          "say": "Let's pour in stock and thyme, simmer."
+          "say": "Let's pour in the beef stock and add some fresh thyme. Now, we'll let it simmer for about twenty minutes. This is where all those flavors come together beautifully."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "toast_bread",
       "descr": "Toast bread slices",
       "instructions": "Toast bread slices",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "simmer_stock"
       ],
       "next": [
-        "step_6"
+        "assemble_soup"
       ],
       "on_enter": [
         {
-          "say": "Let's toast bread slices."
+          "say": "While the soup is simmering, let's toast those slices of French bread until they're nice and golden. They'll add a lovely crunch to our soup."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "assemble_soup",
       "descr": "Ladle soup into bowls, top with bread and cheese",
       "instructions": "Ladle soup into bowls, top with bread and cheese",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "toast_bread"
       ],
       "next": [
-        "step_7"
+        "grill_cheese"
       ],
       "on_enter": [
         {
-          "say": "Let's ladle soup into bowls, top with."
+          "say": "Now, let's ladle that beautiful soup into bowls. Top each one with a slice of toasted bread and a generous handful of grated Gruy\u00e8re cheese."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "grill_cheese",
       "descr": "Grill until cheese is golden and bubbling",
       "instructions": "Grill until cheese is golden and bubbling",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "assemble_soup"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to grill the until cheese is."
+          "say": "Time to pop those bowls under the grill. We're looking for the cheese to be golden and bubbling. This is the final touch to our delicious French onion soup!"
         }
       ]
     }

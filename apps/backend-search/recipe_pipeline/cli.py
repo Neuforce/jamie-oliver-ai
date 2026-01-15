@@ -17,6 +17,20 @@ import sys
 from pathlib import Path
 from typing import Optional
 
+# Load environment variables from .env file
+try:
+    from dotenv import load_dotenv
+    # Try loading from multiple locations
+    env_paths = [
+        Path(__file__).parent.parent / ".env",  # apps/backend-search/.env
+        Path(__file__).parent.parent.parent.parent / ".env",  # project root .env
+    ]
+    for env_path in env_paths:
+        if env_path.exists():
+            load_dotenv(env_path)
+except ImportError:
+    pass  # dotenv not installed, rely on system env vars
+
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -289,6 +303,107 @@ def cmd_list_categories(args):
     return 0
 
 
+def cmd_enhance_existing(args):
+    """Handle 'enhance-existing' command - enhance existing recipe files."""
+    import re
+    from pathlib import Path
+    
+    input_dir = Path(args.input_dir)
+    if not input_dir.is_absolute():
+        input_dir = Path(__file__).parent / args.input_dir
+    
+    output_dir = Path(args.output_dir) if args.output_dir else input_dir
+    
+    if not input_dir.exists():
+        print(f"Input directory not found: {input_dir}", file=sys.stderr)
+        return 1
+    
+    # Find all JSON files
+    recipe_files = sorted(input_dir.glob("*.json"))
+    
+    # Filter by name pattern if specified
+    if args.filter:
+        pattern = args.filter.lower()
+        recipe_files = [f for f in recipe_files if pattern in f.stem.lower()]
+    
+    print(f"Found {len(recipe_files)} recipe files in {input_dir}")
+    
+    if args.dry_run:
+        print("\n[DRY RUN] Would enhance:")
+        for f in recipe_files:
+            print(f"  - {f.name}")
+        return 0
+    
+    # Initialize enhancer and validator
+    enhancer = RecipeEnhancer()
+    validator = RecipeValidator()
+    
+    successful = []
+    failed = []
+    skipped = []
+    
+    for i, recipe_file in enumerate(recipe_files):
+        print(f"\n[{i + 1}/{len(recipe_files)}] Processing: {recipe_file.name}")
+        
+        try:
+            # Load recipe
+            with open(recipe_file) as f:
+                recipe_json = json.load(f)
+            
+            # Check if already enhanced (has semantic step IDs)
+            if args.skip_enhanced:
+                steps = recipe_json.get("steps", [])
+                has_semantic_ids = all(
+                    not re.match(r"^step[_-]?\d+$", s.get("id", s.get("step_id", "step_1")).lower())
+                    for s in steps
+                )
+                if has_semantic_ids and len(steps) > 0:
+                    print(f"  ⏭ Skipping (already enhanced)")
+                    skipped.append(recipe_file.name)
+                    continue
+            
+            # Enhance
+            print(f"  🔄 Enhancing with LLM...")
+            enhanced = enhancer.enhance(recipe_json)
+            
+            # Validate
+            validation = validator.validate(enhanced)
+            print(f"  ✓ Quality score: {validation.quality_score}")
+            
+            # Save
+            output_file = output_dir / recipe_file.name
+            with open(output_file, "w") as f:
+                json.dump(enhanced, f, indent=2)
+            print(f"  ✓ Saved to: {output_file.name}")
+            
+            # Publish if requested
+            if args.publish:
+                try:
+                    upload_recipe(enhanced, publish=True)
+                    print(f"  ✓ Published to Supabase")
+                except Exception as e:
+                    print(f"  ⚠ Upload failed: {e}")
+            
+            successful.append(recipe_file.name)
+            
+        except Exception as e:
+            print(f"  ✗ Error: {e}")
+            failed.append(recipe_file.name)
+    
+    print(f"\n{'=' * 60}")
+    print(f"Enhancement complete!")
+    print(f"  ✓ Successful: {len(successful)}")
+    print(f"  ⏭ Skipped: {len(skipped)}")
+    print(f"  ✗ Failed: {len(failed)}")
+    
+    if failed:
+        print("\nFailed recipes:")
+        for name in failed:
+            print(f"  - {name}")
+    
+    return 0 if not failed else 1
+
+
 def cmd_test(args):
     """Handle 'test' command - quick pipeline test."""
     test_url = args.url or "https://www.jamieoliver.com/recipes/mushroom/mushroom-risotto/"
@@ -433,6 +548,41 @@ def main():
         help="Optional URL to test with"
     )
     test_parser.set_defaults(func=cmd_test)
+    
+    # Enhance existing recipes command
+    enhance_parser = subparsers.add_parser(
+        "enhance-existing",
+        help="Enhance existing recipe JSON files with LLM"
+    )
+    enhance_parser.add_argument(
+        "--input-dir", "-i",
+        default="../../../data/recipes",
+        help="Directory containing recipe JSON files"
+    )
+    enhance_parser.add_argument(
+        "--output-dir", "-o",
+        help="Output directory (defaults to same as input)"
+    )
+    enhance_parser.add_argument(
+        "--filter", "-f",
+        help="Filter recipes by name pattern (e.g., 'risotto')"
+    )
+    enhance_parser.add_argument(
+        "--skip-enhanced",
+        action="store_true",
+        help="Skip recipes that already have semantic step IDs"
+    )
+    enhance_parser.add_argument(
+        "--publish", "-p",
+        action="store_true",
+        help="Publish enhanced recipes to Supabase"
+    )
+    enhance_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="List recipes without enhancing"
+    )
+    enhance_parser.set_defaults(func=cmd_enhance_existing)
     
     # Parse args
     args = parser.parse_args()

@@ -61,131 +61,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_grill",
       "descr": "Preheat grill or pan to medium-high heat",
       "instructions": "Preheat grill or pan to medium-high heat",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "mix_marinade"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the grill or pan."
+          "say": "Right, let's get started by preheating the grill or pan to a lovely medium-high heat. This will give us that perfect sear on the salmon."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "mix_marinade",
       "descr": "Mix olive oil, lemon juice, garlic, salt, and pepper",
       "instructions": "Mix olive oil, lemon juice, garlic, salt, and pepper",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_grill"
       ],
       "next": [
-        "step_3"
+        "brush_salmon"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Now, let's mix together the olive oil, lemon juice, garlic, salt, and pepper. Give it a good whisk until everything is well combined. You should smell that fresh lemon and garlic aroma!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "brush_salmon",
       "descr": "Brush salmon with marinade",
       "instructions": "Brush salmon with marinade",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "mix_marinade"
       ],
       "next": [
-        "step_4"
+        "grill_skin_side"
       ],
       "on_enter": [
         {
-          "say": "Let's brush salmon with marinade."
+          "say": "Lovely! Now, let's brush that beautiful salmon with our marinade. Make sure it's nicely coated for maximum flavour."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "grill_skin_side",
       "descr": "Grill skin-side down for 5 minutes",
       "instructions": "Grill skin-side down for 5 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "brush_salmon"
       ],
       "next": [
-        "step_5"
+        "flip_and_cook"
       ],
       "on_enter": [
         {
-          "say": "Time to grill the skin-side down for."
+          "say": "Time to place the salmon skin-side down on the grill. We're going to let it cook for five minutes. You'll hear it sizzle and see the skin crisp up beautifully."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "flip_and_cook",
       "descr": "Flip and cook for another 3-4 minutes",
       "instructions": "Flip and cook for another 3-4 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT4M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "grill_skin_side"
       ],
       "next": [
-        "step_6"
+        "top_with_dill"
       ],
       "on_enter": [
         {
-          "say": "Let's cook for another 3-4."
+          "say": "Great job! Now let's flip the salmon over and cook it for another three to four minutes. It should be just cooked through and still juicy."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "top_with_dill",
       "descr": "Top with fresh dill and lemon slices",
       "instructions": "Top with fresh dill and lemon slices",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "flip_and_cook"
       ],
       "next": [
-        "step_7"
+        "serve_with_asparagus"
       ],
       "on_enter": [
         {
-          "say": "Let's top with fresh dill and lemon."
+          "say": "Now for the finishing touch! Let's top our salmon with fresh dill and a few slices of lemon. This will add a lovely fresh flavour."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_with_asparagus",
       "descr": "Serve with roasted asparagus",
       "instructions": "Serve with roasted asparagus",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "top_with_dill"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Right, it's time to plate up! Serve your beautiful grilled salmon with some roasted asparagus on the side. Enjoy your meal!"
         }
       ]
     }

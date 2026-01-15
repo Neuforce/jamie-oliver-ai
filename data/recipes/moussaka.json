@@ -2,7 +2,7 @@
   "recipe": {
     "id": "moussaka",
     "title": "Moussaka",
-    "description": "Layered Greek casserole with eggplant, meat sauce, and béchamel",
+    "description": "Layered Greek casserole with eggplant, meat sauce, and b\u00e9chamel",
     "estimated_total": "PT2H",
     "locale": "en",
     "source": "pdf",
@@ -67,131 +67,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "salt_drain_eggplant",
       "descr": "Salt and drain eggplant slices for 30 minutes",
       "instructions": "Salt and drain eggplant slices for 30 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT30M",
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "grill_fry_eggplant"
       ],
       "on_enter": [
         {
-          "say": "Let's salt the and drain eggplant."
+          "say": "Right, let's salt those eggplant slices and let them drain for thirty minutes. This will remove any bitterness and make them perfect for our dish."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "grill_fry_eggplant",
       "descr": "Grill or fry eggplant until golden",
       "instructions": "Grill or fry eggplant until golden",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "salt_drain_eggplant"
       ],
       "next": [
-        "step_3"
+        "make_meat_sauce"
       ],
       "on_enter": [
         {
-          "say": "Time to grill the or fry eggplant."
+          "say": "Now, let's grill or fry those eggplant slices until they're beautifully golden. You'll know they're ready when they have a lovely golden colour."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "make_meat_sauce",
       "descr": "Make meat sauce: brown lamb, add onion and tomatoes, simmer",
       "instructions": "Make meat sauce: brown lamb, add onion and tomatoes, simmer",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "grill_fry_eggplant"
       ],
       "next": [
-        "step_4"
+        "make_bechamel"
       ],
       "on_enter": [
         {
-          "say": "Let's make meat sauce: brown."
+          "say": "Let's get started on the meat sauce. Brown the lamb, then add the onions and tomatoes. Let it all simmer until it's rich and fragrant."
         }
       ]
     },
     {
-      "id": "step_4",
-      "descr": "Make béchamel: melt butter, add flour, whisk in milk",
-      "instructions": "Make béchamel: melt butter, add flour, whisk in milk",
+      "id": "make_bechamel",
+      "descr": "Make b\u00e9chamel: melt butter, add flour, whisk in milk",
+      "instructions": "Make b\u00e9chamel: melt butter, add flour, whisk in milk",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "make_meat_sauce"
       ],
       "next": [
-        "step_5"
+        "layer_ingredients"
       ],
       "on_enter": [
         {
-          "say": "Let's make béchamel: melt butter,."
+          "say": "Time to make the b\u00e9chamel sauce. Melt the butter, add the flour, and whisk in the milk until it's smooth and creamy."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "layer_ingredients",
       "descr": "Layer eggplant, meat sauce, repeat",
       "instructions": "Layer eggplant, meat sauce, repeat",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "make_bechamel"
       ],
       "next": [
-        "step_6"
+        "top_with_bechamel"
       ],
       "on_enter": [
         {
-          "say": "Let's layer eggplant, meat sauce, repeat."
+          "say": "Let's start layering. Begin with the eggplant, then the meat sauce, and repeat until you've used it all up."
         }
       ]
     },
     {
-      "id": "step_6",
-      "descr": "Top with béchamel and Parmesan",
-      "instructions": "Top with béchamel and Parmesan",
+      "id": "top_with_bechamel",
+      "descr": "Top with b\u00e9chamel and Parmesan",
+      "instructions": "Top with b\u00e9chamel and Parmesan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "layer_ingredients"
       ],
       "next": [
-        "step_7"
+        "bake_moussaka"
       ],
       "on_enter": [
         {
-          "say": "Let's top with béchamel and parmesan."
+          "say": "Now, let's top it all off with our lovely b\u00e9chamel sauce and a generous sprinkle of Parmesan."
         }
       ]
     },
     {
-      "id": "step_7",
-      "descr": "Bake at 180°C for 45 minutes until golden",
-      "instructions": "Bake at 180°C for 45 minutes until golden",
-      "type": "immediate",
-      "auto_start": true,
+      "id": "bake_moussaka",
+      "descr": "Bake at 180\u00b0C for 45 minutes until golden",
+      "instructions": "Bake at 180\u00b0C for 45 minutes until golden",
+      "type": "timer",
+      "duration": "PT45M",
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "top_with_bechamel"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to bake the at 180°c for."
+          "say": "Right, let's pop it in the oven at one hundred eighty degrees celsius for forty-five minutes. It'll be ready when it's golden and bubbling."
         }
       ]
     }
