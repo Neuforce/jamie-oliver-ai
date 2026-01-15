@@ -30,6 +30,7 @@ export interface Recipe {
   ingredients: string[];
   instructions: string[];
   tips: string[];
+  utensils?: string[];
   /**
    * Full fidelity copy of backend steps so the UI can stay in sync with voice.
    */

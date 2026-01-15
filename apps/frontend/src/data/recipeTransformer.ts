@@ -153,6 +153,19 @@ function extractCategory(title: string): string {
   return 'Main Course'; // Default category
 }
 
+function transformUtensils(utensils?: Array<unknown>): string[] {
+  if (!utensils || !Array.isArray(utensils)) return [];
+  return utensils
+    .map((u) => {
+      if (typeof u === 'string') return u;
+      if (typeof u === 'object' && u !== null) {
+        return (u as any).name || (u as any).label || (u as any).descr || (u as any).id;
+      }
+      return null;
+    })
+    .filter((v): v is string => Boolean(v));
+}
+
 /**
  * Transform RecipeMatchResponse from backend to Recipe format
  * @param match - The recipe match from the backend
@@ -185,6 +198,7 @@ export function transformRecipeMatch(
     tips: fullRecipe.notes?.text
       ? fullRecipe.notes.text.split('\n').filter(line => line.trim().length > 0)
       : [],
+    utensils: transformUtensils(fullRecipe.utensils),
   };
 }
 

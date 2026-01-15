@@ -6,12 +6,21 @@ import { motion } from 'motion/react';
 interface RecipeCardProps {
   recipe: Recipe;
   onClick: () => void;
-  variant?: 'grid' | 'feed' | 'cooking';
+  variant?: 'grid' | 'feed' | 'cooking' | 'modal';
+  showDifficultyPill?: boolean;
 }
 
-export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProps) {
+export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPill = false }: RecipeCardProps) {
   const [hasSession, setHasSession] = useState(false);
   const [sessionProgress, setSessionProgress] = useState(0);
+  const badgeStyle: React.CSSProperties = {
+    height: '27px',
+    padding: '6px 12px',
+    alignItems: 'flex-start',
+    borderRadius: '33554400px',
+    background: '#3D6E6C',
+    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
+  };
 
   useEffect(() => {
     const checkSession = () => {
@@ -60,7 +69,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
             className="overflow-hidden border border-[#E4E7EC] bg-white shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]"
             style={{ borderRadius: '32px' }}
           >
-            <div className="relative h-[350px] overflow-hidden">
+            <div className="relative aspect-[196/245] overflow-hidden">
               <img
                 src={recipe.image}
                 alt={recipe.title}
@@ -68,15 +77,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
               />
               <span
                 className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
-                style={{
-                  height: '27px',
-                  padding: '6px 12px',
-                  alignItems: 'flex-start',
-                  borderRadius: '33554400px',
-                  background: '#3D6E6C',
-                  boxShadow:
-                    '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
-                }}
+                style={badgeStyle}
               >
                 {recipe.category.toUpperCase()}
               </span>
@@ -134,15 +135,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
               {hasSession ? (
                 <span
                   className="inline-flex items-center gap-1.5 text-white text-xs font-semibold"
-                  style={{
-                    height: '27px',
-                    padding: '6px 12px',
-                    alignItems: 'flex-start',
-                    borderRadius: '33554400px',
-                    background: '#3D6E6C',
-                    boxShadow:
-                      '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
-                  }}
+                  style={badgeStyle}
                 >
                   <Clock className="size-3" />
                   In Progress
@@ -150,15 +143,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
               ) : (
                 <span
                   className="inline-flex items-center text-white text-xs font-semibold"
-                  style={{
-                    height: '27px',
-                    padding: '6px 12px',
-                    alignItems: 'flex-start',
-                    borderRadius: '33554400px',
-                    background: '#3D6E6C',
-                    boxShadow:
-                      '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
-                  }}
+                  style={badgeStyle}
                 >
                   {recipe.category.toUpperCase()}
                 </span>
@@ -203,6 +188,146 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
     );
   }
 
+  // Modal variant: image rounded, text and meta separated, no outer card container
+  if (variant === 'modal') {
+    return (
+      <motion.div
+        whileTap={{ scale: 0.98 }}
+        className="cursor-pointer"
+        onClick={onClick}
+        style={{
+          width: 'clamp(320px, 92vw, 640px)',
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
+        }}
+      >
+        <div className="relative overflow-hidden" style={{ borderRadius: '24px' }}>
+          <img
+            src={recipe.image}
+            alt={recipe.title}
+            className="h-full w-full object-cover"
+            style={{ display: 'block' }}
+          />
+          <span
+            className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
+            style={{
+              height: '27px',
+              padding: '6px 12px',
+              alignItems: 'flex-start',
+              borderRadius: '33554400px',
+              background: '#3D6E6C',
+              boxShadow:
+                '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
+              letterSpacing: '0.2em',
+            }}
+          >
+            {recipe.category.toUpperCase()}
+          </span>
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <h3
+              style={{
+                color: '#2C5F5D',
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: '22px',
+                fontWeight: 700,
+                letterSpacing: '0.087px',
+                lineHeight: '28px',
+                textTransform: 'uppercase',
+              }}
+            >
+              {recipe.title}
+            </h3>
+            <p
+              style={{
+                margin: 0,
+                color: '#234252',
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: '14px',
+                lineHeight: '22px',
+                letterSpacing: '-0.15px',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+                opacity: 1,
+              }}
+            >
+              {recipe.description}
+            </p>
+          </div>
+
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '12px',
+              paddingLeft: '24px',
+              paddingRight: '24px',
+              fontFamily: 'Poppins, sans-serif',
+              fontSize: '14px',
+              lineHeight: '20px',
+              letterSpacing: '0.087px',
+              color: '#717182',
+              opacity: 1,
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Clock className="size-4 text-[#3D6E6C]" />
+              <span>{recipe.time}</span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Users className="size-4 text-[#3D6E6C]" />
+              <span>{recipe.servings}</span>
+            </div>
+            {showDifficultyPill ? (
+              <span
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '6px 12px',
+                  borderRadius: '33554400px',
+                  background: '#F2F5F6',
+                  color: '#2C5F5D',
+                  fontFamily: 'Inter',
+                  fontSize: '12px',
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  lineHeight: '16px',
+                  letterSpacing: '0.3px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {recipe.difficulty}
+              </span>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ChefHat className="size-4 text-[#3D6E6C]" />
+                <span>{recipe.difficulty}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <hr
+          style={{
+            marginTop: '24px',
+            marginBottom: '24px',
+            border: 'none',
+            height: '1px',
+            background: '#E6EAE9',
+          }}
+        />
+      </motion.div>
+    );
+  }
+
   // Feed variant: editorial card
   return (
     <motion.div
@@ -228,7 +353,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
       >
         {/* Image */}
         <div
-          className="relative overflow-hidden"
+          className="relative aspect-[196/245] overflow-hidden"
           style={{
             flex: '0 0 75%',
             minHeight: 0,
@@ -241,16 +366,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
           />
           <span
             className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
-            style={{
-              height: '27px',
-              padding: '6px 12px',
-              alignItems: 'flex-start',
-              borderRadius: '33554400px',
-              background: '#3D6E6C',
-              boxShadow:
-                '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
-              letterSpacing: '0.2em',
-            }}
+            style={{ ...badgeStyle, letterSpacing: '0.2em' }}
           >
             {recipe.category.toUpperCase()}
           </span>
@@ -327,10 +443,33 @@ export function RecipeCard({ recipe, onClick, variant = 'grid' }: RecipeCardProp
               <Users className="size-4 text-[#3D6E6C]" />
               <span>{recipe.servings}</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <ChefHat className="size-4 text-[#3D6E6C]" />
-              <span>{recipe.difficulty}</span>
-            </div>
+            {showDifficultyPill ? (
+              <span
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: '6px 12px',
+                  borderRadius: '33554400px',
+                  background: '#F2F5F6',
+                  color: '#2C5F5D',
+                  fontFamily: 'Inter',
+                  fontSize: '12px',
+                  fontStyle: 'normal',
+                  fontWeight: 600,
+                  lineHeight: '16px',
+                  letterSpacing: '0.3px',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {recipe.difficulty}
+              </span>
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <ChefHat className="size-4 text-[#3D6E6C]" />
+                <span>{recipe.difficulty}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -174,6 +174,18 @@ function extractCategory(title: string): string {
 function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Recipe {
   const recipe = jamieRecipe.recipe;
   const backendSteps = transformBackendSteps(jamieRecipe.steps);
+  const transformUtensils = (utensils?: Array<any>): string[] => {
+    if (!utensils || !Array.isArray(utensils)) return [];
+    return utensils
+      .map((u) => {
+        if (typeof u === 'string') return u;
+        if (typeof u === 'object' && u !== null) {
+          return (u as any).name || (u as any).label || (u as any).descr || (u as any).id;
+        }
+        return null;
+      })
+      .filter((v): v is string => Boolean(v));
+  };
   
   return {
     id: index + 1, // Use index as numeric ID
@@ -190,6 +202,7 @@ function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Reci
     tips: jamieRecipe.notes?.text 
       ? jamieRecipe.notes.text.split('\n').filter(line => line.trim().length > 0)
       : [],
+    utensils: transformUtensils(jamieRecipe.utensils),
     backendSteps,
     rawRecipePayload: jamieRecipe,
   };

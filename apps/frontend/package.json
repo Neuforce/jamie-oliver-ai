@@ -1,4 +1,3 @@
-
 {
     "name": "Jamie Oliver 1.0",
     "version": "0.1.0",
@@ -51,7 +50,7 @@
     "devDependencies": {
         "@types/node": "^20.10.0",
         "@vitejs/plugin-react-swc": "^3.10.2",
-        "vite": "6.3.5",
+        "vite": "^6.4.1",
         "ws": "^8.18.0"
     },
     "scripts": {
@@ -59,4 +58,4 @@
         "build": "vite build",
         "test:websocket": "node scripts/test-websocket.js"
     }
-  }
+}

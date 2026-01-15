@@ -400,6 +400,11 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     currentStepRef.current = currentStep;
   }, [currentStep]);
 
+  // Mic UI assets switch based on mute state
+  const micIconSrc = isMicMuted ? '/assets/tabler-icon-microphone-off.svg' : '/assets/tabler-icon-microphone.svg';
+  const micRingSrc = isMicMuted ? '/assets/Ellipse-red.svg' : '/assets/Ellipse-green.svg';
+  const micIconAlt = isMicMuted ? 'Mic off' : 'Mic on';
+
   // Load saved session on mount
   useEffect(() => {
     if (recipe) {
@@ -813,9 +818,9 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   // 2. The current step is a timer step (type='timer' or has duration)
   useEffect(() => {
     const backendStep = recipe?.backendSteps?.[currentStep];
-    const isTimerStep = backendStep?.type === 'timer' || 
+    const isTimerStep = backendStep?.type === 'timer' ||
                        (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0);
-    
+
     setShouldShowTimer(timerRunning || isTimerStep);
   }, [timerSeconds, timerRunning, recipe, currentStep, parseIsoDurationToSeconds]);
 
@@ -960,8 +965,8 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                 }}
               >
                 <img
-                  src="/assets/tabler-icon-microphone-off.svg"
-                  alt="Mic off"
+                  src={micIconSrc}
+                  alt={micIconAlt}
                   style={{ width: '18px', height: '18px' }}
                 />
               </div>
@@ -977,8 +982,8 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                 }}
               >
                 <img
-                  src="/assets/Ellipse-red.svg"
-                  alt="Jamie Oliver"
+                  src={micRingSrc}
+                  alt={isMicMuted ? 'Microphone muted' : 'Microphone active'}
                   style={{ display: 'block' }}
                 />
               </div>
@@ -1080,21 +1085,11 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="mb-8 flex flex-col items-center">
-                <div className="w-full max-w-[420px]">
-                  <div
-                    className="rounded-full bg-[#0A7E6C]/10 px-4 py-3"
-                    style={{ width: '100%', textAlign: 'center' }}
-                  >
-                    <span className="text-sm font-medium text-[#0A7E6C]">
-                      Step {currentStep + 1} of {totalSteps}
-                    </span>
-                  </div>
-                </div>
-                <div
-                  className="w-full max-w-[420px] flex gap-2"
-                  style={{ marginTop: '24px' }}
-                >
+              <div
+                className="mb-8 flex flex-col items-center"
+                style={{ gap: '24px', marginTop: '24px' }}
+              >
+                <div className="w-full max-w-[420px] flex gap-2">
                   {instructions.map((_, idx) => (
                     <button
                       key={idx}
@@ -1110,7 +1105,18 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                     />
                   ))}
                 </div>
-                <div className="w-full max-w-[420px]" style={{ marginTop: '24px' }}>
+                <div className="w-full max-w-[420px]">
+                  <div
+                    className="rounded-full bg-[#0A7E6C]/10 px-4 py-3"
+                    style={{ width: '100%', textAlign: 'center' }}
+                  >
+                    <span className="text-sm font-medium text-[#0A7E6C]">
+                      Step {currentStep + 1} of {totalSteps}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="w-full max-w-[420px]">
                   <p className="text-2xl leading-relaxed text-foreground">
                     {instructions[currentStep]}
                   </p>
@@ -1126,6 +1132,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
             size="lg"
             className="mb-8 flex items-center justify-center gap-2"
             style={{
+              marginTop: '24px',
               height: '48px',
               padding: '14px 26px',
               gap: '9px',
