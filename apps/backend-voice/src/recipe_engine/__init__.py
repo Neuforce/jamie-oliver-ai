@@ -14,6 +14,7 @@ from .models import (
     Event,
     RecipeStep,
     Recipe,
+    ActiveTimer,
 )
 from .utils import parse_iso_duration
 from .engine import RecipeEngine
@@ -26,6 +27,7 @@ __all__ = [
     "Event",
     "RecipeStep",
     "Recipe",
+    "ActiveTimer",
     # Utilities
     "parse_iso_duration",
     # Core Engine

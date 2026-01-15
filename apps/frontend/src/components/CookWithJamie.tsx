@@ -34,10 +34,11 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from './ui/alert-dialog';
-import { useWebSocket, type RecipeState } from '../hooks/useWebSocket';
+import { useWebSocket, type RecipeState, type ActiveTimerInfo } from '../hooks/useWebSocket';
 import { useAudioCapture } from '../hooks/useAudioCapture';
 import { useAudioPlayback } from '../hooks/useAudioPlayback';
 import { RecipeCard } from './RecipeCard';
+import { TimerPanel, type ActiveTimer } from './TimerPanel';
 // @ts-ignore - handled by Vite
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 const jamieLogo = typeof jamieLogoImport === 'string' ? jamieLogoImport : (jamieLogoImport as any).src || jamieLogoImport;
@@ -56,6 +57,9 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(10); // Default timer
+  
+  // Active timers from backend (parallel cooking support)
+  const [activeTimers, setActiveTimers] = useState<ActiveTimer[]>([]);
 
   // Voice states
   const [isListening, setIsListening] = useState(false);
@@ -230,6 +234,19 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         description: `Timer for ${stepId} is complete${requiresConfirm ? '. Please confirm when finished.' : '.'}`,
         duration: 5000,
       });
+    },
+    onTimerListUpdate: (timers: ActiveTimerInfo[]) => {
+      console.log('🕐 Active timers updated:', timers.length);
+      // Convert to ActiveTimer format for TimerPanel
+      const panelTimers: ActiveTimer[] = timers.map(t => ({
+        id: t.id,
+        step_id: t.step_id,
+        label: t.label,
+        duration_secs: t.duration_secs,
+        started_at: t.started_at,
+        remaining_secs: t.remaining_secs,
+      }));
+      setActiveTimers(panelTimers);
     },
     onAudio: (base64Audio) => {
       // Play audio response from backend
@@ -995,6 +1012,32 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         </div>
       </div>
 
+      {/* Active Timers Panel (Parallel Cooking Support) */}
+      {activeTimers.length > 0 && (
+        <div className="px-6 py-4">
+          <div className="max-w-2xl mx-auto">
+            <TimerPanel
+              timers={activeTimers}
+              onTimerComplete={(timer) => {
+                toast.info('Timer Complete!', {
+                  description: `${timer.label} is done!`,
+                  duration: 5000,
+                });
+              }}
+              onTimerSelect={(timer) => {
+                // Navigate to the step if it has one
+                if (timer.step_id && recipe) {
+                  const stepIndex = stepIdToIndex(timer.step_id);
+                  if (stepIndex !== -1 && stepIndex !== currentStep) {
+                    setCurrentStep(stepIndex);
+                  }
+                }
+              }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Timer Section - Redesigned */}
       {shouldShowTimer && (
         <div className="px-6 py-8 border-b border-border/50">
@@ -1115,6 +1158,28 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                     </span>
                   </div>
                 </div>
+
+                {/* Step Title - Shows the step description prominently */}
+                {(() => {
+                  // Get step title from backend state or derive from instruction
+                  const backendSteps = wsRecipeState?.steps ? Object.values(wsRecipeState.steps) : [];
+                  const orderedIds = Object.keys(wsRecipeState?.steps || {});
+                  const currentStepId = orderedIds[currentStep];
+                  const backendStep = currentStepId ? wsRecipeState?.steps?.[currentStepId] : null;
+                  const stepTitle = backendStep?.descr;
+                  
+                  // Only show if we have a distinct title from backend
+                  if (stepTitle && stepTitle !== instructions[currentStep]) {
+                    return (
+                      <div className="w-full max-w-[420px] text-center">
+                        <h2 className="text-xl font-semibold text-[#0A7E6C] mb-2">
+                          {stepTitle}
+                        </h2>
+                      </div>
+                    );
+                  }
+                  return null;
+                })()}
 
                 <div className="w-full max-w-[420px]">
                   <p className="text-2xl leading-relaxed text-foreground">

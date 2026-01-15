@@ -11,6 +11,7 @@ from .models import (
     Event,
     RecipeStep,
     Recipe,
+    ActiveTimer,
 )
 from .utils import parse_iso_duration
 from .timer_manager import TimerManager
@@ -76,7 +77,11 @@ class RecipeEngine:
 
     async def start_step(self, step_id: str) -> None:
         """
-        Start a specific step.
+        Start a specific step (does NOT auto-start timers).
+        
+        For timer steps, the agent should explicitly call start_timer_for_step()
+        after the user confirms they are ready. This enables parallel cooking
+        workflows where the user can navigate between steps while timers run.
         
         Args:
             step_id: The ID of the step to start
@@ -101,13 +106,6 @@ class RecipeEngine:
                     payload={"step_id": step.id, "message": action["say"]}
                 ))
         
-        # IMPORTANT: Set up timer metadata BEFORE emitting events
-        # This ensures frontend gets complete state with timer info
-        if step.type == "timer" and step.duration:
-            duration_secs = parse_iso_duration(step.duration)
-            # Set timer metadata first (before events)
-            self._timer_manager.set_timer_metadata(step.id, duration_secs)
-        
         # Build event payload
         payload = {
             "step_id": step.id,
@@ -115,58 +113,127 @@ class RecipeEngine:
             "type": step.type,
         }
         
-        if step.duration:
+        # Include timer info if this is a timer step (but don't start the timer)
+        if step.type == "timer" and step.duration:
             duration_secs = parse_iso_duration(step.duration)
             payload["duration_secs"] = duration_secs
             payload["duration_str"] = step.duration
+            payload["has_timer"] = True  # Signal that timer can be started
         
         await self._emit_event(Event(type=EventType.STEP_START, payload=payload))
         
-        # Start timer task if this is a timed step (after metadata is set and event is sent)
-        if step.type == "timer" and step.duration:
-            duration_secs = parse_iso_duration(step.duration)
-            await self._emit_event(Event(
-                type=EventType.TIMER_SET,
-                payload={
-                    "step_id": step.id,
-                    "duration_secs": duration_secs,
-                    "duration_str": step.duration
-                }
-            ))
-            
-            # Start timer task with completion callback
-            self._timer_manager.start_timer_task(
-                step=step,
-                duration_secs=duration_secs,
-                on_complete=self._on_timer_complete
-            )
-        
-        # For immediate steps we now wait for explicit user confirmation so the
-        # assistant and UI stay in sync, even if requires_confirm was false in
-        # the source JSON. Timed steps still auto-complete via the timer callback.
-
-    async def confirm_step_done(self, step_id: str) -> None:
+        # NOTE: Timers are NO LONGER auto-started here!
+        # The agent should call start_timer_for_step() when the user is ready.
+        # This decouples step state from timer state for parallel cooking.
+    
+    async def start_timer_for_step(self, step_id: str) -> Optional[ActiveTimer]:
         """
-        Confirm that a step is done and move to next steps.
+        Explicitly start the timer for a step.
+        
+        This should be called when the user confirms they are ready for the timer.
+        The step must be ACTIVE before its timer can be started.
         
         Args:
-            step_id: The ID of the step to confirm
+            step_id: The ID of the step to start the timer for
+            
+        Returns:
+            The ActiveTimer instance if started, None if failed
         """
         if step_id not in self.recipe.steps:
             logger.warning(f"Step {step_id} not found")
-            return
+            return None
+        
+        step = self.recipe.steps[step_id]
+        
+        if step.type != "timer" or not step.duration:
+            logger.warning(f"Step {step_id} is not a timer step")
+            return None
+        
+        if step.status != StepStatus.ACTIVE:
+            logger.warning(f"Step {step_id} is not active (status: {step.status})")
+            return None
+        
+        # Check if timer is already running
+        if self._timer_manager.has_active_timer_for_step(step_id):
+            logger.warning(f"Timer already running for step {step_id}")
+            return self._timer_manager.get_timer_for_step(step_id)
+        
+        duration_secs = parse_iso_duration(step.duration)
+        
+        # Start the timer
+        timer = self._timer_manager.start_timer_for_step(
+            step=step,
+            on_complete=self._on_timer_complete
+        )
+        
+        # Emit timer events
+        await self._emit_event(Event(
+            type=EventType.TIMER_STARTED,
+            payload={
+                "timer_id": timer.id,
+                "step_id": step.id,
+                "label": step.descr,
+                "duration_secs": duration_secs,
+                "duration_str": step.duration
+            }
+        ))
+        
+        await self._emit_event(Event(
+            type=EventType.TIMER_SET,
+            payload={
+                "step_id": step.id,
+                "duration_secs": duration_secs,
+                "duration_str": step.duration
+            }
+        ))
+        
+        logger.info(f"Timer started for step {step_id}: {duration_secs}s")
+        return timer
+
+    async def confirm_step_done(self, step_id: str, force_cancel_timer: bool = False) -> dict:
+        """
+        Confirm that a step is done and move to next steps.
+        
+        If the step has an active timer, returns a status indicating that
+        confirmation is needed before cancelling (unless force_cancel_timer=True).
+        
+        Args:
+            step_id: The ID of the step to confirm
+            force_cancel_timer: If True, cancel any active timer without asking
+            
+        Returns:
+            dict with status: 'completed', 'timer_active', or 'error'
+        """
+        if step_id not in self.recipe.steps:
+            logger.warning(f"Step {step_id} not found")
+            return {"status": "error", "message": f"Step {step_id} not found"}
         
         step = self.recipe.steps[step_id]
         
         if step.status not in (StepStatus.ACTIVE, StepStatus.WAITING_ACK):
             logger.warning(f"Step {step_id} cannot be confirmed (status: {step.status})")
-            return
+            return {"status": "error", "message": f"Step {step_id} is not active"}
+        
+        # Check if there's an active timer for this step
+        active_timer = self._timer_manager.get_timer_for_step(step_id)
+        
+        if active_timer and not force_cancel_timer:
+            # Timer is still running - need confirmation
+            return {
+                "status": "timer_active",
+                "message": f"Timer still has {active_timer.remaining_secs} seconds remaining",
+                "timer_id": active_timer.id,
+                "remaining_secs": active_timer.remaining_secs,
+                "step_id": step_id
+            }
         
         # Cancel any active timers/reminders
         self._timer_manager.cancel_reminders(step_id)
-        self._timer_manager.cancel_timer(step_id)
+        if active_timer:
+            self._timer_manager.cancel_timer(step_id, emit_event=True)
         
         await self._complete_step(step)
+        return {"status": "completed", "step_id": step_id}
 
     async def _complete_step(self, step: RecipeStep) -> None:
         """Mark a step as completed and unlock dependent steps."""
@@ -296,9 +363,30 @@ class RecipeEngine:
                     "timer": self._timer_manager.get_timer_state(step_id)
                 }
                 for step_id, step in self.recipe.steps.items()
-            }
+            },
+            "active_timers": [t.to_dict() for t in self._timer_manager.get_all_active_timers()]
         }
         return state
+    
+    def get_active_timers(self) -> List[ActiveTimer]:
+        """Get all currently active timers."""
+        return self._timer_manager.get_all_active_timers()
+    
+    def has_active_timer_for_step(self, step_id: str) -> bool:
+        """Check if a step has an active timer running."""
+        return self._timer_manager.has_active_timer_for_step(step_id)
+    
+    async def cancel_timer_for_step(self, step_id: str) -> bool:
+        """
+        Cancel the timer for a step without completing the step.
+        
+        Args:
+            step_id: The step whose timer should be cancelled
+            
+        Returns:
+            True if timer was cancelled, False if not found
+        """
+        return self._timer_manager.cancel_timer_for_step(step_id, emit_event=True)
 
     def get_active_steps(self) -> List[RecipeStep]:
         """Get all currently active steps."""
