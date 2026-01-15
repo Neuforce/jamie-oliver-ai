@@ -237,7 +237,8 @@ def trace_tool_call(tool_name: str):
                     raise
         
         # Return appropriate wrapper based on function type
-        if functools._iscoroutinefunction(func):
+        import asyncio
+        if asyncio.iscoroutinefunction(func):
             return async_wrapper
         return sync_wrapper
     
