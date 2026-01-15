@@ -12,3 +12,4 @@ build/
 .vercel
 .env*.local
 logs/
+apps/frontend/package-lock.json
