@@ -1,0 +1,265 @@
+{
+  "recipe": {
+    "id": "pear-almond-cake",
+    "title": "Pear & almond cake",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "Impress for less with this easy pear & almond Cake. A delicious treat finished with a zesty orange drizzle and crunchy flaked almonds.",
+    "tags": [
+      "pear",
+      "orange",
+      "cake",
+      "dessert",
+      "vegetarian",
+      "dinner-party",
+      "budget-desserts",
+      "yoghurt",
+      "budget-friendly"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/cake/pear-and-almond-cake/",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8ae16046e7d80585d75b95460b7b038fc3f49d3c-2043x3065.jpg/JO_JV_F45_Pear_Almond_Cake_1585.jpg?rect=0,512,2043,2043&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8ae16046e7d80585d75b95460b7b038fc3f49d3c-2043x3065.jpg/JO_JV_F45_Pear_Almond_Cake_1585.jpg?rect=0,512,2043,2043&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8ae16046e7d80585d75b95460b7b038fc3f49d3c-2043x3065.jpg/JO_JV_F45_Pear_Almond_Cake_1585.jpg?rect=0,767,2043,1532&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8ae16046e7d80585d75b95460b7b038fc3f49d3c-2043x3065.jpg/JO_JV_F45_Pear_Almond_Cake_1585.jpg?rect=0,959,2043,1149&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "flaked-almonds",
+      "name": "flaked almonds",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": "at room temperature, plus extra for greasing"
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "ground-allspice",
+      "name": "ground allspice",
+      "quantity": 1.0,
+      "unit": "pinch",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-natural-yog",
+      "name": "heaped tablespoons natural yoghurt",
+      "quantity": 3.0,
+      "unit": null,
+      "note": "approx 75g, plus 8 tablespoons, to serve"
+    },
+    {
+      "id": "orange",
+      "name": "orange",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pear",
+      "name": "pear",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "icing-sugar",
+      "name": "icing sugar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": "for dusting"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": "for spritzing"
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "mixing bowl",
+    "oven",
+    "pan",
+    "spatula",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 160\u00baC/325\u00baF/gas 3",
+      "instructions": "Preheat the oven to 160\u00baC/325\u00baF/gas 3. Grease and line a 23cm springform cake tin with greaseproof paper.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "rest_topping"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 160\u00baC/325\u00baF/gas 3. Grease and line a 23cm springform cake tin with greaseproof paper."
+        }
+      ]
+    },
+    {
+      "id": "rest_topping",
+      "descr": "Place 60g of the flaked almonds in a blender, reserving...",
+      "instructions": "Place 60g of the flaked almonds in a blender, reserving the rest for the topping, and blitz to a fine powder.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_bowl"
+      ],
+      "on_enter": [
+        {
+          "say": "Place 60g of the flaked almonds in a blender, reserving the rest for the topping, and blitz to a fine powder."
+        }
+      ]
+    },
+    {
+      "id": "mix_bowl",
+      "descr": "In a large mixing bowl, beat the butter and caster sugar...",
+      "instructions": "In a large mixing bowl, beat the butter and caster sugar together for 2 minutes with an electric whisk (you could also do this by hand). Add the eggs one by one, making sure you beat each one in well before you add the next, then fold in the flour, ground almonds, allspice and 3 heaped tablespoons of yoghurt. Finely grate in the orange zest, add a pinch of sea salt, and mix until smooth.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "rest_topping"
+      ],
+      "next": [
+        "slice_pear"
+      ],
+      "on_enter": [
+        {
+          "say": "In a large mixing bowl, beat the butter and caster sugar together for 2 minutes with an electric whisk (you could also do this by hand). Add the eggs one by one, making sure you beat each one in well before you add the next, then fold in the flour, ground almonds, allspice and 3 heaped tablespoons of yoghurt. Finely grate in the orange zest, add a pinch of sea salt, and mix until smooth."
+        }
+      ]
+    },
+    {
+      "id": "slice_pear",
+      "descr": "Thinly slice the pear into 3mm-thick slices, discarding...",
+      "instructions": "Thinly slice the pear into 3mm-thick slices, discarding the stalk and core, fan out on a board, lightly dust with half the icing sugar and set aside for 2 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "pour_cake"
+      ],
+      "on_enter": [
+        {
+          "say": "Thinly slice the pear into 3mm-thick slices, discarding the stalk and core, fan out on a board, lightly dust with half the icing sugar and set aside for 2 minutes."
+        }
+      ]
+    },
+    {
+      "id": "pour_cake",
+      "descr": "Pour the cake batter into the lined tin, smoothing the...",
+      "instructions": "Pour the cake batter into the lined tin, smoothing the top with a spatula. Arrange the pears on top, pressing down lightly, then scatter over the reserved flaked almonds. Spritz the top of the cake with a little olive oil, then dust with the remaining icing sugar and bake for 35 to 40 minutes, or until golden and a skewer inserted comes out clean. Release the cake from the tin, then transfer to a wire rack and leave to cool for 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "slice_pear"
+      ],
+      "next": [
+        "heat_thickened"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the cake batter into the lined tin, smoothing the top with a spatula. Arrange the pears on top, pressing down lightly, then scatter over the reserved flaked almonds. Spritz the top of the cake with a little olive oil, then dust with the remaining icing sugar and bake for 35 to 40 minutes, or until golden and a skewer inserted comes out clean. Release the cake from the tin, then transfer to a wire rack and leave to cool for 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_thickened",
+      "descr": "Meanwhile, squeeze the orange juice into a small pan...",
+      "instructions": "Meanwhile, squeeze the orange juice into a small pan with the honey, place on a low heat and simmer until thickened and reduced.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_cake"
+      ],
+      "next": [
+        "slice_dusting"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, squeeze the orange juice into a small pan with the honey, place on a low heat and simmer until thickened and reduced."
+        }
+      ]
+    },
+    {
+      "id": "slice_dusting",
+      "descr": "Spoon most of the orange drizzle over the cooled cake,...",
+      "instructions": "Spoon most of the orange drizzle over the cooled cake, then slice up and serve with a dusting of icing sugar, a dollop of yoghurt and a little more drizzle.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_thickened"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon most of the orange drizzle over the cooled cake, then slice up and serve with a dusting of icing sugar, a dollop of yoghurt and a little more drizzle."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "424 calories",
+    "carbohydrates": "44.8 g",
+    "fat": "25.2 g",
+    "fiber": "2.6 g",
+    "protein": "8.4 g"
+  }
+}

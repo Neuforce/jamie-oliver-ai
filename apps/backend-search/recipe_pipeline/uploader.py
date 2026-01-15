@@ -276,3 +276,37 @@ class RecipeUploader:
         
         logger.info(f"✅ Published recipe: {slug}")
         return result.data[0]
+
+
+def upload_recipe(recipe_json: dict, publish: bool = True) -> dict:
+    """
+    Convenience function to upload a recipe.
+    
+    Args:
+        recipe_json: Full JOAv0 recipe document
+        publish: Whether to publish immediately
+        
+    Returns:
+        Uploaded recipe record
+    """
+    from .validator import RecipeValidator
+    
+    uploader = RecipeUploader()
+    validator = RecipeValidator()
+    
+    # Validate
+    validation = validator.validate(recipe_json)
+    
+    # Extract slug and source URL
+    recipe_meta = recipe_json.get("recipe", {})
+    slug = recipe_meta.get("id", recipe_meta.get("slug", "unknown"))
+    source_url = recipe_meta.get("source_url")
+    
+    return uploader.upload(
+        slug=slug,
+        recipe_json=recipe_json,
+        validation=validation,
+        source_url=source_url,
+        source_type="crawled" if source_url else "manual",
+        publish=publish
+    )

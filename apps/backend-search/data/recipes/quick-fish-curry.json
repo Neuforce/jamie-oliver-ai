@@ -1,0 +1,255 @@
+{
+  "recipe": {
+    "id": "quick-fish-curry",
+    "title": "Quick fish curry",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "Looking for a cheap, healthy weeknight dinner? This speedy fish curry is a total winner. Using pantry staples, it\u2019s ready in just 15 minutes.",
+    "tags": [
+      "quick-easy",
+      "rice",
+      "low-lactose",
+      "gluten-free",
+      "budget-friendly",
+      "dairy-free",
+      "fish",
+      "dinner",
+      "curry"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/quick-fish-curry/",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ffefe9a7332584b0b134da95dc220c60cab1bab3-2073x3109.jpg/JO_JV_F45_Quick_Fish_Curry_2122.jpg?rect=0,519,2073,2073&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ffefe9a7332584b0b134da95dc220c60cab1bab3-2073x3109.jpg/JO_JV_F45_Quick_Fish_Curry_2122.jpg?rect=0,519,2073,2073&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ffefe9a7332584b0b134da95dc220c60cab1bab3-2073x3109.jpg/JO_JV_F45_Quick_Fish_Curry_2122.jpg?rect=0,778,2073,1555&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ffefe9a7332584b0b134da95dc220c60cab1bab3-2073x3109.jpg/JO_JV_F45_Quick_Fish_Curry_2122.jpg?rect=0,972,2073,1166&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "mug-of-long-grain-rice",
+      "name": "mug of long grain rice",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "300g"
+    },
+    {
+      "id": "cloves",
+      "name": "cloves",
+      "quantity": 6.0,
+      "unit": "whole",
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-tikka-masal",
+      "name": "heaped tablespoons tikka masala curry paste",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-plum-tomatoes",
+      "name": "400g tin of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-white-fish-fillets",
+      "name": "frozen white fish fillets",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": "from sustainable sources"
+    },
+    {
+      "id": "frozen-green-beans",
+      "name": "frozen green beans",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-light-coconut-milk",
+      "name": "400g tin of light coconut milk",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_minutes",
+      "descr": "Place the rice in a 24cm non-stick frying pan with the...",
+      "instructions": "Place the rice in a 24cm non-stick frying pan with the cloves, 600ml of boiling water and a pinch of sea salt. Boil for 10 minutes, then cover and reduce to a low heat for 5 minutes, or until the base is golden and crispy and the rice is fluffy.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the rice in a 24cm non-stick frying pan with the cloves, 600ml of boiling water and a pinch of sea salt. Boil for 10 minutes, then cover and reduce to a low heat for 5 minutes, or until the base is golden and crispy and the rice is fluffy."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "Peel and roughly chop the onion",
+      "instructions": "Peel and roughly chop the onion. Pick the coriander leaves into a bowl of iced water, and finely chop the stalks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and roughly chop the onion. Pick the coriander leaves into a bowl of iced water, and finely chop the stalks."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Place a large pan on a high heat with 1 tablespoon of...",
+      "instructions": "Place a large pan on a high heat with 1 tablespoon of olive oil, add the onion and coriander stalks, fry for 1 minute, then add the curry paste and fry for 2 minutes, stirring constantly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large pan on a high heat with 1 tablespoon of olive oil, add the onion and coriander stalks, fry for 1 minute, then add the curry paste and fry for 2 minutes, stirring constantly."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Push the onion to one side, then tip the tomatoes into...",
+      "instructions": "Push the onion to one side, then tip the tomatoes into the other, breaking them up with a spoon. Leave to blip away for 5 minutes, stirring the onions occasionally, then stir everything together to make a sauce. Add the fish and stir again to coat.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "simmer_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Push the onion to one side, then tip the tomatoes into the other, breaking them up with a spoon. Leave to blip away for 5 minutes, stirring the onions occasionally, then stir everything together to make a sauce. Add the fish and stir again to coat."
+        }
+      ]
+    },
+    {
+      "id": "simmer_step_5",
+      "descr": "Break in the beans, tear in half the coriander leaves,...",
+      "instructions": "Break in the beans, tear in half the coriander leaves, then tip in half the coconut milk and bring back to a simmer.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "stir_honey"
+      ],
+      "on_enter": [
+        {
+          "say": "Break in the beans, tear in half the coriander leaves, then tip in half the coconut milk and bring back to a simmer."
+        }
+      ]
+    },
+    {
+      "id": "stir_honey",
+      "descr": "Stir in the honey, then cook for a final 5 minutes, or...",
+      "instructions": "Stir in the honey, then cook for a final 5 minutes, or until the beans are tender and the fish is flaky and cooked through, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "simmer_step_5"
+      ],
+      "next": [
+        "serve_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the honey, then cook for a final 5 minutes, or until the beans are tender and the fish is flaky and cooked through, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "serve_step_7",
+      "descr": "Ripple the remaining coconut milk through the sauce, and...",
+      "instructions": "Ripple the remaining coconut milk through the sauce, and tear over the remaining coriander leaves, then turn out the rice cake and serve up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_honey"
+      ],
+      "on_enter": [
+        {
+          "say": "Ripple the remaining coconut milk through the sauce, and tear over the remaining coriander leaves, then turn out the rice cake and serve up."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "501 calories",
+    "carbohydrates": "76 g",
+    "fat": "11.8 g",
+    "fiber": "4.2 g",
+    "protein": "27.6 g"
+  }
+}
