@@ -75,6 +75,7 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
           <div className="flex items-center gap-3">
             <button
               type="button"
+              onClick={onClose}
               className="inline-flex items-center justify-center"
               style={{
                 padding: 0,
@@ -92,12 +93,6 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
                 style={{ width: '24px', height: '24px', display: 'block' }}
               />
             </button>
-            {savedSession && (
-              <div className="px-4 py-2 rounded-full bg-green-500 text-white text-sm flex items-center gap-2 shadow-lg">
-                <Clock className="size-4" />
-                In progress
-              </div>
-            )}
           </div>
         </div>
 
@@ -107,6 +102,7 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
           variant="modal"
           onClick={() => {}}
           showDifficultyPill
+          showInProgress={!!savedSession}
         />
 
         {/* Cook with Jamie CTA */}

@@ -8,9 +8,10 @@ interface RecipeCardProps {
   onClick: () => void;
   variant?: 'grid' | 'feed' | 'cooking' | 'modal';
   showDifficultyPill?: boolean;
+  showInProgress?: boolean;
 }
 
-export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPill = false }: RecipeCardProps) {
+export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPill = false, showInProgress = false }: RecipeCardProps) {
   const [hasSession, setHasSession] = useState(false);
   const [sessionProgress, setSessionProgress] = useState(0);
   const badgeStyle: React.CSSProperties = {
@@ -225,6 +226,25 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
           >
             {recipe.category.toUpperCase()}
           </span>
+          {showInProgress && (
+            <div
+              className="absolute inline-flex items-center gap-1.5 text-white text-xs font-semibold"
+              style={{
+                right: '12px',
+                top: '12px',
+                height: '27px',
+                padding: '6px 12px',
+                alignItems: 'flex-start',
+                borderRadius: '33554400px',
+                background: '#10B981',
+                boxShadow:
+                  '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
+              }}
+            >
+              <Clock className="size-3" />
+              In progress
+            </div>
+          )}
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
