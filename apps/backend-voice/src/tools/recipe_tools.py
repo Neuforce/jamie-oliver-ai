@@ -87,6 +87,95 @@ def _format_duration(seconds: int) -> str:
     return " ".join(parts)
 
 
+# =============================================================================
+# STATE-AWARE RESPONSE HELPERS
+# See TOOL_RESPONSE_FORMAT.md for standards
+# =============================================================================
+
+def _build_state_context(engine: RecipeEngine) -> dict:
+    """
+    Get current state context for building state-aware responses.
+    
+    Returns:
+        Dictionary with active steps, ready steps, and completion counts.
+    """
+    state = engine.get_state()
+    steps = state.get("steps", {})
+    
+    active_steps = [
+        {"id": s.get("id"), "descr": s.get("descr"), "type": s.get("type")}
+        for s in steps.values() if s.get("status") == "active"
+    ]
+    ready_steps = [
+        {"id": s.get("id"), "descr": s.get("descr"), "type": s.get("type")}
+        for s in steps.values() if s.get("status") == "ready"
+    ]
+    waiting_steps = [
+        {"id": s.get("id"), "descr": s.get("descr"), "type": s.get("type")}
+        for s in steps.values() if s.get("status") == "waiting_ack"
+    ]
+    
+    return {
+        "active": active_steps,
+        "ready": ready_steps,
+        "waiting": waiting_steps,
+        "completed_count": len(state.get("completed_steps", [])),
+        "total_count": len(steps),
+    }
+
+
+def _format_step_brief(step: dict) -> str:
+    """Format a step for display in responses."""
+    step_type = step.get("type", "immediate")
+    descr = step.get("descr", step.get("id", "unknown"))
+    type_tag = f" ({step_type})" if step_type == "timer" else ""
+    return f"'{descr}'{type_tag}"
+
+
+def _build_blocked_response(
+    action: str,
+    reason: str,
+    context: dict,
+    suggested_action: str
+) -> str:
+    """
+    Build a state-aware blocked response.
+    
+    Args:
+        action: What the agent tried to do
+        reason: Why it's blocked
+        context: State context from _build_state_context()
+        suggested_action: What the agent should do instead
+        
+    Returns:
+        Formatted blocked response with state context
+    """
+    # Build current state summary
+    current_parts = []
+    
+    if context["active"]:
+        active_str = ", ".join(_format_step_brief(s) for s in context["active"][:2])
+        current_parts.append(f"ACTIVE: {active_str}")
+    
+    if context["waiting"]:
+        waiting_str = ", ".join(_format_step_brief(s) for s in context["waiting"][:2])
+        current_parts.append(f"WAITING_ACK: {waiting_str}")
+    
+    if context["ready"]:
+        ready_count = len(context["ready"])
+        if ready_count <= 2:
+            ready_str = ", ".join(_format_step_brief(s) for s in context["ready"])
+        else:
+            ready_str = f"{ready_count} steps"
+        current_parts.append(f"READY: {ready_str}")
+    
+    current_summary = " | ".join(current_parts) if current_parts else "No active steps"
+    
+    return f"""[BLOCKED] {reason}
+Current: {current_summary}
+Action: {suggested_action}"""
+
+
 @register_function(recipe_function_manager)
 async def start_recipe(
     recipe_id: str = "",
@@ -459,17 +548,19 @@ async def confirm_step_done(
         step_description: Fallback description if step_id not known
         
     Returns:
-        Confirmation and what happens next
+        State-aware confirmation and what happens next
     """
     session_id = _get_session_id()
     if not session_id:
-        return "I couldn't determine your session. Please reconnect and try again."
+        return "[ERROR] No session found. Please reconnect."
 
     engine = _get_engine(session_id)
     
     if not engine:
-        return "No recipe is in progress."
+        return "[ERROR] No recipe in progress. Call start_recipe() first."
     
+    # Get state context for state-aware responses
+    context = _build_state_context(engine)
     state = engine.get_state()
     active_steps = engine.get_active_steps()
     
@@ -482,18 +573,24 @@ async def confirm_step_done(
         if step_info:
             step_status = step_info["status"]
             step_type = step_info.get("type", "immediate")
+            step_descr = step_info.get("descr", step_id)
             
-            # If the step is READY - DON'T auto-complete! User needs to do it first.
+            # STATE-AWARE: If the step is READY, explain why we can't confirm
             if step_status == "ready":
-                step_descr = step_info.get("descr", step_id)
-                if step_type == "timer":
-                    logger.info(f"Step '{step_id}' is a READY timer step - agent should call start_step() first")
-                    return f"[WAIT] '{step_descr}' is ready but not started. Call start_step('{step_id}') to begin."
-                else:
-                    logger.info(f"Step '{step_id}' is READY but not started - agent should call start_step() first")
-                    return f"[WAIT] '{step_descr}' is ready but not started. Call start_step('{step_id}') first."
+                logger.info(f"Step '{step_id}' is READY but not started - agent should call start_step() first")
+                return _build_blocked_response(
+                    action=f"confirm '{step_descr}'",
+                    reason=f"Step '{step_descr}' is READY but not started yet.",
+                    context=context,
+                    suggested_action=f"Call start_step('{step_id}') to begin this step first."
+                )
             
-            # If step is ACTIVE, we can find it
+            # STATE-AWARE: If step is already completed
+            if step_status == "completed":
+                logger.info(f"Step '{step_id}' is already completed")
+                return f"[INFO] '{step_descr}' is already complete. Check get_current_step() for next action."
+            
+            # If step is ACTIVE or WAITING_ACK, we can confirm it
             for step in engine.get_active_steps():
                 if step.id == step_id:
                     step_to_confirm = step
@@ -532,18 +629,23 @@ async def confirm_step_done(
             if not target:
                 target = ready_steps[0]
             
-            # DON'T auto-complete ready steps! User needs to do them first.
+            # STATE-AWARE: DON'T auto-complete ready steps! Explain the issue.
             step_descr = target.get("descr", target["id"])
-            if target.get("type") == "timer":
-                return f"[WAIT] '{step_descr}' hasn't started yet. Explain what to do, ask if ready, then call start_step('{target['id']}')."
-            else:
-                return f"[WAIT] '{step_descr}' hasn't been done yet. Guide the user through it, then confirm when THEY say done."
+            return _build_blocked_response(
+                action=f"confirm '{step_descr}'",
+                reason=f"'{step_descr}' is READY but hasn't been started.",
+                context=context,
+                suggested_action=f"Call start_step('{target['id']}') to begin this step."
+            )
         else:
             # Check if recipe is complete
-            if len(state["completed_steps"]) == len(state["steps"]):
-                return "[DONE] All steps completed - recipe finished!"
+            completed = context["completed_count"]
+            total = context["total_count"]
+            if completed == total and total > 0:
+                return "[DONE] All steps completed - recipe finished! 🎉"
             
-            return "[INFO] No steps are ready to confirm right now."
+            # No ready steps but recipe not complete - unusual state
+            return f"[INFO] No steps to confirm. Progress: {completed}/{total} steps complete."
     
     # Confirm the step
     if step_to_confirm:
@@ -612,33 +714,50 @@ def _match_step_by_description(description: str, steps: list) -> Optional[Any]:
 
 
 def _build_confirmation_response(state: dict, ready_steps: list) -> str:
-    """Build the confirmation response based on available next steps."""
+    """
+    Build the confirmation response with progress context.
+    
+    See TOOL_RESPONSE_FORMAT.md for response standards.
+    """
+    completed = len(state.get("completed_steps", []))
+    total = len(state.get("steps", {}))
+    progress = f"({completed}/{total} done)"
+    
     if ready_steps:
         if len(ready_steps) == 1:
             next_step = ready_steps[0]
             step_type = next_step.get("type", "immediate")
+            step_id = next_step['id']
+            step_descr = next_step['descr']
+            
             if step_type == "timer":
                 return (
-                    f"[DONE] Next is a TIMER step: {next_step['descr']}. "
-                    f"Explain what to do, ASK if ready, then call start_step('{next_step['id']}')."
+                    f"[DONE] Step complete {progress}.\n"
+                    f"Next: '{step_descr}' (TIMER step).\n"
+                    f"Action: Explain what to do, ASK if ready, then call start_step('{step_id}')."
                 )
             else:
                 return (
-                    f"[DONE] Next step: {next_step['descr']}. "
-                    f"Call start_step('{next_step['id']}') to begin, guide user, then confirm_step_done when THEY say done."
+                    f"[DONE] Step complete {progress}.\n"
+                    f"Next: '{step_descr}'.\n"
+                    f"Action: Call start_step('{step_id}') to begin."
                 )
         else:
             options = [
-                f"{s['descr']} (step_id: {s['id']}, type: {s.get('type', 'immediate')})" 
+                f"'{s['descr']}' (id: {s['id']}, {s.get('type', 'immediate')})" 
                 for s in ready_steps[:3]
             ]
-            return f"[DONE] Multiple steps ready - let user choose: {' / '.join(options)}"
+            return (
+                f"[DONE] Step complete {progress}.\n"
+                f"Next: {len(ready_steps)} steps ready - user can choose:\n"
+                f"  {' | '.join(options)}"
+            )
     else:
         # Check if everything is done
-        if len(state["completed_steps"]) == len(state["steps"]):
-            return "[DONE] All steps completed - recipe finished!"
+        if completed == total and total > 0:
+            return f"[DONE] All {total} steps completed - recipe finished! 🎉"
         else:
-            return "[DONE] Waiting for other steps (parallel timers) to complete."
+            return f"[DONE] Step complete {progress}. Waiting for parallel steps/timers."
 
 
 @register_function(recipe_function_manager)
@@ -690,39 +809,65 @@ async def start_step(step_id: str = "", step_description: str = "") -> str:
         step_description: Optional natural language hint to choose the step
         
     Returns:
-        A short confirmation of the step started, or guidance if none is ready.
+        A short confirmation of the step started, or state-aware guidance if blocked.
     """
     session_id = _get_session_id()
     if not session_id:
-        return "I couldn't determine your session. Please reconnect and try again."
+        return "[ERROR] No session found. Please reconnect."
 
     engine = _get_engine(session_id)
     if not engine:
-        return "No recipe is in progress."
+        return "[ERROR] No recipe is in progress. Call start_recipe() first."
 
-    # Get current state
+    # Get state context for state-aware responses
+    context = _build_state_context(engine)
     state = engine.get_state()
     steps: Dict[str, Any] = state.get("steps", {})
 
     # Collect READY steps
     ready_steps = [s for s in steps.values() if s.get("status") == "ready"]
+    
+    # STATE-AWARE: No ready steps - explain why and suggest action
     if not ready_steps:
-        return "No steps are ready to start right now."
+        # Check if there are active steps blocking
+        if context["active"]:
+            active_step = context["active"][0]
+            return _build_blocked_response(
+                action="start new step",
+                reason=f"Cannot start new step while '{active_step['descr']}' is in progress.",
+                context=context,
+                suggested_action=f"Call confirm_step_done('{active_step['id']}') when user says done."
+            )
+        elif context["waiting"]:
+            waiting_step = context["waiting"][0]
+            return _build_blocked_response(
+                action="start new step",
+                reason=f"Step '{waiting_step['descr']}' is waiting for confirmation.",
+                context=context,
+                suggested_action=f"Call confirm_step_done('{waiting_step['id']}') to confirm timer completion."
+            )
+        else:
+            # All steps completed or recipe not started
+            completed = context["completed_count"]
+            total = context["total_count"]
+            if completed == total and total > 0:
+                return "[INFO] All steps completed! Recipe is finished."
+            return "[INFO] No steps are ready. Recipe may not have started properly."
 
     # Find the target step
     target = _find_step_to_start(step_id, step_description, ready_steps)
     
     if not target:
-        names = ", ".join(s.get("descr", s.get("id")) for s in ready_steps[:3])
+        names = ", ".join(f"'{s.get('descr')}' (id: {s.get('id')})" for s in ready_steps[:3])
         if len(ready_steps) > 3:
             names += ", ..."
-        return f"I found {len(ready_steps)} steps ready to start: {names}. Please specify which one."
+        return f"[INFO] {len(ready_steps)} steps ready: {names}. Specify which one with start_step(step_id='...')."
 
     # Start the step
-    step_id = target["id"]
-    await engine.start_step(step_id)
+    target_step_id = target["id"]
+    await engine.start_step(target_step_id)
     
-    recipe_step = engine.recipe.steps.get(step_id)
+    recipe_step = engine.recipe.steps.get(target_step_id)
 
     # NOTE: We do NOT auto-start the UI timer here anymore.
     # The agent should ask the user "Ready for me to start the timer?" first,
@@ -770,28 +915,37 @@ def _find_step_to_start(
 
 
 def _build_start_confirmation(target: dict, recipe_step) -> str:
-    """Build the confirmation message for starting a step.
+    """
+    Build the confirmation message for starting a step.
     
     When start_step() is called on a timer step, the timer has ALREADY started.
     The agent should have asked the user BEFORE calling start_step().
+    
+    See TOOL_RESPONSE_FORMAT.md for response standards.
     """
+    step_id = target.get("id", "unknown")
+    step_descr = target.get("descr", step_id)
     is_timer = target.get("type") == "timer"
     
     if is_timer and recipe_step and recipe_step.duration:
         duration_secs = parse_iso_duration(recipe_step.duration)
-        mins = duration_secs // 60
-        secs = duration_secs % 60
-        
-        if mins > 0 and secs > 0:
-            duration_str = f"{mins} minutes and {secs} seconds"
-        elif mins > 0:
-            duration_str = f"{mins} minute{'s' if mins != 1 else ''}"
-        else:
-            duration_str = f"{secs} second{'s' if secs != 1 else ''}"
+        duration_str = _format_duration(duration_secs)
         
         # Timer is NOW running. Tell the agent clearly.
-        return f"[TIMER RUNNING] {duration_str} timer started. Wait for timer to finish, then confirm when user is done."
+        return (
+            f"[TIMER RUNNING] '{step_descr}' started with {duration_str} timer.\n"
+            f"Current: Step '{step_id}' is now ACTIVE.\n"
+            f"Action: Wait for timer notification, then call confirm_step_done('{step_id}') when user confirms."
+        )
     elif is_timer:
-        return "[TIMER RUNNING] Timer started. Wait for timer to finish, then confirm when user is done."
+        return (
+            f"[TIMER RUNNING] '{step_descr}' timer started.\n"
+            f"Current: Step '{step_id}' is now ACTIVE.\n"
+            f"Action: Wait for timer notification, then call confirm_step_done('{step_id}') when user confirms."
+        )
     else:
-        return "[STARTED] Step in progress. Wait for user to say they're done before confirming."
+        return (
+            f"[STARTED] '{step_descr}' is now in progress.\n"
+            f"Current: Step '{step_id}' is ACTIVE.\n"
+            f"Action: Guide user, then call confirm_step_done('{step_id}') when THEY say done."
+        )
