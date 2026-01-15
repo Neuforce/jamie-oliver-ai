@@ -139,9 +139,9 @@ async def confirm_step_for_session(session_id: str, step_id: str):
         logger.error(f"Failed to confirm step {step_id} for {session_id}: {exc}", exc_info=True)
         raise HTTPException(status_code=400, detail=f"Unable to confirm step: {exc}")
 
-    # Only inject success message if step was actually completed
-    # Check the tool_message - if it starts with [DONE] or contains "completed", it succeeded
+    # Check what happened based on tool response
     step_completed = tool_message.startswith("[DONE]") or "completed" in tool_message.lower()
+    timer_active = tool_message.startswith("[TIMER_ACTIVE]")
     
     assistant = session_service.get_assistant(session_id)
     if assistant and step_completed:
@@ -154,6 +154,18 @@ async def confirm_step_for_session(session_id: str, step_id: str):
             logger.info(f"✅ Injected system message to assistant for step confirmation: {step_id}")
         except Exception as e:
             logger.warning(f"Failed to inject system message to assistant: {e}")
+    elif assistant and timer_active:
+        # User clicked "Mark Complete" but timer is still running - ask agent to handle
+        try:
+            system_message = (
+                f"[SYSTEM: The user clicked 'Mark Complete' for '{step.descr}' (step_id: {step_id}), "
+                f"but a timer is still running. Ask them: 'Want to cancel the timer and mark it done?' "
+                f"If they say yes, call confirm_step_done('{step_id}', force_cancel_timer=True)]"
+            )
+            await assistant.inject_system_message(system_message)
+            logger.info(f"⏰ Injected timer confirmation request to assistant for step: {step_id}")
+        except Exception as e:
+            logger.warning(f"Failed to inject timer confirmation message: {e}")
     elif assistant and not step_completed:
         logger.warning(f"Step '{step_id}' was NOT completed (response: {tool_message}), skipping success message")
     else:
