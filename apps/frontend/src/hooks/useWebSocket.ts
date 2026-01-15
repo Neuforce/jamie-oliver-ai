@@ -40,12 +40,22 @@ export interface SessionInfo {
   [key: string]: any;
 }
 
+export interface ActiveTimerInfo {
+  id: string;
+  step_id: string | null;
+  label: string;
+  duration_secs: number;
+  started_at: string;
+  remaining_secs: number | null;
+}
+
 export interface UseWebSocketOptions {
   onRecipeState?: (state: RecipeState) => void;
   onRecipeMessage?: (message: string) => void;
   onRecipeError?: (error: string) => void;
   onTimerDone?: (stepId: string, requiresConfirm: boolean) => void;
   onReminderTick?: (stepId: string) => void;
+  onTimerListUpdate?: (timers: ActiveTimerInfo[]) => void;
   onAudio?: (base64Audio: string) => void;
   onStop?: () => void;
   onControl?: (action: string, data?: any) => void;
@@ -62,6 +72,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
     onRecipeError,
     onTimerDone,
     onReminderTick,
+    onTimerListUpdate,
     onAudio,
     onStop,
     onControl,
@@ -405,6 +416,14 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           }
           break;
 
+        case 'timer_list':
+          // Handle active timers list update (for timer panel)
+          if (onTimerListUpdate && data?.timers) {
+            console.log('🕐 [WS] Timer list update received:', data.timers.length, 'timers');
+            onTimerListUpdate(data.timers as ActiveTimerInfo[]);
+          }
+          break;
+
         case 'stop':
           if (onStop) {
             onStop();
@@ -416,7 +435,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           console.log('Unhandled WebSocket message:', message);
       }
     },
-    [onRecipeState, onRecipeMessage, onRecipeError, onTimerDone, onReminderTick, onAudio, onStop, disconnect, onSessionInfo]
+    [onRecipeState, onRecipeMessage, onRecipeError, onTimerDone, onReminderTick, onTimerListUpdate, onAudio, onStop, onControl, disconnect, onSessionInfo]
   );
 
   // Auto-connect if enabled

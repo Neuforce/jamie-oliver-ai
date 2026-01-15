@@ -20,12 +20,57 @@ Action: <suggested_next_action>
 | Status | Meaning | When to Use |
 |--------|---------|-------------|
 | `[DONE]` | Action completed successfully | Step confirmed, recipe finished |
-| `[STARTED]` | Step started successfully | Immediate step started |
-| `[TIMER RUNNING]` | Timer step started | Timer step is now active |
+| `[STARTED]` | Step started successfully | Step activated (timer NOT started) |
+| `[TIMER RUNNING]` | Timer started explicitly | start_timer_for_step() called |
+| `[TIMER_ACTIVE]` | Timer still running | confirm_step_done() with active timer |
 | `[BLOCKED]` | Action cannot proceed | Preconditions not met |
 | `[WAIT]` | Action needs prerequisite | Step not ready/started yet |
 | `[INFO]` | Informational response | State query, no action taken |
 | `[ERROR]` | Unexpected error | System/data error |
+
+## Timer Decoupling (v2.0)
+
+**IMPORTANT**: Timers are decoupled from step lifecycle.
+
+- `start_step()` - Activates the step, timer NOT started
+- `start_timer_for_step()` - Explicitly starts the timer for an active step
+- `confirm_step_done()` - If timer is running, returns `[TIMER_ACTIVE]` requiring confirmation
+
+### Timer Flow for Timer Steps
+
+```
+start_step('roast_squash')
+→ [STARTED] Step active, timer NOT started
+→ Ask user: "Ready for the timer?"
+→ User confirms
+
+start_timer_for_step('roast_squash')
+→ [TIMER RUNNING] 50 minute timer started
+→ User can navigate to other steps
+
+[Timer notification arrives]
+→ Ask user to check
+
+confirm_step_done('roast_squash')
+→ [DONE] Step complete, timer cleaned up
+```
+
+### Parallel Cooking Support
+
+Multiple timers can run simultaneously. Use `get_active_timers()` to check what's running.
+
+### Confirming with Active Timer
+
+```python
+# Timer still running
+result = confirm_step_done('roast_squash')
+# Returns: [TIMER_ACTIVE] Timer has 25 minutes remaining.
+#          Ask user if they want to cancel and complete early.
+
+# User confirms cancellation
+result = confirm_step_done('roast_squash', force_cancel_timer=True)
+# Returns: [DONE] Step complete, timer cancelled.
+```
 
 ## State Context
 

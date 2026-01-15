@@ -16,6 +16,13 @@ ccai = {path = "../../packages/ccai", develop = true}
 pydantic = "^2.10.6"
 python-multipart = "^0.0.20"
 supabase = ">=2.0.0"
+# OpenTelemetry for observability (optional but recommended)
+opentelemetry-api = {version = "^1.20.0", optional = true}
+opentelemetry-sdk = {version = "^1.20.0", optional = true}
+opentelemetry-exporter-otlp = {version = "^1.20.0", optional = true}
+
+[tool.poetry.extras]
+observability = ["opentelemetry-api", "opentelemetry-sdk", "opentelemetry-exporter-otlp"]
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"

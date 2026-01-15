@@ -11,9 +11,10 @@ from ccai.core.function_manager.decorators import register_function
 from ccai.core.logger import configure_logger
 from ccai.core import context_variables
 
-from src.recipe_engine import Recipe, RecipeEngine, RecipeStep, parse_iso_duration, StepStatus
+from src.recipe_engine import Recipe, RecipeEngine, RecipeStep, parse_iso_duration, StepStatus, ActiveTimer
 from src.services.session_service import session_service
 from src.services.recipe_service import get_recipe_service
+from src.observability.tracing import trace_tool_call, add_span_attribute
 
 logger = configure_logger(__name__)
 
@@ -177,6 +178,7 @@ Action: {suggested_action}"""
 
 
 @register_function(recipe_function_manager)
+@trace_tool_call("start_recipe")
 async def start_recipe(
     recipe_id: str = "",
     recipe_payload: dict = None,
@@ -533,9 +535,11 @@ def _format_ready_steps(ready_steps: list) -> str:
 
 
 @register_function(recipe_function_manager)
+@trace_tool_call("confirm_step_done")
 async def confirm_step_done(
     step_id: str = "",
-    step_description: str = ""
+    step_description: str = "",
+    force_cancel_timer: bool = False
 ) -> str:
     """
     Confirm that a cooking step is complete. Use this when the user indicates 
@@ -543,9 +547,14 @@ async def confirm_step_done(
     
     ALWAYS provide step_id for precision (e.g., "preheat_oven", "roast_squash").
     
+    If a timer is still running for this step:
+    - Without force_cancel_timer: Returns [TIMER_ACTIVE] asking you to confirm with user
+    - With force_cancel_timer=True: Cancels the timer and completes the step
+    
     Args:
         step_id: The ID of the step to confirm (PREFERRED - use this!)
         step_description: Fallback description if step_id not known
+        force_cancel_timer: If True, cancel any active timer and complete step
         
     Returns:
         State-aware confirmation and what happens next
@@ -649,8 +658,23 @@ async def confirm_step_done(
     
     # Confirm the step
     if step_to_confirm:
-        logger.info(f"Confirming step: {step_to_confirm.id}")
-        await engine.confirm_step_done(step_to_confirm.id)
+        logger.info(f"Confirming step: {step_to_confirm.id} (force_cancel_timer={force_cancel_timer})")
+        
+        # Check if there's an active timer - engine will tell us
+        result = await engine.confirm_step_done(step_to_confirm.id, force_cancel_timer=force_cancel_timer)
+        
+        # Handle timer cancellation confirmation flow
+        if result.get("status") == "timer_active":
+            remaining = result.get("remaining_secs", 0)
+            remaining_str = _format_duration(remaining)
+            step_descr = step_to_confirm.descr
+            
+            return (
+                f"[TIMER_ACTIVE] '{step_descr}' has a timer with {remaining_str} remaining.\n"
+                f"Ask user: 'The timer still has {remaining_str}. Cancel it and mark as done?'\n"
+                f"If YES → call confirm_step_done('{step_to_confirm.id}', force_cancel_timer=True)\n"
+                f"If NO → continue waiting for the timer."
+            )
     
     # Check what's available next
     state = engine.get_state()
@@ -734,7 +758,8 @@ def _build_confirmation_response(state: dict, ready_steps: list) -> str:
                 return (
                     f"[DONE] Step complete {progress}.\n"
                     f"Next: '{step_descr}' (TIMER step).\n"
-                    f"Action: Explain what to do, ASK if ready, then call start_step('{step_id}')."
+                    f"⚠️ STOP: Do NOT call start_step yet! Ask user 'Ready for the timer?' first.\n"
+                    f"Action: Describe step → Ask user → WAIT for confirmation → Then call start_step('{step_id}')."
                 )
             else:
                 return (
@@ -798,6 +823,7 @@ async def repeat_step() -> str:
 
 
 @register_function(recipe_function_manager)
+@trace_tool_call("start_step")
 async def start_step(step_id: str = "", step_description: str = "") -> str:
     """
     Explicitly start a READY step. Use when the user says they started a step
@@ -918,8 +944,8 @@ def _build_start_confirmation(target: dict, recipe_step) -> str:
     """
     Build the confirmation message for starting a step.
     
-    When start_step() is called on a timer step, the timer has ALREADY started.
-    The agent should have asked the user BEFORE calling start_step().
+    TIMER DECOUPLING: Starting a step does NOT auto-start its timer.
+    The agent should call start_timer_for_step() when the user is ready.
     
     See TOOL_RESPONSE_FORMAT.md for response standards.
     """
@@ -931,17 +957,18 @@ def _build_start_confirmation(target: dict, recipe_step) -> str:
         duration_secs = parse_iso_duration(recipe_step.duration)
         duration_str = _format_duration(duration_secs)
         
-        # Timer is NOW running. Tell the agent clearly.
+        # Timer step started but timer NOT running yet - agent must start it explicitly
         return (
-            f"[TIMER RUNNING] '{step_descr}' started with {duration_str} timer.\n"
-            f"Current: Step '{step_id}' is now ACTIVE.\n"
-            f"Action: Wait for timer notification, then call confirm_step_done('{step_id}') when user confirms."
+            f"[STARTED] '{step_descr}' is now active ({duration_str} timer available).\n"
+            f"Current: Step '{step_id}' is ACTIVE. Timer NOT started yet.\n"
+            f"Action: Guide user through this step, then ASK 'Ready for the timer?' "
+            f"When they confirm, call start_timer_for_step('{step_id}')."
         )
     elif is_timer:
         return (
-            f"[TIMER RUNNING] '{step_descr}' timer started.\n"
-            f"Current: Step '{step_id}' is now ACTIVE.\n"
-            f"Action: Wait for timer notification, then call confirm_step_done('{step_id}') when user confirms."
+            f"[STARTED] '{step_descr}' is now active (timer step).\n"
+            f"Current: Step '{step_id}' is ACTIVE. Timer NOT started yet.\n"
+            f"Action: Ask user if ready for timer, then call start_timer_for_step('{step_id}')."
         )
     else:
         return (
@@ -949,3 +976,119 @@ def _build_start_confirmation(target: dict, recipe_step) -> str:
             f"Current: Step '{step_id}' is ACTIVE.\n"
             f"Action: Guide user, then call confirm_step_done('{step_id}') when THEY say done."
         )
+
+
+@register_function(recipe_function_manager)
+@trace_tool_call("start_timer_for_step")
+async def start_timer_for_step(step_id: str) -> str:
+    """
+    Start the timer for a cooking step. Use this when the user confirms they
+    are ready to start the timer (e.g., "yes", "start the timer", "go ahead").
+    
+    This is SEPARATE from start_step() - the step must already be ACTIVE.
+    
+    The flow for timer steps is:
+    1. start_step(step_id) - activates the step (timer NOT started)
+    2. Guide user through prep for this step
+    3. Ask "Ready for the timer?"
+    4. User confirms → start_timer_for_step(step_id) - NOW timer starts
+    5. Timer runs (user can work on other steps meanwhile)
+    6. Timer done → ask user to check → confirm_step_done(step_id)
+    
+    Args:
+        step_id: The ID of the step to start the timer for
+        
+    Returns:
+        Confirmation that timer started with duration info
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "[ERROR] No session found. Please reconnect."
+
+    engine = _get_engine(session_id)
+    if not engine:
+        return "[ERROR] No recipe is in progress. Call start_recipe() first."
+    
+    # Try to start the timer
+    timer = await engine.start_timer_for_step(step_id)
+    
+    if not timer:
+        # Check why it failed
+        state = engine.get_state()
+        step_info = state["steps"].get(step_id)
+        
+        if not step_info:
+            return f"[ERROR] Step '{step_id}' not found."
+        
+        step_status = step_info.get("status")
+        step_type = step_info.get("type")
+        
+        if step_type != "timer":
+            return f"[ERROR] Step '{step_id}' is not a timer step."
+        
+        if step_status != "active":
+            return (
+                f"[BLOCKED] Cannot start timer - step '{step_id}' is not active (status: {step_status}).\n"
+                f"Action: Call start_step('{step_id}') first to activate the step."
+            )
+        
+        # Timer might already be running
+        if engine.has_active_timer_for_step(step_id):
+            existing_timer = engine._timer_manager.get_timer_for_step(step_id)
+            if existing_timer:
+                remaining_str = _format_duration(existing_timer.remaining_secs or 0)
+                return f"[INFO] Timer already running for '{step_id}' with {remaining_str} remaining."
+        
+        return f"[ERROR] Could not start timer for step '{step_id}'."
+    
+    # Timer started successfully
+    duration_str = _format_duration(timer.duration_secs)
+    
+    # Also send control event to frontend to start UI timer
+    await _send_control_event(session_id, "timer_start", {"seconds": timer.duration_secs})
+    
+    return (
+        f"[TIMER RUNNING] {duration_str} timer started for '{timer.label}'.\n"
+        f"Timer ID: {timer.id}\n"
+        f"Action: User can continue with other steps. When timer completes, ask user to check, "
+        f"then call confirm_step_done('{step_id}')."
+    )
+
+
+@register_function(recipe_function_manager)
+async def get_active_timers() -> str:
+    """
+    Get all currently running timers. Use this to check what timers are active
+    when the user asks about timers or when you need to track parallel cooking.
+    
+    Returns:
+        List of active timers with remaining times
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "[ERROR] No session found. Please reconnect."
+
+    engine = _get_engine(session_id)
+    if not engine:
+        return "[ERROR] No recipe is in progress."
+    
+    timers = engine.get_active_timers()
+    
+    if not timers:
+        return "[INFO] No active timers running."
+    
+    timer_list = []
+    for t in timers:
+        remaining_str = _format_duration(t.remaining_secs or 0)
+        step_info = f" (Step: {t.step_id})" if t.step_id else " (Custom timer)"
+        timer_list.append(f"- {t.label}: {remaining_str} remaining{step_info}")
+    
+    return f"[INFO] Active timers ({len(timers)}):\n" + "\n".join(timer_list)
+
+
+async def _send_control_event(session_id: str, action: str, data: dict) -> None:
+    """Send a control event to the frontend."""
+    try:
+        await session_service.send_control_event(session_id, action, data)
+    except Exception as e:
+        logger.warning(f"Failed to send control event: {e}")

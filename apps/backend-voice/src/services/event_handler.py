@@ -53,16 +53,22 @@ class RecipeEventHandler:
                 EventType.STEP_COMPLETED,
                 EventType.STEP_READY,
                 EventType.ALL_COMPLETED,
-                EventType.TIMER_SET
+                EventType.TIMER_SET,
+                EventType.TIMER_LIST_UPDATE
             ):
                 await self._send_recipe_state()
             
-            # When a timer is set, also send timer_start to frontend to sync the UI timer
-            if event.type == EventType.TIMER_SET:
-                duration_secs = event.payload.get("duration_secs", 0)
-                step_id = event.payload.get("step_id")
-                logger.info(f"🕐 TIMER_SET received for {step_id}, sending timer_start to frontend with {duration_secs}s")
-                await self._send_control_event("timer_start", {"seconds": duration_secs})
+            # When a timer is explicitly started, send timer_start to frontend
+            if event.type == EventType.TIMER_STARTED:
+                await self._handle_timer_started(event)
+            
+            # When timer list changes, send to frontend for timer panel
+            if event.type == EventType.TIMER_LIST_UPDATE:
+                await self._handle_timer_list_update(event)
+            
+            # When a timer is cancelled, notify frontend
+            if event.type == EventType.TIMER_CANCELLED:
+                await self._handle_timer_cancelled(event)
             
             # Handle specific event types
             if event.type == EventType.TIMER_DONE:
@@ -191,4 +197,50 @@ class RecipeEventHandler:
         error_msg = event.payload.get("msg", "Unknown error")
         logger.error(f"Recipe engine error: {error_msg}")
         await self.output_channel.send_event("recipe_error", {"message": error_msg})
+    
+    async def _handle_timer_started(self, event: Event) -> None:
+        """Handle explicit timer start event (decoupled from step start)."""
+        timer_id = event.payload.get("timer_id")
+        step_id = event.payload.get("step_id")
+        duration_secs = event.payload.get("duration_secs", 0)
+        label = event.payload.get("label", "Timer")
+        
+        logger.info(f"🕐 TIMER_STARTED: {timer_id} ({duration_secs}s) for step {step_id}")
+        
+        # Send timer_start control to frontend
+        await self._send_control_event("timer_start", {
+            "timer_id": timer_id,
+            "step_id": step_id,
+            "seconds": duration_secs,
+            "label": label
+        })
+    
+    async def _handle_timer_list_update(self, event: Event) -> None:
+        """Handle timer list update event (for timer panel)."""
+        timers = event.payload.get("timers", [])
+        count = event.payload.get("count", 0)
+        
+        logger.info(f"🕐 TIMER_LIST_UPDATE: {count} active timers")
+        
+        # Send to frontend for timer panel
+        await self.output_channel.send_event("timer_list", {
+            "timers": timers,
+            "count": count
+        })
+    
+    async def _handle_timer_cancelled(self, event: Event) -> None:
+        """Handle timer cancelled event."""
+        timer_id = event.payload.get("timer_id")
+        step_id = event.payload.get("step_id")
+        label = event.payload.get("label", "Timer")
+        remaining = event.payload.get("remaining_secs", 0)
+        
+        logger.info(f"🕐 TIMER_CANCELLED: {timer_id} (had {remaining}s remaining)")
+        
+        # Send to frontend
+        await self._send_control_event("timer_cancel", {
+            "timer_id": timer_id,
+            "step_id": step_id,
+            "label": label
+        })
 
