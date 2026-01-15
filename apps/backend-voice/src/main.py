@@ -24,6 +24,7 @@ from src.tools.recipe_tools import (
     start_recipe as start_recipe_tool,
     confirm_step_done as confirm_step_tool,
 )
+from src.observability.tracing import init_tracing
 
 logger = configure_logger(__name__)
 
@@ -37,6 +38,14 @@ DEFAULT_HELLO_MESSAGE = (
 async def lifespan(app: FastAPI):
     """Manage application lifespan - startup and shutdown events."""
     logger.info("🚀 Starting Jamie Oliver AI Backend...")
+    
+    # Initialize OpenTelemetry tracing (if available)
+    tracing_enabled = init_tracing(
+        service_name="jamie-voice",
+        enabled=settings.OTEL_ENABLED if hasattr(settings, 'OTEL_ENABLED') else True
+    )
+    if tracing_enabled:
+        logger.info("📊 OpenTelemetry tracing enabled")
     
     # Validate configuration
     if not settings.validate():

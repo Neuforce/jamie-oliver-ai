@@ -14,6 +14,7 @@ from ccai.core import context_variables
 from src.recipe_engine import Recipe, RecipeEngine, RecipeStep, parse_iso_duration, StepStatus, ActiveTimer
 from src.services.session_service import session_service
 from src.services.recipe_service import get_recipe_service
+from src.observability.tracing import trace_tool_call, add_span_attribute
 
 logger = configure_logger(__name__)
 
@@ -177,6 +178,7 @@ Action: {suggested_action}"""
 
 
 @register_function(recipe_function_manager)
+@trace_tool_call("start_recipe")
 async def start_recipe(
     recipe_id: str = "",
     recipe_payload: dict = None,
@@ -533,6 +535,7 @@ def _format_ready_steps(ready_steps: list) -> str:
 
 
 @register_function(recipe_function_manager)
+@trace_tool_call("confirm_step_done")
 async def confirm_step_done(
     step_id: str = "",
     step_description: str = "",
@@ -820,6 +823,7 @@ async def repeat_step() -> str:
 
 
 @register_function(recipe_function_manager)
+@trace_tool_call("start_step")
 async def start_step(step_id: str = "", step_description: str = "") -> str:
     """
     Explicitly start a READY step. Use when the user says they started a step
@@ -975,6 +979,7 @@ def _build_start_confirmation(target: dict, recipe_step) -> str:
 
 
 @register_function(recipe_function_manager)
+@trace_tool_call("start_timer_for_step")
 async def start_timer_for_step(step_id: str) -> str:
     """
     Start the timer for a cooking step. Use this when the user confirms they
