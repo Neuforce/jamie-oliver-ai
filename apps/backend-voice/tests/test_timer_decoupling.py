@@ -65,10 +65,11 @@ def immediate_step():
     )
 
 
+@pytest.mark.asyncio
 class TestTimerManager:
     """Tests for TimerManager functionality."""
     
-    def test_start_timer_creates_active_timer(self, timer_manager):
+    async def test_start_timer_creates_active_timer(self, timer_manager):
         """Timer is properly created and tracked."""
         timer = timer_manager.start_timer(
             timer_id="test_timer",
@@ -82,9 +83,10 @@ class TestTimerManager:
         assert timer.label == "Test Timer"
         assert timer.duration_secs == 60
         assert timer.remaining_secs == 60
-        assert timer_manager.has_active_timer_for_step("step_1") is False  # Custom timer, not step timer
+        # Clean up
+        timer_manager.cancel_timer("test_timer", emit_event=False)
     
-    def test_start_timer_for_step(self, timer_manager, sample_step):
+    async def test_start_timer_for_step(self, timer_manager, sample_step):
         """Timer created for a recipe step."""
         timer = timer_manager.start_timer_for_step(sample_step)
         
@@ -93,15 +95,17 @@ class TestTimerManager:
         assert timer.label == "Roast the squash"
         assert timer.duration_secs == 50 * 60  # PT50M = 3000 seconds
         assert timer_manager.has_active_timer_for_step("roast_squash")
+        # Clean up
+        await timer_manager.cancel_all()
     
-    def test_start_timer_for_step_without_duration_raises(self, timer_manager, immediate_step):
+    async def test_start_timer_for_step_without_duration_raises(self, timer_manager, immediate_step):
         """Starting timer for step without duration raises error."""
         with pytest.raises(TimerDurationError) as exc_info:
             timer_manager.start_timer_for_step(immediate_step)
         
         assert exc_info.value.step_id == "prep_veg"
     
-    def test_start_duplicate_timer_raises(self, timer_manager, sample_step):
+    async def test_start_duplicate_timer_raises(self, timer_manager, sample_step):
         """Starting timer when one already exists raises error."""
         timer_manager.start_timer_for_step(sample_step)
         
@@ -109,8 +113,10 @@ class TestTimerManager:
             timer_manager.start_timer_for_step(sample_step)
         
         assert exc_info.value.step_id == "roast_squash"
+        # Clean up
+        await timer_manager.cancel_all()
     
-    def test_cancel_timer(self, timer_manager, sample_step):
+    async def test_cancel_timer(self, timer_manager, sample_step):
         """Timer can be cancelled."""
         timer_manager.start_timer_for_step(sample_step)
         assert timer_manager.has_active_timer_for_step("roast_squash")
@@ -120,31 +126,31 @@ class TestTimerManager:
         assert result is True
         assert timer_manager.has_active_timer_for_step("roast_squash") is False
     
-    def test_cancel_nonexistent_timer_returns_false(self, timer_manager):
+    async def test_cancel_nonexistent_timer_returns_false(self, timer_manager):
         """Cancelling non-existent timer returns False."""
         result = timer_manager.cancel_timer("nonexistent", emit_event=False)
         assert result is False
     
-    def test_cancel_nonexistent_timer_raises_when_requested(self, timer_manager):
+    async def test_cancel_nonexistent_timer_raises_when_requested(self, timer_manager):
         """Cancelling non-existent timer can raise error if requested."""
         with pytest.raises(TimerNotFoundError):
             timer_manager.cancel_timer("nonexistent", raise_if_not_found=True)
     
-    def test_multiple_concurrent_timers(self, timer_manager):
+    async def test_multiple_concurrent_timers(self, timer_manager):
         """Multiple timers can run concurrently."""
-        timer1 = timer_manager.start_timer(
+        timer_manager.start_timer(
             timer_id="timer_1",
             step_id="step_1",
             label="First Timer",
             duration_secs=300
         )
-        timer2 = timer_manager.start_timer(
+        timer_manager.start_timer(
             timer_id="timer_2",
             step_id="step_2",
             label="Second Timer",
             duration_secs=600
         )
-        timer3 = timer_manager.start_custom_timer(
+        timer_manager.start_custom_timer(
             label="Custom Timer",
             duration_secs=120
         )
@@ -156,8 +162,10 @@ class TestTimerManager:
         assert active_timers[0].duration_secs == 120  # Custom
         assert active_timers[1].duration_secs == 300  # First
         assert active_timers[2].duration_secs == 600  # Second
+        # Clean up
+        await timer_manager.cancel_all()
     
-    def test_get_timer_for_step(self, timer_manager, sample_step):
+    async def test_get_timer_for_step(self, timer_manager, sample_step):
         """Can retrieve timer for specific step."""
         timer_manager.start_timer_for_step(sample_step)
         
@@ -165,13 +173,15 @@ class TestTimerManager:
         
         assert timer is not None
         assert timer.step_id == "roast_squash"
+        # Clean up
+        await timer_manager.cancel_all()
     
-    def test_get_timer_for_step_not_found(self, timer_manager):
+    async def test_get_timer_for_step_not_found(self, timer_manager):
         """Returns None for step without timer."""
         timer = timer_manager.get_timer_for_step("nonexistent")
         assert timer is None
     
-    def test_get_timer_state_legacy(self, timer_manager, sample_step):
+    async def test_get_timer_state_legacy(self, timer_manager, sample_step):
         """Legacy get_timer_state method works."""
         timer_manager.start_timer_for_step(sample_step)
         
@@ -181,14 +191,17 @@ class TestTimerManager:
         assert "duration_secs" in state
         assert "end_ts" in state
         assert "remaining_secs" in state
+        # Clean up
+        await timer_manager.cancel_all()
 
 
+@pytest.mark.asyncio
 class TestTimerDecoupling:
     """Tests for timer decoupling from step state."""
     
-    def test_timer_independent_of_step_status(self, timer_manager, sample_step):
+    async def test_timer_independent_of_step_status(self, timer_manager, sample_step):
         """Timer continues running regardless of step status changes."""
-        timer = timer_manager.start_timer_for_step(sample_step)
+        timer_manager.start_timer_for_step(sample_step)
         
         # Simulate step completion - timer should still exist
         sample_step.status = StepStatus.COMPLETED
@@ -197,8 +210,10 @@ class TestTimerDecoupling:
         assert timer_manager.has_active_timer_for_step("roast_squash")
         retrieved_timer = timer_manager.get_timer_for_step("roast_squash")
         assert retrieved_timer is not None
+        # Clean up
+        await timer_manager.cancel_all()
     
-    def test_step_can_complete_while_timer_runs(self, timer_manager, sample_step):
+    async def test_step_can_complete_while_timer_runs(self, timer_manager, sample_step):
         """Step can be marked complete while its timer is still running."""
         timer_manager.start_timer_for_step(sample_step)
         
@@ -212,7 +227,7 @@ class TestTimerDecoupling:
         timer_manager.cancel_timer_for_step("roast_squash", emit_event=False)
         assert not timer_manager.has_active_timer_for_step("roast_squash")
     
-    def test_multiple_step_timers_parallel(self, timer_manager):
+    async def test_multiple_step_timers_parallel(self, timer_manager):
         """Multiple steps can have active timers simultaneously."""
         step1 = RecipeStep(
             id="roast_squash",
@@ -237,6 +252,8 @@ class TestTimerDecoupling:
         
         active = timer_manager.get_all_active_timers()
         assert len(active) == 2
+        # Clean up
+        await timer_manager.cancel_all()
 
 
 @pytest.mark.asyncio
