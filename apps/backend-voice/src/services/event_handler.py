@@ -6,8 +6,17 @@ from ccai.core.logger import configure_logger
 from ccai.core.audio_interface.audio_output.audio_output_service import AudioOutputService
 
 from src.recipe_engine import Event, EventType
+from src.exceptions import WebSocketMessageError
 
 logger = configure_logger(__name__)
+
+
+class EventHandlingError(Exception):
+    """Raised when event handling fails."""
+    def __init__(self, event_type: str, reason: str):
+        self.event_type = event_type
+        self.reason = reason
+        super().__init__(f"Failed to handle event '{event_type}': {reason}")
 
 
 class RecipeEventHandler:
@@ -89,8 +98,16 @@ class RecipeEventHandler:
             if event.type == EventType.STEP_START:
                 await self._send_control_event("focus_step", {"step_id": event.payload.get("step_id")})
                 
+        except EventHandlingError as e:
+            # Specific event handling error - log and continue
+            logger.error(f"❌ Event handling error: {e}", exc_info=True)
+        except ConnectionError as e:
+            # WebSocket/network error - may need to notify session
+            logger.error(f"❌ Connection error in event handler: {e}", exc_info=True)
         except Exception as e:
-            logger.error(f"❌ Error in recipe event handler: {e}", exc_info=True)
+            # Unexpected error - wrap and log
+            logger.error(f"❌ Unexpected error in recipe event handler: {e}", exc_info=True)
+            # Don't re-raise - event handler should be resilient
     
     async def _send_recipe_state(self) -> None:
         """Send the current recipe state to the frontend."""

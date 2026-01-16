@@ -15,6 +15,15 @@ from src.recipe_engine import Recipe, RecipeEngine, RecipeStep, parse_iso_durati
 from src.services.session_service import session_service
 from src.services.recipe_service import get_recipe_service
 from src.observability.tracing import trace_tool_call, add_span_attribute
+from src.exceptions import (
+    SessionNotFoundError,
+    RecipeNotLoadedError,
+    StepNotFoundError,
+    StepNotReadyError,
+    StepBlockedError,
+    TimerActiveError,
+    TimerNotFoundError,
+)
 
 logger = configure_logger(__name__)
 
