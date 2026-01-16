@@ -67,131 +67,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 175°C (350°F), grease a loaf tin",
-      "instructions": "Preheat oven to 175°C (350°F), grease a loaf tin",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 175\u00b0C (350\u00b0F), grease a loaf tin",
+      "instructions": "Preheat oven to 175\u00b0C (350\u00b0F), grease a loaf tin",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "mix_banana_butter"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 175°c."
+          "say": "Right, let's preheat the oven to one hundred seventy-five degrees celsius, that's about three hundred fifty degrees fahrenheit. And don't forget to grease your loaf tin so nothing sticks!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "mix_banana_butter",
       "descr": "Mix mashed banana with melted butter",
       "instructions": "Mix mashed banana with melted butter",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "stir_sugar_egg_vanilla"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Now, let's mix those lovely mashed bananas with the melted butter. It should smell absolutely delicious already!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "stir_sugar_egg_vanilla",
       "descr": "Stir in sugar, egg, and vanilla",
       "instructions": "Stir in sugar, egg, and vanilla",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "mix_banana_butter"
       ],
       "next": [
-        "step_4"
+        "add_baking_soda_salt"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Great! Now let's stir in the sugar, crack in the egg, and add a splash of vanilla. Give it a good mix until it's all combined."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "add_baking_soda_salt",
       "descr": "Add baking soda and salt",
       "instructions": "Add baking soda and salt",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "stir_sugar_egg_vanilla"
       ],
       "next": [
-        "step_5"
+        "fold_in_flour"
       ],
       "on_enter": [
         {
-          "say": "Now add the baking soda and."
+          "say": "Now, sprinkle in the baking soda and a pinch of salt. These will help our bread rise beautifully."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "fold_in_flour",
       "descr": "Fold in flour until just combined",
       "instructions": "Fold in flour until just combined",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "add_baking_soda_salt"
       ],
       "next": [
-        "step_6"
+        "pour_bake"
       ],
       "on_enter": [
         {
-          "say": "Let's fold in flour until just combined."
+          "say": "Let's gently fold in the flour now. Be careful not to overmix - just until it's all combined."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "pour_bake",
       "descr": "Pour into tin and bake 50-60 minutes",
       "instructions": "Pour into tin and bake 50-60 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT50M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "fold_in_flour"
       ],
       "next": [
-        "step_7"
+        "cool_bread"
       ],
       "on_enter": [
         {
-          "say": "Let's pour into tin and bake 50-60."
+          "say": "Brilliant! Pour the mixture into your prepared tin and pop it in the oven. We'll bake it for fifty to sixty minutes. Your kitchen will smell amazing!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "cool_bread",
       "descr": "Cool in tin 10 minutes, then on a wire rack",
       "instructions": "Cool in tin 10 minutes, then on a wire rack",
-      "type": "immediate",
-      "auto_start": true,
+      "type": "timer",
+      "duration": "PT10M",
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "pour_bake"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's cool in tin 10 minutes, then."
+          "say": "Fantastic! Let the bread cool in the tin for ten minutes, then transfer it to a wire rack to cool completely. This will help it firm up nicely."
         }
       ]
     }
@@ -203,6 +205,6 @@
     }
   },
   "notes": {
-    "text": "The riper the bananas, the better\nAdd walnuts or chocolate chips for variety\nTest with a skewer - it should come out clean"
+    "text": "The riper the bananas, the better. Add walnuts or chocolate chips for variety. Test with a skewer - it should come out clean."
   }
 }

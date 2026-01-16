@@ -61,131 +61,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 240°C (475°F)",
-      "instructions": "Preheat oven to 240°C (475°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 240\u00b0C (475\u00b0F)",
+      "instructions": "Preheat oven to 240\u00b0C (475\u00b0F)",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "roll_out_dough"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 240°c."
+          "say": "Right, let's preheat the oven to two hundred forty degrees celsius, which is about four hundred seventy-five degrees fahrenheit. This will ensure our pizza has a lovely crispy crust."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "roll_out_dough",
       "descr": "Roll out pizza dough on a floured surface",
       "instructions": "Roll out pizza dough on a floured surface",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "mix_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's roll out pizza dough on a."
+          "say": "Now, let's roll out the pizza dough on a floured surface. We want it nice and thin, so it bakes up crispy and delicious."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "mix_sauce",
       "descr": "Mix passata with garlic, olive oil, and salt",
       "instructions": "Mix passata with garlic, olive oil, and salt",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "roll_out_dough"
       ],
       "next": [
-        "step_4"
+        "spread_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Let's mix the passata with the minced garlic, olive oil, and a pinch of salt. Give it a good stir until everything is well combined. This will be the base of our pizza."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "spread_sauce",
       "descr": "Spread sauce over dough, leaving a border",
       "instructions": "Spread sauce over dough, leaving a border",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "mix_sauce"
       ],
       "next": [
-        "step_5"
+        "add_mozzarella"
       ],
       "on_enter": [
         {
-          "say": "Let's spread sauce over dough, leaving a."
+          "say": "Now, spread that lovely sauce over the dough, leaving a small border around the edges. This will give us a nice crust."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_mozzarella",
       "descr": "Tear mozzarella and distribute over pizza",
       "instructions": "Tear mozzarella and distribute over pizza",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "spread_sauce"
       ],
       "next": [
-        "step_6"
+        "bake_pizza"
       ],
       "on_enter": [
         {
-          "say": "Let's tear mozzarella and distribute over pizza."
+          "say": "Let's tear the fresh mozzarella into pieces and distribute them evenly over the pizza. This will melt beautifully in the oven."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "bake_pizza",
       "descr": "Bake for 10-12 minutes until crust is golden",
       "instructions": "Bake for 10-12 minutes until crust is golden",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT12M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "add_mozzarella"
       ],
       "next": [
-        "step_7"
+        "finish_with_basil"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the for 10-12 minutes."
+          "say": "Time to bake our pizza! Pop it in the oven for ten to twelve minutes until the crust is golden and the cheese is bubbling. You'll know it's ready when it smells irresistible!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "finish_with_basil",
       "descr": "Top with fresh basil and drizzle with olive oil",
       "instructions": "Top with fresh basil and drizzle with olive oil",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "bake_pizza"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's top with fresh basil and drizzle."
+          "say": "Finally, let's top our beautiful pizza with fresh basil leaves and a drizzle of olive oil. This adds a lovely fresh flavour and aroma. Enjoy your homemade Margherita Pizza!"
         }
       ]
     }

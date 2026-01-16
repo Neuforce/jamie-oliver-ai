@@ -61,131 +61,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_spice_rub",
       "descr": "Mix paprika, brown sugar, garlic powder, salt, pepper for rub",
       "instructions": "Mix paprika, brown sugar, garlic powder, salt, pepper for rub",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "rub_pork"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Right, let's get started by mixing our spices together. Imagine the lovely aroma of paprika and garlic filling the air!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "rub_pork",
       "descr": "Rub spice mix all over pork shoulder",
       "instructions": "Rub spice mix all over pork shoulder",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "mix_spice_rub"
       ],
       "next": [
-        "step_3"
+        "slow_cook_pork"
       ],
       "on_enter": [
         {
-          "say": "Let's mix all over pork."
+          "say": "Now, let's give that pork shoulder a good rub with our spice mix. Make sure it's all covered for maximum flavour!"
         }
       ]
     },
     {
-      "id": "step_3",
-      "descr": "Slow cook at 120°C for 5-6 hours until tender",
-      "instructions": "Slow cook at 120°C for 5-6 hours until tender",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "id": "slow_cook_pork",
+      "descr": "Slow cook at 120\u00b0C for 5-6 hours until tender",
+      "instructions": "Slow cook at 120\u00b0C for 5-6 hours until tender",
+      "type": "timer",
+      "duration": "PT5H",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "rub_pork"
       ],
       "next": [
-        "step_4"
+        "shred_pork"
       ],
       "on_enter": [
         {
-          "say": "Let's cook at 120°c for."
+          "say": "Let's pop that pork into the oven at one hundred twenty degrees celsius. We'll let it cook low and slow for about five to six hours until it's beautifully tender."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "shred_pork",
       "descr": "Shred pork with two forks",
       "instructions": "Shred pork with two forks",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "slow_cook_pork"
       ],
       "next": [
-        "step_5"
+        "mix_bbq_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's shred pork with two forks."
+          "say": "Brilliant! Now that our pork is tender, let's shred it up with two forks. You'll see it just falls apart beautifully."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "mix_bbq_sauce",
       "descr": "Mix with BBQ sauce",
       "instructions": "Mix with BBQ sauce",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "shred_pork"
       ],
       "next": [
-        "step_6"
+        "pile_on_buns"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Time to add some tangy BBQ sauce to our shredded pork. Give it a good mix so every bit is coated in that lovely sauce."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "pile_on_buns",
       "descr": "Pile onto toasted buns",
       "instructions": "Pile onto toasted buns",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "mix_bbq_sauce"
       ],
       "next": [
-        "step_7"
+        "top_with_coleslaw"
       ],
       "on_enter": [
         {
-          "say": "Let's pile onto toasted buns."
+          "say": "Let's pile that delicious pork onto our toasted buns. It's going to be a real treat!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "top_with_coleslaw",
       "descr": "Top with coleslaw and serve",
       "instructions": "Top with coleslaw and serve",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "pile_on_buns"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's top with coleslaw and serve."
+          "say": "Finally, top it off with some fresh coleslaw and you're ready to serve. Enjoy your pulled pork sandwich!"
         }
       ]
     }

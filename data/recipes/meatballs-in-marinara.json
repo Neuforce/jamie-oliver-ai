@@ -69,131 +69,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_ingredients",
       "descr": "Mix beef, egg, breadcrumbs, Parmesan, and garlic",
       "instructions": "Mix beef, egg, breadcrumbs, Parmesan, and garlic",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "form_meatballs"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Right, let's get started by mixing the beef, egg, breadcrumbs, Parmesan, and garlic together. Don't overwork the mixture, just until it's combined."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "form_meatballs",
       "descr": "Form into golf ball-sized meatballs",
       "instructions": "Form into golf ball-sized meatballs",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "mix_ingredients"
       ],
       "next": [
-        "step_3"
+        "brown_meatballs"
       ],
       "on_enter": [
         {
-          "say": "Let's form into golf ball-sized meatballs."
+          "say": "Now, let's shape the mixture into lovely golf ball-sized meatballs. This is where you can get a bit hands-on!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "brown_meatballs",
       "descr": "Brown meatballs in a pan on all sides",
       "instructions": "Brown meatballs in a pan on all sides",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "form_meatballs"
       ],
       "next": [
-        "step_4"
+        "add_tomatoes_basil"
       ],
       "on_enter": [
         {
-          "say": "Let's brown meatballs in a pan on."
+          "say": "Let's brown those meatballs in a hot pan. You want a nice golden crust on all sides, which will add a fantastic flavour to our sauce."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "add_tomatoes_basil",
       "descr": "Add tinned tomatoes and basil to pan",
       "instructions": "Add tinned tomatoes and basil to pan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "brown_meatballs"
       ],
       "next": [
-        "step_5"
+        "simmer_sauce"
       ],
       "on_enter": [
         {
-          "say": "Now add the tinned tomatoes and."
+          "say": "Brilliant! Now, add the tinned tomatoes and a handful of fresh basil to the pan. Give it a good stir."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "simmer_sauce",
       "descr": "Simmer gently for 25-30 minutes",
       "instructions": "Simmer gently for 25-30 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT25M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "add_tomatoes_basil"
       ],
       "next": [
-        "step_6"
+        "cook_spaghetti"
       ],
       "on_enter": [
         {
-          "say": "Time to simmer the gently for 25-30."
+          "say": "Time to let it simmer gently for twenty-five to thirty minutes. You'll know it's ready when the sauce is thick and the flavours have melded beautifully."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "cook_spaghetti",
       "descr": "Cook spaghetti according to package",
       "instructions": "Cook spaghetti according to package",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "simmer_sauce"
       ],
       "next": [
-        "step_7"
+        "serve_dish"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the spaghetti according to."
+          "say": "While the sauce is simmering, let's cook the spaghetti according to the package instructions. Make sure it's al dente, with a bit of bite."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_dish",
       "descr": "Serve meatballs and sauce over pasta",
       "instructions": "Serve meatballs and sauce over pasta",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "cook_spaghetti"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Fantastic! It's time to serve. Place the spaghetti on plates and top with those beautiful meatballs and sauce. Enjoy your meal!"
         }
       ]
     }

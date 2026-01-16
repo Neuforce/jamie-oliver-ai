@@ -68,131 +68,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "cook_pasta",
       "descr": "Cook pasta in salted boiling water",
       "instructions": "Cook pasta in salted boiling water",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT10M",
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "blend_pesto"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the pasta in salted."
+          "say": "Right, let's get started by cooking the pasta in a big pot of salted boiling water. Give it about ten minutes until it's al dente."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "blend_pesto",
       "descr": "Blend basil, pine nuts, garlic, and Parmesan",
       "instructions": "Blend basil, pine nuts, garlic, and Parmesan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "cook_pasta"
       ],
       "next": [
-        "step_3"
+        "drizzle_olive_oil"
       ],
       "on_enter": [
         {
-          "say": "Let's blend everything together."
+          "say": "Now, let's make that beautiful pesto. Pop the basil, pine nuts, garlic, and Parmesan into a blender. Give it a whizz until it's nice and smooth."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "drizzle_olive_oil",
       "descr": "Drizzle in olive oil while blending",
       "instructions": "Drizzle in olive oil while blending",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "blend_pesto"
       ],
       "next": [
-        "step_4"
+        "season_pesto"
       ],
       "on_enter": [
         {
-          "say": "Let's drizzle in olive oil while blending."
+          "say": "Brilliant! Now, while the blender is running, slowly drizzle in the olive oil. This will give your pesto that lovely, silky texture."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "season_pesto",
       "descr": "Season pesto with salt and pepper",
       "instructions": "Season pesto with salt and pepper",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "drizzle_olive_oil"
       ],
       "next": [
-        "step_5"
+        "reserve_drain_pasta"
       ],
       "on_enter": [
         {
-          "say": "Let's season the pesto with salt."
+          "say": "Let's season our pesto with a pinch of salt and a crack of black pepper. Taste it and adjust as you like."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "reserve_drain_pasta",
       "descr": "Reserve pasta water, drain pasta",
       "instructions": "Reserve pasta water, drain pasta",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "season_pesto"
       ],
       "next": [
-        "step_6"
+        "toss_pasta_pesto"
       ],
       "on_enter": [
         {
-          "say": "Let's reserve the pasta water, drain for later."
+          "say": "Right, let's reserve a cup of that starchy pasta water, then drain the pasta. This water will help us loosen the pesto later."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "toss_pasta_pesto",
       "descr": "Toss pasta with pesto, add pasta water to loosen",
       "instructions": "Toss pasta with pesto, add pasta water to loosen",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "reserve_drain_pasta"
       ],
       "next": [
-        "step_7"
+        "serve_with_tomatoes"
       ],
       "on_enter": [
         {
-          "say": "Let's toss everything together."
+          "say": "Now, let's toss the pasta with that gorgeous pesto. Add a splash of the reserved pasta water to get it to the perfect consistency."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_with_tomatoes",
       "descr": "Serve with halved cherry tomatoes and extra Parmesan",
       "instructions": "Serve with halved cherry tomatoes and extra Parmesan",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "toss_pasta_pesto"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Finally, let's plate up! Serve your pasta with some halved cherry tomatoes and a sprinkle of extra Parmesan. Enjoy your meal!"
         }
       ]
     }

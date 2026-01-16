@@ -60,131 +60,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Heat oil to 180°C in a deep fryer",
-      "instructions": "Heat oil to 180°C in a deep fryer",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the oil to 180°c."
-        }
-      ]
-    },
-    {
-      "id": "step_2",
-      "descr": "Par-boil chips for 5 minutes, drain and dry",
-      "instructions": "Par-boil chips for 5 minutes, drain and dry",
+      "id": "heat_oil",
+      "descr": "Heat oil to 180\u00b0C in a deep fryer",
+      "instructions": "Heat oil to 180\u00b0C in a deep fryer",
       "type": "immediate",
       "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
+      "requires_confirm": true,
+      "depends_on": [],
       "next": [
-        "step_3"
+        "parboil_chips"
       ],
       "on_enter": [
         {
-          "say": "Let's par-boil chips for 5 minutes, drain."
+          "say": "Right, let's get started by heating the oil to one hundred eighty degrees celsius in your deep fryer. We want it nice and hot for that perfect crisp!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "parboil_chips",
+      "descr": "Par-boil chips for 5 minutes, drain and dry",
+      "instructions": "Par-boil chips for 5 minutes, drain and dry",
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_oil"
+      ],
+      "next": [
+        "fry_chips"
+      ],
+      "on_enter": [
+        {
+          "say": "Let's par-boil those chips for five minutes. Once done, drain them well and give them a good dry. This will help them get extra crispy later!"
+        }
+      ]
+    },
+    {
+      "id": "fry_chips",
       "descr": "Fry chips until golden and crispy, set aside",
       "instructions": "Fry chips until golden and crispy, set aside",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "parboil_chips"
       ],
       "next": [
-        "step_4"
+        "make_batter"
       ],
       "on_enter": [
         {
-          "say": "Time to fry the chips until golden."
+          "say": "Now, let's fry those chips until they're beautifully golden and crispy. You'll know they're ready when they have that lovely crunch!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "make_batter",
       "descr": "Make batter by whisking flour with beer until smooth",
       "instructions": "Make batter by whisking flour with beer until smooth",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "fry_chips"
       ],
       "next": [
-        "step_5"
+        "dip_fish"
       ],
       "on_enter": [
         {
-          "say": "Let's make batter by whisking."
+          "say": "Let's make that batter by whisking together the flour and cold beer until it's nice and smooth. This is going to give our fish that perfect crispy coating!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "dip_fish",
       "descr": "Dip fish in batter and carefully lower into hot oil",
       "instructions": "Dip fish in batter and carefully lower into hot oil",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "make_batter"
       ],
       "next": [
-        "step_6"
+        "fry_fish"
       ],
       "on_enter": [
         {
-          "say": "Let's dip fish in batter and carefully."
+          "say": "Now, gently dip each fish fillet into the batter, making sure it's fully coated, and carefully lower it into the hot oil. Be careful here, we want to keep it safe!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "fry_fish",
       "descr": "Fry fish for 5-6 minutes until golden and crispy",
       "instructions": "Fry fish for 5-6 minutes until golden and crispy",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT6M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "dip_fish"
       ],
       "next": [
-        "step_7"
+        "serve_dish"
       ],
       "on_enter": [
         {
-          "say": "Time to fry the fish for 5-6."
+          "say": "Time to fry the fish for about five to six minutes. You'll know it's ready when it's golden and crispy. Listen for that sizzle!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_dish",
       "descr": "Serve immediately with chips, salt, and vinegar",
       "instructions": "Serve immediately with chips, salt, and vinegar",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "fry_fish"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Brilliant! Now it's time to serve up your delicious fish and chips with a sprinkle of salt and a splash of vinegar. Enjoy your meal!"
         }
       ]
     }

@@ -60,131 +60,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 200°C (400°F)",
-      "instructions": "Preheat oven to 200°C (400°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 200\u00b0C (400\u00b0F)",
+      "instructions": "Preheat oven to 200\u00b0C (400\u00b0F)",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "mix_apples"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 200°c."
+          "say": "Right, let's preheat the oven to two hundred degrees celsius, which is about four hundred degrees fahrenheit. This will get it nice and hot for our pie."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "mix_apples",
       "descr": "Mix apples with sugar, cinnamon, cornstarch, and lemon juice",
       "instructions": "Mix apples with sugar, cinnamon, cornstarch, and lemon juice",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "roll_pastry"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Now, let's mix those lovely apples with the sugar, cinnamon, cornstarch, and a squeeze of lemon juice. Give it a good stir until everything's nicely coated."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "roll_pastry",
       "descr": "Roll out half the pastry and line a pie dish",
       "instructions": "Roll out half the pastry and line a pie dish",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "mix_apples"
       ],
       "next": [
-        "step_4"
+        "fill_pie"
       ],
       "on_enter": [
         {
-          "say": "Let's roll out half the pastry and."
+          "say": "Let's roll out half of that lovely pastry and gently line your pie dish. Take your time to get it nice and even."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "fill_pie",
       "descr": "Fill with apple mixture",
       "instructions": "Fill with apple mixture",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "roll_pastry"
       ],
       "next": [
-        "step_5"
+        "cover_pie"
       ],
       "on_enter": [
         {
-          "say": "Let's fill with apple mixture."
+          "say": "Now, let's fill that pastry-lined dish with our delicious apple mixture. Spread it out evenly."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "cover_pie",
       "descr": "Cover with remaining pastry, seal edges",
       "instructions": "Cover with remaining pastry, seal edges",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "fill_pie"
       ],
       "next": [
-        "step_6"
+        "brush_egg"
       ],
       "on_enter": [
         {
-          "say": "Let's cover with remaining pastry, seal edges."
+          "say": "Time to cover the pie with the remaining pastry. Press the edges down to seal it all in. Lovely!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "brush_egg",
       "descr": "Brush with beaten egg, make slits for steam",
       "instructions": "Brush with beaten egg, make slits for steam",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "cover_pie"
       ],
       "next": [
-        "step_7"
+        "bake_pie"
       ],
       "on_enter": [
         {
-          "say": "Let's make slits for steam."
+          "say": "Let's brush the top with that beaten egg for a beautiful golden finish. Don't forget to make a few slits for the steam to escape."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "bake_pie",
       "descr": "Bake 45 minutes until golden, cool before serving",
       "instructions": "Bake 45 minutes until golden, cool before serving",
-      "type": "immediate",
-      "auto_start": true,
+      "type": "timer",
+      "duration": "PT45M",
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "brush_egg"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to bake the 45 minutes until."
+          "say": "Pop the pie in the oven and bake it for forty-five minutes until it's beautifully golden. Let it cool a bit before serving, if you can wait!"
         }
       ]
     }

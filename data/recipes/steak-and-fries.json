@@ -60,131 +60,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "prep_potatoes",
       "descr": "Cut potatoes into fries, soak in cold water",
       "instructions": "Cut potatoes into fries, soak in cold water",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "first_fry_chips"
       ],
       "on_enter": [
         {
-          "say": "Let's start by cut."
+          "say": "Let's get started by cutting the potatoes into lovely fries and soaking them in cold water. This will help make them extra crispy later on."
         }
       ]
     },
     {
-      "id": "step_2",
-      "descr": "Heat oil to 160°C, fry chips until soft, drain",
-      "instructions": "Heat oil to 160°C, fry chips until soft, drain",
+      "id": "first_fry_chips",
+      "descr": "Heat oil to 160\u00b0C, fry chips until soft, drain",
+      "instructions": "Heat oil to 160\u00b0C, fry chips until soft, drain",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "prep_potatoes"
       ],
       "next": [
-        "step_3"
+        "season_steaks"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the oil to 160°c,."
+          "say": "Now, let's heat the oil to one hundred sixty degrees celsius. Fry the chips until they're soft, then drain them. You'll know they're ready when they start to look a bit golden."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "season_steaks",
       "descr": "Season steaks generously, let come to room temp",
       "instructions": "Season steaks generously, let come to room temp",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "first_fry_chips"
       ],
       "next": [
-        "step_4"
+        "cook_steaks"
       ],
       "on_enter": [
         {
-          "say": "Let's season the steaks generously, let."
+          "say": "Let's season those beautiful steaks generously with sea salt and black pepper. Let them come to room temperature for the best cooking results."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "cook_steaks",
       "descr": "Heat pan until smoking, cook steaks 3-4 mins per side",
       "instructions": "Heat pan until smoking, cook steaks 3-4 mins per side",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "season_steaks"
       ],
       "next": [
-        "step_5"
+        "baste_steaks"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the pan until smoking,."
+          "say": "Heat your pan until it's smoking hot. We're going to cook the steaks for three to four minutes on each side. Listen for that sizzle!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "baste_steaks",
       "descr": "Add butter, garlic, rosemary, baste steaks",
       "instructions": "Add butter, garlic, rosemary, baste steaks",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "cook_steaks"
       ],
       "next": [
-        "step_6"
+        "rest_steaks"
       ],
       "on_enter": [
         {
-          "say": "Now add the butter, garlic, rosemary,."
+          "say": "Now, add the butter, garlic, and rosemary to the pan and baste the steaks. This will add incredible flavour and aroma."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "rest_steaks",
       "descr": "Rest steaks 5 minutes",
       "instructions": "Rest steaks 5 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "baste_steaks"
       ],
       "next": [
-        "step_7"
+        "final_fry_chips"
       ],
       "on_enter": [
         {
-          "say": "Let's rest steaks 5 minutes."
+          "say": "Brilliant! Let the steaks rest for five minutes. This is really important as it lets all those lovely juices redistribute."
         }
       ]
     },
     {
-      "id": "step_7",
-      "descr": "Fry chips again at 180°C until crispy, serve together",
-      "instructions": "Fry chips again at 180°C until crispy, serve together",
+      "id": "final_fry_chips",
+      "descr": "Fry chips again at 180\u00b0C until crispy, serve together",
+      "instructions": "Fry chips again at 180\u00b0C until crispy, serve together",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "rest_steaks"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to fry the chips again at."
+          "say": "Time to fry the chips again at one hundred eighty degrees celsius until they're beautifully crispy. Then, serve them up with the steaks. Enjoy your meal!"
         }
       ]
     }

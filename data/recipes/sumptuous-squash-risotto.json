@@ -10,7 +10,8 @@
     "tags": ["risotto", "butternut-squash", "comfort-food"],
     "course": "main",
     "cuisine": "italian-inspired",
-    "source": "cookbook"
+    "source": "cookbook",
+    "image_url": "/recipes-img/sumptuous-squash-risotto.webp"
   },
   "ingredients": [
     {

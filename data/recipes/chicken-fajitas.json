@@ -68,131 +68,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_spices",
       "descr": "Mix cumin, paprika, salt, and pepper",
       "instructions": "Mix cumin, paprika, salt, and pepper",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "coat_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Right, let's mix the cumin, paprika, salt, and pepper together. This will be the lovely spice mix for our chicken."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "coat_chicken",
       "descr": "Toss chicken in spice mix",
       "instructions": "Toss chicken in spice mix",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "mix_spices"
       ],
       "next": [
-        "step_3"
+        "cook_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's toss everything together."
+          "say": "Now, let's toss the sliced chicken in that beautiful spice mix. Make sure every piece is nicely coated."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "cook_chicken",
       "descr": "Heat pan, cook chicken until golden",
       "instructions": "Heat pan, cook chicken until golden",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "coat_chicken"
       ],
       "next": [
-        "step_4"
+        "add_veggies"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the pan, cook chicken."
+          "say": "Let's get the pan nice and hot. We're going to cook the chicken until it's golden and sizzling. You'll know it's ready by that fantastic aroma."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "add_veggies",
       "descr": "Add peppers and onions, cook until soft",
       "instructions": "Add peppers and onions, cook until soft",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "cook_chicken"
       ],
       "next": [
-        "step_5"
+        "warm_tortillas"
       ],
       "on_enter": [
         {
-          "say": "Now add the peppers and onions,."
+          "say": "Now, let's add the sliced peppers and onions to the pan. Cook them until they're soft and full of flavour."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "warm_tortillas",
       "descr": "Warm tortillas in a dry pan",
       "instructions": "Warm tortillas in a dry pan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "add_veggies"
       ],
       "next": [
-        "step_6"
+        "serve_fajitas"
       ],
       "on_enter": [
         {
-          "say": "Let's warm the tortillas in dry."
+          "say": "Let's warm the tortillas in a dry pan. Just a minute or two on each side until they're soft and pliable."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "serve_fajitas",
       "descr": "Serve chicken and veg with tortillas and toppings",
       "instructions": "Serve chicken and veg with tortillas and toppings",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "warm_tortillas"
       ],
       "next": [
-        "step_7"
+        "add_lime"
       ],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve! Pile the chicken and veggies onto the tortillas and add your favourite toppings. It's going to be delicious!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "add_lime",
       "descr": "Squeeze lime over everything",
       "instructions": "Squeeze lime over everything",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "serve_fajitas"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's squeeze lime over everything."
+          "say": "Finally, let's squeeze some fresh lime over everything for that extra zing. Enjoy your meal!"
         }
       ]
     }

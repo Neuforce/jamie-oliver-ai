@@ -69,131 +69,135 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "marinate_chicken",
       "descr": "Marinate chicken in yogurt and half the tikka paste for 30 minutes",
       "instructions": "Marinate chicken in yogurt and half the tikka paste for 30 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT30M",
       "depends_on": [],
       "next": [
-        "step_2"
+        "grill_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's marinate chicken in yogurt and half."
+          "say": "Right, let's get started by marinating our chicken in the yogurt and half of the tikka paste. We'll let it soak up all those lovely flavors for thirty minutes."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "grill_chicken",
       "descr": "Grill or pan-fry chicken until charred and cooked through",
       "instructions": "Grill or pan-fry chicken until charred and cooked through",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "marinate_chicken"
       ],
       "next": [
-        "step_3"
+        "saute_onions"
       ],
       "on_enter": [
         {
-          "say": "Time to grill the or pan-fry chicken."
+          "say": "Now, let's grill or pan-fry the chicken until it's beautifully charred and cooked through. You should hear a nice sizzle!"
         }
       ]
     },
     {
-      "id": "step_3",
-      "descr": "In a large pan, sauté onions until golden, add garlic",
-      "instructions": "In a large pan, sauté onions until golden, add garlic",
+      "id": "saute_onions",
+      "descr": "In a large pan, saut\u00e9 onions until golden, add garlic",
+      "instructions": "In a large pan, saut\u00e9 onions until golden, add garlic",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "grill_chicken"
       ],
       "next": [
-        "step_4"
+        "add_tikka_paste"
       ],
       "on_enter": [
         {
-          "say": "Let's in a large pan, sauté onions."
+          "say": "Let's heat up a large pan and saut\u00e9 those onions until they're golden and lovely. Then, we'll add the garlic for that aromatic touch."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "add_tikka_paste",
       "descr": "Stir in remaining tikka paste and cook for 1 minute",
       "instructions": "Stir in remaining tikka paste and cook for 1 minute",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1M",
       "depends_on": [
-        "step_3"
+        "saute_onions"
       ],
       "next": [
-        "step_5"
+        "add_tomatoes"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Now, let's stir in the remaining tikka paste and cook it for a minute. This will really bring out those spices."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_tomatoes",
       "descr": "Add tinned tomatoes and simmer for 10 minutes",
       "instructions": "Add tinned tomatoes and simmer for 10 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT10M",
       "depends_on": [
-        "step_4"
+        "add_tikka_paste"
       ],
       "next": [
-        "step_6"
+        "add_cream_and_chicken"
       ],
       "on_enter": [
         {
-          "say": "Now add the tinned tomatoes and."
+          "say": "Let's add the tinned tomatoes now and let it all simmer for ten minutes. You'll see it start to thicken up nicely."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "add_cream_and_chicken",
       "descr": "Stir in cream and cooked chicken, simmer for 5 minutes",
       "instructions": "Stir in cream and cooked chicken, simmer for 5 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT5M",
       "depends_on": [
-        "step_5"
+        "add_tomatoes"
       ],
       "next": [
-        "step_7"
+        "garnish_and_serve"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Now, let's stir in the cream and our beautifully cooked chicken. We'll let it simmer for another five minutes to get all those flavors mingling."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "garnish_and_serve",
       "descr": "Garnish with fresh coriander and serve with rice or naan",
       "instructions": "Garnish with fresh coriander and serve with rice or naan",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "add_cream_and_chicken"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to garnish and enjoy!"
+          "say": "Finally, let's garnish with some fresh coriander and serve it up with rice or naan. Enjoy your delicious Chicken Tikka Masala!"
         }
       ]
     }
@@ -205,6 +209,6 @@
     }
   },
   "notes": {
-    "text": "Marinating overnight gives better flavor\nDon't skip the charring step - it adds smoky depth\nAdjust spice level to your taste"
+    "text": "Marinating overnight gives better flavor. Don't skip the charring step - it adds smoky depth. Adjust spice level to your taste."
   }
 }

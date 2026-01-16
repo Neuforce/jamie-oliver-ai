@@ -68,131 +68,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_flour_spices",
       "descr": "Mix flour with paprika, salt, and pepper",
       "instructions": "Mix flour with paprika, salt, and pepper",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "cut_coat_fish"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Right, let's mix the flour with paprika, a pinch of salt, and a dash of pepper. This is going to give our fish a lovely flavour."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "cut_coat_fish",
       "descr": "Cut fish into strips, coat in flour",
       "instructions": "Cut fish into strips, coat in flour",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "mix_flour_spices"
       ],
       "next": [
-        "step_3"
+        "fry_fish"
       ],
       "on_enter": [
         {
-          "say": "Let's start by cut."
+          "say": "Now, let's cut the fish into nice strips and give them a good coating in our seasoned flour. Make sure they're well covered."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "fry_fish",
       "descr": "Fry in hot oil until golden and crispy",
       "instructions": "Fry in hot oil until golden and crispy",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "cut_coat_fish"
       ],
       "next": [
-        "step_4"
+        "make_slaw"
       ],
       "on_enter": [
         {
-          "say": "Time to fry the in hot oil."
+          "say": "Time to fry the fish! Get your oil nice and hot, then fry those strips until they're golden and crispy. You'll know it's ready when you hear that lovely sizzle."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "make_slaw",
       "descr": "Mix cabbage with mayo and lime juice for slaw",
       "instructions": "Mix cabbage with mayo and lime juice for slaw",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "fry_fish"
       ],
       "next": [
-        "step_5"
+        "warm_tortillas"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Let's whip up the slaw. Mix the shredded cabbage with mayonnaise and a good squeeze of lime juice. It should be creamy and zesty."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "warm_tortillas",
       "descr": "Warm tortillas",
       "instructions": "Warm tortillas",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "make_slaw"
       ],
       "next": [
-        "step_6"
+        "assemble_tacos"
       ],
       "on_enter": [
         {
-          "say": "Let's warm the tortillas."
+          "say": "Let's warm up those tortillas until they're nice and soft. A quick toast on a hot pan will do the trick."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "assemble_tacos",
       "descr": "Fill with fish and slaw",
       "instructions": "Fill with fish and slaw",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "warm_tortillas"
       ],
       "next": [
-        "step_7"
+        "garnish_tacos"
       ],
       "on_enter": [
         {
-          "say": "Let's fill with fish and slaw."
+          "say": "Now for the fun part! Let's fill those warm tortillas with our crispy fish and fresh slaw. It's going to be delicious."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "garnish_tacos",
       "descr": "Top with cilantro and extra lime",
       "instructions": "Top with cilantro and extra lime",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "assemble_tacos"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's top with cilantro and extra lime."
+          "say": "Finally, let's top it off with some fresh cilantro and an extra squeeze of lime. Perfect! You're going to love this."
         }
       ]
     }

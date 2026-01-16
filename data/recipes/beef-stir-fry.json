@@ -69,131 +69,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "marinate_beef",
       "descr": "Marinate beef in soy sauce and cornstarch for 10 minutes",
       "instructions": "Marinate beef in soy sauce and cornstarch for 10 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT10M",
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "heat_wok"
       ],
       "on_enter": [
         {
-          "say": "Let's marinate beef in soy sauce and."
+          "say": "Let's get started by marinating the beef in soy sauce and cornstarch. Give it a good mix and let it sit for ten minutes. This will make it lovely and tender."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "heat_wok",
       "descr": "Heat wok or large pan on high heat",
       "instructions": "Heat wok or large pan on high heat",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "marinate_beef"
       ],
       "next": [
-        "step_3"
+        "stir_fry_beef"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the wok or large."
+          "say": "Right, now let's heat up the wok or a large pan on high heat. We want it nice and hot to get that perfect sear on the beef."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "stir_fry_beef",
       "descr": "Stir-fry beef in batches until browned, set aside",
       "instructions": "Stir-fry beef in batches until browned, set aside",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "heat_wok"
       ],
       "next": [
-        "step_4"
+        "add_vegetables"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Now, let's stir-fry the beef in batches. Listen for that sizzle and cook until it's beautifully browned. Then set it aside."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "add_vegetables",
       "descr": "Add vegetables and garlic, stir-fry for 3 minutes",
       "instructions": "Add vegetables and garlic, stir-fry for 3 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT3M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "stir_fry_beef"
       ],
       "next": [
-        "step_5"
+        "return_beef"
       ],
       "on_enter": [
         {
-          "say": "Now add the vegetables and garlic,."
+          "say": "Now add those lovely vegetables and garlic to the wok. Stir-fry them for about three minutes until they're vibrant and just tender."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "return_beef",
       "descr": "Return beef to wok",
       "instructions": "Return beef to wok",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "add_vegetables"
       ],
       "next": [
-        "step_6"
+        "add_oyster_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's return beef to wok."
+          "say": "Let's bring that beef back into the wok. It's going to soak up all those wonderful flavors."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "add_oyster_sauce",
       "descr": "Add oyster sauce and a splash of water",
       "instructions": "Add oyster sauce and a splash of water",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "return_beef"
       ],
       "next": [
-        "step_7"
+        "toss_and_serve"
       ],
       "on_enter": [
         {
-          "say": "Now add the oyster sauce and."
+          "say": "Now add the oyster sauce and just a splash of water. This will create a lovely sauce that coats everything beautifully."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "toss_and_serve",
       "descr": "Toss everything together and serve over rice",
       "instructions": "Toss everything together and serve over rice",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "add_oyster_sauce"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's toss everything together."
+          "say": "Finally, let's toss everything together until it's all well combined. Serve it over some steaming rice and enjoy your delicious beef stir fry!"
         }
       ]
     }

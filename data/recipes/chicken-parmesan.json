@@ -70,131 +70,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "flatten_chicken",
       "descr": "Flatten chicken breasts between plastic wrap",
       "instructions": "Flatten chicken breasts between plastic wrap",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "mix_breadcrumbs_parmesan"
       ],
       "on_enter": [
         {
-          "say": "Let's flatten chicken breasts between plastic wrap."
+          "say": "Right, let's flatten those chicken breasts between some plastic wrap. This will help them cook evenly."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "mix_breadcrumbs_parmesan",
       "descr": "Mix breadcrumbs with Parmesan",
       "instructions": "Mix breadcrumbs with Parmesan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "flatten_chicken"
       ],
       "next": [
-        "step_3"
+        "coat_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Now, let's mix the breadcrumbs with the Parmesan. This will give our chicken a lovely cheesy crust."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "coat_chicken",
       "descr": "Dip chicken in egg, then breadcrumb mixture",
       "instructions": "Dip chicken in egg, then breadcrumb mixture",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "mix_breadcrumbs_parmesan"
       ],
       "next": [
-        "step_4"
+        "fry_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's dip chicken in egg, then breadcrumb."
+          "say": "Let's dip each chicken breast in the beaten egg, then coat it in our breadcrumb mixture. Make sure it's nicely covered."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "fry_chicken",
       "descr": "Fry in oil until golden on both sides",
       "instructions": "Fry in oil until golden on both sides",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "coat_chicken"
       ],
       "next": [
-        "step_5"
+        "top_with_sauce_cheese"
       ],
       "on_enter": [
         {
-          "say": "Time to fry the in oil until."
+          "say": "Time to fry the chicken in a bit of oil until it's golden on both sides. You'll know it's ready when you see that beautiful golden colour."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "top_with_sauce_cheese",
       "descr": "Top with marinara and mozzarella",
       "instructions": "Top with marinara and mozzarella",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "fry_chicken"
       ],
       "next": [
-        "step_6"
+        "bake_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's top with marinara and mozzarella."
+          "say": "Let's top our golden chicken with a generous helping of marinara sauce and slices of mozzarella. This is where the magic happens!"
         }
       ]
     },
     {
-      "id": "step_6",
-      "descr": "Bake at 180°C until cheese melts",
-      "instructions": "Bake at 180°C until cheese melts",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "id": "bake_chicken",
+      "descr": "Bake at 180\u00b0C until cheese melts",
+      "instructions": "Bake at 180\u00b0C until cheese melts",
+      "type": "timer",
+      "duration": "PT10M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "top_with_sauce_cheese"
       ],
       "next": [
-        "step_7"
+        "serve_with_spaghetti"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the at 180°c until."
+          "say": "Right, let's pop it in the oven at one hundred eighty degrees celsius until the cheese is beautifully melted. Should take about ten minutes."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_with_spaghetti",
       "descr": "Serve over spaghetti with fresh basil",
       "instructions": "Serve over spaghetti with fresh basil",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "bake_chicken"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve! Place your delicious chicken parmesan over some spaghetti and sprinkle with fresh basil. Enjoy your meal!"
         }
       ]
     }

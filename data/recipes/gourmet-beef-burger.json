@@ -61,131 +61,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "form_patties",
       "descr": "Form beef into 4 patties, season generously",
       "instructions": "Form beef into 4 patties, season generously",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "caramelize_onions"
       ],
       "on_enter": [
         {
-          "say": "Let's form beef into 4 patties, season."
+          "say": "Right, let's form the beef into four lovely patties. Be sure to season them generously. Remember, don't overwork the meat, and make a small indent in the center to prevent puffing."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "caramelize_onions",
       "descr": "Caramelize onions in a pan over low heat",
       "instructions": "Caramelize onions in a pan over low heat",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "form_patties"
       ],
       "next": [
-        "step_3"
+        "cook_burgers"
       ],
       "on_enter": [
         {
-          "say": "Let's caramelize onions in a pan over."
+          "say": "Now, let's caramelize those onions. Pop them in a pan over low heat and let them get all sweet and golden. You'll know they're ready when they smell amazing and have a lovely brown color."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "cook_burgers",
       "descr": "Heat grill or pan to high, cook burgers 3-4 minutes per side",
       "instructions": "Heat grill or pan to high, cook burgers 3-4 minutes per side",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT8M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "caramelize_onions"
       ],
       "next": [
-        "step_4"
+        "melt_cheese"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the grill or pan."
+          "say": "Let's get the grill or pan nice and hot. Cook the burgers for three to four minutes on each side. You're looking for a beautiful sear and a juicy interior."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "melt_cheese",
       "descr": "Add cheese in last minute, cover to melt",
       "instructions": "Add cheese in last minute, cover to melt",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT1M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "cook_burgers"
       ],
       "next": [
-        "step_5"
+        "toast_buns"
       ],
       "on_enter": [
         {
-          "say": "Now add the cheese in last."
+          "say": "In the last minute of cooking, let's add a slice of cheddar cheese on each patty and cover them to melt. This will make them oozy and delicious."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "toast_buns",
       "descr": "Toast burger buns lightly",
       "instructions": "Toast burger buns lightly",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "melt_cheese"
       ],
       "next": [
-        "step_6"
+        "make_sauce"
       ],
       "on_enter": [
         {
-          "say": "Let's toast burger buns lightly."
+          "say": "Let's toast those burger buns lightly. You want them golden and crisp, but not too dark."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "make_sauce",
       "descr": "Mix mayo, ketchup, and mustard for special sauce",
       "instructions": "Mix mayo, ketchup, and mustard for special sauce",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "toast_buns"
       ],
       "next": [
-        "step_7"
+        "assemble_burgers"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Time to whip up our special sauce. Mix together some mayonnaise, ketchup, and mustard until it's nice and smooth. This will add a lovely tang to our burgers."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "assemble_burgers",
       "descr": "Assemble burgers with all toppings and serve",
       "instructions": "Assemble burgers with all toppings and serve",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "make_sauce"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's assemble burgers with all toppings and."
+          "say": "Brilliant! Let's assemble our burgers with all the toppings you love and serve them up. Don't forget to let the burgers rest for a couple of minutes before diving in. Enjoy!"
         }
       ]
     }

@@ -61,131 +61,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 180°C (350°F), line a baking tin",
-      "instructions": "Preheat oven to 180°C (350°F), line a baking tin",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 180\u00b0C (350\u00b0F), line a baking tin",
+      "instructions": "Preheat oven to 180\u00b0C (350\u00b0F), line a baking tin",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "melt_chocolate_butter"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 180°c."
+          "say": "Right, let's preheat the oven to one hundred eighty degrees celsius, that's about three hundred fifty degrees fahrenheit, and line a baking tin with parchment paper. This will help those lovely brownies come out easily."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "melt_chocolate_butter",
       "descr": "Melt chocolate and butter together",
       "instructions": "Melt chocolate and butter together",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "whisk_in_sugar"
       ],
       "on_enter": [
         {
-          "say": "Let's melt chocolate and butter together."
+          "say": "Now, let's melt the chocolate and butter together. You want it smooth and glossy. Keep stirring so it doesn't catch!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "whisk_in_sugar",
       "descr": "Whisk in sugar until combined",
       "instructions": "Whisk in sugar until combined",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "melt_chocolate_butter"
       ],
       "next": [
-        "step_4"
+        "beat_in_eggs"
       ],
       "on_enter": [
         {
-          "say": "Let's whisk everything together."
+          "say": "Brilliant! Now let's whisk in the sugar until it's all combined. It should look thick and glossy."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "beat_in_eggs",
       "descr": "Beat in eggs one at a time",
       "instructions": "Beat in eggs one at a time",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "whisk_in_sugar"
       ],
       "next": [
-        "step_5"
+        "fold_in_dry_ingredients"
       ],
       "on_enter": [
         {
-          "say": "Let's beat in eggs one at a."
+          "say": "Let's beat in the eggs, one at a time. This will help create that lovely fudgy texture we're after."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "fold_in_dry_ingredients",
       "descr": "Fold in flour, cocoa, and salt",
       "instructions": "Fold in flour, cocoa, and salt",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "beat_in_eggs"
       ],
       "next": [
-        "step_6"
+        "bake_brownies"
       ],
       "on_enter": [
         {
-          "say": "Let's fold in flour, cocoa, and salt."
+          "say": "Now gently fold in the flour, cocoa powder, and a pinch of salt. Be careful not to overmix, we want to keep it nice and light."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "bake_brownies",
       "descr": "Pour into tin and bake for 25-30 minutes",
       "instructions": "Pour into tin and bake for 25-30 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT25M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "fold_in_dry_ingredients"
       ],
       "next": [
-        "step_7"
+        "cool_and_cut"
       ],
       "on_enter": [
         {
-          "say": "Let's pour into tin and bake for."
+          "say": "Let's pour the mixture into the prepared tin and pop it into the oven. We'll bake it for twenty-five to thirty minutes. You want the top to be crackly and the inside still a bit gooey."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "cool_and_cut",
       "descr": "Cool completely before cutting into squares",
       "instructions": "Cool completely before cutting into squares",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "bake_brownies"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's cool completely before cutting into squares."
+          "say": "Fantastic! Let the brownies cool completely in the tin before cutting them into squares. This will give you those perfect, clean edges."
         }
       ]
     }

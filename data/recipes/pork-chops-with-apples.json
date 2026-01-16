@@ -60,131 +60,134 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "season_pork_chops",
       "descr": "Season pork chops generously with salt and pepper",
       "instructions": "Season pork chops generously with salt and pepper",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "pan_fry_chops"
       ],
       "on_enter": [
         {
-          "say": "Let's season the pork chops generously."
+          "say": "Right, let's season those lovely pork chops generously with salt and pepper. Make sure they're well coated for maximum flavour!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "pan_fry_chops",
       "descr": "Pan-fry chops 4-5 minutes per side, set aside",
       "instructions": "Pan-fry chops 4-5 minutes per side, set aside",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT10M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "season_pork_chops"
       ],
       "next": [
-        "step_3"
+        "add_butter_apples"
       ],
       "on_enter": [
         {
-          "say": "Let's pan-fry chops 4-5 minutes per side,."
+          "say": "Now, let's get those chops into a hot pan. We're going to fry them for four to five minutes on each side until they're beautifully golden. You'll hear them sizzle away!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "add_butter_apples",
       "descr": "In same pan, add butter and apple slices",
       "instructions": "In same pan, add butter and apple slices",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "pan_fry_chops"
       ],
       "next": [
-        "step_4"
+        "caramelize_apples"
       ],
       "on_enter": [
         {
-          "say": "Let's add butter and apple."
+          "say": "Brilliant! Now, in the same pan, let's add the butter and those lovely apple slices. They'll start to soften and smell amazing."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "caramelize_apples",
       "descr": "Cook apples until caramelized",
       "instructions": "Cook apples until caramelized",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "add_butter_apples"
       ],
       "next": [
-        "step_5"
+        "add_sage_cider_honey"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the apples until caramelized."
+          "say": "Let's cook those apples until they're beautifully caramelized. They'll turn a lovely golden brown and smell sweet and delicious."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_sage_cider_honey",
       "descr": "Add sage, cider, and honey, simmer",
       "instructions": "Add sage, cider, and honey, simmer",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "caramelize_apples"
       ],
       "next": [
-        "step_6"
+        "coat_chops_sauce"
       ],
       "on_enter": [
         {
-          "say": "Now add the sage, cider, and."
+          "say": "Now, let's add the fresh sage leaves, apple cider, and a tablespoon of honey. Give it a good stir and let it simmer gently. The aroma will be fantastic!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "coat_chops_sauce",
       "descr": "Return chops to pan, coat with sauce",
       "instructions": "Return chops to pan, coat with sauce",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "add_sage_cider_honey"
       ],
       "next": [
-        "step_7"
+        "serve_with_potatoes"
       ],
       "on_enter": [
         {
-          "say": "Let's return chops to pan, coat with."
+          "say": "Right, let's return those chops to the pan and coat them with that gorgeous sauce. They'll soak up all those lovely flavours."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_with_potatoes",
       "descr": "Serve with mashed potatoes",
       "instructions": "Serve with mashed potatoes",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "coat_chops_sauce"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to plate up! Serve those beautiful pork chops with some creamy mashed potatoes. Enjoy your meal!"
         }
       ]
     }

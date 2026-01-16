@@ -67,131 +67,134 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_marinade",
       "descr": "Mix olive oil, cumin, paprika, lemon juice",
       "instructions": "Mix olive oil, cumin, paprika, lemon juice",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "marinate_beef"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Right, let's get started by mixing the olive oil, cumin, paprika, and a good squeeze of lemon juice. This is going to be the flavor base for our beef."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "marinate_beef",
       "descr": "Marinate beef for at least 2 hours",
       "instructions": "Marinate beef for at least 2 hours",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT2H",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "mix_marinade"
       ],
       "next": [
-        "step_3"
+        "thread_skewers"
       ],
       "on_enter": [
         {
-          "say": "Let's marinate beef for at least 2."
+          "say": "Now, let's marinate the beef for at least two hours. This will really let those flavors soak in beautifully."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "thread_skewers",
       "descr": "Thread beef, peppers, and onion onto skewers",
       "instructions": "Thread beef, peppers, and onion onto skewers",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "marinate_beef"
       ],
       "next": [
-        "step_4"
+        "preheat_grill"
       ],
       "on_enter": [
         {
-          "say": "Let's thread beef, peppers, and onion onto."
+          "say": "Let's get those skewers ready. Thread the marinated beef, peppers, and onion onto the skewers. Make sure to alternate them for a lovely mix."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "preheat_grill",
       "descr": "Preheat grill to high",
       "instructions": "Preheat grill to high",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "thread_skewers"
       ],
       "next": [
-        "step_5"
+        "grill_kebabs"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the grill to high."
+          "say": "Let's preheat the grill to high. We want it nice and hot to get a good sear on those kebabs."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "grill_kebabs",
       "descr": "Grill kebabs 10-12 minutes, turning often",
       "instructions": "Grill kebabs 10-12 minutes, turning often",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT12M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "preheat_grill"
       ],
       "next": [
-        "step_6"
+        "rest_kebabs"
       ],
       "on_enter": [
         {
-          "say": "Time to grill the kebabs 10-12 minutes,."
+          "say": "Time to grill the kebabs. Let's cook them for ten to twelve minutes, turning often to get that lovely char all around."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "rest_kebabs",
       "descr": "Let rest 5 minutes",
       "instructions": "Let rest 5 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "grill_kebabs"
       ],
       "next": [
-        "step_7"
+        "serve_kebabs"
       ],
       "on_enter": [
         {
-          "say": "Let's let rest 5 minutes."
+          "say": "Brilliant! Let the kebabs rest for about five minutes. This is really important to let all those lovely juices redistribute."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_kebabs",
       "descr": "Serve with flatbread and tzatziki",
       "instructions": "Serve with flatbread and tzatziki",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "rest_kebabs"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up! Enjoy these delicious kebabs with some flatbread and a dollop of tzatziki. Absolutely fantastic!"
         }
       ]
     }

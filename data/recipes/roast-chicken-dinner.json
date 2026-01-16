@@ -60,131 +60,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Preheat oven to 200°C (400°F)",
-      "instructions": "Preheat oven to 200°C (400°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 200\u00b0C (400\u00b0F)",
+      "instructions": "Preheat oven to 200\u00b0C (400\u00b0F)",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "stuff_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 200°c."
+          "say": "Right, let's preheat the oven to two hundred degrees celsius, which is about four hundred degrees fahrenheit. This will get us started on our lovely roast."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "stuff_chicken",
       "descr": "Stuff chicken with lemon, garlic, and herbs",
       "instructions": "Stuff chicken with lemon, garlic, and herbs",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "preheat_oven"
       ],
       "next": [
-        "step_3"
+        "season_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's stuff chicken with lemon, garlic, and."
+          "say": "Now, let's stuff our chicken with those beautiful lemons, garlic, and fresh herbs. This will infuse the meat with incredible flavours."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "season_chicken",
       "descr": "Rub with butter, season generously",
       "instructions": "Rub with butter, season generously",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "stuff_chicken"
       ],
       "next": [
-        "step_4"
+        "roast_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's rub with butter, season generously."
+          "say": "Let's give the chicken a good rub with butter and season it generously. This will help create that lovely crispy skin we all love."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "roast_chicken",
       "descr": "Roast for 1 hour 30 minutes, basting occasionally",
       "instructions": "Roast for 1 hour 30 minutes, basting occasionally",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT90M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "season_chicken"
       ],
       "next": [
-        "step_5"
+        "add_vegetables"
       ],
       "on_enter": [
         {
-          "say": "Time to roast the for 1 hour."
+          "say": "Time to pop the chicken into the oven. We'll roast it for one hour and thirty minutes, and don't forget to baste occasionally to keep it juicy."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_vegetables",
       "descr": "Add vegetables to roasting pan after 30 minutes",
       "instructions": "Add vegetables to roasting pan after 30 minutes",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "roast_chicken"
       ],
       "next": [
-        "step_6"
+        "rest_chicken"
       ],
       "on_enter": [
         {
-          "say": "Now add the vegetables to roasting."
+          "say": "After thirty minutes, let's add those lovely root vegetables to the roasting pan. They'll soak up all the delicious juices."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "rest_chicken",
       "descr": "Rest chicken 15 minutes before carving",
       "instructions": "Rest chicken 15 minutes before carving",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT15M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "add_vegetables"
       ],
       "next": [
-        "step_7"
+        "make_gravy"
       ],
       "on_enter": [
         {
-          "say": "Let's rest chicken 15 minutes before carving."
+          "say": "Brilliant! Let's let the chicken rest for fifteen minutes before carving. This is crucial to keep all those lovely juices inside."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "make_gravy",
       "descr": "Make gravy from pan juices",
       "instructions": "Make gravy from pan juices",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "rest_chicken"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's make gravy from pan."
+          "say": "Finally, let's make a gorgeous gravy from the pan juices. This will be the perfect finishing touch to our roast dinner."
         }
       ]
     }
@@ -196,6 +198,6 @@
     }
   },
   "notes": {
-    "text": "Let chicken come to room temperature first\nUse a meat thermometer - should reach 75°C\nSave the carcass for stock"
+    "text": "Let chicken come to room temperature first\nUse a meat thermometer - should reach seventy-five degrees celsius\nSave the carcass for stock"
   }
 }

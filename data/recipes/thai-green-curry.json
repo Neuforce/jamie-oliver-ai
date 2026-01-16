@@ -70,131 +70,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "heat_oil_fry_paste",
       "descr": "Heat oil in a wok, fry curry paste for 1 minute until fragrant",
       "instructions": "Heat oil in a wok, fry curry paste for 1 minute until fragrant",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT1M",
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "cook_chicken"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the oil in wok,."
+          "say": "Right, let's get started by heating some oil in a wok. Add the curry paste and fry it for about one minute until it's beautifully fragrant. You'll know it's ready when the aroma fills the kitchen!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "cook_chicken",
       "descr": "Add chicken and cook until sealed",
       "instructions": "Add chicken and cook until sealed",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "heat_oil_fry_paste"
       ],
       "next": [
-        "step_3"
+        "add_coconut_milk"
       ],
       "on_enter": [
         {
-          "say": "Now add the chicken and cook."
+          "say": "Now, let's add the sliced chicken. Cook it until it's sealed and has that lovely white colour on the outside."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "add_coconut_milk",
       "descr": "Pour in coconut milk and bring to simmer",
       "instructions": "Pour in coconut milk and bring to simmer",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "cook_chicken"
       ],
       "next": [
-        "step_4"
+        "cook_vegetables"
       ],
       "on_enter": [
         {
-          "say": "Let's pour in coconut milk and bring."
+          "say": "Let's pour in the coconut milk and bring it to a gentle simmer. You'll see little bubbles forming on the surface."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "cook_vegetables",
       "descr": "Add vegetables and cook for 8-10 minutes",
       "instructions": "Add vegetables and cook for 8-10 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT8M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "add_coconut_milk"
       ],
       "next": [
-        "step_5"
+        "add_fish_sauce_sugar"
       ],
       "on_enter": [
         {
-          "say": "Now add the vegetables and cook."
+          "say": "Now, let's add the sliced bell pepper and green beans. Cook them for eight to ten minutes until they're tender but still have a bit of crunch."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "add_fish_sauce_sugar",
       "descr": "Stir in fish sauce and palm sugar",
       "instructions": "Stir in fish sauce and palm sugar",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "cook_vegetables"
       ],
       "next": [
-        "step_6"
+        "add_thai_basil"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Let's stir in the fish sauce and palm sugar. This will add a lovely balance of salty and sweet to our curry."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "add_thai_basil",
       "descr": "Add Thai basil just before serving",
       "instructions": "Add Thai basil just before serving",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "add_fish_sauce_sugar"
       ],
       "next": [
-        "step_7"
+        "serve_curry"
       ],
       "on_enter": [
         {
-          "say": "Now add the thai basil just."
+          "say": "Now, just before serving, let's add those fresh Thai basil leaves. They'll add a wonderful fragrance and freshness to the dish."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_curry",
       "descr": "Serve over jasmine rice",
       "instructions": "Serve over jasmine rice",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "add_thai_basil"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve our delicious Thai green curry over some fluffy jasmine rice. Enjoy every bite!"
         }
       ]
     }

@@ -57,131 +57,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "boil_pasta",
       "descr": "Bring a large pot of salted water to boil and cook spaghetti according to package directions",
       "instructions": "Bring a large pot of salted water to boil and cook spaghetti according to package directions",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "fry_pancetta"
       ],
       "on_enter": [
         {
-          "say": "Let's bring a large pot of salted."
+          "say": "Right, let's bring a large pot of salted water to a boil. Once it's bubbling away, pop in the spaghetti and cook it according to the package directions. Give it a little stir now and then to keep it from sticking."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "fry_pancetta",
       "descr": "While pasta cooks, fry pancetta in a large pan until crispy",
       "instructions": "While pasta cooks, fry pancetta in a large pan until crispy",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "boil_pasta"
       ],
       "next": [
-        "step_3"
+        "whisk_egg_mixture"
       ],
       "on_enter": [
         {
-          "say": "Let's cooks, fry pancetta in."
+          "say": "Now, while the pasta is cooking, let's get that pancetta sizzling in a large pan. We want it nice and crispy, so listen for that lovely crackling sound."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "whisk_egg_mixture",
       "descr": "In a bowl, whisk together egg yolks, grated Parmesan, and lots of black pepper",
       "instructions": "In a bowl, whisk together egg yolks, grated Parmesan, and lots of black pepper",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "fry_pancetta"
       ],
       "next": [
-        "step_4"
+        "reserve_pasta_water"
       ],
       "on_enter": [
         {
-          "say": "Let's in a bowl, whisk together egg."
+          "say": "Brilliant! Let's whisk together the egg yolks, grated Parmesan, and a good amount of black pepper in a bowl. This is going to be the heart of our creamy sauce."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "reserve_pasta_water",
       "descr": "Reserve 1 cup of pasta water, then drain pasta",
       "instructions": "Reserve 1 cup of pasta water, then drain pasta",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "whisk_egg_mixture"
       ],
       "next": [
-        "step_5"
+        "combine_pasta_pancetta"
       ],
       "on_enter": [
         {
-          "say": "Let's reserve the 1 cup of for later."
+          "say": "Right, before we drain the pasta, let's reserve one cup of that starchy pasta water. It's going to help us make a silky sauce. Then go ahead and drain the pasta."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "combine_pasta_pancetta",
       "descr": "Remove pan from heat, add hot pasta to pancetta",
       "instructions": "Remove pan from heat, add hot pasta to pancetta",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "reserve_pasta_water"
       ],
       "next": [
-        "step_6"
+        "stir_egg_mixture"
       ],
       "on_enter": [
         {
-          "say": "Let's remove the pan from heat,."
+          "say": "Let's take the pan off the heat and add our hot pasta to the crispy pancetta. Give it a good toss to combine all those lovely flavours."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "stir_egg_mixture",
       "descr": "Quickly stir in egg mixture, adding pasta water gradually until creamy",
       "instructions": "Quickly stir in egg mixture, adding pasta water gradually until creamy",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "combine_pasta_pancetta"
       ],
       "next": [
-        "step_7"
+        "serve_dish"
       ],
       "on_enter": [
         {
-          "say": "Let's mixture, adding pasta water."
+          "say": "Now, let's quickly stir in our egg mixture. Add the reserved pasta water a little at a time until you've got a creamy, luscious sauce. Keep it moving so the eggs don't scramble."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_dish",
       "descr": "Serve immediately with extra Parmesan and black pepper",
       "instructions": "Serve immediately with extra Parmesan and black pepper",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "stir_egg_mixture"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Fantastic! It's time to serve up your classic spaghetti carbonara. Add a bit more Parmesan and a sprinkle of black pepper on top. Enjoy your meal!"
         }
       ]
     }

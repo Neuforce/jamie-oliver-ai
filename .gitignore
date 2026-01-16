@@ -12,4 +12,4 @@ build/
 .vercel
 .env*.local
 logs/
-apps/frontend/package-lock.json
+apps/frontend/package-lock.jsonapps/backend-search/data/media/

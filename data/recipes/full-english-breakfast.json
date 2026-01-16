@@ -69,131 +69,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "grill_sausages_bacon",
       "descr": "Grill sausages and bacon until cooked",
       "instructions": "Grill sausages and bacon until cooked",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "fry_mushrooms_tomatoes"
       ],
       "on_enter": [
         {
-          "say": "Time to grill the sausages and bacon."
+          "say": "Right, let's get those sausages and bacon grilling. We want them to be sizzling and nicely browned."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "fry_mushrooms_tomatoes",
       "descr": "Fry mushrooms and tomatoes",
       "instructions": "Fry mushrooms and tomatoes",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "grill_sausages_bacon"
       ],
       "next": [
-        "step_3"
+        "heat_baked_beans"
       ],
       "on_enter": [
         {
-          "say": "Time to fry the mushrooms and tomatoes."
+          "say": "Now, let's fry those mushrooms and tomatoes. They'll soften up beautifully and add a lovely flavour."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "heat_baked_beans",
       "descr": "Heat baked beans in a pan",
       "instructions": "Heat baked beans in a pan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "fry_mushrooms_tomatoes"
       ],
       "next": [
-        "step_4"
+        "cook_eggs"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the baked beans in."
+          "say": "Let's warm up those baked beans until they're nice and hot. They'll be the perfect accompaniment."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "cook_eggs",
       "descr": "Fry or scramble eggs to preference",
       "instructions": "Fry or scramble eggs to preference",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "heat_baked_beans"
       ],
       "next": [
-        "step_5"
+        "toast_bread"
       ],
       "on_enter": [
         {
-          "say": "Time to fry the or scramble eggs."
+          "say": "Time to cook the eggs just the way you like them. Whether it's a fry-up or a scramble, make them your own."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "toast_bread",
       "descr": "Toast bread",
       "instructions": "Toast bread",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "cook_eggs"
       ],
       "next": [
-        "step_6"
+        "arrange_on_plates"
       ],
       "on_enter": [
         {
-          "say": "Let's toast bread."
+          "say": "Let's get that bread toasting until it's golden and crispy. Perfect for mopping up all those lovely flavours."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "arrange_on_plates",
       "descr": "Arrange everything on plates",
       "instructions": "Arrange everything on plates",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "toast_bread"
       ],
       "next": [
-        "step_7"
+        "serve_with_tea_coffee"
       ],
       "on_enter": [
         {
-          "say": "Time to arrange and enjoy!"
+          "say": "Now, let's arrange everything beautifully on the plates. It's going to look fantastic!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_with_tea_coffee",
       "descr": "Serve with tea or coffee",
       "instructions": "Serve with tea or coffee",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "arrange_on_plates"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Finally, serve it up with a nice cup of tea or coffee. Enjoy your brilliant full English breakfast!"
         }
       ]
     }

@@ -62,131 +62,132 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "cook_onion",
       "descr": "Cook onion in a large pan until soft",
       "instructions": "Cook onion in a large pan until soft",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "brown_beef"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the onion in large."
+          "say": "Let's start by cooking the onion in a large pan until it's nice and soft. You'll know it's ready when it's translucent and smells sweet."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "brown_beef",
       "descr": "Add ground beef and cook until browned",
       "instructions": "Add ground beef and cook until browned",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "cook_onion"
       ],
       "next": [
-        "step_3"
+        "add_spices"
       ],
       "on_enter": [
         {
-          "say": "Now add the ground beef and."
+          "say": "Now, let's add the ground beef to the pan. Cook it until it's beautifully browned and you can hear that lovely sizzle."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "add_spices",
       "descr": "Stir in cumin, paprika, chili powder, salt and pepper",
       "instructions": "Stir in cumin, paprika, chili powder, salt and pepper",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "brown_beef"
       ],
       "next": [
-        "step_4"
+        "simmer_beef"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Let's stir in the cumin, paprika, chili powder, and a pinch of salt and pepper. This is where the magic happens, giving our beef that wonderful Mexican flavour."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "simmer_beef",
       "descr": "Add a splash of water and simmer for 5 minutes",
       "instructions": "Add a splash of water and simmer for 5 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT5M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "add_spices"
       ],
       "next": [
-        "step_5"
+        "warm_tortillas"
       ],
       "on_enter": [
         {
-          "say": "Now add the splash of water."
+          "say": "Add a splash of water to the pan, then let's simmer it for about five minutes. This will help all those lovely flavours meld together."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "warm_tortillas",
       "descr": "Warm tortillas in a dry pan",
       "instructions": "Warm tortillas in a dry pan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "simmer_beef"
       ],
       "next": [
-        "step_6"
+        "fill_tortillas"
       ],
       "on_enter": [
         {
-          "say": "Let's warm the tortillas in dry."
+          "say": "Time to warm up those tortillas in a dry pan. Just a few seconds on each side until they're nice and pliable."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "fill_tortillas",
       "descr": "Fill tortillas with beef and your favorite toppings",
       "instructions": "Fill tortillas with beef and your favorite toppings",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "warm_tortillas"
       ],
       "next": [
-        "step_7"
+        "serve_tacos"
       ],
       "on_enter": [
         {
-          "say": "Let's fill tortillas with beef and your."
+          "say": "Let's fill those warm tortillas with our delicious beef and your favourite toppings. Get creative and make them your own!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_tacos",
       "descr": "Serve with lime wedges",
       "instructions": "Serve with lime wedges",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "fill_tortillas"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Brilliant! Serve your tacos with some lime wedges on the side. Enjoy your meal!"
         }
       ]
     }
@@ -198,6 +199,6 @@
     }
   },
   "notes": {
-    "text": "Warm tortillas make all the difference\nSet up a taco bar for fun family dining\nTry adding pickled jalapeños for extra kick"
+    "text": "Warm tortillas make all the difference\nSet up a taco bar for fun family dining\nTry adding pickled jalape\u00f1os for extra kick"
   }
 }

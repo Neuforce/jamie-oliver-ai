@@ -71,131 +71,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "simmer_stock",
       "descr": "Bring beef stock to simmer, add soy sauce and miso",
       "instructions": "Bring beef stock to simmer, add soy sauce and miso",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "cook_noodles"
       ],
       "on_enter": [
         {
-          "say": "Let's bring beef stock to simmer, add."
+          "say": "Let's get started by bringing our beef stock to a gentle simmer. Add in the soy sauce and miso, and give it a good stir. You'll know it's ready when you can smell that lovely umami aroma."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "cook_noodles",
       "descr": "Cook noodles according to package",
       "instructions": "Cook noodles according to package",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "simmer_stock"
       ],
       "next": [
-        "step_3"
+        "sear_beef"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the noodles according to."
+          "say": "Time to cook the noodles. Follow the package instructions and make sure they're just right - not too soft, not too firm. Perfect!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "sear_beef",
       "descr": "Sear beef slices quickly in a hot pan",
       "instructions": "Sear beef slices quickly in a hot pan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "cook_noodles"
       ],
       "next": [
-        "step_4"
+        "divide_noodles"
       ],
       "on_enter": [
         {
-          "say": "Let's sear beef slices quickly in a."
+          "say": "Now, let's sear those beef slices in a hot pan. You want them to be beautifully browned on the outside while still tender inside. Listen for that sizzle!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "divide_noodles",
       "descr": "Divide noodles between bowls",
       "instructions": "Divide noodles between bowls",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "sear_beef"
       ],
       "next": [
-        "step_5"
+        "ladle_broth"
       ],
       "on_enter": [
         {
-          "say": "Let's divide noodles between bowls."
+          "say": "Let's divide those lovely noodles between your serving bowls. Make sure each bowl gets a fair share."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "ladle_broth",
       "descr": "Ladle hot broth over noodles",
       "instructions": "Ladle hot broth over noodles",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "divide_noodles"
       ],
       "next": [
-        "step_6"
+        "add_toppings"
       ],
       "on_enter": [
         {
-          "say": "Let's ladle hot broth over noodles."
+          "say": "Now, ladle that hot, flavorful broth over the noodles. This is where the magic happens!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "add_toppings",
       "descr": "Top with beef, halved eggs, spring onions, nori",
       "instructions": "Top with beef, halved eggs, spring onions, nori",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "ladle_broth"
       ],
       "next": [
-        "step_7"
+        "serve_dish"
       ],
       "on_enter": [
         {
-          "say": "Let's top with beef, halved eggs, spring."
+          "say": "Let's finish it off by topping with the seared beef, halved soft-boiled eggs, sliced spring onions, and a bit of nori. It's going to look and taste fantastic!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_dish",
       "descr": "Serve immediately while hot",
       "instructions": "Serve immediately while hot",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "add_toppings"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve and enjoy your delicious beef ramen while it's hot. Dig in and savour every bite!"
         }
       ]
     }

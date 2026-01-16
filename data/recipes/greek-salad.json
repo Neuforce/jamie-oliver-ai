@@ -68,112 +68,112 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "chop_vegetables",
       "descr": "Chop all vegetables into bite-sized pieces",
       "instructions": "Chop all vegetables into bite-sized pieces",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "combine_veggies"
       ],
       "on_enter": [
         {
-          "say": "Let's start by chop."
+          "say": "Right, let's get started by chopping all those lovely vegetables into bite-sized pieces. Take your time and enjoy the process!"
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "combine_veggies",
       "descr": "Combine tomatoes, cucumber, and red onion in a bowl",
       "instructions": "Combine tomatoes, cucumber, and red onion in a bowl",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "chop_vegetables"
       ],
       "next": [
-        "step_3"
+        "add_olives_feta"
       ],
       "on_enter": [
         {
-          "say": "Let's combine everything together."
+          "say": "Now, let's combine the chopped tomatoes, cucumber, and red onion in a nice big bowl. It's going to look so colourful!"
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "add_olives_feta",
       "descr": "Add olives and feta cheese",
       "instructions": "Add olives and feta cheese",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "combine_veggies"
       ],
       "next": [
-        "step_4"
+        "drizzle_dressing"
       ],
       "on_enter": [
         {
-          "say": "Now add the olives and feta."
+          "say": "Lovely! Now, let's add those beautiful Kalamata olives and the cubed feta cheese. It's going to be delicious!"
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "drizzle_dressing",
       "descr": "Drizzle with olive oil and red wine vinegar",
       "instructions": "Drizzle with olive oil and red wine vinegar",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "add_olives_feta"
       ],
       "next": [
-        "step_5"
+        "sprinkle_oregano"
       ],
       "on_enter": [
         {
-          "say": "Let's drizzle with olive oil and red."
+          "say": "Let's drizzle some good quality olive oil and a splash of red wine vinegar over the salad. This will bring all the flavours together beautifully!"
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "sprinkle_oregano",
       "descr": "Sprinkle with oregano, salt, and pepper",
       "instructions": "Sprinkle with oregano, salt, and pepper",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "drizzle_dressing"
       ],
       "next": [
-        "step_6"
+        "toss_and_serve"
       ],
       "on_enter": [
         {
-          "say": "Let's sprinkle with oregano, salt, and pepper."
+          "say": "Now, sprinkle a bit of dried oregano, and season with salt and pepper to taste. This is where the magic happens!"
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "toss_and_serve",
       "descr": "Toss gently and serve immediately",
       "instructions": "Toss gently and serve immediately",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_5"
+        "sprinkle_oregano"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's toss everything together."
+          "say": "Finally, give everything a gentle toss to mix all those lovely ingredients together. Serve it up straight away and enjoy your fresh Greek salad!"
         }
       ]
     }

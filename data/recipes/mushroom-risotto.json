@@ -69,131 +69,133 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
-      "descr": "Sauté mushrooms until golden, set aside",
-      "instructions": "Sauté mushrooms until golden, set aside",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's sauté mushrooms until golden, set aside."
-        }
-      ]
-    },
-    {
-      "id": "step_2",
-      "descr": "Soften onion in butter, add rice and toast for 2 minutes",
-      "instructions": "Soften onion in butter, add rice and toast for 2 minutes",
+      "id": "saute_mushrooms",
+      "descr": "Saut\u00e9 mushrooms until golden, set aside",
+      "instructions": "Saut\u00e9 mushrooms until golden, set aside",
       "type": "immediate",
       "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
+      "requires_confirm": true,
+      "depends_on": [],
       "next": [
-        "step_3"
+        "soften_onion"
       ],
       "on_enter": [
         {
-          "say": "Let's add rice and toast."
+          "say": "Right, let's start by saut\u00e9ing those lovely mushrooms until they're golden. You'll know they're ready when they smell earthy and look beautifully browned. Then, set them aside."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "soften_onion",
+      "descr": "Soften onion in butter, add rice and toast for 2 minutes",
+      "instructions": "Soften onion in butter, add rice and toast for 2 minutes",
+      "type": "timer",
+      "duration": "PT2M",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "saute_mushrooms"
+      ],
+      "next": [
+        "add_wine"
+      ],
+      "on_enter": [
+        {
+          "say": "Now, let's soften the onion in butter until it's nice and translucent. Then we'll add the rice and toast it for about two minutes. You'll hear a gentle sizzle and smell that nutty aroma."
+        }
+      ]
+    },
+    {
+      "id": "add_wine",
       "descr": "Add wine and stir until absorbed",
       "instructions": "Add wine and stir until absorbed",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "soften_onion"
       ],
       "next": [
-        "step_4"
+        "add_stock"
       ],
       "on_enter": [
         {
-          "say": "Now add the wine and stir."
+          "say": "Let's pour in the wine and give it a good stir until it's fully absorbed. You'll see the rice start to soak up all that lovely flavour."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "add_stock",
       "descr": "Add stock one ladle at a time, stirring constantly",
       "instructions": "Add stock one ladle at a time, stirring constantly",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "add_wine"
       ],
       "next": [
-        "step_5"
+        "cook_rice"
       ],
       "on_enter": [
         {
-          "say": "Now add the stock one ladle."
+          "say": "Now, let's add the hot chicken stock one ladle at a time. Keep stirring constantly. This is where the magic happens, as the rice slowly absorbs the stock and becomes creamy."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "cook_rice",
       "descr": "Continue until rice is creamy but al dente (20-25 mins)",
       "instructions": "Continue until rice is creamy but al dente (20-25 mins)",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT25M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "add_stock"
       ],
       "next": [
-        "step_6"
+        "stir_in_mushrooms"
       ],
       "on_enter": [
         {
-          "say": "Let's continue until rice is creamy but."
+          "say": "Let's keep going until the rice is creamy but still has a bit of bite to it. This should take about twenty to twenty-five minutes. Keep an eye on it and give it a stir every now and then."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "stir_in_mushrooms",
       "descr": "Stir in mushrooms, butter, and Parmesan",
       "instructions": "Stir in mushrooms, butter, and Parmesan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "cook_rice"
       ],
       "next": [
-        "step_7"
+        "garnish_and_serve"
       ],
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Brilliant! Now, let's stir in those saut\u00e9ed mushrooms, a bit more butter, and the grated Parmesan. This is where it all comes together into a luscious, creamy risotto."
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "garnish_and_serve",
       "descr": "Garnish with parsley and serve immediately",
       "instructions": "Garnish with parsley and serve immediately",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "stir_in_mushrooms"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to garnish and enjoy!"
+          "say": "Finally, let's garnish with some fresh parsley and serve it up immediately. Enjoy your beautiful mushroom risotto!"
         }
       ]
     }

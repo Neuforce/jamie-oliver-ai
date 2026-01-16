@@ -1,0 +1,530 @@
+{
+  "recipe": {
+    "id": "jamie-s-classic-family-lasagne",
+    "title": "Jamie\u2019s classic family lasagne",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT240M",
+    "description": "There's nothing better than homemade lasagna, and this basic lasagna recipe from Jamie Oliver is delicious comfort food. The whole family will love this one",
+    "tags": [
+      "method",
+      "minced-beef",
+      "family-food",
+      "main-ingredient",
+      "pasta-amp-risotto",
+      "sunday-lunch",
+      "dish-type",
+      "mince",
+      "occasion",
+      "lasagne",
+      "course",
+      "pork",
+      "italian",
+      "lunch-amp-dinner-recipes",
+      "mains",
+      "pasta",
+      "freezer-friendly-recipes",
+      "beef"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/jamie-s-classic-family-lasagne/",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5315a2d9b6975b3d0b64baf5950efdf5b394a176-973x1300.jpg/5315a2d9b6975b3d0b64baf5950efdf5b394a176-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5315a2d9b6975b3d0b64baf5950efdf5b394a176-973x1300.jpg/5315a2d9b6975b3d0b64baf5950efdf5b394a176-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5315a2d9b6975b3d0b64baf5950efdf5b394a176-973x1300.jpg/5315a2d9b6975b3d0b64baf5950efdf5b394a176-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5315a2d9b6975b3d0b64baf5950efdf5b394a176-973x1300.jpg/5315a2d9b6975b3d0b64baf5950efdf5b394a176-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "higher-welfare-smoked-streaky-",
+      "name": "higher-welfare smoked streaky bacon",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "quality-minced-beef",
+      "name": "quality minced beef",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "higher-welfare-minced-pork",
+      "name": "higher-welfare minced pork",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 4.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-tomato-pur-",
+      "name": "heaped tablespoons tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-plum-tomatoes",
+      "name": "400g tins plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-lasagne-sheets",
+      "name": "dried lasagne sheets",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "white-sauce",
+      "name": "WHITE SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mature-cheddar-cheese",
+      "name": "mature Cheddar cheese",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "medium-leeks",
+      "name": "medium leeks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 1.0,
+      "unit": "litre",
+      "note": null
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "grater",
+    "oven",
+    "pan",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "chop_rosemary",
+      "descr": "Strip and finely chop the rosemary leaves and finely...",
+      "instructions": "Strip and finely chop the rosemary leaves and finely chop the bacon.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Strip and finely chop the rosemary leaves and finely chop the bacon."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Heat 1 tablespoon of oil in a large casserole pan on a...",
+      "instructions": "Heat 1 tablespoon of oil in a large casserole pan on a high heat. Once hot, add the rosemary and bacon and fry for 2 minutes, or until the bacon starts to crisp up, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "chop_rosemary"
+      ],
+      "next": [
+        "heat_medium"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 1 tablespoon of oil in a large casserole pan on a high heat. Once hot, add the rosemary and bacon and fry for 2 minutes, or until the bacon starts to crisp up, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_medium",
+      "descr": "Add all the minced meat, using a wooden spoon to break...",
+      "instructions": "Add all the minced meat, using a wooden spoon to break it up as you go. Reduce the heat to medium and cook for at least 10 minutes, or until all the liquid has evaporated, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "process_could"
+      ],
+      "on_enter": [
+        {
+          "say": "Add all the minced meat, using a wooden spoon to break it up as you go. Reduce the heat to medium and cook for at least 10 minutes, or until all the liquid has evaporated, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "process_could",
+      "descr": "Place the coarse grater attachment in your food...",
+      "instructions": "Place the coarse grater attachment in your food processor (or you could use a box grater instead) and grate the Cheddar, then tip into a bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_medium"
+      ],
+      "next": [
+        "mince_peel"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the coarse grater attachment in your food processor (or you could use a box grater instead) and grate the Cheddar, then tip into a bowl."
+        }
+      ]
+    },
+    {
+      "id": "mince_peel",
+      "descr": "Replace the grater with the regular blade",
+      "instructions": "Replace the grater with the regular blade. Trim and halve the carrots, then add to the processor and blitz to roughly the same size as the mince. Peel and halve the onions, add them to the carrot and blitz again.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "process_could"
+      ],
+      "next": [
+        "mince_while"
+      ],
+      "on_enter": [
+        {
+          "say": "Replace the grater with the regular blade. Trim and halve the carrots, then add to the processor and blitz to roughly the same size as the mince. Peel and halve the onions, add them to the carrot and blitz again."
+        }
+      ]
+    },
+    {
+      "id": "mince_while",
+      "descr": "Tip into the pan with the mince while you get on with...",
+      "instructions": "Tip into the pan with the mince while you get on with blitzing and adding the celery. Cook for 15 to 20 minutes, or until the vegetables start to soften, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "mince_peel"
+      ],
+      "next": [
+        "add_tomato"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip into the pan with the mince while you get on with blitzing and adding the celery. Cook for 15 to 20 minutes, or until the vegetables start to soften, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "add_tomato",
+      "descr": "Next, add the tomato pur\u00e9e and plum tomatoes, breaking...",
+      "instructions": "Next, add the tomato pur\u00e9e and plum tomatoes, breaking them up with a spoon. Fill each of the tins with water and tip into the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mince_while"
+      ],
+      "next": [
+        "heat_leave"
+      ],
+      "on_enter": [
+        {
+          "say": "Next, add the tomato pur\u00e9e and plum tomatoes, breaking them up with a spoon. Fill each of the tins with water and tip into the pan."
+        }
+      ]
+    },
+    {
+      "id": "heat_leave",
+      "descr": "Give everything a good stir and reduce the heat to low",
+      "instructions": "Give everything a good stir and reduce the heat to low. Leave to simmer around 2 hours, or until thickened and reduced, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT7200S",
+      "depends_on": [
+        "add_tomato"
+      ],
+      "next": [
+        "slice_leeks"
+      ],
+      "on_enter": [
+        {
+          "say": "Give everything a good stir and reduce the heat to low. Leave to simmer around 2 hours, or until thickened and reduced, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "slice_leeks",
+      "descr": "While that ticks away, make your white sauce",
+      "instructions": "While that ticks away, make your white sauce. Trim, wash and finely slice the leeks, then add to a pan along with 2 tablespoons of oil and the bay leaves. Stir well and season with a tiny pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_leave"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "While that ticks away, make your white sauce. Trim, wash and finely slice the leeks, then add to a pan along with 2 tablespoons of oil and the bay leaves. Stir well and season with a tiny pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Reduce the heat to low and cook for 30 minutes, or until...",
+      "instructions": "Reduce the heat to low and cook for 30 minutes, or until sweet and softened, adding splashes of water, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "slice_leeks"
+      ],
+      "next": [
+        "heat_medium"
+      ],
+      "on_enter": [
+        {
+          "say": "Reduce the heat to low and cook for 30 minutes, or until sweet and softened, adding splashes of water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "heat_medium",
+      "descr": "Add the flour and stir well to coat, then gradually add...",
+      "instructions": "Add the flour and stir well to coat, then gradually add the milk, stirring continuously. Turn the heat up to medium, bring to the boil, then reduce to low and cook for 5 to 10 minutes, or until thickened, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_cook"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the flour and stir well to coat, then gradually add the milk, stirring continuously. Turn the heat up to medium, bring to the boil, then reduce to low and cook for 5 to 10 minutes, or until thickened, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Carefully transfer the sauce to the food processor and...",
+      "instructions": "Carefully transfer the sauce to the food processor and blitz until smooth and silky. Add half the grated cheese and finely grate over half the nutmeg and mix well. Season to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_medium"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully transfer the sauce to the food processor and blitz until smooth and silky. Add half the grated cheese and finely grate over half the nutmeg and mix well. Season to taste."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Once the rag\u00f9 is ready, preheat the oven to...",
+      "instructions": "Once the rag\u00f9 is ready, preheat the oven to 190\u00baC/375\u00baF/gas 5.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "heat_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the rag\u00f9 is ready, preheat the oven to 190\u00baC/375\u00baF/gas 5."
+        }
+      ]
+    },
+    {
+      "id": "heat_them",
+      "descr": "Season the rag\u00f9 to taste, then transfer half into...",
+      "instructions": "Season the rag\u00f9 to taste, then transfer half into freezer bags, portioning up as appropriate for your family. Allow to cool to room temperature, then pop in the freezer for another day. It\u2019s a good idea to freeze them flat so that you can reheat them quickly and easily. It\u2019s also a good idea to label and date them to avoid a game of freezer roulette in a few weeks' time!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "step_step_15"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the rag\u00f9 to taste, then transfer half into freezer bags, portioning up as appropriate for your family. Allow to cool to room temperature, then pop in the freezer for another day. It\u2019s a good idea to freeze them flat so that you can reheat them quickly and easily. It\u2019s also a good idea to label and date them to avoid a game of freezer roulette in a few weeks' time!"
+        }
+      ]
+    },
+    {
+      "id": "step_step_15",
+      "descr": "To build your lasagne, spoon a quarter of the rag\u00f9 into...",
+      "instructions": "To build your lasagne, spoon a quarter of the rag\u00f9 into a large deep ovenproof dish (roughly 25cm by 30cm) and spread it out evenly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_them"
+      ],
+      "next": [
+        "step_step_16"
+      ],
+      "on_enter": [
+        {
+          "say": "To build your lasagne, spoon a quarter of the rag\u00f9 into a large deep ovenproof dish (roughly 25cm by 30cm) and spread it out evenly."
+        }
+      ]
+    },
+    {
+      "id": "step_step_16",
+      "descr": "Spoon over a quarter of the white sauce, then snap over...",
+      "instructions": "Spoon over a quarter of the white sauce, then snap over some lasagne sheets, making sure they completely cover the sauce in one layer. Repeat this 3 times, finishing with a layer of white sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_15"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon over a quarter of the white sauce, then snap over some lasagne sheets, making sure they completely cover the sauce in one layer. Repeat this 3 times, finishing with a layer of white sauce."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Sprinkle over the remaining cheese and bake the lasagne...",
+      "instructions": "Sprinkle over the remaining cheese and bake the lasagne in the oven for 45 minutes or until golden and bubbling.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "step_step_16"
+      ],
+      "next": [
+        "serve_fresh"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle over the remaining cheese and bake the lasagne in the oven for 45 minutes or until golden and bubbling."
+        }
+      ]
+    },
+    {
+      "id": "serve_fresh",
+      "descr": "Remove the lasagne from the oven and leave to sit for 5...",
+      "instructions": "Remove the lasagne from the oven and leave to sit for 5 to 10 minutes before serving. Delicious served with a fresh green salad.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT600S",
+      "depends_on": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the lasagne from the oven and leave to sit for 5 to 10 minutes before serving. Delicious served with a fresh green salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "420 calories",
+    "carbohydrates": "35.6 g",
+    "fat": "18.8 g",
+    "fiber": "2.6 g",
+    "protein": "28.4 g"
+  }
+}

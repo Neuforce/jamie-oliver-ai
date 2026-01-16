@@ -2,7 +2,7 @@
   "recipe": {
     "id": "classic-lasagna",
     "title": "Classic Lasagna",
-    "description": "Layered Italian pasta with rich meat sauce and creamy béchamel",
+    "description": "Layered Italian pasta with rich meat sauce and creamy b\u00e9chamel",
     "estimated_total": "PT2H",
     "locale": "en",
     "source": "pdf",
@@ -69,131 +69,134 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "make_bolognese",
       "descr": "Make bolognese: brown beef, add tomatoes, simmer 30 minutes",
       "instructions": "Make bolognese: brown beef, add tomatoes, simmer 30 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT30M",
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "make_bechamel"
       ],
       "on_enter": [
         {
-          "say": "Let's make bolognese: brown beef,."
+          "say": "Right, let's get started on the bolognese. Brown that lovely beef until it's nice and golden, then add your tinned tomatoes. We'll let it simmer for a good thirty minutes to get all those flavours mingling beautifully."
         }
       ]
     },
     {
-      "id": "step_2",
-      "descr": "Make béchamel: melt butter, add flour, gradually whisk in milk",
-      "instructions": "Make béchamel: melt butter, add flour, gradually whisk in milk",
+      "id": "make_bechamel",
+      "descr": "Make b\u00e9chamel: melt butter, add flour, gradually whisk in milk",
+      "instructions": "Make b\u00e9chamel: melt butter, add flour, gradually whisk in milk",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "make_bolognese"
       ],
       "next": [
-        "step_3"
+        "preheat_oven"
       ],
       "on_enter": [
         {
-          "say": "Let's make béchamel: melt butter,."
+          "say": "Now, let's make that creamy b\u00e9chamel. Melt the butter gently, stir in the flour, and then gradually whisk in the milk until it's smooth and velvety. You'll know it's ready when it coats the back of a spoon."
         }
       ]
     },
     {
-      "id": "step_3",
-      "descr": "Preheat oven to 180°C (350°F)",
-      "instructions": "Preheat oven to 180°C (350°F)",
+      "id": "preheat_oven",
+      "descr": "Preheat oven to 180\u00b0C (350\u00b0F)",
+      "instructions": "Preheat oven to 180\u00b0C (350\u00b0F)",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "make_bechamel"
       ],
       "next": [
-        "step_4"
+        "layer_lasagna"
       ],
       "on_enter": [
         {
-          "say": "Let's preheat the oven to 180°c."
+          "say": "Right, let's preheat the oven to one hundred eighty degrees celsius, that's about three hundred fifty degrees fahrenheit. Perfect for getting that lasagna beautifully golden."
         }
       ]
     },
     {
-      "id": "step_4",
-      "descr": "Layer: meat sauce, pasta, béchamel, repeat",
-      "instructions": "Layer: meat sauce, pasta, béchamel, repeat",
+      "id": "layer_lasagna",
+      "descr": "Layer: meat sauce, pasta, b\u00e9chamel, repeat",
+      "instructions": "Layer: meat sauce, pasta, b\u00e9chamel, repeat",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "preheat_oven"
       ],
       "next": [
-        "step_5"
+        "top_with_cheese"
       ],
       "on_enter": [
         {
-          "say": "Let's layer: meat sauce, pasta, béchamel, repeat."
+          "say": "Now for the fun part, let's layer it up! Start with a bit of that rich meat sauce, then pasta, then a lovely layer of b\u00e9chamel. Keep going until you've used it all up."
         }
       ]
     },
     {
-      "id": "step_5",
-      "descr": "Top with remaining béchamel and all the cheese",
-      "instructions": "Top with remaining béchamel and all the cheese",
+      "id": "top_with_cheese",
+      "descr": "Top with remaining b\u00e9chamel and all the cheese",
+      "instructions": "Top with remaining b\u00e9chamel and all the cheese",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "layer_lasagna"
       ],
       "next": [
-        "step_6"
+        "bake_lasagna"
       ],
       "on_enter": [
         {
-          "say": "Let's top with remaining béchamel and all."
+          "say": "Let's finish it off with the remaining b\u00e9chamel and a generous sprinkle of all that lovely cheese. This is what's going to give us that gorgeous golden top."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "bake_lasagna",
       "descr": "Bake for 40-45 minutes until golden and bubbling",
       "instructions": "Bake for 40-45 minutes until golden and bubbling",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "type": "timer",
+      "duration": "PT45M",
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "top_with_cheese"
       ],
       "next": [
-        "step_7"
+        "rest_before_serving"
       ],
       "on_enter": [
         {
-          "say": "Time to bake the for 40-45 minutes."
+          "say": "Time to pop it in the oven. We'll bake it for forty to forty-five minutes until it's beautifully golden and bubbling away. Your kitchen's going to smell amazing!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "rest_before_serving",
       "descr": "Let rest 10 minutes before serving",
       "instructions": "Let rest 10 minutes before serving",
-      "type": "immediate",
-      "auto_start": true,
+      "type": "timer",
+      "duration": "PT10M",
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "bake_lasagna"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Let's let rest 10 minutes before serving."
+          "say": "Brilliant! Now, let's let it rest for ten minutes before serving. This is really important to let all those lovely layers settle. It'll be worth the wait!"
         }
       ]
     }
@@ -205,6 +208,6 @@
     }
   },
   "notes": {
-    "text": "Make the sauces the day before for easier assembly\nDon't skimp on the béchamel between layers\nCover with foil if top browns too quickly"
+    "text": "Make the sauces the day before for easier assembly\nDon't skimp on the b\u00e9chamel between layers\nCover with foil if top browns too quickly"
   }
 }

@@ -62,131 +62,131 @@
   "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_dry_ingredients",
       "descr": "Mix flour, baking powder, and sugar in a bowl",
       "instructions": "Mix flour, baking powder, and sugar in a bowl",
       "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "auto_start": true,
+      "requires_confirm": true,
       "depends_on": [],
       "next": [
-        "step_2"
+        "whisk_egg_milk"
       ],
       "on_enter": [
         {
-          "say": "Let's mix everything together."
+          "say": "Right, let's start by mixing the flour, baking powder, and sugar in a bowl. Give it a good stir until everything's nicely combined."
         }
       ]
     },
     {
-      "id": "step_2",
+      "id": "whisk_egg_milk",
       "descr": "Whisk egg and milk together",
       "instructions": "Whisk egg and milk together",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_1"
+        "mix_dry_ingredients"
       ],
       "next": [
-        "step_3"
+        "combine_wet_dry"
       ],
       "on_enter": [
         {
-          "say": "Let's whisk everything together."
+          "say": "Now, let's whisk the egg and milk together until they're beautifully blended. You want a nice, smooth mixture."
         }
       ]
     },
     {
-      "id": "step_3",
+      "id": "combine_wet_dry",
       "descr": "Combine wet and dry ingredients until just mixed",
       "instructions": "Combine wet and dry ingredients until just mixed",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_2"
+        "whisk_egg_milk"
       ],
       "next": [
-        "step_4"
+        "heat_butter"
       ],
       "on_enter": [
         {
-          "say": "Let's combine everything together."
+          "say": "Brilliant! Now let's combine the wet and dry ingredients. Just mix until they're combined - a few lumps are fine, they'll make the pancakes fluffier."
         }
       ]
     },
     {
-      "id": "step_4",
+      "id": "heat_butter",
       "descr": "Heat butter in a pan over medium heat",
       "instructions": "Heat butter in a pan over medium heat",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_3"
+        "combine_wet_dry"
       ],
       "next": [
-        "step_5"
+        "pour_batter"
       ],
       "on_enter": [
         {
-          "say": "Let's heat the butter in pan."
+          "say": "Let's get the pan ready by heating some butter over medium heat. You'll know it's ready when the butter starts to sizzle gently."
         }
       ]
     },
     {
-      "id": "step_5",
+      "id": "pour_batter",
       "descr": "Pour small ladles of batter into pan",
       "instructions": "Pour small ladles of batter into pan",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_4"
+        "heat_butter"
       ],
       "next": [
-        "step_6"
+        "cook_pancakes"
       ],
       "on_enter": [
         {
-          "say": "Let's pour small ladles of batter into."
+          "say": "Time to pour small ladles of batter into the pan. Make sure to leave a bit of space between each one so they can spread out nicely."
         }
       ]
     },
     {
-      "id": "step_6",
+      "id": "cook_pancakes",
       "descr": "Cook until bubbles appear, flip and cook other side",
       "instructions": "Cook until bubbles appear, flip and cook other side",
       "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
+      "auto_start": false,
+      "requires_confirm": true,
       "depends_on": [
-        "step_5"
+        "pour_batter"
       ],
       "next": [
-        "step_7"
+        "serve_pancakes"
       ],
       "on_enter": [
         {
-          "say": "Time to cook the until bubbles appear,."
+          "say": "Cook the pancakes until bubbles start to appear on the surface, then give them a flip and cook the other side until it's golden brown. You should smell that delicious aroma!"
         }
       ]
     },
     {
-      "id": "step_7",
+      "id": "serve_pancakes",
       "descr": "Serve stacked with syrup and fresh berries",
       "instructions": "Serve stacked with syrup and fresh berries",
       "type": "immediate",
-      "auto_start": true,
+      "auto_start": false,
       "requires_confirm": false,
       "depends_on": [
-        "step_6"
+        "cook_pancakes"
       ],
       "next": [],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Fantastic! Let's stack those pancakes high, drizzle with maple syrup, and top with fresh berries. Time to dig in and enjoy!"
         }
       ]
     }
