@@ -16,6 +16,34 @@ from .utils import parse_iso_duration
 logger = configure_logger(__name__)
 
 
+class TimerError(Exception):
+    """Base exception for timer-related errors."""
+    pass
+
+
+class TimerNotFoundError(TimerError):
+    """Raised when a timer cannot be found."""
+    def __init__(self, timer_id: str, step_id: Optional[str] = None):
+        self.timer_id = timer_id
+        self.step_id = step_id
+        super().__init__(f"Timer not found: {timer_id}")
+
+
+class TimerAlreadyRunningError(TimerError):
+    """Raised when trying to start a timer that's already running."""
+    def __init__(self, timer_id: str, step_id: Optional[str] = None):
+        self.timer_id = timer_id
+        self.step_id = step_id
+        super().__init__(f"Timer already running: {timer_id}")
+
+
+class TimerDurationError(TimerError):
+    """Raised when timer duration is invalid."""
+    def __init__(self, step_id: str, reason: str = "no duration defined"):
+        self.step_id = step_id
+        super().__init__(f"Invalid timer duration for step {step_id}: {reason}")
+
+
 class TimerManager:
     """
     Manages multiple concurrent timers for recipe cooking.
@@ -104,9 +132,18 @@ class TimerManager:
             
         Returns:
             The created ActiveTimer instance
+            
+        Raises:
+            TimerDurationError: If step has no duration defined
+            TimerAlreadyRunningError: If timer is already running for this step
         """
         if not step.duration:
-            raise ValueError(f"Step {step.id} has no duration defined")
+            raise TimerDurationError(step.id, "no duration defined")
+        
+        # Check if timer already running
+        timer_id = f"timer_{step.id}"
+        if timer_id in self._active_timers:
+            raise TimerAlreadyRunningError(timer_id, step.id)
         
         duration_secs = parse_iso_duration(step.duration)
         timer_id = f"timer_{step.id}"
@@ -144,18 +181,24 @@ class TimerManager:
             duration_secs=duration_secs
         )
     
-    def cancel_timer(self, timer_id: str, emit_event: bool = True) -> bool:
+    def cancel_timer(self, timer_id: str, emit_event: bool = True, raise_if_not_found: bool = False) -> bool:
         """
         Cancel a running timer.
         
         Args:
             timer_id: The timer to cancel
             emit_event: Whether to emit TIMER_CANCELLED event
+            raise_if_not_found: Whether to raise TimerNotFoundError if timer doesn't exist
             
         Returns:
             True if timer was cancelled, False if not found
+            
+        Raises:
+            TimerNotFoundError: If raise_if_not_found=True and timer doesn't exist
         """
         if timer_id not in self._timer_tasks:
+            if raise_if_not_found:
+                raise TimerNotFoundError(timer_id)
             return False
         
         # Cancel the task
