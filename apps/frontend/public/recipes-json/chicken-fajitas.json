@@ -1,200 +1,136 @@
 {
-  "recipe": {
-    "id": "chicken-fajitas",
-    "title": "Chicken Fajitas",
-    "description": "Sizzling Mexican chicken with peppers and warm tortillas",
-    "estimated_total": "PT30M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "chicken",
-      "mexican"
-    ],
-    "course": "main",
-    "cuisine": "mexican"
+  "notes": {
+    "text": "High heat gives the best char\nServe on a sizzling hot plate for drama\nSet up a fajita bar for interactive dining"
   },
-  "ingredients": [
-    {
-      "id": "chicken_breast_sliced",
-      "name": "chicken breast, sliced",
-      "quantity": 500.0,
-      "unit": "g"
-    },
-    {
-      "id": "peppers_sliced",
-      "name": "peppers, sliced",
-      "quantity": 2.0,
-      "unit": "bell"
-    },
-    {
-      "id": "1_onion_sliced",
-      "name": "1 onion, sliced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "cumin",
-      "name": "cumin",
-      "quantity": 2.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "paprika",
-      "name": "paprika",
-      "quantity": 2.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "tortillas",
-      "name": "tortillas",
-      "quantity": 8.0,
-      "unit": "flour"
-    },
-    {
-      "id": "sour_cream_guacamole_salsa",
-      "name": "Sour cream, guacamole, salsa",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "lime_wedges",
-      "name": "Lime wedges",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_spices",
+      "next": [
+        "toss_chicken_spices"
+      ],
+      "type": "immediate",
       "descr": "Mix cumin, paprika, salt, and pepper",
-      "instructions": "Mix cumin, paprika, salt, and pepper",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's mix these lovely spices together - cumin, paprika, a pinch of salt, and pepper. This is going to be the flavour base for our chicken."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "instructions": "Mix cumin, paprika, salt, and pepper",
+      "requires_confirm": false
     },
     {
-      "id": "step_2",
+      "id": "toss_chicken_spices",
+      "next": [
+        "cook_chicken"
+      ],
+      "type": "immediate",
       "descr": "Toss chicken in spice mix",
+      "on_enter": [
+        {
+          "say": "Now, toss the chicken in that beautiful spice mix. Make sure every piece is well coated - this is where the magic happens!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_spices"
+      ],
       "instructions": "Toss chicken in spice mix",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's toss everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "cook_chicken",
+      "next": [
+        "cook_veggies"
+      ],
+      "type": "immediate",
       "descr": "Heat pan, cook chicken until golden",
+      "on_enter": [
+        {
+          "say": "Let's get the pan nice and hot. Add the chicken and cook it until it's beautifully golden and sizzling. You'll know it's ready when it smells irresistible!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "toss_chicken_spices"
+      ],
       "instructions": "Heat pan, cook chicken until golden",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the pan, cook chicken."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "cook_veggies",
+      "next": [
+        "warm_tortillas"
+      ],
+      "type": "immediate",
       "descr": "Add peppers and onions, cook until soft",
+      "on_enter": [
+        {
+          "say": "Now, let's add the peppers and onions to the pan. Cook them until they're soft and vibrant. The colours should be popping!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cook_chicken"
+      ],
       "instructions": "Add peppers and onions, cook until soft",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the peppers and onions,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "warm_tortillas",
+      "next": [
+        "serve_fajitas"
+      ],
+      "type": "immediate",
       "descr": "Warm tortillas in a dry pan",
+      "on_enter": [
+        {
+          "say": "Let's warm up those tortillas in a dry pan. Just a few seconds on each side until they're nice and pliable."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cook_veggies"
+      ],
       "instructions": "Warm tortillas in a dry pan",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's warm the tortillas in dry."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "serve_fajitas",
+      "next": [
+        "squeeze_lime"
+      ],
+      "type": "immediate",
       "descr": "Serve chicken and veg with tortillas and toppings",
-      "instructions": "Serve chicken and veg with tortillas and toppings",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up! Pile that delicious chicken and veg onto the warm tortillas. Add your favourite toppings - sour cream, guacamole, salsa - whatever you fancy!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "warm_tortillas"
+      ],
+      "instructions": "Serve chicken and veg with tortillas and toppings",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Squeeze lime over everything",
-      "instructions": "Squeeze lime over everything",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "squeeze_lime",
       "next": [],
+      "type": "immediate",
+      "descr": "Squeeze lime over everything",
       "on_enter": [
         {
-          "say": "Let's squeeze lime over everything."
+          "say": "Let's finish it off with a squeeze of lime over everything. This will add a lovely zing to your fajitas!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "serve_fajitas"
+      ],
+      "instructions": "Squeeze lime over everything",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -203,7 +139,71 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "High heat gives the best char\nServe on a sizzling hot plate for drama\nSet up a fajita bar for interactive dining"
-  }
+  "recipe": {
+    "id": "chicken-fajitas",
+    "tags": [
+      "chicken",
+      "mexican"
+    ],
+    "title": "Chicken Fajitas",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "mexican",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Sizzling Mexican chicken with peppers and warm tortillas",
+    "estimated_total": "PT30M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "chicken_breast_sliced",
+      "name": "chicken breast, sliced",
+      "unit": "g",
+      "quantity": 500.0
+    },
+    {
+      "id": "peppers_sliced",
+      "name": "peppers, sliced",
+      "unit": "bell",
+      "quantity": 2.0
+    },
+    {
+      "id": "1_onion_sliced",
+      "name": "1 onion, sliced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "cumin",
+      "name": "cumin",
+      "unit": "tsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "unit": "tsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "tortillas",
+      "name": "tortillas",
+      "unit": "flour",
+      "quantity": 8.0
+    },
+    {
+      "id": "sour_cream_guacamole_salsa",
+      "name": "Sour cream, guacamole, salsa",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "lime_wedges",
+      "name": "Lime wedges",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

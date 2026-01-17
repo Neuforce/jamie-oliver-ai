@@ -1,210 +1,420 @@
 {
+  "steps": [
+    {
+      "id": "make_curry_paste",
+      "next": [
+        "toast_spices"
+      ],
+      "type": "immediate",
+      "descr": "To make the curry paste, halve, deseed and roughly chop...",
+      "on_enter": [
+        {
+          "say": "Let's get started by making the curry paste. Halve, deseed, and roughly chop the chillies. Then, peel the garlic and ginger. You're doing great!"
+        }
+      ],
+      "auto_start": true,
+      "instructions": "To make the curry paste, halve, deseed and roughly chop the chilli(es), then peel the garlic and ginger.",
+      "requires_confirm": true
+    },
+    {
+      "id": "toast_spices",
+      "next": [
+        "grind_spices"
+      ],
+      "type": "immediate",
+      "descr": "Place a frying pan over a medium-high heat and scatter...",
+      "on_enter": [
+        {
+          "say": "Now, let's toast those spices. Place a frying pan over medium-high heat, scatter in the cumin and coriander seeds. Toast them for a few minutes until they're golden brown and smell amazing. Then, remove them from the heat."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "make_curry_paste"
+      ],
+      "instructions": "Place a frying pan over a medium-high heat and scatter in the cumin and coriander seeds. Lightly toast for a few minutes, or until golden brown and smelling delicious, then remove from the heat.",
+      "requires_confirm": true
+    },
+    {
+      "id": "grind_spices",
+      "next": [
+        "combine_paste_ingredients"
+      ],
+      "type": "immediate",
+      "descr": "Add the toasted spices to a pestle and mortar and grind...",
+      "on_enter": [
+        {
+          "say": "Brilliant! Add those toasted spices to a pestle and mortar and grind them until they're fine, or use a food processor to whiz them into a powder."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "toast_spices"
+      ],
+      "instructions": "Add the toasted spices to a pestle and mortar and grind until fine, or whiz to a powder in a food processor.",
+      "requires_confirm": true
+    },
+    {
+      "id": "combine_paste_ingredients",
+      "next": [
+        "slice_chicken"
+      ],
+      "type": "immediate",
+      "descr": "Once ground, add the toasted spices to a food processor...",
+      "on_enter": [
+        {
+          "say": "Now, let's make that paste smooth. Add the ground spices to a food processor with the remaining paste ingredients and half a teaspoon of sea salt. Whiz it all up until it's smooth. Set it aside for now."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "grind_spices"
+      ],
+      "instructions": "Once ground, add the toasted spices to a food processor along with the remaining paste ingredient and 12 teaspoon of sea salt, then whiz to a smooth paste. Put aside.",
+      "requires_confirm": true
+    },
+    {
+      "id": "slice_chicken",
+      "next": [
+        "prep_veggies"
+      ],
+      "type": "immediate",
+      "descr": "Slice the chicken lengthways into 2cm strips",
+      "on_enter": [
+        {
+          "say": "Let's move on to the chicken. Slice it lengthways into strips about two centimeters wide. Nice and easy!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "combine_paste_ingredients"
+      ],
+      "instructions": "Slice the chicken lengthways into 2cm strips.",
+      "requires_confirm": true
+    },
+    {
+      "id": "prep_veggies",
+      "next": [
+        "cook_veggies"
+      ],
+      "type": "immediate",
+      "descr": "On a clean chopping board, peel, halve and finely slice...",
+      "on_enter": [
+        {
+          "say": "Time to prep the veggies. Peel, halve, and finely slice the onions. Do the same with the ginger. Pick the coriander leaves and set them aside, then finely chop the stalks with the chilli. You're doing fantastic!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "slice_chicken"
+      ],
+      "instructions": "On a clean chopping board, peel, halve and finely slice the onions. Peel and finely slice the ginger, then pick the coriander leaves and put to one side, finely chopping the stalks along with the chilli.",
+      "requires_confirm": true
+    },
+    {
+      "id": "cook_veggies",
+      "next": [
+        "add_chicken_and_paste"
+      ],
+      "type": "timer",
+      "descr": "Heat 2 tablespoons of oil in a large casserole pan over...",
+      "duration": "PT10M",
+      "on_enter": [
+        {
+          "say": "Heat up two tablespoons of oil in a large casserole pan over medium-high heat. Add the onions, chilli, ginger, and coriander stalks. Cook them for about ten minutes until they're softened and lightly golden. Lovely!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "prep_veggies"
+      ],
+      "instructions": "Heat 2 tablespoons of oil in a large casserole pan over a medium-high heat, add the onions, chilli, ginger and coriander stalks, then cook for around 10 minutes, or until softened and lightly golden.",
+      "requires_confirm": true
+    },
+    {
+      "id": "add_chicken_and_paste",
+      "next": [
+        "simmer_curry"
+      ],
+      "type": "immediate",
+      "descr": "Add the chicken and 140g of the tikka masala paste,...",
+      "on_enter": [
+        {
+          "say": "Add the chicken and one hundred forty grams of the tikka masala paste to the pan. Give it a good stir so everything is nicely coated. Season with salt and black pepper, add the tomatoes and break them up with a spoon. Pour in the coconut milk and bring it all to a boil. Smells amazing, doesn't it?"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "cook_veggies"
+      ],
+      "instructions": "Add the chicken and 140g of the tikka masala paste, stirring well so everything is nicely coated. Season with salt and black pepper, add the tomatoes, breaking them up with the back of a spoon, and the coconut milk, then bring to the boil.",
+      "requires_confirm": true
+    },
+    {
+      "id": "simmer_curry",
+      "next": [
+        "serve_curry"
+      ],
+      "type": "timer",
+      "descr": "Turn the heat down to medium-low, cover and simmer for...",
+      "duration": "PT25M",
+      "on_enter": [
+        {
+          "say": "Turn the heat down to medium-low, cover the pan, and let it simmer for twenty minutes. Then, remove the lid and cook for another five minutes until the meat is tender and the sauce has reduced. Give it a stir now and then. You're almost there!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_chicken_and_paste"
+      ],
+      "instructions": "Turn the heat down to medium-low, cover and simmer for 20 minutes, then remove the lid and cook for a further 5 minutes, or until the meat is tender and the sauce has reduced, stirring occasionally.",
+      "requires_confirm": true
+    },
+    {
+      "id": "serve_curry",
+      "type": "immediate",
+      "descr": "Divide the curry between bowls, sprinkle over the...",
+      "on_enter": [
+        {
+          "say": "Time to serve up! Divide the curry between bowls, sprinkle over the almonds and coriander leaves. Add a dollop of yoghurt and a wedge of lemon to each bowl. This is going to be delicious with some fluffy rice. Enjoy!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "simmer_curry"
+      ],
+      "instructions": "Divide the curry between bowls, sprinkle over the almonds and coriander leaves. Add a dollop of yoghurt and a wedge of lemon to each bowl. Delicious served with fluffy rice.",
+      "requires_confirm": false
+    }
+  ],
   "recipe": {
     "id": "chicken-tikka-masala",
-    "title": "Chicken Tikka Masala",
-    "description": "Tender chicken in a rich, creamy tomato-based curry sauce",
-    "estimated_total": "PT45M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 6,
-    "difficulty": "Medium",
     "tags": [
+      "course",
+      "method",
+      "mains",
+      "indian",
+      "curry-paste",
+      "curry-base-sauce-recipe",
       "chicken",
-      "thai",
-      "indian"
+      "chicken-curry",
+      "curry-sauce",
+      "dinner-party",
+      "occasion",
+      "student-recipes",
+      "dish-type",
+      "curry-base",
+      "curry",
+      "curry-base-sauce",
+      "main-ingredient",
+      "rice"
     ],
+    "title": "Chicken tikka masala",
     "course": "main",
-    "cuisine": "indian"
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ac1a2406a986bcea99e8cc0bdb2fa72a29ac0e2-1387x2081.jpg/chickentikkareshot.jpg?rect=0,348,1387,1387&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ac1a2406a986bcea99e8cc0bdb2fa72a29ac0e2-1387x2081.jpg/chickentikkareshot.jpg?rect=0,348,1387,1387&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ac1a2406a986bcea99e8cc0bdb2fa72a29ac0e2-1387x2081.jpg/chickentikkareshot.jpg?rect=0,521,1387,1040&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ac1a2406a986bcea99e8cc0bdb2fa72a29ac0e2-1387x2081.jpg/chickentikkareshot.jpg?rect=0,651,1387,780&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "cuisine": "indian",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-tikka-masala/",
+    "description": "This brilliant Anglo-Indian chicken curry recipe is sure to make people very happy.",
+    "estimated_total": "PT90M"
+  },
+  "utensils": [
+    "bowl",
+    "chopping board",
+    "food processor",
+    "frying pan",
+    "pan"
+  ],
+  "nutrition": {
+    "fat": "26.7 g",
+    "fiber": "5 g",
+    "protein": "33.6 g",
+    "calories": "441 calories",
+    "carbohydrates": "18.9 g"
   },
   "ingredients": [
     {
-      "id": "chicken_breast_cubed",
-      "name": "chicken breast, cubed",
-      "quantity": 800.0,
-      "unit": "g"
+      "id": "skinless-free-range-chicken-br",
+      "name": "skinless free-range chicken breasts",
+      "note": null,
+      "unit": null,
+      "quantity": 4.0
     },
     {
-      "id": "natural_yogurt",
-      "name": "natural yogurt",
-      "quantity": 200.0,
-      "unit": "ml"
+      "id": "onions",
+      "name": "onions",
+      "note": null,
+      "unit": null,
+      "quantity": 2.0
     },
     {
-      "id": "tikka_masala_paste",
-      "name": "tikka masala paste",
-      "quantity": 2.0,
-      "unit": "tbsp"
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "note": null,
+      "unit": null,
+      "quantity": 5.0
     },
     {
-      "id": "tinned_tomatoes",
-      "name": "tinned tomatoes",
-      "quantity": 400.0,
-      "unit": "g"
+      "id": "a-bunch-of-fresh-coriander",
+      "name": " a bunch of fresh coriander",
+      "note": null,
+      "unit": null,
+      "quantity": null
     },
     {
-      "id": "double_cream",
-      "name": "double cream",
-      "quantity": 200.0,
-      "unit": "ml"
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "note": null,
+      "unit": null,
+      "quantity": 1.0
     },
     {
-      "id": "2_onions_finely_chopped",
-      "name": "2 onions, finely chopped",
-      "quantity": null,
-      "unit": null
+      "id": "groundnut-or-vegetable-oil",
+      "name": "groundnut or vegetable oil",
+      "note": null,
+      "unit": null,
+      "quantity": null
     },
     {
-      "id": "cloves_minced",
-      "name": "cloves, minced",
-      "quantity": 4.0,
-      "unit": "garlic"
+      "id": "400g-tin-of-plum-tomatoes",
+      "name": "400g tin of plum tomatoes",
+      "note": null,
+      "unit": null,
+      "quantity": 400.0
     },
     {
-      "id": "fresh_coriander_to_garnish",
-      "name": "Fresh coriander to garnish",
-      "quantity": null,
-      "unit": null
+      "id": "x-400g-tin-of-light-coconut-mi",
+      "name": " x 400g tin of light coconut milk",
+      "note": null,
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "small-handful-of-flaked-almond",
+      "name": "small handful of flaked almonds",
+      "note": null,
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "fat-free-natural-yoghurt",
+      "name": "fat-free natural yoghurt",
+      "note": null,
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "note": null,
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "tikka-masala-paste",
+      "name": "TIKKA MASALA PASTE",
+      "note": null,
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "note": null,
+      "unit": null,
+      "quantity": 1.5
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "note": null,
+      "unit": "cloves",
+      "quantity": 2.0
+    },
+    {
+      "id": "cm-piece-of-fresh-ginger",
+      "name": "cm piece of fresh ginger",
+      "note": null,
+      "unit": null,
+      "quantity": 5.0
+    },
+    {
+      "id": "cumin-seeds",
+      "name": "cumin seeds",
+      "note": null,
+      "unit": "teaspoon",
+      "quantity": 1.0
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "note": null,
+      "unit": "teaspoon",
+      "quantity": 1.0
+    },
+    {
+      "id": "cayenne-pepper",
+      "name": "cayenne pepper",
+      "note": null,
+      "unit": "teaspoon",
+      "quantity": 1.0
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "note": null,
+      "unit": "tablespoon",
+      "quantity": 1.0
+    },
+    {
+      "id": "garam-masala",
+      "name": "garam masala",
+      "note": null,
+      "unit": "teaspoons",
+      "quantity": 2.0
+    },
+    {
+      "id": "groundnut-oil",
+      "name": "groundnut oil",
+      "note": null,
+      "unit": "tablespoons",
+      "quantity": 2.0
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pure9e",
+      "note": null,
+      "unit": "tablespoons",
+      "quantity": 2.0
+    },
+    {
+      "id": "fresh-coriander",
+      "name": "fresh coriander",
+      "note": null,
+      "unit": "bunch",
+      "quantity": 1.0
+    },
+    {
+      "id": "tablespoon-desiccated-coconut",
+      "name": " tablespoon desiccated coconut",
+      "note": null,
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "ground-almonds",
+      "name": "ground almonds",
+      "note": null,
+      "unit": "tablespoons",
+      "quantity": 2.0
     }
-  ],
-  "utensils": [],
-  "steps": [
-    {
-      "id": "step_1",
-      "descr": "Marinate chicken in yogurt and half the tikka paste for 30 minutes",
-      "instructions": "Marinate chicken in yogurt and half the tikka paste for 30 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's marinate chicken in yogurt and half."
-        }
-      ]
-    },
-    {
-      "id": "step_2",
-      "descr": "Grill or pan-fry chicken until charred and cooked through",
-      "instructions": "Grill or pan-fry chicken until charred and cooked through",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to grill the or pan-fry chicken."
-        }
-      ]
-    },
-    {
-      "id": "step_3",
-      "descr": "In a large pan, sauté onions until golden, add garlic",
-      "instructions": "In a large pan, sauté onions until golden, add garlic",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's in a large pan, sauté onions."
-        }
-      ]
-    },
-    {
-      "id": "step_4",
-      "descr": "Stir in remaining tikka paste and cook for 1 minute",
-      "instructions": "Stir in remaining tikka paste and cook for 1 minute",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
-    },
-    {
-      "id": "step_5",
-      "descr": "Add tinned tomatoes and simmer for 10 minutes",
-      "instructions": "Add tinned tomatoes and simmer for 10 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the tinned tomatoes and."
-        }
-      ]
-    },
-    {
-      "id": "step_6",
-      "descr": "Stir in cream and cooked chicken, simmer for 5 minutes",
-      "instructions": "Stir in cream and cooked chicken, simmer for 5 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
-    },
-    {
-      "id": "step_7",
-      "descr": "Garnish with fresh coriander and serve with rice or naan",
-      "instructions": "Garnish with fresh coriander and serve with rice or naan",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
-      "next": [],
-      "on_enter": [
-        {
-          "say": "Time to garnish and enjoy!"
-        }
-      ]
-    }
-  ],
-  "events": {
-    "tts_voice": "chef_friendly",
-    "reminder_default": {
-      "every": "PT30S"
-    }
-  },
-  "notes": {
-    "text": "Marinating overnight gives better flavor\nDon't skip the charring step - it adds smoky depth\nAdjust spice level to your taste"
-  }
+  ]
 }

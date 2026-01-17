@@ -1,198 +1,138 @@
 {
-  "recipe": {
-    "id": "shepherds-pie",
-    "title": "Shepherd's Pie",
-    "description": "Comforting British classic with lamb mince and mashed potato",
-    "estimated_total": "PT1H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 6,
-    "difficulty": "Medium",
-    "tags": [
-      "dessert"
-    ],
-    "course": "dessert"
+  "notes": {
+    "text": "Use beef mince for cottage pie\nAdd worcestershire sauce for depth\nFreeze individual portions for easy meals"
   },
-  "ingredients": [
-    {
-      "id": "lamb_mince",
-      "name": "lamb mince",
-      "quantity": 500.0,
-      "unit": "g"
-    },
-    {
-      "id": "1_onion_diced",
-      "name": "1 onion, diced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "2_carrots_diced",
-      "name": "2 carrots, diced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "tomato_purée",
-      "name": "tomato purée",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "lamb_stock",
-      "name": "lamb stock",
-      "quantity": 300.0,
-      "unit": "ml"
-    },
-    {
-      "id": "potatoes",
-      "name": "potatoes",
-      "quantity": 1.0,
-      "unit": "kg"
-    },
-    {
-      "id": "butter",
-      "name": "butter",
-      "quantity": 50.0,
-      "unit": "g"
-    },
-    {
-      "id": "milk",
-      "name": "milk",
-      "quantity": 100.0,
-      "unit": "ml"
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "brown_lamb_mince",
+      "next": [
+        "simmer_meat_sauce"
+      ],
+      "type": "immediate",
       "descr": "Brown lamb mince, add onion and carrots",
-      "instructions": "Brown lamb mince, add onion and carrots",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "on_enter": [
+        {
+          "say": "Right, let's get started by browning the lamb mince. Add in the diced onion and carrots. You want to hear a nice sizzle and see the meat turn a lovely brown."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's add onion and carrots."
-        }
-      ]
+      "instructions": "Brown lamb mince, add onion and carrots",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "simmer_meat_sauce",
+      "next": [
+        "boil_potatoes"
+      ],
+      "type": "timer",
       "descr": "Stir in tomato purée and stock, simmer 20 mins",
+      "duration": "PT20M",
+      "on_enter": [
+        {
+          "say": "Now, stir in the tomato purée and lamb stock. We're going to let this simmer for twenty minutes. You'll know it's ready when the sauce thickens and smells absolutely divine."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "brown_lamb_mince"
+      ],
       "instructions": "Stir in tomato purée and stock, simmer 20 mins",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "boil_potatoes",
+      "next": [
+        "mash_potatoes"
+      ],
+      "type": "immediate",
       "descr": "Boil potatoes until tender",
+      "on_enter": [
+        {
+          "say": "While the sauce is simmering, let's boil the potatoes until they're tender. You should be able to easily pierce them with a fork."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "simmer_meat_sauce"
+      ],
       "instructions": "Boil potatoes until tender",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to boil the potatoes until tender."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "mash_potatoes",
+      "next": [
+        "transfer_meat_to_dish"
+      ],
+      "type": "immediate",
       "descr": "Mash with butter and milk until smooth",
+      "on_enter": [
+        {
+          "say": "Now let's mash those potatoes with butter and milk until they're smooth and creamy. This is going to be the lovely topping for our pie."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "boil_potatoes"
+      ],
       "instructions": "Mash with butter and milk until smooth",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mash with butter and milk until."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "transfer_meat_to_dish",
+      "next": [
+        "top_with_mash"
+      ],
+      "type": "immediate",
       "descr": "Transfer meat to baking dish",
+      "on_enter": [
+        {
+          "say": "Brilliant! Let's transfer the meat mixture to a baking dish. Make sure it's spread out evenly."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "mash_potatoes"
+      ],
       "instructions": "Transfer meat to baking dish",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Now transfer the meat to baking."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "top_with_mash",
+      "next": [
+        "bake_pie"
+      ],
+      "type": "immediate",
       "descr": "Top with mashed potato, fork patterns on top",
-      "instructions": "Top with mashed potato, fork patterns on top",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's top with mashed potato, fork patterns."
+          "say": "Let's top the meat with our mashed potatoes. Use a fork to create some lovely patterns on top. This will help it get nice and crispy."
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "transfer_meat_to_dish"
+      ],
+      "instructions": "Top with mashed potato, fork patterns on top",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Bake at 200°C for 25 minutes until golden",
-      "instructions": "Bake at 200°C for 25 minutes until golden",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "bake_pie",
       "next": [],
+      "type": "timer",
+      "descr": "Bake at 200°C for 25 minutes until golden",
+      "duration": "PT25M",
       "on_enter": [
         {
-          "say": "Time to bake the at 200°c for."
+          "say": "Time to bake our pie. Preheat your oven to two hundred degrees celsius, that's about three hundred ninety-two degrees fahrenheit. Bake it for twenty-five minutes until the top is beautifully golden."
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "top_with_mash"
+      ],
+      "instructions": "Bake at 200°C for 25 minutes until golden",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -201,7 +141,69 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Use beef mince for cottage pie\nAdd worcestershire sauce for depth\nFreeze individual portions for easy meals"
-  }
+  "recipe": {
+    "id": "shepherds-pie",
+    "tags": [
+      "dessert"
+    ],
+    "title": "Shepherd's Pie",
+    "course": "dessert",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Medium",
+    "description": "Comforting British classic with lamb mince and mashed potato",
+    "estimated_total": "PT1H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "lamb_mince",
+      "name": "lamb mince",
+      "unit": "g",
+      "quantity": 500
+    },
+    {
+      "id": "1_onion_diced",
+      "name": "1 onion, diced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "2_carrots_diced",
+      "name": "2 carrots, diced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "tomato_purée",
+      "name": "tomato purée",
+      "unit": "tbsp",
+      "quantity": 2
+    },
+    {
+      "id": "lamb_stock",
+      "name": "lamb stock",
+      "unit": "ml",
+      "quantity": 300
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "unit": "kg",
+      "quantity": 1
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "unit": "g",
+      "quantity": 50
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "unit": "ml",
+      "quantity": 100
+    }
+  ]
 }

@@ -1,192 +1,137 @@
 {
-  "recipe": {
-    "id": "buffalo-chicken-wings",
-    "title": "Buffalo Chicken Wings",
-    "description": "Crispy wings tossed in spicy buffalo sauce",
-    "estimated_total": "PT50M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "chicken"
-    ],
-    "course": "main"
+  "notes": {
+    "text": "Drying the wings ensures crispy skin\nAdjust heat level to your preference\nPerfect for game day"
   },
-  "ingredients": [
-    {
-      "id": "chicken_wings",
-      "name": "chicken wings",
-      "quantity": 1.0,
-      "unit": "kg"
-    },
-    {
-      "id": "butter",
-      "name": "butter",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "hot_sauce",
-      "name": "hot sauce",
-      "quantity": 150.0,
-      "unit": "ml"
-    },
-    {
-      "id": "garlic_powder",
-      "name": "garlic powder",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "blue_cheese_dressing",
-      "name": "Blue cheese dressing",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "celery_sticks",
-      "name": "Celery sticks",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "ranch_dressing",
-      "name": "Ranch dressing",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_oven",
+      "next": [
+        "season_wings"
+      ],
+      "type": "immediate",
       "descr": "Preheat oven to 200°C (400°F)",
-      "instructions": "Preheat oven to 200°C (400°F)",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "on_enter": [
+        {
+          "say": "Right, let's preheat the oven to two hundred degrees celsius, which is about four hundred degrees fahrenheit. This will get us started on the right foot!"
+        }
+      ],
+      "auto_start": true,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the oven to 200°c."
-        }
-      ]
+      "instructions": "Preheat oven to 200°C (400°F)",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "season_wings",
+      "next": [
+        "bake_wings"
+      ],
+      "type": "immediate",
       "descr": "Pat wings dry, season with salt and garlic powder",
+      "on_enter": [
+        {
+          "say": "Now, let's pat those wings dry and season them with a bit of salt and garlic powder. This will help them get nice and crispy!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "preheat_oven"
+      ],
       "instructions": "Pat wings dry, season with salt and garlic powder",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's pat wings dry, season with salt."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "bake_wings",
+      "next": [
+        "make_sauce"
+      ],
+      "type": "timer",
       "descr": "Bake on a wire rack for 45 minutes, turning once",
+      "duration": "PT45M",
+      "on_enter": [
+        {
+          "say": "Let's pop those wings in the oven on a wire rack. We'll bake them for forty-five minutes, turning them once so they cook evenly. You'll know they're done when they're golden and crispy!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "season_wings"
+      ],
       "instructions": "Bake on a wire rack for 45 minutes, turning once",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to bake the on wire rack."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "make_sauce",
+      "next": [
+        "toss_wings"
+      ],
+      "type": "immediate",
       "descr": "Melt butter and mix with hot sauce",
+      "on_enter": [
+        {
+          "say": "While the wings are baking, let's melt some butter and mix it with our hot sauce. This is going to be the delicious buffalo sauce that coats our wings!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "bake_wings"
+      ],
       "instructions": "Melt butter and mix with hot sauce",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix with hot sauce."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "toss_wings",
+      "next": [
+        "serve_wings"
+      ],
+      "type": "immediate",
       "descr": "Toss cooked wings in buffalo sauce",
+      "on_enter": [
+        {
+          "say": "Now for the fun part! Let's toss those crispy wings in the buffalo sauce until they're nicely coated. They'll be smelling irresistible!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "make_sauce"
+      ],
       "instructions": "Toss cooked wings in buffalo sauce",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's toss everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "serve_wings",
+      "next": [
+        "provide_napkins"
+      ],
+      "type": "immediate",
       "descr": "Serve with blue cheese dressing and celery",
-      "instructions": "Serve with blue cheese dressing and celery",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up these beauties! Arrange the wings on a platter with some blue cheese dressing and celery sticks on the side. It's going to be a feast!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "toss_wings"
+      ],
+      "instructions": "Serve with blue cheese dressing and celery",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Provide plenty of napkins!",
-      "instructions": "Provide plenty of napkins!",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "provide_napkins",
       "next": [],
+      "type": "immediate",
+      "descr": "Provide plenty of napkins!",
       "on_enter": [
         {
-          "say": "Let's provide plenty of napkins!."
+          "say": "And finally, let's make sure we've got plenty of napkins on hand. These wings are deliciously messy, just the way they should be. Enjoy!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "serve_wings"
+      ],
+      "instructions": "Provide plenty of napkins!",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -195,7 +140,63 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Drying the wings ensures crispy skin\nAdjust heat level to your preference\nPerfect for game day"
-  }
+  "recipe": {
+    "id": "buffalo-chicken-wings",
+    "tags": [
+      "chicken"
+    ],
+    "title": "Buffalo Chicken Wings",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Crispy wings tossed in spicy buffalo sauce",
+    "estimated_total": "PT50M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "chicken_wings",
+      "name": "chicken wings",
+      "unit": "kg",
+      "quantity": 1
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "unit": "g",
+      "quantity": 100
+    },
+    {
+      "id": "hot_sauce",
+      "name": "hot sauce",
+      "unit": "ml",
+      "quantity": 150
+    },
+    {
+      "id": "garlic_powder",
+      "name": "garlic powder",
+      "unit": "tsp",
+      "quantity": 1
+    },
+    {
+      "id": "blue_cheese_dressing",
+      "name": "Blue cheese dressing",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "celery_sticks",
+      "name": "Celery sticks",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "ranch_dressing",
+      "name": "Ranch dressing",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

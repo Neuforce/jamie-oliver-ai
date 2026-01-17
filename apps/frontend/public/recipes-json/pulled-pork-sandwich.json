@@ -1,193 +1,137 @@
 {
-  "recipe": {
-    "id": "pulled-pork-sandwich",
-    "title": "Pulled Pork Sandwich",
-    "description": "Slow-cooked tender pork with BBQ sauce on a soft bun",
-    "estimated_total": "PT6H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 8,
-    "difficulty": "Medium",
-    "tags": [
-      "pork",
-      "breakfast"
-    ],
-    "course": "breakfast"
+  "notes": {
+    "text": "Low and slow is the secret\nCan also use a slow cooker\nLeftovers freeze beautifully"
   },
-  "ingredients": [
-    {
-      "id": "pork_shoulder",
-      "name": "pork shoulder",
-      "quantity": 2.0,
-      "unit": "kg"
-    },
-    {
-      "id": "paprika",
-      "name": "paprika",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "brown_sugar",
-      "name": "brown sugar",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "garlic_powder",
-      "name": "garlic powder",
-      "quantity": 1.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "bbq_sauce",
-      "name": "BBQ sauce",
-      "quantity": 300.0,
-      "unit": "ml"
-    },
-    {
-      "id": "buns",
-      "name": "buns",
-      "quantity": 8.0,
-      "unit": "burger"
-    },
-    {
-      "id": "coleslaw_for_topping",
-      "name": "Coleslaw for topping",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_spice_rub",
+      "next": [
+        "rub_pork"
+      ],
+      "type": "immediate",
       "descr": "Mix paprika, brown sugar, garlic powder, salt, pepper for rub",
-      "instructions": "Mix paprika, brown sugar, garlic powder, salt, pepper for rub",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by mixing our spices. You'll want a lovely, even mix of paprika, brown sugar, garlic powder, salt, and pepper. Give it a good stir!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "instructions": "Mix paprika, brown sugar, garlic powder, salt, pepper for rub",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "rub_pork",
+      "next": [
+        "slow_cook_pork"
+      ],
+      "type": "immediate",
       "descr": "Rub spice mix all over pork shoulder",
+      "on_enter": [
+        {
+          "say": "Now, let's get that beautiful spice rub all over your pork shoulder. Make sure it's completely covered for maximum flavour!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_spice_rub"
+      ],
       "instructions": "Rub spice mix all over pork shoulder",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix all over pork."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "slow_cook_pork",
+      "next": [
+        "shred_pork"
+      ],
+      "type": "timer",
       "descr": "Slow cook at 120°C for 5-6 hours until tender",
+      "duration": 19800,
+      "on_enter": [
+        {
+          "say": "Fantastic! Now, pop that pork into your oven at 120°C. We're going to let it cook low and slow for 5 to 6 hours. Your kitchen will smell amazing!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "rub_pork"
+      ],
       "instructions": "Slow cook at 120°C for 5-6 hours until tender",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's cook at 120°c for."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_4",
+      "id": "shred_pork",
+      "next": [
+        "mix_bbq_sauce"
+      ],
+      "type": "immediate",
       "descr": "Shred pork with two forks",
+      "on_enter": [
+        {
+          "say": "Brilliant! Now that the pork is tender, grab two forks and start shredding it. It should fall apart easily."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "slow_cook_pork"
+      ],
       "instructions": "Shred pork with two forks",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's shred pork with two forks."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "mix_bbq_sauce",
+      "next": [
+        "pile_on_buns"
+      ],
+      "type": "immediate",
       "descr": "Mix with BBQ sauce",
+      "on_enter": [
+        {
+          "say": "Let's add some of that lovely BBQ sauce to our shredded pork. Mix it well so every bit is coated in that delicious sauce."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "shred_pork"
+      ],
       "instructions": "Mix with BBQ sauce",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "pile_on_buns",
+      "next": [
+        "top_with_coleslaw"
+      ],
+      "type": "immediate",
       "descr": "Pile onto toasted buns",
-      "instructions": "Pile onto toasted buns",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's pile onto toasted buns."
+          "say": "Time to pile that beautiful pork onto your toasted buns. Make sure you get a good amount on each one!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_bbq_sauce"
+      ],
+      "instructions": "Pile onto toasted buns",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Top with coleslaw and serve",
-      "instructions": "Top with coleslaw and serve",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "top_with_coleslaw",
       "next": [],
+      "type": "immediate",
+      "descr": "Top with coleslaw and serve",
       "on_enter": [
         {
-          "say": "Let's top with coleslaw and serve."
+          "say": "Finally, let's top it off with some crunchy coleslaw. And there you have it, a perfect pulled pork sandwich ready to enjoy!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "pile_on_buns"
+      ],
+      "instructions": "Top with coleslaw and serve",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -196,7 +140,64 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Low and slow is the secret\nCan also use a slow cooker\nLeftovers freeze beautifully"
-  }
+  "recipe": {
+    "id": "pulled-pork-sandwich",
+    "tags": [
+      "pork",
+      "breakfast"
+    ],
+    "title": "Pulled Pork Sandwich",
+    "course": "breakfast",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 8,
+    "difficulty": "Medium",
+    "description": "Slow-cooked tender pork with BBQ sauce on a soft bun",
+    "estimated_total": "PT6H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "pork_shoulder",
+      "name": "pork shoulder",
+      "unit": "kg",
+      "quantity": 2.0
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "brown_sugar",
+      "name": "brown sugar",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "garlic_powder",
+      "name": "garlic powder",
+      "unit": "tbsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "bbq_sauce",
+      "name": "BBQ sauce",
+      "unit": "ml",
+      "quantity": 300.0
+    },
+    {
+      "id": "buns",
+      "name": "buns",
+      "unit": "burger",
+      "quantity": 8.0
+    },
+    {
+      "id": "coleslaw_for_topping",
+      "name": "Coleslaw for topping",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }
