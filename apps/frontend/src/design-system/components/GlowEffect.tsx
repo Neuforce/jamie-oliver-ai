@@ -1,11 +1,17 @@
+import React from 'react';
+
 export function GlowEffect() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      <svg 
-        className="absolute top-[142px] left-[-4px] w-[394px] h-[442px]" 
-        fill="none" 
-        viewBox="0 0 594 642"
-      >
+      <div className="container mx-auto px-5 relative h-full">
+        <div className="relative w-full max-w-md mx-auto h-full">
+          <svg
+            className="absolute top-[142px] w-[394px] h-[442px]"
+            style={{ left: '-30px' }}
+            fill="none"
+            viewBox="0 0 594 642"
+          >
+
         <defs>
           {/* Filters */}
           <filter id="glow-filter-1" colorInterpolationFilters="sRGB" filterUnits="userSpaceOnUse">
@@ -42,36 +48,38 @@ export function GlowEffect() {
 
         {/* Ellipse 3 - Primary Glow */}
         <g filter="url(#glow-filter-1)">
-          <circle 
-            cx="297" 
-            cy="297" 
-            r="197" 
-            fill="url(#glow-gradient-1)" 
-            fillOpacity="0.3" 
+          <circle
+            cx="297"
+            cy="297"
+            r="197"
+            fill="url(#glow-gradient-1)"
+            fillOpacity="0.3"
           />
         </g>
 
         {/* Ellipse 4 - Secondary Glow */}
         <g filter="url(#glow-filter-2)">
-          <circle 
-            cx="338.5" 
-            cy="386.5" 
-            r="135.5" 
-            fill="url(#glow-gradient-2)" 
-            fillOpacity="0.3" 
+          <circle
+            cx="338.5"
+            cy="386.5"
+            r="135.5"
+            fill="url(#glow-gradient-2)"
+            fillOpacity="0.3"
           />
         </g>
 
         {/* Ellipse 5 - Accent Glow */}
         <g filter="url(#glow-filter-3)">
-          <circle 
-            cx="222.5" 
-            cy="464.5" 
-            r="77.5" 
-            fill="url(#glow-gradient-3)" 
+          <circle
+            cx="222.5"
+            cy="464.5"
+            r="77.5"
+            fill="url(#glow-gradient-3)"
           />
         </g>
       </svg>
+        </div>
+      </div>
     </div>
   );
 }

@@ -51,48 +51,68 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
     <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
       <div className="max-w-5xl mx-auto p-6 space-y-8">
         {/* Header actions */}
-        <div className="flex items-center justify-between gap-3">
-          <button
-            onClick={onClose}
-            className="inline-flex items-center justify-center"
-            style={{ padding: 0, background: 'transparent' }}
-          >
-            <img
-              src="/assets/Back.svg"
-              alt="Back"
-              style={{ width: '24px', height: '24px', display: 'block' }}
-            />
-          </button>
+        <div className="flex items-center justify-center">
+          <div className="grid grid-cols-3 items-center gap-3" style={{ width: '600px', boxSizing: 'border-box' }}>
+            {/* Close Button */}
+            <div className="flex items-center">
+              <button
+                onClick={onClose}
+                className="inline-flex items-center justify-center"
+                style={{ padding: 0, background: 'transparent' }}
+              >
+                <img
+                  src="/assets/Back.svg"
+                  alt="Back"
+                  style={{ width: '24px', height: '24px', display: 'block' }}
+                />
+              </button>
+            </div>
 
-          <div className="flex-1 flex items-center justify-center">
-            <img
-              src={jamieLogo}
-              alt="Jamie Oliver"
-              style={{ height: '32px', width: 'auto', display: 'block' }}
-            />
-          </div>
+            {/* Logo - Centered */}
+            <div className="flex items-center justify-center">
+              <div
+                style={{
+                  height: 'clamp(24px, calc(100vw * 32 / 390), 32px)',
+                  maxWidth: '171.75px'
+                }}
+              >
+                <img
+                  src={jamieLogo}
+                  alt="Jamie Oliver"
+                  style={{
+                    height: '100%',
+                    width: 'auto',
+                    display: 'block',
+                    maxWidth: '100%',
+                    objectFit: 'contain'
+                  }}
+                />
+              </div>
+            </div>
 
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="inline-flex items-center justify-center"
-              style={{
-                padding: 0,
-                background: '#FFFFFF',
-                borderRadius: '999px',
-                width: '48px',
-                height: '48px',
-                boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
-                border: '1px solid rgba(232,235,237,0.8)',
-              }}
-            >
-              <img
-                src="/assets/Recipes.svg"
-                alt="Recipes"
-                style={{ width: '24px', height: '24px', display: 'block' }}
-              />
-            </button>
+            {/* Recipes Button */}
+            <div className="flex items-center justify-end">
+              <button
+                type="button"
+                onClick={onClose}
+                className="inline-flex items-center justify-center"
+                style={{
+                  padding: 0,
+                  background: '#FFFFFF',
+                  borderRadius: '999px',
+                  width: '48px',
+                  height: '48px',
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+                  border: '1px solid rgba(232,235,237,0.8)',
+                }}
+              >
+                <img
+                  src="/assets/Recipes.svg"
+                  alt="Recipes"
+                  style={{ width: '24px', height: '24px', display: 'block' }}
+                />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -106,96 +126,98 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
         />
 
         {/* Cook with Jamie CTA */}
-        <div style={{ marginTop: '24px' }}>
-          {savedSession ? (
-            <div className="space-y-3">
-              <Button
-                onClick={onCookWithJamie}
-                className="w-full justify-between text-white"
-                size="lg"
-                style={{
-                  height: '50px',
-                  padding: '9px 14px 9px 24px',
-                  borderRadius: '24px',
-                  backgroundColor: '#29514F',
-                  transition: 'background-color 0.2s ease',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#1f423f')}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#29514F')}
-              >
-                <Play className="mr-2 size-5" />
-                Continue Cooking - Step {savedSession.currentStep + 1} of {recipe.instructions.length}
-                <span
-                  className="inline-flex items-center justify-center"
+        <div className="flex items-center justify-center" style={{ marginTop: '24px' }}>
+          <div style={{ width: '600px', boxSizing: 'border-box' }}>
+            {savedSession ? (
+              <div className="space-y-3">
+                <Button
+                  onClick={onCookWithJamie}
+                  className="w-full justify-between text-white"
+                  size="lg"
                   style={{
-                    width: '32px',
-                    height: '32px',
-                    borderRadius: '9px',
-                  background: '#29514F',
+                    height: '50px',
+                    padding: '9px 14px 9px 24px',
+                    borderRadius: '24px',
+                    backgroundColor: '#29514F',
+                    transition: 'background-color 0.2s ease',
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#1f423f')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#29514F')}
                 >
-                  <ArrowRight className="size-4" />
-                </span>
-              </Button>
-              <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-                <div
-                  className="bg-green-500 h-full rounded-full transition-all"
-                  style={{
-                    width: `${((savedSession.currentStep + 1) / recipe.instructions.length) * 100}%`
-                  }}
-                />
-              </div>
-            </div>
-          ) : (
-            <div
-              style={{
-                width: '100%',
-                minHeight: '58px',
-                borderRadius: '24px',
-                background: 'rgba(232, 235, 237, 0.5)',
-                padding: '8px 0 0 0',
-                alignSelf: 'stretch',
-                display: 'flex',
-                alignItems: 'flex-end',
-                overflow: 'hidden',
-              }}
-            >
-              <Button
-                onClick={onCookWithJamie}
-                className="w-full justify-between text-white"
-                size="lg"
-                style={{
-                  height: '50px',
-                  padding: '9px 14px 9px 32px',
-                  borderRadius: '24px',
-                  backgroundColor: '#3D6E6C',
-                  transition: 'background-color 0.2s ease',
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#1f423f')}
-                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#3D6E6C')}
-              >
-                <span
-                  style={{
-                    marginLeft: '32px',
-                    textTransform: 'uppercase',
-                  }}
-                >
-                  Cook with Jamie
-                </span>
-                <span
-                  className="inline-flex items-center justify-center"
-                  style={{
-                    width: '24px',
-                    height: '24px',
-                    borderRadius: '9px',
+                  <Play className="mr-2 size-5" />
+                  Continue Cooking - Step {savedSession.currentStep + 1} of {recipe.instructions.length}
+                  <span
+                    className="inline-flex items-center justify-center"
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '9px',
                     background: '#29514F',
+                    }}
+                  >
+                    <ArrowRight className="size-4" />
+                  </span>
+                </Button>
+                <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
+                  <div
+                    className="bg-green-500 h-full rounded-full transition-all"
+                    style={{
+                      width: `${((savedSession.currentStep + 1) / recipe.instructions.length) * 100}%`
+                    }}
+                  />
+                </div>
+              </div>
+            ) : (
+              <div
+                style={{
+                  width: '100%',
+                  minHeight: '58px',
+                  borderRadius: '24px',
+                  background: 'rgba(232, 235, 237, 0.5)',
+                  padding: '8px 0 0 0',
+                  alignSelf: 'stretch',
+                  display: 'flex',
+                  alignItems: 'flex-end',
+                  overflow: 'hidden',
+                }}
+              >
+                <Button
+                  onClick={onCookWithJamie}
+                  className="w-full justify-between text-white"
+                  size="lg"
+                  style={{
+                    height: '50px',
+                    padding: '9px 14px 9px 32px',
+                    borderRadius: '24px',
+                    backgroundColor: '#3D6E6C',
+                    transition: 'background-color 0.2s ease',
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#1f423f')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#3D6E6C')}
                 >
-                  <ArrowRight className="size-4" />
-                </span>
-              </Button>
-            </div>
-          )}
+                  <span
+                    style={{
+                      marginLeft: '32px',
+                      textTransform: 'uppercase',
+                    }}
+                  >
+                    Cook with Jamie
+                  </span>
+                  <span
+                    className="inline-flex items-center justify-center"
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      borderRadius: '9px',
+                      background: '#29514F',
+                    }}
+                  >
+                    <ArrowRight className="size-4" />
+                  </span>
+                </Button>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Tabs */}
@@ -205,15 +227,18 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
           className="w-full"
           style={{ marginTop: '32px' }}
         >
-          <div
-            className="w-full max-w-[420px] mx-auto shadow-[0_4px_10px_rgba(0,0,0,0.05)]"
-            style={{
-              background: '#F2F6F5',
-              borderRadius: '24px',
-              padding: '4px',
-              minHeight: '49px',
-            }}
-          >
+          <div className="flex items-center justify-center">
+            <div
+              className="w-full shadow-[0_4px_10px_rgba(0,0,0,0.05)]"
+              style={{
+                width: '600px',
+                boxSizing: 'border-box',
+                background: '#F2F6F5',
+                borderRadius: '24px',
+                padding: '4px',
+                minHeight: '49px',
+              }}
+            >
             <TabsList className="w-full flex items-center gap-0 bg-transparent p-0">
               <TabsTrigger
                 value="ingredients"
@@ -272,78 +297,83 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
                 Jamie's Tips
               </TabsTrigger>
             </TabsList>
+            </div>
           </div>
 
-          <TabsContent value="ingredients" className="mt-6">
-            <div className="space-y-3">
-              {recipe.ingredients.map((ingredient, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
-                >
-                  <div
-                    className="mt-1 size-2 rounded-full flex-shrink-0"
-                    style={{ background: '#3D6A6C' }}
-                  />
-                  <span>{ingredient}</span>
+          <div className="flex items-center justify-center">
+            <div style={{ width: '600px', boxSizing: 'border-box' }}>
+              <TabsContent value="ingredients" className="mt-6">
+                <div className="space-y-3">
+                  {recipe.ingredients.map((ingredient, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
+                    >
+                      <div
+                        className="mt-1 size-2 rounded-full flex-shrink-0"
+                        style={{ background: '#3D6A6C' }}
+                      />
+                      <span>{ingredient}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </TabsContent>
+              </TabsContent>
 
-          <TabsContent value="utensils" className="mt-6">
-            {recipe.utensils && recipe.utensils.length > 0 ? (
-              <div className="space-y-3">
-                {recipe.utensils.map((utensil, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
-                  >
-                  <div
-                    className="mt-1 size-2 rounded-full flex-shrink-0"
-                    style={{ background: '#3D6A6C' }}
-                  />
-                    <span>{utensil}</span>
+              <TabsContent value="utensils" className="mt-6">
+                {recipe.utensils && recipe.utensils.length > 0 ? (
+                  <div className="space-y-3">
+                    {recipe.utensils.map((utensil, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
+                      >
+                      <div
+                        className="mt-1 size-2 rounded-full flex-shrink-0"
+                        style={{ background: '#3D6A6C' }}
+                      />
+                        <span>{utensil}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-muted-foreground">No utensils listed.</p>
-            )}
-          </TabsContent>
+                ) : (
+                  <p className="text-muted-foreground">No utensils listed.</p>
+                )}
+              </TabsContent>
 
-          <TabsContent value="instructions" className="mt-6">
-            <div className="space-y-4">
-              {recipe.instructions.map((instruction, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-4 p-4 rounded-lg bg-muted/50"
-                >
-                  <div
-                    className="flex-shrink-0 flex items-center justify-center size-8 rounded-full"
-                    style={{ background: '#3D6A6C', color: '#FFFFFF' }}
-                  >
-                    {index + 1}
-                  </div>
-                  <p className="pt-1">{instruction}</p>
+              <TabsContent value="instructions" className="mt-6">
+                <div className="space-y-4">
+                  {recipe.instructions.map((instruction, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-4 p-4 rounded-lg bg-muted/50"
+                    >
+                      <div
+                        className="flex-shrink-0 flex items-center justify-center size-8 rounded-full"
+                        style={{ background: '#3D6A6C', color: '#FFFFFF' }}
+                      >
+                        {index + 1}
+                      </div>
+                      <p className="pt-1">{instruction}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-          </TabsContent>
+              </TabsContent>
 
-          <TabsContent value="tips" className="mt-6">
-            <div className="space-y-4">
-              {recipe.tips.map((tip, index) => (
-                <div
-                  key={index}
-                  className="flex items-start gap-4 p-4 rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800"
-                >
-                  <Lightbulb className="size-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-                  <p>{tip}</p>
+              <TabsContent value="tips" className="mt-6">
+                <div className="space-y-4">
+                  {recipe.tips.map((tip, index) => (
+                    <div
+                      key={index}
+                      className="flex items-start gap-4 p-4 rounded-lg bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-800"
+                    >
+                      <Lightbulb className="size-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                      <p>{tip}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </TabsContent>
             </div>
-          </TabsContent>
+          </div>
         </Tabs>
       </div>
     </div>

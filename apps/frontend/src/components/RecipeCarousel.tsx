@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Recipe } from '../data/recipes';
 import { RecipeCard } from './RecipeCard';
 import { Button } from './ui/button';
@@ -58,7 +58,7 @@ export function RecipeCarousel({ recipes, onRecipeClick }: RecipeCarouselProps) 
           <ChevronLeft className="size-4" />
         </Button>
       )}
-      
+
       {currentIndex < maxIndex && (
         <Button
           onClick={handleNext}
@@ -83,7 +83,7 @@ export function RecipeCarousel({ recipes, onRecipeClick }: RecipeCarouselProps) 
               <RecipeCard
                 recipe={recipe}
                 onClick={() => onRecipeClick(recipe)}
-                variant="grid"
+                variant="chat"
               />
             </div>
           ))}
