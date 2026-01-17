@@ -114,6 +114,9 @@ class TimerManager:
         
         logger.info(f"Started timer '{timer_id}' for {duration_secs}s (step: {step_id or 'custom'})")
         
+        # Emit timer list update so frontend TimerPanel shows the new timer
+        asyncio.create_task(self._emit_timer_list_update())
+        
         return timer
     
     def start_timer_for_step(
