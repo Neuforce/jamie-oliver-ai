@@ -49,10 +49,10 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
 
   return (
     <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
-      <div className="max-w-5xl mx-auto p-6 space-y-8">
+      <div className="w-full max-w-5xl mx-auto space-y-8" style={{ paddingTop: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
         {/* Header actions */}
-        <div className="flex items-center justify-center">
-          <div className="grid grid-cols-3 items-center gap-3" style={{ width: '600px', boxSizing: 'border-box' }}>
+        <div className="flex items-center justify-center w-full" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          <div className="grid grid-cols-3 items-center gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
             {/* Close Button */}
             <div className="flex items-center">
               <button
@@ -126,8 +126,8 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
         />
 
         {/* Cook with Jamie CTA */}
-        <div className="flex items-center justify-center" style={{ marginTop: '24px' }}>
-          <div style={{ width: '600px', boxSizing: 'border-box' }}>
+        <div className="flex items-center justify-center w-full" style={{ marginTop: '24px', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          <div style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
             {savedSession ? (
               <div className="space-y-3">
                 <Button
@@ -227,26 +227,29 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
           className="w-full"
           style={{ marginTop: '32px' }}
         >
-          <div className="flex items-center justify-center">
+          <div className="flex items-center justify-center w-full" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
             <div
               className="w-full shadow-[0_4px_10px_rgba(0,0,0,0.05)]"
               style={{
-                width: '600px',
+                width: '100%',
+                maxWidth: '600px',
                 boxSizing: 'border-box',
                 background: '#F2F6F5',
                 borderRadius: '24px',
-                padding: '4px',
+                padding: 'clamp(2px, calc(100vw * 4 / 390), 4px)',
                 minHeight: '49px',
+                margin: '0 auto',
               }}
             >
             <TabsList className="w-full flex items-center gap-0 bg-transparent p-0">
               <TabsTrigger
                 value="ingredients"
-                className="flex-1 rounded-full text-sm font-semibold flex items-center justify-center"
+                className="flex-1 rounded-full font-semibold flex items-center justify-center"
                 style={{
                   height: '41px',
-                  padding: '0 24px',
+                  padding: '0 clamp(4px, calc(100vw * 12 / 390), 12px)',
                   flex: '1 0 0',
+                  fontSize: 'clamp(11px, calc(100vw * 14 / 390), 14px)',
                   background: activeTab === 'ingredients' ? '#3D6A6C' : 'transparent',
                   color: activeTab === 'ingredients' ? '#FFFFFF' : '#3D6A6C',
                   transition: 'background-color 0.2s ease, color 0.2s ease',
@@ -256,11 +259,12 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
               </TabsTrigger>
               <TabsTrigger
                 value="utensils"
-                className="flex-1 rounded-full text-sm font-semibold flex items-center justify-center"
+                className="flex-1 rounded-full font-semibold flex items-center justify-center"
                 style={{
                   height: '41px',
-                  padding: '0 24px',
+                  padding: '0 clamp(4px, calc(100vw * 12 / 390), 12px)',
                   flex: '1 0 0',
+                  fontSize: 'clamp(11px, calc(100vw * 14 / 390), 14px)',
                   background: activeTab === 'utensils' ? '#3D6A6C' : 'transparent',
                   color: activeTab === 'utensils' ? '#FFFFFF' : '#3D6A6C',
                   transition: 'background-color 0.2s ease, color 0.2s ease',
@@ -270,11 +274,12 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
               </TabsTrigger>
               <TabsTrigger
                 value="instructions"
-                className="flex-1 rounded-full text-sm font-semibold flex items-center justify-center"
+                className="flex-1 rounded-full font-semibold flex items-center justify-center"
                 style={{
                   height: '41px',
-                  padding: '0 24px',
+                  padding: '0 clamp(4px, calc(100vw * 12 / 390), 12px)',
                   flex: '1 0 0',
+                  fontSize: 'clamp(11px, calc(100vw * 14 / 390), 14px)',
                   background: activeTab === 'instructions' ? '#3D6A6C' : 'transparent',
                   color: activeTab === 'instructions' ? '#FFFFFF' : '#3D6A6C',
                   transition: 'background-color 0.2s ease, color 0.2s ease',
@@ -284,11 +289,12 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
               </TabsTrigger>
               <TabsTrigger
                 value="tips"
-                className="flex-1 rounded-full text-sm font-semibold flex items-center justify-center"
+                className="flex-1 rounded-full font-semibold flex items-center justify-center"
                 style={{
                   height: '41px',
-                  padding: '0 24px',
+                  padding: '0 clamp(4px, calc(100vw * 12 / 390), 12px)',
                   flex: '1 0 0',
+                  fontSize: 'clamp(11px, calc(100vw * 14 / 390), 14px)',
                   background: activeTab === 'tips' ? '#3D6A6C' : 'transparent',
                   color: activeTab === 'tips' ? '#FFFFFF' : '#3D6A6C',
                   transition: 'background-color 0.2s ease, color 0.2s ease',
@@ -300,8 +306,8 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
             </div>
           </div>
 
-          <div className="flex items-center justify-center">
-            <div style={{ width: '600px', boxSizing: 'border-box' }}>
+          <div className="flex items-center justify-center w-full" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+            <div style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
               <TabsContent value="ingredients" className="mt-6">
                 <div className="space-y-3">
                   {recipe.ingredients.map((ingredient, index) => (

@@ -31,14 +31,14 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
         setHasSession(false);
         return;
       }
-
+      
       const session = localStorage.getItem(`cooking-session-${recipe.id}`);
       if (session) {
         try {
           const parsed = JSON.parse(session);
           const now = new Date().getTime();
           const sessionAge = now - parsed.timestamp;
-
+          
           if (sessionAge < 24 * 60 * 60 * 1000) {
             setHasSession(true);
             setSessionProgress(((parsed.currentStep + 1) / recipe.instructions.length) * 100);
@@ -97,24 +97,6 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
           </div>
         </motion.div>
         </div>
-        <div
-          className="px-6 py-5 space-y-4"
-          style={{ marginTop: '24px' }}
-        >
-          <h3
-            style={{
-              color: '#2C5F5D',
-              fontFamily: 'Poppins, sans-serif',
-              fontSize: '26px',
-              fontWeight: 700,
-              letterSpacing: '0.087px',
-              lineHeight: '24px',
-              textTransform: 'uppercase',
-            }}
-          >
-            {recipe.title}
-          </h3>
-        </div>
       </>
     );
   }
@@ -145,10 +127,10 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
                 borderRadius: '24px',
               }}
             />
-
+            
             {/* Gradient Overlay - matching Figma design */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 via-50% to-transparent" />
-
+            
             {/* Badges at top */}
             <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
               {/* Category/Session Badge on left */}
@@ -188,10 +170,10 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
               >
                 {recipe.title}
               </h3>
-
+              
               {/* Meta Info */}
 
-
+              
               {/* Progress Bar */}
               {hasSession && (
                 <div className="mt-1 w-full bg-white/20 rounded-full h-1.5 overflow-hidden">

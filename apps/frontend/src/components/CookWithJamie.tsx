@@ -951,13 +951,13 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   return (
     <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
       {/* Cooking hero */}
-      <div className="px-6 pt-8 pb-6">
-        <div className="flex items-center justify-center mb-6">
-          <div className="grid grid-cols-3 items-start gap-3" style={{ width: '600px', boxSizing: 'border-box' }}>
+      <div style={{ paddingTop: 'clamp(16px, calc(100vw * 32 / 390), 32px)', paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+        <div className="flex items-center justify-center mb-6 w-full">
+          <div className="grid grid-cols-3 items-start gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
             {/* Back Button */}
             <div className="flex items-start">
-              <button
-                onClick={handleExitClick}
+        <button
+          onClick={handleExitClick}
                 className="inline-flex items-center justify-center"
                 style={{ marginTop: '16px', padding: 0, background: 'transparent' }}
                 aria-label="Back"
@@ -967,7 +967,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                   alt="Back"
                   style={{ width: '24px', height: '24px', display: 'block' }}
                 />
-              </button>
+        </button>
             </div>
             {/* Logo - Centered */}
             <div className="flex items-center justify-center">
@@ -976,14 +976,15 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                 style={{
                   marginTop: '17px',
                   height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
+                  width: 'clamp(140px, calc(100vw * 171.75 / 390), 171.75px)',
                   maxWidth: '171.75px'
                 }}
               >
                 <img
                   src={jamieLogo}
                   alt="Jamie Oliver"
-                  className="h-full w-auto object-contain"
-                  style={{ maxWidth: '100%' }}
+                  className="h-full w-full object-contain"
+                  style={{ maxWidth: '100%', maxHeight: '100%' }}
                 />
               </div>
             </div>
@@ -1049,9 +1050,36 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
             </div>
           </div>
         </div>
-        <div className="w-full flex items-center justify-center">
-          <div className="pointer-events-none select-none flex items-center justify-center" style={{ width: '100%', maxWidth: '600px' }}>
+        <div className="w-full flex items-center justify-center" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          <div className="pointer-events-none select-none flex items-center justify-center" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
             <RecipeCard recipe={recipe} onClick={() => {}} variant="cooking" />
+        </div>
+      </div>
+
+        {/* Recipe Title - Outside RecipeCard, 24px below image */}
+        <div className="w-full flex items-center justify-center" style={{ marginTop: '24px', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '600px',
+              textAlign: 'left',
+              margin: '0 auto'
+            }}
+          >
+            <h3
+              style={{
+                color: '#2C5F5D',
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: 'clamp(20px, calc(100vw * 26 / 390), 26px)',
+                fontWeight: 700,
+                letterSpacing: '0.087px',
+                lineHeight: '24px',
+                textTransform: 'uppercase',
+                margin: 0,
+              }}
+            >
+              {recipe.title}
+            </h3>
           </div>
         </div>
       </div>
@@ -1201,7 +1229,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                       Step {currentStep + 1} of {totalSteps}
                     </span>
                   </div>
-                </div>
+          </div>
 
                 {/* Step Instructions - Clean and prominent */}
                 <div className="w-full max-w-[420px]">
@@ -1409,8 +1437,8 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           >
             {/* Header */}
             <div className="px-6 pt-8 pb-6 flex-shrink-0">
-              <div className="flex items-center justify-center">
-                <div className="grid grid-cols-3 items-start gap-3" style={{ width: '600px', boxSizing: 'border-box' }}>
+              <div className="flex items-center justify-center w-full" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+                <div className="grid grid-cols-3 items-start gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
                   {/* Close Button */}
                   <div className="flex items-start">
                     <button
@@ -1434,17 +1462,18 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                   <div className="flex items-center justify-center">
                     <div
                       className="flex items-center justify-center"
-                      style={{ 
+                      style={{
                         marginTop: '17px',
                         height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
+                        width: 'clamp(140px, calc(100vw * 171.75 / 390), 171.75px)',
                         maxWidth: '171.75px'
                       }}
                     >
-                      <img 
-                        src={jamieLogo} 
-                        alt="Jamie Oliver" 
-                        className="h-full w-auto object-contain"
-                        style={{ maxWidth: '100%' }}
+                      <img
+                        src={jamieLogo}
+                        alt="Jamie Oliver"
+                        className="h-full w-full object-contain"
+                        style={{ maxWidth: '100%', maxHeight: '100%' }}
                       />
                     </div>
                   </div>

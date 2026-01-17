@@ -487,6 +487,7 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
                       onRecipeClick(recipe);
                       onClose();
                     }}
+                    singleSlide={true}
                   />
                 </div>
               )}
