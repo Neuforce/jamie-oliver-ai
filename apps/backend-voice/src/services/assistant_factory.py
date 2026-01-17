@@ -1,7 +1,12 @@
 """Factory for creating voice assistant instances."""
 
+from typing import Optional
+
 from ccai.core.brain.simple_brain import SimpleBrain
+from ccai.core.llm.base import BaseLLM
 from ccai.core.llm.llm_openai import OpenAILLM
+from ccai.core.llm.llm_gemini import GeminiLLM
+from ccai.core.llm.llm_groq import GroqLLM
 from ccai.core.memory.chat_memory import SimpleChatMemory
 from ccai.core.speech_to_text.stt_deepgram import DeepgramSTTService
 from ccai.core.text_to_speech.elevenlabs_tts import ElevenLabsTextToSpeech
@@ -12,6 +17,73 @@ from src.tools.recipe_tools import recipe_function_manager
 from src.config import settings, JAMIE_OLIVER_SYSTEM_PROMPT
 
 logger = configure_logger(__name__)
+
+
+class LLMFactory:
+    """Factory for creating LLM instances based on provider configuration."""
+    
+    # Default models for each provider
+    DEFAULT_MODELS = {
+        "openai": "gpt-4o",
+        "gemini": "gemini-2.0-flash",
+        "groq": "llama-3.1-70b-versatile",
+    }
+    
+    @classmethod
+    def create(
+        cls,
+        provider: Optional[str] = None,
+        model: Optional[str] = None,
+        temperature: Optional[float] = None,
+    ) -> BaseLLM:
+        """
+        Create an LLM instance based on provider configuration.
+        
+        Args:
+            provider: LLM provider (openai, gemini, groq). Defaults to settings.
+            model: Model name. Defaults to settings or provider default.
+            temperature: Sampling temperature. Defaults to settings.
+            
+        Returns:
+            Configured LLM instance
+            
+        Raises:
+            ValueError: If provider is not supported or API key is missing
+        """
+        provider = provider or settings.LLM_PROVIDER
+        temperature = temperature if temperature is not None else settings.LLM_TEMPERATURE
+        
+        logger.info(f"Creating LLM: provider={provider}, model={model or 'default'}, temp={temperature}")
+        
+        if provider == "openai":
+            if not settings.OPENAI_API_KEY:
+                raise ValueError("OPENAI_API_KEY is required for OpenAI provider")
+            return OpenAILLM(
+                api_key=settings.OPENAI_API_KEY,
+                model=model or settings.LLM_MODEL or cls.DEFAULT_MODELS["openai"],
+                temperature=temperature,
+            )
+        
+        elif provider == "gemini":
+            if not settings.GEMINI_API_KEY:
+                raise ValueError("GEMINI_API_KEY is required for Gemini provider")
+            return GeminiLLM(
+                api_key=settings.GEMINI_API_KEY,
+                model=model or settings.LLM_MODEL or cls.DEFAULT_MODELS["gemini"],
+                temperature=temperature,
+            )
+        
+        elif provider == "groq":
+            if not settings.GROQ_API_KEY:
+                raise ValueError("GROQ_API_KEY is required for Groq provider")
+            return GroqLLM(
+                api_key=settings.GROQ_API_KEY,
+                model=model or settings.LLM_MODEL or cls.DEFAULT_MODELS["groq"],
+                temperature=temperature,
+            )
+        
+        else:
+            raise ValueError(f"Unsupported LLM provider: {provider}. Supported: openai, gemini, groq")
 
 
 class AssistantFactory:
@@ -38,6 +110,10 @@ class AssistantFactory:
         chat_memory = SimpleChatMemory()
         chat_memory.add_system_message(content=JAMIE_OLIVER_SYSTEM_PROMPT)
         
+        # Create LLM using factory (configurable provider)
+        llm = LLMFactory.create()
+        logger.info(f"Using LLM provider: {settings.LLM_PROVIDER}, model: {settings.LLM_MODEL}")
+        
         # Create the voice assistant
         assistant = SimpleVoiceAssistant(
             stt=DeepgramSTTService(
@@ -47,11 +123,7 @@ class AssistantFactory:
                 endpointing=settings.STT_ENDPOINTING_MS,
             ),
             brain=SimpleBrain(
-                llm=OpenAILLM(
-                    model=settings.LLM_MODEL,
-                    api_key=settings.OPENAI_API_KEY,
-                    temperature=settings.LLM_TEMPERATURE,
-                ),
+                llm=llm,
                 chat_memory=chat_memory,
                 function_manager=recipe_function_manager,
             ),

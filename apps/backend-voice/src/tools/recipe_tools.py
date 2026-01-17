@@ -282,19 +282,122 @@ async def start_recipe(
                     await engine.confirm_step_done(step_id)
         logger.info(f"Recipe engine started for session {session_id}")
         
-        # Build internal reference of all steps with IDs for the agent
+        # Build rich recipe context for the agent
+        recipe_context = _build_recipe_context(payload, recipe)
         steps_summary = _build_steps_summary(recipe)
         
         return f"""Recipe loaded: {recipe.title}
 
-INTERNAL STEP REFERENCE (use step_id in tools, don't show user this):
+{recipe_context}
+
+INTERNAL STEP REFERENCE (use step_id in tools, NEVER show to user):
 {chr(10).join(steps_summary)}
 
-Remember: Guide naturally, don't expose technical details. I'll walk the user through step by step."""
+You now know this recipe completely. Answer any questions naturally. Guide them through cooking with warmth and encouragement!"""
         
     except Exception as e:
         logger.error(f"Error starting recipe: {e}", exc_info=True)
         return f"Sorry, there was an error starting the recipe: {str(e)}"
+
+
+def _build_recipe_context(payload: dict, recipe: Recipe) -> str:
+    """
+    Build a rich context summary of the recipe for the agent.
+    
+    This gives the agent "knowledge" of the recipe so it can answer
+    questions naturally without needing to call tools for basic info.
+    """
+    recipe_data = payload.get("recipe", {})
+    
+    # Basic info
+    title = recipe_data.get("title", recipe.title)
+    servings = recipe_data.get("servings", "Unknown")
+    difficulty = recipe_data.get("difficulty", "medium")
+    description = recipe_data.get("description", "")
+    
+    # Timing
+    total_time = recipe_data.get("estimated_total", "")
+    prep_time = recipe_data.get("prep_time", "")
+    cook_time = recipe_data.get("cook_time", "")
+    
+    time_info = []
+    if total_time:
+        time_info.append(f"Total: {_format_duration(parse_iso_duration(total_time))}")
+    if prep_time:
+        time_info.append(f"Prep: {_format_duration(parse_iso_duration(prep_time))}")
+    if cook_time:
+        time_info.append(f"Cook: {_format_duration(parse_iso_duration(cook_time))}")
+    
+    # Ingredients summary
+    ingredients = payload.get("ingredients", [])
+    ing_lines = []
+    for ing in ingredients[:15]:  # Limit to first 15 for context window
+        if isinstance(ing, dict):
+            name = ing.get("name", "")
+            qty = ing.get("quantity", "")
+            unit = ing.get("unit", "")
+            if qty and unit:
+                ing_lines.append(f"- {qty} {unit} {name}")
+            elif qty:
+                ing_lines.append(f"- {qty} {name}")
+            else:
+                ing_lines.append(f"- {name}")
+        elif isinstance(ing, str):
+            ing_lines.append(f"- {ing}")
+    
+    if len(ingredients) > 15:
+        ing_lines.append(f"... and {len(ingredients) - 15} more ingredients")
+    
+    # Steps summary (brief)
+    steps = payload.get("steps", [])
+    step_lines = []
+    for i, step in enumerate(steps[:10], 1):  # Limit for context
+        descr = step.get("descr", f"Step {i}")
+        step_type = step.get("type", "immediate")
+        duration = step.get("duration", "")
+        
+        if step_type == "timer" and duration:
+            dur_str = _format_duration(parse_iso_duration(duration))
+            step_lines.append(f"{i}. {descr} ({dur_str})")
+        else:
+            step_lines.append(f"{i}. {descr}")
+    
+    if len(steps) > 10:
+        step_lines.append(f"... and {len(steps) - 10} more steps")
+    
+    # Notes/tips
+    notes = payload.get("notes", {})
+    notes_text = ""
+    if isinstance(notes, dict):
+        if notes.get("text"):
+            notes_text = notes["text"][:200]  # Truncate
+        elif notes.get("tips"):
+            notes_text = notes["tips"][:200]
+    elif isinstance(notes, str):
+        notes_text = notes[:200]
+    
+    # Build context
+    context_parts = [
+        f"## RECIPE: {title}",
+        f"Servings: {servings} | Difficulty: {difficulty}",
+    ]
+    
+    if time_info:
+        context_parts.append(f"Time: {' | '.join(time_info)}")
+    
+    if description:
+        context_parts.append(f"\n{description[:300]}")
+    
+    context_parts.append("\n### INGREDIENTS:")
+    context_parts.extend(ing_lines)
+    
+    context_parts.append("\n### STEPS OVERVIEW:")
+    context_parts.extend(step_lines)
+    
+    if notes_text:
+        context_parts.append(f"\n### TIPS: {notes_text}")
+    
+    return "\n".join(context_parts)
 @register_function(recipe_function_manager)
 async def list_available_recipes() -> str:
     """
@@ -433,6 +536,266 @@ async def reset_kitchen_timer(duration_seconds: int = 0) -> str:
     except Exception as exc:
         logger.error(f"Failed to reset kitchen timer: {exc}", exc_info=True)
         return "Sorry, I couldn't reset the timer."
+
+
+# =============================================================================
+# ENHANCED TIMER TOOLS - Natural timer management for parallel cooking
+# =============================================================================
+
+@register_function(recipe_function_manager)
+@trace_tool_call("start_custom_timer")
+async def start_custom_timer(label: str, minutes: int = 0, seconds: int = 0) -> str:
+    """
+    Start a custom timer with a label. Use this when the user wants to set
+    a timer that's not tied to a specific recipe step.
+    
+    Examples:
+    - "Set a timer for 5 minutes for the pasta"
+    - "Remind me in 3 minutes to check the sauce"
+    - "Start a 10 minute timer"
+    
+    Args:
+        label: A descriptive name for the timer (e.g., "pasta", "sauce", "bread")
+        minutes: Number of minutes
+        seconds: Number of seconds (in addition to minutes)
+        
+    Returns:
+        Confirmation that the timer was started
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "[ERROR] No session found. Please reconnect."
+    
+    engine = _get_engine(session_id)
+    if not engine:
+        return "[ERROR] No recipe is in progress. Start a recipe first."
+    
+    total_seconds = (minutes * 60) + seconds
+    if total_seconds <= 0:
+        return "[ERROR] Please specify a positive duration for the timer."
+    
+    # Create a custom timer through the timer manager
+    timer_id = f"custom-{label.lower().replace(' ', '-')}-{int(total_seconds)}"
+    
+    try:
+        # For custom timers, we send a control event to the frontend
+        await session_service.send_control_event(
+            session_id,
+            "timer_start",
+            {
+                "seconds": total_seconds,
+                "label": label,
+                "timer_id": timer_id,
+                "is_custom": True
+            }
+        )
+        
+        duration_str = _format_duration(total_seconds)
+        return f"[TIMER STARTED] {duration_str} timer set for '{label}'.\nI'll let you know when it's done!"
+    
+    except Exception as e:
+        logger.error(f"Failed to start custom timer: {e}")
+        return f"[ERROR] Sorry, I couldn't start that timer. {str(e)}"
+
+
+@register_function(recipe_function_manager)
+@trace_tool_call("adjust_timer")
+async def adjust_timer(
+    step_id: str = "",
+    label: str = "",
+    add_minutes: int = 0,
+    subtract_minutes: int = 0
+) -> str:
+    """
+    Adjust the time on a running timer by adding or subtracting minutes.
+    
+    Use this when the user says:
+    - "Add 5 minutes to the squash timer"
+    - "Take 2 minutes off the timer"
+    - "Give me 3 more minutes"
+    
+    Args:
+        step_id: The step ID if adjusting a step timer
+        label: The timer label if adjusting a custom timer
+        add_minutes: Minutes to add to the timer
+        subtract_minutes: Minutes to subtract from the timer
+        
+    Returns:
+        Confirmation of the adjustment
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "[ERROR] No session found. Please reconnect."
+    
+    engine = _get_engine(session_id)
+    if not engine:
+        return "[ERROR] No recipe is in progress."
+    
+    adjustment_secs = (add_minutes * 60) - (subtract_minutes * 60)
+    
+    if adjustment_secs == 0:
+        return "[ERROR] Please specify how much time to add or subtract."
+    
+    # Find the timer to adjust
+    active_timers = engine.get_active_timers()
+    target_timer = None
+    
+    if step_id:
+        for t in active_timers:
+            if t.step_id == step_id:
+                target_timer = t
+                break
+    elif label:
+        label_lower = label.lower()
+        for t in active_timers:
+            if label_lower in t.label.lower():
+                target_timer = t
+                break
+    elif len(active_timers) == 1:
+        # If only one timer, use that
+        target_timer = active_timers[0]
+    
+    if not target_timer:
+        if not active_timers:
+            return "[INFO] No timers are currently running."
+        timers_list = ", ".join([f"'{t.label}'" for t in active_timers])
+        return f"[INFO] Multiple timers running: {timers_list}. Please specify which one to adjust."
+    
+    # Calculate new time
+    current_remaining = target_timer.remaining_secs or 0
+    new_remaining = max(0, current_remaining + adjustment_secs)
+    
+    # Send adjustment to frontend
+    try:
+        await session_service.send_control_event(
+            session_id,
+            "timer_adjust",
+            {
+                "timer_id": target_timer.id,
+                "step_id": target_timer.step_id,
+                "new_seconds": new_remaining,
+                "adjustment": adjustment_secs
+            }
+        )
+        
+        if adjustment_secs > 0:
+            action = f"Added {_format_duration(abs(adjustment_secs))}"
+        else:
+            action = f"Removed {_format_duration(abs(adjustment_secs))}"
+        
+        new_remaining_str = _format_duration(new_remaining)
+        return f"[TIMER ADJUSTED] {action} to '{target_timer.label}'. Now {new_remaining_str} remaining."
+    
+    except Exception as e:
+        logger.error(f"Failed to adjust timer: {e}")
+        return f"[ERROR] Sorry, I couldn't adjust that timer."
+
+
+@register_function(recipe_function_manager)
+@trace_tool_call("cancel_timer")
+async def cancel_timer(step_id: str = "", label: str = "") -> str:
+    """
+    Cancel a running timer without completing the step.
+    
+    Use this when the user wants to stop a timer:
+    - "Cancel the squash timer"
+    - "Stop the timer"
+    - "Never mind about that timer"
+    
+    Args:
+        step_id: The step ID if cancelling a step timer
+        label: The timer label if cancelling a custom timer
+        
+    Returns:
+        Confirmation that the timer was cancelled
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "[ERROR] No session found. Please reconnect."
+    
+    engine = _get_engine(session_id)
+    if not engine:
+        return "[ERROR] No recipe is in progress."
+    
+    active_timers = engine.get_active_timers()
+    target_timer = None
+    
+    if step_id:
+        for t in active_timers:
+            if t.step_id == step_id:
+                target_timer = t
+                break
+    elif label:
+        label_lower = label.lower()
+        for t in active_timers:
+            if label_lower in t.label.lower():
+                target_timer = t
+                break
+    elif len(active_timers) == 1:
+        target_timer = active_timers[0]
+    
+    if not target_timer:
+        if not active_timers:
+            return "[INFO] No timers are currently running."
+        timers_list = ", ".join([f"'{t.label}'" for t in active_timers])
+        return f"[INFO] Multiple timers running: {timers_list}. Please specify which one to cancel."
+    
+    # Cancel the timer
+    try:
+        if target_timer.step_id:
+            await engine.cancel_timer_for_step(target_timer.step_id)
+        
+        await session_service.send_control_event(
+            session_id,
+            "timer_cancel",
+            {
+                "timer_id": target_timer.id,
+                "step_id": target_timer.step_id,
+            }
+        )
+        
+        return f"[TIMER CANCELLED] Stopped the '{target_timer.label}' timer."
+    
+    except Exception as e:
+        logger.error(f"Failed to cancel timer: {e}")
+        return f"[ERROR] Sorry, I couldn't cancel that timer."
+
+
+@register_function(recipe_function_manager)
+@trace_tool_call("list_timers")
+async def list_timers() -> str:
+    """
+    List all currently running timers with their remaining times.
+    
+    Use this when the user asks:
+    - "What timers do I have?"
+    - "How much time left?"
+    - "What's cooking?"
+    
+    Returns:
+        List of all active timers with remaining times, or confirmation if none
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "[ERROR] No session found. Please reconnect."
+    
+    engine = _get_engine(session_id)
+    if not engine:
+        return "[INFO] No recipe is in progress, so no timers running."
+    
+    active_timers = engine.get_active_timers()
+    
+    if not active_timers:
+        return "[INFO] No timers currently running. All clear!"
+    
+    lines = [f"You have {len(active_timers)} timer{'s' if len(active_timers) > 1 else ''} running:"]
+    
+    for timer in active_timers:
+        remaining_str = _format_duration(timer.remaining_secs or 0)
+        timer_type = "Step timer" if timer.step_id else "Custom timer"
+        lines.append(f"  • {timer.label}: {remaining_str} left ({timer_type})")
+    
+    return "\n".join(lines)
 
 
 def _build_steps_summary(recipe: Recipe) -> list[str]:
@@ -1101,3 +1464,32 @@ async def _send_control_event(session_id: str, action: str, data: dict) -> None:
         await session_service.send_control_event(session_id, action, data)
     except Exception as e:
         logger.warning(f"Failed to send control event: {e}")
+
+
+# =============================================================================
+# APP-AGENT SYNC HELPERS
+# These functions allow the agent to synchronize UI state with its conversation
+# =============================================================================
+
+async def _send_focus_step_event(session_id: str, step_id: str, step_index: int = 0) -> None:
+    """Send event to focus/scroll to a specific step in the UI."""
+    try:
+        await session_service.send_control_event(
+            session_id,
+            "focus_step",
+            {"step_id": step_id, "step_index": step_index}
+        )
+    except Exception as e:
+        logger.warning(f"Failed to send focus_step event: {e}")
+
+
+async def _send_highlight_ingredient_event(session_id: str, ingredient: str) -> None:
+    """Send event to highlight an ingredient in the UI."""
+    try:
+        await session_service.send_control_event(
+            session_id,
+            "highlight_ingredient",
+            {"ingredient": ingredient}
+        )
+    except Exception as e:
+        logger.warning(f"Failed to send highlight_ingredient event: {e}")
