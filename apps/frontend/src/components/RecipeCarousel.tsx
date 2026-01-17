@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Recipe } from '../data/recipes';
 import { RecipeCard } from './RecipeCard';
 import { Button } from './ui/button';
@@ -8,14 +8,20 @@ import { motion, AnimatePresence } from 'motion/react';
 interface RecipeCarouselProps {
   recipes: Recipe[];
   onRecipeClick: (recipe: Recipe) => void;
+  singleSlide?: boolean; // Force single slide display (e.g., for chat)
 }
 
-export function RecipeCarousel({ recipes, onRecipeClick }: RecipeCarouselProps) {
+export function RecipeCarousel({ recipes, onRecipeClick, singleSlide = false }: RecipeCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(3);
   const [direction, setDirection] = useState(0);
 
   useEffect(() => {
+    if (singleSlide) {
+      setSlidesToShow(1);
+      return;
+    }
+
     const handleResize = () => {
       if (window.innerWidth < 640) {
         setSlidesToShow(1);
@@ -29,7 +35,7 @@ export function RecipeCarousel({ recipes, onRecipeClick }: RecipeCarouselProps) 
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [singleSlide]);
 
   const maxIndex = Math.max(0, recipes.length - slidesToShow);
 
@@ -58,7 +64,7 @@ export function RecipeCarousel({ recipes, onRecipeClick }: RecipeCarouselProps) 
           <ChevronLeft className="size-4" />
         </Button>
       )}
-      
+
       {currentIndex < maxIndex && (
         <Button
           onClick={handleNext}
@@ -72,22 +78,36 @@ export function RecipeCarousel({ recipes, onRecipeClick }: RecipeCarouselProps) 
 
       {/* Carousel Content */}
       <div className="overflow-hidden">
-        <div
-          className="grid gap-3"
-          style={{
-            gridTemplateColumns: `repeat(${slidesToShow}, minmax(0, 1fr))`,
-          }}
-        >
-          {visibleRecipes.map((recipe) => (
-            <div key={recipe.id}>
-              <RecipeCard
-                recipe={recipe}
-                onClick={() => onRecipeClick(recipe)}
-                variant="grid"
-              />
-            </div>
-          ))}
-        </div>
+        {singleSlide ? (
+          <div className="flex items-center justify-center">
+            {visibleRecipes.map((recipe) => (
+              <div key={recipe.id}>
+                <RecipeCard
+                  recipe={recipe}
+                  onClick={() => onRecipeClick(recipe)}
+                  variant="chat"
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            className="grid gap-3"
+            style={{
+              gridTemplateColumns: `repeat(${slidesToShow}, minmax(0, 1fr))`,
+            }}
+          >
+            {visibleRecipes.map((recipe) => (
+              <div key={recipe.id}>
+                <RecipeCard
+                  recipe={recipe}
+                  onClick={() => onRecipeClick(recipe)}
+                  variant="chat"
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Dots Indicator */}

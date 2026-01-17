@@ -186,6 +186,7 @@ export function transformRecipeMatch(
 
   return {
     id: numericId,
+    backendId: match.recipe_id, // Include backend ID (slug) for WebSocket
     title: match.title || recipe.title,
     description: recipe.description || fullRecipe.steps[0]?.descr || recipe.title,
     category: extractCategory(recipe.title),
@@ -199,6 +200,7 @@ export function transformRecipeMatch(
       ? fullRecipe.notes.text.split('\n').filter(line => line.trim().length > 0)
       : [],
     utensils: transformUtensils(fullRecipe.utensils),
+    rawRecipePayload: fullRecipe, // Include full recipe payload for voice backend
   };
 }
 

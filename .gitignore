@@ -13,3 +13,4 @@ build/
 .env*.local
 logs/
 apps/frontend/package-lock.jsonapps/backend-search/data/media/
+.github/pull_request_template_filled.md

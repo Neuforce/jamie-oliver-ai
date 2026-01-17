@@ -18,7 +18,8 @@ import {
   RefreshCw,
   Save,
   Trash2,
-  MicOff
+  MicOff,
+  ArrowRight
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
@@ -39,6 +40,7 @@ import { useAudioCapture } from '../hooks/useAudioCapture';
 import { useAudioPlayback } from '../hooks/useAudioPlayback';
 import { RecipeCard } from './RecipeCard';
 import { TimerPanel, type ActiveTimer } from './TimerPanel';
+import { clearChatHistory } from './ChatWithJamie';
 // @ts-ignore - handled by Vite
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 const jamieLogo = typeof jamieLogoImport === 'string' ? jamieLogoImport : (jamieLogoImport as any).src || jamieLogoImport;
@@ -46,18 +48,21 @@ const jamieLogo = typeof jamieLogoImport === 'string' ? jamieLogoImport : (jamie
 interface CookWithJamieProps {
   recipe: Recipe | null;
   onClose: () => void;
+  onBackToChat?: () => void;
+  onExploreRecipes?: () => void;
 }
 
-export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
+export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes }: CookWithJamieProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState([] as number[]);
   const [showExitConfirmation, setShowExitConfirmation] = useState(false);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
 
   // Timer states
   const [timerSeconds, setTimerSeconds] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerMinutes, setTimerMinutes] = useState(10); // Default timer
-  
+
   // Active timers from backend (parallel cooking support)
   const [activeTimers, setActiveTimers] = useState<ActiveTimer[]>([]);
 
@@ -365,7 +370,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
         .map(step => resolveStepIndex(step.id, step.descr))
         .filter((idx): idx is number => idx !== null);
 
-      setCompletedSteps(completedIndices);
+        setCompletedSteps(completedIndices);
 
       const stepWithTimer = stepsArray.find(step => step.timer && (step.status === 'active' || step.status === 'waiting_ack'));
       if (stepWithTimer?.timer) {
@@ -851,8 +856,12 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                        timerSeconds > 0;
 
     if (!hasProgress) {
-      console.log('No progress, exiting directly');
+      console.log('No progress, exiting directly to chat');
       onClose();
+      // Navigate back to chat modal
+      if (onBackToChat) {
+        onBackToChat();
+      }
       return;
     }
 
@@ -871,6 +880,10 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     });
     setShowExitConfirmation(false);
     onClose();
+    // Navigate back to chat modal
+    if (onBackToChat) {
+      onBackToChat();
+    }
   };
 
   const handleSaveAndExit = () => {
@@ -882,6 +895,10 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     audioPlayback.cleanup();
     wsDisconnect();
     onClose();
+    // Navigate back to chat modal
+    if (onBackToChat) {
+      onBackToChat();
+    }
   };
 
   const handleExitKeepTimerActive = () => {
@@ -890,6 +907,10 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     setShowExitConfirmation(false);
     // Don't disconnect WebSocket or stop audio - keep them running
     onClose();
+    // Navigate back to chat modal
+    if (onBackToChat) {
+      onBackToChat();
+    }
   };
 
   const handleFinishCooking = () => {
@@ -907,6 +928,9 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
     // Remove the cooking session so it doesn't show as "in progress"
     localStorage.removeItem(`cooking-session-${recipe.id}`);
 
+    // Clear chat history when recipe is completed
+    clearChatHistory();
+
     // Send finish message to WebSocket if connected
     if (isWebSocketConnected) {
       wsSendMessage({
@@ -915,99 +939,147 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
       });
     }
 
-    toast.success('Recipe completed!', {
-      description: `Great job completing ${recipe.title}!`,
-      duration: 3000
-    });
-
     // Cleanup WebSocket and audio
     audioCapture.stopCapture();
     audioPlayback.cleanup();
     wsDisconnect();
 
-    onClose();
+    // Show completion modal instead of toast
+    setShowCompletionModal(true);
   };
 
   return (
     <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
       {/* Cooking hero */}
-      <div className="px-6 pt-8 pb-6">
-        <div className="max-w-[420px] mx-auto">
-          <div className="flex items-start justify-between mb-6">
-            <button
-              onClick={handleExitClick}
-              className="inline-flex items-center text-[#2C5F5D] hover:text-[#18413f] transition-colors"
-              style={{ marginTop: '16px' }}
-              aria-label="Back"
-            >
-              <ArrowLeft style={{ width: '24px', height: '24px' }} />
-            </button>
-            <div
-              className="flex items-center justify-center h-6"
-              style={{ marginTop: '17px' }}
-            >
-              <img src={jamieLogo} alt="Jamie Oliver" className="h-full w-auto object-contain" />
+      <div style={{ paddingTop: 'clamp(16px, calc(100vw * 32 / 390), 32px)', paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+        <div className="flex items-center justify-center mb-6 w-full">
+          <div className="grid grid-cols-3 items-start gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
+            {/* Back Button */}
+            <div className="flex items-start">
+        <button
+          onClick={handleExitClick}
+                className="inline-flex items-center justify-center"
+                style={{ marginTop: '16px', padding: 0, background: 'transparent' }}
+                aria-label="Back"
+              >
+                <img
+                  src="/assets/Back.svg"
+                  alt="Back"
+                  style={{ width: '24px', height: '24px', display: 'block' }}
+                />
+        </button>
             </div>
-            <button
+            {/* Logo - Centered */}
+            <div className="flex items-center justify-center">
+              <div
+                className="flex items-center justify-center"
+                style={{
+                  marginTop: '17px',
+                  height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
+                  width: 'clamp(140px, calc(100vw * 171.75 / 390), 171.75px)',
+                  maxWidth: '171.75px'
+                }}
+              >
+                <img
+                  src={jamieLogo}
+                  alt="Jamie Oliver"
+                  className="h-full w-full object-contain"
+                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                />
+              </div>
+            </div>
+            {/* Mic Control */}
+            <div className="flex items-start justify-end">
+              <button
               onClick={toggleVoiceListening}
-              className="inline-flex rounded-full transition-colors"
-              style={{
-                marginTop: '7px',
-                padding: '0 0 0 12px',
-                height: '42px',
-                width: '93px',
-                borderRadius: '999px',
-                boxShadow: '0 2px 9px rgba(0, 0, 0, 0.08)',
-                border: '1px solid rgba(0, 0, 0, 0.08)',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: 0,
-                backgroundColor: '#F9FAFB',
-              }}
-              title={
-                !isWebSocketConnected
-                  ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
-                  : isMicMuted
-                    ? 'Microphone muted - tap to enable'
-                    : 'Microphone active - tap to mute'
-              }
-            >
-              <div
+                className="inline-flex rounded-full transition-colors"
                 style={{
-                  width: '24px',
-                  height: '24px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <img
-                  src={micIconSrc}
-                  alt={micIconAlt}
-                  style={{ width: '18px', height: '18px' }}
-                />
-              </div>
-              <div
-                style={{
-                  width: '42px',
+                  marginTop: '7px',
+                  padding: '0 0 0 12px',
                   height: '42px',
-                  display: 'flex',
+                  width: '93px',
+                  borderRadius: '999px',
+                  boxShadow: '0 2px 9px rgba(0, 0, 0, 0.08)',
+                  border: '1px solid rgba(0, 0, 0, 0.08)',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  marginLeft: 'auto',
-                  flexShrink: 0,
+                  justifyContent: 'space-between',
+                  gap: 0,
+                  backgroundColor: '#F9FAFB',
                 }}
+                title={
+                  !isWebSocketConnected
+                    ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
+                    : isMicMuted
+                      ? 'Microphone muted - tap to enable'
+                      : 'Microphone active - tap to mute'
+                }
               >
-                <img
-                  src={micRingSrc}
-                  alt={isMicMuted ? 'Microphone muted' : 'Microphone active'}
-                  style={{ display: 'block' }}
-                />
+                <div
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <img
+                    src={micIconSrc}
+                    alt={micIconAlt}
+                    style={{ width: '18px', height: '18px' }}
+                  />
               </div>
-            </button>
+                <div
+                  style={{
+                    width: '42px',
+                    height: '42px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginLeft: 'auto',
+                    flexShrink: 0,
+                  }}
+                >
+                  <img
+                    src={micRingSrc}
+                    alt={isMicMuted ? 'Microphone muted' : 'Microphone active'}
+                    style={{ display: 'block' }}
+                  />
+                </div>
+              </button>
+            </div>
           </div>
-          <div className="pointer-events-none select-none">
+        </div>
+        <div className="w-full flex items-center justify-center" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          <div className="pointer-events-none select-none flex items-center justify-center" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
             <RecipeCard recipe={recipe} onClick={() => {}} variant="cooking" />
+        </div>
+      </div>
+
+        {/* Recipe Title - Outside RecipeCard, 24px below image */}
+        <div className="w-full flex items-center justify-center" style={{ marginTop: '24px', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '600px',
+              textAlign: 'left',
+              margin: '0 auto'
+            }}
+          >
+            <h3
+              style={{
+                color: '#2C5F5D',
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: 'clamp(20px, calc(100vw * 26 / 390), 26px)',
+                fontWeight: 700,
+                letterSpacing: '0.087px',
+                lineHeight: '24px',
+                textTransform: 'uppercase',
+                margin: 0,
+              }}
+            >
+              {recipe.title}
+            </h3>
           </div>
         </div>
       </div>
@@ -1033,8 +1105,8 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                   }
                 }
               }}
-            />
-          </div>
+        />
+      </div>
         </div>
       )}
 
@@ -1112,7 +1184,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           <p className="text-center text-sm text-muted-foreground mt-4">
             Tap +/− to adjust time by minute
           </p>
-          </div>
+      </div>
         </div>
       )}
 
@@ -1133,21 +1205,21 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                 style={{ gap: '24px', marginTop: '24px' }}
               >
                 <div className="w-full max-w-[420px] flex gap-2">
-                  {instructions.map((_, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setCurrentStep(idx)}
+            {instructions.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentStep(idx)}
                       className={`h-1 flex-1 rounded-full transition-colors ${
-                        idx === currentStep
+                  idx === currentStep
                           ? 'bg-[#0A7E6C]'
-                          : completedSteps.includes(idx)
+                    : completedSteps.includes(idx)
                           ? 'bg-[#81EB67]'
                           : 'bg-muted-foreground/20'
-                      }`}
-                      aria-label={`Go to step ${idx + 1}`}
-                    />
-                  ))}
-                </div>
+                }`}
+                aria-label={`Go to step ${idx + 1}`}
+              />
+            ))}
+          </div>
                 <div className="w-full max-w-[420px]">
                   <div
                     className="rounded-full bg-[#0A7E6C]/10 px-4 py-3"
@@ -1157,7 +1229,7 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
                       Step {currentStep + 1} of {totalSteps}
                     </span>
                   </div>
-                </div>
+          </div>
 
                 {/* Step Instructions - Clean and prominent */}
                 <div className="w-full max-w-[420px]">
@@ -1290,22 +1362,22 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
               Enjoy your delicious creation!
             </p>
             <div className="flex flex-col gap-3">
-              <Button 
-                onClick={onClose} 
-                size="lg" 
+              <Button
+                onClick={onClose}
+                size="lg"
                 className="w-full bg-[#3D6E6C] hover:bg-[#2c5654] rounded-full h-12"
               >
                 Done
               </Button>
-              <Button 
-                onClick={onClose} 
-                variant="ghost" 
-                size="lg" 
+              <Button
+                onClick={onClose}
+                variant="ghost"
+                size="lg"
                 className="w-full text-gray-500 rounded-full h-12"
               >
                 Cook again
-              </Button>
-            </div>
+            </Button>
+          </div>
           </motion.div>
         </motion.div>
       )}
@@ -1353,6 +1425,191 @@ export function CookWithJamie({ recipe, onClose }: CookWithJamieProps) {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Completion Modal */}
+      <AnimatePresence>
+        {showCompletionModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-background flex flex-col"
+          >
+            {/* Header */}
+            <div className="px-6 pt-8 pb-6 flex-shrink-0">
+              <div className="flex items-center justify-center w-full" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+                <div className="grid grid-cols-3 items-start gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
+                  {/* Close Button */}
+                  <div className="flex items-start">
+                    <button
+                      onClick={() => {
+                        setShowCompletionModal(false);
+                        onClose();
+                        if (onExploreRecipes) {
+                          onExploreRecipes();
+                        }
+                      }}
+                      className="inline-flex items-center justify-center"
+                      style={{ marginTop: '16px', padding: 0, background: 'transparent' }}
+                      aria-label="Close"
+                    >
+                      <svg className="block size-6" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="#327179" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                      </svg>
+                    </button>
+                  </div>
+                  {/* Logo - Centered */}
+                  <div className="flex items-center justify-center">
+                    <div
+                      className="flex items-center justify-center"
+                      style={{
+                        marginTop: '17px',
+                        height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
+                        width: 'clamp(140px, calc(100vw * 171.75 / 390), 171.75px)',
+                        maxWidth: '171.75px'
+                      }}
+                    >
+                      <img
+                        src={jamieLogo}
+                        alt="Jamie Oliver"
+                        className="h-full w-full object-contain"
+                        style={{ maxWidth: '100%', maxHeight: '100%' }}
+                      />
+                    </div>
+                  </div>
+                  {/* Mic Control */}
+                  <div className="flex items-start justify-end">
+                    <button
+                      onClick={toggleVoiceListening}
+                      className="inline-flex rounded-full transition-colors"
+                      style={{
+                        marginTop: '7px',
+                        padding: '0 0 0 12px',
+                        height: '42px',
+                        width: '93px',
+                        borderRadius: '999px',
+                        boxShadow: '0 2px 9px rgba(0, 0, 0, 0.08)',
+                        border: '1px solid rgba(0, 0, 0, 0.08)',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 0,
+                        backgroundColor: '#F9FAFB',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: '24px',
+                          height: '24px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <img
+                          src={micIconSrc}
+                          alt={micIconAlt}
+                          style={{ width: '18px', height: '18px' }}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          width: '42px',
+                          height: '42px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginLeft: 'auto',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <img
+                          src={micRingSrc}
+                          alt={isMicMuted ? 'Microphone muted' : 'Microphone active'}
+                          style={{ display: 'block' }}
+                        />
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Content - Centered vertically */}
+            <div className="flex-1 flex items-center justify-center px-6">
+              <div style={{ width: '300px', boxSizing: 'border-box' }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center"
+                >
+                  <h2
+                    style={{
+                      color: '#2C5F5D',
+                      fontFamily: 'Poppins, sans-serif',
+                      fontSize: '32px',
+                      fontWeight: 700,
+                      lineHeight: '1.2',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    WELL DONE!
+                  </h2>
+                  <p
+                    style={{
+                      color: '#2C5F5D',
+                      fontFamily: 'Poppins, sans-serif',
+                      fontSize: '16px',
+                      fontWeight: 400,
+                      lineHeight: '1.5',
+                      textAlign: 'left',
+                      marginBottom: '32px',
+                    }}
+                  >
+                    You've just finished the recipe. Thanks for cooking with Jamie — hope you enjoyed every step.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setShowCompletionModal(false);
+                      onClose();
+                      if (onExploreRecipes) {
+                        onExploreRecipes();
+                      }
+                    }}
+                    className="w-full inline-flex items-center justify-between text-white font-semibold uppercase rounded-full transition-opacity"
+                    style={{
+                      height: '50px',
+                      padding: '9px 14px 9px 24px',
+                      borderRadius: '24px',
+                      backgroundColor: '#3D6A6C',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = '0.9';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = '1';
+                    }}
+                  >
+                    <span>EXPLORE MORE RECIPES</span>
+                    <span
+                      className="inline-flex items-center justify-center"
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '9px',
+                        background: '#29514F',
+                      }}
+                    >
+                      <ArrowRight className="size-4" />
+                    </span>
+                  </button>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

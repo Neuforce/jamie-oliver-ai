@@ -6,7 +6,7 @@ import { motion } from 'motion/react';
 interface RecipeCardProps {
   recipe: Recipe;
   onClick: () => void;
-  variant?: 'grid' | 'feed' | 'cooking' | 'modal';
+  variant?: 'grid' | 'feed' | 'cooking' | 'modal' | 'chat';
   showDifficultyPill?: boolean;
   showInProgress?: boolean;
 }
@@ -31,14 +31,14 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
         setHasSession(false);
         return;
       }
-
+      
       const session = localStorage.getItem(`cooking-session-${recipe.id}`);
       if (session) {
         try {
           const parsed = JSON.parse(session);
           const now = new Date().getTime();
           const sessionAge = now - parsed.timestamp;
-
+          
           if (sessionAge < 24 * 60 * 60 * 1000) {
             setHasSession(true);
             setSessionProgress(((parsed.currentStep + 1) / recipe.instructions.length) * 100);
@@ -61,20 +61,31 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
   if (variant === 'cooking') {
     return (
       <>
-        <motion.div
-          whileTap={{ scale: 0.98 }}
-          className="cursor-pointer"
-          onClick={onClick}
-        >
-          <div
-            className="overflow-hidden border border-[#E4E7EC] bg-white shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]"
-            style={{ borderRadius: '32px' }}
+        <div className="flex items-center justify-center w-full">
+          <motion.div
+            whileTap={{ scale: 0.98 }}
+            className="cursor-pointer"
+            onClick={onClick}
           >
-            <div className="relative aspect-[196/245] overflow-hidden">
+            <div
+              className="overflow-hidden border border-[#E4E7EC] bg-white shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-4px_rgba(0,0,0,0.1)]"
+              style={{
+                borderRadius: '28.17px',
+                width: 'calc(100vw * 369 / 390)',
+                height: 'calc(100vw * 350 / 390)',
+                maxWidth: '598px',
+                maxHeight: '567px',
+                margin: '0 auto'
+              }}
+            >
+            <div className="relative overflow-hidden w-full h-full">
               <img
                 src={recipe.image}
                 alt={recipe.title}
-                className="h-full w-full object-cover"
+                className="w-full h-full object-cover"
+                style={{
+                  borderRadius: '28.17px'
+                }}
               />
               <span
                 className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
@@ -85,23 +96,6 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
             </div>
           </div>
         </motion.div>
-        <div
-          className="px-6 py-5 space-y-4"
-          style={{ marginTop: '24px' }}
-        >
-          <h3
-            style={{
-              color: '#2C5F5D',
-              fontFamily: 'Poppins, sans-serif',
-              fontSize: '26px',
-              fontWeight: 700,
-              letterSpacing: '0.087px',
-              lineHeight: '24px',
-              textTransform: 'uppercase',
-            }}
-          >
-            {recipe.title}
-          </h3>
         </div>
       </>
     );
@@ -116,20 +110,27 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
         onClick={onClick}
       >
         <div
-          className="relative overflow-hidden bg-white h-full shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)]"
-          style={{ borderRadius: '24px' }}
+          className="relative overflow-hidden bg-white shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)]"
+          style={{
+            width: '164.5px',
+            height: '205.625px',
+            borderRadius: '24px',
+          }}
         >
           {/* Edge-to-edge Image Container for Grid - Matching Figma Mock */}
-          <div className="relative aspect-[196/245] overflow-hidden">
+          <div className="relative overflow-hidden w-full h-full">
             <img
               src={recipe.image}
               alt={recipe.title}
               className="w-full h-full object-cover transition-opacity duration-300 hover:opacity-95"
+              style={{
+                borderRadius: '24px',
+              }}
             />
-
+            
             {/* Gradient Overlay - matching Figma design */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 via-50% to-transparent" />
-
+            
             {/* Badges at top */}
             <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
               {/* Category/Session Badge on left */}
@@ -169,10 +170,10 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
               >
                 {recipe.title}
               </h3>
-
+              
               {/* Meta Info */}
 
-
+              
               {/* Progress Bar */}
               {hasSession && (
                 <div className="mt-1 w-full bg-white/20 rounded-full h-1.5 overflow-hidden">
@@ -182,6 +183,97 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
                   />
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // Chat variant: used in chat carousel with specific dimensions
+  if (variant === 'chat') {
+    return (
+      <motion.div
+        whileTap={{ scale: 0.98 }}
+        className="cursor-pointer"
+        onClick={onClick}
+      >
+        <div className="flex items-center justify-center w-full">
+          <div
+            className="relative overflow-hidden bg-white shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)]"
+            style={{
+              borderRadius: '24px',
+              width: 'calc(100vw * 350 / 390)',
+              height: 'calc(100vw * 437.5 / 390)',
+              maxWidth: '350px',
+              maxHeight: '437.5px',
+              margin: '0 auto'
+            }}
+          >
+            {/* Edge-to-edge Image Container for Chat - Matching Figma Mock */}
+            <div className="relative overflow-hidden w-full h-full">
+              <img
+                src={recipe.image}
+                alt={recipe.title}
+                className="w-full h-full object-cover transition-opacity duration-300 hover:opacity-95"
+                style={{
+                  borderRadius: '24px',
+                }}
+              />
+
+              {/* Gradient Overlay - matching Figma design */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 via-50% to-transparent" />
+
+              {/* Badges at top */}
+              <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
+                {/* Category/Session Badge on left */}
+                {hasSession ? (
+                  <span
+                    className="inline-flex items-center gap-1.5 text-white text-xs font-semibold"
+                    style={badgeStyle}
+                  >
+                    <Clock className="size-3" />
+                    In Progress
+                  </span>
+                ) : (
+                  <span
+                    className="inline-flex items-center text-white text-xs font-semibold"
+                    style={badgeStyle}
+                  >
+                    {recipe.category.toUpperCase()}
+                  </span>
+                )}
+              </div>
+
+              {/* Content at bottom - matching Figma */}
+              <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-1.5 z-10">
+                {/* Title */}
+                <h3
+                  className="text-white"
+                  style={{
+                    textTransform: 'uppercase',
+                    fontFamily: 'Poppins, sans-serif',
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    lineHeight: '20px',
+                    letterSpacing: '0.2px',
+                    paddingLeft: '16px',
+                    paddingBottom: '16px',
+                  }}
+                >
+                  {recipe.title}
+                </h3>
+
+                {/* Progress Bar */}
+                {hasSession && (
+                  <div className="mt-1 w-full bg-white/20 rounded-full h-1.5 overflow-hidden">
+                    <div
+                      className="bg-[#81EB67] h-full rounded-full transition-all"
+                      style={{ width: `${sessionProgress}%` }}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -204,12 +296,23 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
           gap: '16px',
         }}
       >
-        <div className="relative overflow-hidden" style={{ borderRadius: '24px' }}>
+        <div className="flex items-center justify-center w-full">
+          <div className="relative overflow-hidden" style={{
+            borderRadius: '28.17px',
+            width: 'calc(100vw * 369 / 390)',
+            height: 'calc(100vw * 350 / 390)',
+            maxWidth: '598px',
+            maxHeight: '567px',
+            margin: '0 auto'
+          }}>
           <img
             src={recipe.image}
             alt={recipe.title}
-            className="h-full w-full object-cover"
-            style={{ display: 'block' }}
+            className="w-full h-full object-cover"
+            style={{
+              display: 'block',
+              borderRadius: '28.17px'
+            }}
           />
           <span
             className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
@@ -245,6 +348,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
               In progress
             </div>
           )}
+        </div>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -367,29 +471,33 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
             '0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10)',
           display: 'flex',
           flexDirection: 'column',
-          minHeight: '360px',
-          height: 'min(78vw, 420px)',
         }}
       >
         {/* Image */}
-        <div
-          className="relative aspect-[196/245] overflow-hidden"
-          style={{
-            flex: '0 0 75%',
-            minHeight: 0,
-          }}
-        >
+        <div className="flex items-center justify-center w-full">
+          <div
+            className="relative overflow-hidden"
+            style={{
+              width: 'calc(100vw * 350 / 390)',
+              height: 'calc(100vw * 264.75 / 390)',
+              maxWidth: '350px',
+              maxHeight: '264.75px',
+              borderRadius: '24px 24px 0 0',
+              margin: '0 auto'
+            }}
+          >
           <img
             src={recipe.image}
             alt={recipe.title}
-            className="h-full w-full object-cover"
-          />
-          <span
-            className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
-            style={{ ...badgeStyle, letterSpacing: '0.2em' }}
-          >
-            {recipe.category.toUpperCase()}
-          </span>
+              className="w-full h-full object-cover"
+            />
+            <span
+              className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
+              style={{ ...badgeStyle, letterSpacing: '0.2em' }}
+            >
+              {recipe.category.toUpperCase()}
+            </span>
+          </div>
         </div>
 
         {/* Content */}
@@ -437,8 +545,8 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
                 opacity: 1,
               }}
             >
-              {recipe.description}
-            </p>
+            {recipe.description}
+          </p>
           </div>
 
           <div
@@ -487,8 +595,8 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
             ) : (
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <ChefHat className="size-4 text-[#3D6E6C]" />
-                <span>{recipe.difficulty}</span>
-              </div>
+              <span>{recipe.difficulty}</span>
+            </div>
             )}
           </div>
         </div>

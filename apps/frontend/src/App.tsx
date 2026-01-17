@@ -6,7 +6,7 @@ import { RecipeModal } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
 import { ChatWithJamie } from './components/ChatWithJamie';
 import { Button } from './components/ui/button';
-import { Search, ChefHat, Sparkles, Filter, Grid3x3, LayoutList, ChevronDown, ChevronUp, MessageCircle, Clock, AlertCircle, Menu, SlidersHorizontal } from 'lucide-react';
+import { Search, ChefHat, Sparkles, Filter, Grid3x3, LayoutList, ChevronDown, ChevronUp, MessageCircle, Clock, AlertCircle, Menu, SlidersHorizontal, Book, ArrowUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster } from './components/ui/sonner';
 import {
@@ -44,6 +44,9 @@ export default function App() {
   const [loadingType, setLoadingType] = useState<'recipe' | 'chat' | null>(null);
   const [loadedRecipes, setLoadedRecipes] = useState<Recipe[]>(recipes);
   const [availableCategories, setAvailableCategories] = useState<string[]>(categories);
+  const [showLanding, setShowLanding] = useState(true);
+  const [landingInputValue, setLandingInputValue] = useState('');
+  const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>(undefined);
 
   // Load recipes asynchronously in production (when recipes array is empty)
   useEffect(() => {
@@ -54,6 +57,9 @@ export default function App() {
       }).catch((error) => {
         console.error('Failed to load recipes:', error);
       });
+    } else {
+      // If recipes are already loaded, set categories immediately
+      setAvailableCategories(getCategories(recipes));
     }
   }, []);
 
@@ -68,7 +74,7 @@ export default function App() {
         if (completedRecipe) {
           return; // Recipe is completed, don't show as in progress
         }
-        
+
         const savedSession = localStorage.getItem(`cooking-session-${recipe.id}`);
         if (savedSession) {
           try {
@@ -76,7 +82,7 @@ export default function App() {
             console.log(`Found session for recipe ${recipe.id}:`, session);
             const now = new Date().getTime();
             const sessionAge = now - session.timestamp;
-            
+
             // Only show sessions less than 24 hours old
             if (sessionAge < 24 * 60 * 60 * 1000) {
               inProgress.push(recipe);
@@ -95,7 +101,7 @@ export default function App() {
     };
 
     checkSavedSessions();
-    
+
     // Also check when returning from cook mode
     if (!cookingRecipe) {
       // Small delay to ensure localStorage is written
@@ -127,31 +133,31 @@ export default function App() {
       const matchesSearch = recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            recipe.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            recipe.category.toLowerCase().includes(searchQuery.toLowerCase());
-      
+
       const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
-      
+
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, selectedCategory, loadedRecipes]);
 
   const handleCookWithJamie = () => {
     if (!selectedRecipe) return;
-    
+
     // Check if user is trying to start a DIFFERENT recipe while another is in progress
     const otherActiveSessions = recipesInProgress.filter(r => r.id !== selectedRecipe.id);
-    
+
     if (otherActiveSessions.length > 0) {
       // User has other recipes in progress
       setPendingRecipe(selectedRecipe);
       setShowSessionWarning(true);
       return;
     }
-    
+
     // Show loader before transition
     setIsLoading(true);
     setLoadingType('recipe');
     setSelectedRecipe(null);
-    
+
     // Simulate loading time
     setTimeout(() => {
       setCookingRecipe(selectedRecipe);
@@ -159,7 +165,7 @@ export default function App() {
       setLoadingType(null);
     }, 800);
   };
-  
+
   const handleRecipeClick = (recipe: Recipe) => {
     // If currently cooking a different recipe, show warning
     if (cookingRecipe && cookingRecipe.id !== recipe.id) {
@@ -167,18 +173,18 @@ export default function App() {
       setShowSessionWarning(true);
       return;
     }
-    
+
     // Show loader before opening recipe
     setIsLoading(true);
     setLoadingType('recipe');
-    
+
     setTimeout(() => {
       setSelectedRecipe(recipe);
       setIsLoading(false);
       setLoadingType(null);
     }, 500);
   };
-  
+
   const handleContinueWithNewRecipe = () => {
     // User confirmed they want to start a new recipe
     setShowSessionWarning(false);
@@ -186,11 +192,11 @@ export default function App() {
       // Show loader for transition
       setIsLoading(true);
       setLoadingType('recipe');
-      
+
       // Close current recipe (its state is already saved automatically)
       setCookingRecipe(null);
       setSelectedRecipe(null);
-      
+
       // Start the new recipe directly
       setTimeout(() => {
         setCookingRecipe(pendingRecipe);
@@ -200,7 +206,7 @@ export default function App() {
       }, 500);
     }
   };
-  
+
   const handleReturnToActiveSession = () => {
     // User wants to continue cooking current recipe
     setShowSessionWarning(false);
@@ -208,87 +214,287 @@ export default function App() {
     // Keep cooking the current recipe (no change needed)
   };
 
+  const handleLandingInputSubmit = () => {
+    if (landingInputValue.trim()) {
+      // Set the initial message and open chat
+      setInitialChatMessage(landingInputValue.trim());
+      setChatOpen(true);
+      setLandingInputValue(''); // Clear input after submitting
+    }
+  };
+
+  const handlePromptClick = (prompt: string) => {
+    // Set the initial message and open chat
+    setInitialChatMessage(prompt);
+    setChatOpen(true);
+    setLandingInputValue(''); // Clear input
+  };
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section - Clean minimalist design matching Figma mock */}
-      <div className="relative overflow-hidden bg-white">
-        {/* Glow Effect Background */}
-        <GlowEffect />
-        
-        <div className="container mx-auto px-5 py-3 relative z-10 pt-[12px] pr-[20px] pb-[0px] pl-[20px]">
-          {/* Navigation */}
-          <div className="h-[56px] mb-3">
-            <Nav />
-          </div>
-
-          {/* Jamie's Avatar with Glow */}
+      <AnimatePresence mode="wait">
+        {showLanding ? (
+          // Landing View
           <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center mb-6"
+            key="landing"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="relative overflow-hidden bg-white min-h-screen"
           >
-            <AvatarWithGlow
-              src={jamieAvatar}
-              alt="Jamie Oliver"
-              size={170}
-            />
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-center mt-4"
-            >
-              <h1
-                className="text-center"
-                style={{
-                  fontFamily: 'Poppins, sans-serif',
-                  fontStyle: 'normal',
-                  fontWeight: 800,
-                  fontSize: '32px',
-                  lineHeight: '0.99',
-                  letterSpacing: '0px',
-                  textTransform: 'uppercase',
-                  color: '#327179',
-                }}
-              >
-                COOK WITH JAMIE
-              </h1>
-              <p
-                className="text-center"
-                style={{
-                  fontFamily: 'Poppins, sans-serif',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  fontSize: '16px',
-                  lineHeight: '1.5',
-                  letterSpacing: '0px',
-                  color: '#234252',
-                }}
-              >
-                Cook amazing recipes, step by step
-              </p>
-            </motion.div>
-          </motion.div>
+            {/* Glow Effect Background */}
+            <GlowEffect />
 
-          {/* Search Bar - Using design system component */}
+            <div className="container mx-auto px-5 py-3 relative z-10 pt-[12px] pr-[20px] pb-[0px] pl-[20px]">
+              {/* Navigation */}
+              <div className="mb-3">
+                <Nav
+                  onChatClick={() => setChatOpen(true)}
+                  onRecipesClick={() => setShowLanding(false)}
+                  showRecipesButton={true}
+                />
+              </div>
+
+              {/* Jamie's Avatar with Glow */}
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="flex flex-col items-center mb-6"
+              >
+                <AvatarWithGlow
+                  src={jamieAvatar}
+                  alt="Jamie Oliver"
+                  size={170}
+                />
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.2, duration: 0.5 }}
+                  className="text-center mt-4"
+                >
+                  <h1
+                    className="text-center"
+                    style={{
+                      fontFamily: 'Poppins, sans-serif',
+                      fontStyle: 'normal',
+                      fontWeight: 800,
+                      fontSize: '32px',
+                      lineHeight: '0.99',
+                      letterSpacing: '0px',
+                      textTransform: 'uppercase',
+                      color: '#327179',
+                    }}
+                  >
+                    COOK WITH JAMIE
+                  </h1>
+                </motion.div>
+              </motion.div>
+
+              {/* Welcome Message */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+                className="flex justify-center mb-6"
+              >
+                <p
+                  className="text-center"
+                  style={{
+                    fontFamily: 'Poppins, sans-serif',
+                    fontStyle: 'normal',
+                    fontWeight: 400,
+                    fontSize: '16px',
+                    lineHeight: '150%',
+                    letterSpacing: '0%',
+                    textAlign: 'center',
+                    color: '#234252',
+                    width: '307px',
+                    height: '72px',
+                  }}
+                >
+                  Hello there! I'm Jamie Oliver, and I'm here to help you discover amazing recipes.
+                </p>
+              </motion.div>
+
+              {/* Prompt Suggestions */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                className="flex flex-col items-center gap-3 mb-6 max-w-md mx-auto"
+              >
+                {[
+                  "I've had a long day",
+                  "I just need something easy",
+                  "Cook something you love",
+                  "My energy is at 2%"
+                ].map((prompt, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handlePromptClick(prompt)}
+                    className="w-full rounded-full border border-gray-300 px-4 py-3 text-left transition-colors hover:bg-gray-50"
+                    style={{
+                      fontFamily: 'Poppins, sans-serif',
+                      fontSize: '16px',
+                      color: '#234252',
+                    }}
+                  >
+                    {prompt}
+                  </button>
+                ))}
+              </motion.div>
+
+              {/* Text Input with Arrow */}
+              <motion.div
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+                className="max-w-md mx-auto pb-8"
+              >
+                <div className="bg-white relative rounded-[32px] border border-black/10 shadow-[0px_2px_5px_0px_rgba(0,0,0,0.06),0px_9px_9px_0px_rgba(0,0,0,0.01)]">
+                  <div className="flex items-center gap-5 p-3">
+                    <input
+                      type="text"
+                      value={landingInputValue}
+                      onChange={(e) => setLandingInputValue(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          handleLandingInputSubmit();
+                        }
+                      }}
+                      placeholder="Ask your question…"
+                      className="flex-1 font-['Inter',sans-serif] text-base leading-[24px] text-[#8e8e93] placeholder:text-[#8e8e93] bg-transparent outline-none"
+                    />
+                    <button
+                      onClick={handleLandingInputSubmit}
+                      disabled={!landingInputValue.trim()}
+                      className="shrink-0 rounded-full flex items-center justify-center transition-colors"
+                      style={{
+                        width: '36px',
+                        height: '36px',
+                        backgroundColor: landingInputValue.trim() ? '#46BEA8' : '#F2F5F6',
+                        borderRadius: '999px',
+                      }}
+                      onMouseEnter={(e) => {
+                        if (landingInputValue.trim()) {
+                          e.currentTarget.style.backgroundColor = '#327179';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (landingInputValue.trim()) {
+                          e.currentTarget.style.backgroundColor = '#46BEA8';
+                        } else {
+                          e.currentTarget.style.backgroundColor = '#F2F5F6';
+                        }
+                      }}
+                    >
+                      <ArrowUp
+                        className="size-6"
+                        strokeWidth={2}
+                        style={{
+                          color: landingInputValue.trim() ? '#FFFFFF' : '#8E8E93'
+                        }}
+                      />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
+        ) : (
+          // Recipes View (existing view)
           <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="max-w-md mx-auto"
+            key="recipes"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="relative overflow-hidden bg-white"
           >
-            <SearchInput
-              value={searchQuery}
-              onSearch={(value) => setSearchQuery(value)}
-              placeholder="Search recipes by name, ingredie..."
-            />
-          </motion.div>
-        </div>
-      </div>
+            {/* Hero Section - Clean minimalist design matching Figma mock */}
+            <div className="relative overflow-hidden bg-white">
+              {/* Glow Effect Background */}
+              <GlowEffect />
 
-      {/* Main Content */}
-      <div className="container mx-auto pt-3 pb-12 bg-[rgba(0,0,0,0)]">
+              <div className="container mx-auto px-5 py-3 relative z-10 pt-[12px] pr-[20px] pb-[0px] pl-[20px]">
+                {/* Navigation */}
+                <div className="mb-3">
+                  <Nav
+                    onChatClick={() => setChatOpen(true)}
+                    onRecipesClick={() => setShowLanding(false)}
+                    onCloseClick={() => setShowLanding(true)}
+                    showRecipesButton={false}
+                  />
+                </div>
+
+                {/* Jamie's Avatar with Glow */}
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="flex flex-col items-center mb-6"
+                >
+                  <AvatarWithGlow
+                    src={jamieAvatar}
+                    alt="Jamie Oliver"
+                    size={170}
+                  />
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.2, duration: 0.5 }}
+                    className="text-center mt-4"
+                  >
+                    <h1
+                      className="text-center"
+                      style={{
+                        fontFamily: 'Poppins, sans-serif',
+                        fontStyle: 'normal',
+                        fontWeight: 800,
+                        fontSize: '32px',
+                        lineHeight: '0.99',
+                        letterSpacing: '0px',
+                        textTransform: 'uppercase',
+                        color: '#327179',
+                      }}
+                    >
+                      COOK WITH JAMIE
+                    </h1>
+                    <p
+                      className="text-center"
+                      style={{
+                        fontFamily: 'Poppins, sans-serif',
+                        fontStyle: 'normal',
+                        fontWeight: 400,
+                        fontSize: '16px',
+                        lineHeight: '1.5',
+                        letterSpacing: '0px',
+                        color: '#234252',
+                      }}
+                    >
+                      Cook amazing recipes, step by step
+                    </p>
+                  </motion.div>
+                </motion.div>
+
+                {/* Search Bar - Using design system component */}
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.4, duration: 0.5 }}
+                  className="max-w-md mx-auto"
+                >
+                  <SearchInput
+                    value={searchQuery}
+                    onSearch={(value) => setSearchQuery(value)}
+                    placeholder="Search recipes by name, ingredie..."
+                  />
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="container mx-auto pt-3 pb-12 bg-[rgba(0,0,0,0)]" data-recipes-section>
         {/* Recipes in Progress Section */}
         {recipesInProgress.length > 0 && (
           <motion.div
@@ -308,7 +514,7 @@ export default function App() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {recipesInProgress.map((recipe) => {
                   const session = getSessionDetails(recipe.id);
-                  
+
                   // Calculate timer display
                   let timerDisplay = '';
                   let timerActive = false;
@@ -326,7 +532,7 @@ export default function App() {
                     const secs = session.timerSeconds % 60;
                     timerDisplay = `${mins}:${secs.toString().padStart(2, '0')}`;
                   }
-                  
+
                   return (
                     <motion.div
                       key={recipe.id}
@@ -385,31 +591,59 @@ export default function App() {
           className="mb-6 px-4"
         >
           {/* Top Bar: Results Count, View Toggle, Filter Toggle */}
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-4 mx-auto" style={{ width: '600px' }}>
             {/* View Mode Toggle */}
             <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1 flex-1">
-              <Button
+              <button
                 onClick={() => setViewMode('feed')}
-                variant={viewMode === 'feed' ? "default" : "ghost"}
-                size="sm"
-                className="rounded-full h-8 flex-1"
+                className="rounded-full h-8 flex-1 flex items-center justify-center transition-colors"
+                style={{
+                  backgroundColor: viewMode === 'feed' ? '#3D6E6C' : 'transparent',
+                  color: viewMode === 'feed' ? '#ffffff' : 'inherit',
+                }}
+                onMouseEnter={(e) => {
+                  if (viewMode === 'feed') {
+                    e.currentTarget.style.backgroundColor = '#3D6E6C';
+                    e.currentTarget.style.opacity = '0.9';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (viewMode === 'feed') {
+                    e.currentTarget.style.backgroundColor = '#3D6E6C';
+                    e.currentTarget.style.opacity = '1';
+                  }
+                }}
               >
                 <LayoutList className="size-4" />
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={() => setViewMode('grid')}
-                variant={viewMode === 'grid' ? "default" : "ghost"}
-                size="sm"
-                className="rounded-full h-8 flex-1"
+                className="rounded-full h-8 flex-1 flex items-center justify-center transition-colors"
+                style={{
+                  backgroundColor: viewMode === 'grid' ? '#3D6E6C' : 'transparent',
+                  color: viewMode === 'grid' ? '#ffffff' : 'inherit',
+                }}
+                onMouseEnter={(e) => {
+                  if (viewMode === 'grid') {
+                    e.currentTarget.style.backgroundColor = '#3D6E6C';
+                    e.currentTarget.style.opacity = '0.9';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (viewMode === 'grid') {
+                    e.currentTarget.style.backgroundColor = '#3D6E6C';
+                    e.currentTarget.style.opacity = '1';
+                  }
+                }}
               >
                 <Grid3x3 className="size-4" />
-              </Button>
+              </button>
             </div>
 
             {/* Filter Toggle Button */}
             <Button
               onClick={() => setFiltersExpanded(!filtersExpanded)}
-              variant={selectedCategory !== 'All' ? "default" : "ghost"}
+              variant="ghost"
               size="sm"
               className="rounded-full h-8 gap-1 px-4"
             >
@@ -420,37 +654,29 @@ export default function App() {
             </Button>
           </div>
 
-          {/* Collapsible Filters */}
-          <AnimatePresence initial={false}>
+          {/* Category Filters - Shown when filter button is clicked */}
+          <AnimatePresence mode="wait">
             {filtersExpanded && (
               <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="overflow-hidden"
+                key="category-filters"
+                initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+                animate={{ opacity: 1, height: 'auto', marginBottom: 8 }}
+                exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                transition={{ duration: 0.2 }}
+                className="flex flex-wrap gap-2 mx-auto overflow-hidden"
+                style={{ width: '600px' }}
               >
-                <motion.div
-                  initial={{ y: -10 }}
-                  animate={{ y: 0 }}
-                  exit={{ y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="pb-2"
-                >
-                  <div className="flex flex-wrap gap-2">
-                    {availableCategories.map((category) => (
-                      <Button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        variant={selectedCategory === category ? "default" : "outline"}
-                        size="sm"
-                        className="rounded-full"
-                      >
-                        {category}
-                      </Button>
-                    ))}
-                  </div>
-                </motion.div>
+                {availableCategories.map((category) => (
+                  <Button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    variant={selectedCategory === category ?  "default" : "outline"}
+                    size="sm"
+                    className="rounded-full"
+                  >
+                    {category}
+                  </Button>
+                ))}
               </motion.div>
             )}
           </AnimatePresence>
@@ -463,9 +689,14 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.5 }}
-              className="px-5 mb-12"
+              className="px-5 mb-12 flex justify-center"
             >
-              <div className="grid grid-cols-2 gap-4">
+              <div
+                className="grid grid-cols-3 lg:grid-cols-4 gap-4"
+                style={{
+                  width: 'fit-content'
+                }}
+              >
                 {filteredRecipes.map((recipe, index) => (
                   <motion.div
                     key={recipe.id}
@@ -524,7 +755,10 @@ export default function App() {
             </p>
           </div>
         )}
-      </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Recipe Modal */}
       {selectedRecipe && (
@@ -540,51 +774,32 @@ export default function App() {
         <CookWithJamie
           recipe={cookingRecipe}
           onClose={() => setCookingRecipe(null)}
+          onBackToChat={() => {
+            setCookingRecipe(null);
+            setChatOpen(true);
+          }}
+          onExploreRecipes={() => {
+            setCookingRecipe(null);
+            setShowLanding(false);
+          }}
         />
       )}
 
       {/* Chat with Jamie */}
       {chatOpen && (
         <ChatWithJamie
-          onClose={() => setChatOpen(false)}
+          onClose={() => {
+            setChatOpen(false);
+            setInitialChatMessage(undefined); // Clear initial message when closing
+          }}
           onRecipeClick={(recipe) => setSelectedRecipe(recipe)}
+          initialMessage={initialChatMessage}
+          onRecipesClick={() => {
+            setShowLanding(false); // Show recipes view
+          }}
         />
       )}
 
-      {/* Floating Chat Button */}
-      <AnimatePresence>
-        {!chatOpen && !selectedRecipe && !cookingRecipe && (
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: 'spring', damping: 15, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-40"
-          >
-            <Button
-              onClick={() => setChatOpen(true)}
-              size="lg"
-              className="size-16 rounded-full shadow-2xl bg-[#46BEA8] hover:bg-[#327179] text-white border-4 border-white/30"
-            >
-              <MessageCircle className="size-7" />
-            </Button>
-            {/* Pulse Animation */}
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 0, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 rounded-full bg-[#46BEA8]"
-              style={{ zIndex: -1 }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {/* Footer */}
       <footer className="border-t border-border bg-muted/30 mt-20">
