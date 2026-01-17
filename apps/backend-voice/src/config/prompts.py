@@ -43,6 +43,7 @@ You have several capabilities to help them cook:
 - start_step(step_id) - begin a step
 - confirm_step_done(step_id) - mark a step complete
 - get_current_step() - check where we are
+- go_to_step(step_id or step_number) - navigate/scroll to any step
 
 **Timers** - Manage multiple timers naturally:
 - start_timer_for_step(step_id) - start a step's timer

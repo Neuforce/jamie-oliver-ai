@@ -19,7 +19,8 @@ import {
   Save,
   Trash2,
   MicOff,
-  ArrowRight
+  ArrowRight,
+  Bell
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
@@ -182,6 +183,22 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       return map;
     }, new Map<string, number>());
   }, [recipe]);
+
+  // Helper to check if a step index has an active timer running
+  const stepHasActiveTimer = useCallback((stepIndex: number): boolean => {
+    if (!recipe?.backendSteps?.length || !activeTimers.length) return false;
+    const backendStep = recipe.backendSteps[stepIndex];
+    if (!backendStep) return false;
+    return activeTimers.some(timer => timer.step_id === backendStep.id);
+  }, [recipe, activeTimers]);
+
+  // Get timer info for a step
+  const getStepTimerInfo = useCallback((stepIndex: number): ActiveTimer | undefined => {
+    if (!recipe?.backendSteps?.length || !activeTimers.length) return undefined;
+    const backendStep = recipe.backendSteps[stepIndex];
+    if (!backendStep) return undefined;
+    return activeTimers.find(timer => timer.step_id === backendStep.id);
+  }, [recipe, activeTimers]);
 
   const handleControl = useCallback(
     (action: string, data?: any) => {
@@ -803,6 +820,87 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     }
   };
 
+  // Start a backend timer for the current step (parallel cooking support)
+  const startBackendTimer = async (stepId?: string) => {
+    const targetStepId = stepId || recipe?.backendSteps?.[currentStep]?.id;
+    
+    if (!targetStepId || !sessionInfo?.session_id) {
+      console.warn('Cannot start backend timer: missing stepId or session');
+      return false;
+    }
+    
+    try {
+      // @ts-expect-error - Vite provides import.meta.env
+      const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
+      const apiBaseUrl = wsUrl
+        .replace('wss://', 'https://')
+        .replace('ws://', 'http://')
+        .replace('/ws/voice', '');
+
+      const response = await fetch(
+        `${apiBaseUrl}/sessions/${sessionInfo.session_id}/steps/${targetStepId}/start-timer`,
+        { method: 'POST' }
+      );
+
+      if (response.ok) {
+        console.log(`⏰ Started backend timer for step ${targetStepId}`);
+        toast.success('Timer started!', {
+          description: 'The timer is now running in the background.',
+          duration: 3000,
+        });
+        return true;
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        console.warn(`⚠️ Failed to start timer:`, response.status, errorData);
+        toast.error('Could not start timer', {
+          description: errorData.detail || 'Please try again.',
+          duration: 3000,
+        });
+        return false;
+      }
+    } catch (error) {
+      console.error('Error starting backend timer:', error);
+      toast.error('Timer error', {
+        description: 'Could not connect to server.',
+        duration: 3000,
+      });
+      return false;
+    }
+  };
+
+  // Cancel a backend timer
+  const cancelBackendTimer = async (timerId: string) => {
+    if (!sessionInfo?.session_id) {
+      console.warn('Cannot cancel timer: missing session');
+      return false;
+    }
+    
+    try {
+      // @ts-expect-error - Vite provides import.meta.env
+      const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
+      const apiBaseUrl = wsUrl
+        .replace('wss://', 'https://')
+        .replace('ws://', 'http://')
+        .replace('/ws/voice', '');
+
+      const response = await fetch(
+        `${apiBaseUrl}/sessions/${sessionInfo.session_id}/timers/${timerId}/cancel`,
+        { method: 'POST' }
+      );
+
+      if (response.ok) {
+        console.log(`⏰ Cancelled timer ${timerId}`);
+        return true;
+      } else {
+        console.warn(`⚠️ Failed to cancel timer:`, response.status);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error cancelling timer:', error);
+      return false;
+    }
+  };
+
   const startTimer = () => {
     if (timerSeconds === 0) {
       setTimerSeconds(timerMinutes * 60);
@@ -1096,17 +1194,21 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                   duration: 5000,
                 });
               }}
+              onTimerCancel={(timerId) => {
+                // Cancel timer via backend API
+                cancelBackendTimer(timerId);
+              }}
               onTimerSelect={(timer) => {
                 // Navigate to the step if it has one
                 if (timer.step_id && recipe) {
-                  const stepIndex = stepIdToIndex(timer.step_id);
-                  if (stepIndex !== -1 && stepIndex !== currentStep) {
+                  const stepIndex = stepIdToIndex.get(timer.step_id);
+                  if (stepIndex !== undefined && stepIndex !== currentStep) {
                     setCurrentStep(stepIndex);
                   }
                 }
               }}
-        />
-      </div>
+            />
+          </div>
         </div>
       )}
 
@@ -1184,6 +1286,34 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           <p className="text-center text-sm text-muted-foreground mt-4">
             Tap +/− to adjust time by minute
           </p>
+          
+          {/* Backend Timer Start - for parallel cooking */}
+          {(() => {
+            const backendStep = recipe?.backendSteps?.[currentStep];
+            const isTimerStep = backendStep?.type === 'timer' || 
+                               (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0);
+            const hasActiveBackendTimer = backendStep && activeTimers.some(t => t.step_id === backendStep.id);
+            
+            if (isTimerStep && !hasActiveBackendTimer) {
+              return (
+                <div className="mt-6 pt-6 border-t border-border/30">
+                  <Button
+                    onClick={() => startBackendTimer()}
+                    variant="outline"
+                    size="lg"
+                    className="w-full gap-2 border-amber-500/50 text-amber-600 hover:bg-amber-500/10"
+                  >
+                    <Bell className="size-4" />
+                    Start Step Timer (runs in background)
+                  </Button>
+                  <p className="text-center text-xs text-muted-foreground mt-2">
+                    Timer will continue while you work on other steps
+                  </p>
+                </div>
+              );
+            }
+            return null;
+          })()}
       </div>
         </div>
       )}
@@ -1205,20 +1335,33 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                 style={{ gap: '24px', marginTop: '24px' }}
               >
                 <div className="w-full max-w-[420px] flex gap-2">
-            {instructions.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setCurrentStep(idx)}
-                      className={`h-1 flex-1 rounded-full transition-colors ${
-                  idx === currentStep
-                          ? 'bg-[#0A7E6C]'
-                    : completedSteps.includes(idx)
-                          ? 'bg-[#81EB67]'
+            {instructions.map((_, idx) => {
+              const hasTimer = stepHasActiveTimer(idx);
+              const isCurrentStep = idx === currentStep;
+              const isCompleted = completedSteps.includes(idx);
+              
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentStep(idx)}
+                  className={`relative h-1 flex-1 rounded-full transition-colors ${
+                    isCurrentStep
+                      ? 'bg-[#0A7E6C]'
+                      : isCompleted
+                        ? 'bg-[#81EB67]'
+                        : hasTimer
+                          ? 'bg-amber-500'
                           : 'bg-muted-foreground/20'
-                }`}
-                aria-label={`Go to step ${idx + 1}`}
-              />
-            ))}
+                  }`}
+                  aria-label={`Go to step ${idx + 1}${hasTimer ? ' (timer running)' : ''}`}
+                >
+                  {/* Pulsing indicator for steps with active timers */}
+                  {hasTimer && !isCurrentStep && (
+                    <span className="absolute inset-0 rounded-full bg-amber-500 animate-pulse" />
+                  )}
+                </button>
+              );
+            })}
           </div>
                 <div className="w-full max-w-[420px]">
                   <div

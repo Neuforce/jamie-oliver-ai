@@ -260,6 +260,22 @@ class TimerManager:
             timer.remaining_secs = self._calculate_remaining(timer)
         return timer
     
+    def get_timer_by_id(self, timer_id: str) -> Optional[ActiveTimer]:
+        """Get a timer by its ID."""
+        timer = self._active_timers.get(timer_id)
+        if timer:
+            timer.remaining_secs = self._calculate_remaining(timer)
+        return timer
+    
+    def get_timer_by_label(self, label: str) -> Optional[ActiveTimer]:
+        """Get a timer by its label (case-insensitive partial match)."""
+        label_lower = label.lower()
+        for timer in self._active_timers.values():
+            if label_lower in timer.label.lower():
+                timer.remaining_secs = self._calculate_remaining(timer)
+                return timer
+        return None
+    
     def get_all_active_timers(self) -> List[ActiveTimer]:
         """
         Get all currently active timers with updated remaining times.

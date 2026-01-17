@@ -1467,6 +1467,90 @@ async def _send_control_event(session_id: str, action: str, data: dict) -> None:
 
 
 # =============================================================================
+# NAVIGATION TOOLS
+# These tools allow the agent to freely navigate the recipe
+# =============================================================================
+
+@register_function(recipe_function_manager)
+@trace_tool_call("go_to_step")
+async def go_to_step(step_id: str = "", step_number: int = 0) -> str:
+    """
+    Navigate to a specific step in the recipe. Use this when the user wants to
+    jump to a different step, go back to a previous step, or skip ahead.
+    
+    This does NOT change the step's status - it just scrolls the UI to show
+    that step. Use start_step() to actually begin working on a step.
+    
+    Examples:
+    - User: "Go back to step 2" → go_to_step(step_number=2)
+    - User: "Show me the mixing step" → go_to_step(step_id="mix_ingredients")
+    - User: "What was step 3 again?" → go_to_step(step_number=3)
+    
+    Args:
+        step_id: The ID of the step to navigate to (preferred)
+        step_number: The step number (1-based) to navigate to
+        
+    Returns:
+        Confirmation of navigation and step details
+    """
+    session_id = _get_session_id()
+    if not session_id:
+        return "[ERROR] No session found. Please reconnect."
+    
+    engine = _get_engine(session_id)
+    if not engine:
+        return "[ERROR] No recipe in progress. Call start_recipe() first."
+    
+    state = engine.get_state()
+    steps_list = list(engine.recipe.steps.values())
+    
+    target_step = None
+    step_index = 0
+    
+    # Find by step_id first
+    if step_id:
+        for idx, step in enumerate(steps_list):
+            if step.id == step_id or step_id.lower() in step.id.lower():
+                target_step = step
+                step_index = idx
+                break
+    
+    # If not found by ID, try by step number (1-based)
+    if not target_step and step_number > 0:
+        if 1 <= step_number <= len(steps_list):
+            target_step = steps_list[step_number - 1]
+            step_index = step_number - 1
+    
+    if not target_step:
+        available_steps = [f"{i+1}. {s.descr} (id: {s.id})" for i, s in enumerate(steps_list)]
+        return (
+            f"[INFO] Step not found. Available steps:\n" +
+            "\n".join(available_steps)
+        )
+    
+    # Send focus event to frontend
+    await _send_focus_step_event(session_id, target_step.id, step_index)
+    
+    # Get step status
+    step_info = state["steps"].get(target_step.id, {})
+    step_status = step_info.get("status", "unknown")
+    
+    # Check if there's a timer for this step
+    timer_info = ""
+    active_timers = engine.get_active_timers()
+    for timer in active_timers:
+        if timer.step_id == target_step.id:
+            remaining = _format_duration(timer.remaining_secs or 0)
+            timer_info = f" Timer running: {remaining} remaining."
+    
+    return (
+        f"[NAVIGATED] Now showing step {step_index + 1}: '{target_step.descr}'\n"
+        f"Status: {step_status.upper()}{timer_info}\n"
+        f"Instructions: {target_step.instructions}"
+    )
+
+
+# =============================================================================
 # APP-AGENT SYNC HELPERS
 # These functions allow the agent to synchronize UI state with its conversation
 # =============================================================================

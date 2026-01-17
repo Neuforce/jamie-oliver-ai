@@ -176,6 +176,108 @@ async def confirm_step_for_session(session_id: str, step_id: str):
     return {"state": state, "message": tool_message}
 
 
+@app.post("/sessions/{session_id}/steps/{step_id}/start-timer")
+async def start_timer_for_step_api(session_id: str, step_id: str):
+    """
+    Start a timer for a specific step.
+    Allows the frontend to start timers via UI without voice input.
+    
+    The step must be in ACTIVE status to start a timer.
+    """
+    from src.tools.recipe_tools import start_timer_for_step as start_timer_tool
+    from src.tools.recipe_tools import start_step as start_step_tool
+    
+    engine = session_service.get_engine(session_id)
+    if not engine:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    step = engine.recipe.steps.get(step_id)
+    if not step:
+        raise HTTPException(status_code=404, detail="Step not found for current recipe")
+    
+    # Check step status
+    state = engine.get_state()
+    step_info = state["steps"].get(step_id, {})
+    step_status = step_info.get("status", "unknown")
+    
+    logger.info(f"Timer start requested for step '{step_id}' with status '{step_status}'")
+    
+    try:
+        # If step is READY, start it first
+        if step_status == "ready":
+            logger.info(f"Step '{step_id}' is READY - starting it first before timer")
+            await run_recipe_tool(session_id, start_step_tool, step_id=step_id)
+        
+        # Now start the timer
+        tool_message = await run_recipe_tool(session_id, start_timer_tool, step_id=step_id)
+    except Exception as exc:
+        logger.error(f"Failed to start timer for step {step_id}: {exc}", exc_info=True)
+        raise HTTPException(status_code=400, detail=f"Unable to start timer: {exc}")
+    
+    # Notify agent that user started a timer via UI
+    assistant = session_service.get_assistant(session_id)
+    if assistant:
+        try:
+            system_message = (
+                f"[SYSTEM: The user started the timer for '{step.descr}' (step_id: {step_id}) "
+                f"via the app UI. The timer is now running. Continue guiding them naturally.]"
+            )
+            await assistant.inject_system_message(system_message)
+            logger.info(f"⏰ Injected timer start message to assistant for step: {step_id}")
+        except Exception as e:
+            logger.warning(f"Failed to inject timer start message: {e}")
+    
+    state = engine.get_state()
+    state["has_recipe"] = True
+    return {"state": state, "message": tool_message}
+
+
+@app.post("/sessions/{session_id}/timers/{timer_id}/cancel")
+async def cancel_timer_api(session_id: str, timer_id: str):
+    """
+    Cancel an active timer.
+    Allows the frontend to cancel timers via UI.
+    """
+    engine = session_service.get_engine(session_id)
+    if not engine:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    # Get timer info before cancelling for the response
+    timer = engine._timer_manager.get_timer_by_id(timer_id)
+    if not timer:
+        raise HTTPException(status_code=404, detail="Timer not found")
+    
+    label = timer.label
+    step_id = timer.step_id
+    
+    logger.info(f"Timer cancel requested: '{timer_id}' ({label})")
+    
+    try:
+        result = await engine._timer_manager.cancel_timer(timer_id, emit_event=True)
+        if not result:
+            raise HTTPException(status_code=400, detail="Failed to cancel timer")
+    except Exception as exc:
+        logger.error(f"Failed to cancel timer {timer_id}: {exc}", exc_info=True)
+        raise HTTPException(status_code=400, detail=f"Unable to cancel timer: {exc}")
+    
+    # Notify agent
+    assistant = session_service.get_assistant(session_id)
+    if assistant:
+        try:
+            system_message = (
+                f"[SYSTEM: The user cancelled the timer '{label}' via the app UI."
+                + (f" Step: {step_id}" if step_id else "")
+                + " Continue guiding them naturally.]"
+            )
+            await assistant.inject_system_message(system_message)
+            logger.info(f"⏰ Injected timer cancel message to assistant")
+        except Exception as e:
+            logger.warning(f"Failed to inject timer cancel message: {e}")
+    
+    state = engine.get_state()
+    return {"state": state, "message": f"Timer '{label}' cancelled"}
+
+
 @app.websocket("/ws/voice")
 async def voice_websocket_endpoint(websocket: WebSocket):
     """
