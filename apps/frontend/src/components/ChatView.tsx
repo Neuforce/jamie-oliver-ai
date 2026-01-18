@@ -330,22 +330,17 @@ export function ChatView({
           setThinkingStatus(null);
           setIsTyping(false);
           
-          // Use recipes from agent's tool call (they match what Jamie mentioned)
-          // Only fall back to search if agent didn't return recipes
-          let recipes = agentRecipes;
-          
-          if (recipes.length === 0 && fullResponse.toLowerCase().includes('recipe')) {
-            // Fallback: search based on user's original message
-            console.log('No agent recipes, falling back to search');
-            recipes = await loadRecipesForQuery(text);
-          }
+          // Only show recipes that came from the agent's tool call
+          // Don't do fallback searches - they often return irrelevant results
+          // when the agent is asking clarifying questions
+          const recipes = agentRecipes;
           
           console.log('Final recipe count:', recipes.length);
           
           // Update message to final state
           setMessages(prev => prev.map(msg => 
             msg.id === streamingMessageId 
-              ? { ...msg, content: fullResponse, isStreaming: false, recipes }
+              ? { ...msg, content: fullResponse, isStreaming: false, recipes: recipes.length > 0 ? recipes : undefined }
               : msg
           ));
         } else if (event.type === 'error') {
