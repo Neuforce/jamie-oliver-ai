@@ -1087,18 +1087,21 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           {/* Logo - Centered */}
           <div className="flex items-center justify-center">
             <div
-              className="flex items-center justify-center"
               style={{
-                height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
-                width: 'clamp(140px, calc(100vw * 171.75 / 390), 171.75px)',
+                height: 'clamp(24px, calc(100vw * 32 / 390), 32px)',
                 maxWidth: '171.75px'
               }}
             >
               <img
                 src={jamieLogo}
                 alt="Jamie Oliver"
-                className="h-full w-full object-contain"
-                style={{ maxWidth: '100%', maxHeight: '100%' }}
+                style={{
+                  height: '100%',
+                  width: 'auto',
+                  display: 'block',
+                  maxWidth: '100%',
+                  objectFit: 'contain'
+                }}
               />
             </div>
           </div>
@@ -1108,7 +1111,6 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
               onClick={toggleVoiceListening}
                 className="inline-flex rounded-full transition-colors"
                 style={{
-                  marginTop: '7px',
                   padding: '0 0 0 12px',
                   height: '42px',
                   width: '93px',
