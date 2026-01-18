@@ -2954,10 +2954,14 @@
   --sidebar-ring: oklch(.439 0 0);
 }
 
-html, body, #root {
+html {
   font-size: var(--font-size);
+}
+
+html, body, #root {
   height: 100%;
-  overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 @property --tw-translate-x {
