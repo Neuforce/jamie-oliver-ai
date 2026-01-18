@@ -490,10 +490,10 @@ export function ChatView({
   };
 
   return (
-    <div className="flex flex-col flex-1 min-h-0 bg-white relative">
+    <div className="flex flex-col flex-1 min-h-0 bg-white relative overflow-hidden">
       {/* Empty State with Landing-style prompts */}
       {!hasMessages && !isTyping ? (
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 min-h-0 overflow-y-auto">
           <div className="relative">
             <GlowEffect />
             <div className="relative z-10 px-5 py-6">
@@ -828,12 +828,9 @@ export function ChatView({
         )}
       </AnimatePresence>
 
-      {/* Chat Input - Fixed at bottom */}
+      {/* Chat Input - Always at bottom */}
       <div 
-        className="px-5 py-3 bg-white border-t border-black/5"
-        style={{
-          flexShrink: 0,
-        }}
+        className="px-5 py-3 bg-white border-t border-black/5 shrink-0"
       >
         <div className="max-w-[380px] mx-auto">
           <div 

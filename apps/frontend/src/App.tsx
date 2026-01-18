@@ -232,7 +232,7 @@ export default function App() {
           </header>
 
           {/* Tab Content */}
-          <main className="flex-1 overflow-hidden flex flex-col">
+          <main className="flex-1 flex flex-col min-h-0">
             <AnimatePresence mode="wait">
               {activeView === 'chat' ? (
                 <motion.div
@@ -241,7 +241,7 @@ export default function App() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.2 }}
-                  className="flex-1 flex flex-col min-h-0"
+                  className="flex-1 flex flex-col min-h-0 overflow-hidden"
                 >
                   <ChatView
                     key={chatKey}
