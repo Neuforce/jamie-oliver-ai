@@ -106,14 +106,13 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
     return (
       <motion.div
         whileTap={{ scale: 0.98 }}
-        className="cursor-pointer"
+        className="cursor-pointer w-full"
         onClick={onClick}
       >
         <div
-          className="relative overflow-hidden bg-white shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)]"
+          className="relative overflow-hidden bg-white shadow-[0_1px_3px_rgba(0,0,0,0.10),0_1px_2px_-1px_rgba(0,0,0,0.10)] w-full"
           style={{
-            width: '164.5px',
-            height: '205.625px',
+            aspectRatio: '4 / 5',
             borderRadius: '24px',
           }}
         >

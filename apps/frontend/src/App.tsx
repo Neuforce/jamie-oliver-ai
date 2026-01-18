@@ -685,9 +685,12 @@ export default function App() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.2, duration: 0.5 }}
-                          className="px-5 mb-12 flex justify-center"
+                          className="px-4 mb-12"
                         >
-                          <div className="grid grid-cols-3 lg:grid-cols-4 gap-4" style={{ width: 'fit-content' }}>
+                          <div 
+                            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
+                            style={{ maxWidth: '800px', margin: '0 auto' }}
+                          >
                             {filteredRecipes.map((recipe, index) => (
                               <motion.div
                                 key={recipe.id}
