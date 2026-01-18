@@ -41,7 +41,7 @@ import { useAudioCapture } from '../hooks/useAudioCapture';
 import { useAudioPlayback } from '../hooks/useAudioPlayback';
 import { RecipeCard } from './RecipeCard';
 import { TimerPanel, type ActiveTimer } from './TimerPanel';
-import { clearChatHistory } from './ChatWithJamie';
+import { clearChatHistory } from './ChatView';
 // @ts-ignore - handled by Vite
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 const jamieLogo = typeof jamieLogoImport === 'string' ? jamieLogoImport : (jamieLogoImport as any).src || jamieLogoImport;

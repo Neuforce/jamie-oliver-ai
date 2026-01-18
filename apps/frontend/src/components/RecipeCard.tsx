@@ -159,7 +159,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
                 className="text-white"
                 style={{
                   textTransform: 'uppercase',
-                  fontFamily: 'Poppins, sans-serif',
+                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
                   fontSize: '14px',
                   fontWeight: 600,
                   lineHeight: '20px',
@@ -252,7 +252,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
                   className="text-white"
                   style={{
                     textTransform: 'uppercase',
-                    fontFamily: 'Poppins, sans-serif',
+                    fontFamily: 'var(--font-display, Poppins, sans-serif)',
                     fontSize: '14px',
                     fontWeight: 600,
                     lineHeight: '20px',
@@ -354,25 +354,25 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             <h3
-              style={{
-                color: '#2C5F5D',
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '22px',
-                fontWeight: 700,
-                letterSpacing: '0.087px',
-                lineHeight: '28px',
-                textTransform: 'uppercase',
-              }}
+            style={{
+              color: 'var(--jamie-primary-dark, #2C5F5D)',
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
+              fontSize: '22px',
+              fontWeight: 700,
+              letterSpacing: '0.087px',
+              lineHeight: '28px',
+              textTransform: 'uppercase',
+            }}
             >
               {recipe.title}
             </h3>
             <p
               style={{
-                margin: 0,
-                color: '#234252',
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '14px',
-                lineHeight: '22px',
+              margin: 0,
+              color: 'var(--jamie-text-primary, #234252)',
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
+              fontSize: '14px',
+              lineHeight: '22px',
                 letterSpacing: '-0.15px',
                 display: '-webkit-box',
                 WebkitLineClamp: 2,
@@ -393,11 +393,11 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
               gap: '12px',
               paddingLeft: '24px',
               paddingRight: '24px',
-              fontFamily: 'Poppins, sans-serif',
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
               fontSize: '14px',
               lineHeight: '20px',
               letterSpacing: '0.087px',
-              color: '#717182',
+              color: 'var(--jamie-text-muted, #717182)',
               opacity: 1,
             }}
           >
@@ -452,153 +452,142 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
     );
   }
 
-  // Feed variant: editorial card
+  // Feed variant: large editorial card with prominent image
   return (
     <motion.div
       whileTap={{ scale: 0.98 }}
       className="cursor-pointer"
       onClick={onClick}
       style={{
-        width: 'clamp(320px, 92vw, 640px)',
+        width: '100%',
+        maxWidth: '600px',
         margin: '0 auto',
       }}
     >
       <div
-        className="overflow-hidden border border-[#E4E7EC] bg-white"
+        className="overflow-hidden bg-white"
         style={{
           borderRadius: '24px',
-          boxShadow:
-            '0 1px 3px 0 rgba(0, 0, 0, 0.10), 0 1px 2px -1px rgba(0, 0, 0, 0.10)',
-          display: 'flex',
-          flexDirection: 'column',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+          border: '1px solid rgba(0, 0, 0, 0.06)',
         }}
       >
-        {/* Image */}
-        <div className="flex items-center justify-center w-full">
-          <div
-            className="relative overflow-hidden"
-            style={{
-              width: 'calc(100vw * 350 / 390)',
-              height: 'calc(100vw * 264.75 / 390)',
-              maxWidth: '350px',
-              maxHeight: '264.75px',
-              borderRadius: '24px 24px 0 0',
-              margin: '0 auto'
-            }}
-          >
+        {/* Large Hero Image - Full width, prominent */}
+        <div
+          className="relative overflow-hidden w-full"
+          style={{
+            aspectRatio: '16 / 10',
+          }}
+        >
           <img
             src={recipe.image}
             alt={recipe.title}
-              className="w-full h-full object-cover"
-            />
+            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          />
+          
+          {/* Category Badge */}
+          <span
+            className="absolute left-4 top-4 inline-flex items-center text-white text-xs font-semibold"
+            style={{ ...badgeStyle, letterSpacing: '0.15em' }}
+          >
+            {recipe.category.toUpperCase()}
+          </span>
+
+          {/* In Progress Badge */}
+          {hasSession && (
             <span
-              className="absolute left-3 top-3 inline-flex items-center text-white text-xs font-semibold"
-              style={{ ...badgeStyle, letterSpacing: '0.2em' }}
+              className="absolute right-4 top-4 inline-flex items-center gap-1.5 text-white text-xs font-semibold"
+              style={{
+                ...badgeStyle,
+                background: '#10B981',
+              }}
             >
-              {recipe.category.toUpperCase()}
+              <Clock className="size-3" />
+              In Progress
             </span>
-          </div>
+          )}
         </div>
 
-        {/* Content */}
+        {/* Content Section */}
         <div
           style={{
-            padding: '20px',
-            boxSizing: 'border-box',
+            padding: '20px 24px 24px',
             display: 'flex',
             flexDirection: 'column',
             gap: '12px',
-            backgroundColor: '#FFFFFF',
-            position: 'relative',
-            zIndex: 1,
-            flex: '0 0 25%',
-            minHeight: 0,
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <h3
-              style={{
-                color: '#2C5F5D',
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '18px',
-                fontWeight: 600,
-                letterSpacing: '0.087px',
-                lineHeight: '20px',
-                textTransform: 'uppercase',
-                opacity: 1,
-              }}
-            >
-              {recipe.title}
-            </h3>
-            <p
-              style={{
-                margin: 0,
-                color: '#234252',
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: '14px',
-                lineHeight: '22.75px',
-                letterSpacing: '-0.15px',
-                display: '-webkit-box',
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: 'vertical',
-                overflow: 'hidden',
-                opacity: 1,
-              }}
-            >
+          {/* Title */}
+          <h3
+            style={{
+              color: 'var(--jamie-text-heading, #2C5F5D)',
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
+              fontSize: '20px',
+              fontWeight: 700,
+              letterSpacing: '0.5px',
+              lineHeight: 1.2,
+              textTransform: 'uppercase',
+              margin: 0,
+            }}
+          >
+            {recipe.title}
+          </h3>
+          
+          {/* Description */}
+          <p
+            style={{
+              margin: 0,
+              color: 'var(--jamie-text-primary, #234252)',
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
+              fontSize: '15px',
+              lineHeight: 1.5,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
             {recipe.description}
           </p>
-          </div>
 
+          {/* Meta Info */}
           <div
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '24px',
-              marginTop: 'auto',
-              fontFamily: 'Poppins, sans-serif',
+              gap: '20px',
+              marginTop: '4px',
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
               fontSize: '14px',
-              lineHeight: '20px',
-              letterSpacing: '0.087px',
-              color: '#717182',
-              opacity: 1,
+              color: 'var(--jamie-text-muted, #717182)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Clock className="size-4 text-[#3D6E6C]" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Clock className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
               <span>{recipe.time}</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Users className="size-4 text-[#3D6E6C]" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Users className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
               <span>{recipe.servings}</span>
             </div>
-            {showDifficultyPill ? (
-              <span
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  padding: '6px 12px',
-                  borderRadius: '33554400px',
-                  background: '#F2F5F6',
-                  color: '#2C5F5D',
-                  fontFamily: 'Inter',
-                  fontSize: '12px',
-                  fontStyle: 'normal',
-                  fontWeight: 600,
-                  lineHeight: '16px',
-                  letterSpacing: '0.3px',
-                  textTransform: 'uppercase',
-                }}
-              >
-                {recipe.difficulty}
-              </span>
-            ) : (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <ChefHat className="size-4 text-[#3D6E6C]" />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <ChefHat className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
               <span>{recipe.difficulty}</span>
             </div>
-            )}
           </div>
+
+          {/* Progress Bar for in-progress recipes */}
+          {hasSession && (
+            <div className="mt-2 w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+              <div
+                className="h-full rounded-full transition-all"
+                style={{ 
+                  width: `${sessionProgress}%`,
+                  background: 'linear-gradient(90deg, #46BEA8, #81EB67)',
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </motion.div>

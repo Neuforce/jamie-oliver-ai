@@ -90,29 +90,8 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
               </div>
             </div>
 
-            {/* Recipes Button */}
-            <div className="flex items-center justify-end">
-              <button
-                type="button"
-                onClick={onClose}
-                className="inline-flex items-center justify-center"
-                style={{
-                  padding: 0,
-                  background: '#FFFFFF',
-                  borderRadius: '999px',
-                  width: '48px',
-                  height: '48px',
-                  boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
-                  border: '1px solid rgba(232,235,237,0.8)',
-                }}
-              >
-                <img
-                  src="/assets/Recipes.svg"
-                  alt="Recipes"
-                  style={{ width: '24px', height: '24px', display: 'block' }}
-                />
-              </button>
-            </div>
+            {/* Empty spacer for grid balance */}
+            <div className="flex items-center justify-end" />
           </div>
         </div>
 

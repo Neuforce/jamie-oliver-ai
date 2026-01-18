@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap');
 
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
 @layer properties {
@@ -2900,6 +2900,21 @@
   --jamie-accent-green: #81eb67;
   --jamie-accent-yellow: #f0ff17;
   --jamie-accent-orange: #f0b100;
+  
+  /* Typography - Jamie Oliver Design System */
+  --font-display: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-chat: 'Work Sans', sans-serif;
+  
+  /* Standard Jamie Oliver text colors */
+  --jamie-text-primary: #234252;
+  --jamie-text-heading: #327179;
+  --jamie-text-body: #2c2c2c;
+  --jamie-text-muted: #5d5d5d;
+  --jamie-text-placeholder: #8e8e93;
+  
+  /* Touch target size (44px minimum) */
+  --touch-target-min: 44px;
 }
 
 .dark {
