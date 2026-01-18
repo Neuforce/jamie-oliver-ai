@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
 import { ArrowUp } from 'lucide-react';
@@ -9,7 +9,7 @@ import { AvatarWithGlow } from '../design-system/components/AvatarWithGlow';
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 // @ts-expect-error - Vite handles image imports
 import jamieAvatarLarge from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
-import { searchRecipes } from '../lib/api';
+import { chatWithAgent, generateSessionId, clearChatSession, searchRecipes } from '../lib/api';
 import { transformRecipeMatch, loadRecipeFromLocal } from '../data/recipeTransformer';
 import type { JamieOliverRecipe } from '../data/recipeTransformer';
 
@@ -19,6 +19,7 @@ interface Message {
   content: string;
   recipes?: Recipe[];
   timestamp: Date;
+  isStreaming?: boolean;
 }
 
 interface ChatViewProps {
@@ -29,11 +30,21 @@ interface ChatViewProps {
 }
 
 const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
+const SESSION_ID_KEY = 'jamie-oliver-chat-session';
 
 // Export function to clear chat history (used when recipe is completed)
-export const clearChatHistory = () => {
+export const clearChatHistory = async () => {
   try {
     localStorage.removeItem(CHAT_STORAGE_KEY);
+    const sessionId = localStorage.getItem(SESSION_ID_KEY);
+    if (sessionId) {
+      try {
+        await clearChatSession(sessionId);
+      } catch (e) {
+        console.warn('Failed to clear backend session:', e);
+      }
+      localStorage.removeItem(SESSION_ID_KEY);
+    }
   } catch (error) {
     console.error('Error clearing chat history:', error);
   }
@@ -47,6 +58,16 @@ const PROMPT_SUGGESTIONS = [
   "My energy is at 2%"
 ];
 
+// Helper function to get or create session ID
+const getOrCreateSessionId = (): string => {
+  let sessionId = localStorage.getItem(SESSION_ID_KEY);
+  if (!sessionId) {
+    sessionId = generateSessionId();
+    localStorage.setItem(SESSION_ID_KEY, sessionId);
+  }
+  return sessionId;
+};
+
 // Helper function to load messages from localStorage
 const loadMessagesFromStorage = (): Message[] => {
   try {
@@ -56,6 +77,7 @@ const loadMessagesFromStorage = (): Message[] => {
       return parsed.map((msg: any) => ({
         ...msg,
         timestamp: new Date(msg.timestamp),
+        isStreaming: false,
       }));
     }
   } catch (error) {
@@ -67,14 +89,35 @@ const loadMessagesFromStorage = (): Message[] => {
 // Helper function to save messages to localStorage
 const saveMessagesToStorage = (messages: Message[]) => {
   try {
-    const serializable = messages.map(msg => ({
-      ...msg,
-      timestamp: msg.timestamp.toISOString(),
-    }));
+    // Don't save streaming messages
+    const serializable = messages
+      .filter(msg => !msg.isStreaming)
+      .map(msg => ({
+        ...msg,
+        timestamp: msg.timestamp.toISOString(),
+      }));
     localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(serializable));
   } catch (error) {
     console.error('Error saving chat messages to storage:', error);
   }
+};
+
+// Try to extract recipe IDs from agent response for loading
+const extractRecipeIds = (text: string): string[] => {
+  // Look for patterns like recipe_id: "slug" or **Recipe Name**
+  const patterns = [
+    /"recipe_id":\s*"([^"]+)"/gi,
+    /\*\*([A-Za-z\s-]+)\*\*/g,
+  ];
+  
+  const ids: string[] = [];
+  for (const pattern of patterns) {
+    let match;
+    while ((match = pattern.exec(text)) !== null) {
+      ids.push(match[1].toLowerCase().replace(/\s+/g, '-'));
+    }
+  }
+  return [...new Set(ids)];
 };
 
 export function ChatView({ 
@@ -88,24 +131,27 @@ export function ChatView({
   const [isTyping, setIsTyping] = useState(false);
   const [thinkingStatus, setThinkingStatus] = useState<string | null>(null);
   const [displayedThinkingText, setDisplayedThinkingText] = useState('');
-  const [loadingRecipes, setLoadingRecipes] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   const hasMessages = messages.length > 0;
 
-  const scrollToBottom = () => {
+  const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  }, []);
 
-  // Save messages to localStorage whenever they change
+  // Save messages to localStorage whenever they change (excluding streaming)
   useEffect(() => {
-    saveMessagesToStorage(messages);
+    const nonStreamingMessages = messages.filter(m => !m.isStreaming);
+    if (nonStreamingMessages.length > 0) {
+      saveMessagesToStorage(messages);
+    }
   }, [messages]);
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isTyping]);
+  }, [messages, isTyping, scrollToBottom]);
 
   // Auto-focus input when component mounts
   useEffect(() => {
@@ -135,56 +181,26 @@ export function ChatView({
         } else {
           clearInterval(typeInterval);
         }
-      }, 50);
+      }, 30);
       return () => clearInterval(typeInterval);
     } else {
       setDisplayedThinkingText('');
     }
   }, [thinkingStatus]);
 
-  const handleSendMessage = async (messageText?: string) => {
-    const text = messageText || inputValue.trim();
-    if (!text) return;
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      type: 'user',
-      content: text,
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, userMessage]);
-    setInputValue('');
-    setIsTyping(true);
-    setThinkingStatus("Searching for recipes...");
-    setLoadingRecipes(true);
-
+  // Load recipes mentioned in agent response
+  const loadRecipesFromResponse = useCallback(async (responseText: string): Promise<Recipe[]> => {
+    // Search for recipes based on the response content
     try {
-      const searchResponse = await searchRecipes(text, {
+      const searchResponse = await searchRecipes(responseText.slice(0, 200), {
         include_full_recipe: true,
-        top_k: 10,
+        top_k: 5,
         include_chunks: false,
-        similarity_threshold: 0.7,
+        similarity_threshold: 0.5,
       });
 
-      setThinkingStatus(null);
-      setLoadingRecipes(false);
-
-      if (searchResponse.results.length === 0) {
-        const noResultsMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          type: 'jamie',
-          content: "I couldn't find any recipes matching your search. Try describing what you're looking for in a different way!",
-          timestamp: new Date(),
-        };
-        setMessages(prev => [...prev, noResultsMessage]);
-        setIsTyping(false);
-        return;
-      }
-
-      // Transform recipe matches
-      const transformedRecipes: Recipe[] = [];
-      for (let i = 0; i < searchResponse.results.length; i++) {
+      const recipes: Recipe[] = [];
+      for (let i = 0; i < Math.min(searchResponse.results.length, 4); i++) {
         const match = searchResponse.results[i];
         try {
           let fullRecipe;
@@ -196,47 +212,191 @@ export function ChatView({
             fullRecipe = localRecipe;
           }
           const transformed = transformRecipeMatch(match, fullRecipe, i);
-          transformedRecipes.push(transformed);
+          recipes.push(transformed);
         } catch (error) {
           console.error(`Error transforming recipe ${match.recipe_id}:`, error);
         }
       }
+      return recipes;
+    } catch (e) {
+      console.error('Failed to load recipes from response:', e);
+      return [];
+    }
+  }, []);
 
-      if (transformedRecipes.length === 0) {
-        const errorMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          type: 'jamie',
-          content: "I found some recipes, but there was an error loading them. Please try again!",
-          timestamp: new Date(),
-        };
-        setMessages(prev => [...prev, errorMessage]);
-        setIsTyping(false);
-        return;
+  const handleSendMessage = async (messageText?: string) => {
+    const text = messageText || inputValue.trim();
+    if (!text) return;
+
+    // Cancel any ongoing request
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      type: 'user',
+      content: text,
+      timestamp: new Date(),
+    };
+
+    // Create streaming message placeholder
+    const streamingMessageId = (Date.now() + 1).toString();
+    const streamingMessage: Message = {
+      id: streamingMessageId,
+      type: 'jamie',
+      content: '',
+      timestamp: new Date(),
+      isStreaming: true,
+    };
+
+    setMessages(prev => [...prev, userMessage, streamingMessage]);
+    setInputValue('');
+    setIsTyping(true);
+    setThinkingStatus("Thinking...");
+
+    const sessionId = getOrCreateSessionId();
+    let fullResponse = '';
+    let hasSearchedRecipes = false;
+
+    try {
+      // Stream response from chat agent
+      for await (const event of chatWithAgent(text, sessionId)) {
+        if (event.type === 'text_chunk') {
+          fullResponse += event.content;
+          
+          // Update streaming message with new content
+          setMessages(prev => prev.map(msg => 
+            msg.id === streamingMessageId 
+              ? { ...msg, content: fullResponse }
+              : msg
+          ));
+          
+          // Clear thinking status once we start receiving text
+          if (thinkingStatus) {
+            setThinkingStatus(null);
+          }
+        } else if (event.type === 'tool_call') {
+          // Show what tool is being called
+          const toolName = event.content;
+          if (toolName === 'search_recipes' || toolName === 'suggest_recipes_for_mood') {
+            setThinkingStatus("Searching for recipes...");
+            hasSearchedRecipes = true;
+          } else if (toolName === 'get_recipe_details') {
+            setThinkingStatus("Getting recipe details...");
+          } else if (toolName === 'plan_meal') {
+            setThinkingStatus("Planning your meal...");
+          } else if (toolName === 'create_shopping_list') {
+            setThinkingStatus("Creating shopping list...");
+          }
+        } else if (event.type === 'done') {
+          // Finalize the message
+          setThinkingStatus(null);
+          setIsTyping(false);
+          
+          // Try to load recipes if the agent searched for them
+          let recipes: Recipe[] = [];
+          if (hasSearchedRecipes && fullResponse.length > 50) {
+            recipes = await loadRecipesFromResponse(fullResponse);
+          }
+          
+          // Update message to final state
+          setMessages(prev => prev.map(msg => 
+            msg.id === streamingMessageId 
+              ? { ...msg, content: fullResponse, isStreaming: false, recipes }
+              : msg
+          ));
+        } else if (event.type === 'error') {
+          console.error('Chat error:', event.content);
+          setMessages(prev => prev.map(msg => 
+            msg.id === streamingMessageId 
+              ? { 
+                  ...msg, 
+                  content: "Sorry, something went wrong. Please try again!", 
+                  isStreaming: false 
+                }
+              : msg
+          ));
+          setThinkingStatus(null);
+          setIsTyping(false);
+        }
       }
-
-      const jamieMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        type: 'jamie',
-        content: '',
-        recipes: transformedRecipes,
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, jamieMessage]);
-      setIsTyping(false);
     } catch (error) {
-      console.error('Error searching recipes:', error);
+      console.error('Error chatting with agent:', error);
       setThinkingStatus(null);
-      setLoadingRecipes(false);
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        type: 'jamie',
-        content: error instanceof Error && error.message.includes('connect')
-          ? "I'm having trouble connecting to the recipe search service. Please make sure the backend is running and try again!"
-          : "Sorry, something went wrong while searching for recipes. Please try again!",
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, errorMessage]);
       setIsTyping(false);
+      
+      // Check if it's a connection error - fall back to simple search
+      const isConnectionError = error instanceof Error && 
+        (error.message.includes('connect') || error.message.includes('fetch') || error.message.includes('Failed'));
+      
+      if (isConnectionError) {
+        // Fall back to simple recipe search
+        setThinkingStatus("Searching for recipes...");
+        try {
+          const searchResponse = await searchRecipes(text, {
+            include_full_recipe: true,
+            top_k: 5,
+            include_chunks: false,
+            similarity_threshold: 0.5,
+          });
+
+          const recipes: Recipe[] = [];
+          for (let i = 0; i < searchResponse.results.length; i++) {
+            const match = searchResponse.results[i];
+            try {
+              let fullRecipe;
+              if (match.full_recipe) {
+                fullRecipe = match.full_recipe as unknown as JamieOliverRecipe;
+              } else {
+                const localRecipe = await loadRecipeFromLocal(match.recipe_id);
+                if (!localRecipe) continue;
+                fullRecipe = localRecipe;
+              }
+              const transformed = transformRecipeMatch(match, fullRecipe, i);
+              recipes.push(transformed);
+            } catch (err) {
+              console.error(`Error transforming recipe:`, err);
+            }
+          }
+
+          setMessages(prev => prev.map(msg => 
+            msg.id === streamingMessageId 
+              ? { 
+                  ...msg, 
+                  content: recipes.length > 0 
+                    ? "Here are some recipes you might enjoy:" 
+                    : "I couldn't find any recipes matching your request. Try describing what you're looking for differently!",
+                  isStreaming: false,
+                  recipes: recipes.length > 0 ? recipes : undefined,
+                }
+              : msg
+          ));
+          setThinkingStatus(null);
+        } catch (searchError) {
+          setMessages(prev => prev.map(msg => 
+            msg.id === streamingMessageId 
+              ? { 
+                  ...msg, 
+                  content: "I'm having trouble connecting. Please make sure the backend is running and try again!",
+                  isStreaming: false 
+                }
+              : msg
+          ));
+          setThinkingStatus(null);
+        }
+      } else {
+        setMessages(prev => prev.map(msg => 
+          msg.id === streamingMessageId 
+            ? { 
+                ...msg, 
+                content: "Sorry, something went wrong. Please try again!",
+                isStreaming: false 
+              }
+            : msg
+        ));
+      }
     }
   };
 
@@ -310,7 +470,7 @@ export function ChatView({
                     maxWidth: '307px',
                   }}
                 >
-                  Hello there! I'm Jamie Oliver, and I'm here to help you discover amazing recipes.
+                  Hello there! I'm Jamie Oliver, and I'm here to help you discover amazing recipes. Tell me what you're in the mood for!
                 </p>
               </motion.div>
 
@@ -354,27 +514,49 @@ export function ChatView({
                 )}
 
                 {message.type === 'jamie' ? (
-                  message.content && (
-                    <div className="flex gap-3 items-start">
-                      <div className="relative shrink-0 size-8">
-                        <img 
-                          alt="Jamie" 
-                          className="block size-full rounded-full" 
-                          src={imgJamieAvatar} 
+                  <>
+                    {message.content && (
+                      <div className="flex gap-3 items-start">
+                        <div className="relative shrink-0 size-8">
+                          <img 
+                            alt="Jamie" 
+                            className="block size-full rounded-full" 
+                            src={imgJamieAvatar} 
+                          />
+                        </div>
+                        <p 
+                          className="flex-1 text-base whitespace-pre-wrap"
+                          style={{
+                            fontFamily: 'var(--font-chat)',
+                            lineHeight: 1.5,
+                            color: 'var(--jamie-text-body)',
+                          }}
+                        >
+                          {message.content}
+                          {message.isStreaming && (
+                            <motion.span
+                              animate={{ opacity: [1, 0, 1] }}
+                              transition={{ duration: 0.8, repeat: Infinity }}
+                              className="inline-block ml-0.5"
+                            >
+                              ▊
+                            </motion.span>
+                          )}
+                        </p>
+                      </div>
+                    )}
+                    
+                    {/* Recipe Carousel */}
+                    {message.recipes && message.recipes.length > 0 && (
+                      <div className="mt-4">
+                        <RecipeCarousel
+                          recipes={message.recipes}
+                          onRecipeClick={(recipe) => onRecipeClick(recipe)}
+                          singleSlide={true}
                         />
                       </div>
-                      <p 
-                        className="flex-1 text-base whitespace-pre-wrap"
-                        style={{
-                          fontFamily: 'var(--font-chat)',
-                          lineHeight: 1.5,
-                          color: 'var(--jamie-text-body)',
-                        }}
-                      >
-                        {message.content}
-                      </p>
-                    </div>
-                  )
+                    )}
+                  </>
                 ) : (
                   <div 
                     className="bg-[#f5f5f5] rounded-2xl p-4"
@@ -390,17 +572,6 @@ export function ChatView({
                     >
                       {message.content}
                     </p>
-                  </div>
-                )}
-
-                {/* Recipe Carousel */}
-                {message.recipes && message.recipes.length > 0 && (
-                  <div className="mt-4">
-                    <RecipeCarousel
-                      recipes={message.recipes}
-                      onRecipeClick={(recipe) => onRecipeClick(recipe)}
-                      singleSlide={true}
-                    />
                   </div>
                 )}
               </div>
@@ -437,23 +608,6 @@ export function ChatView({
               </>
             )}
 
-            {/* Loading Spinner */}
-            {loadingRecipes && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-4 bg-white rounded-2xl border border-black/5 shadow-sm p-8"
-              >
-                <div className="flex items-center justify-center">
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                    className="size-6 rounded-full border-2 border-[#46BEA8]/20 border-t-[#46BEA8]"
-                  />
-                </div>
-              </motion.div>
-            )}
-
             <div ref={messagesEndRef} />
           </div>
         </div>
@@ -475,8 +629,9 @@ export function ChatView({
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask your question…"
-                className="flex-1 text-base bg-transparent outline-none"
+                placeholder="Tell me what you're craving..."
+                disabled={isTyping}
+                className="flex-1 text-base bg-transparent outline-none disabled:opacity-50"
                 style={{
                   fontFamily: 'var(--font-body)',
                   lineHeight: '24px',
@@ -487,18 +642,18 @@ export function ChatView({
               {/* Send Button */}
               <button
                 onClick={() => handleSendMessage()}
-                disabled={!inputValue.trim()}
-                className="shrink-0 rounded-full flex items-center justify-center transition-colors"
+                disabled={!inputValue.trim() || isTyping}
+                className="shrink-0 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
                 style={{
                   width: '36px',
                   height: '36px',
-                  backgroundColor: inputValue.trim() ? 'var(--jamie-primary)' : '#E5E5E5',
+                  backgroundColor: inputValue.trim() && !isTyping ? 'var(--jamie-primary)' : '#E5E5E5',
                 }}
               >
                 <ArrowUp 
                   className="size-5" 
                   strokeWidth={2}
-                  style={{ color: inputValue.trim() ? '#FFFFFF' : '#A3A3A3' }}
+                  style={{ color: inputValue.trim() && !isTyping ? '#FFFFFF' : '#A3A3A3' }}
                 />
               </button>
             </div>

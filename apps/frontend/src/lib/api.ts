@@ -2,7 +2,41 @@
  * API client for jo-sem-search backend
  */
 
-// Types matching the backend API
+// Get API base URL from environment variable or use default
+// @ts-expect-error - Vite provides import.meta.env but TypeScript types may not be fully loaded
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+
+// =============================================================================
+// CHAT AGENT TYPES
+// =============================================================================
+
+export interface ChatEvent {
+  type: 'text_chunk' | 'tool_call' | 'done' | 'error';
+  content: string;
+  metadata?: {
+    tool_call_id?: string;
+    arguments?: Record<string, unknown>;
+  };
+}
+
+export interface ChatRequest {
+  message: string;
+  session_id: string;
+}
+
+export interface ChatSyncResponse {
+  response: string;
+  tool_calls: Array<{
+    function: string;
+    arguments: Record<string, unknown>;
+  }>;
+  session_id: string;
+}
+
+// =============================================================================
+// RECIPE SEARCH TYPES
+// =============================================================================
+
 export interface SearchRequest {
   query: string;
   category?: string;
@@ -51,9 +85,9 @@ export interface SearchOptions {
   include_chunks?: boolean;
 }
 
-// Get API base URL from environment variable or use default
-// @ts-expect-error - Vite provides import.meta.env but TypeScript types may not be fully loaded
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+// =============================================================================
+// RECIPE SEARCH FUNCTIONS
+// =============================================================================
 
 /**
  * Search recipes using semantic search
@@ -97,4 +131,136 @@ export async function searchRecipes(
     }
     throw error;
   }
+}
+
+// =============================================================================
+// CHAT AGENT FUNCTIONS
+// =============================================================================
+
+/**
+ * Chat with Jamie Oliver discovery agent using Server-Sent Events (SSE).
+ * 
+ * Yields ChatEvent objects as they are received from the server.
+ * 
+ * @param message - The user's message
+ * @param sessionId - Session ID for conversation continuity
+ * @yields ChatEvent objects
+ */
+export async function* chatWithAgent(
+  message: string,
+  sessionId: string
+): AsyncGenerator<ChatEvent, void, unknown> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/chat`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message,
+      session_id: sessionId,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Chat API request failed: ${response.status} ${response.statusText}. ${errorText}`);
+  }
+
+  if (!response.body) {
+    throw new Error('Response body is null');
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+
+  try {
+    while (true) {
+      const { done, value } = await reader.read();
+      
+      if (done) break;
+      
+      buffer += decoder.decode(value, { stream: true });
+      
+      // Process complete SSE events
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || ''; // Keep incomplete line in buffer
+      
+      for (const line of lines) {
+        if (line.startsWith('data: ')) {
+          const data = line.slice(6);
+          if (data.trim()) {
+            try {
+              const event: ChatEvent = JSON.parse(data);
+              yield event;
+              
+              // Stop if we receive done or error
+              if (event.type === 'done' || event.type === 'error') {
+                return;
+              }
+            } catch (e) {
+              console.error('Failed to parse SSE event:', data, e);
+            }
+          }
+        }
+      }
+    }
+  } finally {
+    reader.releaseLock();
+  }
+}
+
+/**
+ * Chat with Jamie Oliver discovery agent (non-streaming).
+ * 
+ * Returns the complete response instead of streaming.
+ * 
+ * @param message - The user's message
+ * @param sessionId - Session ID for conversation continuity
+ * @returns Complete chat response
+ */
+export async function chatWithAgentSync(
+  message: string,
+  sessionId: string
+): Promise<ChatSyncResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/chat/sync`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message,
+      session_id: sessionId,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Chat API request failed: ${response.status} ${response.statusText}. ${errorText}`);
+  }
+
+  return response.json();
+}
+
+/**
+ * Clear a chat session's memory.
+ * 
+ * @param sessionId - Session ID to clear
+ */
+export async function clearChatSession(sessionId: string): Promise<void> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/chat/${sessionId}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to clear chat session: ${response.status} ${response.statusText}. ${errorText}`);
+  }
+}
+
+/**
+ * Generate a unique session ID for chat.
+ */
+export function generateSessionId(): string {
+  return `chat-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
