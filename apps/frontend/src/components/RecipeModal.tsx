@@ -47,6 +47,8 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
 
   if (!recipe) return null;
 
+  const hasUtensils = recipe.utensils && recipe.utensils.length > 0;
+
   return (
     <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
       <div className="w-full max-w-5xl mx-auto space-y-8" style={{ paddingTop: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
@@ -236,21 +238,23 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
               >
                 Ingredients
               </TabsTrigger>
-              <TabsTrigger
-                value="utensils"
-                className="flex-1 rounded-full font-semibold flex items-center justify-center"
-                style={{
-                  height: '41px',
-                  padding: '0 clamp(4px, calc(100vw * 12 / 390), 12px)',
-                  flex: '1 0 0',
-                  fontSize: 'clamp(11px, calc(100vw * 14 / 390), 14px)',
-                  background: activeTab === 'utensils' ? '#3D6A6C' : 'transparent',
-                  color: activeTab === 'utensils' ? '#FFFFFF' : '#3D6A6C',
-                  transition: 'background-color 0.2s ease, color 0.2s ease',
-                }}
-              >
-                Utensils
-              </TabsTrigger>
+              {hasUtensils && (
+                <TabsTrigger
+                  value="utensils"
+                  className="flex-1 rounded-full font-semibold flex items-center justify-center"
+                  style={{
+                    height: '41px',
+                    padding: '0 clamp(4px, calc(100vw * 12 / 390), 12px)',
+                    flex: '1 0 0',
+                    fontSize: 'clamp(11px, calc(100vw * 14 / 390), 14px)',
+                    background: activeTab === 'utensils' ? '#3D6A6C' : 'transparent',
+                    color: activeTab === 'utensils' ? '#FFFFFF' : '#3D6A6C',
+                    transition: 'background-color 0.2s ease, color 0.2s ease',
+                  }}
+                >
+                  Utensils
+                </TabsTrigger>
+              )}
               <TabsTrigger
                 value="instructions"
                 className="flex-1 rounded-full font-semibold flex items-center justify-center"
@@ -304,26 +308,24 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
                 </div>
               </TabsContent>
 
-              <TabsContent value="utensils" className="mt-6">
-                {recipe.utensils && recipe.utensils.length > 0 ? (
+              {hasUtensils && (
+                <TabsContent value="utensils" className="mt-6">
                   <div className="space-y-3">
-                    {recipe.utensils.map((utensil, index) => (
+                    {recipe.utensils!.map((utensil, index) => (
                       <div
                         key={index}
                         className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
                       >
-                      <div
-                        className="mt-1 size-2 rounded-full flex-shrink-0"
-                        style={{ background: '#3D6A6C' }}
-                      />
+                        <div
+                          className="mt-1 size-2 rounded-full flex-shrink-0"
+                          style={{ background: '#3D6A6C' }}
+                        />
                         <span>{utensil}</span>
                       </div>
                     ))}
                   </div>
-                ) : (
-                  <p className="text-muted-foreground">No utensils listed.</p>
-                )}
-              </TabsContent>
+                </TabsContent>
+              )}
 
               <TabsContent value="instructions" className="mt-6">
                 <div className="space-y-4">
