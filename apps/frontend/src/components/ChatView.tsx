@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import ReactMarkdown from 'react-markdown';
 import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
 import { ArrowUp } from 'lucide-react';
@@ -536,15 +537,60 @@ export function ChatView({
                             src={imgJamieAvatar} 
                           />
                         </div>
-                        <p 
-                          className="flex-1 text-base whitespace-pre-wrap"
+                        <div 
+                          className="flex-1 text-base prose prose-sm max-w-none"
                           style={{
                             fontFamily: 'var(--font-chat)',
                             lineHeight: 1.5,
                             color: 'var(--jamie-text-body)',
                           }}
                         >
-                          {message.content}
+                          <ReactMarkdown
+                            components={{
+                              // Headings
+                              h1: ({ children }) => (
+                                <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>
+                                  {children}
+                                </h3>
+                              ),
+                              h2: ({ children }) => (
+                                <h4 className="text-base font-bold mt-3 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>
+                                  {children}
+                                </h4>
+                              ),
+                              h3: ({ children }) => (
+                                <h5 className="text-base font-semibold mt-3 mb-1" style={{ color: 'var(--jamie-text-heading)' }}>
+                                  {children}
+                                </h5>
+                              ),
+                              // Paragraphs
+                              p: ({ children }) => (
+                                <p className="mb-2 last:mb-0">{children}</p>
+                              ),
+                              // Strong/bold
+                              strong: ({ children }) => (
+                                <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>
+                                  {children}
+                                </strong>
+                              ),
+                              // Lists
+                              ul: ({ children }) => (
+                                <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>
+                              ),
+                              ol: ({ children }) => (
+                                <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>
+                              ),
+                              li: ({ children }) => (
+                                <li className="mb-1">{children}</li>
+                              ),
+                              // Horizontal rule
+                              hr: () => (
+                                <hr className="my-3 border-black/10" />
+                              ),
+                            }}
+                          >
+                            {message.content}
+                          </ReactMarkdown>
                           {message.isStreaming && (
                             <motion.span
                               animate={{ opacity: [1, 0, 1] }}
@@ -554,7 +600,7 @@ export function ChatView({
                               ▊
                             </motion.span>
                           )}
-                        </p>
+                        </div>
                       </div>
                     )}
                     
