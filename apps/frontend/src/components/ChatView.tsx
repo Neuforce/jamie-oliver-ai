@@ -259,8 +259,7 @@ export function ChatView({
 
     const sessionId = getOrCreateSessionId();
     let fullResponse = '';
-    let searchQuery: string | null = null; // Capture the search query from tool calls
-    let toolWasUsed = false; // Track if agent used a search tool
+    let agentRecipes: Recipe[] = []; // Recipes from agent's tool call (exact matches)
 
     try {
       // Stream response from chat agent
@@ -280,57 +279,68 @@ export function ChatView({
             setThinkingStatus(null);
           }
         } else if (event.type === 'tool_call') {
-          // Show what tool is being called and capture search query
+          // Show what tool is being called
           const toolName = event.content;
-          const args = event.metadata?.arguments as Record<string, unknown> | undefined;
-          
-          console.log('Tool call received:', toolName, args);
+          console.log('Tool call:', toolName, event.metadata?.arguments);
           
           if (toolName === 'search_recipes') {
             setThinkingStatus("Searching for recipes...");
-            toolWasUsed = true;
-            // Capture the exact query the agent is using
-            if (args?.query) {
-              searchQuery = args.query as string;
-              console.log('Agent searching for:', searchQuery);
-            }
           } else if (toolName === 'suggest_recipes_for_mood') {
             setThinkingStatus("Finding recipes for your mood...");
-            toolWasUsed = true;
-            // For mood-based search, create a query from the mood
-            if (args?.mood) {
-              searchQuery = `${args.mood} easy comfort food`;
-              console.log('Agent searching by mood:', args.mood);
-            }
           } else if (toolName === 'get_recipe_details') {
             setThinkingStatus("Getting recipe details...");
           } else if (toolName === 'plan_meal') {
             setThinkingStatus("Planning your meal...");
-            toolWasUsed = true;
           } else if (toolName === 'create_shopping_list') {
             setThinkingStatus("Creating shopping list...");
           }
+        } else if (event.type === 'recipes') {
+          // Recipes from agent's tool call - these are the EXACT recipes Jamie mentioned
+          console.log('Received recipes from agent:', event.metadata?.recipes);
+          const recipeData = event.metadata?.recipes || [];
+          
+          // Transform to Recipe format for display
+          for (const r of recipeData) {
+            try {
+              // Load full recipe details for proper card display
+              const localRecipe = await loadRecipeFromLocal(r.recipe_id);
+              if (localRecipe) {
+                const transformed = transformRecipeMatch(
+                  { 
+                    recipe_id: r.recipe_id, 
+                    title: r.title,
+                    similarity_score: r.similarity_score || 0.8,
+                    combined_score: r.similarity_score || 0.8,
+                    file_path: '',
+                    match_explanation: '',
+                    matching_chunks: [],
+                  },
+                  localRecipe,
+                  agentRecipes.length
+                );
+                agentRecipes.push(transformed);
+              }
+            } catch (e) {
+              console.error('Error loading recipe:', r.recipe_id, e);
+            }
+          }
+          console.log('Transformed', agentRecipes.length, 'recipes for display');
         } else if (event.type === 'done') {
           // Finalize the message
           setThinkingStatus(null);
           setIsTyping(false);
           
-          // Load recipes - use tool query if available, otherwise use original message
-          // This ensures we show recipes even if the agent responds from memory
-          let recipes: Recipe[] = [];
-          const queryToUse = searchQuery || text;
+          // Use recipes from agent's tool call (they match what Jamie mentioned)
+          // Only fall back to search if agent didn't return recipes
+          let recipes = agentRecipes;
           
-          // Always try to load recipes for discovery queries
-          // Check if the response mentions recipes or if a tool was used
-          const mentionsRecipes = fullResponse.toLowerCase().includes('recipe') || 
-                                  fullResponse.includes('**') || // Bold text likely recipe names
-                                  toolWasUsed;
-          
-          if (mentionsRecipes) {
-            console.log('Loading recipes with query:', queryToUse);
-            recipes = await loadRecipesForQuery(queryToUse);
-            console.log('Loaded', recipes.length, 'recipes');
+          if (recipes.length === 0 && fullResponse.toLowerCase().includes('recipe')) {
+            // Fallback: search based on user's original message
+            console.log('No agent recipes, falling back to search');
+            recipes = await loadRecipesForQuery(text);
           }
+          
+          console.log('Final recipe count:', recipes.length);
           
           // Update message to final state
           setMessages(prev => prev.map(msg => 

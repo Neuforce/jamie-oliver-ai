@@ -189,6 +189,9 @@ class DiscoveryChatAgent:
         
         logger.info(f"Processing message for session {session_id}: {message[:50]}...")
         
+        # Track tool calls to emit their results after processing
+        pending_tool_calls: Dict[str, str] = {}  # tool_call_id -> function_name
+        
         try:
             # Process message through brain
             async for event in brain.process(user_msg):
@@ -199,6 +202,9 @@ class DiscoveryChatAgent:
                         content=event.content,
                     )
                 elif isinstance(event, FunctionCallResponse):
+                    # Track this tool call
+                    pending_tool_calls[event.tool_call_id] = event.function_name
+                    
                     # Tool call event
                     yield ChatEvent(
                         type="tool_call",
@@ -208,6 +214,30 @@ class DiscoveryChatAgent:
                             "arguments": event.arguments,
                         }
                     )
+            
+            # After brain processing, check for tool results in chat memory
+            # and emit recipes if a search tool was used
+            if pending_tool_calls:
+                messages = session.chat_memory.get_messages()
+                for msg in reversed(messages):
+                    if hasattr(msg, 'tool_call_id') and msg.tool_call_id in pending_tool_calls:
+                        func_name = pending_tool_calls[msg.tool_call_id]
+                        if func_name in ('search_recipes', 'suggest_recipes_for_mood'):
+                            # Parse the tool result and emit recipes
+                            try:
+                                import json
+                                result = json.loads(msg.content)
+                                if result.get('recipes'):
+                                    yield ChatEvent(
+                                        type="recipes",
+                                        content="",
+                                        metadata={"recipes": result['recipes']}
+                                    )
+                                    logger.info(f"Emitted {len(result['recipes'])} recipes from tool result")
+                            except (json.JSONDecodeError, KeyError) as e:
+                                logger.warning(f"Failed to parse tool result: {e}")
+                        # Only process most recent search
+                        break
             
             # Signal completion
             yield ChatEvent(type="done", content="")

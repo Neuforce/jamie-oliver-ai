@@ -11,11 +11,22 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000
 // =============================================================================
 
 export interface ChatEvent {
-  type: 'text_chunk' | 'tool_call' | 'done' | 'error';
+  type: 'text_chunk' | 'tool_call' | 'recipes' | 'done' | 'error';
   content: string;
   metadata?: {
     tool_call_id?: string;
     arguments?: Record<string, unknown>;
+    recipes?: Array<{
+      recipe_id: string;
+      title: string;
+      description?: string;
+      similarity_score?: number;
+      servings?: number;
+      estimated_time?: string;
+      difficulty?: string;
+      ingredient_count?: number;
+      step_count?: number;
+    }>;
   };
 }
 
