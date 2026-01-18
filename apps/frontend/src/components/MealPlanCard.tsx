@@ -46,13 +46,13 @@ const RecipeRow: React.FC<{
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      gap: '8px',
     }}
   >
-    {/* Title - flexible, takes remaining space */}
+    {/* Title - fixed portion */}
     <h4
       style={{
-        flex: 1,
+        width: '45%',
+        flexShrink: 0,
         color: 'var(--jamie-text-heading, #2C5F5D)',
         fontFamily: 'var(--font-display, Poppins, sans-serif)',
         fontSize: '14px',
@@ -70,57 +70,63 @@ const RecipeRow: React.FC<{
       {recipe.title}
     </h4>
     
-    {/* Time column - fixed width */}
-    <span 
-      style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'flex-end',
-        gap: '4px',
-        width: '70px',
-        flexShrink: 0,
-        fontFamily: 'var(--font-display, Poppins, sans-serif)',
-        fontSize: '12px',
-        color: 'var(--jamie-text-muted, #717182)',
+    {/* Tags group - centered area */}
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '16px',
+        flex: 1,
       }}
     >
-      {recipe.estimated_time && (
-        <>
-          <Clock className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-          {formatDuration(recipe.estimated_time)}
-        </>
-      )}
-    </span>
+      {/* Time column - fixed width, left aligned */}
+      <span 
+        style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '4px',
+          width: '70px',
+          fontFamily: 'var(--font-display, Poppins, sans-serif)',
+          fontSize: '12px',
+          color: 'var(--jamie-text-muted, #717182)',
+        }}
+      >
+        {recipe.estimated_time && (
+          <>
+            <Clock className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+            {formatDuration(recipe.estimated_time)}
+          </>
+        )}
+      </span>
+      
+      {/* Difficulty column - fixed width, left aligned */}
+      <span 
+        style={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: '4px',
+          width: '100px',
+          fontFamily: 'var(--font-display, Poppins, sans-serif)',
+          fontSize: '12px',
+          color: 'var(--jamie-text-muted, #717182)',
+        }}
+      >
+        {recipe.difficulty && (
+          <>
+            <ChefHat className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+            {recipe.difficulty}
+          </>
+        )}
+      </span>
+    </div>
     
-    {/* Difficulty column - fixed width */}
-    <span 
-      style={{ 
-        display: 'flex', 
-        alignItems: 'center', 
-        justifyContent: 'flex-end',
-        gap: '4px',
-        width: '100px',
-        flexShrink: 0,
-        fontFamily: 'var(--font-display, Poppins, sans-serif)',
-        fontSize: '12px',
-        color: 'var(--jamie-text-muted, #717182)',
-      }}
-    >
-      {recipe.difficulty && (
-        <>
-          <ChefHat className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-          {recipe.difficulty}
-        </>
-      )}
-    </span>
-    
-    {/* Arrow column - fixed width */}
+    {/* Arrow - pushed to right with margin */}
     <ChevronRight 
       className="size-4" 
       style={{ 
         color: 'var(--jamie-text-muted, #717182)',
         flexShrink: 0,
-        width: '16px',
+        marginLeft: '24px',
       }} 
     />
   </motion.button>
