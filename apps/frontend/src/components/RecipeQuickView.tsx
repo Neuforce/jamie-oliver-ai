@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Clock, Users, ChefHat, PlayCircle, ExternalLink } from 'lucide-react';
+import { X, Clock, Users, ChefHat, ArrowRight } from 'lucide-react';
 import type { RecipeDetailData } from '../lib/api';
 
 interface RecipeQuickViewProps {
@@ -28,7 +28,6 @@ export const RecipeQuickView: React.FC<RecipeQuickViewProps> = ({
   isOpen,
   onClose,
   onViewFull,
-  onCook,
 }) => {
   return (
     <AnimatePresence>
@@ -40,7 +39,7 @@ export const RecipeQuickView: React.FC<RecipeQuickViewProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 z-50"
+            className="fixed inset-0 bg-black/40 z-50"
           />
           
           {/* Modal */}
@@ -48,7 +47,7 @@ export const RecipeQuickView: React.FC<RecipeQuickViewProps> = ({
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 100 }}
-            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            transition={{ type: 'spring', damping: 28, stiffness: 350 }}
             className="fixed left-4 right-4 bottom-4 z-50"
             style={{ maxWidth: '400px', margin: '0 auto' }}
           >
@@ -60,28 +59,38 @@ export const RecipeQuickView: React.FC<RecipeQuickViewProps> = ({
               }}
             >
               {/* Header */}
-              <div 
-                className="relative px-5 py-4"
-                style={{ background: '#3D6E6C' }}
-              >
+              <div style={{ padding: '20px 24px', position: 'relative' }}>
                 <button
                   onClick={onClose}
-                  className="absolute right-4 top-4 p-1.5 rounded-full transition-colors"
-                  style={{ background: 'rgba(255, 255, 255, 0.2)' }}
+                  style={{
+                    position: 'absolute',
+                    right: '16px',
+                    top: '16px',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '16px',
+                    background: '#F2F5F6',
+                    border: 'none',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
                 >
-                  <X className="size-4 text-white" />
+                  <X className="size-4" style={{ color: 'var(--jamie-text-muted, #717182)' }} />
                 </button>
                 
                 <h2
                   style={{
                     fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                    fontSize: '16px',
+                    fontSize: '18px',
                     fontWeight: 700,
-                    color: 'white',
+                    color: 'var(--jamie-text-heading, #2C5F5D)',
                     textTransform: 'uppercase',
-                    letterSpacing: '0.087px',
+                    letterSpacing: '0.5px',
                     margin: 0,
                     paddingRight: '40px',
+                    lineHeight: 1.3,
                   }}
                 >
                   {recipe.title}
@@ -89,170 +98,123 @@ export const RecipeQuickView: React.FC<RecipeQuickViewProps> = ({
                 
                 {/* Meta info */}
                 <div 
-                  className="flex items-center gap-4 mt-3"
                   style={{
-                    fontFamily: 'var(--font-body, Inter, sans-serif)',
-                    fontSize: '13px',
-                    color: 'rgba(255, 255, 255, 0.9)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '16px',
+                    marginTop: '12px',
+                    fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                    fontSize: '14px',
+                    color: 'var(--jamie-text-muted, #717182)',
                   }}
                 >
                   {recipe.estimated_time && (
-                    <span className="flex items-center gap-1.5">
-                      <Clock className="size-4" />
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Clock className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
                       {formatDuration(recipe.estimated_time)}
                     </span>
                   )}
                   {recipe.servings && (
-                    <span className="flex items-center gap-1.5">
-                      <Users className="size-4" />
-                      {recipe.servings} servings
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <Users className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+                      {recipe.servings}
                     </span>
                   )}
                   {recipe.difficulty && (
-                    <span className="flex items-center gap-1.5">
-                      <ChefHat className="size-4" />
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <ChefHat className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
                       {recipe.difficulty}
                     </span>
                   )}
                 </div>
               </div>
               
-              {/* Content */}
-              <div className="p-5" style={{ maxHeight: '40vh', overflowY: 'auto' }}>
-                {/* Description */}
-                {recipe.description && (
+              {/* Description */}
+              {recipe.description && (
+                <div style={{ padding: '0 24px 20px' }}>
                   <p
                     style={{
-                      fontFamily: 'var(--font-body, Inter, sans-serif)',
-                      fontSize: '14px',
+                      fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                      fontSize: '15px',
                       lineHeight: 1.6,
-                      color: '#234252',
+                      color: 'var(--jamie-text-primary, #234252)',
                       margin: 0,
-                      marginBottom: '20px',
                     }}
                   >
                     {recipe.description}
                   </p>
-                )}
-                
-                {/* Ingredients preview */}
-                {recipe.ingredients && recipe.ingredients.length > 0 && (
-                  <div className="mb-5">
-                    <h3
-                      style={{
-                        fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        color: '#5d5d5d',
-                        letterSpacing: '0.15em',
-                        marginBottom: '12px',
-                      }}
-                    >
-                      INGREDIENTS ({recipe.ingredients.length})
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {recipe.ingredients.slice(0, 8).map((ingredient, index) => (
-                        <span
-                          key={index}
-                          style={{
-                            display: 'inline-flex',
-                            padding: '6px 12px',
-                            borderRadius: '33554400px',
-                            background: '#F2F5F6',
-                            color: '#3D6E6C',
-                            fontFamily: 'var(--font-body, Inter, sans-serif)',
-                            fontSize: '12px',
-                            fontWeight: 500,
-                          }}
-                        >
-                          {ingredient.split(' ').slice(-2).join(' ')}
-                        </span>
-                      ))}
-                      {recipe.ingredients.length > 8 && (
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            padding: '6px 12px',
-                            borderRadius: '33554400px',
-                            background: '#E6EAE9',
-                            color: '#5d5d5d',
-                            fontFamily: 'var(--font-body, Inter, sans-serif)',
-                            fontSize: '12px',
-                            fontWeight: 500,
-                          }}
-                        >
-                          +{recipe.ingredients.length - 8} more
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                )}
-                
-                {/* Steps preview */}
-                {recipe.steps && recipe.steps.length > 0 && (
-                  <div>
-                    <h3
-                      style={{
-                        fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                        fontSize: '11px',
-                        fontWeight: 700,
-                        color: '#5d5d5d',
-                        letterSpacing: '0.15em',
-                        marginBottom: '8px',
-                      }}
-                    >
-                      {recipe.steps.length} STEPS
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: 'var(--font-body, Inter, sans-serif)',
-                        fontSize: '13px',
-                        lineHeight: 1.5,
-                        color: '#5d5d5d',
-                        margin: 0,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {recipe.steps[0]}
-                    </p>
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
               
-              {/* Actions */}
-              <div 
-                className="flex gap-3 p-5"
-                style={{ borderTop: '1px solid #E6EAE9' }}
-              >
+              {/* Ingredients preview */}
+              {recipe.ingredients && recipe.ingredients.length > 0 && (
+                <div style={{ padding: '0 24px 20px' }}>
+                  <h3
+                    style={{
+                      fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                      fontSize: '11px',
+                      fontWeight: 700,
+                      color: 'var(--jamie-text-muted, #717182)',
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      marginBottom: '12px',
+                    }}
+                  >
+                    {recipe.ingredients.length} Ingredients
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                      fontSize: '14px',
+                      color: 'var(--jamie-text-muted, #717182)',
+                      lineHeight: 1.5,
+                      margin: 0,
+                    }}
+                  >
+                    {recipe.ingredients.slice(0, 5).join(' · ')}
+                    {recipe.ingredients.length > 5 && ` · +${recipe.ingredients.length - 5} more`}
+                  </p>
+                </div>
+              )}
+              
+              {/* View button */}
+              <div style={{ padding: '0 24px 24px' }}>
                 <button
                   onClick={() => onViewFull(recipe.recipe_id)}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full transition-colors hover:bg-gray-50"
-                  style={{ 
-                    border: '1px solid #3D6E6C',
-                    color: '#3D6E6C',
+                  style={{
+                    width: '100%',
+                    height: '50px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '0 14px 0 24px',
+                    borderRadius: '24px',
+                    border: 'none',
+                    background: '#29514F',
+                    color: 'white',
                     fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                    fontSize: '14px',
+                    fontSize: '15px',
                     fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'background 0.2s ease',
                   }}
+                  onMouseEnter={(e) => (e.currentTarget.style.background = '#1f423f')}
+                  onMouseLeave={(e) => (e.currentTarget.style.background = '#29514F')}
                 >
-                  <ExternalLink className="size-4" />
-                  Full Recipe
-                </button>
-                <button
-                  onClick={() => onCook(recipe.recipe_id)}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full text-white transition-colors"
-                  style={{ 
-                    background: '#3D6E6C',
-                    fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                    fontSize: '14px',
-                    fontWeight: 600,
-                  }}
-                >
-                  <PlayCircle className="size-4" />
-                  Cook Now!
+                  <span>View Full Recipe</span>
+                  <span
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '9px',
+                      background: 'rgba(255,255,255,0.1)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <ArrowRight className="size-4" />
+                  </span>
                 </button>
               </div>
             </div>

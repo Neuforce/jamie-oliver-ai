@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Clock, Users, ChefHat, Eye, PlayCircle } from 'lucide-react';
+import { Clock, Users, ChefHat, ChevronRight } from 'lucide-react';
 import type { MealPlanData, ToolRecipe } from '../lib/api';
 
 interface MealPlanCardProps {
@@ -21,163 +21,85 @@ const formatDuration = (isoTime?: string): string => {
   return `${minutes}min`;
 };
 
-// Course display config
-const courseConfig: Record<string, { label: string; emoji: string }> = {
-  starter: { label: 'STARTER', emoji: '🥗' },
-  salad: { label: 'SALAD', emoji: '🥬' },
-  main: { label: 'MAIN COURSE', emoji: '🍽️' },
-  side: { label: 'SIDE DISH', emoji: '🥦' },
-  dessert: { label: 'DESSERT', emoji: '🍰' },
+// Course display names
+const courseNames: Record<string, string> = {
+  starter: 'Starter',
+  salad: 'Salad',
+  main: 'Main Course',
+  side: 'Side',
+  dessert: 'Dessert',
 };
 
-// Styled badge matching RecipeCard
-const badgeStyle: React.CSSProperties = {
-  height: '27px',
-  padding: '6px 12px',
-  borderRadius: '33554400px',
-  background: '#3D6E6C',
-  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
-  display: 'inline-flex',
-  alignItems: 'center',
-  gap: '6px',
-  color: 'white',
-  fontSize: '12px',
-  fontWeight: 600,
-  letterSpacing: '0.15em',
-  textTransform: 'uppercase' as const,
-  fontFamily: 'var(--font-body, Inter, sans-serif)',
-};
-
-// Recipe item component
-const RecipeItem: React.FC<{
+// Recipe row component - simple, clickable
+const RecipeRow: React.FC<{
   recipe: ToolRecipe;
-  onView: () => void;
-  onCook: () => void;
-  index: number;
-}> = ({ recipe, onView, onCook, index }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: index * 0.05 }}
-    className="bg-white overflow-hidden"
+  onClick: () => void;
+}> = ({ recipe, onClick }) => (
+  <motion.button
+    whileTap={{ scale: 0.98 }}
+    onClick={onClick}
+    className="w-full text-left"
     style={{
-      borderRadius: '16px',
-      border: '1px solid rgba(0, 0, 0, 0.06)',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+      padding: '16px 0',
+      background: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '12px',
     }}
   >
-    <div className="p-4 flex items-center justify-between gap-3">
-      <div className="flex-1 min-w-0">
-        <h4
-          style={{
-            color: '#3D6E6C',
-            fontFamily: 'var(--font-display, Poppins, sans-serif)',
-            fontSize: '14px',
-            fontWeight: 600,
-            lineHeight: '20px',
-            textTransform: 'uppercase',
-            letterSpacing: '0.087px',
-            margin: 0,
-          }}
-        >
-          {recipe.title}
-        </h4>
-        <div 
-          className="flex items-center gap-4 mt-2"
-          style={{
-            fontFamily: 'var(--font-body, Inter, sans-serif)',
-            fontSize: '13px',
-            color: '#5d5d5d',
-          }}
-        >
-          {recipe.estimated_time && (
-            <span className="flex items-center gap-1.5">
-              <Clock className="size-3.5" style={{ color: '#3D6E6C' }} />
-              {formatDuration(recipe.estimated_time)}
-            </span>
-          )}
-          {recipe.difficulty && (
-            <span className="flex items-center gap-1.5">
-              <ChefHat className="size-3.5" style={{ color: '#3D6E6C' }} />
-              {recipe.difficulty}
-            </span>
-          )}
-        </div>
-      </div>
-      
-      <div className="flex items-center gap-2">
-        <button
-          onClick={(e) => { e.stopPropagation(); onView(); }}
-          className="p-2.5 rounded-full transition-colors hover:bg-gray-100"
-          style={{ border: '1px solid rgba(0, 0, 0, 0.08)' }}
-          title="View recipe"
-        >
-          <Eye className="size-4" style={{ color: '#3D6E6C' }} />
-        </button>
-        <button
-          onClick={(e) => { e.stopPropagation(); onCook(); }}
-          className="p-2.5 rounded-full transition-colors"
-          style={{ 
-            background: '#3D6E6C',
-            border: 'none',
-          }}
-          title="Start cooking"
-        >
-          <PlayCircle className="size-4 text-white" />
-        </button>
-      </div>
-    </div>
-  </motion.div>
-);
-
-// Course section component
-const CourseSection: React.FC<{
-  courseName: string;
-  recipes: ToolRecipe[];
-  onViewRecipe: (recipeId: string) => void;
-  onCookRecipe: (recipeId: string) => void;
-  sectionIndex: number;
-}> = ({ courseName, recipes, onViewRecipe, onCookRecipe, sectionIndex }) => {
-  const config = courseConfig[courseName] || { label: courseName.toUpperCase(), emoji: '🍴' };
-  
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: sectionIndex * 0.1 }}
-    >
-      <div 
-        className="flex items-center gap-2 mb-3"
+    <div style={{ flex: 1, minWidth: 0 }}>
+      <h4
         style={{
+          color: 'var(--jamie-text-heading, #2C5F5D)',
           fontFamily: 'var(--font-display, Poppins, sans-serif)',
-          fontSize: '11px',
-          fontWeight: 700,
-          color: '#5d5d5d',
-          letterSpacing: '0.15em',
+          fontSize: '15px',
+          fontWeight: 600,
+          lineHeight: 1.3,
+          textTransform: 'uppercase',
+          letterSpacing: '0.3px',
+          margin: 0,
         }}
       >
-        <span style={{ fontSize: '14px' }}>{config.emoji}</span>
-        {config.label}
+        {recipe.title}
+      </h4>
+      <div 
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          marginTop: '6px',
+          fontFamily: 'var(--font-display, Poppins, sans-serif)',
+          fontSize: '13px',
+          color: 'var(--jamie-text-muted, #717182)',
+        }}
+      >
+        {recipe.estimated_time && (
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <Clock className="size-3.5" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+            {formatDuration(recipe.estimated_time)}
+          </span>
+        )}
+        {recipe.difficulty && (
+          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <ChefHat className="size-3.5" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+            {recipe.difficulty}
+          </span>
+        )}
       </div>
-      <div className="space-y-2">
-        {recipes.map((recipe, index) => (
-          <RecipeItem
-            key={recipe.recipe_id}
-            recipe={recipe}
-            onView={() => onViewRecipe(recipe.recipe_id)}
-            onCook={() => onCookRecipe(recipe.recipe_id)}
-            index={index}
-          />
-        ))}
-      </div>
-    </motion.div>
-  );
-};
+    </div>
+    <ChevronRight 
+      className="size-5 shrink-0" 
+      style={{ color: 'var(--jamie-text-muted, #717182)' }} 
+    />
+  </motion.button>
+);
 
 export const MealPlanCard: React.FC<MealPlanCardProps> = ({
   mealPlan,
   onViewRecipe,
-  onCookRecipe,
 }) => {
   const courseOrder = ['starter', 'salad', 'main', 'side', 'dessert'];
   const activeCourses = courseOrder.filter(
@@ -186,8 +108,8 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={{ opacity: 1, scale: 1 }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       className="overflow-hidden bg-white"
       style={{
         borderRadius: '24px',
@@ -195,95 +117,90 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
         border: '1px solid rgba(0, 0, 0, 0.06)',
       }}
     >
-      {/* Header */}
-      <div 
-        className="px-5 py-4"
-        style={{ background: '#3D6E6C' }}
-      >
-        <div className="flex items-center justify-between">
+      {/* Header - minimal */}
+      <div style={{ padding: '20px 24px 16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <h2
             style={{
               fontFamily: 'var(--font-display, Poppins, sans-serif)',
-              fontSize: '16px',
+              fontSize: '18px',
               fontWeight: 700,
-              color: 'white',
+              color: 'var(--jamie-text-heading, #2C5F5D)',
               textTransform: 'uppercase',
-              letterSpacing: '0.087px',
+              letterSpacing: '0.5px',
               margin: 0,
             }}
           >
             Your Meal Plan
           </h2>
           <div 
-            className="flex items-center gap-1.5"
             style={{
-              fontFamily: 'var(--font-body, Inter, sans-serif)',
-              fontSize: '13px',
-              color: 'rgba(255, 255, 255, 0.9)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
+              fontSize: '14px',
+              color: 'var(--jamie-text-muted, #717182)',
             }}
           >
-            <Users className="size-4" />
+            <Users className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
             <span>Serves {mealPlan.serves}</span>
           </div>
         </div>
         <p
           style={{
-            fontFamily: 'var(--font-body, Inter, sans-serif)',
-            fontSize: '13px',
-            color: 'rgba(255, 255, 255, 0.75)',
+            fontFamily: 'var(--font-display, Poppins, sans-serif)',
+            fontSize: '14px',
+            color: 'var(--jamie-text-muted, #717182)',
             marginTop: '4px',
             textTransform: 'capitalize',
           }}
         >
-          {mealPlan.occasion} meal
+          {mealPlan.occasion}
         </p>
       </div>
 
       {/* Courses */}
-      <div className="p-5 space-y-5">
-        {activeCourses.map((course, index) => {
+      <div style={{ padding: '0 24px 24px' }}>
+        {activeCourses.map((course, sectionIndex) => {
           const recipes = mealPlan.courses[course as keyof typeof mealPlan.courses];
           if (!recipes?.length) return null;
           
           return (
-            <CourseSection
-              key={course}
-              courseName={course}
-              recipes={recipes}
-              onViewRecipe={onViewRecipe}
-              onCookRecipe={onCookRecipe}
-              sectionIndex={index}
-            />
+            <div key={course}>
+              {/* Section header */}
+              <div
+                style={{
+                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  color: 'var(--jamie-text-muted, #717182)',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  paddingTop: sectionIndex > 0 ? '8px' : '0',
+                  paddingBottom: '4px',
+                  borderTop: sectionIndex > 0 ? '1px solid #E6EAE9' : 'none',
+                }}
+              >
+                {courseNames[course] || course}
+              </div>
+              
+              {/* Recipe rows */}
+              {recipes.map((recipe, index) => (
+                <React.Fragment key={recipe.recipe_id}>
+                  <RecipeRow
+                    recipe={recipe}
+                    onClick={() => onViewRecipe(recipe.recipe_id)}
+                  />
+                  {index < recipes.length - 1 && (
+                    <div style={{ height: '1px', background: '#F2F5F6' }} />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
           );
         })}
       </div>
-
-      {/* Tips */}
-      {mealPlan.tips && mealPlan.tips.length > 0 && (
-        <div 
-          className="px-5 py-4"
-          style={{ 
-            borderTop: '1px solid #E6EAE9',
-            background: '#F8FAFA',
-          }}
-        >
-          <div className="flex items-start gap-3">
-            <span style={{ fontSize: '16px' }}>💡</span>
-            <p
-              style={{
-                fontFamily: 'var(--font-body, Inter, sans-serif)',
-                fontSize: '13px',
-                color: '#5d5d5d',
-                lineHeight: 1.5,
-                margin: 0,
-              }}
-            >
-              <span style={{ fontWeight: 600, color: '#3D6E6C' }}>Jamie's Tip: </span>
-              {mealPlan.tips[0]}
-            </p>
-          </div>
-        </div>
-      )}
     </motion.div>
   );
 };
