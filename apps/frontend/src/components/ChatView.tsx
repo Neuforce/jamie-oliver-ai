@@ -490,7 +490,7 @@ export function ChatView({
   };
 
   return (
-    <div className="flex flex-col h-full bg-white relative">
+    <div className="flex flex-col flex-1 min-h-0 bg-white relative">
       {/* Empty State with Landing-style prompts */}
       {!hasMessages && !isTyping ? (
         <div className="flex-1 overflow-y-auto">
@@ -585,7 +585,7 @@ export function ChatView({
         <div 
           ref={messagesContainerRef}
           onScroll={handleScroll}
-          className="flex-1 overflow-y-auto px-5 py-4"
+          className="flex-1 min-h-0 overflow-y-auto px-5 py-4"
         >
           <div className="max-w-[380px] mx-auto space-y-4">
             {messages.map((message, index) => (
@@ -828,12 +828,11 @@ export function ChatView({
         )}
       </AnimatePresence>
 
-      {/* Chat Input - Sticky at bottom */}
-      <div className="px-5 py-3 shrink-0 bg-white border-t border-black/5"
+      {/* Chat Input - Fixed at bottom */}
+      <div 
+        className="px-5 py-3 bg-white border-t border-black/5"
         style={{
-          position: 'sticky',
-          bottom: 0,
-          zIndex: 20,
+          flexShrink: 0,
         }}
       >
         <div className="max-w-[380px] mx-auto">

@@ -90,20 +90,19 @@ function IconTabButton({ isActive, onClick, icon, label }: IconTabButtonProps) {
       style={{
         width: '44px',
         height: '44px',
-        color: 'var(--jamie-text-heading)',
-        backgroundColor: isActive ? 'rgba(70, 190, 168, 0.15)' : '#FFFFFF',
-        border: `1px solid ${isActive ? 'var(--jamie-primary)' : 'rgba(0, 0, 0, 0.1)'}`,
+        backgroundColor: isActive ? '#29514F' : '#FFFFFF',
+        border: isActive ? 'none' : '1px solid rgba(0, 0, 0, 0.1)',
         boxShadow: isActive 
-          ? '0 2px 8px rgba(70, 190, 168, 0.25)' 
+          ? '0 2px 8px rgba(41, 81, 79, 0.3)' 
           : '0 2px 8px rgba(0, 0, 0, 0.06)',
       }}
       whileTap={{ scale: 0.95 }}
       whileHover={{ 
-        backgroundColor: isActive ? 'rgba(70, 190, 168, 0.22)' : 'rgba(0, 0, 0, 0.04)',
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        backgroundColor: isActive ? '#1f423f' : 'rgba(0, 0, 0, 0.04)',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
       }}
     >
-      <span style={{ color: isActive ? 'var(--jamie-primary-dark)' : 'var(--jamie-text-heading)' }}>
+      <span style={{ color: isActive ? '#FFFFFF' : 'var(--jamie-text-heading)' }}>
         {icon}
       </span>
     </motion.button>
