@@ -5,8 +5,8 @@ import { RecipeCarousel } from './RecipeCarousel';
 import { MealPlanCard } from './MealPlanCard';
 import { RecipeQuickView } from './RecipeQuickView';
 import { ShoppingListCard } from './ShoppingListCard';
-import { ArrowUp } from 'lucide-react';
-import { motion } from 'motion/react';
+import { ArrowUp, ArrowDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 import { GlowEffect } from '../design-system/components/GlowEffect';
 import { AvatarWithGlow } from '../design-system/components/AvatarWithGlow';
 // @ts-expect-error - Vite resolves figma:asset imports
@@ -146,7 +146,9 @@ export function ChatView({
   const [isTyping, setIsTyping] = useState(false);
   const [thinkingStatus, setThinkingStatus] = useState<string | null>(null);
   const [displayedThinkingText, setDisplayedThinkingText] = useState('');
+  const [showScrollButton, setShowScrollButton] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -154,6 +156,16 @@ export function ChatView({
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  // Track scroll position to show/hide scroll-to-bottom button
+  const handleScroll = useCallback(() => {
+    const container = messagesContainerRef.current;
+    if (!container) return;
+    
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+    setShowScrollButton(!isNearBottom && scrollHeight > clientHeight);
   }, []);
 
   // Save messages to localStorage whenever they change (excluding streaming)
@@ -478,7 +490,7 @@ export function ChatView({
   };
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full bg-white relative">
       {/* Empty State with Landing-style prompts */}
       {!hasMessages && !isTyping ? (
         <div className="flex-1 overflow-y-auto">
@@ -569,8 +581,12 @@ export function ChatView({
           </div>
         </div>
       ) : (
-        /* Messages Container */
-        <div className="flex-1 overflow-y-auto px-5 py-4">
+        /* Messages Container - Scrollable */
+        <div 
+          ref={messagesContainerRef}
+          onScroll={handleScroll}
+          className="flex-1 overflow-y-auto px-5 py-4"
+        >
           <div className="max-w-[380px] mx-auto space-y-4">
             {messages.map((message, index) => (
               <div key={message.id}>
@@ -782,8 +798,44 @@ export function ChatView({
         </div>
       )}
 
-      {/* Chat Input - Fixed at bottom */}
-      <div className="px-5 py-3 shrink-0 bg-white border-t border-black/5">
+      {/* Scroll to Bottom Button */}
+      <AnimatePresence>
+        {showScrollButton && hasMessages && (
+          <motion.button
+            initial={{ opacity: 0, scale: 0.8, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 10 }}
+            onClick={scrollToBottom}
+            className="absolute z-10"
+            style={{
+              left: '50%',
+              bottom: '90px',
+              transform: 'translateX(-50%)',
+              width: '40px',
+              height: '40px',
+              borderRadius: '20px',
+              background: 'white',
+              border: '1px solid rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+            }}
+          >
+            <ArrowDown className="size-5" style={{ color: 'var(--jamie-text-muted)' }} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Chat Input - Sticky at bottom */}
+      <div className="px-5 py-3 shrink-0 bg-white border-t border-black/5"
+        style={{
+          position: 'sticky',
+          bottom: 0,
+          zIndex: 20,
+        }}
+      >
         <div className="max-w-[380px] mx-auto">
           <div 
             className="bg-white relative rounded-full border border-black/10"
@@ -800,9 +852,10 @@ export function ChatView({
                 onKeyPress={handleKeyPress}
                 placeholder="Tell me what you're craving..."
                 disabled={isTyping}
-                className="flex-1 text-base bg-transparent outline-none disabled:opacity-50"
+                className="flex-1 text-base bg-transparent outline-none disabled:opacity-50 placeholder:text-gray-400"
                 style={{
-                  fontFamily: 'var(--font-body)',
+                  fontFamily: 'var(--font-display)',
+                  fontSize: '15px',
                   lineHeight: '24px',
                   color: 'var(--jamie-text-body)',
                 }}
