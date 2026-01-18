@@ -1003,8 +1003,8 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     if (recipe) {
       localStorage.removeItem(`cooking-session-${recipe.id}`);
     }
-    toast.info('Sesión eliminada', {
-      description: 'Tu progreso no se ha guardado'
+    toast.info('Session discarded', {
+      description: 'Your progress was not saved'
     });
     setShowExitConfirmation(false);
     onClose();
