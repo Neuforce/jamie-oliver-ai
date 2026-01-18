@@ -67,6 +67,9 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   // Active timers from backend (parallel cooking support)
   const [activeTimers, setActiveTimers] = useState<ActiveTimer[]>([]);
 
+  // Session tracking - only save when user has made deliberate progress
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+
   // Voice states
   const [isListening, setIsListening] = useState(false);
   const [voiceText, setVoiceText] = useState('');
@@ -339,6 +342,14 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   const syncRecipeStateFromBackend = useCallback((state: RecipeState) => {
     if (!state || !recipe) return;
 
+    // CRITICAL: Only apply state if it's for the current recipe
+    // This prevents ghost sessions from stale backend state
+    const currentRecipeId = recipe.backendId || String(recipe.id);
+    if (state.recipe_id && state.recipe_id !== currentRecipeId) {
+      console.warn('[CookWithJamie] Ignoring state for different recipe:', state.recipe_id, 'vs', currentRecipeId);
+      return;
+    }
+
     const resolveStepIndex = (stepId?: string, descr?: string): number | null => {
       if (stepId && stepIdToIndex.has(stepId)) {
         return stepIdToIndex.get(stepId)!;
@@ -455,9 +466,19 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
 
         // Only restore if session is less than 24 hours old
         if (sessionAge < 24 * 60 * 60 * 1000) {
+          // Verify the session is for this recipe (extra safety check)
+          if (session.recipeId !== recipe.id) {
+            console.warn('[CookWithJamie] Session recipeId mismatch, clearing:', session.recipeId, 'vs', recipe.id);
+            localStorage.removeItem(`cooking-session-${recipe.id}`);
+            return;
+          }
+
           // Automatically restore session without toast - user already clicked "Continue Cooking"
           setCurrentStep(session.currentStep);
           setCompletedSteps(session.completedSteps);
+          
+          // Mark as interacted since user is continuing a previous session
+          setHasUserInteracted(true);
 
           // Handle timer restoration - check if timer was kept active
           if (session.timerEndTime && session.timerEndTime > now) {
@@ -490,30 +511,31 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     }
   }, [recipe]);
 
-  // Save session periodically
+  // Save session only when user has made deliberate progress
+  // This prevents ghost sessions from restored or synced state
   useEffect(() => {
-    if (recipe) {
-      // Check if there's any progress worth saving
-      const hasProgress = currentStep > 0 ||
-                         completedSteps.length > 0 ||
-                         timerRunning ||
-                         timerSeconds > 0;
+    if (!recipe || !hasUserInteracted) return;
 
-      if (hasProgress) {
-        const session = {
-          recipeId: recipe.id,
-          currentStep,
-          completedSteps,
-          timerSeconds,
-          timerRunning,
-          timestamp: new Date().getTime(),
-          timerEndTime: timerRunning ? new Date().getTime() + timerSeconds * 1000 : null
-        };
-        console.log('Saving session to localStorage:', session);
-        localStorage.setItem(`cooking-session-${recipe.id}`, JSON.stringify(session));
-      }
+    // Check if there's any progress worth saving
+    const hasProgress = currentStep > 0 ||
+                       completedSteps.length > 0 ||
+                       timerRunning ||
+                       timerSeconds > 0;
+
+    if (hasProgress) {
+      const session = {
+        recipeId: recipe.id,
+        currentStep,
+        completedSteps,
+        timerSeconds,
+        timerRunning,
+        timestamp: new Date().getTime(),
+        timerEndTime: timerRunning ? new Date().getTime() + timerSeconds * 1000 : null
+      };
+      console.log('[CookWithJamie] Saving session to localStorage:', session);
+      localStorage.setItem(`cooking-session-${recipe.id}`, JSON.stringify(session));
     }
-  }, [currentStep, completedSteps, timerSeconds, timerRunning, recipe]);
+  }, [currentStep, completedSteps, timerSeconds, timerRunning, recipe, hasUserInteracted]);
 
   // Initialize WebSocket connection and audio capture when component mounts (only once)
   // This runs immediately when component mounts, which happens after user clicks "Cook with Jamie"
@@ -756,17 +778,20 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
 
   const handleNext = () => {
     if (currentStep < totalSteps - 1) {
+      setHasUserInteracted(true);
       setCurrentStep(currentStep + 1);
     }
   };
 
   const handlePrevious = () => {
     if (currentStep > 0) {
+      setHasUserInteracted(true);
       setCurrentStep(currentStep - 1);
     }
   };
 
   const toggleStepComplete = async () => {
+    setHasUserInteracted(true);
     const wasCompleted = completedSteps.includes(currentStep);
 
     // Update local state first for immediate feedback
@@ -902,6 +927,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   };
 
   const startTimer = () => {
+    setHasUserInteracted(true);
     if (timerSeconds === 0) {
       setTimerSeconds(timerMinutes * 60);
     }
@@ -909,19 +935,23 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   };
 
   const pauseTimer = () => {
+    setHasUserInteracted(true);
     setTimerRunning(false);
   };
 
   const resetTimer = () => {
+    setHasUserInteracted(true);
     setTimerRunning(false);
     setTimerSeconds(timerMinutes * 60);
   };
 
   const addMinute = () => {
+    setHasUserInteracted(true);
     setTimerSeconds(prev => prev + 60);
   };
 
   const subtractMinute = () => {
+    setHasUserInteracted(true);
     setTimerSeconds(prev => Math.max(0, prev - 60));
   };
 

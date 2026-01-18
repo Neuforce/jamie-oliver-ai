@@ -1,6 +1,15 @@
 /**
  * Custom hook for managing cooking session state.
  * 
+ * NOTE: This hook is currently UNUSED. The session management logic is 
+ * implemented directly in CookWithJamie.tsx. This hook exists as a potential 
+ * refactoring target to consolidate session management into a reusable hook.
+ * 
+ * Before using this hook, consider:
+ * 1. It doesn't include the `hasUserInteracted` flag for preventing ghost sessions
+ * 2. It doesn't validate recipe ID from backend state
+ * 3. The CookWithJamie component has more complex timer restoration logic
+ * 
  * Handles:
  * - Step navigation and completion
  * - Session persistence to localStorage

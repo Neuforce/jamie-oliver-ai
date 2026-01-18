@@ -359,15 +359,39 @@ export default function App() {
                           transition={{ duration: 0.5 }}
                           className="mb-8 px-4"
                         >
-                          <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-6 text-white shadow-xl">
-                            <div className="flex items-center gap-3 mb-4">
-                              <Clock className="size-5" />
-                              <h2 className="text-white font-semibold">Continue Cooking</h2>
+                          <div
+                            style={{
+                              backgroundColor: 'var(--jamie-primary-dark)',
+                              borderRadius: '20px',
+                              padding: '20px',
+                              boxShadow: '0 4px 20px rgba(41, 81, 79, 0.25)',
+                            }}
+                          >
+                            <div className="flex items-center gap-3 mb-3">
+                              <Clock className="size-5" style={{ color: 'white' }} />
+                              <h2
+                                style={{
+                                  fontFamily: 'var(--font-display)',
+                                  fontSize: '16px',
+                                  fontWeight: 600,
+                                  color: 'white',
+                                  margin: 0,
+                                }}
+                              >
+                                Continue Cooking
+                              </h2>
                             </div>
-                            <p className="text-white/90 mb-4 text-sm">
+                            <p
+                              style={{
+                                fontFamily: 'var(--font-body)',
+                                fontSize: '13px',
+                                color: 'rgba(255, 255, 255, 0.85)',
+                                marginBottom: '16px',
+                              }}
+                            >
                               You have {recipesInProgress.length} {recipesInProgress.length === 1 ? 'recipe' : 'recipes'} in progress
                             </p>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                            <div className="grid grid-cols-1 gap-3">
                               {recipesInProgress.map((recipe) => {
                                 const session = getSessionDetails(recipe.id);
                                 let timerDisplay = '';
@@ -392,35 +416,109 @@ export default function App() {
                                     key={recipe.id}
                                     whileTap={{ scale: 0.98 }}
                                     onClick={() => setSelectedRecipe(recipe)}
-                                    className="bg-white/10 backdrop-blur-sm rounded-xl p-3 cursor-pointer hover:bg-white/15 transition-colors border border-white/20"
+                                    style={{
+                                      backgroundColor: 'rgba(255, 255, 255, 0.12)',
+                                      borderRadius: '16px',
+                                      padding: '12px',
+                                      cursor: 'pointer',
+                                      border: '1px solid rgba(255, 255, 255, 0.15)',
+                                      transition: 'background-color 0.2s ease',
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.18)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
+                                    }}
                                   >
-                                    <div className="flex gap-3">
+                                    <div className="flex gap-3 items-center">
                                       <div className="relative flex-shrink-0">
                                         <img
                                           src={recipe.image}
                                           alt={recipe.title}
-                                          className="size-14 rounded-lg object-cover"
+                                          style={{
+                                            width: '56px',
+                                            height: '56px',
+                                            borderRadius: '12px',
+                                            objectFit: 'cover',
+                                          }}
                                         />
-                                        <div className="absolute -top-1 -right-1 size-5 bg-orange-500 rounded-full flex items-center justify-center text-xs font-medium">
+                                        <div
+                                          style={{
+                                            position: 'absolute',
+                                            top: '-4px',
+                                            right: '-4px',
+                                            width: '22px',
+                                            height: '22px',
+                                            backgroundColor: '#F97316',
+                                            borderRadius: '50%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '11px',
+                                            fontWeight: 600,
+                                            color: 'white',
+                                            fontFamily: 'var(--font-body)',
+                                          }}
+                                        >
                                           {session?.currentStep + 1 || 1}
                                         </div>
                                       </div>
                                       <div className="flex-1 min-w-0">
-                                        <h3 className="text-white text-sm font-medium mb-1 truncate">{recipe.title}</h3>
-                                        <p className="text-white/70 text-xs mb-2">
+                                        <h3
+                                          style={{
+                                            fontFamily: 'var(--font-display)',
+                                            fontSize: '14px',
+                                            fontWeight: 600,
+                                            color: 'white',
+                                            marginBottom: '4px',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'nowrap',
+                                          }}
+                                        >
+                                          {recipe.title}
+                                        </h3>
+                                        <p
+                                          style={{
+                                            fontFamily: 'var(--font-body)',
+                                            fontSize: '12px',
+                                            color: 'rgba(255, 255, 255, 0.7)',
+                                            marginBottom: '8px',
+                                          }}
+                                        >
                                           Step {session?.currentStep + 1 || 1} of {recipe.instructions.length}
                                         </p>
-                                        <div className="w-full bg-white/20 rounded-full h-1.5 overflow-hidden">
+                                        <div
+                                          style={{
+                                            width: '100%',
+                                            height: '4px',
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            borderRadius: '2px',
+                                            overflow: 'hidden',
+                                          }}
+                                        >
                                           <div
-                                            className="bg-white h-full rounded-full transition-all"
                                             style={{
-                                              width: `${((session?.currentStep + 1 || 1) / recipe.instructions.length) * 100}%`
+                                              height: '100%',
+                                              width: `${((session?.currentStep + 1 || 1) / recipe.instructions.length) * 100}%`,
+                                              backgroundColor: 'white',
+                                              borderRadius: '2px',
+                                              transition: 'width 0.3s ease',
                                             }}
                                           />
                                         </div>
                                         {timerDisplay && (
-                                          <div className={`flex items-center gap-1.5 text-xs mt-2 ${timerActive ? 'text-orange-200' : 'text-white/70'}`}>
-                                            <Clock className={`size-3 ${timerActive ? 'animate-pulse' : ''}`} />
+                                          <div
+                                            className="flex items-center gap-1.5 mt-2"
+                                            style={{
+                                              fontSize: '12px',
+                                              color: timerActive ? '#FDBA74' : 'rgba(255, 255, 255, 0.7)',
+                                            }}
+                                          >
+                                            <Clock
+                                              className={`size-3 ${timerActive ? 'animate-pulse' : ''}`}
+                                            />
                                             <span className="tabular-nums">{timerDisplay}</span>
                                           </div>
                                         )}
