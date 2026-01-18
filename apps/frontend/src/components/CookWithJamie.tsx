@@ -1581,39 +1581,63 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
             <AlertDialogTitle>
               {timerRunning && timerSeconds > 0
                 ? `Active timer: ${formatTime(timerSeconds)}`
-                : 'Exit?'}
+                : 'Leave cooking session?'}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Your progress will be saved automatically
+              {timerRunning && timerSeconds > 0
+                ? 'Your timer is still running. What would you like to do?'
+                : 'Would you like to save your progress for later?'}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter className="flex-col sm:flex-row gap-2">
-            <AlertDialogCancel onClick={() => setShowExitConfirmation(false)}>
-              Keep cooking
-            </AlertDialogCancel>
-
+          <AlertDialogFooter className="flex-col gap-2">
             {timerRunning && timerSeconds > 0 ? (
               <>
                 <Button
-                  onClick={handleSaveAndExit}
-                  variant="outline"
+                  onClick={handleExitKeepTimerActive}
+                  style={{ backgroundColor: 'var(--jamie-primary-dark)' }}
+                  className="w-full"
                 >
-                  Pause timer
+                  Keep timer running
                 </Button>
                 <Button
-                  onClick={handleExitKeepTimerActive}
-                  className="bg-green-600 hover:bg-green-700"
+                  onClick={handleSaveAndExit}
+                  variant="outline"
+                  className="w-full"
                 >
-                  Keep active
+                  Pause timer & save
+                </Button>
+                <Button
+                  onClick={handleExitWithoutSaving}
+                  variant="ghost"
+                  className="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
+                >
+                  Discard session
                 </Button>
               </>
             ) : (
-              <Button
-                onClick={handleSaveAndExit}
-              >
-                Save & exit
-              </Button>
+              <>
+                <Button
+                  onClick={handleSaveAndExit}
+                  style={{ backgroundColor: 'var(--jamie-primary-dark)' }}
+                  className="w-full"
+                >
+                  Save & exit
+                </Button>
+                <Button
+                  onClick={handleExitWithoutSaving}
+                  variant="outline"
+                  className="w-full"
+                >
+                  Exit without saving
+                </Button>
+              </>
             )}
+            <AlertDialogCancel 
+              onClick={() => setShowExitConfirmation(false)}
+              className="w-full"
+            >
+              Keep cooking
+            </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

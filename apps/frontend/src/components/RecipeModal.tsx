@@ -1,10 +1,11 @@
 import React from 'react';
 import { Recipe } from '../data/recipes';
-import { ArrowLeft, Clock, Users, ChefHat, Lightbulb, Play, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Clock, Users, ChefHat, Lightbulb, Play, ArrowRight, RotateCcw } from 'lucide-react';
 import { Button } from './ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { useEffect, useState } from 'react';
 import { RecipeCard } from './RecipeCard';
+import { toast } from './ui/sonner';
 // @ts-ignore - Vite handles image imports
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 
@@ -161,6 +162,21 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
                     }}
                   />
                 </div>
+                <Button
+                  onClick={() => {
+                    localStorage.removeItem(`cooking-session-${recipe.id}`);
+                    setSavedSession(null);
+                    toast.success('Session cleared', {
+                      description: 'You can start fresh now',
+                    });
+                  }}
+                  variant="ghost"
+                  className="w-full text-muted-foreground hover:text-foreground"
+                  size="sm"
+                >
+                  <RotateCcw className="mr-2 size-4" />
+                  Start fresh (discard progress)
+                </Button>
               </div>
             ) : (
               <div

@@ -8,7 +8,8 @@ import { TabNav, TabView } from './components/TabNav';
 import { Button } from './components/ui/button';
 import { Search, ChefHat, Grid3x3, LayoutList, Clock, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Toaster } from './components/ui/sonner';
+import { Toaster, toast } from './components/ui/sonner';
+import { Play, Trash2 } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -179,6 +180,26 @@ export default function App() {
   const handleReturnToActiveSession = () => {
     setShowSessionWarning(false);
     setPendingRecipe(null);
+  };
+
+  // Resume cooking directly (from Continue Cooking section)
+  const handleResumeCooking = (recipe: Recipe) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setCookingRecipe(recipe);
+      setIsLoading(false);
+    }, 300);
+  };
+
+  // Discard a saved session
+  const handleDiscardSession = (recipe: Recipe, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the parent click
+    localStorage.removeItem(`cooking-session-${recipe.id}`);
+    // Update the recipes in progress list
+    setRecipesInProgress(prev => prev.filter(r => r.id !== recipe.id));
+    toast.success('Session discarded', {
+      description: `${recipe.title} progress has been removed`,
+    });
   };
 
   // Handle prompt clicks from Chat view
@@ -414,21 +435,11 @@ export default function App() {
                                 return (
                                   <motion.div
                                     key={recipe.id}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => setSelectedRecipe(recipe)}
                                     style={{
                                       backgroundColor: 'rgba(255, 255, 255, 0.12)',
                                       borderRadius: '16px',
                                       padding: '12px',
-                                      cursor: 'pointer',
                                       border: '1px solid rgba(255, 255, 255, 0.15)',
-                                      transition: 'background-color 0.2s ease',
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.18)';
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
                                     }}
                                   >
                                     <div className="flex gap-3 items-center">
@@ -523,6 +534,62 @@ export default function App() {
                                           </div>
                                         )}
                                       </div>
+                                    </div>
+                                    {/* Action buttons */}
+                                    <div className="flex gap-2 mt-3">
+                                      <button
+                                        onClick={() => handleResumeCooking(recipe)}
+                                        style={{
+                                          flex: 1,
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          gap: '6px',
+                                          padding: '8px 12px',
+                                          backgroundColor: 'white',
+                                          color: 'var(--jamie-primary-dark)',
+                                          borderRadius: '20px',
+                                          border: 'none',
+                                          cursor: 'pointer',
+                                          fontFamily: 'var(--font-display)',
+                                          fontSize: '13px',
+                                          fontWeight: 600,
+                                          transition: 'opacity 0.2s ease',
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
+                                        onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                                      >
+                                        <Play className="size-4" />
+                                        Resume
+                                      </button>
+                                      <button
+                                        onClick={(e) => handleDiscardSession(recipe, e)}
+                                        style={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          padding: '8px 12px',
+                                          backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                                          color: 'rgba(255, 255, 255, 0.8)',
+                                          borderRadius: '20px',
+                                          border: '1px solid rgba(255, 255, 255, 0.2)',
+                                          cursor: 'pointer',
+                                          transition: 'all 0.2s ease',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
+                                          e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+                                          e.currentTarget.style.color = '#fca5a5';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                                          e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
+                                        }}
+                                        title="Discard session"
+                                      >
+                                        <Trash2 className="size-4" />
+                                      </button>
                                     </div>
                                   </motion.div>
                                 );
