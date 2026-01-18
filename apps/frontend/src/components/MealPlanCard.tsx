@@ -12,7 +12,6 @@ interface MealPlanCardProps {
 // Helper to format duration
 const formatDuration = (isoTime?: string): string => {
   if (!isoTime) return '';
-  // Parse PT25M or PT1H30M format
   const match = isoTime.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
   if (!match) return isoTime;
   const hours = match[1] ? parseInt(match[1]) : 0;
@@ -22,22 +21,31 @@ const formatDuration = (isoTime?: string): string => {
   return `${minutes}min`;
 };
 
-// Course emoji mapping
-const courseEmoji: Record<string, string> = {
-  starter: '🥗',
-  main: '🍽️',
-  dessert: '🍰',
-  side: '🥦',
-  salad: '🥬',
+// Course display config
+const courseConfig: Record<string, { label: string; emoji: string }> = {
+  starter: { label: 'STARTER', emoji: '🥗' },
+  salad: { label: 'SALAD', emoji: '🥬' },
+  main: { label: 'MAIN COURSE', emoji: '🍽️' },
+  side: { label: 'SIDE DISH', emoji: '🥦' },
+  dessert: { label: 'DESSERT', emoji: '🍰' },
 };
 
-// Course display names
-const courseNames: Record<string, string> = {
-  starter: 'Starter',
-  main: 'Main Course',
-  dessert: 'Dessert',
-  side: 'Side Dish',
-  salad: 'Salad',
+// Styled badge matching RecipeCard
+const badgeStyle: React.CSSProperties = {
+  height: '27px',
+  padding: '6px 12px',
+  borderRadius: '33554400px',
+  background: '#3D6E6C',
+  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.10), 0 4px 6px -4px rgba(0, 0, 0, 0.10)',
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '6px',
+  color: 'white',
+  fontSize: '12px',
+  fontWeight: 600,
+  letterSpacing: '0.15em',
+  textTransform: 'uppercase' as const,
+  fontFamily: 'var(--font-body, Inter, sans-serif)',
 };
 
 // Recipe item component
@@ -48,50 +56,76 @@ const RecipeItem: React.FC<{
   index: number;
 }> = ({ recipe, onView, onCook, index }) => (
   <motion.div
-    initial={{ opacity: 0, x: -10 }}
-    animate={{ opacity: 1, x: 0 }}
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
     transition={{ delay: index * 0.05 }}
-    className="flex items-center justify-between p-3 rounded-xl bg-white border border-black/5 hover:border-jamie-primary/30 transition-all"
-    style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}
+    className="bg-white overflow-hidden"
+    style={{
+      borderRadius: '16px',
+      border: '1px solid rgba(0, 0, 0, 0.06)',
+      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+    }}
   >
-    <div className="flex-1 min-w-0">
-      <h4 
-        className="font-semibold text-sm truncate"
-        style={{ color: 'var(--jamie-text-heading)' }}
-      >
-        {recipe.title}
-      </h4>
-      <div className="flex items-center gap-3 mt-1 text-xs" style={{ color: 'var(--jamie-text-muted)' }}>
-        {recipe.estimated_time && (
-          <span className="flex items-center gap-1">
-            <Clock className="size-3" />
-            {formatDuration(recipe.estimated_time)}
-          </span>
-        )}
-        {recipe.difficulty && (
-          <span className="flex items-center gap-1">
-            <ChefHat className="size-3" />
-            {recipe.difficulty}
-          </span>
-        )}
+    <div className="p-4 flex items-center justify-between gap-3">
+      <div className="flex-1 min-w-0">
+        <h4
+          style={{
+            color: '#3D6E6C',
+            fontFamily: 'var(--font-display, Poppins, sans-serif)',
+            fontSize: '14px',
+            fontWeight: 600,
+            lineHeight: '20px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.087px',
+            margin: 0,
+          }}
+        >
+          {recipe.title}
+        </h4>
+        <div 
+          className="flex items-center gap-4 mt-2"
+          style={{
+            fontFamily: 'var(--font-body, Inter, sans-serif)',
+            fontSize: '13px',
+            color: '#5d5d5d',
+          }}
+        >
+          {recipe.estimated_time && (
+            <span className="flex items-center gap-1.5">
+              <Clock className="size-3.5" style={{ color: '#3D6E6C' }} />
+              {formatDuration(recipe.estimated_time)}
+            </span>
+          )}
+          {recipe.difficulty && (
+            <span className="flex items-center gap-1.5">
+              <ChefHat className="size-3.5" style={{ color: '#3D6E6C' }} />
+              {recipe.difficulty}
+            </span>
+          )}
+        </div>
       </div>
-    </div>
-    
-    <div className="flex items-center gap-2 ml-2">
-      <button
-        onClick={onView}
-        className="p-2 rounded-full hover:bg-gray-100 transition-colors"
-        title="View recipe"
-      >
-        <Eye className="size-4" style={{ color: 'var(--jamie-primary-dark)' }} />
-      </button>
-      <button
-        onClick={onCook}
-        className="p-2 rounded-full bg-jamie-primary hover:bg-jamie-primary-dark transition-colors"
-        title="Start cooking"
-      >
-        <PlayCircle className="size-4 text-white" />
-      </button>
+      
+      <div className="flex items-center gap-2">
+        <button
+          onClick={(e) => { e.stopPropagation(); onView(); }}
+          className="p-2.5 rounded-full transition-colors hover:bg-gray-100"
+          style={{ border: '1px solid rgba(0, 0, 0, 0.08)' }}
+          title="View recipe"
+        >
+          <Eye className="size-4" style={{ color: '#3D6E6C' }} />
+        </button>
+        <button
+          onClick={(e) => { e.stopPropagation(); onCook(); }}
+          className="p-2.5 rounded-full transition-colors"
+          style={{ 
+            background: '#3D6E6C',
+            border: 'none',
+          }}
+          title="Start cooking"
+        >
+          <PlayCircle className="size-4 text-white" />
+        </button>
+      </div>
     </div>
   </motion.div>
 );
@@ -103,39 +137,48 @@ const CourseSection: React.FC<{
   onViewRecipe: (recipeId: string) => void;
   onCookRecipe: (recipeId: string) => void;
   sectionIndex: number;
-}> = ({ courseName, recipes, onViewRecipe, onCookRecipe, sectionIndex }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ delay: sectionIndex * 0.1 }}
-    className="space-y-2"
-  >
-    <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide"
-      style={{ color: 'var(--jamie-text-muted)' }}
+}> = ({ courseName, recipes, onViewRecipe, onCookRecipe, sectionIndex }) => {
+  const config = courseConfig[courseName] || { label: courseName.toUpperCase(), emoji: '🍴' };
+  
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: sectionIndex * 0.1 }}
     >
-      <span>{courseEmoji[courseName] || '🍴'}</span>
-      {courseNames[courseName] || courseName}
-    </h3>
-    <div className="space-y-2">
-      {recipes.map((recipe, index) => (
-        <RecipeItem
-          key={recipe.recipe_id}
-          recipe={recipe}
-          onView={() => onViewRecipe(recipe.recipe_id)}
-          onCook={() => onCookRecipe(recipe.recipe_id)}
-          index={index}
-        />
-      ))}
-    </div>
-  </motion.div>
-);
+      <div 
+        className="flex items-center gap-2 mb-3"
+        style={{
+          fontFamily: 'var(--font-display, Poppins, sans-serif)',
+          fontSize: '11px',
+          fontWeight: 700,
+          color: '#5d5d5d',
+          letterSpacing: '0.15em',
+        }}
+      >
+        <span style={{ fontSize: '14px' }}>{config.emoji}</span>
+        {config.label}
+      </div>
+      <div className="space-y-2">
+        {recipes.map((recipe, index) => (
+          <RecipeItem
+            key={recipe.recipe_id}
+            recipe={recipe}
+            onView={() => onViewRecipe(recipe.recipe_id)}
+            onCook={() => onCookRecipe(recipe.recipe_id)}
+            index={index}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
+};
 
 export const MealPlanCard: React.FC<MealPlanCardProps> = ({
   mealPlan,
   onViewRecipe,
   onCookRecipe,
 }) => {
-  // Get courses in display order
   const courseOrder = ['starter', 'salad', 'main', 'side', 'dessert'];
   const activeCourses = courseOrder.filter(
     (course) => mealPlan.courses[course as keyof typeof mealPlan.courses]?.length
@@ -143,41 +186,61 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="rounded-2xl overflow-hidden"
+      className="overflow-hidden bg-white"
       style={{
-        background: 'linear-gradient(135deg, #f8fffe 0%, #f0faf8 100%)',
-        border: '1px solid rgba(70, 190, 168, 0.2)',
-        boxShadow: '0 4px 20px rgba(70, 190, 168, 0.1)',
+        borderRadius: '24px',
+        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+        border: '1px solid rgba(0, 0, 0, 0.06)',
       }}
     >
       {/* Header */}
       <div 
-        className="px-4 py-3"
-        style={{
-          background: 'linear-gradient(90deg, var(--jamie-primary) 0%, var(--jamie-primary-dark) 100%)',
-        }}
+        className="px-5 py-4"
+        style={{ background: '#3D6E6C' }}
       >
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="text-xl">🍽️</span>
-            <h2 className="font-bold text-white text-lg">
-              Your Meal Plan
-            </h2>
-          </div>
-          <div className="flex items-center gap-2 text-white/90 text-sm">
+          <h2
+            style={{
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
+              fontSize: '16px',
+              fontWeight: 700,
+              color: 'white',
+              textTransform: 'uppercase',
+              letterSpacing: '0.087px',
+              margin: 0,
+            }}
+          >
+            Your Meal Plan
+          </h2>
+          <div 
+            className="flex items-center gap-1.5"
+            style={{
+              fontFamily: 'var(--font-body, Inter, sans-serif)',
+              fontSize: '13px',
+              color: 'rgba(255, 255, 255, 0.9)',
+            }}
+          >
             <Users className="size-4" />
             <span>Serves {mealPlan.serves}</span>
           </div>
         </div>
-        <p className="text-white/80 text-sm mt-1 capitalize">
+        <p
+          style={{
+            fontFamily: 'var(--font-body, Inter, sans-serif)',
+            fontSize: '13px',
+            color: 'rgba(255, 255, 255, 0.75)',
+            marginTop: '4px',
+            textTransform: 'capitalize',
+          }}
+        >
           {mealPlan.occasion} meal
         </p>
       </div>
 
       {/* Courses */}
-      <div className="p-4 space-y-4">
+      <div className="p-5 space-y-5">
         {activeCourses.map((course, index) => {
           const recipes = mealPlan.courses[course as keyof typeof mealPlan.courses];
           if (!recipes?.length) return null;
@@ -198,18 +261,26 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
       {/* Tips */}
       {mealPlan.tips && mealPlan.tips.length > 0 && (
         <div 
-          className="px-4 py-3 border-t"
+          className="px-5 py-4"
           style={{ 
-            borderColor: 'rgba(70, 190, 168, 0.2)',
-            background: 'rgba(70, 190, 168, 0.05)',
+            borderTop: '1px solid #E6EAE9',
+            background: '#F8FAFA',
           }}
         >
-          <div className="flex items-start gap-2">
-            <span className="text-base">💡</span>
-            <div className="text-xs" style={{ color: 'var(--jamie-text-muted)' }}>
-              <span className="font-semibold">Jamie's Tips: </span>
+          <div className="flex items-start gap-3">
+            <span style={{ fontSize: '16px' }}>💡</span>
+            <p
+              style={{
+                fontFamily: 'var(--font-body, Inter, sans-serif)',
+                fontSize: '13px',
+                color: '#5d5d5d',
+                lineHeight: 1.5,
+                margin: 0,
+              }}
+            >
+              <span style={{ fontWeight: 600, color: '#3D6E6C' }}>Jamie's Tip: </span>
               {mealPlan.tips[0]}
-            </div>
+            </p>
           </div>
         </div>
       )}
