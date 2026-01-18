@@ -200,7 +200,15 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen bg-white flex flex-col overflow-hidden">
+    <div 
+      style={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        backgroundColor: 'white',
+      }}
+    >
       {/* Full-screen cooking overlay takes priority */}
       <AnimatePresence>
         {cookingRecipe && (
@@ -223,7 +231,7 @@ export default function App() {
       {!cookingRecipe && (
         <>
           {/* Persistent Tab Navigation */}
-          <header className="shrink-0 z-40 bg-white">
+          <header style={{ flexShrink: 0, zIndex: 40, backgroundColor: 'white' }}>
             <TabNav 
               activeTab={activeView} 
               onTabChange={setActiveView}
@@ -231,8 +239,16 @@ export default function App() {
             />
           </header>
 
-          {/* Tab Content */}
-          <main className="flex-1 flex flex-col min-h-0 overflow-hidden">
+          {/* Tab Content - Full remaining height */}
+          <main 
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: 0,
+              overflow: 'hidden',
+            }}
+          >
             <AnimatePresence mode="wait">
               {activeView === 'chat' ? (
                 <motion.div
@@ -241,7 +257,12 @@ export default function App() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.2 }}
-                  className="flex-1 flex flex-col min-h-0"
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minHeight: 0,
+                  }}
                 >
                   <ChatView
                     key={chatKey}
