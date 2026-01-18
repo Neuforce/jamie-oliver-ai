@@ -50,7 +50,7 @@ export function TabNav({ activeTab, onTabChange, onLogoClick }: TabNavProps) {
             src={logoImage}
             alt="Jamie Oliver - Home"
             className="h-6 w-auto object-contain pointer-events-none"
-            style={{ maxWidth: '172px' }}
+            style={{ maxWidth: '165px' }}
           />
         </motion.button>
 

@@ -93,7 +93,7 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
               src={jamieLogo}
               alt="Jamie Oliver"
               className="h-6 w-auto object-contain"
-              style={{ maxWidth: '172px' }}
+              style={{ maxWidth: '165px' }}
             />
           </div>
 

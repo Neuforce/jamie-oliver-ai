@@ -1090,7 +1090,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
               src={jamieLogo}
               alt="Jamie Oliver"
               className="h-6 w-auto object-contain"
-              style={{ maxWidth: '172px' }}
+              style={{ maxWidth: '165px' }}
             />
           </div>
           {/* Mic Control */}
