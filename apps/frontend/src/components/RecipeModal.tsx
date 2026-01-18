@@ -50,54 +50,80 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
   const hasUtensils = recipe.utensils && recipe.utensils.length > 0;
 
   return (
-    <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
-      <div className="w-full max-w-5xl mx-auto space-y-8" style={{ paddingTop: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
-        {/* Header actions */}
-        <div className="flex items-center justify-center w-full" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
-          <div className="grid grid-cols-3 items-center gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
-            {/* Close Button */}
-            <div className="flex items-center">
-              <button
-                onClick={onClose}
-                className="inline-flex items-center justify-center"
-                style={{ padding: 0, background: 'transparent' }}
-              >
-                <img
-                  src="/assets/Back.svg"
-                  alt="Back"
-                  style={{ width: '24px', height: '24px', display: 'block' }}
-                />
-              </button>
-            </div>
-
-            {/* Logo - Centered */}
-            <div className="flex items-center justify-center">
-              <div
-                style={{
-                  height: 'clamp(24px, calc(100vw * 32 / 390), 32px)',
-                  maxWidth: '171.75px'
-                }}
-              >
-                <img
-                  src={jamieLogo}
-                  alt="Jamie Oliver"
-                  style={{
-                    height: '100%',
-                    width: 'auto',
-                    display: 'block',
-                    maxWidth: '100%',
-                    objectFit: 'contain'
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Empty spacer for grid balance */}
-            <div className="flex items-center justify-end" />
+    <div 
+      className="fixed inset-0 z-50 bg-background"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+      }}
+    >
+      {/* Sticky Header */}
+      <header
+        style={{
+          flexShrink: 0,
+          backgroundColor: 'white',
+          zIndex: 10,
+          paddingTop: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          paddingBottom: '12px',
+          paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div className="grid grid-cols-3 items-center gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
+          {/* Close Button */}
+          <div className="flex items-center">
+            <button
+              onClick={onClose}
+              className="inline-flex items-center justify-center"
+              style={{ padding: 0, background: 'transparent' }}
+            >
+              <img
+                src="/assets/Back.svg"
+                alt="Back"
+                style={{ width: '24px', height: '24px', display: 'block' }}
+              />
+            </button>
           </div>
-        </div>
 
-        {/* Feed-style card */}
+          {/* Logo - Centered */}
+          <div className="flex items-center justify-center">
+            <div
+              style={{
+                height: 'clamp(24px, calc(100vw * 32 / 390), 32px)',
+                maxWidth: '171.75px'
+              }}
+            >
+              <img
+                src={jamieLogo}
+                alt="Jamie Oliver"
+                style={{
+                  height: '100%',
+                  width: 'auto',
+                  display: 'block',
+                  maxWidth: '100%',
+                  objectFit: 'contain'
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Empty spacer for grid balance */}
+          <div className="flex items-center justify-end" />
+        </div>
+      </header>
+
+      {/* Scrollable Content */}
+      <div 
+        style={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: 'auto',
+        }}
+      >
+        <div className="w-full max-w-5xl mx-auto space-y-8" style={{ paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          {/* Feed-style card */}
         <RecipeCard
           recipe={recipe}
           variant="modal"
@@ -362,6 +388,7 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
             </div>
           </div>
         </Tabs>
+        </div>
       </div>
     </div>
   );

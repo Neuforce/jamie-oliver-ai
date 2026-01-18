@@ -1047,47 +1047,63 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   };
 
   return (
-    <div className="fixed inset-0 z-50 bg-background overflow-y-auto">
-      {/* Cooking hero */}
-      <div style={{ paddingTop: 'clamp(16px, calc(100vw * 32 / 390), 32px)', paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
-        <div className="flex items-center justify-center mb-6 w-full">
-          <div className="grid grid-cols-3 items-start gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
-            {/* Back Button */}
-            <div className="flex items-start">
-        <button
-          onClick={handleExitClick}
-                className="inline-flex items-center justify-center"
-                style={{ marginTop: '16px', padding: 0, background: 'transparent' }}
-                aria-label="Back"
-              >
-                <img
-                  src="/assets/Back.svg"
-                  alt="Back"
-                  style={{ width: '24px', height: '24px', display: 'block' }}
-                />
-        </button>
+    <div 
+      className="fixed inset-0 z-50 bg-background"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
+      }}
+    >
+      {/* Sticky Header - Back, Logo, Mic */}
+      <header
+        style={{
+          flexShrink: 0,
+          backgroundColor: 'white',
+          zIndex: 10,
+          paddingTop: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          paddingBottom: '12px',
+          paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div className="grid grid-cols-3 items-center gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
+          {/* Back Button */}
+          <div className="flex items-center">
+            <button
+              onClick={handleExitClick}
+              className="inline-flex items-center justify-center"
+              style={{ padding: 0, background: 'transparent' }}
+              aria-label="Back"
+            >
+              <img
+                src="/assets/Back.svg"
+                alt="Back"
+                style={{ width: '24px', height: '24px', display: 'block' }}
+              />
+            </button>
+          </div>
+          {/* Logo - Centered */}
+          <div className="flex items-center justify-center">
+            <div
+              className="flex items-center justify-center"
+              style={{
+                height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
+                width: 'clamp(140px, calc(100vw * 171.75 / 390), 171.75px)',
+                maxWidth: '171.75px'
+              }}
+            >
+              <img
+                src={jamieLogo}
+                alt="Jamie Oliver"
+                className="h-full w-full object-contain"
+                style={{ maxWidth: '100%', maxHeight: '100%' }}
+              />
             </div>
-            {/* Logo - Centered */}
-            <div className="flex items-center justify-center">
-              <div
-                className="flex items-center justify-center"
-                style={{
-                  marginTop: '17px',
-                  height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
-                  width: 'clamp(140px, calc(100vw * 171.75 / 390), 171.75px)',
-                  maxWidth: '171.75px'
-                }}
-              >
-                <img
-                  src={jamieLogo}
-                  alt="Jamie Oliver"
-                  className="h-full w-full object-contain"
-                  style={{ maxWidth: '100%', maxHeight: '100%' }}
-                />
-              </div>
-            </div>
-            {/* Mic Control */}
-            <div className="flex items-start justify-end">
+          </div>
+          {/* Mic Control */}
+          <div className="flex items-center justify-end">
               <button
               onClick={toggleVoiceListening}
                 className="inline-flex rounded-full transition-colors"
@@ -1147,10 +1163,21 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
               </button>
             </div>
           </div>
-        </div>
-        <div className="w-full flex items-center justify-center" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
-          <div className="pointer-events-none select-none flex items-center justify-center" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
-            <RecipeCard recipe={recipe} onClick={() => {}} variant="cooking" />
+      </header>
+
+      {/* Scrollable Content */}
+      <div
+        style={{
+          flex: 1,
+          minHeight: 0,
+          overflowY: 'auto',
+        }}
+      >
+        {/* Recipe Card Section */}
+        <div style={{ paddingTop: '16px', paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          <div className="w-full flex items-center justify-center">
+            <div className="pointer-events-none select-none flex items-center justify-center" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
+              <RecipeCard recipe={recipe} onClick={() => {}} variant="cooking" />
         </div>
       </div>
 
@@ -1524,6 +1551,8 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           </motion.div>
         </motion.div>
       )}
+      </div>
+      {/* End Scrollable Content */}
 
       {/* Exit Confirmation Dialog */}
       <AlertDialog open={showExitConfirmation} onOpenChange={setShowExitConfirmation}>
