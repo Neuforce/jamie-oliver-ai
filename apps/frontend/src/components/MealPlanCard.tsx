@@ -30,7 +30,7 @@ const courseNames: Record<string, string> = {
   dessert: 'Dessert',
 };
 
-// Recipe row component - table-like alignment
+// Recipe row component - responsive, wraps on small screens
 const RecipeRow: React.FC<{
   recipe: ToolRecipe;
   onClick: () => void;
@@ -38,7 +38,7 @@ const RecipeRow: React.FC<{
   <motion.button
     whileTap={{ scale: 0.98 }}
     onClick={onClick}
-    className="w-full"
+    className="w-full meal-plan-row"
     style={{
       padding: '14px 0',
       background: 'transparent',
@@ -46,13 +46,14 @@ const RecipeRow: React.FC<{
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
+      flexWrap: 'wrap',
+      gap: '4px 12px',
     }}
   >
-    {/* Title - fixed portion */}
+    {/* Title - grows to full width on small screens */}
     <h4
+      className="meal-plan-title"
       style={{
-        width: '45%',
-        flexShrink: 0,
         color: 'var(--jamie-text-heading, #2C5F5D)',
         fontFamily: 'var(--font-display, Poppins, sans-serif)',
         fontSize: '14px',
@@ -62,71 +63,62 @@ const RecipeRow: React.FC<{
         letterSpacing: '0.3px',
         margin: 0,
         textAlign: 'left',
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
       }}
     >
       {recipe.title}
     </h4>
     
-    {/* Tags group - centered area */}
+    {/* Tags group */}
     <div
+      className="meal-plan-tags"
       style={{
         display: 'flex',
         alignItems: 'center',
         gap: '16px',
-        flex: 1,
       }}
     >
-      {/* Time column - fixed width, left aligned */}
-      <span 
-        style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '4px',
-          width: '70px',
-          fontFamily: 'var(--font-display, Poppins, sans-serif)',
-          fontSize: '12px',
-          color: 'var(--jamie-text-muted, #717182)',
-        }}
-      >
-        {recipe.estimated_time && (
-          <>
-            <Clock className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-            {formatDuration(recipe.estimated_time)}
-          </>
-        )}
-      </span>
+      {/* Time */}
+      {recipe.estimated_time && (
+        <span 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '4px',
+            fontFamily: 'var(--font-display, Poppins, sans-serif)',
+            fontSize: '12px',
+            color: 'var(--jamie-text-muted, #717182)',
+          }}
+        >
+          <Clock className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+          {formatDuration(recipe.estimated_time)}
+        </span>
+      )}
       
-      {/* Difficulty column - fixed width, left aligned */}
-      <span 
-        style={{ 
-          display: 'flex', 
-          alignItems: 'center', 
-          gap: '4px',
-          width: '100px',
-          fontFamily: 'var(--font-display, Poppins, sans-serif)',
-          fontSize: '12px',
-          color: 'var(--jamie-text-muted, #717182)',
-        }}
-      >
-        {recipe.difficulty && (
-          <>
-            <ChefHat className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-            {recipe.difficulty}
-          </>
-        )}
-      </span>
+      {/* Difficulty */}
+      {recipe.difficulty && (
+        <span 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '4px',
+            fontFamily: 'var(--font-display, Poppins, sans-serif)',
+            fontSize: '12px',
+            color: 'var(--jamie-text-muted, #717182)',
+          }}
+        >
+          <ChefHat className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+          {recipe.difficulty}
+        </span>
+      )}
     </div>
     
-    {/* Arrow - pushed to right with margin */}
+    {/* Arrow - always at the end */}
     <ChevronRight 
-      className="size-4" 
+      className="size-4 meal-plan-arrow" 
       style={{ 
         color: 'var(--jamie-text-muted, #717182)',
         flexShrink: 0,
-        marginLeft: '24px',
+        marginLeft: 'auto',
       }} 
     />
   </motion.button>
