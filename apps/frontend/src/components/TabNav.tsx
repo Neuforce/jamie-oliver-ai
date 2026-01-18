@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, BookOpen } from 'lucide-react';
 // @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 
@@ -33,13 +33,7 @@ export function TabNav({ activeTab, onTabChange, onLogoClick }: TabNavProps) {
         <IconTabButton
           isActive={activeTab === 'recipes'}
           onClick={() => onTabChange('recipes')}
-          icon={
-            <img
-              src="/assets/Recipes.svg"
-              alt="Recipes"
-              className="w-5 h-5"
-            />
-          }
+          icon={<BookOpen className="w-5 h-5" />}
           label="Recipes"
         />
 

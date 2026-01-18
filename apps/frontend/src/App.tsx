@@ -200,7 +200,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="h-screen bg-white flex flex-col overflow-hidden">
       {/* Full-screen cooking overlay takes priority */}
       <AnimatePresence>
         {cookingRecipe && (
@@ -223,7 +223,7 @@ export default function App() {
       {!cookingRecipe && (
         <>
           {/* Persistent Tab Navigation */}
-          <header className="sticky top-0 z-40 bg-white">
+          <header className="shrink-0 z-40 bg-white">
             <TabNav 
               activeTab={activeView} 
               onTabChange={setActiveView}
