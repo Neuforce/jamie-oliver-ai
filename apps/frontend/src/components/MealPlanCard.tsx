@@ -30,7 +30,7 @@ const courseNames: Record<string, string> = {
   dessert: 'Dessert',
 };
 
-// Recipe row component - single row, title left, details right
+// Recipe row component - table-like alignment
 const RecipeRow: React.FC<{
   recipe: ToolRecipe;
   onClick: () => void;
@@ -46,10 +46,10 @@ const RecipeRow: React.FC<{
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      gap: '12px',
+      gap: '8px',
     }}
   >
-    {/* Title - left */}
+    {/* Title - flexible, takes remaining space */}
     <h4
       style={{
         flex: 1,
@@ -70,36 +70,58 @@ const RecipeRow: React.FC<{
       {recipe.title}
     </h4>
     
-    {/* Details - right */}
-    <div 
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        gap: '12px',
+    {/* Time column - fixed width */}
+    <span 
+      style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'flex-end',
+        gap: '4px',
+        width: '70px',
+        flexShrink: 0,
         fontFamily: 'var(--font-display, Poppins, sans-serif)',
         fontSize: '12px',
         color: 'var(--jamie-text-muted, #717182)',
-        flexShrink: 0,
       }}
     >
       {recipe.estimated_time && (
-        <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+        <>
           <Clock className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
           {formatDuration(recipe.estimated_time)}
-        </span>
+        </>
       )}
+    </span>
+    
+    {/* Difficulty column - fixed width */}
+    <span 
+      style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'flex-end',
+        gap: '4px',
+        width: '100px',
+        flexShrink: 0,
+        fontFamily: 'var(--font-display, Poppins, sans-serif)',
+        fontSize: '12px',
+        color: 'var(--jamie-text-muted, #717182)',
+      }}
+    >
       {recipe.difficulty && (
-        <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+        <>
           <ChefHat className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
           {recipe.difficulty}
-        </span>
+        </>
       )}
-    </div>
+    </span>
     
-    {/* Arrow */}
+    {/* Arrow column - fixed width */}
     <ChevronRight 
-      className="size-4 shrink-0" 
-      style={{ color: 'var(--jamie-text-muted, #717182)' }} 
+      className="size-4" 
+      style={{ 
+        color: 'var(--jamie-text-muted, #717182)',
+        flexShrink: 0,
+        width: '16px',
+      }} 
     />
   </motion.button>
 );
