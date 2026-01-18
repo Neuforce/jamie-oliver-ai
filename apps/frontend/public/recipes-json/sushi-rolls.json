@@ -1,195 +1,137 @@
 {
-  "recipe": {
-    "id": "sushi-rolls",
-    "title": "Sushi Rolls",
-    "description": "Fresh homemade sushi with salmon, avocado, and cucumber",
-    "estimated_total": "PT1H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Tricky",
-    "tags": [
-      "fish",
-      "chinese",
-      "dessert"
-    ],
-    "course": "dessert",
-    "cuisine": "chinese"
+  "notes": {
+    "text": "Use very fresh, sushi-grade fish\nWet hands when handling rice\nSharp knife is essential for clean cuts"
   },
-  "ingredients": [
-    {
-      "id": "sushi_rice",
-      "name": "sushi rice",
-      "quantity": 300.0,
-      "unit": "g"
-    },
-    {
-      "id": "rice_vinegar",
-      "name": "rice vinegar",
-      "quantity": 4.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "sheets",
-      "name": "sheets",
-      "quantity": 4.0,
-      "unit": "nori"
-    },
-    {
-      "id": "fresh_salmon",
-      "name": "fresh salmon",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "1_avocado_sliced",
-      "name": "1 avocado, sliced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "1_cucumber_julienned",
-      "name": "1 cucumber, julienned",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "soy_sauce_wasabi_pickled_ginger",
-      "name": "Soy sauce, wasabi, pickled ginger",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "cook_rice",
+      "next": [
+        "cool_rice"
+      ],
+      "type": "immediate",
       "descr": "Cook sushi rice, mix with rice vinegar while warm",
-      "instructions": "Cook sushi rice, mix with rice vinegar while warm",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by cooking the sushi rice. Once it's cooked, mix it with rice vinegar while it's still warm. You'll love the aroma!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to cook the sushi rice, mix."
-        }
-      ]
+      "instructions": "Cook sushi rice, mix with rice vinegar while warm",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "cool_rice",
+      "next": [
+        "place_nori"
+      ],
+      "type": "timer",
       "descr": "Let rice cool to room temperature",
+      "duration": 600,
+      "on_enter": [
+        {
+          "say": "Now, let's let the rice cool down to room temperature. This will take about 10 minutes. Perfect time to get everything else ready!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cook_rice"
+      ],
       "instructions": "Let rice cool to room temperature",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's let rice cool to room temperature."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_3",
+      "id": "place_nori",
+      "next": [
+        "spread_rice"
+      ],
+      "type": "immediate",
       "descr": "Place nori on bamboo mat",
+      "on_enter": [
+        {
+          "say": "Great! Now place a sheet of nori on your bamboo mat. Make sure it's nice and flat."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cool_rice"
+      ],
       "instructions": "Place nori on bamboo mat",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Now place the nori on bamboo."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "spread_rice",
+      "next": [
+        "add_fillings"
+      ],
+      "type": "immediate",
       "descr": "Spread rice over nori, leaving 2cm at top",
+      "on_enter": [
+        {
+          "say": "Let's spread the rice over the nori, leaving about 2cm at the top. Use wet hands to prevent sticking!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "place_nori"
+      ],
       "instructions": "Spread rice over nori, leaving 2cm at top",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's spread rice over nori, leaving 2cm."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "add_fillings",
+      "next": [
+        "roll_sushi"
+      ],
+      "type": "immediate",
       "descr": "Add salmon, avocado, cucumber in a line",
+      "on_enter": [
+        {
+          "say": "Now, add the salmon, avocado, and cucumber in a neat line across the rice. This is where the magic happens!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "spread_rice"
+      ],
       "instructions": "Add salmon, avocado, cucumber in a line",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the salmon, avocado, cucumber."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "roll_sushi",
+      "next": [
+        "slice_and_serve"
+      ],
+      "type": "immediate",
       "descr": "Roll tightly using the mat",
-      "instructions": "Roll tightly using the mat",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's roll tightly using the mat."
+          "say": "Let's roll it up tightly using the mat. Keep it snug and you'll have a perfect roll!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_fillings"
+      ],
+      "instructions": "Roll tightly using the mat",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Slice into pieces and serve with condiments",
-      "instructions": "Slice into pieces and serve with condiments",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "slice_and_serve",
       "next": [],
+      "type": "immediate",
+      "descr": "Slice into pieces and serve with condiments",
       "on_enter": [
         {
-          "say": "Let's start by slice."
+          "say": "Finally, slice your sushi roll into pieces and serve with soy sauce, wasabi, and pickled ginger. Enjoy your homemade sushi!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "roll_sushi"
+      ],
+      "instructions": "Slice into pieces and serve with condiments",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -198,7 +140,66 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Use very fresh, sushi-grade fish\nWet hands when handling rice\nSharp knife is essential for clean cuts"
-  }
+  "recipe": {
+    "id": "sushi-rolls",
+    "tags": [
+      "fish",
+      "chinese",
+      "dessert"
+    ],
+    "title": "Sushi Rolls",
+    "course": "dessert",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "chinese",
+    "servings": 4,
+    "difficulty": "Tricky",
+    "description": "Fresh homemade sushi with salmon, avocado, and cucumber",
+    "estimated_total": "PT1H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "sushi_rice",
+      "name": "sushi rice",
+      "unit": "g",
+      "quantity": 300.0
+    },
+    {
+      "id": "rice_vinegar",
+      "name": "rice vinegar",
+      "unit": "tbsp",
+      "quantity": 4.0
+    },
+    {
+      "id": "sheets",
+      "name": "sheets",
+      "unit": "nori",
+      "quantity": 4.0
+    },
+    {
+      "id": "fresh_salmon",
+      "name": "fresh salmon",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "1_avocado_sliced",
+      "name": "1 avocado, sliced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "1_cucumber_julienned",
+      "name": "1 cucumber, julienned",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "soy_sauce_wasabi_pickled_ginger",
+      "name": "Soy sauce, wasabi, pickled ginger",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

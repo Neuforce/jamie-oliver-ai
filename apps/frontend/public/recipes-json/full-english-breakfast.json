@@ -1,201 +1,136 @@
 {
-  "recipe": {
-    "id": "full-english-breakfast",
-    "title": "Full English Breakfast",
-    "description": "Classic British breakfast with all the trimmings",
-    "estimated_total": "PT30M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "pork",
-      "quick",
-      "dessert",
-      "breakfast"
-    ],
-    "course": "dessert"
+  "notes": {
+    "text": "Use the oven to keep things warm\nQuality sausages make all the difference\nPerfect weekend treat"
   },
-  "ingredients": [
-    {
-      "id": "rashers",
-      "name": "rashers",
-      "quantity": 8.0,
-      "unit": "bacon"
-    },
-    {
-      "id": "8_sausages",
-      "name": "8 sausages",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "4_eggs",
-      "name": "4 eggs",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "tinned_baked_beans",
-      "name": "tinned baked beans",
-      "quantity": 400.0,
-      "unit": "g"
-    },
-    {
-      "id": "4_tomatoes_halved",
-      "name": "4 tomatoes, halved",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "mushrooms",
-      "name": "mushrooms",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "bread",
-      "name": "bread",
-      "quantity": 4.0,
-      "unit": "slices"
-    },
-    {
-      "id": "black_pudding_optional",
-      "name": "Black pudding (optional)",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "grill_sausages_bacon",
+      "next": [
+        "fry_mushrooms_tomatoes"
+      ],
+      "type": "immediate",
       "descr": "Grill sausages and bacon until cooked",
-      "instructions": "Grill sausages and bacon until cooked",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by grilling our sausages and bacon until they're beautifully cooked. You'll know they're ready when they're golden and sizzling!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to grill the sausages and bacon."
-        }
-      ]
+      "instructions": "Grill sausages and bacon until cooked",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "fry_mushrooms_tomatoes",
+      "next": [
+        "heat_baked_beans"
+      ],
+      "type": "immediate",
       "descr": "Fry mushrooms and tomatoes",
+      "on_enter": [
+        {
+          "say": "Now, let's fry up those lovely mushrooms and tomatoes. We want them soft and juicy, with a bit of colour."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "grill_sausages_bacon"
+      ],
       "instructions": "Fry mushrooms and tomatoes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to fry the mushrooms and tomatoes."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "heat_baked_beans",
+      "next": [
+        "cook_eggs"
+      ],
+      "type": "immediate",
       "descr": "Heat baked beans in a pan",
+      "on_enter": [
+        {
+          "say": "Let's warm up those baked beans until they're nice and hot. Give them a stir now and then."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "fry_mushrooms_tomatoes"
+      ],
       "instructions": "Heat baked beans in a pan",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the baked beans in."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "cook_eggs",
+      "next": [
+        "toast_bread"
+      ],
+      "type": "immediate",
       "descr": "Fry or scramble eggs to preference",
+      "on_enter": [
+        {
+          "say": "Time for the eggs! Whether you like them fried or scrambled, let's cook them to your liking. They should be creamy and delicious."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "heat_baked_beans"
+      ],
       "instructions": "Fry or scramble eggs to preference",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to fry the or scramble eggs."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "toast_bread",
+      "next": [
+        "plate_breakfast"
+      ],
+      "type": "immediate",
       "descr": "Toast bread",
+      "on_enter": [
+        {
+          "say": "Let's get that bread toasting until it's golden and crisp. Perfect for mopping up all those lovely juices."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cook_eggs"
+      ],
       "instructions": "Toast bread",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's toast bread."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "plate_breakfast",
+      "next": [
+        "serve_with_tea_coffee"
+      ],
+      "type": "immediate",
       "descr": "Arrange everything on plates",
-      "instructions": "Arrange everything on plates",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Time to arrange and enjoy!"
+          "say": "Brilliant! Let's arrange everything on the plates. Make it look as good as it tastes!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "toast_bread"
+      ],
+      "instructions": "Arrange everything on plates",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve with tea or coffee",
-      "instructions": "Serve with tea or coffee",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_with_tea_coffee",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve with tea or coffee",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "And there we have it! Serve up your full English breakfast with a nice cup of tea or coffee. Enjoy!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "plate_breakfast"
+      ],
+      "instructions": "Serve with tea or coffee",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -204,7 +139,72 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Use the oven to keep things warm\nQuality sausages make all the difference\nPerfect weekend treat"
-  }
+  "recipe": {
+    "id": "full-english-breakfast",
+    "tags": [
+      "pork",
+      "quick",
+      "dessert",
+      "breakfast"
+    ],
+    "title": "Full English Breakfast",
+    "course": "dessert",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Classic British breakfast with all the trimmings",
+    "estimated_total": "PT30M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "rashers",
+      "name": "rashers",
+      "unit": "bacon",
+      "quantity": 8.0
+    },
+    {
+      "id": "8_sausages",
+      "name": "8 sausages",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "4_eggs",
+      "name": "4 eggs",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "tinned_baked_beans",
+      "name": "tinned baked beans",
+      "unit": "g",
+      "quantity": 400.0
+    },
+    {
+      "id": "4_tomatoes_halved",
+      "name": "4 tomatoes, halved",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "mushrooms",
+      "name": "mushrooms",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "bread",
+      "name": "bread",
+      "unit": "slices",
+      "quantity": 4.0
+    },
+    {
+      "id": "black_pudding_optional",
+      "name": "Black pudding (optional)",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

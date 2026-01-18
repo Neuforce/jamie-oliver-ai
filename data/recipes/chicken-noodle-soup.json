@@ -12,7 +12,8 @@
       "chicken",
       "soup"
     ],
-    "course": "soup"
+    "course": "soup",
+    "cuisine": "american"
   },
   "ingredients": [
     {

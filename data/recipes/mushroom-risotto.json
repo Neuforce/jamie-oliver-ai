@@ -9,11 +9,10 @@
     "servings": 4,
     "difficulty": "Medium",
     "tags": [
-      "chicken",
       "italian",
-      "breakfast"
+      "vegetarian"
     ],
-    "course": "breakfast",
+    "course": "main",
     "cuisine": "italian"
   },
   "ingredients": [

@@ -119,8 +119,12 @@ class TestStartStepResponses:
     
     @pytest.mark.asyncio
     async def test_start_step_success_timer(self, parallel_steps_recipe_data):
-        """Test successful start of timer step shows TIMER RUNNING."""
-        from src.tools.recipe_tools import start_step
+        """Test successful start of timer step shows STARTED (timer NOT auto-started).
+        
+        With timer decoupling, starting a timer step activates it but does NOT
+        start the timer. The agent must call start_timer_for_step() separately.
+        """
+        from src.tools.recipe_tools import start_step, start_timer_for_step
         
         recipe = Recipe.from_dict(parallel_steps_recipe_data)
         session_id = "test-start-timer"
@@ -130,12 +134,19 @@ class TestStartStepResponses:
         await engine.start()
         await engine.confirm_step_done("preheat_oven")
         
-        # roast_squash is a timer step
+        # roast_squash is a timer step - starting it does NOT auto-start timer
         result = await run_recipe_tool(session_id, start_step, step_id="roast_squash")
         
-        assert "[TIMER RUNNING]" in result
-        assert "50 minute" in result  # PT50M
-        assert "confirm_step_done" in result
+        # Timer decoupling: start_step returns [STARTED], not [TIMER RUNNING]
+        assert "[STARTED]" in result
+        assert "timer available" in result.lower() or "timer not started" in result.lower()
+        
+        # Now explicitly start the timer
+        timer_result = await run_recipe_tool(session_id, start_timer_for_step, step_id="roast_squash")
+        
+        # NOW we should see TIMER RUNNING
+        assert "[TIMER RUNNING]" in timer_result
+        assert "50 minute" in timer_result or "roast_squash" in timer_result.lower()
         
         await session_service.cleanup_session(session_id)
 

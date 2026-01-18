@@ -3,14 +3,16 @@
 Script para ingerir recetas JSON existentes a Supabase con embeddings.
 
 Lee los JSONs de data/recipes/ (monorepo root) y los ingiere a Supabase:
+- Opcionalmente mejora las recetas con LLM (--enhance)
 - Genera chunks semánticos
 - Genera embeddings (384 dims)
-- Guarda en recipe_index e intelligent_recipe_chunks
+- Guarda en recipes, recipe_index e intelligent_recipe_chunks
 """
 
 import json
 import logging
 import os
+import re
 import sys
 from hashlib import sha256
 from pathlib import Path
@@ -25,6 +27,10 @@ from recipe_pdf_agent_llama.embed import embed_text
 from recipe_pdf_agent_llama.supabase_store import SupabaseConfig, upsert_chunks
 from recipe_pdf_agent.logging_utils import configure_logging
 
+# Import enhancement components
+from recipe_pipeline.enhancer import RecipeEnhancer
+from recipe_pipeline.validator import RecipeValidator
+
 # Cargar variables de entorno
 project_root = Path(__file__).resolve().parent
 load_dotenv(project_root / ".env")
@@ -32,6 +38,17 @@ load_dotenv(project_root / ".env")
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def sanitize_json_for_postgres(obj):
+    """Remove null characters that Postgres can't handle."""
+    if isinstance(obj, str):
+        return obj.replace('\x00', '').replace('\\u0000', '')
+    elif isinstance(obj, dict):
+        return {k: sanitize_json_for_postgres(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [sanitize_json_for_postgres(item) for item in obj]
+    return obj
 
 
 def _sha256_file(path: Path) -> str:
@@ -70,7 +87,15 @@ def _detect_category_mood(recipe_doc: dict) -> tuple[str | None, str | None]:
     return category, mood
 
 
-def process_one_json(json_path: Path, cfg: LlamaAgentConfig, dry_run: bool = False) -> bool:
+def process_one_json(
+    json_path: Path, 
+    cfg: LlamaAgentConfig, 
+    dry_run: bool = False,
+    enhance: bool = False,
+    publish: bool = False,
+    enhancer: RecipeEnhancer = None,
+    validator: RecipeValidator = None,
+) -> bool:
     """
     Procesa un archivo JSON y lo ingiere a Supabase.
     
@@ -78,6 +103,10 @@ def process_one_json(json_path: Path, cfg: LlamaAgentConfig, dry_run: bool = Fal
         json_path: Ruta al archivo JSON
         cfg: Configuración del agente
         dry_run: Si True, solo muestra lo que haría sin guardar
+        enhance: Si True, mejora la receta con LLM antes de guardar
+        publish: Si True, publica la receta inmediatamente
+        enhancer: RecipeEnhancer instance (reused across calls)
+        validator: RecipeValidator instance (reused across calls)
     
     Returns:
         True si fue exitoso, False si hubo error
@@ -95,6 +124,29 @@ def process_one_json(json_path: Path, cfg: LlamaAgentConfig, dry_run: bool = Fal
         title = recipe_doc.get("recipe", {}).get("title", recipe_id)
         logger.info(f"Processing: {title} ({recipe_id})")
         
+        # Enhance with LLM if requested
+        source_type = "imported"
+        quality_score = None
+        
+        if enhance and enhancer:
+            logger.info(f"  🤖 Enhancing with LLM...")
+            try:
+                recipe_doc = enhancer.enhance(recipe_doc)
+                recipe_doc = sanitize_json_for_postgres(recipe_doc)
+                source_type = "enhanced"
+                logger.info(f"  ✅ Enhanced successfully")
+            except Exception as e:
+                logger.warning(f"  ⚠️ Enhancement failed, using original: {e}")
+        
+        # Validate
+        if validator:
+            validation = validator.validate(recipe_doc)
+            quality_score = validation.quality_score
+            logger.info(f"  Quality score: {quality_score}")
+            if validation.warnings:
+                for w in validation.warnings[:2]:
+                    logger.warning(f"  ⚠️ {w}")
+        
         # Calcular hash del archivo
         file_hash = _sha256_file(json_path)
         
@@ -102,12 +154,12 @@ def process_one_json(json_path: Path, cfg: LlamaAgentConfig, dry_run: bool = Fal
         category, mood = _detect_category_mood(recipe_doc)
         
         # Generar chunks semánticos
-        logger.info(f"Generating chunks for {recipe_id}...")
+        logger.info(f"  Generating chunks for {recipe_id}...")
         chunks = generate_multiview_chunks(
             recipe_id=recipe_id,
             joav0_doc=recipe_doc,
         )
-        logger.info(f"Generated {len(chunks)} chunks")
+        logger.info(f"  Generated {len(chunks)} chunks")
         
         if dry_run:
             logger.info(f"DRY RUN: Would process {len(chunks)} chunks for {recipe_id}")
@@ -123,7 +175,40 @@ def process_one_json(json_path: Path, cfg: LlamaAgentConfig, dry_run: bool = Fal
         
         client = create_client(supabase_url, supabase_key)
         
-        # 1. Upsert en recipe_index (metadata básica)
+        # 0. Upsert en recipes table (full recipe JSON - source of truth)
+        recipe_meta = recipe_doc.get("recipe", {})
+        steps = recipe_doc.get("steps", [])
+        
+        # Compute metadata for recipes table
+        has_timers = any(s.get("type") == "timer" for s in steps)
+        metadata = {
+            "title": title,
+            "description": recipe_meta.get("description"),
+            "difficulty": recipe_meta.get("difficulty"),
+            "servings": recipe_meta.get("servings"),
+            "categories": [category] if category else [],
+            "moods": [mood] if mood else [],
+            "step_count": len(steps),
+            "has_timers": has_timers,
+            "image_url": recipe_meta.get("image_url"),
+        }
+        
+        recipes_row = {
+            "slug": recipe_id,
+            "recipe_json": recipe_doc,
+            "metadata": metadata,
+            "quality_score": quality_score,
+            "source_type": source_type,
+            "status": "published" if publish else "draft",
+        }
+        if publish:
+            recipes_row["published_at"] = "now()"
+        
+        logger.info(f"  Upserting recipes table for {recipe_id}...")
+        client.table("recipes").upsert(recipes_row, on_conflict="slug").execute()
+        logger.info(f"  ✅ recipes table updated for {recipe_id}")
+        
+        # 1. Upsert en recipe_index (metadata básica for search)
         recipe_row = {
             "id": recipe_id,
             "title": title,
@@ -138,15 +223,15 @@ def process_one_json(json_path: Path, cfg: LlamaAgentConfig, dry_run: bool = Fal
             "file_hash": file_hash,
         }
         
-        logger.info(f"Upserting recipe_index for {recipe_id}...")
+        logger.info(f"  Upserting recipe_index for {recipe_id}...")
         client.table("recipe_index").upsert(recipe_row).execute()
-        logger.info(f"✅ recipe_index updated for {recipe_id}")
+        logger.info(f"  ✅ recipe_index updated for {recipe_id}")
         
         # 2. Generar embeddings y upsert chunks
         chunk_rows = []
         for idx, chunk in enumerate(chunks, 1):
             chunk_text = chunk["chunk_text"]
-            logger.info(f"  Generating embedding for chunk {idx}/{len(chunks)}...")
+            logger.info(f"    Generating embedding for chunk {idx}/{len(chunks)}...")
             
             embedding = embed_text(chunk_text, model_name=cfg.embedding_model)
             
@@ -162,7 +247,7 @@ def process_one_json(json_path: Path, cfg: LlamaAgentConfig, dry_run: bool = Fal
             })
         
         # Upsert chunks
-        logger.info(f"Upserting {len(chunk_rows)} chunks for {recipe_id}...")
+        logger.info(f"  Upserting {len(chunk_rows)} chunks for {recipe_id}...")
         upsert_chunks(
             cfg=SupabaseConfig(
                 url_env=cfg.supabase_url_env,
@@ -171,7 +256,7 @@ def process_one_json(json_path: Path, cfg: LlamaAgentConfig, dry_run: bool = Fal
             ),
             rows=chunk_rows,
         )
-        logger.info(f"✅ {len(chunk_rows)} chunks ingested for {recipe_id}")
+        logger.info(f"  ✅ {len(chunk_rows)} chunks ingested for {recipe_id}")
         
         return True
         
@@ -200,6 +285,18 @@ def main():
         action="store_true",
         help="Re-procesar recetas que ya existen",
     )
+    parser.add_argument(
+        "--enhance",
+        "-e",
+        action="store_true",
+        help="Enhance recipes with LLM (adds Jamie Oliver voice, semantic step IDs, timer detection)",
+    )
+    parser.add_argument(
+        "--publish",
+        "-p",
+        action="store_true",
+        help="Publish recipes immediately (otherwise saved as draft)",
+    )
     
     args = parser.parse_args()
     
@@ -210,6 +307,14 @@ def main():
     # Cargar configuración
     cfg = load_config()
     configure_logging(cfg.log_level)
+    
+    # Initialize enhancer and validator if enhancement is enabled
+    enhancer = None
+    validator = RecipeValidator()
+    
+    if args.enhance:
+        logger.info("🤖 Enhancement enabled - recipes will be processed with LLM")
+        enhancer = RecipeEnhancer()
     
     # Buscar archivos JSON
     json_files = sorted(
@@ -245,7 +350,15 @@ def main():
     error_count = 0
     
     for json_file in json_files:
-        if process_one_json(json_file, cfg, dry_run=args.dry_run):
+        if process_one_json(
+            json_file, 
+            cfg, 
+            dry_run=args.dry_run,
+            enhance=args.enhance,
+            publish=args.publish,
+            enhancer=enhancer,
+            validator=validator,
+        ):
             success_count += 1
         else:
             error_count += 1
@@ -255,6 +368,12 @@ def main():
     logger.info(f"  ✅ Success: {success_count}")
     logger.info(f"  ❌ Errors: {error_count}")
     logger.info(f"  📊 Total: {len(json_files)}")
+    if args.enhance:
+        logger.info(f"  🤖 Enhancement: ENABLED")
+    if args.publish:
+        logger.info(f"  📢 Published: YES")
+    else:
+        logger.info(f"  📋 Status: DRAFT (use --publish to publish)")
     logger.info("=" * 80)
     
     return 0 if error_count == 0 else 1

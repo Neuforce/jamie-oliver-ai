@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&display=swap');
 
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
 @layer properties {
@@ -2900,6 +2900,21 @@
   --jamie-accent-green: #81eb67;
   --jamie-accent-yellow: #f0ff17;
   --jamie-accent-orange: #f0b100;
+  
+  /* Typography - Jamie Oliver Design System */
+  --font-display: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-chat: 'Work Sans', sans-serif;
+  
+  /* Standard Jamie Oliver text colors */
+  --jamie-text-primary: #234252;
+  --jamie-text-heading: #327179;
+  --jamie-text-body: #2c2c2c;
+  --jamie-text-muted: #5d5d5d;
+  --jamie-text-placeholder: #8e8e93;
+  
+  /* Touch target size (44px minimum) */
+  --touch-target-min: 44px;
 }
 
 .dark {
@@ -2941,6 +2956,20 @@
 
 html {
   font-size: var(--font-size);
+}
+
+/* Critical: Full height chain for flex layout */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* Prevent body scroll */
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @property --tw-translate-x {
@@ -3342,5 +3371,48 @@ html {
   to {
     opacity: var(--tw-exit-opacity, 1);
     transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0) scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), var(--tw-exit-scale, 1)) rotate(var(--tw-exit-rotate, 0));
+  }
+}
+
+/* Meal Plan Card - Responsive layout */
+.meal-plan-row {
+  /* Default: single row */
+}
+
+.meal-plan-title {
+  flex: 1;
+  min-width: 0;
+}
+
+.meal-plan-tags {
+  flex-shrink: 0;
+}
+
+.meal-plan-arrow {
+  flex-shrink: 0;
+}
+
+/* Small screens: wrap to two lines */
+@media (max-width: 480px) {
+  .meal-plan-row {
+    position: relative;
+    padding-right: 32px !important;
+  }
+  
+  .meal-plan-title {
+    flex: none;
+    width: 100%;
+    margin-bottom: 4px;
+  }
+  
+  .meal-plan-tags {
+    flex: 1;
+  }
+  
+  .meal-plan-arrow {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }

@@ -11,7 +11,8 @@
     "tags": [
       "chicken"
     ],
-    "course": "main"
+    "course": "main",
+    "cuisine": "british"
   },
   "ingredients": [
     {

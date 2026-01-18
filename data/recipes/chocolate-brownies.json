@@ -9,10 +9,10 @@
     "servings": 12,
     "difficulty": "Not Too Tricky",
     "tags": [
-      "dessert",
-      "breakfast"
+      "dessert"
     ],
-    "course": "dessert"
+    "course": "dessert",
+    "cuisine": "american"
   },
   "ingredients": [
     {

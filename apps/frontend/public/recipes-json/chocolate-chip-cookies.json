@@ -1,199 +1,137 @@
 {
-  "recipe": {
-    "id": "chocolate-chip-cookies",
-    "title": "Chocolate Chip Cookies",
-    "description": "Classic chewy cookies loaded with chocolate chips",
-    "estimated_total": "PT25M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 24,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "dessert",
-      "breakfast"
-    ],
-    "course": "dessert"
+  "notes": {
+    "text": "Chill dough for thicker cookies\nDon't overbake - they continue cooking on the tray\nUse a mix of dark and milk chocolate"
   },
-  "ingredients": [
-    {
-      "id": "butter_softened",
-      "name": "butter, softened",
-      "quantity": 225.0,
-      "unit": "g"
-    },
-    {
-      "id": "brown_sugar",
-      "name": "brown sugar",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "white_sugar",
-      "name": "white sugar",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "2_eggs",
-      "name": "2 eggs",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "plain_flour",
-      "name": "plain flour",
-      "quantity": 300.0,
-      "unit": "g"
-    },
-    {
-      "id": "baking_soda",
-      "name": "baking soda",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "chocolate_chips",
-      "name": "chocolate chips",
-      "quantity": 300.0,
-      "unit": "g"
-    },
-    {
-      "id": "vanilla_extract",
-      "name": "vanilla extract",
-      "quantity": 1.0,
-      "unit": "tsp"
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_oven",
+      "next": [
+        "cream_butter_sugars"
+      ],
+      "type": "immediate",
       "descr": "Preheat oven to 180°C (350°F)",
-      "instructions": "Preheat oven to 180°C (350°F)",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by preheating the oven to 180°C. This'll ensure it's nice and hot when we're ready to bake."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the oven to 180°c."
-        }
-      ]
+      "instructions": "Preheat oven to 180°C (350°F)",
+      "requires_confirm": false
     },
     {
-      "id": "step_2",
+      "id": "cream_butter_sugars",
+      "next": [
+        "beat_eggs_vanilla"
+      ],
+      "type": "immediate",
       "descr": "Cream butter and sugars until fluffy",
+      "on_enter": [
+        {
+          "say": "Now, let's cream the butter and sugars together until they're light and fluffy. You'll know it's ready when it looks pale and smooth."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
       "instructions": "Cream butter and sugars until fluffy",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's cream butter and sugars until fluffy."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "beat_eggs_vanilla",
+      "next": [
+        "mix_flour_baking_soda"
+      ],
+      "type": "immediate",
       "descr": "Beat in eggs and vanilla",
+      "on_enter": [
+        {
+          "say": "Great job! Now let's beat in the eggs and vanilla. This will add a lovely richness to our dough."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cream_butter_sugars"
+      ],
       "instructions": "Beat in eggs and vanilla",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's beat in eggs and vanilla."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "mix_flour_baking_soda",
+      "next": [
+        "fold_chocolate_chips"
+      ],
+      "type": "immediate",
       "descr": "Mix in flour and baking soda",
+      "on_enter": [
+        {
+          "say": "Let's mix in the flour and baking soda. Be gentle and mix until just combined to keep our cookies nice and tender."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "beat_eggs_vanilla"
+      ],
       "instructions": "Mix in flour and baking soda",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "fold_chocolate_chips",
+      "next": [
+        "drop_onto_sheet"
+      ],
+      "type": "immediate",
       "descr": "Fold in chocolate chips",
+      "on_enter": [
+        {
+          "say": "Now for the best part - let's fold in those chocolate chips. Make sure they're evenly distributed for chocolatey goodness in every bite."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_flour_baking_soda"
+      ],
       "instructions": "Fold in chocolate chips",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's fold in chocolate chips."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "drop_onto_sheet",
+      "next": [
+        "bake_cookies"
+      ],
+      "type": "immediate",
       "descr": "Drop spoonfuls onto baking sheet",
-      "instructions": "Drop spoonfuls onto baking sheet",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's drop spoonfuls onto baking sheet."
+          "say": "Let's drop spoonfuls of our cookie dough onto the baking sheet. Leave some space between them as they'll spread out while baking."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "fold_chocolate_chips"
+      ],
+      "instructions": "Drop spoonfuls onto baking sheet",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Bake 10-12 minutes until golden at edges",
-      "instructions": "Bake 10-12 minutes until golden at edges",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "bake_cookies",
       "next": [],
+      "type": "timer",
+      "descr": "Bake 10-12 minutes until golden at edges",
+      "duration": 720,
       "on_enter": [
         {
-          "say": "Time to bake the 10-12 minutes until."
+          "say": "Time to bake these beauties! Pop them in the oven for 10 to 12 minutes until they're golden at the edges. Your kitchen will smell amazing!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "drop_onto_sheet"
+      ],
+      "instructions": "Bake 10-12 minutes until golden at edges",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -202,7 +140,70 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Chill dough for thicker cookies\nDon't overbake - they continue cooking on the tray\nUse a mix of dark and milk chocolate"
-  }
+  "recipe": {
+    "id": "chocolate-chip-cookies",
+    "tags": [
+      "dessert",
+      "breakfast"
+    ],
+    "title": "Chocolate Chip Cookies",
+    "course": "dessert",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 24,
+    "difficulty": "Not Too Tricky",
+    "description": "Classic chewy cookies loaded with chocolate chips",
+    "estimated_total": "PT25M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "butter_softened",
+      "name": "butter, softened",
+      "unit": "g",
+      "quantity": 225.0
+    },
+    {
+      "id": "brown_sugar",
+      "name": "brown sugar",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "white_sugar",
+      "name": "white sugar",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "2_eggs",
+      "name": "2 eggs",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "plain_flour",
+      "name": "plain flour",
+      "unit": "g",
+      "quantity": 300.0
+    },
+    {
+      "id": "baking_soda",
+      "name": "baking soda",
+      "unit": "tsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "chocolate_chips",
+      "name": "chocolate chips",
+      "unit": "g",
+      "quantity": 300.0
+    },
+    {
+      "id": "vanilla_extract",
+      "name": "vanilla extract",
+      "unit": "tsp",
+      "quantity": 1.0
+    }
+  ]
 }

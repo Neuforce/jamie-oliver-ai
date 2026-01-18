@@ -1,248 +1,140 @@
 {
-  "recipe": {
-    "id": "somali-beef-stew-jamie-oliver-recipes",
-    "title": "Somali Beef Stew | Jamie Oliver recipes",
-    "description": "Warm the oil in a large Dutch oven or other heavy pot set over medium heat.",
-    "estimated_total": "PT45M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 6,
-    "difficulty": "Easy",
-    "tags": [
-      "beef",
-      "mexican"
-    ],
-    "course": "main",
-    "cuisine": "mexican"
+  "notes": {
+    "text": "TOP TIP\nYou can make the stew up to a week in advance and refrigerate it in an airtight container (it gets even better the longer it sits) or freeze it in an airtight container for up to 2 months (defrost in the refrigerator for up to a day before serving). Gently rewarm the stew in a heavy pot set over low heat before serving."
   },
-  "ingredients": [
-    {
-      "id": "canola_oil",
-      "name": "canola oil",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "red_onion",
-      "name": "red onion",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "garlic_cloves",
-      "name": "garlic cloves",
-      "quantity": 3.0,
-      "unit": null
-    },
-    {
-      "id": "xawaash_spice_mix",
-      "name": "Xawaash Spice Mix",
-      "quantity": 2.0,
-      "unit": null
-    },
-    {
-      "id": "kosher_salt",
-      "name": "kosher salt",
-      "quantity": 2.0,
-      "unit": null
-    },
-    {
-      "id": "water",
-      "name": "water",
-      "quantity": 2.0,
-      "unit": null
-    },
-    {
-      "id": "boneless_beef_chuck",
-      "name": "boneless beef chuck or other stew meat",
-      "quantity": 2.0,
-      "unit": "pounds"
-    },
-    {
-      "id": "baking_potatoes",
-      "name": "baking potatoes",
-      "quantity": 2.0,
-      "unit": null
-    },
-    {
-      "id": "carrots",
-      "name": "carrots",
-      "quantity": 2.0,
-      "unit": null
-    },
-    {
-      "id": "red_bell_pepper",
-      "name": "red bell pepper",
-      "quantity": 1.0,
-      "unit": null
-    },
-    {
-      "id": "cooked_rice",
-      "name": "cooked rice",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "hot_sauce",
-      "name": "hot sauce",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "pepper_sauce",
-      "name": "Pepper Sauce",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "cilantro_leaves",
-      "name": "Cilantro leaves",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "lime_wedges",
-      "name": "Lime wedges",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "fresh_bananas",
-      "name": "Fresh bananas",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
       "id": "warm_oil",
-      "descr": "Warm the oil in a large Dutch oven or other heavy pot set over medium heat.",
-      "instructions": "Warm the oil in a large Dutch oven or other heavy pot set over medium heat.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [],
       "next": [
         "cook_onion_garlic"
       ],
+      "type": "immediate",
+      "descr": "Warm the oil in a large Dutch oven or other heavy pot set over medium heat.",
       "on_enter": [
         {
-          "say": "Let's warm the oil in."
+          "say": "Right, let's get started by warming up some oil in a large pot over medium heat. You'll know it's ready when it shimmers."
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [],
+      "instructions": "Warm the oil in a large Dutch oven or other heavy pot set over medium heat.",
+      "requires_confirm": true
     },
     {
       "id": "cook_onion_garlic",
+      "next": [
+        "add_spices"
+      ],
+      "type": "timer",
       "descr": "Add the onion and garlic and cook, stirring occasionally, until just beginning to soften, about 3 minutes.",
-      "instructions": "Add the onion and garlic and cook, stirring occasionally, until just beginning to soften, about 3 minutes.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 180,
+      "on_enter": [
+        {
+          "say": "Now, let's toss in the onion and garlic. Give it a stir every now and then, and in about 3 minutes, they'll start to soften and smell wonderful."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [
         "warm_oil"
       ],
-      "next": [
-        "add_spices"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the onion and garlic."
-        }
-      ]
+      "instructions": "Add the onion and garlic and cook, stirring occasionally, until just beginning to soften, about 3 minutes.",
+      "requires_confirm": true
     },
     {
       "id": "add_spices",
+      "next": [
+        "add_water_beef"
+      ],
+      "type": "timer",
       "descr": "Stir in the Xawaash, tomato paste, and salt and cook until aromatic, about 1 minute.",
-      "instructions": "Stir in the Xawaash, tomato paste, and salt and cook until aromatic, about 1 minute.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 60,
+      "on_enter": [
+        {
+          "say": "Time to add some spice! Stir in the Xawaash, tomato paste, and salt. Cook it for about a minute until it smells absolutely divine."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [
         "cook_onion_garlic"
       ],
-      "next": [
-        "add_water_beef"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
+      "instructions": "Stir in the Xawaash, tomato paste, and salt and cook until aromatic, about 1 minute.",
+      "requires_confirm": true
     },
     {
       "id": "add_water_beef",
-      "descr": "Stir in the water and increase the heat to high. Bring to a boil, then reduce the heat to low, then stir in the beef and potatoes.",
-      "instructions": "Stir in the water and increase the heat to high. Bring to a boil, then reduce the heat to low, then stir in the beef and potatoes.",
+      "next": [
+        "simmer_beef_potatoes"
+      ],
       "type": "immediate",
+      "descr": "Stir in the water and increase the heat to high. Bring to a boil, then reduce the heat to low, then stir in the beef and potatoes.",
+      "on_enter": [
+        {
+          "say": "Let's add the water and crank up the heat. Once it's boiling, we'll lower the heat and add in our beef and potatoes. It's going to be delicious!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [
         "add_spices"
       ],
-      "next": [
-        "simmer_beef_potatoes"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
+      "instructions": "Stir in the water and increase the heat to high. Bring to a boil, then reduce the heat to low, then stir in the beef and potatoes.",
+      "requires_confirm": true
     },
     {
       "id": "simmer_beef_potatoes",
+      "next": [
+        "add_carrots_pepper"
+      ],
+      "type": "timer",
       "descr": "Partially cover the pot (leave the lid slightly ajar so steam can escape) and simmer until the beef and potatoes are just cooked through, about 45 minutes.",
-      "instructions": "Partially cover the pot (leave the lid slightly ajar so steam can escape) and simmer until the beef and potatoes are just cooked through, about 45 minutes.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 2700,
+      "on_enter": [
+        {
+          "say": "Now, let's partially cover the pot and let it simmer gently for about 45 minutes. This will make the beef and potatoes beautifully tender."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [
         "add_water_beef"
       ],
-      "next": [
-        "add_carrots_pepper"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's partially cover the pot (leave the."
-        }
-      ]
+      "instructions": "Partially cover the pot (leave the lid slightly ajar so steam can escape) and simmer until the beef and potatoes are just cooked through, about 45 minutes.",
+      "requires_confirm": false
     },
     {
       "id": "add_carrots_pepper",
-      "descr": "Stir in the carrots and bell pepper and cook, covered, until the beef and vegetables are all very tender, an additional 30 minutes.",
-      "instructions": "Stir in the carrots and bell pepper and cook, covered, until the beef and vegetables are all very tender, an additional 30 minutes.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [
-        "simmer_beef_potatoes"
-      ],
       "next": [
         "season_and_serve"
       ],
+      "type": "timer",
+      "descr": "Stir in the carrots and bell pepper and cook, covered, until the beef and vegetables are all very tender, an additional 30 minutes.",
+      "duration": 1800,
       "on_enter": [
         {
-          "say": "Let's stir everything together."
+          "say": "Let's add the carrots and bell pepper to the pot. Cover it up and let it cook for another 30 minutes until everything is tender and full of flavor."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "simmer_beef_potatoes"
+      ],
+      "instructions": "Stir in the carrots and bell pepper and cook, covered, until the beef and vegetables are all very tender, an additional 30 minutes.",
+      "requires_confirm": false
     },
     {
       "id": "season_and_serve",
-      "descr": "Season the stew to taste with salt and serve over rice with hot sauce and cilantro for topping, lime wedges for squeezing",
-      "instructions": "Season the stew to taste with salt and serve over rice with hot sauce and cilantro for topping, lime wedges for squeezing",
+      "next": [],
       "type": "immediate",
+      "descr": "Season the stew to taste with salt and serve over rice with hot sauce and cilantro for topping, lime wedges for squeezing",
+      "on_enter": [
+        {
+          "say": "Finally, let's season our stew to perfection. Serve it over some rice and top with hot sauce, cilantro, and a squeeze of lime. Enjoy!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [
         "add_carrots_pepper"
       ],
-      "next": [],
-      "on_enter": [
-        {
-          "say": "Let's season the stew to taste."
-        }
-      ]
+      "instructions": "Season the stew to taste with salt and serve over rice with hot sauce and cilantro for topping, lime wedges for squeezing",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -251,7 +143,119 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "TOP TIP\nYou can make the stew up to a week in advance and refrigerate it in an airtight container (it gets even better the longer it sits) or freeze it in an airtight container for up to 2 months (defrost in the refrigerator for up to a day before serving). Gently rewarm the stew in a heavy pot set over low heat before serving."
-  }
+  "recipe": {
+    "id": "somali-beef-stew-jamie-oliver-recipes",
+    "tags": [
+      "beef",
+      "mexican"
+    ],
+    "title": "Somali Beef Stew | Jamie Oliver recipes",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "mexican",
+    "servings": 6,
+    "difficulty": "Easy",
+    "description": "Warm the oil in a large Dutch oven or other heavy pot set over medium heat.",
+    "estimated_total": "PT45M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "canola_oil",
+      "name": "canola oil",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "red_onion",
+      "name": "red onion",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "garlic_cloves",
+      "name": "garlic cloves",
+      "unit": null,
+      "quantity": 3.0
+    },
+    {
+      "id": "xawaash_spice_mix",
+      "name": "Xawaash Spice Mix",
+      "unit": null,
+      "quantity": 2.0
+    },
+    {
+      "id": "kosher_salt",
+      "name": "kosher salt",
+      "unit": null,
+      "quantity": 2.0
+    },
+    {
+      "id": "water",
+      "name": "water",
+      "unit": null,
+      "quantity": 2.0
+    },
+    {
+      "id": "boneless_beef_chuck",
+      "name": "boneless beef chuck or other stew meat",
+      "unit": "pounds",
+      "quantity": 2.0
+    },
+    {
+      "id": "baking_potatoes",
+      "name": "baking potatoes",
+      "unit": null,
+      "quantity": 2.0
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "unit": null,
+      "quantity": 2.0
+    },
+    {
+      "id": "red_bell_pepper",
+      "name": "red bell pepper",
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "cooked_rice",
+      "name": "cooked rice",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "hot_sauce",
+      "name": "hot sauce",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "pepper_sauce",
+      "name": "Pepper Sauce",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "cilantro_leaves",
+      "name": "Cilantro leaves",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "lime_wedges",
+      "name": "Lime wedges",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "fresh_bananas",
+      "name": "Fresh bananas",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

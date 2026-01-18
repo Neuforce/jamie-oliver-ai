@@ -97,6 +97,9 @@ class SimpleBrain(BaseBrain):
                     logger.debug(
                         f"Received FunctionCallResponse [{event.tool_call_id}]: {event.function_name} | {event.arguments}"
                     )
+                    # Yield the function call event so callers can track tool usage
+                    yield event
+                    
                     # Serialize arguments to JSON string
                     serialized_arguments = json.dumps(event.arguments)
 

@@ -1,200 +1,136 @@
 {
-  "recipe": {
-    "id": "pesto-pasta",
-    "title": "Pesto Pasta",
-    "description": "Simple pasta with fresh basil pesto and Parmesan",
-    "estimated_total": "PT20M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "pasta",
-      "italian"
-    ],
-    "course": "main",
-    "cuisine": "italian"
+  "notes": {
+    "text": "Toast pine nuts for deeper flavor\nPesto can be made ahead and frozen\nAdd a splash of lemon juice for brightness"
   },
-  "ingredients": [
-    {
-      "id": "pasta",
-      "name": "pasta",
-      "quantity": 400.0,
-      "unit": "g"
-    },
-    {
-      "id": "fresh_basil",
-      "name": "fresh basil",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "pine_nuts",
-      "name": "pine nuts",
-      "quantity": 50.0,
-      "unit": "g"
-    },
-    {
-      "id": "cloves",
-      "name": "cloves",
-      "quantity": 2.0,
-      "unit": "garlic"
-    },
-    {
-      "id": "parmesan_grated",
-      "name": "Parmesan, grated",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "olive_oil",
-      "name": "olive oil",
-      "quantity": 150.0,
-      "unit": "ml"
-    },
-    {
-      "id": "salt_and_pepper",
-      "name": "Salt and pepper",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "cherry_tomatoes",
-      "name": "Cherry tomatoes",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "cook_pasta",
+      "next": [
+        "blend_pesto"
+      ],
+      "type": "immediate",
       "descr": "Cook pasta in salted boiling water",
-      "instructions": "Cook pasta in salted boiling water",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by cooking our pasta in a big pot of salted boiling water. It should be bubbling away nicely!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to cook the pasta in salted."
-        }
-      ]
+      "instructions": "Cook pasta in salted boiling water",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "blend_pesto",
+      "next": [
+        "add_olive_oil"
+      ],
+      "type": "immediate",
       "descr": "Blend basil, pine nuts, garlic, and Parmesan",
+      "on_enter": [
+        {
+          "say": "Now, let's make our beautiful pesto. Pop the basil, pine nuts, garlic, and Parmesan into a blender. Give it a whizz until it's all combined."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cook_pasta"
+      ],
       "instructions": "Blend basil, pine nuts, garlic, and Parmesan",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's blend everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "add_olive_oil",
+      "next": [
+        "season_pesto"
+      ],
+      "type": "immediate",
       "descr": "Drizzle in olive oil while blending",
+      "on_enter": [
+        {
+          "say": "Lovely! Now, while the blender is running, slowly drizzle in the olive oil. You'll see it turn into a smooth, luscious sauce."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "blend_pesto"
+      ],
       "instructions": "Drizzle in olive oil while blending",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's drizzle in olive oil while blending."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "season_pesto",
+      "next": [
+        "drain_pasta"
+      ],
+      "type": "immediate",
       "descr": "Season pesto with salt and pepper",
+      "on_enter": [
+        {
+          "say": "Time to season our pesto. Add a pinch of salt and a good grind of pepper. Taste it to make sure it's just right."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_olive_oil"
+      ],
       "instructions": "Season pesto with salt and pepper",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's season the pesto with salt."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "drain_pasta",
+      "next": [
+        "toss_pasta"
+      ],
+      "type": "immediate",
       "descr": "Reserve pasta water, drain pasta",
+      "on_enter": [
+        {
+          "say": "Let's reserve a cup of that starchy pasta water, then drain the pasta. This water will help us get the perfect sauce consistency."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "season_pesto"
+      ],
       "instructions": "Reserve pasta water, drain pasta",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's reserve the pasta water, drain for later."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "toss_pasta",
+      "next": [
+        "serve_pasta"
+      ],
+      "type": "immediate",
       "descr": "Toss pasta with pesto, add pasta water to loosen",
-      "instructions": "Toss pasta with pesto, add pasta water to loosen",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's toss everything together."
+          "say": "Now, let's toss the pasta with our fresh pesto. Add a splash of the reserved pasta water to loosen it up. It should look glossy and delicious!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "drain_pasta"
+      ],
+      "instructions": "Toss pasta with pesto, add pasta water to loosen",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve with halved cherry tomatoes and extra Parmesan",
-      "instructions": "Serve with halved cherry tomatoes and extra Parmesan",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_pasta",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve with halved cherry tomatoes and extra Parmesan",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to plate up! Serve your pasta with some halved cherry tomatoes and a sprinkle of extra Parmesan. Enjoy your meal!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "toss_pasta"
+      ],
+      "instructions": "Serve with halved cherry tomatoes and extra Parmesan",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -203,7 +139,71 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Toast pine nuts for deeper flavor\nPesto can be made ahead and frozen\nAdd a splash of lemon juice for brightness"
-  }
+  "recipe": {
+    "id": "pesto-pasta",
+    "tags": [
+      "pasta",
+      "italian"
+    ],
+    "title": "Pesto Pasta",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "italian",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Simple pasta with fresh basil pesto and Parmesan",
+    "estimated_total": "PT20M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "pasta",
+      "name": "pasta",
+      "unit": "g",
+      "quantity": 400.0
+    },
+    {
+      "id": "fresh_basil",
+      "name": "fresh basil",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "pine_nuts",
+      "name": "pine nuts",
+      "unit": "g",
+      "quantity": 50.0
+    },
+    {
+      "id": "cloves",
+      "name": "cloves",
+      "unit": "garlic",
+      "quantity": 2.0
+    },
+    {
+      "id": "parmesan_grated",
+      "name": "Parmesan, grated",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "unit": "ml",
+      "quantity": 150.0
+    },
+    {
+      "id": "salt_and_pepper",
+      "name": "Salt and pepper",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "cherry_tomatoes",
+      "name": "Cherry tomatoes",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

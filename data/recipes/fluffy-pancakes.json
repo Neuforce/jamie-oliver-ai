@@ -10,10 +10,10 @@
     "difficulty": "Not Too Tricky",
     "tags": [
       "quick",
-      "dessert",
       "breakfast"
     ],
-    "course": "dessert"
+    "course": "breakfast",
+    "cuisine": "american"
   },
   "ingredients": [
     {

@@ -11,7 +11,8 @@
     "tags": [
       "beef"
     ],
-    "course": "main"
+    "course": "main",
+    "cuisine": "american"
   },
   "ingredients": [
     {

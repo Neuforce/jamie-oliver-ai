@@ -1,200 +1,136 @@
 {
-  "recipe": {
-    "id": "avocado-toast",
-    "title": "Avocado Toast",
-    "description": "Trendy breakfast with smashed avocado on toasted sourdough",
-    "estimated_total": "PT10M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 2,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "quick",
-      "breakfast"
-    ],
-    "course": "breakfast",
-    "cuisine": "mediterranean"
+  "notes": {
+    "text": "Use perfectly ripe avocados\nAdd feta cheese for extra flavor\nExperiment with toppings like radishes or microgreens"
   },
-  "ingredients": [
-    {
-      "id": "avocados",
-      "name": "avocados",
-      "quantity": 2.0,
-      "unit": "ripe"
-    },
-    {
-      "id": "sourdough_bread",
-      "name": "sourdough bread",
-      "quantity": 4.0,
-      "unit": "slices"
-    },
-    {
-      "id": "(optional)",
-      "name": "(optional)",
-      "quantity": 2.0,
-      "unit": "eggs"
-    },
-    {
-      "id": "cherry_tomatoes",
-      "name": "Cherry tomatoes",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "lemon_juice",
-      "name": "Lemon juice",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "red_pepper_flakes",
-      "name": "Red pepper flakes",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "extra_virgin_olive_oil",
-      "name": "Extra virgin olive oil",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "sea_salt",
-      "name": "Sea salt",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "toast_bread",
+      "next": [
+        "mash_avocado"
+      ],
+      "type": "immediate",
       "descr": "Toast sourdough until golden and crispy",
-      "instructions": "Toast sourdough until golden and crispy",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get that sourdough nice and toasty until it's golden and crispy. You'll know it's ready when it smells deliciously warm and looks beautifully golden."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's toast sourdough until golden and crispy."
-        }
-      ]
+      "instructions": "Toast sourdough until golden and crispy",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "mash_avocado",
+      "next": [
+        "spread_avocado"
+      ],
+      "type": "immediate",
       "descr": "Mash avocados with lemon juice and salt",
+      "on_enter": [
+        {
+          "say": "Now, let's get those avocados mashed up with a good squeeze of lemon juice and a pinch of salt. You want a nice, creamy texture with a bit of zing from the lemon."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "toast_bread"
+      ],
       "instructions": "Mash avocados with lemon juice and salt",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mash avocados with lemon juice and."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "spread_avocado",
+      "next": [
+        "add_tomatoes"
+      ],
+      "type": "immediate",
       "descr": "Spread avocado on toast",
+      "on_enter": [
+        {
+          "say": "Brilliant! Now spread that lovely avocado mixture over your crispy toast. Make sure you cover it all the way to the edges for maximum flavour."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mash_avocado"
+      ],
       "instructions": "Spread avocado on toast",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's spread avocado on toast."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "add_tomatoes",
+      "next": [
+        "add_egg"
+      ],
+      "type": "immediate",
       "descr": "Top with halved cherry tomatoes",
+      "on_enter": [
+        {
+          "say": "Let's add some lovely halved cherry tomatoes on top. They'll add a burst of freshness and colour to your toast."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "spread_avocado"
+      ],
       "instructions": "Top with halved cherry tomatoes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's top with halved cherry tomatoes."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "add_egg",
+      "next": [
+        "drizzle_olive_oil"
+      ],
+      "type": "immediate",
       "descr": "Add a poached or fried egg if desired",
+      "on_enter": [
+        {
+          "say": "If you're feeling a bit indulgent, let's pop a poached or fried egg on top. It'll make it even more satisfying!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_tomatoes"
+      ],
       "instructions": "Add a poached or fried egg if desired",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the poached or fried."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "drizzle_olive_oil",
+      "next": [
+        "sprinkle_seasoning"
+      ],
+      "type": "immediate",
       "descr": "Drizzle with olive oil",
-      "instructions": "Drizzle with olive oil",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's drizzle with olive oil."
+          "say": "Now, let's give it a nice drizzle of extra virgin olive oil. It'll add a lovely richness to the dish."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_egg"
+      ],
+      "instructions": "Drizzle with olive oil",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Sprinkle with red pepper flakes and sea salt",
-      "instructions": "Sprinkle with red pepper flakes and sea salt",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "sprinkle_seasoning",
       "next": [],
+      "type": "immediate",
+      "descr": "Sprinkle with red pepper flakes and sea salt",
       "on_enter": [
         {
-          "say": "Let's sprinkle with red pepper flakes and."
+          "say": "Finally, let's sprinkle some red pepper flakes and a pinch of sea salt on top. It'll give your toast that extra kick and flavour. Perfect!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "drizzle_olive_oil"
+      ],
+      "instructions": "Sprinkle with red pepper flakes and sea salt",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -203,7 +139,71 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Use perfectly ripe avocados\nAdd feta cheese for extra flavor\nExperiment with toppings like radishes or microgreens"
-  }
+  "recipe": {
+    "id": "avocado-toast",
+    "tags": [
+      "quick",
+      "breakfast"
+    ],
+    "title": "Avocado Toast",
+    "course": "breakfast",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "mediterranean",
+    "servings": 2,
+    "difficulty": "Not Too Tricky",
+    "description": "Trendy breakfast with smashed avocado on toasted sourdough",
+    "estimated_total": "PT10M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "avocados",
+      "name": "avocados",
+      "unit": "ripe",
+      "quantity": 2.0
+    },
+    {
+      "id": "sourdough_bread",
+      "name": "sourdough bread",
+      "unit": "slices",
+      "quantity": 4.0
+    },
+    {
+      "id": "(optional)",
+      "name": "(optional)",
+      "unit": "eggs",
+      "quantity": 2.0
+    },
+    {
+      "id": "cherry_tomatoes",
+      "name": "Cherry tomatoes",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "lemon_juice",
+      "name": "Lemon juice",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "red_pepper_flakes",
+      "name": "Red pepper flakes",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "extra_virgin_olive_oil",
+      "name": "Extra virgin olive oil",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "sea_salt",
+      "name": "Sea salt",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

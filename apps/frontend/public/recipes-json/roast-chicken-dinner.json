@@ -1,192 +1,139 @@
 {
-  "recipe": {
-    "id": "roast-chicken-dinner",
-    "title": "Roast Chicken Dinner",
-    "description": "Classic Sunday roast with crispy skin and herb stuffing",
-    "estimated_total": "PT2H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 6,
-    "difficulty": "Medium",
-    "tags": [
-      "chicken"
-    ],
-    "course": "main"
+  "notes": {
+    "text": "Let chicken come to room temperature first\nUse a meat thermometer - should reach 75°C\nSave the carcass for stock"
   },
-  "ingredients": [
-    {
-      "id": "chicken_(18kg)",
-      "name": "chicken (1.8kg)",
-      "quantity": 1.0,
-      "unit": "whole"
-    },
-    {
-      "id": "2_lemons",
-      "name": "2 lemons",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "garlic",
-      "name": "garlic",
-      "quantity": 1.0,
-      "unit": "bulb"
-    },
-    {
-      "id": "fresh_thyme_and_rosemary",
-      "name": "Fresh thyme and rosemary",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "butter",
-      "name": "butter",
-      "quantity": 50.0,
-      "unit": "g"
-    },
-    {
-      "id": "root_vegetables_for_roasting",
-      "name": "Root vegetables for roasting",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "gravy_ingredients",
-      "name": "Gravy ingredients",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_oven",
+      "next": [
+        "stuff_chicken"
+      ],
+      "type": "immediate",
       "descr": "Preheat oven to 200°C (400°F)",
-      "instructions": "Preheat oven to 200°C (400°F)",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by preheating the oven to 200°C. This will ensure our chicken cooks beautifully."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the oven to 200°c."
-        }
-      ]
+      "instructions": "Preheat oven to 200°C (400°F)",
+      "requires_confirm": false
     },
     {
-      "id": "step_2",
+      "id": "stuff_chicken",
+      "next": [
+        "butter_and_season"
+      ],
+      "type": "immediate",
       "descr": "Stuff chicken with lemon, garlic, and herbs",
+      "on_enter": [
+        {
+          "say": "Now, let's stuff our lovely chicken with lemon, garlic, and those fragrant herbs. Make sure it's packed with flavour!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
       "instructions": "Stuff chicken with lemon, garlic, and herbs",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stuff chicken with lemon, garlic, and."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "butter_and_season",
+      "next": [
+        "roast_chicken"
+      ],
+      "type": "immediate",
       "descr": "Rub with butter, season generously",
+      "on_enter": [
+        {
+          "say": "Time to give our chicken some love with a good rub of butter and a generous seasoning. This will give us that beautiful crispy skin."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "stuff_chicken"
+      ],
       "instructions": "Rub with butter, season generously",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's rub with butter, season generously."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "roast_chicken",
+      "next": [
+        "add_vegetables"
+      ],
+      "type": "timer",
       "descr": "Roast for 1 hour 30 minutes, basting occasionally",
+      "duration": 5400,
+      "on_enter": [
+        {
+          "say": "Let's pop the chicken in the oven and roast it for 1 hour and 30 minutes. Remember to baste occasionally to keep it juicy!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "butter_and_season"
+      ],
       "instructions": "Roast for 1 hour 30 minutes, basting occasionally",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to roast the for 1 hour."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "add_vegetables",
+      "next": [
+        "rest_chicken"
+      ],
+      "type": "timer",
       "descr": "Add vegetables to roasting pan after 30 minutes",
+      "duration": 1800,
+      "on_enter": [
+        {
+          "say": "After 30 minutes, let's add those lovely root vegetables to the roasting pan. They'll soak up all those delicious juices."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "roast_chicken"
+      ],
       "instructions": "Add vegetables to roasting pan after 30 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the vegetables to roasting."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "rest_chicken",
+      "next": [
+        "make_gravy"
+      ],
+      "type": "timer",
       "descr": "Rest chicken 15 minutes before carving",
-      "instructions": "Rest chicken 15 minutes before carving",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 900,
       "on_enter": [
         {
-          "say": "Let's rest chicken 15 minutes before carving."
+          "say": "Brilliant! Let's let the chicken rest for 15 minutes. This is crucial to keep all those lovely juices inside when we carve it."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_vegetables"
+      ],
+      "instructions": "Rest chicken 15 minutes before carving",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Make gravy from pan juices",
-      "instructions": "Make gravy from pan juices",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "make_gravy",
       "next": [],
+      "type": "immediate",
+      "descr": "Make gravy from pan juices",
       "on_enter": [
         {
-          "say": "Let's make gravy from pan."
+          "say": "Now, let's make a gorgeous gravy from those pan juices. This will bring everything together beautifully."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "rest_chicken"
+      ],
+      "instructions": "Make gravy from pan juices",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -195,7 +142,63 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Let chicken come to room temperature first\nUse a meat thermometer - should reach 75°C\nSave the carcass for stock"
-  }
+  "recipe": {
+    "id": "roast-chicken-dinner",
+    "tags": [
+      "chicken"
+    ],
+    "title": "Roast Chicken Dinner",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Medium",
+    "description": "Classic Sunday roast with crispy skin and herb stuffing",
+    "estimated_total": "PT2H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "chicken_(18kg)",
+      "name": "chicken (1.8kg)",
+      "unit": "whole",
+      "quantity": 1.0
+    },
+    {
+      "id": "2_lemons",
+      "name": "2 lemons",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "unit": "bulb",
+      "quantity": 1.0
+    },
+    {
+      "id": "fresh_thyme_and_rosemary",
+      "name": "Fresh thyme and rosemary",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "unit": "g",
+      "quantity": 50.0
+    },
+    {
+      "id": "root_vegetables_for_roasting",
+      "name": "Root vegetables for roasting",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "gravy_ingredients",
+      "name": "Gravy ingredients",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

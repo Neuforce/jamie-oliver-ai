@@ -1,194 +1,136 @@
 {
-  "recipe": {
-    "id": "fluffy-pancakes",
-    "title": "Fluffy Pancakes",
-    "description": "Light and fluffy American-style breakfast pancakes",
-    "estimated_total": "PT20M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "quick",
-      "dessert",
-      "breakfast"
-    ],
-    "course": "dessert"
+  "notes": {
+    "text": "Don't overmix - lumpy batter makes fluffier pancakes\nKeep cooked pancakes warm in a low oven\nAdd blueberries to the batter for extra flavor"
   },
-  "ingredients": [
-    {
-      "id": "self-raising_flour",
-      "name": "self-raising flour",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "baking_powder",
-      "name": "baking powder",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "sugar",
-      "name": "sugar",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "1_egg",
-      "name": "1 egg",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "milk",
-      "name": "milk",
-      "quantity": 250.0,
-      "unit": "ml"
-    },
-    {
-      "id": "butter_for_cooking",
-      "name": "Butter for cooking",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "maple_syrup_and_berries_to_serve",
-      "name": "Maple syrup and berries to serve",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_dry_ingredients",
+      "next": [
+        "whisk_wet_ingredients"
+      ],
+      "type": "immediate",
       "descr": "Mix flour, baking powder, and sugar in a bowl",
-      "instructions": "Mix flour, baking powder, and sugar in a bowl",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's start by mixing the flour, baking powder, and sugar in a bowl. Give it a good stir until everything's combined."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "instructions": "Mix flour, baking powder, and sugar in a bowl",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "whisk_wet_ingredients",
+      "next": [
+        "combine_wet_and_dry"
+      ],
+      "type": "immediate",
       "descr": "Whisk egg and milk together",
+      "on_enter": [
+        {
+          "say": "Now, let's whisk the egg and milk together until they're beautifully combined. You want a nice, smooth mixture here."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_dry_ingredients"
+      ],
       "instructions": "Whisk egg and milk together",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's whisk everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "combine_wet_and_dry",
+      "next": [
+        "heat_butter"
+      ],
+      "type": "immediate",
       "descr": "Combine wet and dry ingredients until just mixed",
+      "on_enter": [
+        {
+          "say": "Let's bring it all together now. Pour the wet ingredients into the dry and gently mix until just combined. Remember, a few lumps are okay!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "whisk_wet_ingredients"
+      ],
       "instructions": "Combine wet and dry ingredients until just mixed",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's combine everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "heat_butter",
+      "next": [
+        "pour_batter"
+      ],
+      "type": "immediate",
       "descr": "Heat butter in a pan over medium heat",
+      "on_enter": [
+        {
+          "say": "Time to get the pan ready. Heat some butter over medium heat until it's melted and sizzling slightly. You'll know it's ready when it starts to foam."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "combine_wet_and_dry"
+      ],
       "instructions": "Heat butter in a pan over medium heat",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the butter in pan."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "pour_batter",
+      "next": [
+        "cook_pancakes"
+      ],
+      "type": "immediate",
       "descr": "Pour small ladles of batter into pan",
+      "on_enter": [
+        {
+          "say": "Let's get those pancakes cooking! Pour small ladles of batter into the pan, leaving a bit of space between each one. They should sizzle as they hit the pan."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "heat_butter"
+      ],
       "instructions": "Pour small ladles of batter into pan",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's pour small ladles of batter into."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "cook_pancakes",
+      "next": [
+        "serve_pancakes"
+      ],
+      "type": "immediate",
       "descr": "Cook until bubbles appear, flip and cook other side",
-      "instructions": "Cook until bubbles appear, flip and cook other side",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Time to cook the until bubbles appear,."
+          "say": "Keep an eye on those pancakes. When you see bubbles forming on the surface, it's time to flip them. Cook until both sides are golden brown."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "pour_batter"
+      ],
+      "instructions": "Cook until bubbles appear, flip and cook other side",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve stacked with syrup and fresh berries",
-      "instructions": "Serve stacked with syrup and fresh berries",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_pancakes",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve stacked with syrup and fresh berries",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Brilliant! Stack those fluffy pancakes high, drizzle with maple syrup, and scatter some fresh berries on top. Enjoy your delicious creation!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cook_pancakes"
+      ],
+      "instructions": "Serve stacked with syrup and fresh berries",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -197,7 +139,65 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Don't overmix - lumpy batter makes fluffier pancakes\nKeep cooked pancakes warm in a low oven\nAdd blueberries to the batter for extra flavor"
-  }
+  "recipe": {
+    "id": "fluffy-pancakes",
+    "tags": [
+      "quick",
+      "dessert",
+      "breakfast"
+    ],
+    "title": "Fluffy Pancakes",
+    "course": "dessert",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Light and fluffy American-style breakfast pancakes",
+    "estimated_total": "PT20M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "self-raising_flour",
+      "name": "self-raising flour",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "baking_powder",
+      "name": "baking powder",
+      "unit": "tsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "1_egg",
+      "name": "1 egg",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "unit": "ml",
+      "quantity": 250.0
+    },
+    {
+      "id": "butter_for_cooking",
+      "name": "Butter for cooking",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "maple_syrup_and_berries_to_serve",
+      "name": "Maple syrup and berries to serve",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

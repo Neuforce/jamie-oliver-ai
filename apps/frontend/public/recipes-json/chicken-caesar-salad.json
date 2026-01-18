@@ -1,202 +1,136 @@
 {
-  "recipe": {
-    "id": "chicken-caesar-salad",
-    "title": "Chicken Caesar Salad",
-    "description": "Crisp romaine with grilled chicken, parmesan, and creamy dressing",
-    "estimated_total": "PT20M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "chicken",
-      "italian",
-      "dessert",
-      "salad"
-    ],
-    "course": "salad",
-    "cuisine": "italian"
+  "notes": {
+    "text": "The dressing should be bold and garlicky\nMake your own croutons for best results\nAdd anchovies for authentic flavor"
   },
-  "ingredients": [
-    {
-      "id": "breasts",
-      "name": "breasts",
-      "quantity": 2.0,
-      "unit": "chicken"
-    },
-    {
-      "id": "lettuce_heads",
-      "name": "lettuce heads",
-      "quantity": 2.0,
-      "unit": "romaine"
-    },
-    {
-      "id": "parmesan_shaved",
-      "name": "Parmesan, shaved",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "croutons",
-      "name": "Croutons",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "mayonnaise",
-      "name": "mayonnaise",
-      "quantity": 3.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "dijon_mustard",
-      "name": "Dijon mustard",
-      "quantity": 1.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "cloves_minced",
-      "name": "cloves, minced",
-      "quantity": 2.0,
-      "unit": "garlic"
-    },
-    {
-      "id": "lemon_juice_worcestershire_sauce",
-      "name": "Lemon juice, Worcestershire sauce",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "grill_chicken",
+      "next": [
+        "make_dressing"
+      ],
+      "type": "immediate",
       "descr": "Grill or pan-fry chicken breasts, season well",
-      "instructions": "Grill or pan-fry chicken breasts, season well",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by grilling or pan-frying those chicken breasts. Season them well and listen for that lovely sizzle!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to grill the or pan-fry chicken."
-        }
-      ]
+      "instructions": "Grill or pan-fry chicken breasts, season well",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "make_dressing",
+      "next": [
+        "tear_lettuce"
+      ],
+      "type": "immediate",
       "descr": "Make dressing: mix mayo, mustard, garlic, lemon juice, Worcestershire",
+      "on_enter": [
+        {
+          "say": "Now, let's whip up that delicious dressing. Mix together the mayo, mustard, garlic, lemon juice, and a splash of Worcestershire sauce. It should be nice and creamy!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "grill_chicken"
+      ],
       "instructions": "Make dressing: mix mayo, mustard, garlic, lemon juice, Worcestershire",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's make dressing: mix mayo,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "tear_lettuce",
+      "next": [
+        "slice_chicken"
+      ],
+      "type": "immediate",
       "descr": "Tear lettuce into bite-sized pieces",
+      "on_enter": [
+        {
+          "say": "Let's tear up that crisp romaine lettuce into bite-sized pieces. It'll be the perfect base for our salad!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "make_dressing"
+      ],
       "instructions": "Tear lettuce into bite-sized pieces",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's tear lettuce into bite-sized pieces."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_4",
+      "id": "slice_chicken",
+      "next": [
+        "toss_lettuce"
+      ],
+      "type": "immediate",
       "descr": "Slice cooked chicken",
+      "on_enter": [
+        {
+          "say": "Time to slice up that beautifully cooked chicken. Nice even slices will do the trick!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "tear_lettuce"
+      ],
       "instructions": "Slice cooked chicken",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's start by slice."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "toss_lettuce",
+      "next": [
+        "top_salad"
+      ],
+      "type": "immediate",
       "descr": "Toss lettuce with dressing",
+      "on_enter": [
+        {
+          "say": "Let's toss that lovely lettuce with our creamy dressing. Make sure it's all nicely coated!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "slice_chicken"
+      ],
       "instructions": "Toss lettuce with dressing",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's toss everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "top_salad",
+      "next": [
+        "serve_salad"
+      ],
+      "type": "immediate",
       "descr": "Top with chicken, Parmesan, and croutons",
-      "instructions": "Top with chicken, Parmesan, and croutons",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's top with chicken, parmesan, and croutons."
+          "say": "Now, let's top our salad with those juicy chicken slices, a generous sprinkle of Parmesan, and some crunchy croutons. It's looking fantastic!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "toss_lettuce"
+      ],
+      "instructions": "Top with chicken, Parmesan, and croutons",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve immediately",
-      "instructions": "Serve immediately",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_salad",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve immediately",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up and enjoy your beautiful Chicken Caesar Salad. Dig in and savour every bite!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "top_salad"
+      ],
+      "instructions": "Serve immediately",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -205,7 +139,73 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "The dressing should be bold and garlicky\nMake your own croutons for best results\nAdd anchovies for authentic flavor"
-  }
+  "recipe": {
+    "id": "chicken-caesar-salad",
+    "tags": [
+      "chicken",
+      "italian",
+      "dessert",
+      "salad"
+    ],
+    "title": "Chicken Caesar Salad",
+    "course": "salad",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "italian",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Crisp romaine with grilled chicken, parmesan, and creamy dressing",
+    "estimated_total": "PT20M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "breasts",
+      "name": "breasts",
+      "unit": "chicken",
+      "quantity": 2.0
+    },
+    {
+      "id": "lettuce_heads",
+      "name": "lettuce heads",
+      "unit": "romaine",
+      "quantity": 2.0
+    },
+    {
+      "id": "parmesan_shaved",
+      "name": "Parmesan, shaved",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "croutons",
+      "name": "Croutons",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "mayonnaise",
+      "name": "mayonnaise",
+      "unit": "tbsp",
+      "quantity": 3.0
+    },
+    {
+      "id": "dijon_mustard",
+      "name": "Dijon mustard",
+      "unit": "tbsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "unit": "garlic",
+      "quantity": 2.0
+    },
+    {
+      "id": "lemon_juice_worcestershire_sauce",
+      "name": "Lemon juice, Worcestershire sauce",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

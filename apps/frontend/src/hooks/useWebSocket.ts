@@ -60,6 +60,11 @@ export interface UseWebSocketOptions {
   onStop?: () => void;
   onControl?: (action: string, data?: any) => void;
   onSessionInfo?: (info: SessionInfo) => void;
+  // New sync events for AI-native experience
+  onFocusStep?: (stepId: string, stepIndex: number) => void;
+  onHighlightIngredient?: (ingredientName: string) => void;
+  onTimerAdjust?: (timerId: string, newSeconds: number) => void;
+  onTimerCancel?: (timerId: string) => void;
   autoConnect?: boolean;
   recipeId?: string;
   context?: Record<string, any>;
@@ -77,6 +82,10 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
     onStop,
     onControl,
     onSessionInfo,
+    onFocusStep,
+    onHighlightIngredient,
+    onTimerAdjust,
+    onTimerCancel,
     autoConnect = false,
     recipeId,
     context,
@@ -424,6 +433,38 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           }
           break;
 
+        case 'focus_step':
+          // Agent wants to scroll/focus on a specific step
+          if (onFocusStep && data?.step_id !== undefined) {
+            console.log('🎯 [WS] Focus step event:', data.step_id, data.step_index);
+            onFocusStep(data.step_id, data.step_index ?? 0);
+          }
+          break;
+
+        case 'highlight_ingredient':
+          // Agent is discussing a specific ingredient
+          if (onHighlightIngredient && data?.ingredient) {
+            console.log('✨ [WS] Highlight ingredient:', data.ingredient);
+            onHighlightIngredient(data.ingredient);
+          }
+          break;
+
+        case 'timer_adjust':
+          // Timer was adjusted (time added/removed)
+          if (onTimerAdjust && data?.timer_id) {
+            console.log('⏱️ [WS] Timer adjust:', data.timer_id, data.new_seconds);
+            onTimerAdjust(data.timer_id, data.new_seconds ?? 0);
+          }
+          break;
+
+        case 'timer_cancel':
+          // Timer was cancelled
+          if (onTimerCancel && data?.timer_id) {
+            console.log('❌ [WS] Timer cancelled:', data.timer_id);
+            onTimerCancel(data.timer_id);
+          }
+          break;
+
         case 'stop':
           if (onStop) {
             onStop();
@@ -435,7 +476,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           console.log('Unhandled WebSocket message:', message);
       }
     },
-    [onRecipeState, onRecipeMessage, onRecipeError, onTimerDone, onReminderTick, onTimerListUpdate, onAudio, onStop, onControl, disconnect, onSessionInfo]
+    [onRecipeState, onRecipeMessage, onRecipeError, onTimerDone, onReminderTick, onTimerListUpdate, onAudio, onStop, onControl, disconnect, onSessionInfo, onFocusStep, onHighlightIngredient, onTimerAdjust, onTimerCancel]
   );
 
   // Auto-connect if enabled

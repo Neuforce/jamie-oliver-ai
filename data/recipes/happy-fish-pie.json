@@ -2,7 +2,7 @@
   "recipe": {
     "id": "happy-fish-pie",
     "title": "Happy fish pie",
-    "description": "Preheat the oven to 180°C/350°F/gas 4.",
+    "description": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
     "estimated_total": "PT1H5M",
     "locale": "en",
     "source": "pdf",
@@ -10,10 +10,10 @@
     "difficulty": "Tricky",
     "tags": [
       "fish",
-      "dessert",
-      "breakfast"
+      "comfort",
+      "british"
     ],
-    "course": "dessert",
+    "course": "main",
     "cuisine": "mediterranean"
   },
   "ingredients": [
@@ -70,8 +70,8 @@
   "steps": [
     {
       "id": "preheat_oven",
-      "descr": "Preheat the oven to 180°C/350°F/gas 4.",
-      "instructions": "Preheat the oven to 180°C/350°F/gas 4.",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
       "type": "immediate",
       "auto_start": false,
       "requires_confirm": false,
@@ -220,8 +220,8 @@
     },
     {
       "id": "mash_potato_broccoli",
-      "descr": "Mash the potato and broccoli – rustic or smooth, the choice is yours.",
-      "instructions": "Mash the potato and broccoli – rustic or smooth, the choice is yours.",
+      "descr": "Mash the potato and broccoli \u2013 rustic or smooth, the choice is yours.",
+      "instructions": "Mash the potato and broccoli \u2013 rustic or smooth, the choice is yours.",
       "type": "immediate",
       "auto_start": true,
       "requires_confirm": false,
@@ -233,7 +233,7 @@
       ],
       "on_enter": [
         {
-          "say": "Let's mash the potato and broccoli –."
+          "say": "Let's mash the potato and broccoli \u2013."
         }
       ]
     },

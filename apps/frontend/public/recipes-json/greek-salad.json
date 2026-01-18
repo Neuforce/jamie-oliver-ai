@@ -1,181 +1,117 @@
 {
-  "recipe": {
-    "id": "greek-salad",
-    "title": "Greek Salad",
-    "description": "Fresh Mediterranean salad with feta, olives, and crisp vegetables",
-    "estimated_total": "PT15M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "dessert",
-      "salad"
-    ],
-    "course": "salad",
-    "cuisine": "greek"
+  "notes": {
+    "text": "Use the ripest tomatoes you can find\nDon't overdress - let the ingredients shine\nServe with warm pita bread"
   },
-  "ingredients": [
-    {
-      "id": "tomatoes_chopped",
-      "name": "tomatoes, chopped",
-      "quantity": 4.0,
-      "unit": "large"
-    },
-    {
-      "id": "1_cucumber_diced",
-      "name": "1 cucumber, diced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "onion_thinly_sliced",
-      "name": "onion, thinly sliced",
-      "quantity": 1.0,
-      "unit": "red"
-    },
-    {
-      "id": "feta_cheese_cubed",
-      "name": "feta cheese, cubed",
-      "quantity": 150.0,
-      "unit": "g"
-    },
-    {
-      "id": "kalamata_olives",
-      "name": "Kalamata olives",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "olive_oil",
-      "name": "olive oil",
-      "quantity": 3.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "red_wine_vinegar",
-      "name": "red wine vinegar",
-      "quantity": 1.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "dried_oregano",
-      "name": "Dried oregano",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "chop_vegetables",
+      "next": [
+        "combine_ingredients"
+      ],
+      "type": "immediate",
       "descr": "Chop all vegetables into bite-sized pieces",
-      "instructions": "Chop all vegetables into bite-sized pieces",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get chopping! Slice those lovely tomatoes, cucumber, and onion into bite-sized pieces. Take your time and enjoy the process."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's start by chop."
-        }
-      ]
+      "instructions": "Chop all vegetables into bite-sized pieces",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "combine_ingredients",
+      "next": [
+        "add_olives_feta"
+      ],
+      "type": "immediate",
       "descr": "Combine tomatoes, cucumber, and red onion in a bowl",
+      "on_enter": [
+        {
+          "say": "Now, let's bring those fresh veggies together in a bowl. Look at those colours!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "chop_vegetables"
+      ],
       "instructions": "Combine tomatoes, cucumber, and red onion in a bowl",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's combine everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "add_olives_feta",
+      "next": [
+        "drizzle_dressing"
+      ],
+      "type": "immediate",
       "descr": "Add olives and feta cheese",
+      "on_enter": [
+        {
+          "say": "Time to add the olives and that gorgeous feta cheese. This is where the magic starts to happen!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "combine_ingredients"
+      ],
       "instructions": "Add olives and feta cheese",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the olives and feta."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "drizzle_dressing",
+      "next": [
+        "season_sprinkle"
+      ],
+      "type": "immediate",
       "descr": "Drizzle with olive oil and red wine vinegar",
+      "on_enter": [
+        {
+          "say": "Let's drizzle it all with some lovely olive oil and a splash of red wine vinegar. Give it a good mix!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_olives_feta"
+      ],
       "instructions": "Drizzle with olive oil and red wine vinegar",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's drizzle with olive oil and red."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "season_sprinkle",
+      "next": [
+        "toss_serve"
+      ],
+      "type": "immediate",
       "descr": "Sprinkle with oregano, salt, and pepper",
-      "instructions": "Sprinkle with oregano, salt, and pepper",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
       "on_enter": [
         {
-          "say": "Let's sprinkle with oregano, salt, and pepper."
+          "say": "Now, sprinkle over some oregano, and don't forget a pinch of salt and pepper. Smell that aroma!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "drizzle_dressing"
+      ],
+      "instructions": "Sprinkle with oregano, salt, and pepper",
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
-      "descr": "Toss gently and serve immediately",
-      "instructions": "Toss gently and serve immediately",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
+      "id": "toss_serve",
       "next": [],
+      "type": "immediate",
+      "descr": "Toss gently and serve immediately",
       "on_enter": [
         {
-          "say": "Let's toss everything together."
+          "say": "Finally, give it all a gentle toss and serve it up straight away. Enjoy your beautiful Greek salad!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "season_sprinkle"
+      ],
+      "instructions": "Toss gently and serve immediately",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -184,7 +120,71 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Use the ripest tomatoes you can find\nDon't overdress - let the ingredients shine\nServe with warm pita bread"
-  }
+  "recipe": {
+    "id": "greek-salad",
+    "tags": [
+      "dessert",
+      "salad"
+    ],
+    "title": "Greek Salad",
+    "course": "salad",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "greek",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Fresh Mediterranean salad with feta, olives, and crisp vegetables",
+    "estimated_total": "PT15M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "tomatoes_chopped",
+      "name": "tomatoes, chopped",
+      "unit": "large",
+      "quantity": 4.0
+    },
+    {
+      "id": "1_cucumber_diced",
+      "name": "1 cucumber, diced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "onion_thinly_sliced",
+      "name": "onion, thinly sliced",
+      "unit": "red",
+      "quantity": 1.0
+    },
+    {
+      "id": "feta_cheese_cubed",
+      "name": "feta cheese, cubed",
+      "unit": "g",
+      "quantity": 150.0
+    },
+    {
+      "id": "kalamata_olives",
+      "name": "Kalamata olives",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "unit": "tbsp",
+      "quantity": 3.0
+    },
+    {
+      "id": "red_wine_vinegar",
+      "name": "red wine vinegar",
+      "unit": "tbsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "dried_oregano",
+      "name": "Dried oregano",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

@@ -9,10 +9,10 @@
     "servings": 8,
     "difficulty": "Medium",
     "tags": [
-      "pork",
-      "breakfast"
+      "pork"
     ],
-    "course": "breakfast"
+    "course": "main",
+    "cuisine": "american"
   },
   "ingredients": [
     {

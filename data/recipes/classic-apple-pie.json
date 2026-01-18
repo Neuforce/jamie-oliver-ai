@@ -11,7 +11,8 @@
     "tags": [
       "dessert"
     ],
-    "course": "dessert"
+    "course": "dessert",
+    "cuisine": "american"
   },
   "ingredients": [
     {

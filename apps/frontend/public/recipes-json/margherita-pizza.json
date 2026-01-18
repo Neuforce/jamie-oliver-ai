@@ -1,193 +1,137 @@
 {
-  "recipe": {
-    "id": "margherita-pizza",
-    "title": "Margherita Pizza",
-    "description": "Classic Italian pizza with fresh mozzarella, tomato, and basil",
-    "estimated_total": "PT90M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 2,
-    "difficulty": "Medium",
-    "tags": [
-      "italian"
-    ],
-    "course": "main",
-    "cuisine": "italian"
+  "notes": {
+    "text": "A pizza stone gives the best crust\nLet dough come to room temperature before rolling\nLess is more - don't overload with toppings"
   },
-  "ingredients": [
-    {
-      "id": "pizza_dough",
-      "name": "pizza dough",
-      "quantity": 300.0,
-      "unit": "g"
-    },
-    {
-      "id": "passata",
-      "name": "passata",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "fresh_mozzarella",
-      "name": "fresh mozzarella",
-      "quantity": 250.0,
-      "unit": "g"
-    },
-    {
-      "id": "fresh_basil_leaves",
-      "name": "Fresh basil leaves",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "olive_oil",
-      "name": "olive oil",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "cloves_minced",
-      "name": "cloves, minced",
-      "quantity": 2.0,
-      "unit": "garlic"
-    },
-    {
-      "id": "salt_to_taste",
-      "name": "Salt to taste",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_oven",
+      "next": [
+        "roll_out_dough"
+      ],
+      "type": "immediate",
       "descr": "Preheat oven to 240°C (475°F)",
-      "instructions": "Preheat oven to 240°C (475°F)",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by preheating the oven to 240°C. We want it nice and hot for that perfect crust!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the oven to 240°c."
-        }
-      ]
+      "instructions": "Preheat oven to 240°C (475°F)",
+      "requires_confirm": false
     },
     {
-      "id": "step_2",
+      "id": "roll_out_dough",
+      "next": [
+        "mix_sauce"
+      ],
+      "type": "immediate",
       "descr": "Roll out pizza dough on a floured surface",
+      "on_enter": [
+        {
+          "say": "Now, let's roll out that lovely pizza dough on a floured surface. Aim for a nice even thickness!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
       "instructions": "Roll out pizza dough on a floured surface",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's roll out pizza dough on a."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "mix_sauce",
+      "next": [
+        "spread_sauce"
+      ],
+      "type": "immediate",
       "descr": "Mix passata with garlic, olive oil, and salt",
+      "on_enter": [
+        {
+          "say": "Let's mix the passata with garlic, olive oil, and a pinch of salt. Give it a good stir until it's all combined."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "roll_out_dough"
+      ],
       "instructions": "Mix passata with garlic, olive oil, and salt",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "spread_sauce",
+      "next": [
+        "add_mozzarella"
+      ],
+      "type": "immediate",
       "descr": "Spread sauce over dough, leaving a border",
+      "on_enter": [
+        {
+          "say": "Time to spread that lovely sauce over the dough. Leave a little border for a nice crust!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_sauce"
+      ],
       "instructions": "Spread sauce over dough, leaving a border",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's spread sauce over dough, leaving a."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "add_mozzarella",
+      "next": [
+        "bake_pizza"
+      ],
+      "type": "immediate",
       "descr": "Tear mozzarella and distribute over pizza",
+      "on_enter": [
+        {
+          "say": "Tear up the mozzarella and scatter it over the pizza. Make sure it's evenly distributed for that melty goodness!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "spread_sauce"
+      ],
       "instructions": "Tear mozzarella and distribute over pizza",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's tear mozzarella and distribute over pizza."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "bake_pizza",
+      "next": [
+        "finish_pizza"
+      ],
+      "type": "timer",
       "descr": "Bake for 10-12 minutes until crust is golden",
-      "instructions": "Bake for 10-12 minutes until crust is golden",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 660,
       "on_enter": [
         {
-          "say": "Time to bake the for 10-12 minutes."
+          "say": "Pop the pizza in the oven and let it bake for 10 to 12 minutes. You'll know it's ready when the crust is beautifully golden and the cheese is bubbling!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_mozzarella"
+      ],
+      "instructions": "Bake for 10-12 minutes until crust is golden",
+      "requires_confirm": false
     },
     {
-      "id": "step_7",
-      "descr": "Top with fresh basil and drizzle with olive oil",
-      "instructions": "Top with fresh basil and drizzle with olive oil",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "finish_pizza",
       "next": [],
+      "type": "immediate",
+      "descr": "Top with fresh basil and drizzle with olive oil",
       "on_enter": [
         {
-          "say": "Let's top with fresh basil and drizzle."
+          "say": "Let's finish off our masterpiece with some fresh basil leaves and a drizzle of olive oil. Absolutely gorgeous!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "bake_pizza"
+      ],
+      "instructions": "Top with fresh basil and drizzle with olive oil",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -196,7 +140,64 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "A pizza stone gives the best crust\nLet dough come to room temperature before rolling\nLess is more - don't overload with toppings"
-  }
+  "recipe": {
+    "id": "margherita-pizza",
+    "tags": [
+      "italian"
+    ],
+    "title": "Margherita Pizza",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "italian",
+    "servings": 2,
+    "difficulty": "Medium",
+    "description": "Classic Italian pizza with fresh mozzarella, tomato, and basil",
+    "estimated_total": "PT90M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "pizza_dough",
+      "name": "pizza dough",
+      "unit": "g",
+      "quantity": 300.0
+    },
+    {
+      "id": "passata",
+      "name": "passata",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "fresh_mozzarella",
+      "name": "fresh mozzarella",
+      "unit": "g",
+      "quantity": 250.0
+    },
+    {
+      "id": "fresh_basil_leaves",
+      "name": "Fresh basil leaves",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "unit": "garlic",
+      "quantity": 2.0
+    },
+    {
+      "id": "salt_to_taste",
+      "name": "Salt to taste",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

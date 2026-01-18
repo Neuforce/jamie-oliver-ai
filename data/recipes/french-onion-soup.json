@@ -10,8 +10,7 @@
     "difficulty": "Medium",
     "tags": [
       "beef",
-      "soup",
-      "breakfast"
+      "soup"
     ],
     "course": "soup",
     "cuisine": "french"
@@ -54,8 +53,8 @@
       "unit": "slices"
     },
     {
-      "id": "gruy\u0000e8re_cheese_grated",
-      "name": "Gruy\u0000e8re cheese, grated",
+      "id": "gruye8re_cheese_grated",
+      "name": "Gruye8re cheese, grated",
       "quantity": 200.0,
       "unit": "g"
     },

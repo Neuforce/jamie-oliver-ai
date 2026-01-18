@@ -1,192 +1,138 @@
 {
-  "recipe": {
-    "id": "fish-and-chips",
-    "title": "Fish and Chips",
-    "description": "Classic British comfort food with crispy battered fish and golden chips",
-    "estimated_total": "PT45M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Medium",
-    "tags": [
-      "fish"
-    ],
-    "course": "main"
+  "notes": {
+    "text": "Keep oil at consistent temperature\nPat fish dry before battering\nDouble-fry chips for extra crispiness"
   },
-  "ingredients": [
-    {
-      "id": "fillets",
-      "name": "fillets",
-      "quantity": 4.0,
-      "unit": "cod"
-    },
-    {
-      "id": "self-raising_flour",
-      "name": "self-raising flour",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "cold_beer",
-      "name": "cold beer",
-      "quantity": 300.0,
-      "unit": "ml"
-    },
-    {
-      "id": "potatoes_cut_into_chips",
-      "name": "potatoes, cut into chips",
-      "quantity": 1.0,
-      "unit": "kg"
-    },
-    {
-      "id": "oil_for_deep_frying",
-      "name": "Oil for deep frying",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "salt_and_malt_vinegar",
-      "name": "Salt and malt vinegar",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "mushy_peas_to_serve",
-      "name": "Mushy peas to serve",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "heat_oil",
+      "next": [
+        "parboil_chips"
+      ],
+      "type": "immediate",
       "descr": "Heat oil to 180°C in a deep fryer",
-      "instructions": "Heat oil to 180°C in a deep fryer",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by heating the oil to 180°C. Make sure it's nice and hot!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the oil to 180°c."
-        }
-      ]
+      "instructions": "Heat oil to 180°C in a deep fryer",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "parboil_chips",
+      "next": [
+        "fry_chips"
+      ],
+      "type": "timer",
       "descr": "Par-boil chips for 5 minutes, drain and dry",
+      "duration": 300,
+      "on_enter": [
+        {
+          "say": "Let's par-boil those chips for 5 minutes. Once done, drain them well and pat them dry."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "heat_oil"
+      ],
       "instructions": "Par-boil chips for 5 minutes, drain and dry",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's par-boil chips for 5 minutes, drain."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "fry_chips",
+      "next": [
+        "make_batter"
+      ],
+      "type": "immediate",
       "descr": "Fry chips until golden and crispy, set aside",
+      "on_enter": [
+        {
+          "say": "Now, let's fry those chips until they're beautifully golden and crispy. You'll know they're ready when they have that lovely crunch."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "parboil_chips"
+      ],
       "instructions": "Fry chips until golden and crispy, set aside",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to fry the chips until golden."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "make_batter",
+      "next": [
+        "dip_fish"
+      ],
+      "type": "immediate",
       "descr": "Make batter by whisking flour with beer until smooth",
+      "on_enter": [
+        {
+          "say": "Let's make that batter! Whisk the flour with the beer until it's nice and smooth. It should be a lovely, thick consistency."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "fry_chips"
+      ],
       "instructions": "Make batter by whisking flour with beer until smooth",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's make batter by whisking."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "dip_fish",
+      "next": [
+        "fry_fish"
+      ],
+      "type": "immediate",
       "descr": "Dip fish in batter and carefully lower into hot oil",
+      "on_enter": [
+        {
+          "say": "Now, dip each piece of fish into the batter and carefully lower it into the hot oil. Be gentle!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "make_batter"
+      ],
       "instructions": "Dip fish in batter and carefully lower into hot oil",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's dip fish in batter and carefully."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "fry_fish",
+      "next": [
+        "serve_dish"
+      ],
+      "type": "timer",
       "descr": "Fry fish for 5-6 minutes until golden and crispy",
-      "instructions": "Fry fish for 5-6 minutes until golden and crispy",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 330,
       "on_enter": [
         {
-          "say": "Time to fry the fish for 5-6."
+          "say": "Time to fry the fish for 5 to 6 minutes. You'll know it's done when it's golden and crispy. Listen for that sizzle!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "dip_fish"
+      ],
+      "instructions": "Fry fish for 5-6 minutes until golden and crispy",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve immediately with chips, salt, and vinegar",
-      "instructions": "Serve immediately with chips, salt, and vinegar",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_dish",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve immediately with chips, salt, and vinegar",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Brilliant! Now, let's serve up your delicious fish and chips with a sprinkle of salt and a dash of vinegar. Enjoy!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "fry_fish"
+      ],
+      "instructions": "Serve immediately with chips, salt, and vinegar",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -195,7 +141,63 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Keep oil at consistent temperature\nPat fish dry before battering\nDouble-fry chips for extra crispiness"
-  }
+  "recipe": {
+    "id": "fish-and-chips",
+    "tags": [
+      "fish"
+    ],
+    "title": "Fish and Chips",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Medium",
+    "description": "Classic British comfort food with crispy battered fish and golden chips",
+    "estimated_total": "PT45M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "fillets",
+      "name": "fillets",
+      "unit": "cod",
+      "quantity": 4.0
+    },
+    {
+      "id": "self-raising_flour",
+      "name": "self-raising flour",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "cold_beer",
+      "name": "cold beer",
+      "unit": "ml",
+      "quantity": 300.0
+    },
+    {
+      "id": "potatoes_cut_into_chips",
+      "name": "potatoes, cut into chips",
+      "unit": "kg",
+      "quantity": 1.0
+    },
+    {
+      "id": "oil_for_deep_frying",
+      "name": "Oil for deep frying",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "salt_and_malt_vinegar",
+      "name": "Salt and malt vinegar",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "mushy_peas_to_serve",
+      "name": "Mushy peas to serve",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

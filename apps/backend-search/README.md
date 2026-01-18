@@ -31,9 +31,33 @@ apps/backend-search/
 
 ## CLI
 
+### PDF Processing
 - `recipe-pdf run <pdf_dir>` - Procesar PDFs de recetas
 - `recipe-pdf watch <pdf_dir>` - Monitorear directorio y procesar nuevos PDFs
 - `recipe-pdf validate <json_file>` - Validar JSON contra schema JOAv0
+
+### Recipe Pipeline (URL Import)
+- `python -m recipe_pipeline.cli import --url "URL" --enhance --publish` - Import recipe from Jamie Oliver website
+- `python -m recipe_pipeline.cli batch-import --category "vegetarian" --limit 50 --enhance` - Batch import from category
+- `python -m recipe_pipeline.cli enhance-existing --input-dir path/to/jsons --publish` - Enhance existing JSON files
+
+### JSON Ingestion (Local Files)
+```bash
+# Import JSON recipes with LLM enhancement (recommended)
+python ingest_json_recipes.py /path/to/recipes --enhance --publish
+
+# Import without enhancement (faster, for pre-enhanced files)
+python ingest_json_recipes.py /path/to/recipes --publish
+
+# Dry run to preview what would be ingested
+python ingest_json_recipes.py /path/to/recipes --enhance --dry-run
+```
+
+**Flags:**
+- `--enhance` / `-e` - Use LLM to add Jamie Oliver voice, semantic step IDs, and timer detection
+- `--publish` / `-p` - Publish recipes immediately (otherwise saved as draft)
+- `--overwrite` - Re-process recipes that already exist in Supabase
+- `--dry-run` - Show what would be processed without saving
 
 ## Desarrollo
 

@@ -1,199 +1,138 @@
 {
-  "recipe": {
-    "id": "banana-bread",
-    "title": "Banana Bread",
-    "description": "Moist, sweet bread perfect for breakfast or snacking",
-    "estimated_total": "PT1H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 10,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "quick",
-      "breakfast"
-    ],
-    "course": "breakfast"
+  "notes": {
+    "text": "The riper the bananas, the better. Add walnuts or chocolate chips for variety. Test with a skewer - it should come out clean."
   },
-  "ingredients": [
-    {
-      "id": "bananas_mashed",
-      "name": "bananas, mashed",
-      "quantity": 3.0,
-      "unit": "ripe"
-    },
-    {
-      "id": "melted_butter",
-      "name": "melted butter",
-      "quantity": 75.0,
-      "unit": "g"
-    },
-    {
-      "id": "sugar",
-      "name": "sugar",
-      "quantity": 150.0,
-      "unit": "g"
-    },
-    {
-      "id": "1_egg",
-      "name": "1 egg",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "vanilla",
-      "name": "vanilla",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "baking_soda",
-      "name": "baking soda",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "pinch_of_salt",
-      "name": "Pinch of salt",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "plain_flour",
-      "name": "plain flour",
-      "quantity": 190.0,
-      "unit": "g"
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_oven",
+      "next": [
+        "mix_banana_butter"
+      ],
+      "type": "immediate",
       "descr": "Preheat oven to 175°C (350°F), grease a loaf tin",
-      "instructions": "Preheat oven to 175°C (350°F), grease a loaf tin",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by preheating the oven to 175°C. Make sure to grease your loaf tin so nothing sticks!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the oven to 175°c."
-        }
-      ]
+      "instructions": "Preheat oven to 175°C (350°F), grease a loaf tin",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "mix_banana_butter",
+      "next": [
+        "stir_sugar_egg_vanilla"
+      ],
+      "type": "immediate",
       "descr": "Mix mashed banana with melted butter",
+      "on_enter": [
+        {
+          "say": "Now, let's mix those lovely mashed bananas with the melted butter. It should smell delicious already!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
       "instructions": "Mix mashed banana with melted butter",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "stir_sugar_egg_vanilla",
+      "next": [
+        "add_baking_soda_salt"
+      ],
+      "type": "immediate",
       "descr": "Stir in sugar, egg, and vanilla",
+      "on_enter": [
+        {
+          "say": "Brilliant! Now stir in the sugar, egg, and vanilla. Give it a good mix until everything's well combined."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_banana_butter"
+      ],
       "instructions": "Stir in sugar, egg, and vanilla",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "add_baking_soda_salt",
+      "next": [
+        "fold_in_flour"
+      ],
+      "type": "immediate",
       "descr": "Add baking soda and salt",
+      "on_enter": [
+        {
+          "say": "Let's add a pinch of salt and the baking soda. This will help our bread rise beautifully."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "stir_sugar_egg_vanilla"
+      ],
       "instructions": "Add baking soda and salt",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the baking soda and."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "fold_in_flour",
+      "next": [
+        "bake_banana_bread"
+      ],
+      "type": "immediate",
       "descr": "Fold in flour until just combined",
+      "on_enter": [
+        {
+          "say": "Gently fold in the flour until it's just combined. We don't want to overmix it."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_baking_soda_salt"
+      ],
       "instructions": "Fold in flour until just combined",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's fold in flour until just combined."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "bake_banana_bread",
+      "next": [
+        "cool_banana_bread"
+      ],
+      "type": "timer",
       "descr": "Pour into tin and bake 50-60 minutes",
-      "instructions": "Pour into tin and bake 50-60 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 3300,
       "on_enter": [
         {
-          "say": "Let's pour into tin and bake 50-60."
+          "say": "Pour the batter into your prepared tin and pop it in the oven. We'll bake it for about 50 to 60 minutes until it's beautifully golden and cooked through."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "fold_in_flour"
+      ],
+      "instructions": "Pour into tin and bake 50-60 minutes",
+      "requires_confirm": false
     },
     {
-      "id": "step_7",
-      "descr": "Cool in tin 10 minutes, then on a wire rack",
-      "instructions": "Cool in tin 10 minutes, then on a wire rack",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "cool_banana_bread",
       "next": [],
+      "type": "timer",
+      "descr": "Cool in tin 10 minutes, then on a wire rack",
+      "duration": 600,
       "on_enter": [
         {
-          "say": "Let's cool in tin 10 minutes, then."
+          "say": "Once it's out of the oven, let it cool in the tin for about 10 minutes. Then, transfer it to a wire rack to cool completely. The aroma is going to be irresistible!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "bake_banana_bread"
+      ],
+      "instructions": "Cool in tin 10 minutes, then on a wire rack",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -202,7 +141,70 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "The riper the bananas, the better\nAdd walnuts or chocolate chips for variety\nTest with a skewer - it should come out clean"
-  }
+  "recipe": {
+    "id": "banana-bread",
+    "tags": [
+      "quick",
+      "breakfast"
+    ],
+    "title": "Banana Bread",
+    "course": "breakfast",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 10,
+    "difficulty": "Not Too Tricky",
+    "description": "Moist, sweet bread perfect for breakfast or snacking",
+    "estimated_total": "PT1H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "bananas_mashed",
+      "name": "bananas, mashed",
+      "unit": "ripe",
+      "quantity": 3.0
+    },
+    {
+      "id": "melted_butter",
+      "name": "melted butter",
+      "unit": "g",
+      "quantity": 75.0
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "unit": "g",
+      "quantity": 150.0
+    },
+    {
+      "id": "1_egg",
+      "name": "1 egg",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "vanilla",
+      "name": "vanilla",
+      "unit": "tsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "baking_soda",
+      "name": "baking soda",
+      "unit": "tsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "pinch_of_salt",
+      "name": "Pinch of salt",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "plain_flour",
+      "name": "plain flour",
+      "unit": "g",
+      "quantity": 190.0
+    }
+  ]
 }
