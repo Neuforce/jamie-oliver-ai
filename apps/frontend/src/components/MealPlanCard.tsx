@@ -30,7 +30,7 @@ const courseNames: Record<string, string> = {
   dessert: 'Dessert',
 };
 
-// Recipe row component - simple, clickable
+// Recipe row component - single row, title left, details right
 const RecipeRow: React.FC<{
   recipe: ToolRecipe;
   onClick: () => void;
@@ -38,60 +38,67 @@ const RecipeRow: React.FC<{
   <motion.button
     whileTap={{ scale: 0.98 }}
     onClick={onClick}
-    className="w-full text-left"
+    className="w-full"
     style={{
-      padding: '16px 0',
+      padding: '14px 0',
       background: 'transparent',
       border: 'none',
       cursor: 'pointer',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between',
       gap: '12px',
     }}
   >
-    <div style={{ flex: 1, minWidth: 0 }}>
-      <h4
-        style={{
-          color: 'var(--jamie-text-heading, #2C5F5D)',
-          fontFamily: 'var(--font-display, Poppins, sans-serif)',
-          fontSize: '15px',
-          fontWeight: 600,
-          lineHeight: 1.3,
-          textTransform: 'uppercase',
-          letterSpacing: '0.3px',
-          margin: 0,
-        }}
-      >
-        {recipe.title}
-      </h4>
-      <div 
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '16px',
-          marginTop: '6px',
-          fontFamily: 'var(--font-display, Poppins, sans-serif)',
-          fontSize: '13px',
-          color: 'var(--jamie-text-muted, #717182)',
-        }}
-      >
-        {recipe.estimated_time && (
-          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <Clock className="size-3.5" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-            {formatDuration(recipe.estimated_time)}
-          </span>
-        )}
-        {recipe.difficulty && (
-          <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-            <ChefHat className="size-3.5" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-            {recipe.difficulty}
-          </span>
-        )}
-      </div>
+    {/* Title - left */}
+    <h4
+      style={{
+        flex: 1,
+        color: 'var(--jamie-text-heading, #2C5F5D)',
+        fontFamily: 'var(--font-display, Poppins, sans-serif)',
+        fontSize: '14px',
+        fontWeight: 600,
+        lineHeight: 1.3,
+        textTransform: 'uppercase',
+        letterSpacing: '0.3px',
+        margin: 0,
+        textAlign: 'left',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+      }}
+    >
+      {recipe.title}
+    </h4>
+    
+    {/* Details - right */}
+    <div 
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '12px',
+        fontFamily: 'var(--font-display, Poppins, sans-serif)',
+        fontSize: '12px',
+        color: 'var(--jamie-text-muted, #717182)',
+        flexShrink: 0,
+      }}
+    >
+      {recipe.estimated_time && (
+        <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+          <Clock className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+          {formatDuration(recipe.estimated_time)}
+        </span>
+      )}
+      {recipe.difficulty && (
+        <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+          <ChefHat className="size-3" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+          {recipe.difficulty}
+        </span>
+      )}
     </div>
+    
+    {/* Arrow */}
     <ChevronRight 
-      className="size-5 shrink-0" 
+      className="size-4 shrink-0" 
       style={{ color: 'var(--jamie-text-muted, #717182)' }} 
     />
   </motion.button>
