@@ -87,26 +87,14 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
             </button>
           </div>
 
-          {/* Logo - Centered */}
+          {/* Logo - Centered (consistent 24px height across all layouts) */}
           <div className="flex items-center justify-center">
-            <div
-              style={{
-                height: 'clamp(24px, calc(100vw * 32 / 390), 32px)',
-                maxWidth: '171.75px'
-              }}
-            >
-              <img
-                src={jamieLogo}
-                alt="Jamie Oliver"
-                style={{
-                  height: '100%',
-                  width: 'auto',
-                  display: 'block',
-                  maxWidth: '100%',
-                  objectFit: 'contain'
-                }}
-              />
-            </div>
+            <img
+              src={jamieLogo}
+              alt="Jamie Oliver"
+              className="h-6 w-auto object-contain"
+              style={{ maxWidth: '172px' }}
+            />
           </div>
 
           {/* Empty spacer for grid balance */}
