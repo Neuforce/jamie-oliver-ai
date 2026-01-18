@@ -12,7 +12,8 @@
       "beef",
       "breakfast"
     ],
-    "course": "breakfast"
+    "course": "main",
+    "cuisine": "american"
   },
   "ingredients": [
     {

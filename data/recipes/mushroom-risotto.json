@@ -10,10 +10,9 @@
     "difficulty": "Medium",
     "tags": [
       "chicken",
-      "italian",
-      "breakfast"
+      "italian"
     ],
-    "course": "breakfast",
+    "course": "main",
     "cuisine": "italian"
   },
   "ingredients": [

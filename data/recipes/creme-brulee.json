@@ -9,9 +9,12 @@
     "servings": 6,
     "difficulty": "Medium",
     "tags": [
-      "breakfast"
+      "breakfast",
+      "dessert",
+      "french"
     ],
-    "course": "main"
+    "course": "dessert",
+    "cuisine": "french"
   },
   "ingredients": [
     {

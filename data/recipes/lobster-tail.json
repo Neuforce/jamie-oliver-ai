@@ -11,7 +11,8 @@
     "tags": [
       "seafood"
     ],
-    "course": "main"
+    "course": "main",
+    "cuisine": "american"
   },
   "ingredients": [
     {

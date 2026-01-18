@@ -38,6 +38,8 @@ def get_search_agent():
 
 def search_recipes(
     query: str,
+    course: str = "",
+    cuisine: str = "",
     max_results: int = 5,
 ) -> str:
     """
@@ -46,8 +48,19 @@ def search_recipes(
     Use this tool when the user asks for recipe recommendations, wants to find
     something specific, or describes what they're looking for.
     
+    IMPORTANT: Use the 'course' filter to ensure you return the right type of dish:
+    - For appetizers/starters: course="appetizer"
+    - For main dishes: course="main"
+    - For desserts/sweets: course="dessert"
+    - For soups: course="soup"
+    - For salads: course="salad"
+    - For sides: course="side"
+    - For breakfast: course="breakfast"
+    
     Args:
         query: Natural language search query describing what the user wants to cook
+        course: Filter by course type (main, dessert, breakfast, soup, salad, side, appetizer). Leave empty for all.
+        cuisine: Filter by cuisine type (italian, mexican, japanese, british, etc). Leave empty for all.
         max_results: Maximum number of recipes to return (default 5)
     
     Returns:
@@ -58,10 +71,18 @@ def search_recipes(
     
     agent = get_search_agent()
     
-    filters = SearchFilters()
+    # Build filters - course maps to category in the search system
+    filters = SearchFilters(
+        category=course if course else None,
+    )
+    
+    # Build enhanced query if cuisine is specified
+    search_query = query
+    if cuisine:
+        search_query = f"{cuisine} {query}"
     
     results = agent.search(
-        query=query,
+        query=search_query,
         filters=filters,
         top_k=max_results,
         include_full_recipe=True,
@@ -258,15 +279,13 @@ def plan_meal(
     """
     import json
     
-    courses = ["starter", "main", "dessert"]
-    
-    # Map occasions to search strategies
+    # Map occasions to search style keywords
     occasion_styles = {
-        "dinner party": "elegant impressive sophisticated",
-        "date night": "romantic intimate special",
-        "family gathering": "crowd-pleasing hearty generous",
-        "holiday": "festive traditional celebration",
-        "casual": "relaxed easy crowd-pleasing",
+        "dinner party": "elegant impressive gourmet",
+        "date night": "romantic special elegant",
+        "family gathering": "hearty comforting family-friendly",
+        "holiday": "festive celebration traditional",
+        "casual": "relaxed easy simple",
     }
     
     style = occasion_styles.get(occasion.lower(), "delicious")
@@ -278,29 +297,74 @@ def plan_meal(
         "tips": []
     }
     
-    # Search for each course
-    course_queries = {
-        "starter": f"{style} appetizer starter small plate",
-        "main": f"{style} main course entree centerpiece",
-        "side": f"side dish vegetable accompaniment",
-        "dessert": f"{style} dessert sweet finish",
-        "salad": f"salad fresh greens",
-    }
+    # Define courses with their filters and queries
+    course_configs = [
+        {
+            "name": "starter",
+            "course_filter": "appetizer",  # Filter by appetizer course
+            "query": f"{style} appetizer starter",
+            "fallback_course": "salad",  # Try salads as starters if no appetizers
+        },
+        {
+            "name": "main",
+            "course_filter": "main",
+            "query": f"{style} main course dinner",
+            "fallback_course": None,
+        },
+        {
+            "name": "dessert",
+            "course_filter": "dessert",
+            "query": f"{style} dessert sweet treat",
+            "fallback_course": None,
+        },
+    ]
     
-    for course in courses:
-        query = course_queries.get(course.lower(), f"{style} {course}")
-        results_json = search_recipes(query=query, max_results=3)
+    used_recipe_ids = set()  # Track to avoid duplicates
+    
+    for config in course_configs:
+        course_name = config["name"]
+        
+        # First try with course filter
+        results_json = search_recipes(
+            query=config["query"],
+            course=config["course_filter"],
+            max_results=5,  # Get more to filter out duplicates
+        )
         results = json.loads(results_json)
         
-        if results.get("recipes"):
-            meal_plan["courses"][course] = results["recipes"]
+        # If no results with primary filter, try fallback
+        if not results.get("recipes") and config.get("fallback_course"):
+            results_json = search_recipes(
+                query=config["query"],
+                course=config["fallback_course"],
+                max_results=5,
+            )
+            results = json.loads(results_json)
+        
+        # Filter out duplicates and take top 3
+        unique_recipes = []
+        for recipe in results.get("recipes", []):
+            recipe_id = recipe.get("recipe_id")
+            if recipe_id not in used_recipe_ids:
+                used_recipe_ids.add(recipe_id)
+                unique_recipes.append(recipe)
+                if len(unique_recipes) >= 3:
+                    break
+        
+        if unique_recipes:
+            meal_plan["courses"][course_name] = unique_recipes
     
-    # Add helpful tips
+    # Add helpful tips based on occasion
     meal_plan["tips"] = [
         f"For {num_people} people, consider scaling recipes accordingly",
         "Prep what you can ahead of time to enjoy the occasion",
         "Consider dietary restrictions when making final selections",
     ]
+    
+    if occasion.lower() == "dinner party":
+        meal_plan["tips"].append("Choose dishes that can be partially prepared ahead")
+    elif occasion.lower() == "family gathering":
+        meal_plan["tips"].append("Pick crowd-pleasers that work for all ages")
     
     return json.dumps(meal_plan, indent=2)
 

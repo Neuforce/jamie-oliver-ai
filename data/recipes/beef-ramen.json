@@ -12,11 +12,10 @@
       "beef",
       "quick",
       "chinese",
-      "soup",
-      "breakfast"
+      "soup"
     ],
     "course": "soup",
-    "cuisine": "chinese"
+    "cuisine": "japanese"
   },
   "ingredients": [
     {
