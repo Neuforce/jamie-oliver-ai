@@ -260,6 +260,7 @@ export function ChatView({
     const sessionId = getOrCreateSessionId();
     let fullResponse = '';
     let searchQuery: string | null = null; // Capture the search query from tool calls
+    let toolWasUsed = false; // Track if agent used a search tool
 
     try {
       // Stream response from chat agent
@@ -283,8 +284,11 @@ export function ChatView({
           const toolName = event.content;
           const args = event.metadata?.arguments as Record<string, unknown> | undefined;
           
+          console.log('Tool call received:', toolName, args);
+          
           if (toolName === 'search_recipes') {
             setThinkingStatus("Searching for recipes...");
+            toolWasUsed = true;
             // Capture the exact query the agent is using
             if (args?.query) {
               searchQuery = args.query as string;
@@ -292,6 +296,7 @@ export function ChatView({
             }
           } else if (toolName === 'suggest_recipes_for_mood') {
             setThinkingStatus("Finding recipes for your mood...");
+            toolWasUsed = true;
             // For mood-based search, create a query from the mood
             if (args?.mood) {
               searchQuery = `${args.mood} easy comfort food`;
@@ -301,6 +306,7 @@ export function ChatView({
             setThinkingStatus("Getting recipe details...");
           } else if (toolName === 'plan_meal') {
             setThinkingStatus("Planning your meal...");
+            toolWasUsed = true;
           } else if (toolName === 'create_shopping_list') {
             setThinkingStatus("Creating shopping list...");
           }
@@ -309,10 +315,21 @@ export function ChatView({
           setThinkingStatus(null);
           setIsTyping(false);
           
-          // Load recipes if the agent searched for them
+          // Load recipes - use tool query if available, otherwise use original message
+          // This ensures we show recipes even if the agent responds from memory
           let recipes: Recipe[] = [];
-          if (searchQuery) {
-            recipes = await loadRecipesForQuery(searchQuery);
+          const queryToUse = searchQuery || text;
+          
+          // Always try to load recipes for discovery queries
+          // Check if the response mentions recipes or if a tool was used
+          const mentionsRecipes = fullResponse.toLowerCase().includes('recipe') || 
+                                  fullResponse.includes('**') || // Bold text likely recipe names
+                                  toolWasUsed;
+          
+          if (mentionsRecipes) {
+            console.log('Loading recipes with query:', queryToUse);
+            recipes = await loadRecipesForQuery(queryToUse);
+            console.log('Loaded', recipes.length, 'recipes');
           }
           
           // Update message to final state
