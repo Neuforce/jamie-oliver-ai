@@ -10,23 +10,78 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000
 // CHAT AGENT TYPES
 // =============================================================================
 
+// Recipe info returned from tools
+export interface ToolRecipe {
+  recipe_id: string;
+  title: string;
+  description?: string;
+  similarity_score?: number;
+  servings?: number;
+  estimated_time?: string;
+  difficulty?: string;
+  ingredient_count?: number;
+  step_count?: number;
+}
+
+// Meal plan structure
+export interface MealPlanData {
+  occasion: string;
+  serves: number;
+  courses: {
+    starter?: ToolRecipe[];
+    main?: ToolRecipe[];
+    dessert?: ToolRecipe[];
+    side?: ToolRecipe[];
+    salad?: ToolRecipe[];
+  };
+  tips: string[];
+}
+
+// Recipe detail structure
+export interface RecipeDetailData {
+  recipe_id: string;
+  title: string;
+  description: string;
+  servings?: number;
+  estimated_time?: string;
+  difficulty?: string;
+  ingredients: string[];
+  steps: string[];
+  notes?: string;
+}
+
+// Shopping list structure
+export interface ShoppingListData {
+  recipes_included: string[];
+  total_items: number;
+  shopping_list: Array<{
+    item: string;
+    quantity: string;
+    notes: string;
+  }>;
+}
+
 export interface ChatEvent {
-  type: 'text_chunk' | 'tool_call' | 'recipes' | 'done' | 'error';
+  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'done' | 'error';
   content: string;
   metadata?: {
+    // Tool call info
     tool_call_id?: string;
     arguments?: Record<string, unknown>;
-    recipes?: Array<{
-      recipe_id: string;
-      title: string;
-      description?: string;
-      similarity_score?: number;
-      servings?: number;
-      estimated_time?: string;
-      difficulty?: string;
-      ingredient_count?: number;
-      step_count?: number;
-    }>;
+    // Recipe search results
+    recipes?: ToolRecipe[];
+    mood?: string;
+    mood_explanation?: string;
+    // Meal plan
+    meal_plan?: MealPlanData;
+    occasion?: string;
+    serves?: number;
+    // Recipe detail
+    recipe?: RecipeDetailData;
+    // Shopping list
+    shopping_list?: ShoppingListData;
+    recipes_included?: string[];
+    total_items?: number;
   };
 }
 

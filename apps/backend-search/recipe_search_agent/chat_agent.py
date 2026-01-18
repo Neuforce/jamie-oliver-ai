@@ -38,8 +38,20 @@ class ChatSession:
 
 @dataclass 
 class ChatEvent:
-    """Event emitted during chat processing."""
-    type: str  # "text_chunk", "tool_call", "tool_result", "done", "error"
+    """
+    Event emitted during chat processing.
+    
+    Event types:
+    - "text_chunk": Streaming text from LLM
+    - "tool_call": Tool is being called (content = tool name)
+    - "recipes": Recipe search results (metadata.recipes = list of recipes)
+    - "meal_plan": Meal plan results (metadata.meal_plan = structured plan)
+    - "recipe_detail": Single recipe details (metadata.recipe = full recipe)
+    - "shopping_list": Shopping list (metadata.shopping_list = list data)
+    - "done": Processing complete
+    - "error": Error occurred (content = error message)
+    """
+    type: str
     content: str
     metadata: Optional[Dict[str, Any]] = None
 
@@ -216,28 +228,77 @@ class DiscoveryChatAgent:
                     )
             
             # After brain processing, check for tool results in chat memory
-            # and emit recipes if a search tool was used
+            # and emit structured events for UI components
             if pending_tool_calls:
+                import json
                 messages = session.chat_memory.get_messages()
+                
+                # Process all tool results (not just the most recent)
                 for msg in reversed(messages):
                     if hasattr(msg, 'tool_call_id') and msg.tool_call_id in pending_tool_calls:
                         func_name = pending_tool_calls[msg.tool_call_id]
-                        if func_name in ('search_recipes', 'suggest_recipes_for_mood'):
-                            # Parse the tool result and emit recipes
-                            try:
-                                import json
-                                result = json.loads(msg.content)
+                        
+                        try:
+                            result = json.loads(msg.content)
+                            
+                            # Emit appropriate event based on tool type
+                            if func_name in ('search_recipes', 'suggest_recipes_for_mood'):
                                 if result.get('recipes'):
                                     yield ChatEvent(
                                         type="recipes",
                                         content="",
-                                        metadata={"recipes": result['recipes']}
+                                        metadata={
+                                            "recipes": result['recipes'],
+                                            "mood": result.get('mood'),
+                                            "mood_explanation": result.get('mood_explanation'),
+                                        }
                                     )
-                                    logger.info(f"Emitted {len(result['recipes'])} recipes from tool result")
-                            except (json.JSONDecodeError, KeyError) as e:
-                                logger.warning(f"Failed to parse tool result: {e}")
-                        # Only process most recent search
-                        break
+                                    logger.info(f"Emitted {len(result['recipes'])} recipes")
+                            
+                            elif func_name == 'plan_meal':
+                                yield ChatEvent(
+                                    type="meal_plan",
+                                    content="",
+                                    metadata={
+                                        "meal_plan": result,
+                                        "occasion": result.get('occasion'),
+                                        "serves": result.get('serves'),
+                                    }
+                                )
+                                logger.info(f"Emitted meal_plan for {result.get('occasion')}")
+                            
+                            elif func_name == 'get_recipe_details':
+                                if result.get('recipe'):
+                                    yield ChatEvent(
+                                        type="recipe_detail",
+                                        content="",
+                                        metadata={
+                                            "recipe": result['recipe'],
+                                        }
+                                    )
+                                    logger.info(f"Emitted recipe_detail for {result['recipe'].get('title')}")
+                            
+                            elif func_name == 'create_shopping_list':
+                                yield ChatEvent(
+                                    type="shopping_list",
+                                    content="",
+                                    metadata={
+                                        "shopping_list": result,
+                                        "recipes_included": result.get('recipes_included'),
+                                        "total_items": result.get('total_items'),
+                                    }
+                                )
+                                logger.info(f"Emitted shopping_list with {result.get('total_items')} items")
+                        
+                        except (json.JSONDecodeError, KeyError) as e:
+                            logger.warning(f"Failed to parse tool result for {func_name}: {e}")
+                        
+                        # Remove processed tool call
+                        del pending_tool_calls[msg.tool_call_id]
+                        
+                        # Stop if we've processed all tool calls
+                        if not pending_tool_calls:
+                            break
             
             # Signal completion
             yield ChatEvent(type="done", content="")

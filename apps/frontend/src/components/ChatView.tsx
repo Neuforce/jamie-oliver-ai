@@ -2,6 +2,9 @@ import React, { useState, useRef, useEffect, useCallback } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
+import { MealPlanCard } from './MealPlanCard';
+import { RecipeQuickView } from './RecipeQuickView';
+import { ShoppingListCard } from './ShoppingListCard';
 import { ArrowUp } from 'lucide-react';
 import { motion } from 'motion/react';
 import { GlowEffect } from '../design-system/components/GlowEffect';
@@ -10,7 +13,15 @@ import { AvatarWithGlow } from '../design-system/components/AvatarWithGlow';
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 // @ts-expect-error - Vite handles image imports
 import jamieAvatarLarge from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
-import { chatWithAgent, generateSessionId, clearChatSession, searchRecipes } from '../lib/api';
+import { 
+  chatWithAgent, 
+  generateSessionId, 
+  clearChatSession, 
+  searchRecipes,
+  type MealPlanData,
+  type RecipeDetailData,
+  type ShoppingListData,
+} from '../lib/api';
 import { transformRecipeMatch, loadRecipeFromLocal } from '../data/recipeTransformer';
 import type { JamieOliverRecipe } from '../data/recipeTransformer';
 
@@ -19,6 +30,9 @@ interface Message {
   type: 'user' | 'jamie';
   content: string;
   recipes?: Recipe[];
+  mealPlan?: MealPlanData;
+  recipeDetail?: RecipeDetailData;
+  shoppingList?: ShoppingListData;
   timestamp: Date;
   isStreaming?: boolean;
 }
@@ -326,6 +340,39 @@ export function ChatView({
             }
           }
           console.log('Transformed', agentRecipes.length, 'recipes for display');
+        } else if (event.type === 'meal_plan') {
+          // Meal plan from plan_meal tool
+          console.log('Received meal plan:', event.metadata?.meal_plan);
+          if (event.metadata?.meal_plan) {
+            // Update message with meal plan data immediately
+            setMessages(prev => prev.map(msg => 
+              msg.id === streamingMessageId 
+                ? { ...msg, mealPlan: event.metadata!.meal_plan }
+                : msg
+            ));
+          }
+        } else if (event.type === 'recipe_detail') {
+          // Recipe detail from get_recipe_details tool
+          console.log('Received recipe detail:', event.metadata?.recipe);
+          if (event.metadata?.recipe) {
+            // Update message with recipe detail data immediately
+            setMessages(prev => prev.map(msg => 
+              msg.id === streamingMessageId 
+                ? { ...msg, recipeDetail: event.metadata!.recipe }
+                : msg
+            ));
+          }
+        } else if (event.type === 'shopping_list') {
+          // Shopping list from create_shopping_list tool
+          console.log('Received shopping list:', event.metadata?.shopping_list);
+          if (event.metadata?.shopping_list) {
+            // Update message with shopping list data immediately
+            setMessages(prev => prev.map(msg => 
+              msg.id === streamingMessageId 
+                ? { ...msg, shoppingList: event.metadata!.shopping_list }
+                : msg
+            ));
+          }
         } else if (event.type === 'done') {
           // Finalize the message
           setThinkingStatus(null);
@@ -338,10 +385,16 @@ export function ChatView({
           
           console.log('Final recipe count:', recipes.length);
           
-          // Update message to final state
+          // Update message to final state with all accumulated data
           setMessages(prev => prev.map(msg => 
             msg.id === streamingMessageId 
-              ? { ...msg, content: fullResponse, isStreaming: false, recipes: recipes.length > 0 ? recipes : undefined }
+              ? { 
+                  ...msg, 
+                  content: fullResponse, 
+                  isStreaming: false, 
+                  recipes: recipes.length > 0 ? recipes : msg.recipes,
+                  // Keep any meal_plan, recipe_detail, shopping_list that was already set
+                }
               : msg
           ));
         } else if (event.type === 'error') {
@@ -611,6 +664,64 @@ export function ChatView({
                           recipes={message.recipes}
                           onRecipeClick={(recipe) => onRecipeClick(recipe)}
                           singleSlide={true}
+                        />
+                      </div>
+                    )}
+                    
+                    {/* Meal Plan Card */}
+                    {message.mealPlan && (
+                      <div className="mt-4">
+                        <MealPlanCard
+                          mealPlan={message.mealPlan}
+                          onViewRecipe={async (recipeId) => {
+                            // Load and show recipe
+                            const localRecipe = await loadRecipeFromLocal(recipeId);
+                            if (localRecipe) {
+                              const transformed = transformRecipeMatch(
+                                { 
+                                  recipe_id: recipeId, 
+                                  title: localRecipe.recipe?.title || recipeId,
+                                  similarity_score: 1,
+                                  combined_score: 1,
+                                  file_path: '',
+                                  match_explanation: '',
+                                  matching_chunks: [],
+                                },
+                                localRecipe,
+                                0
+                              );
+                              onRecipeClick(transformed);
+                            }
+                          }}
+                          onCookRecipe={async (recipeId) => {
+                            // Load and start cooking
+                            const localRecipe = await loadRecipeFromLocal(recipeId);
+                            if (localRecipe) {
+                              const transformed = transformRecipeMatch(
+                                { 
+                                  recipe_id: recipeId, 
+                                  title: localRecipe.recipe?.title || recipeId,
+                                  similarity_score: 1,
+                                  combined_score: 1,
+                                  file_path: '',
+                                  match_explanation: '',
+                                  matching_chunks: [],
+                                },
+                                localRecipe,
+                                0
+                              );
+                              onRecipeClick(transformed);
+                            }
+                          }}
+                        />
+                      </div>
+                    )}
+                    
+                    {/* Shopping List Card */}
+                    {message.shoppingList && (
+                      <div className="mt-4">
+                        <ShoppingListCard
+                          shoppingList={message.shoppingList}
                         />
                       </div>
                     )}
