@@ -188,19 +188,19 @@ export function ChatView({
     }
   }, [thinkingStatus]);
 
-  // Load recipes mentioned in agent response
-  const loadRecipesFromResponse = useCallback(async (responseText: string): Promise<Recipe[]> => {
-    // Search for recipes based on the response content
+  // Load recipes using the exact search query the agent used
+  const loadRecipesForQuery = useCallback(async (query: string): Promise<Recipe[]> => {
     try {
-      const searchResponse = await searchRecipes(responseText.slice(0, 200), {
+      console.log('Loading recipes for query:', query);
+      const searchResponse = await searchRecipes(query, {
         include_full_recipe: true,
         top_k: 5,
         include_chunks: false,
-        similarity_threshold: 0.5,
+        similarity_threshold: 0.3,
       });
 
       const recipes: Recipe[] = [];
-      for (let i = 0; i < Math.min(searchResponse.results.length, 4); i++) {
+      for (let i = 0; i < Math.min(searchResponse.results.length, 5); i++) {
         const match = searchResponse.results[i];
         try {
           let fullRecipe;
@@ -217,9 +217,10 @@ export function ChatView({
           console.error(`Error transforming recipe ${match.recipe_id}:`, error);
         }
       }
+      console.log('Loaded recipes:', recipes.length);
       return recipes;
     } catch (e) {
-      console.error('Failed to load recipes from response:', e);
+      console.error('Failed to load recipes:', e);
       return [];
     }
   }, []);
@@ -258,7 +259,7 @@ export function ChatView({
 
     const sessionId = getOrCreateSessionId();
     let fullResponse = '';
-    let hasSearchedRecipes = false;
+    let searchQuery: string | null = null; // Capture the search query from tool calls
 
     try {
       // Stream response from chat agent
@@ -278,11 +279,24 @@ export function ChatView({
             setThinkingStatus(null);
           }
         } else if (event.type === 'tool_call') {
-          // Show what tool is being called
+          // Show what tool is being called and capture search query
           const toolName = event.content;
-          if (toolName === 'search_recipes' || toolName === 'suggest_recipes_for_mood') {
+          const args = event.metadata?.arguments as Record<string, unknown> | undefined;
+          
+          if (toolName === 'search_recipes') {
             setThinkingStatus("Searching for recipes...");
-            hasSearchedRecipes = true;
+            // Capture the exact query the agent is using
+            if (args?.query) {
+              searchQuery = args.query as string;
+              console.log('Agent searching for:', searchQuery);
+            }
+          } else if (toolName === 'suggest_recipes_for_mood') {
+            setThinkingStatus("Finding recipes for your mood...");
+            // For mood-based search, create a query from the mood
+            if (args?.mood) {
+              searchQuery = `${args.mood} easy comfort food`;
+              console.log('Agent searching by mood:', args.mood);
+            }
           } else if (toolName === 'get_recipe_details') {
             setThinkingStatus("Getting recipe details...");
           } else if (toolName === 'plan_meal') {
@@ -295,10 +309,10 @@ export function ChatView({
           setThinkingStatus(null);
           setIsTyping(false);
           
-          // Try to load recipes if the agent searched for them
+          // Load recipes if the agent searched for them
           let recipes: Recipe[] = [];
-          if (hasSearchedRecipes && fullResponse.length > 50) {
-            recipes = await loadRecipesFromResponse(fullResponse);
+          if (searchQuery) {
+            recipes = await loadRecipesForQuery(searchQuery);
           }
           
           // Update message to final state
@@ -332,35 +346,11 @@ export function ChatView({
         (error.message.includes('connect') || error.message.includes('fetch') || error.message.includes('Failed'));
       
       if (isConnectionError) {
-        // Fall back to simple recipe search
+        // Fall back to simple recipe search using the user's query directly
         setThinkingStatus("Searching for recipes...");
         try {
-          const searchResponse = await searchRecipes(text, {
-            include_full_recipe: true,
-            top_k: 5,
-            include_chunks: false,
-            similarity_threshold: 0.5,
-          });
-
-          const recipes: Recipe[] = [];
-          for (let i = 0; i < searchResponse.results.length; i++) {
-            const match = searchResponse.results[i];
-            try {
-              let fullRecipe;
-              if (match.full_recipe) {
-                fullRecipe = match.full_recipe as unknown as JamieOliverRecipe;
-              } else {
-                const localRecipe = await loadRecipeFromLocal(match.recipe_id);
-                if (!localRecipe) continue;
-                fullRecipe = localRecipe;
-              }
-              const transformed = transformRecipeMatch(match, fullRecipe, i);
-              recipes.push(transformed);
-            } catch (err) {
-              console.error(`Error transforming recipe:`, err);
-            }
-          }
-
+          const recipes = await loadRecipesForQuery(text);
+          
           setMessages(prev => prev.map(msg => 
             msg.id === streamingMessageId 
               ? { 
