@@ -12,7 +12,7 @@ import asyncio
 from typing import List, Optional
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query
+from fastapi import FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
@@ -582,6 +582,64 @@ async def get_chat_session(session_id: str):
     except Exception as e:
         logger.error(f"Failed to get session info: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to get session info: {str(e)}")
+
+
+# =============================================================================
+# VOICE CHAT WEBSOCKET ENDPOINT
+# =============================================================================
+
+@app.websocket("/ws/chat-voice")
+async def voice_chat_websocket(websocket: WebSocket):
+    """
+    WebSocket endpoint for voice-based chat with Jamie Oliver discovery agent.
+    
+    Enables real-time voice conversations:
+    - Receives audio input from browser microphone
+    - Transcribes speech using Deepgram STT
+    - Processes through the discovery chat agent
+    - Synthesizes responses with ElevenLabs TTS
+    - Streams audio and text back to client
+    
+    Protocol:
+    - Client sends: {"event": "start", "sessionId": "...", "sampleRate": 16000}
+    - Client sends: {"event": "audio", "data": "base64_pcm_data"}
+    - Client sends: {"event": "stop"}
+    - Client sends: {"event": "interrupt"} (to stop Jamie while speaking)
+    
+    - Server sends: {"event": "session_info", "data": {...}}
+    - Server sends: {"event": "listening"}
+    - Server sends: {"event": "transcript_interim", "data": "partial text..."}
+    - Server sends: {"event": "transcript_final", "data": "final text"}
+    - Server sends: {"event": "processing"}
+    - Server sends: {"event": "text_chunk", "data": "response chunk..."}
+    - Server sends: {"event": "audio", "data": "base64_pcm_data"}
+    - Server sends: {"event": "recipes", "data": {...}}
+    - Server sends: {"event": "meal_plan", "data": {...}}
+    - Server sends: {"event": "recipe_detail", "data": {...}}
+    - Server sends: {"event": "shopping_list", "data": {...}}
+    - Server sends: {"event": "done"}
+    - Server sends: {"event": "error", "data": "error message"}
+    
+    Requires environment variables:
+    - DEEPGRAM_API_KEY: For speech-to-text
+    - ELEVENLABS_API_KEY: For text-to-speech
+    - ELEVENLABS_VOICE_ID: Voice ID for Jamie
+    """
+    try:
+        from recipe_search_agent.voice_handler import handle_voice_chat
+        
+        chat_agent = get_chat_agent()
+        await handle_voice_chat(websocket, chat_agent)
+        
+    except WebSocketDisconnect:
+        logger.info("Voice chat WebSocket disconnected")
+    except Exception as e:
+        logger.error(f"Error in voice chat WebSocket: {e}", exc_info=True)
+        try:
+            if websocket.client_state.CONNECTED:
+                await websocket.close(code=1011, reason=str(e))
+        except:
+            pass
 
 
 # =============================================================================

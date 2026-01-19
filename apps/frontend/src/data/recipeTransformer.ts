@@ -205,6 +205,51 @@ export function transformRecipeMatch(
 }
 
 /**
+ * Backend recipe summary data from search results
+ */
+export interface BackendRecipeSummary {
+  recipe_id: string;
+  title: string;
+  description?: string;
+  servings?: number | string;
+  estimated_time?: string;
+  difficulty?: string;
+  ingredient_count?: number;
+  step_count?: number;
+  similarity_score?: number;
+}
+
+/**
+ * Transform recipe summary from backend to Recipe format for display
+ * This works with the summary data from search_recipes without needing full recipe
+ */
+export function transformRecipeFromSummary(
+  summary: BackendRecipeSummary,
+  index?: number
+): Recipe {
+  // Generate numeric ID from recipe_id if index not provided
+  const numericId = index !== undefined
+    ? index + 1
+    : summary.recipe_id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 10000;
+
+  return {
+    id: numericId,
+    backendId: summary.recipe_id,
+    title: summary.title,
+    description: summary.description || summary.title,
+    category: extractCategory(summary.title),
+    difficulty: summary.difficulty ? mapDifficulty(summary.difficulty) : 'Medium',
+    time: summary.estimated_time ? parseDuration(summary.estimated_time) : '30 mins',
+    servings: typeof summary.servings === 'number' ? summary.servings : parseInt(String(summary.servings)) || 4,
+    image: getImagePath(summary.recipe_id),
+    // These will be empty for summary - full data loaded when recipe is selected
+    ingredients: [],
+    instructions: [],
+    tips: [],
+  };
+}
+
+/**
  * Load recipe JSON from /recipes-json/ directory
  * This is used as fallback when full_recipe is not included in the API response
  * Recipes are served from public/recipes-json/ which is available at /recipes-json/ in both dev and prod

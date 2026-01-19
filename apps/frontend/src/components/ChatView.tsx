@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
@@ -9,6 +9,8 @@ import { ArrowUp, ArrowDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GlowEffect } from '../design-system/components/GlowEffect';
 import { AvatarWithGlow } from '../design-system/components/AvatarWithGlow';
+import { VoiceModeButton, VoiceModeIndicator, AudioWaveform, StopGenerationButton } from './VoiceModeIndicator';
+import { useVoiceChat } from '../hooks/useVoiceChat';
 // @ts-expect-error - Vite resolves figma:asset imports
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 // @ts-expect-error - Vite handles image imports
@@ -22,7 +24,7 @@ import {
   type RecipeDetailData,
   type ShoppingListData,
 } from '../lib/api';
-import { transformRecipeMatch, loadRecipeFromLocal } from '../data/recipeTransformer';
+import { transformRecipeMatch, transformRecipeFromSummary, loadRecipeFromLocal, type BackendRecipeSummary } from '../data/recipeTransformer';
 import type { JamieOliverRecipe } from '../data/recipeTransformer';
 
 interface Message {
@@ -152,7 +154,181 @@ export function ChatView({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
+  // Shared session ID for both text and voice chat (ensures unified experience)
+  const sessionId = useMemo(() => getOrCreateSessionId(), []);
+
+  // Voice mode state
+  const voiceMessageRef = useRef<string | null>(null);
+  const voiceMessageIdRef = useRef<string | null>(null);
+  const voiceResponseAccumulatorRef = useRef<string>('');
+
   const hasMessages = messages.length > 0;
+
+  // Voice chat hook - uses same sessionId as text chat for unified experience
+  const {
+    state: voiceState,
+    isConnected: isVoiceConnected,
+    currentTranscript,
+    toggleVoiceMode,
+    interrupt,
+    cancel: cancelVoice,
+    disconnect: disconnectVoice,
+    isListening,
+    isProcessing,
+    isSpeaking,
+    isActive: isVoiceActive,
+  } = useVoiceChat({
+    sessionId,  // Share session ID between voice and text chat
+    onTranscript: (text, isFinal) => {
+      console.log('🎤 Transcript received:', { text, isFinal });
+      
+      if (isFinal && text.trim()) {
+        // Create user message from voice transcript
+        const userMessage: Message = {
+          id: Date.now().toString(),
+          type: 'user',
+          content: text,
+          timestamp: new Date(),
+        };
+        
+        // Create streaming message placeholder for Jamie's response
+        const streamingId = (Date.now() + 1).toString();
+        voiceMessageIdRef.current = streamingId;
+        voiceResponseAccumulatorRef.current = '';
+        
+        console.log('🎤 Created voice message placeholder:', streamingId);
+        
+        const streamingMessage: Message = {
+          id: streamingId,
+          type: 'jamie',
+          content: '',
+          timestamp: new Date(),
+          isStreaming: true,
+        };
+        
+        setMessages(prev => [...prev, userMessage, streamingMessage]);
+        setIsTyping(true);
+        setThinkingStatus("Listening...");
+      }
+    },
+    onTextChunk: (text) => {
+      // Accumulate voice response text
+      voiceResponseAccumulatorRef.current += text;
+      
+      console.log('🎤 Text chunk received:', { 
+        chunk: text.substring(0, 50), 
+        totalLength: voiceResponseAccumulatorRef.current.length,
+        messageId: voiceMessageIdRef.current 
+      });
+      
+      if (voiceMessageIdRef.current) {
+        setMessages(prev => prev.map(msg =>
+          msg.id === voiceMessageIdRef.current
+            ? { ...msg, content: voiceResponseAccumulatorRef.current }
+            : msg
+        ));
+      }
+      
+      // Clear thinking status once we get text
+      if (thinkingStatus) {
+        setThinkingStatus(null);
+      }
+    },
+    onRecipes: (data) => {
+      console.log('🎤 Recipes received:', { count: data?.recipes?.length, messageId: voiceMessageIdRef.current });
+      
+      // Transform backend recipe summaries to Recipe format for display
+      const recipeData = data?.recipes || [];
+      const recipes: Recipe[] = recipeData.map((r: BackendRecipeSummary, index: number) => 
+        transformRecipeFromSummary(r, index)
+      );
+      
+      console.log('🎤 Transformed recipes for voice:', recipes.length);
+      
+      if (voiceMessageIdRef.current && recipes.length > 0) {
+        setMessages(prev => prev.map(msg =>
+          msg.id === voiceMessageIdRef.current
+            ? { ...msg, recipes }
+            : msg
+        ));
+      }
+    },
+    onMealPlan: (data) => {
+      console.log('🎤 Meal plan received:', { hasData: !!data?.meal_plan, messageId: voiceMessageIdRef.current });
+      
+      if (voiceMessageIdRef.current && data?.meal_plan) {
+        setMessages(prev => prev.map(msg =>
+          msg.id === voiceMessageIdRef.current
+            ? { ...msg, mealPlan: data.meal_plan }
+            : msg
+        ));
+      }
+    },
+    onRecipeDetail: (data) => {
+      console.log('🎤 Recipe detail received:', { hasData: !!data?.recipe, messageId: voiceMessageIdRef.current });
+      
+      if (voiceMessageIdRef.current && data?.recipe) {
+        setMessages(prev => prev.map(msg =>
+          msg.id === voiceMessageIdRef.current
+            ? { ...msg, recipeDetail: data.recipe }
+            : msg
+        ));
+      }
+    },
+    onShoppingList: (data) => {
+      console.log('🎤 Shopping list received:', { hasData: !!data?.shopping_list, messageId: voiceMessageIdRef.current });
+      
+      if (voiceMessageIdRef.current && data?.shopping_list) {
+        setMessages(prev => prev.map(msg =>
+          msg.id === voiceMessageIdRef.current
+            ? { ...msg, shoppingList: data.shopping_list }
+            : msg
+        ));
+      }
+    },
+    onDone: () => {
+      // Finalize the voice message
+      if (voiceMessageIdRef.current) {
+        const messageId = voiceMessageIdRef.current;
+        const accumulatedText = voiceResponseAccumulatorRef.current;
+        
+        console.log('🎤 Voice response done:', { messageId, textLength: accumulatedText.length });
+        
+        setMessages(prev => prev.map(msg => {
+          if (msg.id === messageId) {
+            // If message has no content but has other data (recipes, mealPlan, etc.), 
+            // add a default intro. If completely empty, add a fallback message.
+            let content = msg.content || accumulatedText;
+            if (!content && (msg.recipes || msg.mealPlan || msg.recipeDetail || msg.shoppingList)) {
+              content = "Here's what I found for you:";
+            } else if (!content) {
+              content = "I'm here to help! What would you like to cook today?";
+            }
+            return { ...msg, content, isStreaming: false };
+          }
+          return msg;
+        }));
+      }
+      voiceMessageIdRef.current = null;
+      voiceResponseAccumulatorRef.current = '';
+      setIsTyping(false);
+      setThinkingStatus(null);
+    },
+    onError: (error) => {
+      console.error('Voice chat error:', error);
+      if (voiceMessageIdRef.current) {
+        setMessages(prev => prev.map(msg =>
+          msg.id === voiceMessageIdRef.current
+            ? { ...msg, content: "Sorry, I had trouble hearing you. Please try again!", isStreaming: false }
+            : msg
+        ));
+      }
+      voiceMessageIdRef.current = null;
+      voiceResponseAccumulatorRef.current = '';
+      setIsTyping(false);
+      setThinkingStatus(null);
+    },
+  });
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -252,6 +428,21 @@ export function ChatView({
     }
   }, []);
 
+  // Stop generation - cancel the current streaming response
+  const handleStopGeneration = useCallback(() => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+    setIsTyping(false);
+    setThinkingStatus(null);
+    
+    // Mark any streaming messages as complete
+    setMessages(prev => prev.map(msg => 
+      msg.isStreaming ? { ...msg, isStreaming: false } : msg
+    ));
+  }, []);
+
   const handleSendMessage = async (messageText?: string) => {
     const text = messageText || inputValue.trim();
     if (!text) return;
@@ -284,7 +475,7 @@ export function ChatView({
     setIsTyping(true);
     setThinkingStatus("Thinking...");
 
-    const sessionId = getOrCreateSessionId();
+    // Use the shared sessionId (same for text and voice chat)
     let fullResponse = '';
     let agentRecipes: Recipe[] = []; // Recipes from agent's tool call (exact matches)
 
@@ -326,30 +517,11 @@ export function ChatView({
           console.log('Received recipes from agent:', event.metadata?.recipes);
           const recipeData = event.metadata?.recipes || [];
           
-          // Transform to Recipe format for display
+          // Transform backend recipe summaries to Recipe format for display
+          // Uses summary data directly - no need to re-fetch full recipes
           for (const r of recipeData) {
-            try {
-              // Load full recipe details for proper card display
-              const localRecipe = await loadRecipeFromLocal(r.recipe_id);
-              if (localRecipe) {
-                const transformed = transformRecipeMatch(
-                  { 
-                    recipe_id: r.recipe_id, 
-                    title: r.title,
-                    similarity_score: r.similarity_score || 0.8,
-                    combined_score: r.similarity_score || 0.8,
-                    file_path: '',
-                    match_explanation: '',
-                    matching_chunks: [],
-                  },
-                  localRecipe,
-                  agentRecipes.length
-                );
-                agentRecipes.push(transformed);
-              }
-            } catch (e) {
-              console.error('Error loading recipe:', r.recipe_id, e);
-            }
+            const transformed = transformRecipeFromSummary(r as BackendRecipeSummary, agentRecipes.length);
+            agentRecipes.push(transformed);
           }
           console.log('Transformed', agentRecipes.length, 'recipes for display');
         } else if (event.type === 'meal_plan') {
@@ -847,6 +1019,43 @@ export function ChatView({
         )}
       </AnimatePresence>
 
+      {/* Voice Mode Indicator - Shows when voice is active */}
+      <AnimatePresence>
+        {isVoiceActive && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="px-5 py-3 bg-white border-t border-black/5"
+            style={{ flexShrink: 0 }}
+          >
+            <div className="max-w-[380px] mx-auto">
+              <VoiceModeIndicator 
+                state={voiceState} 
+                transcript={currentTranscript}
+                onCancel={cancelVoice}
+                onExit={disconnectVoice}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Stop Generation Button - Shows when text is streaming */}
+      <AnimatePresence>
+        {isTyping && !isVoiceActive && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="flex justify-center px-5 py-2"
+            style={{ flexShrink: 0 }}
+          >
+            <StopGenerationButton onClick={handleStopGeneration} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Chat Input - Always at bottom */}
       <div 
         className="px-5 py-3 bg-white border-t border-black/5"
@@ -861,43 +1070,75 @@ export function ChatView({
               boxShadow: '0px 2px 5px 0px rgba(0,0,0,0.06), 0px 9px 9px 0px rgba(0,0,0,0.01)',
             }}
           >
-            <div className="flex items-center gap-3 p-3">
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Tell me what you're craving..."
-                disabled={isTyping}
-                className="flex-1 text-base bg-transparent outline-none disabled:opacity-50 placeholder:text-gray-400"
-                style={{
-                  fontFamily: 'var(--font-display)',
-                  fontSize: '15px',
-                  lineHeight: '24px',
-                  color: 'var(--jamie-text-body)',
-                }}
+            <div className="flex items-center gap-2 p-2 pl-3">
+              {/* Voice Mode Button */}
+              <VoiceModeButton
+                isActive={isVoiceActive}
+                isConnecting={voiceState === 'connecting'}
+                onClick={toggleVoiceMode}
+                disabled={isTyping && !isVoiceActive}
+                className="shrink-0"
               />
 
-              {/* Send Button */}
-              <button
-                onClick={() => handleSendMessage()}
-                disabled={!inputValue.trim() || isTyping}
-                className="shrink-0 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  backgroundColor: inputValue.trim() && !isTyping ? 'var(--jamie-primary)' : '#E5E5E5',
-                }}
-              >
-                <ArrowUp 
-                  className="size-5" 
-                  strokeWidth={2}
-                  style={{ color: inputValue.trim() && !isTyping ? '#FFFFFF' : '#A3A3A3' }}
-                />
-              </button>
+              {/* Text Input - Hidden when voice mode is active and listening */}
+              {!isVoiceActive || voiceState === 'idle' ? (
+                <>
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="Tell me what you're craving..."
+                    disabled={isTyping || isVoiceActive}
+                    className="flex-1 text-base bg-transparent outline-none disabled:opacity-50 placeholder:text-gray-400"
+                    style={{
+                      fontFamily: 'var(--font-display)',
+                      fontSize: '15px',
+                      lineHeight: '24px',
+                      color: 'var(--jamie-text-body)',
+                    }}
+                  />
+
+                  {/* Send Button */}
+                  <button
+                    onClick={() => handleSendMessage()}
+                    disabled={!inputValue.trim() || isTyping}
+                    className="shrink-0 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
+                    style={{
+                      width: '36px',
+                      height: '36px',
+                      backgroundColor: inputValue.trim() && !isTyping ? 'var(--jamie-primary)' : '#E5E5E5',
+                    }}
+                  >
+                    <ArrowUp 
+                      className="size-5" 
+                      strokeWidth={2}
+                      style={{ color: inputValue.trim() && !isTyping ? '#FFFFFF' : '#A3A3A3' }}
+                    />
+                  </button>
+                </>
+              ) : (
+                /* Voice Mode Active - Show waveform */
+                <div className="flex-1 flex items-center justify-center py-2">
+                  <AudioWaveform isActive={isListening || isSpeaking} bars={7} />
+                </div>
+              )}
             </div>
           </div>
+          
+          {/* Voice mode hint */}
+          {!isVoiceActive && !hasMessages && (
+            <p 
+              className="text-center mt-2 text-xs"
+              style={{ 
+                color: 'var(--text-tertiary)',
+                fontFamily: 'var(--font-display)',
+              }}
+            >
+              Tap the mic to talk to Jamie
+            </p>
+          )}
         </div>
       </div>
     </div>

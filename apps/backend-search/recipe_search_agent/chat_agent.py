@@ -180,6 +180,9 @@ class DiscoveryChatAgent:
         """
         Process a chat message and stream responses.
         
+        This method works identically for text and voice - the presentation
+        layer (frontend) handles any differences in how results are displayed.
+        
         Args:
             message: User's message
             session_id: Session identifier for conversation continuity
@@ -196,7 +199,7 @@ class DiscoveryChatAgent:
             function_manager=discovery_function_manager,
         )
         
-        # Create user message
+        # Create user message - identical processing for text and voice
         user_msg = UserMessage(content=message)
         
         logger.info(f"Processing message for session {session_id}: {message[:50]}...")

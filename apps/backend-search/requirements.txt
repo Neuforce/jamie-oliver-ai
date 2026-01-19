@@ -15,6 +15,11 @@ httpx>=0.28.0
 openai>=1.0.0
 docstring_parser>=0.15
 
+# Voice Chat dependencies (STT + TTS)
+deepgram-sdk>=3.0.0
+elevenlabs>=1.0.0
+aiohttp>=3.9.0
+
 # CCAI package (local - install with: pip install -e ../../packages/ccai)
 # For production, this should be published to PyPI or included as a wheel
 # Note: ccai must be installed separately: pip install -e ../../packages/ccai
