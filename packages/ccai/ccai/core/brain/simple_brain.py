@@ -99,7 +99,7 @@ class SimpleBrain(BaseBrain):
                     )
                     # Yield the function call event so callers can track tool usage
                     yield event
-                    
+
                     # Serialize arguments to JSON string
                     serialized_arguments = json.dumps(event.arguments)
 
@@ -133,20 +133,57 @@ class SimpleBrain(BaseBrain):
                 )
 
                 # Execute all function calls concurrently and gather their results
+                # Use return_exceptions=True to handle individual function failures gracefully
+                tool_responses = []
                 try:
                     # Use a timeout to prevent hanging on function calls
-                    tool_responses = await asyncio.gather(*function_call_tasks)
-                    logger.warning(tool_responses)
+                    # return_exceptions=True ensures we get results even if some functions fail
+                    results = await asyncio.gather(*function_call_tasks, return_exceptions=True)
+                    logger.debug(f"Function execution completed. Responses: {len(results)}")
+
+                    # Process results and handle exceptions
+                    for i, result in enumerate(results):
+                        if isinstance(result, Exception):
+                            # If a function call raised an exception, create an error response
+                            logger.error(f"Function call {i} raised exception: {result}", exc_info=result if isinstance(result, BaseException) else None)
+                            # Match by index to get the corresponding tool_call
+                            if i < len(tool_calls):
+                                tool_call = tool_calls[i]
+                                error_response = ToolMessage(
+                                    content=f"Error executing function {tool_call.function.name}: {str(result)}",
+                                    tool_call_id=tool_call.id,
+                                    function_name=tool_call.function.name,
+                                )
+                                tool_responses.append(error_response)
+                            else:
+                                logger.warning(f"Could not match exception to tool_call at index {i}")
+                        else:
+                            # Normal ToolMessage response
+                            tool_responses.append(result)
+
                 except asyncio.TimeoutError:
                     logger.error("Function execution timed out")
-                    # Break the loop if functions time out
-                    break
+                    # Create error responses for all tool calls that didn't complete
+                    for tool_call in tool_calls:
+                        error_response = ToolMessage(
+                            content=f"Function execution timed out for {tool_call.function.name}",
+                            tool_call_id=tool_call.id,
+                            function_name=tool_call.function.name,
+                        )
+                        tool_responses.append(error_response)
                 except Exception as e:
-                    logger.error(f"Error during function execution: {e}", exc_info=True)
-                    # Break the loop on error
-                    break
+                    logger.error(f"Unexpected error during function execution: {e}", exc_info=True)
+                    # Create error responses for all tool calls that didn't complete
+                    for tool_call in tool_calls:
+                        error_response = ToolMessage(
+                            content=f"Error executing function {tool_call.function.name}: {str(e)}",
+                            tool_call_id=tool_call.id,
+                            function_name=tool_call.function.name,
+                        )
+                        tool_responses.append(error_response)
 
-                # Add tool responses to the chat memory
+                # Add tool responses to the chat memory (including error responses)
+                # This ensures every tool_call has a corresponding response, preventing OpenAI errors
                 for tool_response in tool_responses:
                     self.chat_memory.add_tool_message(
                         content=(
