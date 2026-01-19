@@ -6,13 +6,20 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends --fix-missing \
     build-essential \
     libpq-dev \
     portaudio19-dev \
     libportaudio2 \
     curl \
-    && rm -rf /var/lib/apt/lists/*
+    || (apt-get update && apt-get install -y --no-install-recommends \
+        build-essential \
+        libpq-dev \
+        portaudio19-dev \
+        libportaudio2 \
+        curl) && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy files needed for dependency installation
 COPY apps/backend-voice/requirements.txt ./apps/backend-voice/
