@@ -22,6 +22,11 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
         speaker_boost: bool = True,
         output_format: str = "ulaw_8000",
     ):
+        if not api_key or not api_key.strip():
+            raise ValueError("ELEVENLABS_API_KEY is required but not provided or is empty")
+        if not voice_id or not voice_id.strip():
+            raise ValueError("ELEVENLABS_VOICE_ID is required but not provided or is empty")
+        
         self.api_key = api_key
         self.voice_id = voice_id
         self.similarity_boost = similarity_boost
@@ -73,6 +78,19 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
                             
                             yield chunk
 
+        except aiohttp.ClientResponseError as e:
+            if e.status == 401:
+                logger.error(
+                    f"ElevenLabs API authentication failed (401 Unauthorized). "
+                    f"Please check that ELEVENLABS_API_KEY is correctly set in your environment variables. "
+                    f"Error: {e.message}"
+                )
+                raise ValueError(
+                    "ElevenLabs API authentication failed. Please verify ELEVENLABS_API_KEY is set correctly."
+                ) from e
+            else:
+                logger.error(f"ElevenLabs API error ({e.status}): {e.message}")
+                raise
         except Exception as e:
             logger.error(f"Error in ElevenLabsTTS: {e}")
             raise

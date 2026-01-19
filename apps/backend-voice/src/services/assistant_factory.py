@@ -34,6 +34,28 @@ class AssistantFactory:
         """
         logger.info("Creating voice assistant")
         
+        # Validate required API keys
+        if not settings.ELEVENLABS_API_KEY or not settings.ELEVENLABS_API_KEY.strip():
+            raise ValueError(
+                "ELEVENLABS_API_KEY is required but not set. "
+                "Please set it in your environment variables or .env file."
+            )
+        if not settings.ELEVENLABS_VOICE_ID or not settings.ELEVENLABS_VOICE_ID.strip():
+            raise ValueError(
+                "ELEVENLABS_VOICE_ID is required but not set. "
+                "Please set it in your environment variables or .env file."
+            )
+        if not settings.DEEPGRAM_API_KEY or not settings.DEEPGRAM_API_KEY.strip():
+            raise ValueError(
+                "DEEPGRAM_API_KEY is required but not set. "
+                "Please set it in your environment variables or .env file."
+            )
+        if not settings.OPENAI_API_KEY or not settings.OPENAI_API_KEY.strip():
+            raise ValueError(
+                "OPENAI_API_KEY is required but not set. "
+                "Please set it in your environment variables or .env file."
+            )
+        
         # Initialize chat memory with system prompt
         chat_memory = SimpleChatMemory()
         chat_memory.add_system_message(content=JAMIE_OLIVER_SYSTEM_PROMPT)

@@ -19,13 +19,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Copy files needed for dependency installation
 COPY apps/backend-voice/pyproject.toml ./apps/backend-voice/
+COPY apps/backend-voice/poetry.lock ./apps/backend-voice/
 COPY apps/backend-voice/README.md ./apps/backend-voice/
 COPY packages/ccai /app/packages/ccai
 
 WORKDIR /app/apps/backend-voice
 RUN poetry config virtualenvs.create false && \
-    poetry install --no-root --only main || \
-    pip install -e .
+    poetry install --no-root --no-interaction
+
+# Explicitly install supabase to ensure it's available
+RUN pip install "supabase>=2.0.0"
 
 # Copy backend source
 COPY apps/backend-voice/src ./src

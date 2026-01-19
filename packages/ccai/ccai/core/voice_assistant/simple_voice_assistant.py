@@ -11,6 +11,7 @@ from ccai.core.speech_to_text.base import BaseSpeechToText
 from ccai.core.text_to_speech.base import BaseTextToSpeech
 from ccai.core.tracing import observe_voice_assistant, tracer
 from ccai.core import context_variables
+from ccai.core.llm.base import ChunkResponse, FunctionCallResponse
 from .base import BaseVoiceAssistant
 
 logger = configure_logger(__name__)
@@ -315,8 +316,16 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                         f"{self.__class__.__name__} time to first chunk event: {inference_time}"
                     )
                     counter += 1
-                buffer += event.content
-                full_content += event.content
+                
+                # Only process content from ChunkResponse events
+                # FunctionCallResponse events don't have content
+                if isinstance(event, ChunkResponse):
+                    buffer += event.content
+                    full_content += event.content
+                elif isinstance(event, FunctionCallResponse):
+                    # Function calls are handled by the brain, skip them here
+                    logger.debug(f"Skipping FunctionCallResponse: {event.function_name}")
+                    continue
 
                 sentence, remainder = self.contains_punctuation(buffer)
                 if sentence:

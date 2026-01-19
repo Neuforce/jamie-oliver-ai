@@ -12,6 +12,7 @@ from ccai.core.text_to_speech.base import BaseTextToSpeech
 from ccai.core.text_to_speech.elevenlabs_ws_tts import ElevenLabsWebSocketTTS
 from ccai.core.tracing import observe_voice_assistant, tracer
 from ccai.core import context_variables
+from ccai.core.llm.base import ChunkResponse, FunctionCallResponse
 from .base import BaseVoiceAssistant
 
 logger = configure_logger(__name__)
@@ -178,14 +179,21 @@ class OptimizedVoiceAssistant(BaseVoiceAssistant):
                         buffer = ""
                         
                         async for event in response:
-                            buffer += event.content
-                            
-                            # Always use intelligent chunking for smooth audio
-                            # Word-level streaming causes chunky audio with TTS
-                            chunk, remainder = self._smart_chunk_detection(buffer)
-                            if chunk:
-                                yield chunk
-                                buffer = remainder or ""
+                            # Only process content from ChunkResponse events
+                            # FunctionCallResponse events don't have content
+                            if isinstance(event, ChunkResponse):
+                                buffer += event.content
+                                
+                                # Always use intelligent chunking for smooth audio
+                                # Word-level streaming causes chunky audio with TTS
+                                chunk, remainder = self._smart_chunk_detection(buffer)
+                                if chunk:
+                                    yield chunk
+                                    buffer = remainder or ""
+                            elif isinstance(event, FunctionCallResponse):
+                                # Function calls are handled by the brain, skip them here
+                                logger.debug(f"Skipping FunctionCallResponse: {event.function_name}")
+                                continue
                         
                         # Send any remaining text
                         if buffer.strip():
@@ -266,8 +274,15 @@ class OptimizedVoiceAssistant(BaseVoiceAssistant):
             last_chunk_time = time.perf_counter()
 
             async for event in response:
-                buffer += event.content
-                full_content += event.content
+                # Only process content from ChunkResponse events
+                # FunctionCallResponse events don't have content
+                if isinstance(event, ChunkResponse):
+                    buffer += event.content
+                    full_content += event.content
+                elif isinstance(event, FunctionCallResponse):
+                    # Function calls are handled by the brain, skip them here
+                    logger.debug(f"Skipping FunctionCallResponse: {event.function_name}")
+                    continue
 
                 current_time = time.perf_counter()
                 time_since_last_chunk = current_time - last_chunk_time
