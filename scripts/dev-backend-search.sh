@@ -67,6 +67,11 @@ if [ ! -f ".deps-installed" ] || ! python -c "import uvicorn" 2>/dev/null; then
     else
         pip install -r requirements.txt
     fi
+    # Install ccai package (required for chat agent)
+    echo "   Installing ccai package..."
+    cd ../../packages/ccai
+    pip install -e .
+    cd ../../apps/backend-search
     touch .deps-installed
     echo "✅ Dependencies installed"
 fi

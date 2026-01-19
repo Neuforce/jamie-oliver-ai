@@ -26,7 +26,7 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
             raise ValueError("ELEVENLABS_API_KEY is required but not provided or is empty")
         if not voice_id or not voice_id.strip():
             raise ValueError("ELEVENLABS_VOICE_ID is required but not provided or is empty")
-        
+
         self.api_key = api_key
         self.voice_id = voice_id
         self.similarity_boost = similarity_boost
@@ -75,7 +75,7 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
                                     f"Time to first chunk: {time.perf_counter() - start:.2f}s - Text: {text}"
                                 )
                                 first_chunk = False
-                            
+
                             yield chunk
 
         except aiohttp.ClientResponseError as e:

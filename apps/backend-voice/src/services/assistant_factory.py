@@ -21,14 +21,14 @@ logger = configure_logger(__name__)
 
 class LLMFactory:
     """Factory for creating LLM instances based on provider configuration."""
-    
+
     # Default models for each provider
     DEFAULT_MODELS = {
         "openai": "gpt-4o",
         "gemini": "gemini-2.0-flash",
         "groq": "llama-3.1-70b-versatile",
     }
-    
+
     @classmethod
     def create(
         cls,
@@ -38,23 +38,23 @@ class LLMFactory:
     ) -> BaseLLM:
         """
         Create an LLM instance based on provider configuration.
-        
+
         Args:
             provider: LLM provider (openai, gemini, groq). Defaults to settings.
             model: Model name. Defaults to settings or provider default.
             temperature: Sampling temperature. Defaults to settings.
-            
+
         Returns:
             Configured LLM instance
-            
+
         Raises:
             ValueError: If provider is not supported or API key is missing
         """
         provider = provider or settings.LLM_PROVIDER
         temperature = temperature if temperature is not None else settings.LLM_TEMPERATURE
-        
+
         logger.info(f"Creating LLM: provider={provider}, model={model or 'default'}, temp={temperature}")
-        
+
         if provider == "openai":
             if not settings.OPENAI_API_KEY:
                 raise ValueError("OPENAI_API_KEY is required for OpenAI provider")
@@ -63,7 +63,7 @@ class LLMFactory:
                 model=model or settings.LLM_MODEL or cls.DEFAULT_MODELS["openai"],
                 temperature=temperature,
             )
-        
+
         elif provider == "gemini":
             if not settings.GEMINI_API_KEY:
                 raise ValueError("GEMINI_API_KEY is required for Gemini provider")
@@ -72,7 +72,7 @@ class LLMFactory:
                 model=model or settings.LLM_MODEL or cls.DEFAULT_MODELS["gemini"],
                 temperature=temperature,
             )
-        
+
         elif provider == "groq":
             if not settings.GROQ_API_KEY:
                 raise ValueError("GROQ_API_KEY is required for Groq provider")
@@ -81,14 +81,14 @@ class LLMFactory:
                 model=model or settings.LLM_MODEL or cls.DEFAULT_MODELS["groq"],
                 temperature=temperature,
             )
-        
+
         else:
             raise ValueError(f"Unsupported LLM provider: {provider}. Supported: openai, gemini, groq")
 
 
 class AssistantFactory:
     """Factory for creating voice assistant instances."""
-    
+
     @staticmethod
     def create_voice_assistant(
         input_channel,
@@ -96,16 +96,16 @@ class AssistantFactory:
     ) -> SimpleVoiceAssistant:
         """
         Create a configured voice assistant instance.
-        
+
         Args:
             input_channel: Audio input channel (generator)
             output_channel: Audio output service
-            
+
         Returns:
             Configured SimpleVoiceAssistant instance
         """
         logger.info("Creating voice assistant")
-        
+
         # Validate required API keys
         if not settings.ELEVENLABS_API_KEY or not settings.ELEVENLABS_API_KEY.strip():
             raise ValueError(
@@ -127,15 +127,15 @@ class AssistantFactory:
                 "OPENAI_API_KEY is required but not set. "
                 "Please set it in your environment variables or .env file."
             )
-        
+
         # Initialize chat memory with system prompt
         chat_memory = SimpleChatMemory()
         chat_memory.add_system_message(content=JAMIE_OLIVER_SYSTEM_PROMPT)
-        
+
         # Create LLM using factory (configurable provider)
         llm = LLMFactory.create()
         logger.info(f"Using LLM provider: {settings.LLM_PROVIDER}, model: {settings.LLM_MODEL}")
-        
+
         # Create the voice assistant
         assistant = SimpleVoiceAssistant(
             stt=DeepgramSTTService(
@@ -158,7 +158,7 @@ class AssistantFactory:
             input_channel=input_channel,
             output_channel=output_channel,
         )
-        
+
         logger.info("Voice assistant created successfully")
         return assistant
 

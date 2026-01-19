@@ -47,7 +47,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         self.tts = tts
         self.input_channel = input_channel
         self.output_channel = output_channel
-        
+
         # Use a brain request queue instead of direct task management
         self.brain_queue = asyncio.Queue()
         self.brain_task = None
@@ -58,7 +58,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         self.audio_queue = asyncio.Queue()
         self.output_task = None
         self.is_speaking = False
-        
+
         # System message queue for events from recipe engine, timers, etc.
         self.system_message_queue = asyncio.Queue()
         self.system_message_task = None
@@ -73,10 +73,10 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         """
         # Start the output processor task
         self.output_task = asyncio.create_task(self._process_output_queue())
-        
+
         # Start the brain processor task
         self.brain_task = asyncio.create_task(self._process_brain_queue())
-        
+
         # Start the system message processor task
         self.system_message_task = asyncio.create_task(self._process_system_message_queue())
 
@@ -93,7 +93,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                 # Clear the audio queue
                 self._clear_audio_queue()
                 self.is_speaking = False
-                
+
                 # Update the current transcription to the latest one
                 self.current_transcription = transcription.content
 
@@ -165,10 +165,10 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
             try:
                 # Wait for the next transcription in the queue
                 transcription = await self.brain_queue.get()
-                
+
                 # Set processing flag to true
                 self.brain_processing = True
-                
+
                 try:
                     # Handle the transcription
                     await self.brain_process(transcription)
@@ -182,7 +182,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                     # Mark task as done and reset processing flag
                     self.brain_queue.task_done()
                     self.brain_processing = False
-                    
+
             except asyncio.CancelledError:
                 logger.info("Brain queue processor was cancelled")
                 break
@@ -200,9 +200,9 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
             try:
                 # Wait for the next system message
                 system_message = await self.system_message_queue.get()
-                
+
                 logger.info(f"Processing system message: {system_message}")
-                
+
                 try:
                     # Inject the system message as a UserMessage to the brain
                     # This allows the assistant to respond to system events
@@ -211,7 +211,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                     logger.error(f"Error processing system message: {e}", exc_info=True)
                 finally:
                     self.system_message_queue.task_done()
-                    
+
             except asyncio.CancelledError:
                 logger.info("System message queue processor was cancelled")
                 break
@@ -223,7 +223,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         """
         Inject a system message into the conversation.
         This can be called externally to notify the user about events.
-        
+
         Args:
             message: The system message to inject
         """
@@ -242,11 +242,11 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         # Use a manual span for each conversation turn to capture input/output properly
         from langfuse import get_client
         langfuse = get_client()
-        
+
         if not langfuse:
             # Fallback if no langfuse client available
             return await self._brain_process_internal(transcription, is_system_message)
-            
+
         # Create a NEW TRACE for this specific conversation turn so it shows up in Sessions
         # even while the root conversation span is active.
         from langfuse import Langfuse
@@ -260,7 +260,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                 # Ensure session context is inherited
                 session_id = context_variables.get("session_id")
                 user_id = context_variables.get("user_id")
-                
+
                 # Attach session/user context and the user input at TRACE level so it appears in Sessions
                 turn_span.update_trace(
                     session_id=session_id,
@@ -268,15 +268,15 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                     input=transcription,
                     tags=[message_type, "ccai"]
                 )
-                
+
                 # Process the conversation turn
                 full_content = await self._brain_process_internal(transcription, is_system_message)
-                
+
                 # Update TRACE output so the Sessions view shows this assistant reply
                 turn_span.update_trace(output=full_content)
-                
+
                 return full_content
-                
+
             except Exception as e:
                 turn_span.update(
                     output={"error": str(e)},
@@ -287,7 +287,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
     async def _brain_process_internal(self, transcription: str, is_system_message: bool = False):
         """
         Internal brain processing logic separated for better tracing.
-        
+
         Args:
             transcription: The text to process
             is_system_message: If True, format as a system notification to the assistant
@@ -298,13 +298,13 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         try:
             start = time.perf_counter()
             counter = 0
-            
+
             # Format system messages differently so the assistant knows it's from the system
             if is_system_message:
                 message_content = f"[SYSTEM NOTIFICATION] {transcription}"
             else:
                 message_content = transcription
-            
+
             response = self.brain.process(UserMessage(content=message_content))
             buffer = ""
             full_content = ""
@@ -316,7 +316,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                         f"{self.__class__.__name__} time to first chunk event: {inference_time}"
                     )
                     counter += 1
-                
+
                 # Only process content from ChunkResponse events
                 # FunctionCallResponse events don't have content
                 if isinstance(event, ChunkResponse):
@@ -404,7 +404,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                 await self.output_task
             except asyncio.CancelledError:
                 logger.info("Output task cancelled during shutdown")
-        
+
         # Cancel the brain queue processor task
         if self.brain_task and not self.brain_task.done():
             self.brain_task.cancel()
@@ -412,7 +412,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                 await self.brain_task
             except asyncio.CancelledError:
                 logger.info("Brain task cancelled during shutdown")
-        
+
         # Cancel the system message processor task
         if self.system_message_task and not self.system_message_task.done():
             self.system_message_task.cancel()

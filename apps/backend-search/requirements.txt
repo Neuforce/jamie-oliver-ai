@@ -17,4 +17,4 @@ docstring_parser>=0.15
 
 # CCAI package (local - install with: pip install -e ../../packages/ccai)
 # For production, this should be published to PyPI or included as a wheel
-# ccai @ file:../../packages/ccai
+# Note: ccai must be installed separately: pip install -e ../../packages/ccai

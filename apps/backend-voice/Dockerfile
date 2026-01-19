@@ -2,9 +2,7 @@ ARG PYTHON_VERSION=3.11
 FROM python:${PYTHON_VERSION}-slim-bullseye
 
 ENV PYTHONUNBUFFERED=1 \
-    POETRY_VERSION=2.1.1 \
-    POETRY_HOME=/opt/poetry \
-    PATH="$POETRY_HOME/bin:$PATH"
+    PIP_NO_CACHE_DIR=1
 
 WORKDIR /app
 
@@ -14,21 +12,18 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     portaudio19-dev \
     libportaudio2 \
     curl \
-    && rm -rf /var/lib/apt/lists/* \
-    && pip install poetry==$POETRY_VERSION && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy files needed for dependency installation
-COPY apps/backend-voice/pyproject.toml ./apps/backend-voice/
-COPY apps/backend-voice/poetry.lock ./apps/backend-voice/
+COPY apps/backend-voice/requirements.txt ./apps/backend-voice/
 COPY apps/backend-voice/README.md ./apps/backend-voice/
 COPY packages/ccai /app/packages/ccai
 
+# Install Python dependencies
 WORKDIR /app/apps/backend-voice
-RUN poetry config virtualenvs.create false && \
-    poetry install --no-root --no-interaction
-
-# Explicitly install supabase to ensure it's available
-RUN pip install "supabase>=2.0.0"
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install -e /app/packages/ccai
 
 # Copy backend source
 COPY apps/backend-voice/src ./src
