@@ -1,222 +1,117 @@
 {
-  "recipe": {
-    "id": "christmas-salad-jamie-oliver-recipes",
-    "title": "Christmas salad",
-    "description": "Crush in the walnuts and add a pinch of black pepper.",
-    "estimated_total": "PT20M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 8,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "salad"
-    ],
-    "course": "salad",
-    "cuisine": "mediterranean"
+  "notes": {
+    "text": ""
   },
-  "ingredients": [
-    {
-      "id": "walnuts",
-      "name": "walnuts",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "pear",
-      "name": "pear",
-      "quantity": 1.0,
-      "unit": null
-    },
-    {
-      "id": "apple",
-      "name": "apple",
-      "quantity": 1.0,
-      "unit": null
-    },
-    {
-      "id": "frisee_lettuce",
-      "name": "frisee lettuce",
-      "quantity": 1.0,
-      "unit": null
-    },
-    {
-      "id": "round_red_chicory",
-      "name": "round red chicory",
-      "quantity": 1.0,
-      "unit": null
-    },
-    {
-      "id": "wild_rocket",
-      "name": "wild rocket",
-      "quantity": 1.0,
-      "unit": "handful"
-    },
-    {
-      "id": "long_red_chicory",
-      "name": "long red chicory",
-      "quantity": 1.0,
-      "unit": null
-    },
-    {
-      "id": "long_white_chicory",
-      "name": "long white chicory",
-      "quantity": 1.0,
-      "unit": null
-    },
-    {
-      "id": "clementines",
-      "name": "clementines",
-      "quantity": 2.0,
-      "unit": null
-    },
-    {
-      "id": "english_mustard",
-      "name": "English mustard",
-      "quantity": 1.0,
-      "unit": "teaspoon"
-    },
-    {
-      "id": "wholegrain_mustard",
-      "name": "wholegrain mustard",
-      "quantity": 1.0,
-      "unit": "teaspoon"
-    },
-    {
-      "id": "olive_oil",
-      "name": "olive oil",
-      "quantity": 3.0,
-      "unit": "tablespoons"
-    },
-    {
-      "id": "extra_virgin_olive_oil",
-      "name": "extra virgin olive oil",
-      "quantity": 3.0,
-      "unit": "tablespoons"
-    },
-    {
-      "id": "white_wine_vinegar",
-      "name": "white wine vinegar",
-      "quantity": 3.0,
-      "unit": "tablespoons"
-    },
-    {
-      "id": "honey",
-      "name": "honey",
-      "quantity": 2.0,
-      "unit": "teaspoons"
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
       "id": "crush_walnuts",
-      "descr": "Crush in the walnuts and add a pinch of black pepper.",
-      "instructions": "Crush in the walnuts and add a pinch of black pepper.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [],
       "next": [
         "slice_pear_apple"
       ],
+      "type": "immediate",
+      "descr": "Crush in the walnuts and add a pinch of black pepper.",
       "on_enter": [
         {
-          "say": "Let's crush in the walnuts and add."
+          "say": "Right, let's get those walnuts crushed and add a lovely pinch of black pepper. It'll add a nice crunch and a bit of spice to our salad!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [],
+      "instructions": "Crush in the walnuts and add a pinch of black pepper.",
+      "requires_confirm": true
     },
     {
       "id": "slice_pear_apple",
-      "descr": "Trim the pear and apple and finely slice into matchsticks,",
-      "instructions": "Trim the pear and apple and finely slice into matchsticks, place in the base of the bowl and toss in the dressing.",
+      "next": [
+        "chop_frisee_chicory"
+      ],
       "type": "immediate",
+      "descr": "Trim the pear and apple and finely slice into matchsticks.",
+      "on_enter": [
+        {
+          "say": "Now, let's trim the pear and apple and slice them into lovely matchsticks. They'll add a sweet and juicy crunch to our salad!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [
         "crush_walnuts"
       ],
-      "next": [
-        "chop_frisee_chicory"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's start by trim."
-        }
-      ]
+      "instructions": "Trim the pear and apple and finely slice into matchsticks, place in the base of the bowl and toss in the dressing.",
+      "requires_confirm": true
     },
     {
       "id": "chop_frisee_chicory",
-      "descr": "Roughly chop the frisee, trim and finely slice the round red chicory and add to the bowl with the rocket.",
-      "instructions": "Roughly chop the frisee, trim and finely slice the round red chicory and add to the bowl with the rocket.",
+      "next": [
+        "trim_long_chicory"
+      ],
       "type": "immediate",
+      "descr": "Roughly chop the frisee, trim and finely slice the round red chicory and add to the bowl with the rocket.",
+      "on_enter": [
+        {
+          "say": "Let's give the frisee a rough chop and slice up that beautiful red chicory. Add them to the bowl with a handful of peppery rocket. It's going to be a feast for the eyes and the taste buds!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [
         "slice_pear_apple"
       ],
-      "next": [
-        "trim_long_chicory"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's roughly chop the frisee, trim and."
-        }
-      ]
+      "instructions": "Roughly chop the frisee, trim and finely slice the round red chicory and add to the bowl with the rocket.",
+      "requires_confirm": true
     },
     {
       "id": "trim_long_chicory",
-      "descr": "Trim the long red and white chicory, cut in half, then separate into leaves, finely slice the stalk and add everything to the bowl.",
-      "instructions": "Trim the long red and white chicory, cut in half, then separate into leaves, finely slice the stalk and add everything to the bowl.",
+      "next": [
+        "slice_clementines"
+      ],
       "type": "immediate",
+      "descr": "Trim the long red and white chicory, cut in half, then separate into leaves, finely slice the stalk and add everything to the bowl.",
+      "on_enter": [
+        {
+          "say": "Let's trim the long chicory, separate those lovely leaves, and slice the stalk finely. Add it all to the bowl. It's going to add a nice bit of texture!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [
         "chop_frisee_chicory"
       ],
-      "next": [
-        "slice_clementines"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's start by trim."
-        }
-      ]
+      "instructions": "Trim the long red and white chicory, cut in half, then separate into leaves, finely slice the stalk and add everything to the bowl.",
+      "requires_confirm": true
     },
     {
       "id": "slice_clementines",
-      "descr": "Peel the clementines and finely slice horizontally into rounds.",
-      "instructions": "Peel the clementines and finely slice horizontally into rounds.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [
-        "trim_long_chicory"
-      ],
       "next": [
         "toss_and_serve"
       ],
+      "type": "immediate",
+      "descr": "Peel the clementines and finely slice horizontally into rounds.",
       "on_enter": [
         {
-          "say": "Let's start by peel."
+          "say": "Now, peel those juicy clementines and slice them into lovely rounds. They'll add a burst of sweetness and colour to our salad!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "trim_long_chicory"
+      ],
+      "instructions": "Peel the clementines and finely slice horizontally into rounds.",
+      "requires_confirm": true
     },
     {
       "id": "toss_and_serve",
-      "descr": "Toss everything together and serve.",
-      "instructions": "Toss everything together and serve.",
+      "next": [],
       "type": "immediate",
+      "descr": "Toss everything together and serve.",
+      "on_enter": [
+        {
+          "say": "Let's toss everything together now. Give it a good mix so all those fantastic flavours come together beautifully. Then, it's ready to serve and enjoy!"
+        }
+      ],
       "auto_start": true,
-      "requires_confirm": true,
       "depends_on": [
         "slice_clementines"
       ],
-      "next": [],
-      "on_enter": [
-        {
-          "say": "Let's toss everything together."
-        }
-      ]
+      "instructions": "Toss everything together and serve.",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -225,7 +120,112 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": ""
-  }
+  "recipe": {
+    "id": "christmas-salad-jamie-oliver-recipes",
+    "tags": [
+      "salad"
+    ],
+    "title": "Christmas salad",
+    "course": "salad",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "mediterranean",
+    "servings": 8,
+    "difficulty": "Not Too Tricky",
+    "description": "Crush in the walnuts and add a pinch of black pepper.",
+    "estimated_total": "PT20M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "walnuts",
+      "name": "walnuts",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "pear",
+      "name": "pear",
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "apple",
+      "name": "apple",
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "frisee_lettuce",
+      "name": "frisee lettuce",
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "round_red_chicory",
+      "name": "round red chicory",
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "wild_rocket",
+      "name": "wild rocket",
+      "unit": "handful",
+      "quantity": 1.0
+    },
+    {
+      "id": "long_red_chicory",
+      "name": "long red chicory",
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "long_white_chicory",
+      "name": "long white chicory",
+      "unit": null,
+      "quantity": 1.0
+    },
+    {
+      "id": "clementines",
+      "name": "clementines",
+      "unit": null,
+      "quantity": 2.0
+    },
+    {
+      "id": "english_mustard",
+      "name": "English mustard",
+      "unit": "teaspoon",
+      "quantity": 1.0
+    },
+    {
+      "id": "wholegrain_mustard",
+      "name": "wholegrain mustard",
+      "unit": "teaspoon",
+      "quantity": 1.0
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "unit": "tablespoons",
+      "quantity": 3.0
+    },
+    {
+      "id": "extra_virgin_olive_oil",
+      "name": "extra virgin olive oil",
+      "unit": "tablespoons",
+      "quantity": 3.0
+    },
+    {
+      "id": "white_wine_vinegar",
+      "name": "white wine vinegar",
+      "unit": "tablespoons",
+      "quantity": 3.0
+    },
+    {
+      "id": "honey",
+      "name": "honey",
+      "unit": "teaspoons",
+      "quantity": 2.0
+    }
+  ]
 }

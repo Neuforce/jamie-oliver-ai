@@ -11,7 +11,8 @@
     "tags": [
       "beef"
     ],
-    "course": "main"
+    "course": "main",
+    "cuisine": "british"
   },
   "ingredients": [
     {
@@ -33,8 +34,8 @@
       "unit": "g"
     },
     {
-      "id": "p\u0000e2t\u0000e9",
-      "name": "p\u0000e2t\u0000e9",
+      "id": "pe2te9",
+      "name": "pe2te9",
       "quantity": 100.0,
       "unit": "g"
     },

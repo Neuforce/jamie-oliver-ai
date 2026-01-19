@@ -12,7 +12,8 @@
       "quick",
       "breakfast"
     ],
-    "course": "breakfast"
+    "course": "breakfast",
+    "cuisine": "american"
   },
   "ingredients": [
     {

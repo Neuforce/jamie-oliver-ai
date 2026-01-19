@@ -9,11 +9,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     libpq-dev \
     libgomp1 \
+    portaudio19-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies first to leverage Docker layer caching
 COPY apps/backend-search/requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip && pip install -r /app/requirements.txt
+
+# Copy and install CCAI package (required for chat agent)
+COPY packages/ccai /app/packages/ccai
+RUN pip install /app/packages/ccai
 
 # Copy application source
 COPY apps/backend-search /app/apps/backend-search

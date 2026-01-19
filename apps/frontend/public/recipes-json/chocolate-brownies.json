@@ -1,193 +1,137 @@
 {
-  "recipe": {
-    "id": "chocolate-brownies",
-    "title": "Chocolate Brownies",
-    "description": "Fudgy, rich chocolate brownies with a crackly top",
-    "estimated_total": "PT35M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 12,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "dessert",
-      "breakfast"
-    ],
-    "course": "dessert"
+  "notes": {
+    "text": "Don't overbake - they should be slightly gooey\nA skewer should come out with moist crumbs\nLet cool fully for clean cuts"
   },
-  "ingredients": [
-    {
-      "id": "dark_chocolate",
-      "name": "dark chocolate",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "butter",
-      "name": "butter",
-      "quantity": 175.0,
-      "unit": "g"
-    },
-    {
-      "id": "caster_sugar",
-      "name": "caster sugar",
-      "quantity": 325.0,
-      "unit": "g"
-    },
-    {
-      "id": "eggs",
-      "name": "eggs",
-      "quantity": 3.0,
-      "unit": "large"
-    },
-    {
-      "id": "plain_flour",
-      "name": "plain flour",
-      "quantity": 75.0,
-      "unit": "g"
-    },
-    {
-      "id": "cocoa_powder",
-      "name": "cocoa powder",
-      "quantity": 50.0,
-      "unit": "g"
-    },
-    {
-      "id": "pinch_of_salt",
-      "name": "Pinch of salt",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_oven",
+      "next": [
+        "melt_chocolate_butter"
+      ],
+      "type": "immediate",
       "descr": "Preheat oven to 180°C (350°F), line a baking tin",
-      "instructions": "Preheat oven to 180°C (350°F), line a baking tin",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by preheating the oven to 180°C. Make sure to line your baking tin with parchment paper, so nothing sticks!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the oven to 180°c."
-        }
-      ]
+      "instructions": "Preheat oven to 180°C (350°F), line a baking tin",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "melt_chocolate_butter",
+      "next": [
+        "whisk_in_sugar"
+      ],
+      "type": "immediate",
       "descr": "Melt chocolate and butter together",
+      "on_enter": [
+        {
+          "say": "Now, let's melt the chocolate and butter together. Stir it gently until it's smooth and glossy."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
       "instructions": "Melt chocolate and butter together",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's melt chocolate and butter together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "whisk_in_sugar",
+      "next": [
+        "beat_in_eggs"
+      ],
+      "type": "immediate",
       "descr": "Whisk in sugar until combined",
+      "on_enter": [
+        {
+          "say": "Brilliant! Now whisk in the sugar until it's all beautifully combined."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "melt_chocolate_butter"
+      ],
       "instructions": "Whisk in sugar until combined",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's whisk everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "beat_in_eggs",
+      "next": [
+        "fold_in_dry_ingredients"
+      ],
+      "type": "immediate",
       "descr": "Beat in eggs one at a time",
+      "on_enter": [
+        {
+          "say": "Let's beat in the eggs, one at a time. This will give us a lovely, rich batter."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "whisk_in_sugar"
+      ],
       "instructions": "Beat in eggs one at a time",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's beat in eggs one at a."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "fold_in_dry_ingredients",
+      "next": [
+        "pour_and_bake"
+      ],
+      "type": "immediate",
       "descr": "Fold in flour, cocoa, and salt",
+      "on_enter": [
+        {
+          "say": "Gently fold in the flour, cocoa, and a pinch of salt. Be careful not to overmix, just until it's combined."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "beat_in_eggs"
+      ],
       "instructions": "Fold in flour, cocoa, and salt",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's fold in flour, cocoa, and salt."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "pour_and_bake",
+      "next": [
+        "cool_before_cutting"
+      ],
+      "type": "timer",
       "descr": "Pour into tin and bake for 25-30 minutes",
-      "instructions": "Pour into tin and bake for 25-30 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 1500,
       "on_enter": [
         {
-          "say": "Let's pour into tin and bake for."
+          "say": "Pour the batter into your prepared tin and pop it in the oven. We'll bake it for 25 to 30 minutes. You'll know it's done when the top is crackly and a skewer comes out with moist crumbs."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "fold_in_dry_ingredients"
+      ],
+      "instructions": "Pour into tin and bake for 25-30 minutes",
+      "requires_confirm": false
     },
     {
-      "id": "step_7",
-      "descr": "Cool completely before cutting into squares",
-      "instructions": "Cool completely before cutting into squares",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "cool_before_cutting",
       "next": [],
+      "type": "immediate",
+      "descr": "Cool completely before cutting into squares",
       "on_enter": [
         {
-          "say": "Let's cool completely before cutting into squares."
+          "say": "Fantastic! Let the brownies cool completely in the tin before cutting them into squares. This will give you those perfect, clean edges."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "pour_and_bake"
+      ],
+      "instructions": "Cool completely before cutting into squares",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -196,7 +140,64 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Don't overbake - they should be slightly gooey\nA skewer should come out with moist crumbs\nLet cool fully for clean cuts"
-  }
+  "recipe": {
+    "id": "chocolate-brownies",
+    "tags": [
+      "dessert",
+      "breakfast"
+    ],
+    "title": "Chocolate Brownies",
+    "course": "dessert",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 12,
+    "difficulty": "Not Too Tricky",
+    "description": "Fudgy, rich chocolate brownies with a crackly top",
+    "estimated_total": "PT35M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "dark_chocolate",
+      "name": "dark chocolate",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "unit": "g",
+      "quantity": 175.0
+    },
+    {
+      "id": "caster_sugar",
+      "name": "caster sugar",
+      "unit": "g",
+      "quantity": 325.0
+    },
+    {
+      "id": "eggs",
+      "name": "eggs",
+      "unit": "large",
+      "quantity": 3.0
+    },
+    {
+      "id": "plain_flour",
+      "name": "plain flour",
+      "unit": "g",
+      "quantity": 75.0
+    },
+    {
+      "id": "cocoa_powder",
+      "name": "cocoa powder",
+      "unit": "g",
+      "quantity": 50.0
+    },
+    {
+      "id": "pinch_of_salt",
+      "name": "Pinch of salt",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

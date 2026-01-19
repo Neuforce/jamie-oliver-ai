@@ -1,193 +1,136 @@
 {
-  "recipe": {
-    "id": "french-toast",
-    "title": "French Toast",
-    "description": "Golden eggy bread with cinnamon and maple syrup",
-    "estimated_total": "PT15M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "breakfast"
-    ],
-    "course": "breakfast",
-    "cuisine": "french"
+  "notes": {
+    "text": "Stale bread works best\nDon't oversoak or bread will fall apart\nAdd a pinch of nutmeg for extra flavor"
   },
-  "ingredients": [
-    {
-      "id": "slices_bread",
-      "name": "slices bread",
-      "quantity": 8.0,
-      "unit": "thick"
-    },
-    {
-      "id": "4_eggs",
-      "name": "4 eggs",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "milk",
-      "name": "milk",
-      "quantity": 150.0,
-      "unit": "ml"
-    },
-    {
-      "id": "cinnamon",
-      "name": "cinnamon",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "vanilla_extract",
-      "name": "vanilla extract",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "butter_for_frying",
-      "name": "Butter for frying",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "maple_syrup_and_berries",
-      "name": "Maple syrup and berries",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "whisk_egg_mixture",
+      "next": [
+        "dip_bread"
+      ],
+      "type": "immediate",
       "descr": "Whisk eggs, milk, cinnamon, and vanilla",
-      "instructions": "Whisk eggs, milk, cinnamon, and vanilla",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by whisking together the eggs, milk, cinnamon, and vanilla until it's all beautifully combined."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's whisk everything together."
-        }
-      ]
+      "instructions": "Whisk eggs, milk, cinnamon, and vanilla",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "dip_bread",
+      "next": [
+        "heat_butter"
+      ],
+      "type": "immediate",
       "descr": "Dip bread slices in egg mixture",
+      "on_enter": [
+        {
+          "say": "Now, let's dip those lovely slices of bread into the egg mixture. Make sure they're nicely coated but not too soggy!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "whisk_egg_mixture"
+      ],
       "instructions": "Dip bread slices in egg mixture",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's dip bread slices in egg mixture."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "heat_butter",
+      "next": [
+        "fry_bread"
+      ],
+      "type": "immediate",
       "descr": "Heat butter in a pan",
+      "on_enter": [
+        {
+          "say": "Let's heat up some butter in a pan over medium heat until it's sizzling and ready for our bread."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "dip_bread"
+      ],
       "instructions": "Heat butter in a pan",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the butter in pan."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "fry_bread",
+      "next": [
+        "keep_warm"
+      ],
+      "type": "immediate",
       "descr": "Fry bread until golden on both sides",
+      "on_enter": [
+        {
+          "say": "Time to fry the bread! Cook each slice until it's beautifully golden on both sides. You'll know it's ready when it smells amazing and looks gorgeous."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "heat_butter"
+      ],
       "instructions": "Fry bread until golden on both sides",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to fry the bread until golden."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "keep_warm",
+      "next": [
+        "stack_on_plates"
+      ],
+      "type": "immediate",
       "descr": "Keep warm in oven while cooking remaining slices",
+      "on_enter": [
+        {
+          "say": "Let's keep those cooked slices warm in the oven while we finish up the rest. They'll stay nice and toasty!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "fry_bread"
+      ],
       "instructions": "Keep warm in oven while cooking remaining slices",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's keep the warm in oven for later."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_6",
+      "id": "stack_on_plates",
+      "next": [
+        "add_toppings"
+      ],
+      "type": "immediate",
       "descr": "Stack on plates",
-      "instructions": "Stack on plates",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's stack on plates."
+          "say": "Now, let's stack those golden slices onto plates, ready for the final touches."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "keep_warm"
+      ],
+      "instructions": "Stack on plates",
+      "requires_confirm": false
     },
     {
-      "id": "step_7",
-      "descr": "Drizzle with maple syrup and top with fresh berries",
-      "instructions": "Drizzle with maple syrup and top with fresh berries",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "add_toppings",
       "next": [],
+      "type": "immediate",
+      "descr": "Drizzle with maple syrup and top with fresh berries",
       "on_enter": [
         {
-          "say": "Let's drizzle with maple syrup and top."
+          "say": "Finally, drizzle over some lovely maple syrup and top with fresh berries. Absolutely delicious!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "stack_on_plates"
+      ],
+      "instructions": "Drizzle with maple syrup and top with fresh berries",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -196,7 +139,64 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Stale bread works best\nDon't oversoak or bread will fall apart\nAdd a pinch of nutmeg for extra flavor"
-  }
+  "recipe": {
+    "id": "french-toast",
+    "tags": [
+      "breakfast"
+    ],
+    "title": "French Toast",
+    "course": "breakfast",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "french",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Golden eggy bread with cinnamon and maple syrup",
+    "estimated_total": "PT15M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "slices_bread",
+      "name": "slices bread",
+      "unit": "thick",
+      "quantity": 8.0
+    },
+    {
+      "id": "4_eggs",
+      "name": "4 eggs",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "unit": "ml",
+      "quantity": 150.0
+    },
+    {
+      "id": "cinnamon",
+      "name": "cinnamon",
+      "unit": "tsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "vanilla_extract",
+      "name": "vanilla extract",
+      "unit": "tsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "butter_for_frying",
+      "name": "Butter for frying",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "maple_syrup_and_berries",
+      "name": "Maple syrup and berries",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

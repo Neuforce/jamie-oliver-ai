@@ -1,187 +1,139 @@
 {
-  "recipe": {
-    "id": "lemon-tart",
-    "title": "Lemon Tart",
-    "description": "Tangy, smooth lemon curd in a buttery pastry shell",
-    "estimated_total": "PT1H30M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 8,
-    "difficulty": "Medium",
-    "tags": [
-      "dessert",
-      "breakfast"
-    ],
-    "course": "dessert"
+  "notes": {
+    "text": "The filling should have a slight wobble\nBest served chilled\nUse unwaxed lemons for the zest"
   },
-  "ingredients": [
-    {
-      "id": "shortcrust_pastry",
-      "name": "shortcrust pastry",
-      "quantity": 250.0,
-      "unit": "g"
-    },
-    {
-      "id": "lemons_(zest_and_juice)",
-      "name": "lemons (zest and juice)",
-      "quantity": 4.0,
-      "unit": "large"
-    },
-    {
-      "id": "caster_sugar",
-      "name": "caster sugar",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "plus_2_yolks",
-      "name": "plus 2 yolks",
-      "quantity": 4.0,
-      "unit": "eggs"
-    },
-    {
-      "id": "double_cream",
-      "name": "double cream",
-      "quantity": 150.0,
-      "unit": "ml"
-    },
-    {
-      "id": "icing_sugar_for_dusting",
-      "name": "Icing sugar for dusting",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "prepare_pastry",
+      "next": [
+        "blind_bake"
+      ],
+      "type": "timer",
       "descr": "Roll out pastry and line a tart tin, chill 30 mins",
-      "instructions": "Roll out pastry and line a tart tin, chill 30 mins",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 1800,
+      "on_enter": [
+        {
+          "say": "Right, let's roll out that lovely pastry and line our tart tin. Once that's done, pop it in the fridge to chill for 30 minutes. This will help it hold its shape beautifully."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's roll out pastry and line a."
-        }
-      ]
+      "instructions": "Roll out pastry and line a tart tin, chill 30 mins",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "blind_bake",
+      "next": [
+        "whisk_filling"
+      ],
+      "type": "timer",
       "descr": "Blind bake at 180°C for 20 minutes",
+      "duration": 1200,
+      "on_enter": [
+        {
+          "say": "Now, let's blind bake our pastry at 180°C for 20 minutes. You want it to be nice and golden. The smell will be amazing!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "prepare_pastry"
+      ],
       "instructions": "Blind bake at 180°C for 20 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's blind bake at 180°c for 20."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "whisk_filling",
+      "next": [
+        "add_cream"
+      ],
+      "type": "immediate",
       "descr": "Whisk eggs, yolks, sugar, lemon zest and juice",
+      "on_enter": [
+        {
+          "say": "Let's get whisking! Combine the eggs, yolks, sugar, lemon zest, and juice until it's all smooth and lovely. It should smell fresh and citrusy."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "blind_bake"
+      ],
       "instructions": "Whisk eggs, yolks, sugar, lemon zest and juice",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's whisk everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "add_cream",
+      "next": [
+        "fill_pastry"
+      ],
+      "type": "immediate",
       "descr": "Stir in cream",
+      "on_enter": [
+        {
+          "say": "Now, gently stir in the cream. This will make our filling rich and silky. Look at that beautiful texture!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "whisk_filling"
+      ],
       "instructions": "Stir in cream",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "fill_pastry",
+      "next": [
+        "bake_tart"
+      ],
+      "type": "immediate",
       "descr": "Pour into pastry case",
+      "on_enter": [
+        {
+          "say": "Let's carefully pour the filling into our prepared pastry case. Make sure it's nice and even."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_cream"
+      ],
       "instructions": "Pour into pastry case",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's pour into pastry case."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "bake_tart",
+      "next": [
+        "cool_and_dust"
+      ],
+      "type": "timer",
       "descr": "Bake at 140°C for 35-40 minutes until just set",
-      "instructions": "Bake at 140°C for 35-40 minutes until just set",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 2100,
       "on_enter": [
         {
-          "say": "Time to bake the at 140°c for."
+          "say": "Time to bake our tart at 140°C for 35 to 40 minutes. It should be just set with a slight wobble in the middle. Your kitchen will smell divine!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "fill_pastry"
+      ],
+      "instructions": "Bake at 140°C for 35-40 minutes until just set",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Cool completely, dust with icing sugar",
-      "instructions": "Cool completely, dust with icing sugar",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "cool_and_dust",
       "next": [],
+      "type": "immediate",
+      "descr": "Cool completely, dust with icing sugar",
       "on_enter": [
         {
-          "say": "Let's cool completely, dust with icing sugar."
+          "say": "Brilliant! Let the tart cool completely, then give it a lovely dusting of icing sugar. It's going to be a showstopper!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "bake_tart"
+      ],
+      "instructions": "Cool completely, dust with icing sugar",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -190,7 +142,58 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "The filling should have a slight wobble\nBest served chilled\nUse unwaxed lemons for the zest"
-  }
+  "recipe": {
+    "id": "lemon-tart",
+    "tags": [
+      "dessert",
+      "breakfast"
+    ],
+    "title": "Lemon Tart",
+    "course": "dessert",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 8,
+    "difficulty": "Medium",
+    "description": "Tangy, smooth lemon curd in a buttery pastry shell",
+    "estimated_total": "PT1H30M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "shortcrust_pastry",
+      "name": "shortcrust pastry",
+      "unit": "g",
+      "quantity": 250.0
+    },
+    {
+      "id": "lemons_(zest_and_juice)",
+      "name": "lemons (zest and juice)",
+      "unit": "large",
+      "quantity": 4.0
+    },
+    {
+      "id": "caster_sugar",
+      "name": "caster sugar",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "plus_2_yolks",
+      "name": "plus 2 yolks",
+      "unit": "eggs",
+      "quantity": 4.0
+    },
+    {
+      "id": "double_cream",
+      "name": "double cream",
+      "unit": "ml",
+      "quantity": 150.0
+    },
+    {
+      "id": "icing_sugar_for_dusting",
+      "name": "Icing sugar for dusting",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

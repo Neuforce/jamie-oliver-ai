@@ -1,195 +1,137 @@
 {
-  "recipe": {
-    "id": "tiramisu",
-    "title": "Tiramisu",
-    "description": "Classic Italian dessert with coffee-soaked ladyfingers and mascarpone",
-    "estimated_total": "PT30M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 8,
-    "difficulty": "Medium",
-    "tags": [
-      "italian",
-      "dessert",
-      "breakfast"
-    ],
-    "course": "dessert",
-    "cuisine": "italian"
+  "notes": {
+    "text": "Don't oversoak the biscuits\nUse good quality espresso\nBest made a day ahead"
   },
-  "ingredients": [
-    {
-      "id": "mascarpone",
-      "name": "mascarpone",
-      "quantity": 500.0,
-      "unit": "g"
-    },
-    {
-      "id": "6_eggs_separated",
-      "name": "6 eggs, separated",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "sugar",
-      "name": "sugar",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "strong_espresso_cooled",
-      "name": "strong espresso, cooled",
-      "quantity": 300.0,
-      "unit": "ml"
-    },
-    {
-      "id": "marsala_wine",
-      "name": "Marsala wine",
-      "quantity": 3.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "ladyfinger_biscuits",
-      "name": "ladyfinger biscuits",
-      "quantity": 300.0,
-      "unit": "g"
-    },
-    {
-      "id": "cocoa_powder_for_dusting",
-      "name": "Cocoa powder for dusting",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "whisk_egg_yolks",
+      "next": [
+        "beat_in_mascarpone"
+      ],
+      "type": "immediate",
       "descr": "Whisk egg yolks with sugar until pale and thick",
-      "instructions": "Whisk egg yolks with sugar until pale and thick",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by whisking those egg yolks with sugar until they're beautifully pale and thick. You'll know it's ready when it looks nice and creamy."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's whisk everything together."
-        }
-      ]
+      "instructions": "Whisk egg yolks with sugar until pale and thick",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "beat_in_mascarpone",
+      "next": [
+        "whip_egg_whites"
+      ],
+      "type": "immediate",
       "descr": "Beat in mascarpone until smooth",
+      "on_enter": [
+        {
+          "say": "Now, let's beat in the mascarpone until it's smooth and luscious. It should look silky and rich."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "whisk_egg_yolks"
+      ],
       "instructions": "Beat in mascarpone until smooth",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's beat in mascarpone until smooth."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "whip_egg_whites",
+      "next": [
+        "mix_espresso_marsala"
+      ],
+      "type": "immediate",
       "descr": "Whip egg whites to stiff peaks, fold into mascarpone",
+      "on_enter": [
+        {
+          "say": "Let's whip those egg whites until they form stiff peaks. Then, gently fold them into the mascarpone mixture. It'll be light and airy!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "beat_in_mascarpone"
+      ],
       "instructions": "Whip egg whites to stiff peaks, fold into mascarpone",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's whip egg whites to stiff peaks,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "mix_espresso_marsala",
+      "next": [
+        "dip_ladyfingers"
+      ],
+      "type": "immediate",
       "descr": "Mix espresso with Marsala",
+      "on_enter": [
+        {
+          "say": "Now, let's mix the cooled espresso with the Marsala wine. This is going to give our tiramisu that classic, rich flavour."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "whip_egg_whites"
+      ],
       "instructions": "Mix espresso with Marsala",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_5",
+      "id": "dip_ladyfingers",
+      "next": [
+        "spread_mascarpone_cream"
+      ],
+      "type": "immediate",
       "descr": "Dip ladyfingers briefly in coffee, layer in dish",
+      "on_enter": [
+        {
+          "say": "Time to dip those ladyfingers briefly in the coffee mixture and layer them in your dish. Just a quick dip, you don't want them too soggy!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_espresso_marsala"
+      ],
       "instructions": "Dip ladyfingers briefly in coffee, layer in dish",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's dip ladyfingers briefly in coffee, layer."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "spread_mascarpone_cream",
+      "next": [
+        "refrigerate_and_dust"
+      ],
+      "type": "immediate",
       "descr": "Spread half the mascarpone cream, repeat layers",
-      "instructions": "Spread half the mascarpone cream, repeat layers",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's spread half the mascarpone cream, repeat."
+          "say": "Let's spread half of that lovely mascarpone cream over the ladyfingers, then repeat the layers. It's all about building those beautiful flavours."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "dip_ladyfingers"
+      ],
+      "instructions": "Spread half the mascarpone cream, repeat layers",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Refrigerate 4 hours, dust with cocoa before serving",
-      "instructions": "Refrigerate 4 hours, dust with cocoa before serving",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "refrigerate_and_dust",
       "next": [],
+      "type": "timer",
+      "descr": "Refrigerate 4 hours, dust with cocoa before serving",
+      "duration": 14400,
       "on_enter": [
         {
-          "say": "Let's refrigerate 4 hours, dust with cocoa."
+          "say": "Fantastic! Now, pop it in the fridge for at least 4 hours to let all those flavours meld together. Just before serving, give it a nice dusting of cocoa powder. It'll be worth the wait!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "spread_mascarpone_cream"
+      ],
+      "instructions": "Refrigerate 4 hours, dust with cocoa before serving",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -198,7 +140,66 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Don't oversoak the biscuits\nUse good quality espresso\nBest made a day ahead"
-  }
+  "recipe": {
+    "id": "tiramisu",
+    "tags": [
+      "italian",
+      "dessert",
+      "breakfast"
+    ],
+    "title": "Tiramisu",
+    "course": "dessert",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "italian",
+    "servings": 8,
+    "difficulty": "Medium",
+    "description": "Classic Italian dessert with coffee-soaked ladyfingers and mascarpone",
+    "estimated_total": "PT30M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "mascarpone",
+      "name": "mascarpone",
+      "unit": "g",
+      "quantity": 500.0
+    },
+    {
+      "id": "6_eggs_separated",
+      "name": "6 eggs, separated",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "strong_espresso_cooled",
+      "name": "strong espresso, cooled",
+      "unit": "ml",
+      "quantity": 300.0
+    },
+    {
+      "id": "marsala_wine",
+      "name": "Marsala wine",
+      "unit": "tbsp",
+      "quantity": 3.0
+    },
+    {
+      "id": "ladyfinger_biscuits",
+      "name": "ladyfinger biscuits",
+      "unit": "g",
+      "quantity": 300.0
+    },
+    {
+      "id": "cocoa_powder_for_dusting",
+      "name": "Cocoa powder for dusting",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

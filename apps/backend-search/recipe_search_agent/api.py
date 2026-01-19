@@ -6,12 +6,15 @@ Expone endpoints REST para búsqueda semántica de recetas.
 
 import os
 import time
+import json
 import logging
+import asyncio
 from typing import List, Optional
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 from supabase import create_client
@@ -144,6 +147,41 @@ class SearchResponse(BaseModel):
     results: List[RecipeMatchResponse]
     total: int
     took_ms: float
+
+
+# Chat Agent Models
+class ChatRequest(BaseModel):
+    """Request for chat endpoint."""
+    
+    message: str = Field(..., description="User message to send to Jamie", example="I'm feeling tired, what should I cook?")
+    session_id: str = Field(..., description="Session ID for conversation continuity", example="user-123-abc")
+
+
+class ChatResponse(BaseModel):
+    """Non-streaming chat response."""
+    
+    response: str
+    tool_calls: List[dict]
+    session_id: str
+
+
+# Chat Agent singleton
+_chat_agent = None
+
+
+def get_chat_agent():
+    """Get or create the chat agent singleton."""
+    global _chat_agent
+    
+    if _chat_agent is None:
+        # Import here to avoid circular imports
+        from recipe_search_agent.chat_agent import DiscoveryChatAgent
+        
+        search_agent = get_search_agent()
+        _chat_agent = DiscoveryChatAgent(search_agent=search_agent)
+        logger.info("Chat agent initialized")
+    
+    return _chat_agent
 
 
 # Endpoints
@@ -409,6 +447,144 @@ async def list_recipes(
     except Exception as e:
         logger.error(f"Failed to list recipes: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to list recipes: {str(e)}")
+
+
+# =============================================================================
+# CHAT AGENT ENDPOINTS
+# =============================================================================
+
+@app.post("/api/v1/chat")
+async def chat(request: ChatRequest):
+    """
+    Conversational chat with Jamie Oliver discovery agent.
+    
+    Streams responses via Server-Sent Events (SSE).
+    
+    Event types:
+    - text_chunk: Partial text from Jamie's response
+    - tool_call: When the agent calls a tool (search, etc.)
+    - done: Response complete
+    - error: An error occurred
+    
+    Example:
+    ```json
+    {
+        "message": "I've had a long day and need something easy",
+        "session_id": "user-123"
+    }
+    ```
+    """
+    try:
+        chat_agent = get_chat_agent()
+        
+        async def event_generator():
+            """Generate SSE events from chat agent."""
+            try:
+                async for event in chat_agent.chat(request.message, request.session_id):
+                    # Format as SSE
+                    data = {
+                        "type": event.type,
+                        "content": event.content,
+                    }
+                    if event.metadata:
+                        data["metadata"] = event.metadata
+                    
+                    yield f"data: {json.dumps(data)}\n\n"
+                    
+                    # Small delay to prevent overwhelming the client
+                    await asyncio.sleep(0.01)
+                    
+            except Exception as e:
+                logger.error(f"Error in chat stream: {e}", exc_info=True)
+                error_data = {"type": "error", "content": str(e)}
+                yield f"data: {json.dumps(error_data)}\n\n"
+        
+        return StreamingResponse(
+            event_generator(),
+            media_type="text/event-stream",
+            headers={
+                "Cache-Control": "no-cache",
+                "Connection": "keep-alive",
+                "X-Accel-Buffering": "no",  # Disable nginx buffering
+            }
+        )
+        
+    except Exception as e:
+        logger.error(f"Chat failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}")
+
+
+@app.post("/api/v1/chat/sync")
+async def chat_sync(request: ChatRequest) -> ChatResponse:
+    """
+    Non-streaming chat endpoint for simpler integrations.
+    
+    Returns the complete response instead of streaming.
+    """
+    try:
+        chat_agent = get_chat_agent()
+        result = await chat_agent.chat_sync(request.message, request.session_id)
+        
+        if "error" in result:
+            raise HTTPException(status_code=500, detail=result["error"])
+        
+        return ChatResponse(
+            response=result["response"],
+            tool_calls=result["tool_calls"],
+            session_id=request.session_id,
+        )
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Chat sync failed: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}")
+
+
+@app.delete("/api/v1/chat/{session_id}")
+async def clear_chat_session(session_id: str):
+    """
+    Clear a chat session's memory.
+    
+    Use this when the user wants to start a fresh conversation.
+    """
+    try:
+        chat_agent = get_chat_agent()
+        cleared = chat_agent.clear_session(session_id)
+        
+        return {
+            "session_id": session_id,
+            "cleared": cleared,
+            "message": "Session cleared" if cleared else "Session not found"
+        }
+        
+    except Exception as e:
+        logger.error(f"Failed to clear session: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to clear session: {str(e)}")
+
+
+@app.get("/api/v1/chat/{session_id}")
+async def get_chat_session(session_id: str):
+    """
+    Get information about a chat session.
+    """
+    try:
+        chat_agent = get_chat_agent()
+        info = chat_agent.get_session_info(session_id)
+        
+        if not info:
+            raise HTTPException(status_code=404, detail=f"Session not found: {session_id}")
+        
+        return info
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to get session info: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to get session info: {str(e)}")
+
+
+# =============================================================================
 
 
 if __name__ == "__main__":

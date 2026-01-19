@@ -1,192 +1,138 @@
 {
-  "recipe": {
-    "id": "pork-chops-with-apples",
-    "title": "Pork Chops with Apples",
-    "description": "Pan-seared pork chops with caramelized apples and sage",
-    "estimated_total": "PT30M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "pork"
-    ],
-    "course": "main"
+  "notes": {
+    "text": "Don't overcook pork - it should be slightly pink\nLet chops rest before serving\nGranny Smith apples work wonderfully"
   },
-  "ingredients": [
-    {
-      "id": "pork_chops",
-      "name": "pork chops",
-      "quantity": 4.0,
-      "unit": "thick"
-    },
-    {
-      "id": "2_apples_sliced",
-      "name": "2 apples, sliced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "butter",
-      "name": "butter",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "fresh_sage_leaves",
-      "name": "Fresh sage leaves",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "apple_cider",
-      "name": "apple cider",
-      "quantity": 100.0,
-      "unit": "ml"
-    },
-    {
-      "id": "honey",
-      "name": "honey",
-      "quantity": 1.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "salt_and_pepper",
-      "name": "Salt and pepper",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "season_pork_chops",
+      "next": [
+        "pan_fry_chops"
+      ],
+      "type": "immediate",
       "descr": "Season pork chops generously with salt and pepper",
-      "instructions": "Season pork chops generously with salt and pepper",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by seasoning our pork chops generously with salt and pepper. This will really bring out the flavour!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's season the pork chops generously."
-        }
-      ]
+      "instructions": "Season pork chops generously with salt and pepper",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "pan_fry_chops",
+      "next": [
+        "add_butter_apples"
+      ],
+      "type": "timer",
       "descr": "Pan-fry chops 4-5 minutes per side, set aside",
+      "duration": 600,
+      "on_enter": [
+        {
+          "say": "Now, let's pan-fry these beauties for 4-5 minutes on each side until they're golden brown. You'll hear that lovely sizzle!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "season_pork_chops"
+      ],
       "instructions": "Pan-fry chops 4-5 minutes per side, set aside",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's pan-fry chops 4-5 minutes per side,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "add_butter_apples",
+      "next": [
+        "caramelize_apples"
+      ],
+      "type": "immediate",
       "descr": "In same pan, add butter and apple slices",
+      "on_enter": [
+        {
+          "say": "Brilliant! Now, in the same pan, let's add our butter and sliced apples. The aroma will be fantastic!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "pan_fry_chops"
+      ],
       "instructions": "In same pan, add butter and apple slices",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's add butter and apple."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "caramelize_apples",
+      "next": [
+        "add_sage_cider_honey"
+      ],
+      "type": "immediate",
       "descr": "Cook apples until caramelized",
+      "on_enter": [
+        {
+          "say": "Time to cook those apples until they're beautifully caramelized. They'll turn a lovely golden colour and smell amazing!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_butter_apples"
+      ],
       "instructions": "Cook apples until caramelized",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to cook the apples until caramelized."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "add_sage_cider_honey",
+      "next": [
+        "coat_chops"
+      ],
+      "type": "timer",
       "descr": "Add sage, cider, and honey, simmer",
+      "duration": 300,
+      "on_enter": [
+        {
+          "say": "Let's add the sage, cider, and honey now. Give it a good stir and let it simmer for a few minutes. The flavours will meld beautifully!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "caramelize_apples"
+      ],
       "instructions": "Add sage, cider, and honey, simmer",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the sage, cider, and."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "coat_chops",
+      "next": [
+        "serve_dish"
+      ],
+      "type": "immediate",
       "descr": "Return chops to pan, coat with sauce",
-      "instructions": "Return chops to pan, coat with sauce",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's return chops to pan, coat with."
+          "say": "Right, let's return those chops to the pan and coat them with that lovely sauce. They'll soak up all those delicious flavours!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_sage_cider_honey"
+      ],
+      "instructions": "Return chops to pan, coat with sauce",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve with mashed potatoes",
-      "instructions": "Serve with mashed potatoes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_dish",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve with mashed potatoes",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up! Pair these gorgeous pork chops with some creamy mashed potatoes. Enjoy your meal!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "coat_chops"
+      ],
+      "instructions": "Serve with mashed potatoes",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -195,7 +141,63 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Don't overcook pork - it should be slightly pink\nLet chops rest before serving\nGranny Smith apples work wonderfully"
-  }
+  "recipe": {
+    "id": "pork-chops-with-apples",
+    "tags": [
+      "pork"
+    ],
+    "title": "Pork Chops with Apples",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Pan-seared pork chops with caramelized apples and sage",
+    "estimated_total": "PT30M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "pork_chops",
+      "name": "pork chops",
+      "unit": "thick",
+      "quantity": 4.0
+    },
+    {
+      "id": "2_apples_sliced",
+      "name": "2 apples, sliced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "fresh_sage_leaves",
+      "name": "Fresh sage leaves",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "apple_cider",
+      "name": "apple cider",
+      "unit": "ml",
+      "quantity": 100.0
+    },
+    {
+      "id": "honey",
+      "name": "honey",
+      "unit": "tbsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "salt_and_pepper",
+      "name": "Salt and pepper",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

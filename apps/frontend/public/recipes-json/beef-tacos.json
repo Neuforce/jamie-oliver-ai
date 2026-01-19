@@ -1,196 +1,137 @@
 {
-  "recipe": {
-    "id": "beef-tacos",
-    "title": "Beef Tacos",
-    "description": "Mexican street-style tacos with seasoned ground beef and fresh toppings",
-    "estimated_total": "PT30M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "beef",
-      "mexican"
-    ],
-    "course": "main",
-    "cuisine": "mexican"
+  "notes": {
+    "text": "Warm tortillas make all the difference\nSet up a taco bar for fun family dining\nTry adding pickled jalapeños for extra kick"
   },
-  "ingredients": [
-    {
-      "id": "ground_beef",
-      "name": "ground beef",
-      "quantity": 500.0,
-      "unit": "g"
-    },
-    {
-      "id": "1_onion_diced",
-      "name": "1 onion, diced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "cumin",
-      "name": "cumin",
-      "quantity": 2.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "paprika",
-      "name": "paprika",
-      "quantity": 2.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "chili_powder",
-      "name": "chili powder",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "tortillas",
-      "name": "tortillas",
-      "quantity": 8.0,
-      "unit": "small"
-    },
-    {
-      "id": "lettuce_tomatoes_cheese_sour_cream_for_topping",
-      "name": "Lettuce, tomatoes, cheese, sour cream for topping",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "cook_onion",
+      "next": [
+        "brown_beef"
+      ],
+      "type": "immediate",
       "descr": "Cook onion in a large pan until soft",
-      "instructions": "Cook onion in a large pan until soft",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's start by cooking the onion in a large pan until it's nice and soft. You'll know it's ready when it turns translucent and smells sweet."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to cook the onion in large."
-        }
-      ]
+      "instructions": "Cook onion in a large pan until soft",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "brown_beef",
+      "next": [
+        "add_spices"
+      ],
+      "type": "immediate",
       "descr": "Add ground beef and cook until browned",
+      "on_enter": [
+        {
+          "say": "Now, let's add the ground beef to the pan. Cook it until it's beautifully browned and you can hear that lovely sizzle."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cook_onion"
+      ],
       "instructions": "Add ground beef and cook until browned",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the ground beef and."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "add_spices",
+      "next": [
+        "simmer_beef"
+      ],
+      "type": "immediate",
       "descr": "Stir in cumin, paprika, chili powder, salt and pepper",
+      "on_enter": [
+        {
+          "say": "Let's spice things up! Stir in the cumin, paprika, chili powder, and a pinch of salt and pepper. Give it a good mix so everything's well combined."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "brown_beef"
+      ],
       "instructions": "Stir in cumin, paprika, chili powder, salt and pepper",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "simmer_beef",
+      "next": [
+        "warm_tortillas"
+      ],
+      "type": "timer",
       "descr": "Add a splash of water and simmer for 5 minutes",
+      "duration": 300,
+      "on_enter": [
+        {
+          "say": "Now, add a splash of water to the pan and let it simmer for 5 minutes. This will help all those lovely flavors meld together."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_spices"
+      ],
       "instructions": "Add a splash of water and simmer for 5 minutes",
-      "type": "timer",
-      "duration": "PT5M",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the splash of water."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_5",
+      "id": "warm_tortillas",
+      "next": [
+        "fill_tortillas"
+      ],
+      "type": "immediate",
       "descr": "Warm tortillas in a dry pan",
+      "on_enter": [
+        {
+          "say": "Let's warm up those tortillas in a dry pan. You want them nice and pliable, ready to hold all that delicious filling."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "simmer_beef"
+      ],
       "instructions": "Warm tortillas in a dry pan",
-      "type": "timer",
-      "duration": "PT3M",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's warm the tortillas in dry."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "fill_tortillas",
+      "next": [
+        "serve_tacos"
+      ],
+      "type": "immediate",
       "descr": "Fill tortillas with beef and your favorite toppings",
-      "instructions": "Fill tortillas with beef and your favorite toppings",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's fill tortillas with beef and your."
+          "say": "Now for the fun part! Fill each tortilla with the beef mixture and top with your favorite toppings. Get creative!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "warm_tortillas"
+      ],
+      "instructions": "Fill tortillas with beef and your favorite toppings",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve with lime wedges",
-      "instructions": "Serve with lime wedges",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_tacos",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve with lime wedges",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up these beautiful tacos with some lime wedges on the side. Enjoy every bite!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "fill_tortillas"
+      ],
+      "instructions": "Serve with lime wedges",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -199,7 +140,65 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Warm tortillas make all the difference\nSet up a taco bar for fun family dining\nTry adding pickled jalapeños for extra kick"
-  }
+  "recipe": {
+    "id": "beef-tacos",
+    "tags": [
+      "beef",
+      "mexican"
+    ],
+    "title": "Beef Tacos",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "mexican",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Mexican street-style tacos with seasoned ground beef and fresh toppings",
+    "estimated_total": "PT30M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "ground_beef",
+      "name": "ground beef",
+      "unit": "g",
+      "quantity": 500.0
+    },
+    {
+      "id": "1_onion_diced",
+      "name": "1 onion, diced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "cumin",
+      "name": "cumin",
+      "unit": "tsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "unit": "tsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "chili_powder",
+      "name": "chili powder",
+      "unit": "tsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "tortillas",
+      "name": "tortillas",
+      "unit": "small",
+      "quantity": 8.0
+    },
+    {
+      "id": "lettuce_tomatoes_cheese_sour_cream_for_topping",
+      "name": "Lettuce, tomatoes, cheese, sour cream for topping",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

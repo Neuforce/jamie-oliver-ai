@@ -1,201 +1,139 @@
 {
-  "recipe": {
-    "id": "classic-lasagna",
-    "title": "Classic Lasagna",
-    "description": "Layered Italian pasta with rich meat sauce and creamy béchamel",
-    "estimated_total": "PT2H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 8,
-    "difficulty": "Tricky",
-    "tags": [
-      "pasta",
-      "beef",
-      "italian"
-    ],
-    "course": "main",
-    "cuisine": "italian"
+  "notes": {
+    "text": "Make the sauces the day before for easier assembly\nDon't skimp on the béchamel between layers\nCover with foil if top browns too quickly"
   },
-  "ingredients": [
-    {
-      "id": "ground_beef",
-      "name": "ground beef",
-      "quantity": 500.0,
-      "unit": "g"
-    },
-    {
-      "id": "tinned_tomatoes",
-      "name": "tinned tomatoes",
-      "quantity": 400.0,
-      "unit": "g"
-    },
-    {
-      "id": "sheets",
-      "name": "sheets",
-      "quantity": 12.0,
-      "unit": "lasagna"
-    },
-    {
-      "id": "butter",
-      "name": "butter",
-      "quantity": 50.0,
-      "unit": "g"
-    },
-    {
-      "id": "flour",
-      "name": "flour",
-      "quantity": 50.0,
-      "unit": "g"
-    },
-    {
-      "id": "milk",
-      "name": "milk",
-      "quantity": 600.0,
-      "unit": "ml"
-    },
-    {
-      "id": "mozzarella_grated",
-      "name": "mozzarella, grated",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "parmesan_grated",
-      "name": "Parmesan, grated",
-      "quantity": 100.0,
-      "unit": "g"
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "make_bolognese",
+      "next": [
+        "make_bechamel"
+      ],
+      "type": "timer",
       "descr": "Make bolognese: brown beef, add tomatoes, simmer 30 minutes",
-      "instructions": "Make bolognese: brown beef, add tomatoes, simmer 30 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 1800,
+      "on_enter": [
+        {
+          "say": "Right, let's get started with the bolognese! Brown the beef until it's beautifully caramelized, then add the tomatoes. Let it simmer for 30 minutes, giving it a stir now and then."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's make bolognese: brown beef,."
-        }
-      ]
+      "instructions": "Make bolognese: brown beef, add tomatoes, simmer 30 minutes",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "make_bechamel",
+      "next": [
+        "preheat_oven"
+      ],
+      "type": "immediate",
       "descr": "Make béchamel: melt butter, add flour, gradually whisk in milk",
+      "on_enter": [
+        {
+          "say": "Now, let's make that lovely béchamel sauce. Melt the butter, stir in the flour, and then slowly whisk in the milk until it's smooth and creamy. Keep whisking to avoid lumps!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "make_bolognese"
+      ],
       "instructions": "Make béchamel: melt butter, add flour, gradually whisk in milk",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's make béchamel: melt butter,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "preheat_oven",
+      "next": [
+        "layer_lasagna"
+      ],
+      "type": "immediate",
       "descr": "Preheat oven to 180°C (350°F)",
+      "on_enter": [
+        {
+          "say": "Let's get the oven nice and hot. Preheat it to 180°C, or 350°F. Perfect temperature for a golden lasagna!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "make_bechamel"
+      ],
       "instructions": "Preheat oven to 180°C (350°F)",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the oven to 180°c."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_4",
+      "id": "layer_lasagna",
+      "next": [
+        "top_with_cheese"
+      ],
+      "type": "immediate",
       "descr": "Layer: meat sauce, pasta, béchamel, repeat",
+      "on_enter": [
+        {
+          "say": "Time to build our lasagna! Start with a layer of meat sauce, then pasta, then béchamel. Keep layering until you've used everything up. It's like building a delicious pasta tower!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "preheat_oven"
+      ],
       "instructions": "Layer: meat sauce, pasta, béchamel, repeat",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's layer: meat sauce, pasta, béchamel, repeat."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "top_with_cheese",
+      "next": [
+        "bake_lasagna"
+      ],
+      "type": "immediate",
       "descr": "Top with remaining béchamel and all the cheese",
+      "on_enter": [
+        {
+          "say": "Now for the cheesy finale! Spread the remaining béchamel on top and sprinkle over all that lovely grated cheese. This is what's going to give us that beautiful golden crust."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "layer_lasagna"
+      ],
       "instructions": "Top with remaining béchamel and all the cheese",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's top with remaining béchamel and all."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "bake_lasagna",
+      "next": [
+        "rest_lasagna"
+      ],
+      "type": "timer",
       "descr": "Bake for 40-45 minutes until golden and bubbling",
-      "instructions": "Bake for 40-45 minutes until golden and bubbling",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 2700,
       "on_enter": [
         {
-          "say": "Time to bake the for 40-45 minutes."
+          "say": "Pop the lasagna in the oven and let it bake for 40 to 45 minutes. You'll know it's ready when it's golden and bubbling away. The smell will be irresistible!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "top_with_cheese"
+      ],
+      "instructions": "Bake for 40-45 minutes until golden and bubbling",
+      "requires_confirm": false
     },
     {
-      "id": "step_7",
-      "descr": "Let rest 10 minutes before serving",
-      "instructions": "Let rest 10 minutes before serving",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "rest_lasagna",
       "next": [],
+      "type": "timer",
+      "descr": "Let rest 10 minutes before serving",
+      "duration": 600,
       "on_enter": [
         {
-          "say": "Let's let rest 10 minutes before serving."
+          "say": "Fantastic! Let the lasagna rest for 10 minutes before serving. This helps it set a bit so you can slice it beautifully. Almost there!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "bake_lasagna"
+      ],
+      "instructions": "Let rest 10 minutes before serving",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -204,7 +142,72 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Make the sauces the day before for easier assembly\nDon't skimp on the béchamel between layers\nCover with foil if top browns too quickly"
-  }
+  "recipe": {
+    "id": "classic-lasagna",
+    "tags": [
+      "pasta",
+      "beef",
+      "italian"
+    ],
+    "title": "Classic Lasagna",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "italian",
+    "servings": 8,
+    "difficulty": "Tricky",
+    "description": "Layered Italian pasta with rich meat sauce and creamy béchamel",
+    "estimated_total": "PT2H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "ground_beef",
+      "name": "ground beef",
+      "unit": "g",
+      "quantity": 500.0
+    },
+    {
+      "id": "tinned_tomatoes",
+      "name": "tinned tomatoes",
+      "unit": "g",
+      "quantity": 400.0
+    },
+    {
+      "id": "sheets",
+      "name": "sheets",
+      "unit": "lasagna",
+      "quantity": 12.0
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "unit": "g",
+      "quantity": 50.0
+    },
+    {
+      "id": "flour",
+      "name": "flour",
+      "unit": "g",
+      "quantity": 50.0
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "unit": "ml",
+      "quantity": 600.0
+    },
+    {
+      "id": "mozzarella_grated",
+      "name": "mozzarella, grated",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "parmesan_grated",
+      "name": "Parmesan, grated",
+      "unit": "g",
+      "quantity": 100.0
+    }
+  ]
 }

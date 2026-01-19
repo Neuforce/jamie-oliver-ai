@@ -1,193 +1,138 @@
 {
-  "recipe": {
-    "id": "grilled-salmon-with-lemon",
-    "title": "Grilled Salmon with Lemon",
-    "description": "Perfectly grilled salmon with fresh herbs and citrus",
-    "estimated_total": "PT20M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "fish"
-    ],
-    "course": "main",
-    "cuisine": "mediterranean"
+  "notes": {
+    "text": "Don't overcook - salmon should be slightly pink in center\nLet salmon come to room temperature before cooking\nCrispy skin is delicious - don't skip it"
   },
-  "ingredients": [
-    {
-      "id": "fillets",
-      "name": "fillets",
-      "quantity": 4.0,
-      "unit": "salmon"
-    },
-    {
-      "id": "2_lemons",
-      "name": "2 lemons",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "olive_oil",
-      "name": "olive oil",
-      "quantity": 3.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "cloves_minced",
-      "name": "cloves, minced",
-      "quantity": 2.0,
-      "unit": "garlic"
-    },
-    {
-      "id": "fresh_dill",
-      "name": "Fresh dill",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "salt_and_pepper",
-      "name": "Salt and pepper",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "asparagus_for_serving",
-      "name": "Asparagus for serving",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_grill",
+      "next": [
+        "mix_marinade"
+      ],
+      "type": "immediate",
       "descr": "Preheat grill or pan to medium-high heat",
-      "instructions": "Preheat grill or pan to medium-high heat",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by preheating your grill or pan to medium-high heat. You want it nice and hot!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the grill or pan."
-        }
-      ]
+      "instructions": "Preheat grill or pan to medium-high heat",
+      "requires_confirm": false
     },
     {
-      "id": "step_2",
+      "id": "mix_marinade",
+      "next": [
+        "brush_salmon"
+      ],
+      "type": "immediate",
       "descr": "Mix olive oil, lemon juice, garlic, salt, and pepper",
+      "on_enter": [
+        {
+          "say": "Now, let's mix together the olive oil, lemon juice, garlic, salt, and pepper. Give it a good stir!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "preheat_grill"
+      ],
       "instructions": "Mix olive oil, lemon juice, garlic, salt, and pepper",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "brush_salmon",
+      "next": [
+        "grill_skin_side_down"
+      ],
+      "type": "immediate",
       "descr": "Brush salmon with marinade",
+      "on_enter": [
+        {
+          "say": "Lovely! Now, brush that beautiful salmon with the marinade we just made. Make sure it's well coated."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_marinade"
+      ],
       "instructions": "Brush salmon with marinade",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's brush salmon with marinade."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "grill_skin_side_down",
+      "next": [
+        "flip_and_cook"
+      ],
+      "type": "timer",
       "descr": "Grill skin-side down for 5 minutes",
+      "duration": 300,
+      "on_enter": [
+        {
+          "say": "Time to grill! Place the salmon skin-side down and let it cook for 5 minutes. You'll hear it sizzle and the skin will start to crisp up beautifully."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "brush_salmon"
+      ],
       "instructions": "Grill skin-side down for 5 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to grill the skin-side down for."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "flip_and_cook",
+      "next": [
+        "top_with_dill"
+      ],
+      "type": "timer",
       "descr": "Flip and cook for another 3-4 minutes",
+      "duration": 240,
+      "on_enter": [
+        {
+          "say": "Brilliant! Now flip the salmon and cook for another 3 to 4 minutes. The aroma will be amazing!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "grill_skin_side_down"
+      ],
       "instructions": "Flip and cook for another 3-4 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's cook for another 3-4."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "top_with_dill",
+      "next": [
+        "serve_with_asparagus"
+      ],
+      "type": "immediate",
       "descr": "Top with fresh dill and lemon slices",
-      "instructions": "Top with fresh dill and lemon slices",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's top with fresh dill and lemon."
+          "say": "Let's finish it off by topping the salmon with fresh dill and lemon slices. It adds a lovely fresh flavor!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "flip_and_cook"
+      ],
+      "instructions": "Top with fresh dill and lemon slices",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve with roasted asparagus",
-      "instructions": "Serve with roasted asparagus",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_with_asparagus",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve with roasted asparagus",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up this gorgeous dish with some roasted asparagus. Enjoy your meal!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "top_with_dill"
+      ],
+      "instructions": "Serve with roasted asparagus",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -196,7 +141,64 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Don't overcook - salmon should be slightly pink in center\nLet salmon come to room temperature before cooking\nCrispy skin is delicious - don't skip it"
-  }
+  "recipe": {
+    "id": "grilled-salmon-with-lemon",
+    "tags": [
+      "fish"
+    ],
+    "title": "Grilled Salmon with Lemon",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "mediterranean",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Perfectly grilled salmon with fresh herbs and citrus",
+    "estimated_total": "PT20M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "fillets",
+      "name": "fillets",
+      "unit": "salmon",
+      "quantity": 4.0
+    },
+    {
+      "id": "2_lemons",
+      "name": "2 lemons",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "unit": "tbsp",
+      "quantity": 3.0
+    },
+    {
+      "id": "cloves_minced",
+      "name": "cloves, minced",
+      "unit": "garlic",
+      "quantity": 2.0
+    },
+    {
+      "id": "fresh_dill",
+      "name": "Fresh dill",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "salt_and_pepper",
+      "name": "Salt and pepper",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "asparagus_for_serving",
+      "name": "Asparagus for serving",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

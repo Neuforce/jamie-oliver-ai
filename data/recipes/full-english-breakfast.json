@@ -11,10 +11,10 @@
     "tags": [
       "pork",
       "quick",
-      "dessert",
       "breakfast"
     ],
-    "course": "dessert"
+    "course": "breakfast",
+    "cuisine": "british"
   },
   "ingredients": [
     {

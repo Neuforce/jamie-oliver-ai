@@ -1,200 +1,136 @@
 {
-  "recipe": {
-    "id": "fish-tacos",
-    "title": "Fish Tacos",
-    "description": "Crispy fish with fresh slaw in soft tortillas",
-    "estimated_total": "PT30M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "fish",
-      "mexican"
-    ],
-    "course": "main",
-    "cuisine": "mexican"
+  "notes": {
+    "text": "Cod or tilapia work great\nAdd hot sauce for extra kick\nServe with fresh pico de gallo"
   },
-  "ingredients": [
-    {
-      "id": "white_fish_fillets",
-      "name": "white fish fillets",
-      "quantity": 500.0,
-      "unit": "g"
-    },
-    {
-      "id": "tortillas",
-      "name": "tortillas",
-      "quantity": 8.0,
-      "unit": "small"
-    },
-    {
-      "id": "flour",
-      "name": "flour",
-      "quantity": 1.0,
-      "unit": "cup"
-    },
-    {
-      "id": "paprika",
-      "name": "paprika",
-      "quantity": 1.0,
-      "unit": "tsp"
-    },
-    {
-      "id": "1/4_cabbage_shredded",
-      "name": "1/4 cabbage, shredded",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "mayonnaise",
-      "name": "mayonnaise",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "lime_juice",
-      "name": "Lime juice",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "fresh_cilantro",
-      "name": "Fresh cilantro",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "mix_flour_spices",
+      "next": [
+        "cut_coat_fish"
+      ],
+      "type": "immediate",
       "descr": "Mix flour with paprika, salt, and pepper",
-      "instructions": "Mix flour with paprika, salt, and pepper",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by mixing our flour with paprika, salt, and pepper. Give it a good stir until it's all combined."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "instructions": "Mix flour with paprika, salt, and pepper",
+      "requires_confirm": false
     },
     {
-      "id": "step_2",
+      "id": "cut_coat_fish",
+      "next": [
+        "fry_fish"
+      ],
+      "type": "immediate",
       "descr": "Cut fish into strips, coat in flour",
+      "on_enter": [
+        {
+          "say": "Now, let's cut our fish into lovely strips and coat them in that seasoned flour. Make sure each piece is nicely covered."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_flour_spices"
+      ],
       "instructions": "Cut fish into strips, coat in flour",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's start by cut."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "fry_fish",
+      "next": [
+        "make_slaw"
+      ],
+      "type": "immediate",
       "descr": "Fry in hot oil until golden and crispy",
+      "on_enter": [
+        {
+          "say": "Time to fry the fish! Get your oil nice and hot, then fry those strips until they're golden and crispy. You'll hear them sizzle beautifully!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cut_coat_fish"
+      ],
       "instructions": "Fry in hot oil until golden and crispy",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to fry the in hot oil."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "make_slaw",
+      "next": [
+        "warm_tortillas"
+      ],
+      "type": "immediate",
       "descr": "Mix cabbage with mayo and lime juice for slaw",
+      "on_enter": [
+        {
+          "say": "Let's whip up a quick slaw. Mix your shredded cabbage with mayo and a squeeze of lime juice. It'll be fresh and zesty!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "fry_fish"
+      ],
       "instructions": "Mix cabbage with mayo and lime juice for slaw",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_5",
+      "id": "warm_tortillas",
+      "next": [
+        "assemble_tacos"
+      ],
+      "type": "immediate",
       "descr": "Warm tortillas",
+      "on_enter": [
+        {
+          "say": "Let's warm up those tortillas. Just a quick toast on each side until they're nice and pliable."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "make_slaw"
+      ],
       "instructions": "Warm tortillas",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's warm the tortillas."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "assemble_tacos",
+      "next": [
+        "add_toppings"
+      ],
+      "type": "immediate",
       "descr": "Fill with fish and slaw",
-      "instructions": "Fill with fish and slaw",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's fill with fish and slaw."
+          "say": "Brilliant! Now let's fill those warm tortillas with our crispy fish and fresh slaw. It's coming together beautifully!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "warm_tortillas"
+      ],
+      "instructions": "Fill with fish and slaw",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Top with cilantro and extra lime",
-      "instructions": "Top with cilantro and extra lime",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "add_toppings",
       "next": [],
+      "type": "immediate",
+      "descr": "Top with cilantro and extra lime",
       "on_enter": [
         {
-          "say": "Let's top with cilantro and extra lime."
+          "say": "Finally, let's top it all off with some fresh cilantro and a squeeze of extra lime. Perfect!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "assemble_tacos"
+      ],
+      "instructions": "Top with cilantro and extra lime",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -203,7 +139,71 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Cod or tilapia work great\nAdd hot sauce for extra kick\nServe with fresh pico de gallo"
-  }
+  "recipe": {
+    "id": "fish-tacos",
+    "tags": [
+      "fish",
+      "mexican"
+    ],
+    "title": "Fish Tacos",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "mexican",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Crispy fish with fresh slaw in soft tortillas",
+    "estimated_total": "PT30M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "white_fish_fillets",
+      "name": "white fish fillets",
+      "unit": "g",
+      "quantity": 500.0
+    },
+    {
+      "id": "tortillas",
+      "name": "tortillas",
+      "unit": "small",
+      "quantity": 8.0
+    },
+    {
+      "id": "flour",
+      "name": "flour",
+      "unit": "cup",
+      "quantity": 1.0
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "unit": "tsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "1/4_cabbage_shredded",
+      "name": "1/4 cabbage, shredded",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "mayonnaise",
+      "name": "mayonnaise",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "lime_juice",
+      "name": "Lime juice",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "fresh_cilantro",
+      "name": "Fresh cilantro",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }
