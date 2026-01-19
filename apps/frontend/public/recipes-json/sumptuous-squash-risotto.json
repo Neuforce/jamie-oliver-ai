@@ -1,0 +1,312 @@
+{
+  "notes": {
+    "stock_tip": "For extra flavour, make your own stock with chicken bones, onion, carrot, celery offcuts, leftover herbs, and dried mushrooms. Simmer 3–4 hours, then strain and season."
+  },
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "next": [
+        "roast_squash",
+        "prep_veg"
+      ],
+      "type": "immediate",
+      "descr": "Preheat oven to 180°C / 350°F / gas 4",
+      "on_enter": [
+        {
+          "say": "Right, let's get started! Preheat the oven to one hundred eighty degrees celsius, that's three fifty fahrenheit or gas mark four. Give it a few minutes to get nice and hot."
+        }
+      ],
+      "auto_start": true,
+      "instructions": "Preheat the oven to 180°C/350°F/gas 4 so it is hot and ready for roasting the squash.",
+      "requires_confirm": true
+    },
+    {
+      "id": "roast_squash",
+      "type": "timer",
+      "descr": "Season squash and roast",
+      "duration": "PT1M",
+      "on_enter": [
+        {
+          "say": "Now for the squash! Peel it, halve it lengthways, scoop out those seeds, then slice it into chunky moons about three centimetres thick. Toss them in a baking tray with olive oil, a pinch of chilli flakes, salt and pepper. Pop it in the oven - this will take about fifty minutes until beautifully caramelized."
+        }
+      ],
+      "reminder": {
+        "every": "PT20S"
+      },
+      "auto_start": false,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "instructions": "Peel the butternut squash, carefully halve it lengthways, then scoop out and discard the seeds. Slice the squash into 3 cm-thick moons and toss them in a baking tray with about 1 tablespoon of olive oil, the dried red chilli flakes and a pinch of sea salt and black pepper. Roast for about 50 minutes, or until the squash is soft and starting to caramelize around the edges.",
+      "requires_confirm": true
+    },
+    {
+      "id": "prep_veg",
+      "next": [
+        "fry_rosemary"
+      ],
+      "type": "immediate",
+      "descr": "Chop onions & celery; keep stock simmering",
+      "on_enter": [
+        {
+          "say": "While that squash is roasting, let's prep. Finely chop your onions and celery. Get your stock in a pan on the lowest heat, just keeping it at a gentle simmer - you'll need it hot and ready for the risotto."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "instructions": "While the squash is roasting, peel and finely chop the onions and finely chop the celery. Put the stock into a pan and leave it on the lowest heat so it stays at a gentle simmer, ready to ladle into the risotto later.",
+      "requires_confirm": true
+    },
+    {
+      "id": "fry_rosemary",
+      "next": [
+        "soffritto"
+      ],
+      "type": "timer",
+      "descr": "Crisp rosemary in oil",
+      "duration": "PT1M",
+      "on_enter": [
+        {
+          "say": "Get a large high-sided pan on medium heat with a tablespoon of olive oil. Strip those rosemary leaves straight into the pan and fry them until they're crispy and fragrant. Then scoop them out onto a plate, but keep that gorgeous flavoured oil in the pan!"
+        }
+      ],
+      "reminder": {
+        "every": "PT20S"
+      },
+      "auto_start": false,
+      "depends_on": [
+        "prep_veg"
+      ],
+      "instructions": "Place a large high-sided pan on a medium heat with 1 tablespoon of olive oil. Strip the rosemary leaves from their stalks straight into the pan and fry them until crispy and fragrant. Use a slotted spoon to lift the crispy rosemary leaves out onto a plate, leaving the flavoured oil behind in the pan.",
+      "requires_confirm": true
+    },
+    {
+      "id": "soffritto",
+      "next": [
+        "toast_rice"
+      ],
+      "type": "timer",
+      "descr": "Cook onions & celery (soffritto)",
+      "duration": "PT1M",
+      "on_enter": [
+        {
+          "say": "Into that rosemary oil go your onions and celery. Cook them gently for about ten minutes, stirring regularly. You want them soft and translucent, not coloured - nice and gentle does it!"
+        }
+      ],
+      "reminder": {
+        "every": "PT15S"
+      },
+      "auto_start": false,
+      "depends_on": [
+        "fry_rosemary"
+      ],
+      "instructions": "Add the chopped onions and celery into the rosemary-flavoured oil. Cook gently for about 10 minutes, stirring regularly, until the vegetables are soft and starting to turn translucent but not coloured.",
+      "requires_confirm": true
+    },
+    {
+      "id": "toast_rice",
+      "next": [
+        "risotto_phase"
+      ],
+      "type": "timer",
+      "descr": "Toast rice",
+      "duration": "PT2M",
+      "on_enter": [
+        {
+          "say": "Now stir in your risotto rice. Toast it with the vegetables for about two minutes, stirring constantly. You want every grain coated in that lovely flavoured oil."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "soffritto"
+      ],
+      "instructions": "Stir in the risotto rice and cook it in the pan with the vegetables for about 2 minutes, stirring constantly so the grains get coated in the flavoured oil and start to toast lightly.",
+      "requires_confirm": true
+    },
+    {
+      "id": "risotto_phase",
+      "next": [
+        "incorporate"
+      ],
+      "type": "timer",
+      "descr": "Add stock gradually with constant stirring",
+      "duration": "PT17M",
+      "on_enter": [
+        {
+          "say": "This is the heart of risotto making! Add your hot stock one ladle at a time, stirring constantly. Wait until each ladle is absorbed before adding the next. This lovely gentle process takes about seventeen minutes - the rice should be tender with a slight bite at the end."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "toast_rice"
+      ],
+      "instructions": "Start adding the hot stock a ladleful at a time, stirring constantly and waiting until each ladleful has been absorbed before adding the next. Continue this gentle, steady process until the rice is tender but still holding its shape with a slight bite, which should take around 17 minutes.",
+      "requires_confirm": true
+    },
+    {
+      "id": "incorporate",
+      "next": [
+        "chestnut_cream"
+      ],
+      "type": "immediate",
+      "descr": "Mash 3/4 squash into risotto, add Parmesan; rest",
+      "on_enter": [
+        {
+          "say": "Beautiful! Mash up three-quarters of your roasted squash with a fork and stir it into the risotto. Grate in the Parmesan, season to taste, then cover and let it rest while we make the chestnut cream."
+        }
+      ],
+      "depends_on": [
+        "roast_squash",
+        "risotto_phase"
+      ],
+      "unlock_when": "all",
+      "instructions": "Once the squash is roasted, mash up three-quarters of it with a fork. Stir this mashed squash into the cooked risotto until well combined. Finely grate in the Parmesan cheese, stir again, and season the risotto to taste with salt and pepper. Cover the pan and let the risotto rest off the heat while you prepare the chestnut cream.",
+      "requires_confirm": true
+    },
+    {
+      "id": "chestnut_cream",
+      "next": [
+        "plate"
+      ],
+      "type": "immediate",
+      "descr": "Blend chestnuts with cottage cheese until smooth",
+      "on_enter": [
+        {
+          "say": "Pop your chestnuts and cottage cheese in a blender. Blitz until super smooth - add a splash of water if needed. Season it perfectly with salt and pepper."
+        }
+      ],
+      "depends_on": [
+        "incorporate"
+      ],
+      "instructions": "In a blender, combine the vac-packed chestnuts with the cottage cheese. Blitz until the mixture is super-smooth, loosening with small splashes of water if needed to reach a spoonable cream. Season to perfection with salt and pepper.",
+      "requires_confirm": true
+    },
+    {
+      "id": "plate",
+      "type": "immediate",
+      "descr": "Plate and serve with garnish",
+      "on_enter": [
+        {
+          "say": "Time to plate up! Divide the risotto between warm bowls, tear over the remaining squash pieces, spoon over that gorgeous chestnut cream, and sprinkle with your crispy rosemary. A final grating of Parmesan if you fancy it, and serve immediately. Enjoy!"
+        }
+      ],
+      "depends_on": [
+        "chestnut_cream"
+      ],
+      "instructions": "Divide the risotto between warm bowls. Tear the remaining roasted squash pieces over the top, spoon over the chestnut cream, and sprinkle over the reserved crispy rosemary leaves. Finish with an extra grating of Parmesan, if you like, and serve immediately.",
+      "requires_confirm": false
+    }
+  ],
+  "events": {
+    "tts_voice": "chef_friendly",
+    "reminder_default": {
+      "every": "PT30S"
+    }
+  },
+  "recipe": {
+    "id": "sumptuous-squash-risotto",
+    "tags": [
+      "risotto",
+      "butternut-squash",
+      "comfort-food"
+    ],
+    "title": "Sumptuous Squash Risotto",
+    "course": "main",
+    "locale": "en",
+    "source": "cookbook",
+    "cuisine": "italian-inspired",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "description": "Creamy butternut squash risotto topped with chestnut cream and crispy rosemary.",
+    "estimated_total": "PT1H"
+  },
+  "utensils": [
+    "oven",
+    "baking tray",
+    "sharp knife",
+    "chopping board",
+    "medium saucepan",
+    "large high-sided pan",
+    "slotted spoon",
+    "wooden spoon",
+    "blender",
+    "bowls for serving",
+    "grater"
+  ],
+  "ingredients": [
+    {
+      "id": "butternut_squash",
+      "name": "butternut squash",
+      "note": "about 1.2 kg",
+      "unit": "whole",
+      "quantity": 1
+    },
+    {
+      "id": "olive_oil",
+      "name": "olive oil",
+      "note": "you'll need a few tablespoons throughout",
+      "unit": "tbsp",
+      "quantity": null
+    },
+    {
+      "id": "chilli_flakes",
+      "name": "dried red chilli flakes",
+      "unit": "pinch",
+      "quantity": 1
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "note": "about 320 g total",
+      "unit": "whole",
+      "quantity": 2
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "unit": "g",
+      "quantity": 320
+    },
+    {
+      "id": "stock",
+      "name": "vegetable or chicken stock",
+      "note": "kept hot at a gentle simmer",
+      "unit": "litres",
+      "quantity": 1.6
+    },
+    {
+      "id": "rosemary",
+      "name": "fresh rosemary",
+      "note": "about 10 g; leaves stripped",
+      "unit": "bunch",
+      "quantity": 0.5
+    },
+    {
+      "id": "risotto_rice",
+      "name": "risotto rice",
+      "unit": "g",
+      "quantity": 300
+    },
+    {
+      "id": "parmesan",
+      "name": "Parmesan cheese",
+      "note": "plus extra to serve",
+      "unit": "g",
+      "quantity": 30
+    },
+    {
+      "id": "chestnuts",
+      "name": "vac-packed chestnuts",
+      "unit": "g",
+      "quantity": 180
+    },
+    {
+      "id": "cottage_cheese",
+      "name": "cottage cheese",
+      "unit": "g",
+      "quantity": 300
+    }
+  ]
+}

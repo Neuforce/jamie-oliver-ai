@@ -1,201 +1,138 @@
 {
-  "recipe": {
-    "id": "french-onion-soup",
-    "title": "French Onion Soup",
-    "description": "Rich, comforting soup with caramelized onions and melted cheese",
-    "estimated_total": "PT1H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Medium",
-    "tags": [
-      "beef",
-      "soup",
-      "breakfast"
-    ],
-    "course": "soup",
-    "cuisine": "french"
+  "notes": {
+    "text": "Low and slow is key for caramelizing onions\nUse good quality beef stock\nIndividual oven-safe bowls work best"
   },
-  "ingredients": [
-    {
-      "id": "onions_thinly_sliced",
-      "name": "onions, thinly sliced",
-      "quantity": 6.0,
-      "unit": "large"
-    },
-    {
-      "id": "butter",
-      "name": "butter",
-      "quantity": 50.0,
-      "unit": "g"
-    },
-    {
-      "id": "flour",
-      "name": "flour",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "beef_stock",
-      "name": "beef stock",
-      "quantity": 1.5,
-      "unit": "L"
-    },
-    {
-      "id": "white_wine",
-      "name": "white wine",
-      "quantity": 150.0,
-      "unit": "ml"
-    },
-    {
-      "id": "french_bread",
-      "name": "French bread",
-      "quantity": 4.0,
-      "unit": "slices"
-    },
-    {
-      "id": "gruyère_cheese_grated",
-      "name": "Gruyère cheese, grated",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "fresh_thyme",
-      "name": "Fresh thyme",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "caramelize_onions",
+      "next": [
+        "add_flour"
+      ],
+      "type": "timer",
       "descr": "Slowly caramelize onions in butter for 30-40 minutes",
-      "instructions": "Slowly caramelize onions in butter for 30-40 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": "PT35M",
+      "on_enter": [
+        {
+          "say": "Right, let's slowly caramelize these onions in butter. We want them to be beautifully golden and sweet. This will take about thirty to forty minutes, so be patient and let them work their magic."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's slowly caramelize onions in butter for."
-        }
-      ]
+      "instructions": "Slowly caramelize onions in butter for 30-40 minutes",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "add_flour",
+      "next": [
+        "add_wine"
+      ],
+      "type": "immediate",
       "descr": "Sprinkle with flour and stir",
+      "on_enter": [
+        {
+          "say": "Now, let's sprinkle the flour over those lovely onions and give it a good stir. This will help thicken our soup beautifully."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "caramelize_onions"
+      ],
       "instructions": "Sprinkle with flour and stir",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's sprinkle with flour and stir."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "add_wine",
+      "next": [
+        "simmer_stock"
+      ],
+      "type": "immediate",
       "descr": "Add wine and let it bubble",
+      "on_enter": [
+        {
+          "say": "Time to add the wine. Pour it in and let it bubble away, reducing slightly. You'll smell that wonderful aroma as the alcohol cooks off."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_flour"
+      ],
       "instructions": "Add wine and let it bubble",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the wine and let."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "simmer_stock",
+      "next": [
+        "toast_bread"
+      ],
+      "type": "timer",
       "descr": "Pour in stock and thyme, simmer for 20 minutes",
+      "duration": "PT20M",
+      "on_enter": [
+        {
+          "say": "Let's pour in the beef stock and add a sprig of fresh thyme. Now, we'll let it simmer gently for about twenty minutes to let all those flavors meld together."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_wine"
+      ],
       "instructions": "Pour in stock and thyme, simmer for 20 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's pour in stock and thyme, simmer."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "toast_bread",
+      "next": [
+        "assemble_soup"
+      ],
+      "type": "immediate",
       "descr": "Toast bread slices",
+      "on_enter": [
+        {
+          "say": "While the soup is simmering, let's toast those slices of French bread until they're nice and crispy. They'll be perfect for soaking up the soup."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "simmer_stock"
+      ],
       "instructions": "Toast bread slices",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's toast bread slices."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "assemble_soup",
+      "next": [
+        "grill_cheese"
+      ],
+      "type": "immediate",
       "descr": "Ladle soup into bowls, top with bread and cheese",
-      "instructions": "Ladle soup into bowls, top with bread and cheese",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's ladle soup into bowls, top with."
+          "say": "Now, let's ladle the soup into oven-safe bowls, top each one with a slice of toasted bread, and sprinkle generously with grated Gruyère cheese."
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "toast_bread"
+      ],
+      "instructions": "Ladle soup into bowls, top with bread and cheese",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Grill until cheese is golden and bubbling",
-      "instructions": "Grill until cheese is golden and bubbling",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "grill_cheese",
       "next": [],
+      "type": "immediate",
+      "descr": "Grill until cheese is golden and bubbling",
       "on_enter": [
         {
-          "say": "Time to grill the until cheese is."
+          "say": "Finally, let's pop those bowls under the grill until the cheese is golden and bubbling. Keep an eye on them so they don't burn. Enjoy your delicious French onion soup!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "assemble_soup"
+      ],
+      "instructions": "Grill until cheese is golden and bubbling",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -204,7 +141,72 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Low and slow is key for caramelizing onions\nUse good quality beef stock\nIndividual oven-safe bowls work best"
-  }
+  "recipe": {
+    "id": "french-onion-soup",
+    "tags": [
+      "beef",
+      "soup",
+      "breakfast"
+    ],
+    "title": "French Onion Soup",
+    "course": "soup",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "french",
+    "servings": 4,
+    "difficulty": "Medium",
+    "description": "Rich, comforting soup with caramelized onions and melted cheese",
+    "estimated_total": "PT1H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "onions_thinly_sliced",
+      "name": "onions, thinly sliced",
+      "unit": "large",
+      "quantity": 6
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "unit": "g",
+      "quantity": 50
+    },
+    {
+      "id": "flour",
+      "name": "flour",
+      "unit": "tbsp",
+      "quantity": 2
+    },
+    {
+      "id": "beef_stock",
+      "name": "beef stock",
+      "unit": "L",
+      "quantity": 1.5
+    },
+    {
+      "id": "white_wine",
+      "name": "white wine",
+      "unit": "ml",
+      "quantity": 150
+    },
+    {
+      "id": "french_bread",
+      "name": "French bread",
+      "unit": "slices",
+      "quantity": 4
+    },
+    {
+      "id": "gruye8re_cheese_grated",
+      "name": "Gruye8re cheese, grated",
+      "unit": "g",
+      "quantity": 200
+    },
+    {
+      "id": "fresh_thyme",
+      "name": "Fresh thyme",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

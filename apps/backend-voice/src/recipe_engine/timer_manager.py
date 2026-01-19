@@ -114,6 +114,9 @@ class TimerManager:
         
         logger.info(f"Started timer '{timer_id}' for {duration_secs}s (step: {step_id or 'custom'})")
         
+        # Emit timer list update so frontend TimerPanel shows the new timer
+        asyncio.create_task(self._emit_timer_list_update())
+        
         return timer
     
     def start_timer_for_step(
@@ -256,6 +259,22 @@ class TimerManager:
         if timer:
             timer.remaining_secs = self._calculate_remaining(timer)
         return timer
+    
+    def get_timer_by_id(self, timer_id: str) -> Optional[ActiveTimer]:
+        """Get a timer by its ID."""
+        timer = self._active_timers.get(timer_id)
+        if timer:
+            timer.remaining_secs = self._calculate_remaining(timer)
+        return timer
+    
+    def get_timer_by_label(self, label: str) -> Optional[ActiveTimer]:
+        """Get a timer by its label (case-insensitive partial match)."""
+        label_lower = label.lower()
+        for timer in self._active_timers.values():
+            if label_lower in timer.label.lower():
+                timer.remaining_secs = self._calculate_remaining(timer)
+                return timer
+        return None
     
     def get_all_active_timers(self) -> List[ActiveTimer]:
         """

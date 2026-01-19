@@ -1,203 +1,136 @@
 {
-  "recipe": {
-    "id": "beef-ramen",
-    "title": "Beef Ramen",
-    "description": "Rich, flavorful Japanese noodle soup with tender beef",
-    "estimated_total": "PT45M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Medium",
-    "tags": [
-      "beef",
-      "quick",
-      "chinese",
-      "soup",
-      "breakfast"
-    ],
-    "course": "soup",
-    "cuisine": "chinese"
+  "notes": {
+    "text": "Don't overcook the eggs - yolks should be jammy\nAdd chili oil for extra heat\nGarnish generously"
   },
-  "ingredients": [
-    {
-      "id": "ramen_noodles",
-      "name": "ramen noodles",
-      "quantity": 400.0,
-      "unit": "g"
-    },
-    {
-      "id": "beef_sirloin_sliced",
-      "name": "beef sirloin, sliced",
-      "quantity": 300.0,
-      "unit": "g"
-    },
-    {
-      "id": "beef_stock",
-      "name": "beef stock",
-      "quantity": 1.5,
-      "unit": "L"
-    },
-    {
-      "id": "soy_sauce",
-      "name": "soy sauce",
-      "quantity": 3.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "miso_paste",
-      "name": "miso paste",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "4_soft-boiled_eggs",
-      "name": "4 soft-boiled eggs",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "spring_onions_sliced",
-      "name": "Spring onions, sliced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "nori_sheets",
-      "name": "Nori sheets",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "simmer_stock",
+      "next": [
+        "cook_noodles"
+      ],
+      "type": "immediate",
       "descr": "Bring beef stock to simmer, add soy sauce and miso",
-      "instructions": "Bring beef stock to simmer, add soy sauce and miso",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get that beef stock simmering. Add in the soy sauce and miso, and give it a good stir. You'll know it's ready when it smells absolutely delicious!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's bring beef stock to simmer, add."
-        }
-      ]
+      "instructions": "Bring beef stock to simmer, add soy sauce and miso",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "cook_noodles",
+      "next": [
+        "sear_beef"
+      ],
+      "type": "immediate",
       "descr": "Cook noodles according to package",
+      "on_enter": [
+        {
+          "say": "Time to cook those noodles! Follow the package instructions and cook them until they're just right. We want them nice and springy."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "simmer_stock"
+      ],
       "instructions": "Cook noodles according to package",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to cook the noodles according to."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "sear_beef",
+      "next": [
+        "divide_noodles"
+      ],
+      "type": "immediate",
       "descr": "Sear beef slices quickly in a hot pan",
+      "on_enter": [
+        {
+          "say": "Now, let's sear those beef slices. Get your pan nice and hot, and listen for that satisfying sizzle. We're looking for a lovely golden brown on each side."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "cook_noodles"
+      ],
       "instructions": "Sear beef slices quickly in a hot pan",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's sear beef slices quickly in a."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "divide_noodles",
+      "next": [
+        "ladle_broth"
+      ],
+      "type": "immediate",
       "descr": "Divide noodles between bowls",
+      "on_enter": [
+        {
+          "say": "Brilliant! Now, let's divide those noodles between your serving bowls. Make sure each bowl gets a good portion."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "sear_beef"
+      ],
       "instructions": "Divide noodles between bowls",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's divide noodles between bowls."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_5",
+      "id": "ladle_broth",
+      "next": [
+        "top_garnishes"
+      ],
+      "type": "immediate",
       "descr": "Ladle hot broth over noodles",
+      "on_enter": [
+        {
+          "say": "Time to ladle that beautiful hot broth over your noodles. This is where all the flavor comes together!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "divide_noodles"
+      ],
       "instructions": "Ladle hot broth over noodles",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's ladle hot broth over noodles."
-        }
-      ]
+      "requires_confirm": false
     },
     {
-      "id": "step_6",
+      "id": "top_garnishes",
+      "next": [
+        "serve_hot"
+      ],
+      "type": "immediate",
       "descr": "Top with beef, halved eggs, spring onions, nori",
-      "instructions": "Top with beef, halved eggs, spring onions, nori",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's top with beef, halved eggs, spring."
+          "say": "Let's finish it off by topping each bowl with the seared beef, halved eggs, a sprinkle of spring onions, and a piece of nori. It's going to look and taste amazing!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "ladle_broth"
+      ],
+      "instructions": "Top with beef, halved eggs, spring onions, nori",
+      "requires_confirm": false
     },
     {
-      "id": "step_7",
-      "descr": "Serve immediately while hot",
-      "instructions": "Serve immediately while hot",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_hot",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve immediately while hot",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "And there we have it! Serve your beef ramen immediately while it's hot and enjoy every slurp!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "top_garnishes"
+      ],
+      "instructions": "Serve immediately while hot",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -206,7 +139,74 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Don't overcook the eggs - yolks should be jammy\nAdd chili oil for extra heat\nGarnish generously"
-  }
+  "recipe": {
+    "id": "beef-ramen",
+    "tags": [
+      "beef",
+      "quick",
+      "chinese",
+      "soup",
+      "breakfast"
+    ],
+    "title": "Beef Ramen",
+    "course": "soup",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "chinese",
+    "servings": 4,
+    "difficulty": "Medium",
+    "description": "Rich, flavorful Japanese noodle soup with tender beef",
+    "estimated_total": "PT45M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "ramen_noodles",
+      "name": "ramen noodles",
+      "unit": "g",
+      "quantity": 400.0
+    },
+    {
+      "id": "beef_sirloin_sliced",
+      "name": "beef sirloin, sliced",
+      "unit": "g",
+      "quantity": 300.0
+    },
+    {
+      "id": "beef_stock",
+      "name": "beef stock",
+      "unit": "L",
+      "quantity": 1.5
+    },
+    {
+      "id": "soy_sauce",
+      "name": "soy sauce",
+      "unit": "tbsp",
+      "quantity": 3.0
+    },
+    {
+      "id": "miso_paste",
+      "name": "miso paste",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "4_soft-boiled_eggs",
+      "name": "4 soft-boiled eggs",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "spring_onions_sliced",
+      "name": "Spring onions, sliced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "nori_sheets",
+      "name": "Nori sheets",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

@@ -1,202 +1,138 @@
 {
-  "recipe": {
-    "id": "thai-green-curry",
-    "title": "Thai Green Curry",
-    "description": "Aromatic coconut curry with vegetables and fragrant Thai basil",
-    "estimated_total": "PT35M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "chicken",
-      "fish",
-      "thai",
-      "indian"
-    ],
-    "course": "main",
-    "cuisine": "thai"
+  "notes": {
+    "text": "Frying the curry paste releases its aromatics\nAdd bamboo shoots for authentic texture\nAdjust sweetness and saltiness to taste"
   },
-  "ingredients": [
-    {
-      "id": "thai_green_curry_paste",
-      "name": "Thai green curry paste",
-      "quantity": 3.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "coconut_milk",
-      "name": "coconut milk",
-      "quantity": 400.0,
-      "unit": "ml"
-    },
-    {
-      "id": "chicken_breast_sliced",
-      "name": "chicken breast, sliced",
-      "quantity": 300.0,
-      "unit": "g"
-    },
-    {
-      "id": "bell_pepper_sliced",
-      "name": "bell pepper, sliced",
-      "quantity": 1.0,
-      "unit": "red"
-    },
-    {
-      "id": "green_beans",
-      "name": "green beans",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "fish_sauce",
-      "name": "fish sauce",
-      "quantity": 1.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "palm_sugar",
-      "name": "palm sugar",
-      "quantity": 1.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "thai_basil_leaves",
-      "name": "Thai basil leaves",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "heat_oil_fry_paste",
+      "next": [
+        "cook_chicken"
+      ],
+      "type": "timer",
       "descr": "Heat oil in a wok, fry curry paste for 1 minute until fragrant",
-      "instructions": "Heat oil in a wok, fry curry paste for 1 minute until fragrant",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 60,
+      "on_enter": [
+        {
+          "say": "Right, let's get started by heating some oil in your wok. Add the curry paste and fry it for a minute until it's beautifully fragrant. You'll know it's ready when you can really smell those lovely aromas!"
+        }
+      ],
+      "auto_start": true,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the oil in wok,."
-        }
-      ]
+      "instructions": "Heat oil in a wok, fry curry paste for 1 minute until fragrant",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "cook_chicken",
+      "next": [
+        "add_coconut_milk"
+      ],
+      "type": "immediate",
       "descr": "Add chicken and cook until sealed",
+      "on_enter": [
+        {
+          "say": "Now, let's add the chicken to the wok. Cook it until it's nicely sealed on the outside. You want to see a lovely white colour on the chicken."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "heat_oil_fry_paste"
+      ],
       "instructions": "Add chicken and cook until sealed",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the chicken and cook."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "add_coconut_milk",
+      "next": [
+        "cook_vegetables"
+      ],
+      "type": "immediate",
       "descr": "Pour in coconut milk and bring to simmer",
+      "on_enter": [
+        {
+          "say": "Time to pour in the coconut milk. Give it a good stir and bring it to a gentle simmer. You should see small bubbles forming on the surface."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "cook_chicken"
+      ],
       "instructions": "Pour in coconut milk and bring to simmer",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's pour in coconut milk and bring."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "cook_vegetables",
+      "next": [
+        "stir_fish_sauce_sugar"
+      ],
+      "type": "timer",
       "descr": "Add vegetables and cook for 8-10 minutes",
+      "duration": 600,
+      "on_enter": [
+        {
+          "say": "Let's add those vibrant vegetables to the wok. Cook them for about 8 to 10 minutes until they're tender but still have a bit of crunch. Keep an eye on them!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_coconut_milk"
+      ],
       "instructions": "Add vegetables and cook for 8-10 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the vegetables and cook."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "stir_fish_sauce_sugar",
+      "next": [
+        "add_basil"
+      ],
+      "type": "immediate",
       "descr": "Stir in fish sauce and palm sugar",
+      "on_enter": [
+        {
+          "say": "Now, let's stir in the fish sauce and palm sugar. This will add a lovely balance of salty and sweet to your curry. Give it a good mix!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "cook_vegetables"
+      ],
       "instructions": "Stir in fish sauce and palm sugar",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "add_basil",
+      "next": [
+        "serve_curry"
+      ],
+      "type": "immediate",
       "descr": "Add Thai basil just before serving",
-      "instructions": "Add Thai basil just before serving",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Now add the thai basil just."
+          "say": "Just before serving, let's add those fresh Thai basil leaves. They'll add a beautiful fragrance and a pop of colour to your dish."
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "stir_fish_sauce_sugar"
+      ],
+      "instructions": "Add Thai basil just before serving",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve over jasmine rice",
-      "instructions": "Serve over jasmine rice",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_curry",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve over jasmine rice",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Time to serve up your delicious Thai Green Curry! Spoon it over some fluffy jasmine rice and enjoy every bite. Well done!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_basil"
+      ],
+      "instructions": "Serve over jasmine rice",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -205,7 +141,73 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Frying the curry paste releases its aromatics\nAdd bamboo shoots for authentic texture\nAdjust sweetness and saltiness to taste"
-  }
+  "recipe": {
+    "id": "thai-green-curry",
+    "tags": [
+      "chicken",
+      "fish",
+      "thai",
+      "indian"
+    ],
+    "title": "Thai Green Curry",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "thai",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Aromatic coconut curry with vegetables and fragrant Thai basil",
+    "estimated_total": "PT35M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "thai_green_curry_paste",
+      "name": "Thai green curry paste",
+      "unit": "tbsp",
+      "quantity": 3.0
+    },
+    {
+      "id": "coconut_milk",
+      "name": "coconut milk",
+      "unit": "ml",
+      "quantity": 400.0
+    },
+    {
+      "id": "chicken_breast_sliced",
+      "name": "chicken breast, sliced",
+      "unit": "g",
+      "quantity": 300.0
+    },
+    {
+      "id": "bell_pepper_sliced",
+      "name": "bell pepper, sliced",
+      "unit": "red",
+      "quantity": 1.0
+    },
+    {
+      "id": "green_beans",
+      "name": "green beans",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "fish_sauce",
+      "name": "fish sauce",
+      "unit": "tbsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "palm_sugar",
+      "name": "palm sugar",
+      "unit": "tbsp",
+      "quantity": 1.0
+    },
+    {
+      "id": "thai_basil_leaves",
+      "name": "Thai basil leaves",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

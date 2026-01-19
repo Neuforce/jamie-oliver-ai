@@ -23,17 +23,63 @@ interface Message {
 interface ChatWithJamieProps {
   onClose: () => void;
   onRecipeClick: (recipe: Recipe) => void;
+  initialMessage?: string;
+  onRecipesClick?: () => void;
 }
 
-export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
-  const [messages, setMessages] = useState([
+const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
+
+// Export function to clear chat history (used when recipe is completed)
+export const clearChatHistory = () => {
+  try {
+    localStorage.removeItem(CHAT_STORAGE_KEY);
+  } catch (error) {
+    console.error('Error clearing chat history:', error);
+  }
+};
+
+// Helper function to load messages from localStorage
+const loadMessagesFromStorage = (): Message[] => {
+  try {
+    const stored = localStorage.getItem(CHAT_STORAGE_KEY);
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      // Convert timestamp strings back to Date objects
+      return parsed.map((msg: any) => ({
+        ...msg,
+        timestamp: new Date(msg.timestamp),
+      }));
+    }
+  } catch (error) {
+    console.error('Error loading chat messages from storage:', error);
+  }
+  // Return default initial message if nothing is stored
+  return [
     {
       id: '1',
       type: 'jamie' as const,
       content: "Hello there! I'm Jamie Oliver, and I'm here to help you discover amazing recipes. What are you in the mood for today?",
       timestamp: new Date(),
     },
-  ]);
+  ];
+};
+
+// Helper function to save messages to localStorage
+const saveMessagesToStorage = (messages: Message[]) => {
+  try {
+    // Convert Date objects to ISO strings for storage
+    const serializable = messages.map(msg => ({
+      ...msg,
+      timestamp: msg.timestamp.toISOString(),
+    }));
+    localStorage.setItem(CHAT_STORAGE_KEY, JSON.stringify(serializable));
+  } catch (error) {
+    console.error('Error saving chat messages to storage:', error);
+  }
+};
+
+export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipesClick }: ChatWithJamieProps) {
+  const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [thinkingStatus, setThinkingStatus] = useState(null as string | null);
@@ -41,21 +87,154 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
   const [loadingRecipes, setLoadingRecipes] = useState(false);
   const [error, setError] = useState(null as string | null);
   const messagesEndRef = useRef(null as HTMLDivElement | null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Save messages to localStorage whenever they change
+  useEffect(() => {
+    saveMessagesToStorage(messages);
+  }, [messages]);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
+
+  // Auto-focus input when component mounts
+  useEffect(() => {
+    // Small delay to ensure the modal animation completes
+    const timer = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Auto-send initial message if provided
+  useEffect(() => {
+    if (initialMessage && initialMessage.trim()) {
+      // Set input value and send message after a short delay
+      setInputValue(initialMessage);
+      const timer = setTimeout(async () => {
+        // Create user message
+        const userMessage: Message = {
+          id: Date.now().toString(),
+          type: 'user',
+          content: initialMessage,
+          timestamp: new Date(),
+        };
+
+        setMessages(prev => [...prev, userMessage]);
+        setInputValue('');
+        setIsTyping(true);
+        setError(null);
+        setThinkingStatus("Searching for recipes...");
+        setLoadingRecipes(true);
+
+        try {
+          // Call semantic search API
+          const searchResponse = await searchRecipes(initialMessage, {
+            include_full_recipe: true,
+            top_k: 10,
+            include_chunks: false,
+            similarity_threshold: 0.7,
+          });
+
+          setThinkingStatus(null);
+          setLoadingRecipes(false);
+
+          if (searchResponse.results.length === 0) {
+            const noResultsMessage: Message = {
+              id: (Date.now() + 1).toString(),
+              type: 'jamie',
+              content: "I couldn't find any recipes matching your search. Try describing what you're looking for in a different way!",
+              timestamp: new Date(),
+            };
+            setMessages(prev => [...prev, noResultsMessage]);
+            setIsTyping(false);
+            return;
+          }
+
+          // Transform all recipe matches to Recipe format
+          const transformedRecipes: Recipe[] = [];
+
+          for (let i = 0; i < searchResponse.results.length; i++) {
+            const match = searchResponse.results[i];
+
+            try {
+              let fullRecipe;
+
+              // Check if full_recipe is available in the response
+              if (match.full_recipe) {
+                fullRecipe = match.full_recipe as unknown as JamieOliverRecipe;
+              } else {
+                // Fallback: load from local JSON files
+                const localRecipe = await loadRecipeFromLocal(match.recipe_id);
+                if (!localRecipe) {
+                  console.warn(`Could not load recipe ${match.recipe_id} from local files`);
+                  continue;
+                }
+                fullRecipe = localRecipe;
+              }
+
+              const transformed = transformRecipeMatch(match, fullRecipe, i);
+              transformedRecipes.push(transformed);
+            } catch (error) {
+              console.error(`Error transforming recipe ${match.recipe_id}:`, error);
+              // Continue with other recipes
+            }
+          }
+
+          if (transformedRecipes.length === 0) {
+            // All recipes failed to transform
+            const errorMessage: Message = {
+              id: (Date.now() + 1).toString(),
+              type: 'jamie',
+              content: "I found some recipes, but there was an error loading them. Please try again!",
+              timestamp: new Date(),
+            };
+            setMessages(prev => [...prev, errorMessage]);
+            setIsTyping(false);
+            return;
+          }
+
+          // Add message with recipes
+          const jamieMessage: Message = {
+            id: (Date.now() + 2).toString(),
+            type: 'jamie',
+            content: `I found ${transformedRecipes.length} recipe${transformedRecipes.length > 1 ? 's' : ''} for you!`,
+            recipes: transformedRecipes,
+            timestamp: new Date(),
+          };
+          setMessages(prev => [...prev, jamieMessage]);
+          setIsTyping(false);
+        } catch (err) {
+          console.error('Error searching recipes:', err);
+          setError('Failed to search recipes. Please try again.');
+          setThinkingStatus(null);
+          setLoadingRecipes(false);
+          setIsTyping(false);
+
+          const errorMessage: Message = {
+            id: (Date.now() + 3).toString(),
+            type: 'jamie',
+            content: "Sorry, I encountered an error while searching for recipes. Please try again!",
+            timestamp: new Date(),
+          };
+          setMessages(prev => [...prev, errorMessage]);
+        }
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [initialMessage]);
 
   // Animate thinking status text letter by letter
   useEffect(() => {
     if (thinkingStatus) {
       setDisplayedThinkingText('');
       let currentIndex = 0;
-      
+
       const typeInterval = setInterval(() => {
         if (currentIndex < thinkingStatus.length) {
           setDisplayedThinkingText(thinkingStatus.substring(0, currentIndex + 1));
@@ -64,7 +243,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
           clearInterval(typeInterval);
         }
       }, 50); // 50ms per character for smooth typing effect
-      
+
       return () => clearInterval(typeInterval);
     } else {
       setDisplayedThinkingText('');
@@ -116,13 +295,13 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
 
       // Transform all recipe matches to Recipe format
       const transformedRecipes: Recipe[] = [];
-      
+
       for (let i = 0; i < searchResponse.results.length; i++) {
         const match = searchResponse.results[i];
-        
+
         try {
           let fullRecipe;
-          
+
           // Check if full_recipe is available in the response
           if (match.full_recipe) {
             fullRecipe = match.full_recipe as unknown as JamieOliverRecipe;
@@ -135,7 +314,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
             }
             fullRecipe = localRecipe;
           }
-          
+
           const transformed = transformRecipeMatch(match, fullRecipe, i);
           transformedRecipes.push(transformed);
         } catch (error) {
@@ -165,7 +344,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
         recipes: transformedRecipes,
             timestamp: new Date(),
           };
-          
+
           setMessages(prev => [...prev, jamieMessage]);
       setIsTyping(false);
     } catch (error) {
@@ -173,7 +352,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
       setThinkingStatus(null);
               setLoadingRecipes(false);
       setError(error instanceof Error ? error.message : 'An error occurred while searching for recipes');
-      
+
       // Show error message to user
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -200,7 +379,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
       initial={{ opacity: 0, scale: 0.95, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95, y: 20 }}
-      transition={{ 
+      transition={{
         duration: 0.3,
         ease: [0.16, 1, 0.3, 1] // Custom easing for smooth spring-like motion
       }}
@@ -208,20 +387,62 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
       onClick={(e) => e.stopPropagation()}
     >
       {/* Header Nav */}
-      <div className="bg-white relative rounded-bl-[16px] rounded-br-[16px] h-[56px] shrink-0">
+      <div className="bg-white rounded-bl-[16px] rounded-br-[16px] h-[56px] shrink-0">
+        <div className="mx-auto grid grid-cols-3 items-center px-4" style={{ width: '600px', height: '100%', boxSizing: 'border-box' }}>
         {/* Close Button */}
+          <div className="flex items-center">
         <button
           onClick={onClose}
-          className="absolute left-[11px] size-[24px] top-[16px] z-10"
+              className="size-[24px] flex items-center justify-center z-10"
         >
           <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
             <path d="M18 6L6 18M6 6L18 18" stroke="#327179" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
           </svg>
         </button>
-        
-        {/* Logo */}
-        <div className="absolute h-[24px] left-[110px] top-[16px] w-[171.75px]">
-          <img alt="Jamie Oliver" className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full" src={imgImage11} />
+          </div>
+
+          {/* Logo - Centered */}
+          <div 
+            className="flex items-center justify-center"
+            style={{ 
+              height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
+              maxWidth: '171.75px'
+            }}
+          >
+            <img 
+              alt="Jamie Oliver" 
+              className="h-full w-auto object-contain pointer-events-none" 
+              src={imgImage11}
+              style={{ maxWidth: '100%' }}
+            />
+        </div>
+
+        {/* Recipes Button */}
+          <div className="flex items-center justify-end">
+        <button
+          type="button"
+              onClick={() => {
+                onClose();
+                onRecipesClick?.();
+              }}
+              className="z-10 inline-flex items-center justify-center"
+          style={{
+            padding: 0,
+            background: '#FFFFFF',
+            borderRadius: '999px',
+            width: '48px',
+            height: '48px',
+            boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
+            border: '1px solid rgba(232,235,237,0.8)',
+          }}
+        >
+          <img
+            src="/assets/Recipes.svg"
+            alt="Recipes"
+            style={{ width: '24px', height: '24px', display: 'block' }}
+          />
+        </button>
+          </div>
         </div>
       </div>
 
@@ -234,7 +455,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
               {index > 0 && (
                 <div className="h-px w-full bg-black/5 my-4" />
               )}
-              
+
               {message.type === 'jamie' ? (
                 message.content && (
                 <div className="flex gap-4 items-start">
@@ -242,7 +463,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
                   <div className="relative shrink-0 size-[31.875px]">
                     <img alt="" className="block size-full rounded-full" src={imgJamieAvatar} />
                   </div>
-                  
+
                   {/* Message Content */}
                   <p className="flex-1 font-['Work_Sans',sans-serif] leading-[1.5] text-[#2c2c2c] text-base whitespace-pre-wrap">
                     {message.content}
@@ -260,12 +481,13 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
               {/* Recipe Carousel */}
               {message.recipes && message.recipes.length > 0 && (
                 <div className="mt-4">
-                  <RecipeCarousel 
-                    recipes={message.recipes} 
+                  <RecipeCarousel
+                    recipes={message.recipes}
                     onRecipeClick={(recipe) => {
                       onRecipeClick(recipe);
                       onClose();
-                    }} 
+                    }}
+                    singleSlide={true}
                   />
                 </div>
               )}
@@ -299,7 +521,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
 
           {/* Loading Recipes Card with Spinner */}
           {loadingRecipes && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-4 bg-white rounded-2xl border border-black/5 shadow-sm p-8"
@@ -327,6 +549,7 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
           <div className="bg-white relative rounded-[32px] border border-black/10 shadow-[0px_2px_5px_0px_rgba(0,0,0,0.06),0px_9px_9px_0px_rgba(0,0,0,0.01)]">
             <div className="flex items-center gap-5 p-3">
               <input
+                ref={inputRef}
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
@@ -334,14 +557,14 @@ export function ChatWithJamie({ onClose, onRecipeClick }: ChatWithJamieProps) {
                 placeholder="Ask your question…"
                 className="flex-1 font-['Inter',sans-serif] text-base leading-[24px] text-[#8e8e93] placeholder:text-[#8e8e93] bg-transparent outline-none"
               />
-              
+
               {/* Send Button */}
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim()}
                 className={`shrink-0 size-9 rounded-full flex items-center justify-center transition-colors ${
-                  inputValue.trim() 
-                    ? 'bg-[#46BEA8] hover:bg-[#327179]' 
+                  inputValue.trim()
+                    ? 'bg-[#46BEA8] hover:bg-[#327179]'
                     : 'bg-[#b4b4b4]'
                 }`}
               >

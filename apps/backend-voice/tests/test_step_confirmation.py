@@ -154,7 +154,11 @@ async def test_step_confirmation_graceful_without_assistant():
 
 @pytest.mark.asyncio
 async def test_confirm_tool_preserves_parallel_timer_state():
-    """Confirming a step via the tool should not reset other active timers."""
+    """Confirming a step via the tool should not reset other active timers.
+    
+    With timer decoupling (v2.0): Timers must be explicitly started via
+    engine.start_timer_for_step(), not auto-started when step becomes active.
+    """
     from src.recipe_engine import Recipe
     from src.services import session_service
     from src.services.tool_runner import run_recipe_tool
@@ -193,6 +197,11 @@ async def test_confirm_tool_preserves_parallel_timer_state():
     engine = session_service.get_session_manager().create_session(session_id, recipe, None)
 
     await engine.start()
+    
+    # With timer decoupling, we must explicitly start the timer
+    # Step is auto-started (active), but timer is NOT auto-started
+    timer = await engine.start_timer_for_step("timer_step")
+    assert timer is not None, "Timer should start for timer_step"
 
     timer_state_before = engine.get_state()["steps"]["timer_step"]["timer"]
     assert timer_state_before is not None and timer_state_before["remaining_secs"] > 0

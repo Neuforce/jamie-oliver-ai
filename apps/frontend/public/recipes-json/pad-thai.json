@@ -1,203 +1,137 @@
 {
-  "recipe": {
-    "id": "pad-thai",
-    "title": "Pad Thai",
-    "description": "Sweet and tangy Thai rice noodles with peanuts and lime",
-    "estimated_total": "PT30M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Medium",
-    "tags": [
-      "chicken",
-      "fish",
-      "seafood",
-      "thai",
-      "breakfast"
-    ],
-    "course": "main",
-    "cuisine": "thai"
+  "notes": {
+    "text": "Have all ingredients prepared before you start\nCook on high heat for best flavor\nAdjust sweet-sour-salty balance to taste"
   },
-  "ingredients": [
-    {
-      "id": "rice_noodles",
-      "name": "rice noodles",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "2_eggs",
-      "name": "2 eggs",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "prawns_or_chicken",
-      "name": "prawns or chicken",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "tamarind_paste",
-      "name": "tamarind paste",
-      "quantity": 3.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "fish_sauce",
-      "name": "fish sauce",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "palm_sugar",
-      "name": "palm sugar",
-      "quantity": 2.0,
-      "unit": "tbsp"
-    },
-    {
-      "id": "beansprouts",
-      "name": "beansprouts",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "crushed_peanuts_and_lime_wedges",
-      "name": "Crushed peanuts and lime wedges",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "soak_noodles",
+      "next": [
+        "mix_sauce"
+      ],
+      "type": "immediate",
       "descr": "Soak rice noodles in hot water until soft, drain",
-      "instructions": "Soak rice noodles in hot water until soft, drain",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get those rice noodles soaking in hot water until they're nice and soft. Then we'll drain them and set them aside."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's soak the rice noodles in."
-        }
-      ]
+      "instructions": "Soak rice noodles in hot water until soft, drain",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "mix_sauce",
+      "next": [
+        "scramble_eggs"
+      ],
+      "type": "immediate",
       "descr": "Mix tamarind paste, fish sauce, and palm sugar",
+      "on_enter": [
+        {
+          "say": "Let's mix up our lovely sauce with tamarind paste, fish sauce, and palm sugar. Give it a good stir until everything's combined beautifully."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "soak_noodles"
+      ],
       "instructions": "Mix tamarind paste, fish sauce, and palm sugar",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's mix everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "scramble_eggs",
+      "next": [
+        "stir_fry_protein"
+      ],
+      "type": "immediate",
       "descr": "Heat wok, scramble eggs, set aside",
+      "on_enter": [
+        {
+          "say": "Now, let's heat up that wok until it's nice and hot. Crack in the eggs and scramble them quickly, then set them aside for later."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "mix_sauce"
+      ],
       "instructions": "Heat wok, scramble eggs, set aside",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the wok, scramble eggs,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "stir_fry_protein",
+      "next": [
+        "combine_noodles_sauce"
+      ],
+      "type": "immediate",
       "descr": "Stir-fry prawns or chicken until cooked",
+      "on_enter": [
+        {
+          "say": "Let's get those prawns or chicken sizzling in the wok. Stir-fry them until they're cooked through and smelling fantastic."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "scramble_eggs"
+      ],
       "instructions": "Stir-fry prawns or chicken until cooked",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's stir everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "combine_noodles_sauce",
+      "next": [
+        "add_beansprouts_eggs"
+      ],
+      "type": "immediate",
       "descr": "Add noodles and sauce, toss to combine",
+      "on_enter": [
+        {
+          "say": "Now, let's add those softened noodles and our lovely sauce to the wok. Give everything a good toss to combine all those amazing flavours."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "stir_fry_protein"
+      ],
       "instructions": "Add noodles and sauce, toss to combine",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the noodles and sauce,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "add_beansprouts_eggs",
+      "next": [
+        "serve_dish"
+      ],
+      "type": "timer",
       "descr": "Add beansprouts and eggs, cook for 1 minute",
-      "instructions": "Add beansprouts and eggs, cook for 1 minute",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 60,
       "on_enter": [
         {
-          "say": "Now add the beansprouts and eggs,."
+          "say": "Let's toss in the beansprouts and those scrambled eggs. We'll cook it all together for just a minute to keep everything fresh and vibrant."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "combine_noodles_sauce"
+      ],
+      "instructions": "Add beansprouts and eggs, cook for 1 minute",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve with peanuts, lime, and fresh herbs",
-      "instructions": "Serve with peanuts, lime, and fresh herbs",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_dish",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve with peanuts, lime, and fresh herbs",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Brilliant! It's time to serve up your delicious Pad Thai. Top it with crushed peanuts, a squeeze of lime, and some fresh herbs. Enjoy!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "add_beansprouts_eggs"
+      ],
+      "instructions": "Serve with peanuts, lime, and fresh herbs",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -206,7 +140,74 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Have all ingredients prepared before you start\nCook on high heat for best flavor\nAdjust sweet-sour-salty balance to taste"
-  }
+  "recipe": {
+    "id": "pad-thai",
+    "tags": [
+      "chicken",
+      "fish",
+      "seafood",
+      "thai",
+      "breakfast"
+    ],
+    "title": "Pad Thai",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "thai",
+    "servings": 4,
+    "difficulty": "Medium",
+    "description": "Sweet and tangy Thai rice noodles with peanuts and lime",
+    "estimated_total": "PT30M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "rice_noodles",
+      "name": "rice noodles",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "2_eggs",
+      "name": "2 eggs",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "prawns_or_chicken",
+      "name": "prawns or chicken",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "tamarind_paste",
+      "name": "tamarind paste",
+      "unit": "tbsp",
+      "quantity": 3.0
+    },
+    {
+      "id": "fish_sauce",
+      "name": "fish sauce",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "palm_sugar",
+      "name": "palm sugar",
+      "unit": "tbsp",
+      "quantity": 2.0
+    },
+    {
+      "id": "beansprouts",
+      "name": "beansprouts",
+      "unit": "g",
+      "quantity": 100.0
+    },
+    {
+      "id": "crushed_peanuts_and_lime_wedges",
+      "name": "Crushed peanuts and lime wedges",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

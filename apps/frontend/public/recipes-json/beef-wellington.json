@@ -1,198 +1,139 @@
 {
-  "recipe": {
-    "id": "beef-wellington",
-    "title": "Beef Wellington",
-    "description": "Luxurious beef fillet wrapped in puff pastry with mushroom duxelles",
-    "estimated_total": "PT2H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 6,
-    "difficulty": "Tricky",
-    "tags": [
-      "beef"
-    ],
-    "course": "main"
+  "notes": {
+    "text": "Use a meat thermometer for perfect doneness\nMake sure mushrooms are completely dry\nThis is a showstopper - perfect for special occasions"
   },
-  "ingredients": [
-    {
-      "id": "beef_fillet",
-      "name": "beef fillet",
-      "quantity": 1.0,
-      "unit": "kg"
-    },
-    {
-      "id": "puff_pastry",
-      "name": "puff pastry",
-      "quantity": 500.0,
-      "unit": "g"
-    },
-    {
-      "id": "mushrooms_finely_chopped",
-      "name": "mushrooms, finely chopped",
-      "quantity": 400.0,
-      "unit": "g"
-    },
-    {
-      "id": "pâté",
-      "name": "pâté",
-      "quantity": 100.0,
-      "unit": "g"
-    },
-    {
-      "id": "parma_ham",
-      "name": "Parma ham",
-      "quantity": 6.0,
-      "unit": "slices"
-    },
-    {
-      "id": "yolks",
-      "name": "yolks",
-      "quantity": 2.0,
-      "unit": "egg"
-    },
-    {
-      "id": "fresh_thyme",
-      "name": "Fresh thyme",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "dijon_mustard",
-      "name": "Dijon mustard",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "sear_beef",
+      "next": [
+        "cook_mushrooms"
+      ],
+      "type": "immediate",
       "descr": "Sear beef on all sides, brush with mustard, let cool",
-      "instructions": "Sear beef on all sides, brush with mustard, let cool",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "on_enter": [
+        {
+          "say": "Right, let's get that beef sizzling! Sear it on all sides until it's beautifully browned, then brush it with a nice layer of mustard. Let it cool down a bit before we move on."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's sear beef on all sides, brush."
-        }
-      ]
+      "instructions": "Sear beef on all sides, brush with mustard, let cool",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "cook_mushrooms",
+      "next": [
+        "layer_ham"
+      ],
+      "type": "immediate",
       "descr": "Cook mushrooms until all liquid evaporates, season well",
+      "on_enter": [
+        {
+          "say": "Now let's cook those mushrooms. We want to get rid of all the liquid, so keep stirring until they're nice and dry. Season them well for that extra flavour."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "sear_beef"
+      ],
       "instructions": "Cook mushrooms until all liquid evaporates, season well",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Time to cook the mushrooms until all."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "layer_ham",
+      "next": [
+        "wrap_beef"
+      ],
+      "type": "immediate",
       "descr": "Lay ham on plastic wrap, spread with pâté and mushrooms",
+      "on_enter": [
+        {
+          "say": "Let's lay out the Parma ham on some plastic wrap. Spread it with a lovely layer of pâté and then our cooked mushrooms. This is going to be delicious!"
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "cook_mushrooms"
+      ],
       "instructions": "Lay ham on plastic wrap, spread with pâté and mushrooms",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's lay ham on plastic wrap, spread."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "wrap_beef",
+      "next": [
+        "wrap_puff_pastry"
+      ],
+      "type": "timer",
       "descr": "Wrap beef in ham layer, refrigerate 30 minutes",
+      "duration": "PT30M",
+      "on_enter": [
+        {
+          "say": "Now, let's wrap that beef up in the ham layer. Pop it in the fridge for thirty minutes to let it set nicely."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "layer_ham"
+      ],
       "instructions": "Wrap beef in ham layer, refrigerate 30 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's wrap beef in ham layer, refrigerate."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "wrap_puff_pastry",
+      "next": [
+        "bake_beef"
+      ],
+      "type": "immediate",
       "descr": "Wrap in puff pastry, seal edges, brush with egg",
+      "on_enter": [
+        {
+          "say": "Let's get that beef wrapped up in the puff pastry. Make sure to seal the edges well, and give it a nice brush with egg yolk for that golden finish."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "wrap_beef"
+      ],
       "instructions": "Wrap in puff pastry, seal edges, brush with egg",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's wrap in puff pastry, seal edges,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "bake_beef",
+      "next": [
+        "rest_before_slicing"
+      ],
+      "type": "timer",
       "descr": "Bake at 200°C for 35-40 minutes until golden",
-      "instructions": "Bake at 200°C for 35-40 minutes until golden",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": "PT40M",
       "on_enter": [
         {
-          "say": "Time to bake the at 200°c for."
+          "say": "Time to bake! Preheat your oven to two hundred degrees celsius, that's about three hundred ninety-two degrees fahrenheit. Pop it in for thirty-five to forty minutes until it's beautifully golden."
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "wrap_puff_pastry"
+      ],
+      "instructions": "Bake at 200°C for 35-40 minutes until golden",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Rest 10 minutes before slicing",
-      "instructions": "Rest 10 minutes before slicing",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "rest_before_slicing",
       "next": [],
+      "type": "timer",
+      "descr": "Rest 10 minutes before slicing",
+      "duration": "PT10M",
       "on_enter": [
         {
-          "say": "Let's rest 10 minutes before slicing."
+          "say": "Brilliant! Let it rest for ten minutes before slicing. This is really important - it lets all those lovely juices redistribute."
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "bake_beef"
+      ],
+      "instructions": "Rest 10 minutes before slicing",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -201,7 +142,69 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Use a meat thermometer for perfect doneness\nMake sure mushrooms are completely dry\nThis is a showstopper - perfect for special occasions"
-  }
+  "recipe": {
+    "id": "beef-wellington",
+    "tags": [
+      "beef"
+    ],
+    "title": "Beef Wellington",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Tricky",
+    "description": "Luxurious beef fillet wrapped in puff pastry with mushroom duxelles",
+    "estimated_total": "PT2H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "beef_fillet",
+      "name": "beef fillet",
+      "unit": "kg",
+      "quantity": 1
+    },
+    {
+      "id": "puff_pastry",
+      "name": "puff pastry",
+      "unit": "g",
+      "quantity": 500
+    },
+    {
+      "id": "mushrooms_finely_chopped",
+      "name": "mushrooms, finely chopped",
+      "unit": "g",
+      "quantity": 400
+    },
+    {
+      "id": "pâté",
+      "name": "pâté",
+      "unit": "g",
+      "quantity": 100
+    },
+    {
+      "id": "parma_ham",
+      "name": "Parma ham",
+      "unit": "slices",
+      "quantity": 6
+    },
+    {
+      "id": "yolks",
+      "name": "yolks",
+      "unit": "egg",
+      "quantity": 2
+    },
+    {
+      "id": "fresh_thyme",
+      "name": "Fresh thyme",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "dijon_mustard",
+      "name": "Dijon mustard",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

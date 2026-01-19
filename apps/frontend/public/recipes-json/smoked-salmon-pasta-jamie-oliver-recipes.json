@@ -1,95 +1,80 @@
 {
-  "recipe": {
-    "id": "smoked-salmon-pasta-jamie-oliver-recipes",
-    "title": "Smoked Salmon Pasta",
-    "description": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
-    "estimated_total": "PT8M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 1,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "pasta",
-      "fish",
-      "italian"
-    ],
-    "course": "main",
-    "cuisine": "italian"
+  "notes": {
+    "text": ""
   },
-  "ingredients": [],
-  "utensils": [],
   "steps": [
     {
-      "id": "boil_kettle_cut_pasta",
-      "descr": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
-      "instructions": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [],
+      "id": "prepare_pasta",
       "next": [
         "heat_pan_add_ingredients"
       ],
+      "type": "immediate",
+      "descr": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
       "on_enter": [
         {
-          "say": "Time to boil the kettle. cut."
+          "say": "Let's get started by boiling the kettle. While that's happening, cut your lasagne sheets in half lengthways, then into lovely 2cm strips. Nice and easy!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [],
+      "instructions": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
+      "requires_confirm": true
     },
     {
       "id": "heat_pan_add_ingredients",
-      "descr": "Put a 28cm frying pan on a high heat. Once hot, put a little drizzle of olive oil into the pan with the spring onions, spinach, chopped salmon and lemon zest.",
-      "instructions": "Put a 28cm frying pan on a high heat. Once hot, put a little drizzle of olive oil into the pan with the spring onions, spinach, chopped salmon and lemon zest.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [
-        "boil_kettle_cut_pasta"
-      ],
       "next": [
         "cook_pasta"
       ],
+      "type": "immediate",
+      "descr": "Put a 28cm frying pan on a high heat. Once hot, put a little drizzle of olive oil into the pan with the spring onions, spinach, chopped salmon and lemon zest.",
       "on_enter": [
         {
-          "say": "Now put the 28cm frying pan."
+          "say": "Right, let's heat up a 28cm frying pan on high. Once it's nice and hot, drizzle in some olive oil and add the spring onions, spinach, chopped salmon, and lemon zest. You'll start to smell those amazing aromas!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "prepare_pasta"
+      ],
+      "instructions": "Put a 28cm frying pan on a high heat. Once hot, put a little drizzle of olive oil into the pan with the spring onions, spinach, chopped salmon and lemon zest.",
+      "requires_confirm": true
     },
     {
       "id": "cook_pasta",
-      "descr": "Let it bubble away for 4 minutes, or until the pasta has absorbed most of the water and you've got a nice sauce.",
-      "instructions": "Let it bubble away for 4 minutes, or until the pasta has absorbed most of the water and you've got a nice sauce.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [
-        "heat_pan_add_ingredients"
-      ],
       "next": [
         "finish_sauce"
       ],
+      "type": "timer",
+      "descr": "Let it bubble away for 4 minutes, or until the pasta has absorbed most of the water and you've got a nice sauce.",
+      "duration": 240,
       "on_enter": [
         {
-          "say": "Let's let it bubble away for 4."
+          "say": "Now, let it bubble away for about 4 minutes. You'll see the pasta absorb the water and create a lovely sauce. Keep an eye on it!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "heat_pan_add_ingredients"
+      ],
+      "instructions": "Let it bubble away for 4 minutes, or until the pasta has absorbed most of the water and you've got a nice sauce.",
+      "requires_confirm": true
     },
     {
       "id": "finish_sauce",
-      "descr": "Turn the heat off, squeeze in the lemon juice, stir in the cottage cheese and Parmesan, then season to perfection.",
-      "instructions": "Turn the heat off, squeeze in the lemon juice, stir in the cottage cheese and Parmesan, then season to perfection.",
+      "next": [],
       "type": "immediate",
+      "descr": "Turn the heat off, squeeze in the lemon juice, stir in the cottage cheese and Parmesan, then season to perfection.",
+      "on_enter": [
+        {
+          "say": "Brilliant! Turn off the heat, squeeze in that fresh lemon juice, and stir in the cottage cheese and Parmesan. Give it a taste and season to perfection. You're going to love this!"
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [
         "cook_pasta"
       ],
-      "next": [],
-      "on_enter": [
-        {
-          "say": "Let's heat off, squeeze in."
-        }
-      ]
+      "instructions": "Turn the heat off, squeeze in the lemon juice, stir in the cottage cheese and Parmesan, then season to perfection.",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -98,7 +83,23 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": ""
-  }
+  "recipe": {
+    "id": "smoked-salmon-pasta-jamie-oliver-recipes",
+    "tags": [
+      "pasta",
+      "fish",
+      "italian"
+    ],
+    "title": "Smoked Salmon Pasta",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "italian",
+    "servings": 1,
+    "difficulty": "Not Too Tricky",
+    "description": "Boil the kettle. Cut the lasagne sheets in half lengthways, then into 2cm strips.",
+    "estimated_total": "PT8M"
+  },
+  "utensils": [],
+  "ingredients": []
 }

@@ -10,11 +10,10 @@
     "difficulty": "Tricky",
     "tags": [
       "fish",
-      "chinese",
-      "dessert"
+      "japanese"
     ],
-    "course": "dessert",
-    "cuisine": "chinese"
+    "course": "main",
+    "cuisine": "japanese"
   },
   "ingredients": [
     {

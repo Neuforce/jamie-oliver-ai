@@ -8,7 +8,7 @@
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: #46BEA8;
+  --primary: #3D6E6C;
   --primary-foreground: #ffffff;
   --secondary: oklch(0.95 0.0058 264.53);
   --secondary-foreground: #030213;
@@ -39,7 +39,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  
+
   /* Jamie Oliver Brand Colors */
   --jamie-primary: #46BEA8;
   --jamie-primary-dark: #327179;

@@ -1,14 +1,15 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
 import { RecipeCard } from './components/RecipeCard';
-import { RecipeFeedCard } from './components/RecipeFeedCard';
 import { RecipeModal } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
-import { ChatWithJamie } from './components/ChatWithJamie';
+import { ChatView, clearChatHistory } from './components/ChatView';
+import { TabNav, TabView } from './components/TabNav';
 import { Button } from './components/ui/button';
-import { Search, ChefHat, Sparkles, Filter, Grid3x3, LayoutList, ChevronDown, ChevronUp, MessageCircle, Clock, AlertCircle, Menu, SlidersHorizontal } from 'lucide-react';
+import { Search, ChefHat, Grid3x3, LayoutList, Clock, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Toaster } from './components/ui/sonner';
+import { Toaster, toast } from './components/ui/sonner';
+import { Play, Trash2 } from 'lucide-react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,28 +23,39 @@ import {
 import { GlowEffect } from './design-system/components/GlowEffect';
 import { AvatarWithGlow } from './design-system/components/AvatarWithGlow';
 import { SearchInput } from './design-system/components/SearchInput';
-import { RecipeSkeletonLoader, ChatSkeletonLoader } from './components/ui/skeleton-loader';
-import Nav from './imports/Nav';
+import { RecipeSkeletonLoader } from './components/ui/skeleton-loader';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
 const jamieAvatar = typeof jamieAvatarImport === 'string' ? jamieAvatarImport : (jamieAvatarImport as any).src || jamieAvatarImport;
 
 export default function App() {
+  // Navigation state - unified tab-based navigation
+  const [activeView, setActiveView] = useState<TabView>('chat');
+  
+  // Recipe browsing state
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [cookingRecipe, setCookingRecipe] = useState<Recipe | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'feed'>('feed');
   const [filtersExpanded, setFiltersExpanded] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
+  
+  // Session management
   const [recipesInProgress, setRecipesInProgress] = useState<Recipe[]>([]);
   const [showSessionWarning, setShowSessionWarning] = useState(false);
   const [pendingRecipe, setPendingRecipe] = useState<Recipe | null>(null);
+  
+  // Loading states
   const [isLoading, setIsLoading] = useState(false);
-  const [loadingType, setLoadingType] = useState<'recipe' | 'chat' | null>(null);
+  
+  // Data state
   const [loadedRecipes, setLoadedRecipes] = useState<Recipe[]>(recipes);
   const [availableCategories, setAvailableCategories] = useState<string[]>(categories);
+  
+  // Chat state
+  const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>(undefined);
+  const [chatKey, setChatKey] = useState(0); // Key to force ChatView remount when clearing
 
   // Load recipes asynchronously in production (when recipes array is empty)
   useEffect(() => {
@@ -54,35 +66,28 @@ export default function App() {
       }).catch((error) => {
         console.error('Failed to load recipes:', error);
       });
+    } else {
+      setAvailableCategories(getCategories(recipes));
     }
   }, []);
 
   // Check for recipes with saved sessions
   useEffect(() => {
     const checkSavedSessions = () => {
-      console.log('Checking for saved sessions...');
       const inProgress: Recipe[] = [];
       loadedRecipes.forEach(recipe => {
-        // Skip if recipe is completed
         const completedRecipe = localStorage.getItem(`completed-recipe-${recipe.id}`);
-        if (completedRecipe) {
-          return; // Recipe is completed, don't show as in progress
-        }
-        
+        if (completedRecipe) return;
+
         const savedSession = localStorage.getItem(`cooking-session-${recipe.id}`);
         if (savedSession) {
           try {
             const session = JSON.parse(savedSession);
-            console.log(`Found session for recipe ${recipe.id}:`, session);
             const now = new Date().getTime();
             const sessionAge = now - session.timestamp;
-            
-            // Only show sessions less than 24 hours old
             if (sessionAge < 24 * 60 * 60 * 1000) {
               inProgress.push(recipe);
             } else {
-              // Clean up old sessions
-              console.log(`Session for recipe ${recipe.id} is too old, removing...`);
               localStorage.removeItem(`cooking-session-${recipe.id}`);
             }
           } catch (e) {
@@ -90,25 +95,18 @@ export default function App() {
           }
         }
       });
-      console.log('Recipes in progress:', inProgress.length, inProgress.map(r => r.title));
       setRecipesInProgress(inProgress);
     };
 
     checkSavedSessions();
-    
-    // Also check when returning from cook mode
     if (!cookingRecipe) {
-      // Small delay to ensure localStorage is written
       setTimeout(checkSavedSessions, 100);
     }
-  }, [cookingRecipe, loadedRecipes]); // Re-check when exiting cook mode or recipes change
+  }, [cookingRecipe, loadedRecipes]);
 
-  // Helper function to check if a recipe has a saved session
-  const hasSession = (recipeId: number) => {
-    return recipesInProgress.some(r => r.id === recipeId);
-  };
-
-  // Helper function to get session details
+  // Helper functions for session management
+  const hasSession = (recipeId: number) => recipesInProgress.some(r => r.id === recipeId);
+  
   const getSessionDetails = (recipeId: number) => {
     const savedSession = localStorage.getItem(`cooking-session-${recipeId}`);
     if (savedSession) {
@@ -127,404 +125,635 @@ export default function App() {
       const matchesSearch = recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            recipe.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            recipe.category.toLowerCase().includes(searchQuery.toLowerCase());
-      
       const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
-      
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, selectedCategory, loadedRecipes]);
 
+  // Recipe interaction handlers
   const handleCookWithJamie = () => {
     if (!selectedRecipe) return;
-    
-    // Check if user is trying to start a DIFFERENT recipe while another is in progress
+
     const otherActiveSessions = recipesInProgress.filter(r => r.id !== selectedRecipe.id);
-    
     if (otherActiveSessions.length > 0) {
-      // User has other recipes in progress
       setPendingRecipe(selectedRecipe);
       setShowSessionWarning(true);
       return;
     }
-    
-    // Show loader before transition
+
     setIsLoading(true);
-    setLoadingType('recipe');
     setSelectedRecipe(null);
-    
-    // Simulate loading time
     setTimeout(() => {
       setCookingRecipe(selectedRecipe);
       setIsLoading(false);
-      setLoadingType(null);
-    }, 800);
+    }, 500);
   };
-  
+
   const handleRecipeClick = (recipe: Recipe) => {
-    // If currently cooking a different recipe, show warning
     if (cookingRecipe && cookingRecipe.id !== recipe.id) {
       setPendingRecipe(recipe);
       setShowSessionWarning(true);
       return;
     }
-    
-    // Show loader before opening recipe
+
     setIsLoading(true);
-    setLoadingType('recipe');
-    
     setTimeout(() => {
       setSelectedRecipe(recipe);
       setIsLoading(false);
-      setLoadingType(null);
-    }, 500);
+    }, 300);
   };
-  
+
   const handleContinueWithNewRecipe = () => {
-    // User confirmed they want to start a new recipe
     setShowSessionWarning(false);
     if (pendingRecipe) {
-      // Show loader for transition
       setIsLoading(true);
-      setLoadingType('recipe');
-      
-      // Close current recipe (its state is already saved automatically)
       setCookingRecipe(null);
       setSelectedRecipe(null);
-      
-      // Start the new recipe directly
       setTimeout(() => {
         setCookingRecipe(pendingRecipe);
         setPendingRecipe(null);
         setIsLoading(false);
-        setLoadingType(null);
       }, 500);
     }
   };
-  
+
   const handleReturnToActiveSession = () => {
-    // User wants to continue cooking current recipe
     setShowSessionWarning(false);
     setPendingRecipe(null);
-    // Keep cooking the current recipe (no change needed)
+  };
+
+  // Resume cooking directly (from Continue Cooking section)
+  const handleResumeCooking = (recipe: Recipe) => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setCookingRecipe(recipe);
+      setIsLoading(false);
+    }, 300);
+  };
+
+  // Discard a saved session
+  const handleDiscardSession = (recipe: Recipe, e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent triggering the parent click
+    localStorage.removeItem(`cooking-session-${recipe.id}`);
+    // Update the recipes in progress list
+    setRecipesInProgress(prev => prev.filter(r => r.id !== recipe.id));
+    toast.success('Session discarded', {
+      description: `${recipe.title} progress has been removed`,
+    });
+  };
+
+  // Handle prompt clicks from Chat view
+  const handlePromptClick = (prompt: string) => {
+    setInitialChatMessage(prompt);
+  };
+
+  // Handle recipe selection from Chat view
+  const handleChatRecipeClick = (recipe: Recipe) => {
+    setSelectedRecipe(recipe);
+  };
+
+  // Handle logo click - return to home (Chat with fresh state)
+  const handleLogoClick = () => {
+    clearChatHistory();
+    setChatKey(prev => prev + 1); // Force ChatView to remount with fresh state
+    setActiveView('chat');
+    setInitialChatMessage(undefined);
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section - Clean minimalist design matching Figma mock */}
-      <div className="relative overflow-hidden bg-white">
-        {/* Glow Effect Background */}
-        <GlowEffect />
-        
-        <div className="container mx-auto px-5 py-3 relative z-10 pt-[12px] pr-[20px] pb-[0px] pl-[20px]">
-          {/* Navigation */}
-          <div className="h-[56px] mb-3">
-            <Nav />
-          </div>
-
-          {/* Jamie's Avatar with Glow */}
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="flex flex-col items-center mb-6"
-          >
-            <AvatarWithGlow
-              src={jamieAvatar}
-              alt="Jamie Oliver"
-              size={170}
-            />
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="text-center mt-4"
-            >
-              <h1
-                className="text-center"
-                style={{
-                  fontFamily: 'Poppins, sans-serif',
-                  fontStyle: 'normal',
-                  fontWeight: 800,
-                  fontSize: '32px',
-                  lineHeight: '0.99',
-                  letterSpacing: '0px',
-                  textTransform: 'uppercase',
-                  color: '#327179',
-                }}
-              >
-                COOK WITH JAMIE
-              </h1>
-              <p
-                className="text-center"
-                style={{
-                  fontFamily: 'Poppins, sans-serif',
-                  fontStyle: 'normal',
-                  fontWeight: 400,
-                  fontSize: '16px',
-                  lineHeight: '1.5',
-                  letterSpacing: '0px',
-                  color: '#234252',
-                }}
-              >
-                Cook amazing recipes, step by step
-              </p>
-            </motion.div>
-          </motion.div>
-
-          {/* Search Bar - Using design system component */}
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="max-w-md mx-auto"
-          >
-            <SearchInput
-              value={searchQuery}
-              onSearch={(value) => setSearchQuery(value)}
-              placeholder="Search recipes by name, ingredie..."
-            />
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="container mx-auto pt-3 pb-12 bg-[rgba(0,0,0,0)]">
-        {/* Recipes in Progress Section */}
-        {recipesInProgress.length > 0 && (
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.5 }}
-            className="mb-12 px-4"
-          >
-            <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl p-8 text-white shadow-xl">
-              <div className="flex items-center gap-4 mb-6">
-                <Clock className="size-6" />
-                <h2 className="text-white">Continue Cooking</h2>
-              </div>
-              <p className="text-white/90 mb-6">
-                You have {recipesInProgress.length} {recipesInProgress.length === 1 ? 'recipe' : 'recipes'} in progress
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {recipesInProgress.map((recipe) => {
-                  const session = getSessionDetails(recipe.id);
-                  
-                  // Calculate timer display
-                  let timerDisplay = '';
-                  let timerActive = false;
-                  if (session?.timerEndTime) {
-                    const now = new Date().getTime();
-                    const remaining = Math.ceil((session.timerEndTime - now) / 1000);
-                    if (remaining > 0) {
-                      timerActive = true;
-                      const mins = Math.floor(remaining / 60);
-                      const secs = remaining % 60;
-                      timerDisplay = `${mins}:${secs.toString().padStart(2, '0')}`;
-                    }
-                  } else if (session?.timerSeconds && session.timerSeconds > 0) {
-                    const mins = Math.floor(session.timerSeconds / 60);
-                    const secs = session.timerSeconds % 60;
-                    timerDisplay = `${mins}:${secs.toString().padStart(2, '0')}`;
-                  }
-                  
-                  return (
-                    <motion.div
-                      key={recipe.id}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => {
-                        setSelectedRecipe(recipe);
-                      }}
-                      className="bg-white/10 backdrop-blur-sm rounded-xl p-4 cursor-pointer hover:bg-white/15 transition-colors duration-200 border border-white/20"
-                    >
-                      <div className="flex gap-3">
-                        <div className="relative flex-shrink-0">
-                          <img
-                            src={recipe.image}
-                            alt={recipe.title}
-                            className="size-16 rounded-lg object-cover"
-                          />
-                          <div className="absolute -top-1 -right-1 size-5 bg-orange-500 rounded-full flex items-center justify-center text-xs">
-                            {session?.currentStep + 1 || 1}
-                          </div>
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="text-white text-sm mb-1 truncate">{recipe.title}</h3>
-                          <p className="text-white/70 text-xs mb-2">
-                            Step {session?.currentStep + 1 || 1} of {recipe.instructions.length}
-                          </p>
-                          <div className="w-full bg-white/20 rounded-full h-1.5 overflow-hidden mb-2">
-                            <div
-                              className="bg-white h-full rounded-full transition-all"
-                              style={{
-                                width: `${((session?.currentStep + 1 || 1) / recipe.instructions.length) * 100}%`
-                              }}
-                            />
-                          </div>
-                          {timerDisplay && (
-                            <div className={`flex items-center gap-1.5 text-xs ${timerActive ? 'text-orange-200' : 'text-white/70'}`}>
-                              <Clock className={`size-3 ${timerActive ? 'animate-pulse' : ''}`} />
-                              <span className="tabular-nums">{timerDisplay}</span>
-                              {timerActive && <span className="text-orange-200">• Activo</span>}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  );
-                })}
-              </div>
-            </div>
-          </motion.div>
+    <div 
+      style={{
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        backgroundColor: 'white',
+      }}
+    >
+      {/* Full-screen cooking overlay takes priority */}
+      <AnimatePresence>
+        {cookingRecipe && (
+          <CookWithJamie
+            recipe={cookingRecipe}
+            onClose={() => setCookingRecipe(null)}
+            onBackToChat={() => {
+              setCookingRecipe(null);
+              setActiveView('chat');
+            }}
+            onExploreRecipes={() => {
+              setCookingRecipe(null);
+              setActiveView('recipes');
+            }}
+          />
         )}
+      </AnimatePresence>
 
-        {/* Filters & View Mode Bar */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="mb-6 px-4"
-        >
-          {/* Top Bar: Results Count, View Toggle, Filter Toggle */}
-          <div className="flex items-center gap-2 mb-4">
-            {/* View Mode Toggle */}
-            <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1 flex-1">
-              <Button
-                onClick={() => setViewMode('feed')}
-                variant={viewMode === 'feed' ? "default" : "ghost"}
-                size="sm"
-                className="rounded-full h-8 flex-1"
-              >
-                <LayoutList className="size-4" />
-              </Button>
-              <Button
-                onClick={() => setViewMode('grid')}
-                variant={viewMode === 'grid' ? "default" : "ghost"}
-                size="sm"
-                className="rounded-full h-8 flex-1"
-              >
-                <Grid3x3 className="size-4" />
-              </Button>
-            </div>
+      {/* Main app content - hidden when cooking */}
+      {!cookingRecipe && (
+        <>
+          {/* Persistent Tab Navigation */}
+          <header style={{ flexShrink: 0, zIndex: 40, backgroundColor: 'white' }}>
+            <TabNav 
+              activeTab={activeView} 
+              onTabChange={setActiveView}
+              onLogoClick={handleLogoClick}
+            />
+          </header>
 
-            {/* Filter Toggle Button */}
-            <Button
-              onClick={() => setFiltersExpanded(!filtersExpanded)}
-              variant={selectedCategory !== 'All' ? "default" : "ghost"}
-              size="sm"
-              className="rounded-full h-8 gap-1 px-4"
-            >
-              <SlidersHorizontal className="size-4" />
-              {selectedCategory !== 'All' && (
-                <span className="size-2 rounded-full bg-white" />
-              )}
-            </Button>
-          </div>
-
-          {/* Collapsible Filters */}
-          <AnimatePresence initial={false}>
-            {filtersExpanded && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="overflow-hidden"
-              >
+          {/* Tab Content - Full remaining height */}
+          <main 
+            style={{
+              flex: 1,
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: 0,
+              overflow: 'hidden',
+            }}
+          >
+            <AnimatePresence mode="wait">
+              {activeView === 'chat' ? (
                 <motion.div
-                  initial={{ y: -10 }}
-                  animate={{ y: 0 }}
-                  exit={{ y: -10 }}
-                  transition={{ duration: 0.3 }}
-                  className="pb-2"
+                  key={`chat-${chatKey}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2 }}
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    minHeight: 0,
+                  }}
                 >
-                  <div className="flex flex-wrap gap-2">
-                    {availableCategories.map((category) => (
-                      <Button
-                        key={category}
-                        onClick={() => setSelectedCategory(category)}
-                        variant={selectedCategory === category ? "default" : "outline"}
-                        size="sm"
-                        className="rounded-full"
+                  <ChatView
+                    key={chatKey}
+                    initialMessage={initialChatMessage}
+                    onRecipeClick={handleChatRecipeClick}
+                    onPromptClick={handlePromptClick}
+                    onClearInitialMessage={() => setInitialChatMessage(undefined)}
+                  />
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="recipes"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.2 }}
+                  className="h-full overflow-y-auto"
+                >
+                  {/* Recipes View */}
+                  <div className="relative overflow-hidden bg-white">
+                    {/* Hero Section with Glow Effect */}
+                    <div className="relative overflow-hidden bg-white">
+                      <GlowEffect />
+                      <div className="container mx-auto px-5 py-3 relative z-10">
+                        {/* Jamie's Avatar */}
+                        <motion.div
+                          initial={{ scale: 0.8, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.5 }}
+                          className="flex flex-col items-center mb-6"
+                        >
+                          <AvatarWithGlow
+                            src={jamieAvatar}
+                            alt="Jamie Oliver"
+                            size={140}
+                          />
+                          <motion.div
+                            initial={{ y: 20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.2, duration: 0.5 }}
+                            className="text-center mt-4"
+                          >
+                            <h1
+                              className="text-center"
+                              style={{
+                                fontFamily: 'var(--font-display)',
+                                fontWeight: 800,
+                                fontSize: '28px',
+                                lineHeight: 1,
+                                textTransform: 'uppercase',
+                                color: 'var(--jamie-text-heading)',
+                              }}
+                            >
+                              COOK WITH JAMIE
+                            </h1>
+                            <p
+                              className="text-center mt-2"
+                              style={{
+                                fontFamily: 'var(--font-display)',
+                                fontWeight: 400,
+                                fontSize: '15px',
+                                lineHeight: 1.5,
+                                color: 'var(--jamie-text-primary)',
+                              }}
+                            >
+                              Cook amazing recipes, step by step
+                            </p>
+                          </motion.div>
+                        </motion.div>
+
+                        {/* Search Bar */}
+                        <motion.div
+                          initial={{ y: 20, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.4, duration: 0.5 }}
+                          className="max-w-md mx-auto"
+                        >
+                          <SearchInput
+                            value={searchQuery}
+                            onSearch={(value) => setSearchQuery(value)}
+                            placeholder="Search recipes by name, ingredie..."
+                          />
+                        </motion.div>
+                      </div>
+                    </div>
+
+                    {/* Main Content */}
+                    <div className="container mx-auto pt-3 pb-12">
+                      {/* Recipes in Progress Section */}
+                      {recipesInProgress.length > 0 && (
+                        <motion.div
+                          initial={{ y: 20, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ duration: 0.5 }}
+                          className="mb-8 px-4"
+                        >
+                          <div
+                            style={{
+                              backgroundColor: 'var(--jamie-primary-dark)',
+                              borderRadius: '20px',
+                              padding: '20px',
+                              boxShadow: '0 4px 20px rgba(41, 81, 79, 0.25)',
+                            }}
+                          >
+                            <div className="flex items-center gap-3 mb-3">
+                              <Clock className="size-5" style={{ color: 'white' }} />
+                              <h2
+                                style={{
+                                  fontFamily: 'var(--font-display)',
+                                  fontSize: '16px',
+                                  fontWeight: 600,
+                                  color: 'white',
+                                  margin: 0,
+                                }}
+                              >
+                                Continue Cooking
+                              </h2>
+                            </div>
+                            <p
+                              style={{
+                                fontFamily: 'var(--font-body)',
+                                fontSize: '13px',
+                                color: 'rgba(255, 255, 255, 0.85)',
+                                marginBottom: '16px',
+                              }}
+                            >
+                              You have {recipesInProgress.length} {recipesInProgress.length === 1 ? 'recipe' : 'recipes'} in progress
+                            </p>
+                            <div className="grid grid-cols-1 gap-3">
+                              {recipesInProgress.map((recipe) => {
+                                const session = getSessionDetails(recipe.id);
+                                let timerDisplay = '';
+                                let timerActive = false;
+                                if (session?.timerEndTime) {
+                                  const now = new Date().getTime();
+                                  const remaining = Math.ceil((session.timerEndTime - now) / 1000);
+                                  if (remaining > 0) {
+                                    timerActive = true;
+                                    const mins = Math.floor(remaining / 60);
+                                    const secs = remaining % 60;
+                                    timerDisplay = `${mins}:${secs.toString().padStart(2, '0')}`;
+                                  }
+                                } else if (session?.timerSeconds && session.timerSeconds > 0) {
+                                  const mins = Math.floor(session.timerSeconds / 60);
+                                  const secs = session.timerSeconds % 60;
+                                  timerDisplay = `${mins}:${secs.toString().padStart(2, '0')}`;
+                                }
+
+                                return (
+                                  <motion.div
+                                    key={recipe.id}
+                                    style={{
+                                      backgroundColor: 'rgba(255, 255, 255, 0.12)',
+                                      borderRadius: '16px',
+                                      padding: '12px',
+                                      border: '1px solid rgba(255, 255, 255, 0.15)',
+                                    }}
+                                  >
+                                    <div className="flex gap-3 items-center">
+                                      <div className="relative flex-shrink-0">
+                                        <img
+                                          src={recipe.image}
+                                          alt={recipe.title}
+                                          style={{
+                                            width: '56px',
+                                            height: '56px',
+                                            borderRadius: '12px',
+                                            objectFit: 'cover',
+                                          }}
+                                        />
+                                        <div
+                                          style={{
+                                            position: 'absolute',
+                                            top: '-4px',
+                                            right: '-4px',
+                                            width: '22px',
+                                            height: '22px',
+                                            backgroundColor: '#F97316',
+                                            borderRadius: '50%',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontSize: '11px',
+                                            fontWeight: 600,
+                                            color: 'white',
+                                            fontFamily: 'var(--font-body)',
+                                          }}
+                                        >
+                                          {session?.currentStep + 1 || 1}
+                                        </div>
+                                      </div>
+                                      <div className="flex-1 min-w-0">
+                                        <h3
+                                          style={{
+                                            fontFamily: 'var(--font-display)',
+                                            fontSize: '14px',
+                                            fontWeight: 600,
+                                            color: 'white',
+                                            marginBottom: '4px',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                            whiteSpace: 'nowrap',
+                                          }}
+                                        >
+                                          {recipe.title}
+                                        </h3>
+                                        <p
+                                          style={{
+                                            fontFamily: 'var(--font-body)',
+                                            fontSize: '12px',
+                                            color: 'rgba(255, 255, 255, 0.7)',
+                                            marginBottom: '8px',
+                                          }}
+                                        >
+                                          Step {session?.currentStep + 1 || 1} of {recipe.instructions.length}
+                                        </p>
+                                        <div
+                                          style={{
+                                            width: '100%',
+                                            height: '4px',
+                                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                                            borderRadius: '2px',
+                                            overflow: 'hidden',
+                                          }}
+                                        >
+                                          <div
+                                            style={{
+                                              height: '100%',
+                                              width: `${((session?.currentStep + 1 || 1) / recipe.instructions.length) * 100}%`,
+                                              backgroundColor: 'white',
+                                              borderRadius: '2px',
+                                              transition: 'width 0.3s ease',
+                                            }}
+                                          />
+                                        </div>
+                                        {timerDisplay && (
+                                          <div
+                                            className="flex items-center gap-1.5 mt-2"
+                                            style={{
+                                              fontSize: '12px',
+                                              color: timerActive ? '#FDBA74' : 'rgba(255, 255, 255, 0.7)',
+                                            }}
+                                          >
+                                            <Clock
+                                              className={`size-3 ${timerActive ? 'animate-pulse' : ''}`}
+                                            />
+                                            <span className="tabular-nums">{timerDisplay}</span>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                    {/* Action buttons */}
+                                    <div className="flex gap-2 mt-3">
+                                      <button
+                                        onClick={() => handleResumeCooking(recipe)}
+                                        style={{
+                                          flex: 1,
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          gap: '6px',
+                                          padding: '8px 12px',
+                                          backgroundColor: 'white',
+                                          color: 'var(--jamie-primary-dark)',
+                                          borderRadius: '20px',
+                                          border: 'none',
+                                          cursor: 'pointer',
+                                          fontFamily: 'var(--font-display)',
+                                          fontSize: '13px',
+                                          fontWeight: 600,
+                                          transition: 'opacity 0.2s ease',
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
+                                        onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
+                                      >
+                                        <Play className="size-4" />
+                                        Resume
+                                      </button>
+                                      <button
+                                        onClick={(e) => handleDiscardSession(recipe, e)}
+                                        style={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'center',
+                                          padding: '8px 12px',
+                                          backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                                          color: 'rgba(255, 255, 255, 0.8)',
+                                          borderRadius: '20px',
+                                          border: '1px solid rgba(255, 255, 255, 0.2)',
+                                          cursor: 'pointer',
+                                          transition: 'all 0.2s ease',
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.2)';
+                                          e.currentTarget.style.borderColor = 'rgba(239, 68, 68, 0.4)';
+                                          e.currentTarget.style.color = '#fca5a5';
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                                          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+                                          e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)';
+                                        }}
+                                        title="Discard session"
+                                      >
+                                        <Trash2 className="size-4" />
+                                      </button>
+                                    </div>
+                                  </motion.div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {/* Filters & View Mode Bar */}
+                      <motion.div
+                        initial={{ y: 20, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.6, duration: 0.5 }}
+                        className="mb-6 px-4"
                       >
-                        {category}
-                      </Button>
-                    ))}
+                        <div className="flex items-center gap-2 mb-4 mx-auto" style={{ maxWidth: '600px' }}>
+                          {/* View Mode Toggle */}
+                          <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1 flex-1">
+                            <button
+                              onClick={() => setViewMode('feed')}
+                              className="rounded-full h-9 flex-1 flex items-center justify-center transition-colors"
+                              style={{
+                                backgroundColor: viewMode === 'feed' ? '#3D6E6C' : 'transparent',
+                                color: viewMode === 'feed' ? '#ffffff' : 'inherit',
+                              }}
+                            >
+                              <LayoutList className="size-4" />
+                            </button>
+                            <button
+                              onClick={() => setViewMode('grid')}
+                              className="rounded-full h-9 flex-1 flex items-center justify-center transition-colors"
+                              style={{
+                                backgroundColor: viewMode === 'grid' ? '#3D6E6C' : 'transparent',
+                                color: viewMode === 'grid' ? '#ffffff' : 'inherit',
+                              }}
+                            >
+                              <Grid3x3 className="size-4" />
+                            </button>
+                          </div>
+
+                          {/* Filter Toggle Button */}
+                          <Button
+                            onClick={() => setFiltersExpanded(!filtersExpanded)}
+                            variant="ghost"
+                            size="sm"
+                            className="rounded-full h-9 gap-1 px-4"
+                          >
+                            <SlidersHorizontal className="size-4" />
+                            {selectedCategory !== 'All' && (
+                              <span className="size-2 rounded-full bg-[#46BEA8]" />
+                            )}
+                          </Button>
+                        </div>
+
+                        {/* Category Filters */}
+                        <AnimatePresence mode="wait">
+                          {filtersExpanded && (
+                            <motion.div
+                              key="category-filters"
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.2 }}
+                              className="flex flex-wrap gap-2 mx-auto overflow-hidden"
+                              style={{ maxWidth: '600px' }}
+                            >
+                              {availableCategories.map((category) => (
+                                <button
+                                  key={category}
+                                  onClick={() => setSelectedCategory(category)}
+                                  className="rounded-full px-4 py-2 text-sm font-medium transition-all duration-200"
+                                  style={{
+                                    fontFamily: 'var(--font-body)',
+                                    backgroundColor: selectedCategory === category ? 'var(--jamie-primary-dark)' : 'white',
+                                    color: selectedCategory === category ? 'white' : 'var(--jamie-text-body)',
+                                    border: selectedCategory === category ? 'none' : '1px solid #e5e7eb',
+                                    boxShadow: selectedCategory === category ? '0 2px 4px rgba(0,0,0,0.1)' : 'none',
+                                  }}
+                                >
+                                  {category}
+                                </button>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </motion.div>
+
+                      {/* Recipe Grid View */}
+                      {viewMode === 'grid' && (
+                        <motion.div
+                          key={`grid-${recipesInProgress.length}`}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.2, duration: 0.5 }}
+                          className="px-4 mb-12"
+                        >
+                          <div 
+                            className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
+                            style={{ maxWidth: '800px', margin: '0 auto' }}
+                          >
+                            {filteredRecipes.map((recipe, index) => (
+                              <motion.div
+                                key={recipe.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.05 * (index % 8), duration: 0.3 }}
+                              >
+                                <RecipeCard
+                                  recipe={recipe}
+                                  onClick={() => handleRecipeClick(recipe)}
+                                  variant="grid"
+                                />
+                              </motion.div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {/* Recipe Feed View */}
+                      {viewMode === 'feed' && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.2, duration: 0.5 }}
+                          className="px-5 mb-12"
+                        >
+                          <div className="max-w-3xl mx-auto flex flex-col" style={{ gap: '32px' }}>
+                            {filteredRecipes.map((recipe, index) => (
+                              <motion.div
+                                key={recipe.id}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ delay: 0.05 * (index % 8), duration: 0.3 }}
+                              >
+                                <RecipeCard
+                                  recipe={recipe}
+                                  onClick={() => handleRecipeClick(recipe)}
+                                  variant="feed"
+                                />
+                              </motion.div>
+                            ))}
+                          </div>
+                        </motion.div>
+                      )}
+
+                      {/* No Results */}
+                      {filteredRecipes.length === 0 && (
+                        <div className="text-center py-12">
+                          <ChefHat className="size-16 mx-auto mb-4 text-muted-foreground" />
+                          <h3 className="mb-2 font-medium">No recipes found</h3>
+                          <p className="text-muted-foreground">
+                            Try adjusting your search or filters
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Recipe Grid View */}
-          {viewMode === 'grid' && (
-            <motion.div
-              key={`grid-${recipesInProgress.length}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="px-5 mb-12"
-            >
-              <div className="grid grid-cols-2 gap-4">
-                {filteredRecipes.map((recipe, index) => (
-                  <motion.div
-                    key={recipe.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 * (index % 8), duration: 0.3 }}
-                  >
-                    <RecipeCard
-                      recipe={recipe}
-                      onClick={() => handleRecipeClick(recipe)}
-                      variant="grid"
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-        {/* Recipe Feed View */}
-          {viewMode === 'feed' && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="px-5 mb-12"
-            >
-              <div
-                className="max-w-3xl mx-auto flex flex-col"
-                style={{ gap: '38px' }}
-              >
-                {filteredRecipes.map((recipe, index) => (
-                  <motion.div
-                    key={recipe.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.05 * (index % 8), duration: 0.3 }}
-                  >
-                    <RecipeCard
-                      recipe={recipe}
-                      onClick={() => handleRecipeClick(recipe)}
-                      variant="feed"
-                    />
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
-          )}
-
-        {/* No Results */}
-        {filteredRecipes.length === 0 && (
-          <div className="text-center py-12">
-            <ChefHat className="size-16 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="mb-2">No recipes found</h3>
-            <p className="text-muted-foreground">
-              Try adjusting your search or filters
-            </p>
-          </div>
-        )}
-      </div>
+              )}
+            </AnimatePresence>
+          </main>
+        </>
+      )}
 
       {/* Recipe Modal */}
       {selectedRecipe && (
@@ -535,97 +764,22 @@ export default function App() {
         />
       )}
 
-      {/* Cook with Jamie */}
-      {cookingRecipe && (
-        <CookWithJamie
-          recipe={cookingRecipe}
-          onClose={() => setCookingRecipe(null)}
-        />
-      )}
-
-      {/* Chat with Jamie */}
-      {chatOpen && (
-        <ChatWithJamie
-          onClose={() => setChatOpen(false)}
-          onRecipeClick={(recipe) => setSelectedRecipe(recipe)}
-        />
-      )}
-
-      {/* Floating Chat Button */}
-      <AnimatePresence>
-        {!chatOpen && !selectedRecipe && !cookingRecipe && (
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0, opacity: 0 }}
-            transition={{ type: 'spring', damping: 15, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-40"
-          >
-            <Button
-              onClick={() => setChatOpen(true)}
-              size="lg"
-              className="size-16 rounded-full shadow-2xl bg-[#46BEA8] hover:bg-[#327179] text-white border-4 border-white/30"
-            >
-              <MessageCircle className="size-7" />
-            </Button>
-            {/* Pulse Animation */}
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                opacity: [0.5, 0, 0.5],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="absolute inset-0 rounded-full bg-[#46BEA8]"
-              style={{ zIndex: -1 }}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Footer */}
-      <footer className="border-t border-border bg-muted/30 mt-20">
-        <div className="container mx-auto px-4 py-12 text-center hidden">
-          <div className="flex items-center justify-center gap-3 mb-3">
-            <ChefHat className="size-5 text-[#46BEA8]" />
-            <p className="text-muted-foreground">
-              Made with love by Jamie Oliver AI Assistant
-            </p>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Your personal cooking companion • 50 amazing recipes and counting
-          </p>
-        </div>
-      </footer>
-
       {/* Toaster */}
       <Toaster />
 
       {/* Session Warning Dialog */}
       {showSessionWarning && (
-        <AlertDialog
-          open={showSessionWarning}
-          onOpenChange={setShowSessionWarning}
-        >
+        <AlertDialog open={showSessionWarning} onOpenChange={setShowSessionWarning}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>
-                Switch to {pendingRecipe?.title}?
-              </AlertDialogTitle>
+              <AlertDialogTitle>Switch to {pendingRecipe?.title}?</AlertDialogTitle>
               <AlertDialogDescription>
                 Your current progress will be saved automatically.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter className="gap-2">
-              <AlertDialogCancel onClick={handleReturnToActiveSession}>
-                Cancel
-              </AlertDialogCancel>
-              <AlertDialogAction onClick={handleContinueWithNewRecipe}>
-                Switch
-              </AlertDialogAction>
+              <AlertDialogCancel onClick={handleReturnToActiveSession}>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={handleContinueWithNewRecipe}>Switch</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
@@ -633,7 +787,7 @@ export default function App() {
 
       {/* Loading Skeleton */}
       <AnimatePresence>
-        {isLoading && loadingType === 'recipe' && (
+        {isLoading && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -641,16 +795,6 @@ export default function App() {
             transition={{ duration: 0.2 }}
           >
             <RecipeSkeletonLoader />
-          </motion.div>
-        )}
-        {isLoading && loadingType === 'chat' && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <ChatSkeletonLoader />
           </motion.div>
         )}
       </AnimatePresence>

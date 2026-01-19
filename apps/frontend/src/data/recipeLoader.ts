@@ -160,14 +160,179 @@ function transformBackendSteps(steps: BackendRecipePayload['steps']): BackendRec
   }));
 }
 
-// Extract category from title or use default
-function extractCategory(title: string): string {
+// Categorize recipes intelligently based on title, ingredients hints, and recipe type
+function extractCategory(title: string, ingredients?: BackendRecipePayload['ingredients']): string {
   const lower = title.toLowerCase();
-  if (lower.includes('pasta') || lower.includes('spaghetti')) return 'Italian';
-  if (lower.includes('salad')) return 'Salads';
-  if (lower.includes('stew') || lower.includes('curry')) return 'Main Course';
-  if (lower.includes('pie')) return 'Main Course';
-  return 'Main Course'; // Default category
+  
+  // Desserts & Sweets
+  if (
+    lower.includes('brownie') ||
+    lower.includes('cookie') ||
+    lower.includes('cake') ||
+    lower.includes('pie') && (lower.includes('apple') || lower.includes('lemon') || lower.includes('cherry') || lower.includes('pumpkin')) ||
+    lower.includes('tart') ||
+    lower.includes('tiramisu') ||
+    lower.includes('crème brûlée') ||
+    lower.includes('creme brulee') ||
+    lower.includes('pudding') ||
+    lower.includes('ice cream') ||
+    lower.includes('cheesecake')
+  ) {
+    return 'Desserts';
+  }
+  
+  // Breads & Baked Goods
+  if (
+    lower.includes('bread') ||
+    lower.includes('toast') && !lower.includes('french toast') ||
+    lower.includes('garlic bread') ||
+    lower.includes('focaccia') ||
+    lower.includes('bagel')
+  ) {
+    return 'Breads';
+  }
+  
+  // Breakfast
+  if (
+    lower.includes('breakfast') ||
+    lower.includes('pancake') ||
+    lower.includes('french toast') ||
+    lower.includes('eggs benedict') ||
+    lower.includes('omelette') ||
+    lower.includes('waffle')
+  ) {
+    return 'Breakfast';
+  }
+  
+  // Salads
+  if (lower.includes('salad')) {
+    return 'Salads';
+  }
+  
+  // Soups
+  if (lower.includes('soup') || lower.includes('stew') || lower.includes('chowder')) {
+    return 'Soups';
+  }
+  
+  // Pasta & Italian
+  if (
+    lower.includes('pasta') ||
+    lower.includes('spaghetti') ||
+    lower.includes('carbonara') ||
+    lower.includes('lasagna') ||
+    lower.includes('risotto') ||
+    lower.includes('gnocchi') ||
+    lower.includes('pesto') ||
+    lower.includes('marinara') ||
+    lower.includes('pizza') ||
+    lower.includes('meatball')
+  ) {
+    return 'Italian';
+  }
+  
+  // Asian
+  if (
+    lower.includes('thai') ||
+    lower.includes('pad thai') ||
+    lower.includes('curry') && !lower.includes('chicken curry') ||
+    lower.includes('ramen') ||
+    lower.includes('sushi') ||
+    lower.includes('stir fry') ||
+    lower.includes('stir-fry') ||
+    lower.includes('noodle') && !lower.includes('chicken noodle soup') ||
+    lower.includes('dim sum') ||
+    lower.includes('teriyaki')
+  ) {
+    return 'Asian';
+  }
+  
+  // Mexican
+  if (
+    lower.includes('taco') ||
+    lower.includes('burrito') ||
+    lower.includes('fajita') ||
+    lower.includes('enchilada') ||
+    lower.includes('quesadilla') ||
+    lower.includes('guacamole')
+  ) {
+    return 'Mexican';
+  }
+  
+  // Seafood
+  if (
+    lower.includes('fish') ||
+    lower.includes('salmon') ||
+    lower.includes('shrimp') ||
+    lower.includes('lobster') ||
+    lower.includes('mussel') ||
+    lower.includes('scampi') ||
+    lower.includes('seafood') ||
+    lower.includes('crab') ||
+    lower.includes('tuna')
+  ) {
+    return 'Seafood';
+  }
+  
+  // Grilled & BBQ
+  if (
+    lower.includes('kebab') ||
+    lower.includes('bbq') ||
+    lower.includes('barbecue') ||
+    lower.includes('grilled') ||
+    lower.includes('wings')
+  ) {
+    return 'Grilled';
+  }
+  
+  // Burgers & Sandwiches
+  if (
+    lower.includes('burger') ||
+    lower.includes('sandwich') ||
+    lower.includes('wrap')
+  ) {
+    return 'Sandwiches';
+  }
+  
+  // Chicken dishes
+  if (lower.includes('chicken')) {
+    return 'Poultry';
+  }
+  
+  // Beef dishes
+  if (
+    lower.includes('beef') ||
+    lower.includes('steak') ||
+    lower.includes('wellington')
+  ) {
+    return 'Beef';
+  }
+  
+  // Pork dishes
+  if (lower.includes('pork') || lower.includes('bacon') || lower.includes('ham')) {
+    return 'Pork';
+  }
+  
+  // Vegetarian indicator
+  if (
+    lower.includes('vegetable') ||
+    lower.includes('veggie') ||
+    lower.includes('quinoa') ||
+    lower.includes('avocado toast')
+  ) {
+    return 'Vegetarian';
+  }
+  
+  // Comfort Food / Main Course (default for savory pies, etc.)
+  if (
+    lower.includes('pie') || // Shepherd's pie, fish pie
+    lower.includes('moussaka') ||
+    lower.includes('roast')
+  ) {
+    return 'Comfort Food';
+  }
+  
+  // Default
+  return 'Main Course';
 }
 
 // Transform jamie-oliver-ai recipe to joui format
@@ -192,7 +357,7 @@ function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Reci
     backendId: recipe.id,
     title: recipe.title,
     description: recipe.description || jamieRecipe.steps[0]?.descr || recipe.title,
-    category: extractCategory(recipe.title),
+    category: extractCategory(recipe.title, jamieRecipe.ingredients),
     difficulty: mapDifficulty(recipe.difficulty),
     time: parseDuration(recipe.estimated_total),
     servings: recipe.servings,

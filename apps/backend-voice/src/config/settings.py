@@ -83,9 +83,15 @@ class Settings:
     STT_LANGUAGE: str = "en-US"
     STT_ENDPOINTING_MS: int = 200  # milliseconds of silence before considering speech complete
     
-    # LLM Configuration (OpenAI)
-    LLM_MODEL: str = "gpt-4.1"
-    LLM_TEMPERATURE: float = 0.0  # Deterministic for consistent cooking instructions
+    # LLM Configuration
+    # Provider options: "openai", "gemini", "groq"
+    LLM_PROVIDER: str = os.getenv("LLM_PROVIDER", "openai").strip().lower()
+    LLM_MODEL: str = os.getenv("LLM_MODEL", "gpt-4o").strip()  # Default to GPT-4o for better tool use
+    LLM_TEMPERATURE: float = float(os.getenv("LLM_TEMPERATURE", "0.7"))  # Slightly creative for natural conversation
+    
+    # Provider-specific API keys
+    GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "").strip()
+    GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "").strip()
     
     # TTS Configuration (ElevenLabs)
     TTS_SPEED: float = 1.1  # Slightly faster for natural flow

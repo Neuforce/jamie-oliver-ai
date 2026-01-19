@@ -1,199 +1,138 @@
 {
-  "recipe": {
-    "id": "chicken-noodle-soup",
-    "title": "Chicken Noodle Soup",
-    "description": "Comforting classic soup with tender chicken and egg noodles",
-    "estimated_total": "PT40M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 6,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "chicken",
-      "soup"
-    ],
-    "course": "soup"
+  "notes": {
+    "text": "Use homemade stock for best results\nDon't overcook the noodles\nAdd lemon juice for brightness"
   },
-  "ingredients": [
-    {
-      "id": "breasts",
-      "name": "breasts",
-      "quantity": 2.0,
-      "unit": "chicken"
-    },
-    {
-      "id": "egg_noodles",
-      "name": "egg noodles",
-      "quantity": 200.0,
-      "unit": "g"
-    },
-    {
-      "id": "chicken_stock",
-      "name": "chicken stock",
-      "quantity": 2.0,
-      "unit": "L"
-    },
-    {
-      "id": "2_carrots_sliced",
-      "name": "2 carrots, sliced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "stalks_chopped",
-      "name": "stalks, chopped",
-      "quantity": 2.0,
-      "unit": "celery"
-    },
-    {
-      "id": "1_onion_diced",
-      "name": "1 onion, diced",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "fresh_parsley",
-      "name": "Fresh parsley",
-      "quantity": null,
-      "unit": null
-    },
-    {
-      "id": "bay_leaves",
-      "name": "Bay leaves",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "boil_stock_add_chicken",
+      "next": [
+        "remove_shred_chicken"
+      ],
+      "type": "timer",
       "descr": "Bring stock to boil, add chicken and cook for 20 minutes",
-      "instructions": "Bring stock to boil, add chicken and cook for 20 minutes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 1200,
+      "on_enter": [
+        {
+          "say": "Right, let's get started by bringing the stock to a boil. Once it's bubbling away, add in the chicken breasts. We'll let them cook for 20 minutes. You'll know it's ready when the chicken is tender and cooked through."
+        }
+      ],
+      "auto_start": true,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's add chicken and cook."
-        }
-      ]
+      "instructions": "Bring stock to boil, add chicken and cook for 20 minutes",
+      "requires_confirm": true
     },
     {
-      "id": "step_2",
+      "id": "remove_shred_chicken",
+      "next": [
+        "add_vegetables_simmer"
+      ],
+      "type": "immediate",
       "descr": "Remove chicken, shred when cool",
+      "on_enter": [
+        {
+          "say": "Brilliant! Now let's carefully remove the chicken from the pot. Once it's cool enough to handle, shred it into lovely bite-sized pieces."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "boil_stock_add_chicken"
+      ],
       "instructions": "Remove chicken, shred when cool",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's remove the chicken, shred when."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "add_vegetables_simmer",
+      "next": [
+        "add_noodles_cook"
+      ],
+      "type": "timer",
       "descr": "Add vegetables to stock, simmer for 10 minutes",
+      "duration": 600,
+      "on_enter": [
+        {
+          "say": "Now, let's add those lovely vegetables to the stock. Give it a good stir and let it simmer gently for 10 minutes. The aroma will be fantastic!"
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "remove_shred_chicken"
+      ],
       "instructions": "Add vegetables to stock, simmer for 10 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the vegetables to stock,."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "add_noodles_cook",
+      "next": [
+        "return_chicken_to_pot"
+      ],
+      "type": "immediate",
       "descr": "Add noodles and cook until tender",
+      "on_enter": [
+        {
+          "say": "Time to add the noodles! Stir them in and cook until they're tender. Keep an eye on them so they don't overcook."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_vegetables_simmer"
+      ],
       "instructions": "Add noodles and cook until tender",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Now add the noodles and cook."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "return_chicken_to_pot",
+      "next": [
+        "season_soup"
+      ],
+      "type": "immediate",
       "descr": "Return shredded chicken to pot",
+      "on_enter": [
+        {
+          "say": "Let's return the shredded chicken to the pot. Give it a good stir to mix everything together beautifully."
+        }
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "add_noodles_cook"
+      ],
       "instructions": "Return shredded chicken to pot",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's return shredded chicken to pot."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "season_soup",
+      "next": [
+        "serve_soup"
+      ],
+      "type": "immediate",
       "descr": "Season with salt, pepper, and fresh parsley",
-      "instructions": "Season with salt, pepper, and fresh parsley",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
       "on_enter": [
         {
-          "say": "Let's season the with salt, pepper,."
+          "say": "Now, let's season our soup with a pinch of salt, a dash of pepper, and a sprinkle of fresh parsley. Taste and adjust as needed."
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "return_chicken_to_pot"
+      ],
+      "instructions": "Season with salt, pepper, and fresh parsley",
+      "requires_confirm": true
     },
     {
-      "id": "step_7",
-      "descr": "Serve hot with crusty bread",
-      "instructions": "Serve hot with crusty bread",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "serve_soup",
       "next": [],
+      "type": "immediate",
+      "descr": "Serve hot with crusty bread",
       "on_enter": [
         {
-          "say": "Time to serve and enjoy!"
+          "say": "Fantastic! It's time to serve up this delicious chicken noodle soup. Enjoy it hot with a slice of crusty bread. Bon appétit!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "season_soup"
+      ],
+      "instructions": "Serve hot with crusty bread",
+      "requires_confirm": false
     }
   ],
   "events": {
@@ -202,7 +141,70 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Use homemade stock for best results\nDon't overcook the noodles\nAdd lemon juice for brightness"
-  }
+  "recipe": {
+    "id": "chicken-noodle-soup",
+    "tags": [
+      "chicken",
+      "soup"
+    ],
+    "title": "Chicken Noodle Soup",
+    "course": "soup",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Not Too Tricky",
+    "description": "Comforting classic soup with tender chicken and egg noodles",
+    "estimated_total": "PT40M"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "breasts",
+      "name": "breasts",
+      "unit": "chicken",
+      "quantity": 2.0
+    },
+    {
+      "id": "egg_noodles",
+      "name": "egg noodles",
+      "unit": "g",
+      "quantity": 200.0
+    },
+    {
+      "id": "chicken_stock",
+      "name": "chicken stock",
+      "unit": "L",
+      "quantity": 2.0
+    },
+    {
+      "id": "2_carrots_sliced",
+      "name": "2 carrots, sliced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "stalks_chopped",
+      "name": "stalks, chopped",
+      "unit": "celery",
+      "quantity": 2.0
+    },
+    {
+      "id": "1_onion_diced",
+      "name": "1 onion, diced",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "fresh_parsley",
+      "name": "Fresh parsley",
+      "unit": null,
+      "quantity": null
+    },
+    {
+      "id": "bay_leaves",
+      "name": "Bay leaves",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

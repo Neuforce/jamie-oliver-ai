@@ -10,3 +10,11 @@ pydantic>=2.0.0
 
 # Optional but recommended
 httpx>=0.28.0
+
+# Chat Agent dependencies
+openai>=1.0.0
+docstring_parser>=0.15
+
+# CCAI package (local - install with: pip install -e ../../packages/ccai)
+# For production, this should be published to PyPI or included as a wheel
+# ccai @ file:../../packages/ccai

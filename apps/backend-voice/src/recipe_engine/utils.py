@@ -3,12 +3,15 @@
 import re
 
 
-def parse_iso_duration(duration: str) -> int:
+def parse_iso_duration(duration) -> int:
     """
-    Parse ISO 8601 duration to seconds.
+    Parse duration to seconds. Handles:
+    - ISO 8601 duration string (e.g., "PT50M", "PT1H30M", "PT90S")
+    - Integer seconds
+    - None/empty values
     
     Args:
-        duration: ISO 8601 duration string (e.g., "PT50M", "PT1H30M", "PT90S")
+        duration: ISO 8601 duration string, integer seconds, or None
         
     Returns:
         Total duration in seconds
@@ -20,10 +23,32 @@ def parse_iso_duration(duration: str) -> int:
         5400
         >>> parse_iso_duration("PT90S")
         90
+        >>> parse_iso_duration(300)
+        300
+        >>> parse_iso_duration(None)
+        0
     """
+    # Handle None or empty
+    if duration is None:
+        return 0
+    
+    # Handle integer (already in seconds)
+    if isinstance(duration, (int, float)):
+        return int(duration)
+    
+    # Handle string
+    if not isinstance(duration, str):
+        return 0
+    
+    # Try ISO 8601 format
     match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', duration)
     if not match:
-        return 0
+        # Try plain number string
+        try:
+            return int(duration)
+        except ValueError:
+            return 0
+    
     hours = int(match.group(1) or 0)
     minutes = int(match.group(2) or 0)
     seconds = int(match.group(3) or 0)

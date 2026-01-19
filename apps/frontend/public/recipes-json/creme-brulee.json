@@ -1,180 +1,137 @@
 {
-  "recipe": {
-    "id": "creme-brulee",
-    "title": "Crème Brûlée",
-    "description": "Silky vanilla custard with caramelized sugar crust",
-    "estimated_total": "PT1H",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 6,
-    "difficulty": "Medium",
-    "tags": [
-      "breakfast"
-    ],
-    "course": "main"
+  "notes": {
+    "text": "Don't skip the water bath - it ensures smooth custard\nThe custard should wobble slightly\nChill thoroughly before brûléeing"
   },
-  "ingredients": [
-    {
-      "id": "double_cream",
-      "name": "double cream",
-      "quantity": 600.0,
-      "unit": "ml"
-    },
-    {
-      "id": "pod",
-      "name": "pod",
-      "quantity": 1.0,
-      "unit": "vanilla"
-    },
-    {
-      "id": "yolks",
-      "name": "yolks",
-      "quantity": 6.0,
-      "unit": "egg"
-    },
-    {
-      "id": "caster_sugar",
-      "name": "caster sugar",
-      "quantity": 75.0,
-      "unit": "g"
-    },
-    {
-      "id": "extra_sugar_for_topping",
-      "name": "Extra sugar for topping",
-      "quantity": null,
-      "unit": null
-    }
-  ],
-  "utensils": [],
   "steps": [
     {
-      "id": "step_1",
+      "id": "preheat_oven",
+      "next": [
+        "heat_cream"
+      ],
+      "type": "immediate",
       "descr": "Preheat oven to 140°C (275°F)",
-      "instructions": "Preheat oven to 140°C (275°F)",
-      "type": "immediate",
+      "on_enter": [
+        {
+          "say": "Right, let's get started by preheating the oven to 140°C. This will ensure our crème brûlée cooks evenly."
+        }
+      ],
       "auto_start": false,
-      "requires_confirm": false,
       "depends_on": [],
-      "next": [
-        "step_2"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's preheat the oven to 140°c."
-        }
-      ]
+      "instructions": "Preheat oven to 140°C (275°F)",
+      "requires_confirm": false
     },
     {
-      "id": "step_2",
+      "id": "heat_cream",
+      "next": [
+        "whisk_yolks"
+      ],
+      "type": "immediate",
       "descr": "Heat cream with vanilla pod until just boiling",
+      "on_enter": [
+        {
+          "say": "Now, let's gently heat the cream with the vanilla pod until it's just about to boil. You'll smell that lovely vanilla aroma."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
       "instructions": "Heat cream with vanilla pod until just boiling",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_1"
-      ],
-      "next": [
-        "step_3"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's heat the cream with vanilla."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_3",
+      "id": "whisk_yolks",
+      "next": [
+        "combine_cream_eggs"
+      ],
+      "type": "immediate",
       "descr": "Whisk egg yolks with sugar until pale",
+      "on_enter": [
+        {
+          "say": "Brilliant! Now whisk those egg yolks with the sugar until they're pale and creamy. This will give our custard a beautiful texture."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "heat_cream"
+      ],
       "instructions": "Whisk egg yolks with sugar until pale",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_2"
-      ],
-      "next": [
-        "step_4"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's whisk everything together."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_4",
+      "id": "combine_cream_eggs",
+      "next": [
+        "strain_ramekins"
+      ],
+      "type": "immediate",
       "descr": "Pour hot cream over eggs, whisking constantly",
+      "on_enter": [
+        {
+          "say": "Carefully pour the hot cream over the egg mixture, whisking all the time. This is key to a smooth custard."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "whisk_yolks"
+      ],
       "instructions": "Pour hot cream over eggs, whisking constantly",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_3"
-      ],
-      "next": [
-        "step_5"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's pour hot cream over eggs, whisking."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_5",
+      "id": "strain_ramekins",
+      "next": [
+        "bake_water_bath"
+      ],
+      "type": "immediate",
       "descr": "Strain into ramekins",
+      "on_enter": [
+        {
+          "say": "Let's strain the mixture into the ramekins to catch any lumps. This will ensure a silky finish."
+        }
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "combine_cream_eggs"
+      ],
       "instructions": "Strain into ramekins",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_4"
-      ],
-      "next": [
-        "step_6"
-      ],
-      "on_enter": [
-        {
-          "say": "Let's strain into ramekins."
-        }
-      ]
+      "requires_confirm": true
     },
     {
-      "id": "step_6",
+      "id": "bake_water_bath",
+      "next": [
+        "chill_and_torch"
+      ],
+      "type": "timer",
       "descr": "Bake in water bath for 30-35 minutes",
-      "instructions": "Bake in water bath for 30-35 minutes",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_5"
-      ],
-      "next": [
-        "step_7"
-      ],
+      "duration": 2100,
       "on_enter": [
         {
-          "say": "Time to bake the in water bath."
+          "say": "Time to bake! Place the ramekins in a water bath and pop them in the oven for 30 to 35 minutes. The custard should be set but still have a slight wobble."
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "strain_ramekins"
+      ],
+      "instructions": "Bake in water bath for 30-35 minutes",
+      "requires_confirm": false
     },
     {
-      "id": "step_7",
-      "descr": "Chill 4 hours, sprinkle with sugar and blowtorch",
-      "instructions": "Chill 4 hours, sprinkle with sugar and blowtorch",
-      "type": "immediate",
-      "auto_start": true,
-      "requires_confirm": false,
-      "depends_on": [
-        "step_6"
-      ],
+      "id": "chill_and_torch",
       "next": [],
+      "type": "immediate",
+      "descr": "Chill 4 hours, sprinkle with sugar and blowtorch",
       "on_enter": [
         {
-          "say": "Let's chill 4 hours, sprinkle with sugar."
+          "say": "Once baked, chill the custards for at least 4 hours. Then sprinkle with sugar and use a blowtorch to caramelize the top. Listen for that lovely crack when you tap it!"
         }
-      ]
+      ],
+      "auto_start": true,
+      "depends_on": [
+        "bake_water_bath"
+      ],
+      "instructions": "Chill 4 hours, sprinkle with sugar and blowtorch",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -183,7 +140,51 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "Don't skip the water bath - it ensures smooth custard\nThe custard should wobble slightly\nChill thoroughly before brûléeing"
-  }
+  "recipe": {
+    "id": "creme-brulee",
+    "tags": [
+      "breakfast"
+    ],
+    "title": "Crème Brûlée",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "servings": 6,
+    "difficulty": "Medium",
+    "description": "Silky vanilla custard with caramelized sugar crust",
+    "estimated_total": "PT1H"
+  },
+  "utensils": [],
+  "ingredients": [
+    {
+      "id": "double_cream",
+      "name": "double cream",
+      "unit": "ml",
+      "quantity": 600.0
+    },
+    {
+      "id": "pod",
+      "name": "pod",
+      "unit": "vanilla",
+      "quantity": 1.0
+    },
+    {
+      "id": "yolks",
+      "name": "yolks",
+      "unit": "egg",
+      "quantity": 6.0
+    },
+    {
+      "id": "caster_sugar",
+      "name": "caster sugar",
+      "unit": "g",
+      "quantity": 75.0
+    },
+    {
+      "id": "extra_sugar_for_topping",
+      "name": "Extra sugar for topping",
+      "unit": null,
+      "quantity": null
+    }
+  ]
 }

@@ -1,95 +1,81 @@
 {
-  "recipe": {
-    "id": "tomato-mussel-pasta",
-    "title": "TOMATO & MUSSEL PASTA",
-    "description": "Cook the pasta according to the packet instructions.",
-    "estimated_total": "PT20M",
-    "locale": "en",
-    "source": "pdf",
-    "servings": 4,
-    "difficulty": "Not Too Tricky",
-    "tags": [
-      "pasta",
-      "seafood",
-      "italian"
-    ],
-    "course": "main",
-    "cuisine": "italian"
+  "notes": {
+    "text": "TOP TIP To make this veggie, swap out the mussels for a jar of artichoke antipasti, drained of oil."
   },
-  "ingredients": [],
-  "utensils": [],
   "steps": [
     {
       "id": "cook_pasta",
-      "descr": "Cook the pasta according to the packet instructions.",
-      "instructions": "Cook the pasta according to the packet instructions.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [],
       "next": [
         "fry_vegetables"
       ],
+      "type": "immediate",
+      "descr": "Cook the pasta according to the packet instructions.",
       "on_enter": [
         {
-          "say": "Time to cook the pasta according to."
+          "say": "Let's get started by cooking the pasta. Follow the packet instructions, and remember to give it a stir now and then so it doesn't stick. You're doing great!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [],
+      "instructions": "Cook the pasta according to the packet instructions.",
+      "requires_confirm": true
     },
     {
       "id": "fry_vegetables",
+      "next": [
+        "add_tomatoes"
+      ],
+      "type": "timer",
       "descr": "Put a large frying pan over a medium heat, then add olive oil along with the garlic, celery and courgette. Fry for 5 minutes until softened.",
-      "instructions": "Put a large frying pan over a medium heat, then add olive oil along with the garlic, celery and courgette. Fry for 5 minutes until softened.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 300,
+      "on_enter": [
+        {
+          "say": "Right, let's heat up a large frying pan over medium heat. Add a splash of olive oil, then toss in the garlic, celery, and courgette. Fry them for about 5 minutes until they're beautifully softened and fragrant. You'll love the aroma!"
+        }
+      ],
+      "auto_start": true,
       "depends_on": [
         "cook_pasta"
       ],
-      "next": [
-        "add_tomatoes"
-      ],
-      "on_enter": [
-        {
-          "say": "Now put the large frying pan."
-        }
-      ]
+      "instructions": "Put a large frying pan over a medium heat, then add olive oil along with the garlic, celery and courgette. Fry for 5 minutes until softened.",
+      "requires_confirm": true
     },
     {
       "id": "add_tomatoes",
-      "descr": "Add the tomatoes",
-      "instructions": "Add the tomatoes",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
-      "depends_on": [
-        "fry_vegetables"
-      ],
       "next": [
         "add_mussels"
       ],
+      "type": "immediate",
+      "descr": "Add the tomatoes.",
       "on_enter": [
         {
-          "say": "Now add the tomatoes."
+          "say": "Now, let's add those lovely tomatoes to the pan. They'll start to break down and create a delicious sauce. Keep it stirring!"
         }
-      ]
+      ],
+      "auto_start": false,
+      "depends_on": [
+        "fry_vegetables"
+      ],
+      "instructions": "Add the tomatoes.",
+      "requires_confirm": true
     },
     {
       "id": "add_mussels",
+      "next": [],
+      "type": "timer",
       "descr": "After a couple of minutes add the mussels, pop a lid on and cook for 5 minutes.",
-      "instructions": "After a couple of minutes add the mussels, pop a lid on and cook for 5 minutes.",
-      "type": "immediate",
-      "auto_start": false,
-      "requires_confirm": false,
+      "duration": 300,
+      "on_enter": [
+        {
+          "say": "Time to add the mussels! After a couple of minutes, pop them in, cover with a lid, and let them cook for 5 minutes. You'll know they're done when they've opened up and released their briny juices. Delicious!"
+        }
+      ],
+      "auto_start": true,
       "depends_on": [
         "add_tomatoes"
       ],
-      "next": [],
-      "on_enter": [
-        {
-          "say": "Let's after a couple of minutes add."
-        }
-      ]
+      "instructions": "After a couple of minutes add the mussels, pop a lid on and cook for 5 minutes.",
+      "requires_confirm": true
     }
   ],
   "events": {
@@ -98,7 +84,23 @@
       "every": "PT30S"
     }
   },
-  "notes": {
-    "text": "TOP TIP To make this veggie, swap out the mussels for a jar of artichoke antipasti, drained of oil."
-  }
+  "recipe": {
+    "id": "tomato-mussel-pasta",
+    "tags": [
+      "pasta",
+      "seafood",
+      "italian"
+    ],
+    "title": "TOMATO & MUSSEL PASTA",
+    "course": "main",
+    "locale": "en",
+    "source": "pdf",
+    "cuisine": "italian",
+    "servings": 4,
+    "difficulty": "Not Too Tricky",
+    "description": "Cook the pasta according to the packet instructions.",
+    "estimated_total": "PT20M"
+  },
+  "utensils": [],
+  "ingredients": []
 }
