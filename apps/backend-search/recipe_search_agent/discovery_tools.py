@@ -90,6 +90,40 @@ def search_recipes(
         similarity_threshold=0.3,
     )
     
+    def _matches_cuisine(match, cuisine_value: str) -> bool:
+        if not cuisine_value:
+            return True
+        cuisine_key = cuisine_value.lower().strip()
+        cuisine_terms = [cuisine_key] + cuisine_key.split()
+        cuisine_synonyms = {
+            "greek": ["greek", "mediterranean", "feta", "halloumi", "tzatziki", "souvlaki", "gyro", "gyros"],
+            "italian": ["italian", "pasta", "risotto", "parmesan", "basil", "oregano"],
+            "mexican": ["mexican", "taco", "tacos", "tortilla", "salsa", "cilantro"],
+            "japanese": ["japanese", "miso", "soy", "teriyaki", "sushi", "ramen"],
+            "british": ["british", "shepherd", "pie", "gravy", "roast"],
+        }
+        cuisine_terms.extend(cuisine_synonyms.get(cuisine_key, []))
+
+        title = (match.title or "").lower()
+        description = ""
+        ingredients_text = ""
+        if match.full_recipe:
+            recipe = match.full_recipe.get("recipe", {})
+            description = (recipe.get("description") or "").lower()
+            ingredients = match.full_recipe.get("ingredients", [])
+            ingredients_text = " ".join((i.get("name", "") for i in ingredients)).lower()
+
+        haystack = " ".join([title, description, ingredients_text])
+        return any(term in haystack for term in cuisine_terms)
+
+    if cuisine:
+        filtered_results = [match for match in results if _matches_cuisine(match, cuisine)]
+        if filtered_results:
+            results = filtered_results
+        else:
+            logger.info(f"No results matched cuisine='{cuisine}'. Returning no results.")
+            results = []
+
     if not results:
         return json.dumps({
             "found": 0,
