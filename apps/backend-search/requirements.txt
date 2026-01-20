@@ -16,7 +16,9 @@ openai>=1.0.0
 docstring_parser>=0.15
 
 # Voice Chat dependencies (STT + TTS)
-deepgram-sdk>=3.0.0
+# Note: deepgram-sdk version must be compatible with ccai (^3.7.6)
+# Installing specific version to avoid ImportError with DeepgramApiKeyError
+deepgram-sdk>=3.7.6,<4.0.0
 elevenlabs>=1.0.0
 aiohttp>=3.9.0
 

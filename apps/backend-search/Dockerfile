@@ -17,6 +17,8 @@ COPY apps/backend-search/requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip && pip install -r /app/requirements.txt
 
 # Copy and install CCAI package (required for chat agent)
+# Note: deepgram-sdk should already be installed from requirements.txt above
+# This ensures version compatibility before installing ccai
 COPY packages/ccai /app/packages/ccai
 RUN pip install /app/packages/ccai
 
