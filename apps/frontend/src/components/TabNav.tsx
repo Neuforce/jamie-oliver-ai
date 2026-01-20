@@ -14,7 +14,7 @@ interface TabNavProps {
 
 /**
  * TabNav - Compact header navigation with icon-only tabs
- * 
+ *
  * Layout when in recipes: [X (Close)] - [Logo (Non-clickable)] - [Chat Icon]
  * Layout when in chat: [X (Close)] - [Logo (Non-clickable)] - [Recipes Icon]
  * Logo is always non-clickable (decorative only)
@@ -23,7 +23,7 @@ export function TabNav({ activeTab, onTabChange, onCloseChat }: TabNavProps) {
   const isChatView = activeTab === 'chat';
 
   return (
-    <header 
+    <header
       className="bg-white w-full"
       style={{
         maxWidth: '600px',
@@ -91,12 +91,12 @@ function IconTabButton({ isActive, onClick, icon, label }: IconTabButtonProps) {
         height: '44px',
         backgroundColor: isActive ? '#29514F' : '#FFFFFF',
         border: isActive ? 'none' : '1px solid rgba(0, 0, 0, 0.1)',
-        boxShadow: isActive 
-          ? '0 2px 8px rgba(41, 81, 79, 0.3)' 
+        boxShadow: isActive
+          ? '0 2px 8px rgba(41, 81, 79, 0.3)'
           : '0 2px 8px rgba(0, 0, 0, 0.06)',
       }}
       whileTap={{ scale: 0.95 }}
-      whileHover={{ 
+      whileHover={{
         backgroundColor: isActive ? '#1f423f' : 'rgba(0, 0, 0, 0.04)',
         boxShadow: '0 4px 12px rgba(0, 0, 0, 0.12)',
       }}

@@ -32,7 +32,7 @@ const jamieAvatar = typeof jamieAvatarImport === 'string' ? jamieAvatarImport : 
 export default function App() {
   // Navigation state - unified tab-based navigation
   const [activeView, setActiveView] = useState<TabView>('chat');
-  
+
   // Recipe browsing state
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -40,19 +40,19 @@ export default function App() {
   const [cookingRecipe, setCookingRecipe] = useState<Recipe | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'feed'>('feed');
   const [filtersExpanded, setFiltersExpanded] = useState(false);
-  
+
   // Session management
   const [recipesInProgress, setRecipesInProgress] = useState<Recipe[]>([]);
   const [showSessionWarning, setShowSessionWarning] = useState(false);
   const [pendingRecipe, setPendingRecipe] = useState<Recipe | null>(null);
-  
+
   // Loading states
   const [isLoading, setIsLoading] = useState(false);
-  
+
   // Data state
   const [loadedRecipes, setLoadedRecipes] = useState<Recipe[]>(recipes);
   const [availableCategories, setAvailableCategories] = useState<string[]>(categories);
-  
+
   // Chat state
   const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>(undefined);
   const [chatKey, setChatKey] = useState(0); // Key to force ChatView remount when clearing
@@ -106,7 +106,7 @@ export default function App() {
 
   // Helper functions for session management
   const hasSession = (recipeId: number) => recipesInProgress.some(r => r.id === recipeId);
-  
+
   const getSessionDetails = (recipeId: number) => {
     const savedSession = localStorage.getItem(`cooking-session-${recipeId}`);
     if (savedSession) {
@@ -229,7 +229,7 @@ export default function App() {
   };
 
   return (
-    <div 
+    <div
       style={{
         height: '100%',
         display: 'flex',
@@ -261,15 +261,15 @@ export default function App() {
         <>
           {/* Persistent Tab Navigation */}
           <header style={{ flexShrink: 0, zIndex: 40, backgroundColor: 'white' }}>
-            <TabNav 
-              activeTab={activeView} 
+            <TabNav
+              activeTab={activeView}
               onTabChange={setActiveView}
               onCloseChat={handleCloseChat}
             />
           </header>
 
           {/* Tab Content - Full remaining height */}
-          <main 
+          <main
             style={{
               flex: 1,
               display: 'flex',
@@ -695,7 +695,7 @@ export default function App() {
                           transition={{ delay: 0.2, duration: 0.5 }}
                           className="px-4 mb-12"
                         >
-                          <div 
+                          <div
                             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
                             style={{ maxWidth: '800px', margin: '0 auto' }}
                           >
