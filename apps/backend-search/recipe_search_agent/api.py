@@ -174,6 +174,16 @@ def get_chat_agent():
     global _chat_agent
     
     if _chat_agent is None:
+        # Verify ccai is installed before importing
+        try:
+            import ccai
+        except ImportError:
+            logger.error("ccai package is not installed. Please run: pip install -e ../../packages/ccai")
+            raise HTTPException(
+                status_code=500,
+                detail="Chat agent requires ccai package. Please install it: pip install -e ../../packages/ccai"
+            )
+        
         # Import here to avoid circular imports
         from recipe_search_agent.chat_agent import DiscoveryChatAgent
         

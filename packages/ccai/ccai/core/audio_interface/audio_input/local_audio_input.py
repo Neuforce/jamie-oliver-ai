@@ -3,7 +3,10 @@ import audioop
 from ccai.core.logger import configure_logger
 from typing import AsyncGenerator, Optional
 
-import pyaudio
+try:
+    import pyaudio
+except ImportError:
+    pyaudio = None  # pyaudio is optional (only needed for LocalAudioInput/Output)
 
 from ccai.core.audio_interface.audio_input.audio_input_service import AudioInputService
 
@@ -28,6 +31,12 @@ class LocalAudioInput(AudioInputService):
             sample_rate (int): The sampling rate in Hz.
             input_device_index (Optional[int]): The index of the input device to use.
         """
+        if pyaudio is None:
+            raise ImportError(
+                "pyaudio is required for LocalAudioInput. "
+                "Install it with: pip install pyaudio or pip install ccai[audio]"
+            )
+
         self.sample_rate = sample_rate
         self.chunk_size = int(sample_rate * self.duration)
         self.audio_queue: asyncio.Queue = asyncio.Queue()

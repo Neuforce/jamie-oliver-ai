@@ -220,6 +220,14 @@ export default function App() {
     setInitialChatMessage(undefined);
   };
 
+  // Handle close chat - clear storage and reset chat
+  const handleCloseChat = () => {
+    clearChatHistory();
+    setChatKey(prev => prev + 1); // Force ChatView to remount with fresh state
+    setInitialChatMessage(undefined);
+    // Stay in chat view but with cleared state
+  };
+
   return (
     <div 
       style={{
@@ -256,7 +264,7 @@ export default function App() {
             <TabNav 
               activeTab={activeView} 
               onTabChange={setActiveView}
-              onLogoClick={handleLogoClick}
+              onCloseChat={handleCloseChat}
             />
           </header>
 

@@ -445,16 +445,16 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
           </div>
 
           {/* Logo - Centered */}
-          <div 
+          <div
             className="flex items-center justify-center"
-            style={{ 
+            style={{
               height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
               maxWidth: '171.75px'
             }}
           >
-            <img 
-              alt="Jamie Oliver" 
-              className="h-full w-auto object-contain pointer-events-none" 
+            <img
+              alt="Jamie Oliver"
+              className="h-full w-auto object-contain pointer-events-none"
               src={imgImage11}
               style={{ maxWidth: '100%' }}
             />
