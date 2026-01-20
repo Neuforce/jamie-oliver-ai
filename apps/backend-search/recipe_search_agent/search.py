@@ -203,14 +203,49 @@ class RecipeSearchAgent:
                     "similarity_threshold": similarity_threshold,
                 }
             ).execute()
-            
-            if not response.data:
+
+            results_data = response.data or []
+
+            # Fallback: if we get too few results, relax threshold to improve recall
+            min_results_for_fallback = min(3, top_k)
+            if len(results_data) < min_results_for_fallback:
+                relaxed_threshold = max(0.15, similarity_threshold * 0.5)
+                logger.info(
+                    f"Low result count ({len(results_data)}). "
+                    f"Retrying with relaxed similarity_threshold={relaxed_threshold}"
+                )
+                fallback_response = self.client.rpc(
+                    "hybrid_recipe_search",
+                    {
+                        "query_embedding": query_embedding,
+                        "query_text": filters.ingredients_query,
+                        "filter_category": filters.category,
+                        "filter_mood": filters.mood,
+                        "filter_complexity": filters.complexity,
+                        "filter_cost": filters.cost,
+                        "match_count": top_k,
+                        "similarity_threshold": relaxed_threshold,
+                    }
+                ).execute()
+                fallback_data = fallback_response.data or []
+                if fallback_data:
+                    # Merge, keeping highest combined_score per recipe_id
+                    merged_by_id = {row["recipe_id"]: row for row in results_data}
+                    for row in fallback_data:
+                        existing = merged_by_id.get(row["recipe_id"])
+                        if not existing or row.get("combined_score", 0) > existing.get("combined_score", 0):
+                            merged_by_id[row["recipe_id"]] = row
+                    results_data = list(merged_by_id.values())
+                    results_data.sort(key=lambda r: r.get("combined_score", 0), reverse=True)
+                    results_data = results_data[:top_k]
+
+            if not results_data:
                 logger.info("No results found")
                 return []
             
             # 4. Enriquecer resultados
             results = []
-            for row in response.data:
+            for row in results_data:
                 # Obtener chunks relevantes
                 matching_chunks = []
                 if include_chunks:

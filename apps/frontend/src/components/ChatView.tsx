@@ -48,6 +48,7 @@ interface ChatViewProps {
 
 const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
 const SESSION_ID_KEY = 'jamie-oliver-chat-session';
+const TOOL_INTRO_MAX_CHARS = 240;
 
 // Export function to clear chat history (used when recipe is completed)
 export const clearChatHistory = async () => {
@@ -101,6 +102,25 @@ const loadMessagesFromStorage = (): Message[] => {
     console.error('Error loading chat messages from storage:', error);
   }
   return [];
+};
+
+const hasToolPayload = (message: Message) =>
+  Boolean(message.recipes?.length || message.mealPlan || message.recipeDetail || message.shoppingList);
+
+const getToolIntroForMessage = (message: Message) => {
+  if (message.mealPlan) return "Here's a meal plan I put together for you.";
+  if (message.recipeDetail) return "Here are the details for that recipe.";
+  if (message.shoppingList) return "Here's your shopping list.";
+  return "Here are some great options for you.";
+};
+
+const applyToolDominantCopy = (message: Message, content: string) => {
+  if (!hasToolPayload(message)) return content;
+  if (!content.trim()) return getToolIntroForMessage(message);
+  if (content.length > TOOL_INTRO_MAX_CHARS) {
+    return getToolIntroForMessage(message);
+  }
+  return content;
 };
 
 // Helper function to save messages to localStorage
@@ -296,15 +316,13 @@ export function ChatView({
         
         setMessages(prev => prev.map(msg => {
           if (msg.id === messageId) {
-            // If message has no content but has other data (recipes, mealPlan, etc.), 
-            // add a default intro. If completely empty, add a fallback message.
             let content = msg.content || accumulatedText;
-            if (!content && (msg.recipes || msg.mealPlan || msg.recipeDetail || msg.shoppingList)) {
-              content = "Here's what I found for you:";
-            } else if (!content) {
-              content = "I'm here to help! What would you like to cook today?";
+            if (!content) {
+              content = hasToolPayload(msg)
+                ? getToolIntroForMessage(msg)
+                : "I'm here to help! What would you like to cook today?";
             }
-            return { ...msg, content, isStreaming: false };
+            return { ...msg, content: applyToolDominantCopy(msg, content), isStreaming: false };
           }
           return msg;
         }));
@@ -570,17 +588,16 @@ export function ChatView({
           console.log('Final recipe count:', recipes.length);
           
           // Update message to final state with all accumulated data
-          setMessages(prev => prev.map(msg => 
-            msg.id === streamingMessageId 
-              ? { 
-                  ...msg, 
-                  content: fullResponse, 
-                  isStreaming: false, 
-                  recipes: recipes.length > 0 ? recipes : msg.recipes,
-                  // Keep any meal_plan, recipe_detail, shopping_list that was already set
-                }
-              : msg
-          ));
+          setMessages(prev => prev.map(msg => {
+            if (msg.id !== streamingMessageId) return msg;
+            const updated = {
+              ...msg,
+              content: fullResponse,
+              isStreaming: false,
+              recipes: recipes.length > 0 ? recipes : msg.recipes,
+            };
+            return { ...updated, content: applyToolDominantCopy(updated, updated.content) };
+          }));
         } else if (event.type === 'error') {
           console.error('Chat error:', event.content);
           setMessages(prev => prev.map(msg => 

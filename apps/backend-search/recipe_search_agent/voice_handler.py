@@ -89,6 +89,7 @@ class VoiceChatHandler:
         self.is_running = False
         self.is_listening = False
         self.is_speaking = False
+        self.cancel_event = asyncio.Event()
         
         # Audio queue for incoming audio chunks
         self.audio_queue: asyncio.Queue[bytes] = asyncio.Queue()
@@ -242,7 +243,19 @@ class VoiceChatHandler:
                     # User interrupted while Jamie is speaking
                     logger.info(f"Interrupt received for session {self.session_id}")
                     self.is_speaking = False
+                    self.cancel_event.set()
                     # Clear any pending audio
+                    while not self.audio_queue.empty():
+                        try:
+                            self.audio_queue.get_nowait()
+                        except asyncio.QueueEmpty:
+                            break
+                
+                elif event_type == "cancel":
+                    # User cancelled processing/speaking and wants to return to listening
+                    logger.info(f"Cancel received for session {self.session_id}")
+                    self.is_speaking = False
+                    self.cancel_event.set()
                     while not self.audio_queue.empty():
                         try:
                             self.audio_queue.get_nowait()
@@ -309,6 +322,7 @@ class VoiceChatHandler:
             # Process through chat agent
             await self.send_event("processing")
             self.is_speaking = True
+            self.cancel_event.clear()
             
             try:
                 await self._process_and_respond(transcription)
@@ -329,6 +343,9 @@ class VoiceChatHandler:
         
         # Process through chat agent - identical to text chat for consistent experience
         async for event in self.chat_agent.chat(message, self.session_id):
+            if self.cancel_event.is_set():
+                logger.info("Voice processing cancelled by user")
+                break
             logger.debug(f"Chat event: type={event.type}, content_len={len(event.content) if event.content else 0}")
             
             if event.type == "text_chunk":
@@ -398,12 +415,12 @@ class VoiceChatHandler:
     
     async def _synthesize_and_send(self, text: str):
         """Synthesize text to speech and send audio to client."""
-        if not text.strip() or not self.is_speaking:
+        if not text.strip() or not self.is_speaking or self.cancel_event.is_set():
             return
         
         try:
             async for audio_chunk in self.tts.synthesize(text):
-                if not self.is_speaking:
+                if not self.is_speaking or self.cancel_event.is_set():
                     # User interrupted
                     break
                 await self.send_audio(audio_chunk)
