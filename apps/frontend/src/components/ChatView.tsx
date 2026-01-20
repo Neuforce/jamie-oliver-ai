@@ -163,6 +163,49 @@ const extractRecipeIds = (text: string): string[] => {
   return [...new Set(ids)];
 };
 
+// Helper function to ensure recipe has full payload before passing to RecipeModal
+const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
+  // If recipe already has rawRecipePayload, return as-is
+  if (recipe.rawRecipePayload && recipe.backendId) {
+    return recipe;
+  }
+
+  // If no backendId, can't load the recipe
+  if (!recipe.backendId) {
+    console.warn('Recipe missing backendId, cannot load full payload:', recipe.id);
+    return recipe;
+  }
+
+  // Load full recipe from local JSON files
+  try {
+    const fullRecipe = await loadRecipeFromLocal(recipe.backendId);
+    if (!fullRecipe) {
+      console.warn(`Could not load recipe ${recipe.backendId} from local files`);
+      return recipe;
+    }
+
+    // Transform to get complete recipe with rawRecipePayload
+    const transformed = transformRecipeMatch(
+      {
+        recipe_id: recipe.backendId,
+        title: recipe.title,
+        similarity_score: 1,
+        combined_score: 1,
+        file_path: '',
+        match_explanation: '',
+        matching_chunks: [],
+      },
+      fullRecipe,
+      recipe.id - 1 // Use existing numeric ID
+    );
+
+    return transformed;
+  } catch (error) {
+    console.error(`Error loading full recipe for ${recipe.backendId}:`, error);
+    return recipe;
+  }
+};
+
 export function ChatView({ 
   initialMessage, 
   onRecipeClick, 
@@ -892,7 +935,11 @@ export function ChatView({
                       <div className="mt-4">
                         <RecipeCarousel
                           recipes={message.recipes}
-                          onRecipeClick={(recipe) => onRecipeClick(recipe)}
+                          onRecipeClick={async (recipe) => {
+                            // Ensure recipe has full payload before passing to RecipeModal
+                            const completeRecipe = await ensureRecipeHasPayload(recipe);
+                            onRecipeClick(completeRecipe);
+                          }}
                           singleSlide={true}
                         />
                       </div>

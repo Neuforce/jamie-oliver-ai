@@ -1,6 +1,6 @@
 /**
  * useVoiceChat - Voice chat hook for recipe discovery
- * 
+ *
  * Provides voice input/output capabilities for the chat view:
  * - Microphone capture and streaming to backend
  * - Real-time transcription display
@@ -12,7 +12,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { useAudioCapture } from './useAudioCapture';
 import { useAudioPlayback } from './useAudioPlayback';
 
-export type VoiceChatState = 
+export type VoiceChatState =
   | 'idle'           // Not listening, not speaking
   | 'connecting'     // WebSocket connecting
   | 'listening'      // Listening for user speech
@@ -75,11 +75,11 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentTranscript, setCurrentTranscript] = useState('');
-  
+
   // Refs
   const wsRef = useRef<WebSocket | null>(null);
   const isVoiceModeActiveRef = useRef(false);
-  
+
   // Store callbacks in refs to avoid stale closures
   const callbacksRef = useRef(options);
   useEffect(() => {
@@ -104,9 +104,9 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
 
   // Get WebSocket URL for voice chat
   const getWebSocketUrl = useCallback(() => {
-    // Use the backend-search WebSocket URL
+    // Use the backend-search WebSocket URL from VITE_API_BASE_URL
     // @ts-expect-error - Vite provides import.meta.env
-    const baseUrl = import.meta.env.VITE_SEARCH_API_URL || 'http://localhost:8000';
+    const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
     const wsProtocol = baseUrl.startsWith('https') ? 'wss' : 'ws';
     const wsUrl = baseUrl.replace(/^https?/, wsProtocol);
     return `${wsUrl}/ws/chat-voice`;
@@ -263,7 +263,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   // Disconnect from voice chat
   const disconnect = useCallback(() => {
     isVoiceModeActiveRef.current = false;
-    
+
     if (wsRef.current) {
       // Send stop event
       if (wsRef.current.readyState === WebSocket.OPEN) {
@@ -331,7 +331,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     isConnected,
     error,
     currentTranscript,
-    
+
     // Actions
     connect,
     disconnect,
@@ -339,7 +339,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     interrupt,
     cancel,
     setMicMuted,
-    
+
     // Derived
     isListening: state === 'listening',
     isProcessing: state === 'processing',
