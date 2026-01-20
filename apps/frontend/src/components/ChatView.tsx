@@ -15,10 +15,10 @@ import { useVoiceChat } from '../hooks/useVoiceChat';
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 // @ts-expect-error - Vite handles image imports
 import jamieAvatarLarge from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
-import { 
-  chatWithAgent, 
-  generateSessionId, 
-  clearChatSession, 
+import {
+  chatWithAgent,
+  generateSessionId,
+  clearChatSession,
   searchRecipes,
   type MealPlanData,
   type RecipeDetailData,
@@ -152,7 +152,7 @@ const extractRecipeIds = (text: string): string[] => {
     /"recipe_id":\s*"([^"]+)"/gi,
     /\*\*([A-Za-z\s-]+)\*\*/g,
   ];
-  
+
   const ids: string[] = [];
   for (const pattern of patterns) {
     let match;
@@ -163,11 +163,54 @@ const extractRecipeIds = (text: string): string[] => {
   return [...new Set(ids)];
 };
 
-export function ChatView({ 
-  initialMessage, 
-  onRecipeClick, 
+// Helper function to ensure recipe has full payload before passing to RecipeModal
+const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
+  // If recipe already has rawRecipePayload, return as-is
+  if (recipe.rawRecipePayload && recipe.backendId) {
+    return recipe;
+  }
+
+  // If no backendId, can't load the recipe
+  if (!recipe.backendId) {
+    console.warn('Recipe missing backendId, cannot load full payload:', recipe.id);
+    return recipe;
+  }
+
+  // Load full recipe from local JSON files
+  try {
+    const fullRecipe = await loadRecipeFromLocal(recipe.backendId);
+    if (!fullRecipe) {
+      console.warn(`Could not load recipe ${recipe.backendId} from local files`);
+      return recipe;
+    }
+
+    // Transform to get complete recipe with rawRecipePayload
+    const transformed = transformRecipeMatch(
+      {
+        recipe_id: recipe.backendId,
+        title: recipe.title,
+        similarity_score: 1,
+        combined_score: 1,
+        file_path: '',
+        match_explanation: '',
+        matching_chunks: [],
+      },
+      fullRecipe,
+      recipe.id - 1 // Use existing numeric ID
+    );
+
+    return transformed;
+  } catch (error) {
+    console.error(`Error loading full recipe for ${recipe.backendId}:`, error);
+    return recipe;
+  }
+};
+
+export function ChatView({
+  initialMessage,
+  onRecipeClick,
   onPromptClick,
-  onClearInitialMessage 
+  onClearInitialMessage
 }: ChatViewProps) {
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const [inputValue, setInputValue] = useState('');
@@ -207,7 +250,7 @@ export function ChatView({
     sessionId,  // Share session ID between voice and text chat
     onTranscript: (text, isFinal) => {
       console.log('🎤 Transcript received:', { text, isFinal });
-      
+
       if (isFinal && text.trim()) {
         // Create user message from voice transcript
         const userMessage: Message = {
@@ -216,14 +259,14 @@ export function ChatView({
           content: text,
           timestamp: new Date(),
         };
-        
+
         // Create streaming message placeholder for Jamie's response
         const streamingId = (Date.now() + 1).toString();
         voiceMessageIdRef.current = streamingId;
         voiceResponseAccumulatorRef.current = '';
-        
+
         console.log('🎤 Created voice message placeholder:', streamingId);
-        
+
         const streamingMessage: Message = {
           id: streamingId,
           type: 'jamie',
@@ -231,7 +274,7 @@ export function ChatView({
           timestamp: new Date(),
           isStreaming: true,
         };
-        
+
         setMessages(prev => [...prev, userMessage, streamingMessage]);
         setIsTyping(true);
         setThinkingStatus("Listening...");
@@ -240,13 +283,13 @@ export function ChatView({
     onTextChunk: (text) => {
       // Accumulate voice response text
       voiceResponseAccumulatorRef.current += text;
-      
-      console.log('🎤 Text chunk received:', { 
-        chunk: text.substring(0, 50), 
+
+      console.log('🎤 Text chunk received:', {
+        chunk: text.substring(0, 50),
         totalLength: voiceResponseAccumulatorRef.current.length,
-        messageId: voiceMessageIdRef.current 
+        messageId: voiceMessageIdRef.current
       });
-      
+
       if (voiceMessageIdRef.current) {
         setMessages(prev => prev.map(msg =>
           msg.id === voiceMessageIdRef.current
@@ -254,7 +297,7 @@ export function ChatView({
             : msg
         ));
       }
-      
+
       // Clear thinking status once we get text
       if (thinkingStatus) {
         setThinkingStatus(null);
@@ -262,15 +305,15 @@ export function ChatView({
     },
     onRecipes: (data) => {
       console.log('🎤 Recipes received:', { count: data?.recipes?.length, messageId: voiceMessageIdRef.current });
-      
+
       // Transform backend recipe summaries to Recipe format for display
       const recipeData = data?.recipes || [];
-      const recipes: Recipe[] = recipeData.map((r: BackendRecipeSummary, index: number) => 
+      const recipes: Recipe[] = recipeData.map((r: BackendRecipeSummary, index: number) =>
         transformRecipeFromSummary(r, index)
       );
-      
+
       console.log('🎤 Transformed recipes for voice:', recipes.length);
-      
+
       if (voiceMessageIdRef.current && recipes.length > 0) {
         setMessages(prev => prev.map(msg =>
           msg.id === voiceMessageIdRef.current
@@ -281,7 +324,7 @@ export function ChatView({
     },
     onMealPlan: (data) => {
       console.log('🎤 Meal plan received:', { hasData: !!data?.meal_plan, messageId: voiceMessageIdRef.current });
-      
+
       if (voiceMessageIdRef.current && data?.meal_plan) {
         setMessages(prev => prev.map(msg =>
           msg.id === voiceMessageIdRef.current
@@ -292,7 +335,7 @@ export function ChatView({
     },
     onRecipeDetail: (data) => {
       console.log('🎤 Recipe detail received:', { hasData: !!data?.recipe, messageId: voiceMessageIdRef.current });
-      
+
       if (voiceMessageIdRef.current && data?.recipe) {
         setMessages(prev => prev.map(msg =>
           msg.id === voiceMessageIdRef.current
@@ -303,7 +346,7 @@ export function ChatView({
     },
     onShoppingList: (data) => {
       console.log('🎤 Shopping list received:', { hasData: !!data?.shopping_list, messageId: voiceMessageIdRef.current });
-      
+
       if (voiceMessageIdRef.current && data?.shopping_list) {
         setMessages(prev => prev.map(msg =>
           msg.id === voiceMessageIdRef.current
@@ -317,9 +360,9 @@ export function ChatView({
       if (voiceMessageIdRef.current) {
         const messageId = voiceMessageIdRef.current;
         const accumulatedText = voiceResponseAccumulatorRef.current;
-        
+
         console.log('🎤 Voice response done:', { messageId, textLength: accumulatedText.length });
-        
+
         setMessages(prev => prev.map(msg => {
           if (msg.id === messageId) {
             let content = msg.content || accumulatedText;
@@ -362,7 +405,7 @@ export function ChatView({
   const handleScroll = useCallback(() => {
     const container = messagesContainerRef.current;
     if (!container) return;
-    
+
     const { scrollTop, scrollHeight, clientHeight } = container;
     const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
     setShowScrollButton(!isNearBottom && scrollHeight > clientHeight);
@@ -380,13 +423,28 @@ export function ChatView({
     scrollToBottom();
   }, [messages, isTyping, scrollToBottom]);
 
-  // Auto-focus input when component mounts
+  // Auto-focus input when component mounts or becomes visible
   useEffect(() => {
+    // Use a longer delay to ensure the component is fully rendered and visible
+    // This accounts for the animation when switching from recipes view
     const timer = setTimeout(() => {
-      inputRef.current?.focus();
-    }, 100);
+      if (inputRef.current && !isVoiceActive) {
+        inputRef.current.focus();
+      }
+    }, 300); // Longer delay to account for AnimatePresence animation (200ms transition + buffer)
     return () => clearTimeout(timer);
-  }, []);
+  }, []); // Empty deps - only on mount
+
+  // Also focus when input becomes enabled (e.g., after voice mode ends)
+  useEffect(() => {
+    if (!isVoiceActive && !isTyping && inputRef.current) {
+      // Small delay to ensure the input is visible and enabled
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isVoiceActive, isTyping]);
 
   // Process initial message if provided
   useEffect(() => {
@@ -460,9 +518,9 @@ export function ChatView({
     }
     setIsTyping(false);
     setThinkingStatus(null);
-    
+
     // Mark any streaming messages as complete
-    setMessages(prev => prev.map(msg => 
+    setMessages(prev => prev.map(msg =>
       msg.isStreaming ? { ...msg, isStreaming: false } : msg
     ));
   }, []);
@@ -508,14 +566,14 @@ export function ChatView({
       for await (const event of chatWithAgent(text, sessionId)) {
         if (event.type === 'text_chunk') {
           fullResponse += event.content;
-          
+
           // Update streaming message with new content
-          setMessages(prev => prev.map(msg => 
-            msg.id === streamingMessageId 
+          setMessages(prev => prev.map(msg =>
+            msg.id === streamingMessageId
               ? { ...msg, content: fullResponse }
               : msg
           ));
-          
+
           // Clear thinking status once we start receiving text
           if (thinkingStatus) {
             setThinkingStatus(null);
@@ -524,7 +582,7 @@ export function ChatView({
           // Show what tool is being called
           const toolName = event.content;
           console.log('Tool call:', toolName, event.metadata?.arguments);
-          
+
           if (toolName === 'search_recipes') {
             setThinkingStatus("Searching for recipes...");
           } else if (toolName === 'suggest_recipes_for_mood') {
@@ -540,7 +598,7 @@ export function ChatView({
           // Recipes from agent's tool call - these are the EXACT recipes Jamie mentioned
           console.log('Received recipes from agent:', event.metadata?.recipes);
           const recipeData = event.metadata?.recipes || [];
-          
+
           // Transform backend recipe summaries to Recipe format for display
           // Uses summary data directly - no need to re-fetch full recipes
           for (const r of recipeData) {
@@ -553,8 +611,8 @@ export function ChatView({
           console.log('Received meal plan:', event.metadata?.meal_plan);
           if (event.metadata?.meal_plan) {
             // Update message with meal plan data immediately
-            setMessages(prev => prev.map(msg => 
-              msg.id === streamingMessageId 
+            setMessages(prev => prev.map(msg =>
+              msg.id === streamingMessageId
                 ? { ...msg, mealPlan: event.metadata!.meal_plan }
                 : msg
             ));
@@ -564,8 +622,8 @@ export function ChatView({
           console.log('Received recipe detail:', event.metadata?.recipe);
           if (event.metadata?.recipe) {
             // Update message with recipe detail data immediately
-            setMessages(prev => prev.map(msg => 
-              msg.id === streamingMessageId 
+            setMessages(prev => prev.map(msg =>
+              msg.id === streamingMessageId
                 ? { ...msg, recipeDetail: event.metadata!.recipe }
                 : msg
             ));
@@ -575,8 +633,8 @@ export function ChatView({
           console.log('Received shopping list:', event.metadata?.shopping_list);
           if (event.metadata?.shopping_list) {
             // Update message with shopping list data immediately
-            setMessages(prev => prev.map(msg => 
-              msg.id === streamingMessageId 
+            setMessages(prev => prev.map(msg =>
+              msg.id === streamingMessageId
                 ? { ...msg, shoppingList: event.metadata!.shopping_list }
                 : msg
             ));
@@ -585,14 +643,14 @@ export function ChatView({
           // Finalize the message
           setThinkingStatus(null);
           setIsTyping(false);
-          
+
           // Only show recipes that came from the agent's tool call
           // Don't do fallback searches - they often return irrelevant results
           // when the agent is asking clarifying questions
           const recipes = agentRecipes;
-          
+
           console.log('Final recipe count:', recipes.length);
-          
+
           // Update message to final state with all accumulated data
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId) return msg;
@@ -606,12 +664,12 @@ export function ChatView({
           }));
         } else if (event.type === 'error') {
           console.error('Chat error:', event.content);
-          setMessages(prev => prev.map(msg => 
-            msg.id === streamingMessageId 
-              ? { 
-                  ...msg, 
-                  content: "Sorry, something went wrong. Please try again!", 
-                  isStreaming: false 
+          setMessages(prev => prev.map(msg =>
+            msg.id === streamingMessageId
+              ? {
+                  ...msg,
+                  content: "Sorry, something went wrong. Please try again!",
+                  isStreaming: false
                 }
               : msg
           ));
@@ -623,23 +681,23 @@ export function ChatView({
       console.error('Error chatting with agent:', error);
       setThinkingStatus(null);
       setIsTyping(false);
-      
+
       // Check if it's a connection error - fall back to simple search
-      const isConnectionError = error instanceof Error && 
+      const isConnectionError = error instanceof Error &&
         (error.message.includes('connect') || error.message.includes('fetch') || error.message.includes('Failed'));
-      
+
       if (isConnectionError) {
         // Fall back to simple recipe search using the user's query directly
         setThinkingStatus("Searching for recipes...");
         try {
           const recipes = await loadRecipesForQuery(text);
-          
-          setMessages(prev => prev.map(msg => 
-            msg.id === streamingMessageId 
-              ? { 
-                  ...msg, 
-                  content: recipes.length > 0 
-                    ? "Here are some recipes you might enjoy:" 
+
+          setMessages(prev => prev.map(msg =>
+            msg.id === streamingMessageId
+              ? {
+                  ...msg,
+                  content: recipes.length > 0
+                    ? "Here are some recipes you might enjoy:"
                     : "I couldn't find any recipes matching your request. Try describing what you're looking for differently!",
                   isStreaming: false,
                   recipes: recipes.length > 0 ? recipes : undefined,
@@ -648,24 +706,24 @@ export function ChatView({
           ));
           setThinkingStatus(null);
         } catch (searchError) {
-          setMessages(prev => prev.map(msg => 
-            msg.id === streamingMessageId 
-              ? { 
-                  ...msg, 
+          setMessages(prev => prev.map(msg =>
+            msg.id === streamingMessageId
+              ? {
+                  ...msg,
                   content: "I'm having trouble connecting. Please make sure the backend is running and try again!",
-                  isStreaming: false 
+                  isStreaming: false
                 }
               : msg
           ));
           setThinkingStatus(null);
         }
       } else {
-        setMessages(prev => prev.map(msg => 
-          msg.id === streamingMessageId 
-            ? { 
-                ...msg, 
+        setMessages(prev => prev.map(msg =>
+          msg.id === streamingMessageId
+            ? {
+                ...msg,
                 content: "Sorry, something went wrong. Please try again!",
-                isStreaming: false 
+                isStreaming: false
               }
             : msg
         ));
@@ -685,7 +743,7 @@ export function ChatView({
   };
 
   return (
-    <div 
+    <div
       className="bg-white relative"
       style={{
         display: 'flex',
@@ -696,7 +754,7 @@ export function ChatView({
     >
       {/* Empty State with Landing-style prompts */}
       {!hasMessages && !isTyping ? (
-        <div 
+        <div
           style={{
             flex: 1,
             minHeight: 0,
@@ -791,7 +849,7 @@ export function ChatView({
         </div>
       ) : (
         /* Messages Container - Scrollable */
-        <div 
+        <div
           ref={messagesContainerRef}
           onScroll={handleScroll}
           className="px-5 py-4"
@@ -814,13 +872,13 @@ export function ChatView({
                     {message.content && (
                       <div className="flex gap-3 items-start">
                         <div className="relative shrink-0 size-8">
-                          <img 
-                            alt="Jamie" 
-                            className="block size-full rounded-full" 
-                            src={imgJamieAvatar} 
+                          <img
+                            alt="Jamie"
+                            className="block size-full rounded-full"
+                            src={imgJamieAvatar}
                           />
                         </div>
-                        <div 
+                        <div
                           className="flex-1 text-base prose prose-sm max-w-none"
                           style={{
                             fontFamily: 'var(--font-chat)',
@@ -886,18 +944,22 @@ export function ChatView({
                         </div>
                       </div>
                     )}
-                    
+
                     {/* Recipe Carousel */}
                     {message.recipes && message.recipes.length > 0 && (
                       <div className="mt-4">
                         <RecipeCarousel
                           recipes={message.recipes}
-                          onRecipeClick={(recipe) => onRecipeClick(recipe)}
+                          onRecipeClick={async (recipe) => {
+                            // Ensure recipe has full payload before passing to RecipeModal
+                            const completeRecipe = await ensureRecipeHasPayload(recipe);
+                            onRecipeClick(completeRecipe);
+                          }}
                           singleSlide={true}
                         />
                       </div>
                     )}
-                    
+
                     {/* Meal Plan Card */}
                     {message.mealPlan && (
                       <div className="mt-4">
@@ -908,8 +970,8 @@ export function ChatView({
                             const localRecipe = await loadRecipeFromLocal(recipeId);
                             if (localRecipe) {
                               const transformed = transformRecipeMatch(
-                                { 
-                                  recipe_id: recipeId, 
+                                {
+                                  recipe_id: recipeId,
                                   title: localRecipe.recipe?.title || recipeId,
                                   similarity_score: 1,
                                   combined_score: 1,
@@ -928,8 +990,8 @@ export function ChatView({
                             const localRecipe = await loadRecipeFromLocal(recipeId);
                             if (localRecipe) {
                               const transformed = transformRecipeMatch(
-                                { 
-                                  recipe_id: recipeId, 
+                                {
+                                  recipe_id: recipeId,
                                   title: localRecipe.recipe?.title || recipeId,
                                   similarity_score: 1,
                                   combined_score: 1,
@@ -946,7 +1008,7 @@ export function ChatView({
                         />
                       </div>
                     )}
-                    
+
                     {/* Shopping List Card */}
                     {message.shoppingList && (
                       <div className="mt-4">
@@ -957,11 +1019,11 @@ export function ChatView({
                     )}
                   </>
                 ) : (
-                  <div 
+                  <div
                     className="bg-[#f5f5f5] rounded-2xl p-4"
                     style={{ borderRadius: '16px' }}
                   >
-                    <p 
+                    <p
                       className="text-base"
                       style={{
                         fontFamily: 'var(--font-chat)',
@@ -985,7 +1047,7 @@ export function ChatView({
                     <img alt="" className="block size-full rounded-full" src={imgJamieAvatar} />
                   </div>
                   <div className="flex items-center gap-0 pt-1">
-                    <span 
+                    <span
                       className="text-sm italic"
                       style={{
                         fontFamily: 'var(--font-chat)',
@@ -1053,8 +1115,8 @@ export function ChatView({
             style={{ flexShrink: 0 }}
           >
             <div className="max-w-[380px] mx-auto">
-              <VoiceModeIndicator 
-                state={voiceState} 
+              <VoiceModeIndicator
+                state={voiceState}
                 transcript={currentTranscript}
                 onCancel={cancelVoice}
                 onExit={disconnectVoice}
@@ -1080,29 +1142,20 @@ export function ChatView({
       </AnimatePresence>
 
       {/* Chat Input - Always at bottom */}
-      <div 
+      <div
         className="px-5 py-3 bg-white border-t border-black/5"
         style={{
           flexShrink: 0,
         }}
       >
         <div className="max-w-[380px] mx-auto">
-          <div 
+          <div
             className="bg-white relative rounded-full border border-black/10"
             style={{
               boxShadow: '0px 2px 5px 0px rgba(0,0,0,0.06), 0px 9px 9px 0px rgba(0,0,0,0.01)',
             }}
           >
             <div className="flex items-center gap-2 p-2 pl-3">
-              {/* Voice Mode Button */}
-              <VoiceModeButton
-                isActive={isVoiceActive}
-                isConnecting={voiceState === 'connecting'}
-                onClick={toggleVoiceMode}
-                disabled={isTyping && !isVoiceActive}
-                className="shrink-0"
-              />
-
               {/* Text Input - Hidden when voice mode is active and listening */}
               {!isVoiceActive || voiceState === 'idle' ? (
                 <>
@@ -1123,6 +1176,15 @@ export function ChatView({
                     }}
                   />
 
+                  {/* Voice Mode Button */}
+                  <VoiceModeButton
+                    isActive={isVoiceActive}
+                    isConnecting={voiceState === 'connecting'}
+                    onClick={toggleVoiceMode}
+                    disabled={isTyping && !isVoiceActive}
+                    className="shrink-0"
+                  />
+
                   {/* Send Button */}
                   <button
                     onClick={() => handleSendMessage()}
@@ -1134,8 +1196,8 @@ export function ChatView({
                       backgroundColor: inputValue.trim() && !isTyping ? 'var(--jamie-primary)' : '#E5E5E5',
                     }}
                   >
-                    <ArrowUp 
-                      className="size-5" 
+                    <ArrowUp
+                      className="size-5"
                       strokeWidth={2}
                       style={{ color: inputValue.trim() && !isTyping ? '#FFFFFF' : '#A3A3A3' }}
                     />
@@ -1149,12 +1211,12 @@ export function ChatView({
               )}
             </div>
           </div>
-          
+
           {/* Voice mode hint */}
           {!isVoiceActive && !hasMessages && (
-            <p 
+            <p
               className="text-center mt-2 text-xs"
-              style={{ 
+              style={{
                 color: 'var(--text-tertiary)',
                 fontFamily: 'var(--font-display)',
               }}

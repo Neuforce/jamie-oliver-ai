@@ -78,6 +78,49 @@ const saveMessagesToStorage = (messages: Message[]) => {
   }
 };
 
+// Helper function to ensure recipe has full payload before passing to RecipeModal
+const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
+  // If recipe already has rawRecipePayload, return as-is
+  if (recipe.rawRecipePayload && recipe.backendId) {
+    return recipe;
+  }
+
+  // If no backendId, can't load the recipe
+  if (!recipe.backendId) {
+    console.warn('Recipe missing backendId, cannot load full payload:', recipe.id);
+    return recipe;
+  }
+
+  // Load full recipe from local JSON files
+  try {
+    const fullRecipe = await loadRecipeFromLocal(recipe.backendId);
+    if (!fullRecipe) {
+      console.warn(`Could not load recipe ${recipe.backendId} from local files`);
+      return recipe;
+    }
+
+    // Transform to get complete recipe with rawRecipePayload
+    const transformed = transformRecipeMatch(
+      {
+        recipe_id: recipe.backendId,
+        title: recipe.title,
+        similarity_score: 1,
+        combined_score: 1,
+        file_path: '',
+        match_explanation: '',
+        matching_chunks: [],
+      },
+      fullRecipe,
+      recipe.id - 1 // Use existing numeric ID
+    );
+
+    return transformed;
+  } catch (error) {
+    console.error(`Error loading full recipe for ${recipe.backendId}:`, error);
+    return recipe;
+  }
+};
+
 export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipesClick }: ChatWithJamieProps) {
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const [inputValue, setInputValue] = useState('');
@@ -402,16 +445,16 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
           </div>
 
           {/* Logo - Centered */}
-          <div 
+          <div
             className="flex items-center justify-center"
-            style={{ 
+            style={{
               height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
               maxWidth: '171.75px'
             }}
           >
-            <img 
-              alt="Jamie Oliver" 
-              className="h-full w-auto object-contain pointer-events-none" 
+            <img
+              alt="Jamie Oliver"
+              className="h-full w-auto object-contain pointer-events-none"
               src={imgImage11}
               style={{ maxWidth: '100%' }}
             />
@@ -483,8 +526,10 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
                 <div className="mt-4">
                   <RecipeCarousel
                     recipes={message.recipes}
-                    onRecipeClick={(recipe) => {
-                      onRecipeClick(recipe);
+                    onRecipeClick={async (recipe) => {
+                      // Ensure recipe has full payload before passing to RecipeModal
+                      const completeRecipe = await ensureRecipeHasPayload(recipe);
+                      onRecipeClick(completeRecipe);
                       onClose();
                     }}
                     singleSlide={true}

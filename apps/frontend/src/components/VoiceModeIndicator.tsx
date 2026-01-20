@@ -1,6 +1,6 @@
 /**
  * VoiceModeIndicator - Visual feedback for voice chat state
- * 
+ *
  * Shows animated indicators for:
  * - Listening (microphone active, waiting for speech)
  * - Processing (transcribing/thinking)
@@ -20,12 +20,12 @@ interface VoiceModeIndicatorProps {
   className?: string;
 }
 
-export function VoiceModeIndicator({ 
-  state, 
+export function VoiceModeIndicator({
+  state,
   transcript,
   onCancel,
   onExit,
-  className = '' 
+  className = ''
 }: VoiceModeIndicatorProps) {
   if (state === 'idle' || state === 'connecting') {
     return null;
@@ -50,8 +50,8 @@ export function VoiceModeIndicator({
                 animate={{ scale: [1, 1.1, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <Mic 
-                  size={20} 
+                <Mic
+                  size={20}
                   style={{ color: 'var(--jamie-primary, #46BEA8)' }}
                 />
                 {/* Pulsing ring */}
@@ -70,8 +70,8 @@ export function VoiceModeIndicator({
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
               >
-                <Loader2 
-                  size={20} 
+                <Loader2
+                  size={20}
                   style={{ color: 'var(--jamie-primary-dark, #327179)' }}
                 />
               </motion.div>
@@ -82,8 +82,8 @@ export function VoiceModeIndicator({
                 animate={{ scale: [1, 1.15, 1] }}
                 transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut' }}
               >
-                <Volume2 
-                  size={20} 
+                <Volume2
+                  size={20}
                   style={{ color: 'var(--jamie-primary, #46BEA8)' }}
                 />
               </motion.div>
@@ -92,15 +92,15 @@ export function VoiceModeIndicator({
 
           {/* State Label */}
           <div className="flex flex-col">
-            <span 
+            <span
               className="text-xs font-medium uppercase tracking-wide"
-              style={{ 
+              style={{
                 fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                color: state === 'listening' 
-                  ? 'var(--jamie-primary, #46BEA8)' 
-                  : state === 'speaking' 
-                    ? 'var(--jamie-primary, #46BEA8)' 
-                    : 'var(--jamie-primary-dark, #327179)' 
+                color: state === 'listening'
+                  ? 'var(--jamie-primary, #46BEA8)'
+                  : state === 'speaking'
+                    ? 'var(--jamie-primary, #46BEA8)'
+                    : 'var(--jamie-primary-dark, #327179)'
               }}
             >
               {state === 'listening' && 'Listening...'}
@@ -114,9 +114,9 @@ export function VoiceModeIndicator({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="text-sm italic max-w-[200px] truncate"
-                style={{ 
+                style={{
                   fontFamily: 'var(--font-body, Inter, sans-serif)',
-                  color: 'var(--jamie-text-muted, #5d5d5d)' 
+                  color: 'var(--jamie-text-muted, #5d5d5d)'
                 }}
               >
                 "{transcript}"
@@ -186,14 +186,13 @@ export function VoiceModeButton({
         relative flex items-center justify-center
         w-10 h-10 rounded-full
         transition-colors duration-200
-        ${isActive 
-          ? 'bg-[var(--jamie-primary,#46BEA8)] text-white' 
-          : 'bg-black/5 hover:bg-black/10'
-        }
         ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
         ${className}
       `}
-      style={{ color: isActive ? '#FFFFFF' : 'var(--jamie-text-muted, #5d5d5d)' }}
+      style={{
+        backgroundColor: isActive ? 'var(--jamie-primary, #46BEA8)' : '#E5E5E5',
+        color: isActive ? '#FFFFFF' : '#A3A3A3',
+      }}
       whileTap={{ scale: 0.95 }}
       whileHover={{ scale: disabled ? 1 : 1.05 }}
     >
@@ -233,10 +232,10 @@ interface AudioWaveformProps {
   className?: string;
 }
 
-export function AudioWaveform({ 
-  isActive, 
+export function AudioWaveform({
+  isActive,
   bars = 5,
-  className = '' 
+  className = ''
 }: AudioWaveformProps) {
   return (
     <div className={`flex items-center gap-0.5 h-5 ${className}`}>
@@ -280,7 +279,7 @@ export function StopGenerationButton({
       exit={{ opacity: 0, scale: 0.9 }}
       onClick={onClick}
       className={`
-        flex items-center gap-2 px-4 py-2 
+        flex items-center gap-2 px-4 py-2
         rounded-full border border-black/10
         bg-white hover:bg-black/5
         transition-colors shadow-sm

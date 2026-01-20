@@ -86,15 +86,15 @@ _search_agent = None
 def get_search_agent() -> RecipeSearchAgent:
     """Obtener instancia singleton del agente de búsqueda."""
     global _supabase_client, _search_agent
-    
+
     if _search_agent is None:
         # Crear cliente de Supabase
         supabase_url = os.getenv("SUPABASE_URL")
         supabase_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-        
+
         if not supabase_url or not supabase_key:
             raise RuntimeError("SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY not found in environment")
-        
+
         _supabase_client = create_client(supabase_url, supabase_key)
         _search_agent = RecipeSearchAgent(
             supabase_client=_supabase_client,
@@ -102,14 +102,14 @@ def get_search_agent() -> RecipeSearchAgent:
             project_root=project_root,
         )
         logger.info("Search agent initialized")
-    
+
     return _search_agent
 
 
 # Modelos Pydantic para request/response
 class SearchRequest(BaseModel):
     """Request para búsqueda de recetas."""
-    
+
     query: str = Field(..., description="Query en lenguaje natural", example="quick vegetarian pasta")
     category: Optional[str] = Field(None, description="Filtro por categoría", example="dinner")
     mood: Optional[str] = Field(None, description="Filtro por mood", example="comfort")
@@ -124,7 +124,7 @@ class SearchRequest(BaseModel):
 
 class RecipeMatchResponse(BaseModel):
     """Respuesta para un match de receta."""
-    
+
     recipe_id: str
     title: str
     similarity_score: float
@@ -141,7 +141,7 @@ class RecipeMatchResponse(BaseModel):
 
 class SearchResponse(BaseModel):
     """Respuesta de búsqueda."""
-    
+
     query: str
     filters_applied: dict
     results: List[RecipeMatchResponse]
@@ -152,14 +152,14 @@ class SearchResponse(BaseModel):
 # Chat Agent Models
 class ChatRequest(BaseModel):
     """Request for chat endpoint."""
-    
+
     message: str = Field(..., description="User message to send to Jamie", example="I'm feeling tired, what should I cook?")
     session_id: str = Field(..., description="Session ID for conversation continuity", example="user-123-abc")
 
 
 class ChatResponse(BaseModel):
     """Non-streaming chat response."""
-    
+
     response: str
     tool_calls: List[dict]
     session_id: str
@@ -172,15 +172,25 @@ _chat_agent = None
 def get_chat_agent():
     """Get or create the chat agent singleton."""
     global _chat_agent
-    
+
     if _chat_agent is None:
+        # Verify ccai is installed before importing
+        try:
+            import ccai
+        except ImportError:
+            logger.error("ccai package is not installed. Please run: pip install -e ../../packages/ccai")
+            raise HTTPException(
+                status_code=500,
+                detail="Chat agent requires ccai package. Please install it: pip install -e ../../packages/ccai"
+            )
+
         # Import here to avoid circular imports
         from recipe_search_agent.chat_agent import DiscoveryChatAgent
-        
+
         search_agent = get_search_agent()
         _chat_agent = DiscoveryChatAgent(search_agent=search_agent)
         logger.info("Chat agent initialized")
-    
+
     return _chat_agent
 
 
@@ -217,12 +227,12 @@ async def health():
 async def search_recipes(request: SearchRequest):
     """
     Búsqueda semántica de recetas.
-    
+
     Combina:
     - Vector similarity (embeddings semánticos)
     - Filtros exactos (category, mood, complexity, cost)
     - Full-text search en ingredientes
-    
+
     Ejemplo:
     ```json
     {
@@ -234,7 +244,7 @@ async def search_recipes(request: SearchRequest):
     """
     try:
         start_time = time.time()
-        
+
         # Crear filtros
         filters = SearchFilters(
             category=request.category,
@@ -243,7 +253,7 @@ async def search_recipes(request: SearchRequest):
             cost=request.cost,
             ingredients_query=request.ingredients_query,
         )
-        
+
         # Buscar
         agent = get_search_agent()
         results = agent.search(
@@ -254,15 +264,15 @@ async def search_recipes(request: SearchRequest):
             include_chunks=request.include_chunks,
             similarity_threshold=request.similarity_threshold,
         )
-        
+
         elapsed_ms = (time.time() - start_time) * 1000
-        
+
         # Convertir a response models
         response_results = [
             RecipeMatchResponse(**match.to_dict())
             for match in results
         ]
-        
+
         return SearchResponse(
             query=request.query,
             filters_applied={
@@ -276,7 +286,7 @@ async def search_recipes(request: SearchRequest):
             total=len(response_results),
             took_ms=round(elapsed_ms, 2),
         )
-        
+
     except Exception as e:
         logger.error(f"Search failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Search failed: {str(e)}")
@@ -286,17 +296,17 @@ async def search_recipes(request: SearchRequest):
 async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
     """
     Obtener receta completa por ID (slug).
-    
+
     Args:
         recipe_id: Slug de la receta (ej: "christmas-salad-jamie-oliver-recipes")
         include_chunks: Si True, incluye todos los chunks de la receta
     """
     try:
         agent = get_search_agent()
-        
+
         # First try the new `recipes` table (source of truth)
         recipes_response = agent.client.table("recipes").select("*").eq("slug", recipe_id).execute()
-        
+
         if recipes_response.data:
             recipe_row = recipes_response.data[0]
             result = {
@@ -313,13 +323,13 @@ async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
         else:
             # Fallback to recipe_index for backward compatibility
             response = agent.client.table("recipe_index").select("*").eq("id", recipe_id).execute()
-            
+
             if not response.data:
                 raise HTTPException(status_code=404, detail=f"Recipe not found: {recipe_id}")
-            
+
             recipe_data = response.data[0]
             full_recipe = agent._load_recipe_json(recipe_data["file_path"])
-            
+
             result = {
                 "recipe_id": recipe_id,
                 "title": recipe_data["title"],
@@ -330,7 +340,7 @@ async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
                 "file_path": recipe_data["file_path"],
                 "full_recipe": full_recipe,
             }
-        
+
         # Incluir chunks si se solicita
         if include_chunks:
             chunks_response = agent.client.table("intelligent_recipe_chunks") \
@@ -338,9 +348,9 @@ async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
                 .eq("recipe_id", recipe_id) \
                 .execute()
             result["chunks"] = chunks_response.data
-        
+
         return result
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -360,9 +370,9 @@ async def list_recipes(
 ):
     """
     Listar recetas con filtros opcionales.
-    
+
     Fetches from the `recipes` table (source of truth) with fallback to `recipe_index`.
-    
+
     Args:
         category: Filtro por categoría
         mood: Filtro por mood
@@ -374,24 +384,24 @@ async def list_recipes(
     """
     try:
         agent = get_search_agent()
-        
+
         # Try the new `recipes` table first
         select_fields = "slug, metadata, quality_score, status, created_at, updated_at"
         if include_full:
             select_fields += ", recipe_json"
-        
+
         query = agent.client.table("recipes").select(select_fields)
-        
+
         # Apply status filter - default to published OR draft (not archived)
         if status:
             query = query.eq("status", status)
         else:
             # Include both published and draft by default
             query = query.in_("status", ["published", "draft"])
-        
+
         query = query.order("updated_at", desc=True).range(offset, offset + limit - 1)
         response = query.execute()
-        
+
         if response.data:
             # Transform to consistent response format
             recipes = []
@@ -414,7 +424,7 @@ async def list_recipes(
                 if include_full:
                     recipe_item["full_recipe"] = row.get("recipe_json")
                 recipes.append(recipe_item)
-            
+
             return {
                 "recipes": recipes,
                 "total": len(recipes),
@@ -422,20 +432,20 @@ async def list_recipes(
                 "offset": offset,
                 "source": "recipes_table",
             }
-        
+
         # Fallback to recipe_index for backward compatibility
         query = agent.client.table("recipe_index").select("*")
-        
+
         if category:
             query = query.eq("category", category)
         if mood:
             query = query.eq("mood", mood)
         if complexity:
             query = query.eq("complexity", complexity)
-        
+
         query = query.range(offset, offset + limit - 1)
         response = query.execute()
-        
+
         return {
             "recipes": response.data,
             "total": len(response.data),
@@ -443,7 +453,7 @@ async def list_recipes(
             "offset": offset,
             "source": "recipe_index_fallback",
         }
-        
+
     except Exception as e:
         logger.error(f"Failed to list recipes: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to list recipes: {str(e)}")
@@ -457,15 +467,15 @@ async def list_recipes(
 async def chat(request: ChatRequest):
     """
     Conversational chat with Jamie Oliver discovery agent.
-    
+
     Streams responses via Server-Sent Events (SSE).
-    
+
     Event types:
     - text_chunk: Partial text from Jamie's response
     - tool_call: When the agent calls a tool (search, etc.)
     - done: Response complete
     - error: An error occurred
-    
+
     Example:
     ```json
     {
@@ -476,7 +486,7 @@ async def chat(request: ChatRequest):
     """
     try:
         chat_agent = get_chat_agent()
-        
+
         async def event_generator():
             """Generate SSE events from chat agent."""
             try:
@@ -488,17 +498,17 @@ async def chat(request: ChatRequest):
                     }
                     if event.metadata:
                         data["metadata"] = event.metadata
-                    
+
                     yield f"data: {json.dumps(data)}\n\n"
-                    
+
                     # Small delay to prevent overwhelming the client
                     await asyncio.sleep(0.01)
-                    
+
             except Exception as e:
                 logger.error(f"Error in chat stream: {e}", exc_info=True)
                 error_data = {"type": "error", "content": str(e)}
                 yield f"data: {json.dumps(error_data)}\n\n"
-        
+
         return StreamingResponse(
             event_generator(),
             media_type="text/event-stream",
@@ -508,7 +518,7 @@ async def chat(request: ChatRequest):
                 "X-Accel-Buffering": "no",  # Disable nginx buffering
             }
         )
-        
+
     except Exception as e:
         logger.error(f"Chat failed: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Chat failed: {str(e)}")
@@ -518,22 +528,22 @@ async def chat(request: ChatRequest):
 async def chat_sync(request: ChatRequest) -> ChatResponse:
     """
     Non-streaming chat endpoint for simpler integrations.
-    
+
     Returns the complete response instead of streaming.
     """
     try:
         chat_agent = get_chat_agent()
         result = await chat_agent.chat_sync(request.message, request.session_id)
-        
+
         if "error" in result:
             raise HTTPException(status_code=500, detail=result["error"])
-        
+
         return ChatResponse(
             response=result["response"],
             tool_calls=result["tool_calls"],
             session_id=request.session_id,
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -545,19 +555,19 @@ async def chat_sync(request: ChatRequest) -> ChatResponse:
 async def clear_chat_session(session_id: str):
     """
     Clear a chat session's memory.
-    
+
     Use this when the user wants to start a fresh conversation.
     """
     try:
         chat_agent = get_chat_agent()
         cleared = chat_agent.clear_session(session_id)
-        
+
         return {
             "session_id": session_id,
             "cleared": cleared,
             "message": "Session cleared" if cleared else "Session not found"
         }
-        
+
     except Exception as e:
         logger.error(f"Failed to clear session: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to clear session: {str(e)}")
@@ -571,12 +581,12 @@ async def get_chat_session(session_id: str):
     try:
         chat_agent = get_chat_agent()
         info = chat_agent.get_session_info(session_id)
-        
+
         if not info:
             raise HTTPException(status_code=404, detail=f"Session not found: {session_id}")
-        
+
         return info
-        
+
     except HTTPException:
         raise
     except Exception as e:
@@ -592,20 +602,20 @@ async def get_chat_session(session_id: str):
 async def voice_chat_websocket(websocket: WebSocket):
     """
     WebSocket endpoint for voice-based chat with Jamie Oliver discovery agent.
-    
+
     Enables real-time voice conversations:
     - Receives audio input from browser microphone
     - Transcribes speech using Deepgram STT
     - Processes through the discovery chat agent
     - Synthesizes responses with ElevenLabs TTS
     - Streams audio and text back to client
-    
+
     Protocol:
     - Client sends: {"event": "start", "sessionId": "...", "sampleRate": 16000}
     - Client sends: {"event": "audio", "data": "base64_pcm_data"}
     - Client sends: {"event": "stop"}
     - Client sends: {"event": "interrupt"} (to stop Jamie while speaking)
-    
+
     - Server sends: {"event": "session_info", "data": {...}}
     - Server sends: {"event": "listening"}
     - Server sends: {"event": "transcript_interim", "data": "partial text..."}
@@ -619,7 +629,7 @@ async def voice_chat_websocket(websocket: WebSocket):
     - Server sends: {"event": "shopping_list", "data": {...}}
     - Server sends: {"event": "done"}
     - Server sends: {"event": "error", "data": "error message"}
-    
+
     Requires environment variables:
     - DEEPGRAM_API_KEY: For speech-to-text
     - ELEVENLABS_API_KEY: For text-to-speech
@@ -627,10 +637,10 @@ async def voice_chat_websocket(websocket: WebSocket):
     """
     try:
         from recipe_search_agent.voice_handler import handle_voice_chat
-        
+
         chat_agent = get_chat_agent()
         await handle_voice_chat(websocket, chat_agent)
-        
+
     except WebSocketDisconnect:
         logger.info("Voice chat WebSocket disconnected")
     except Exception as e:
@@ -647,7 +657,7 @@ async def voice_chat_websocket(websocket: WebSocket):
 
 if __name__ == "__main__":
     import uvicorn
-    
+
     # Ejecutar servidor
     uvicorn.run(
         "recipe_search_agent.api:app",
@@ -666,19 +676,19 @@ async def publish_all_recipes():
     """
     try:
         agent = get_search_agent()
-        
+
         # Get all draft recipes
         drafts = agent.client.table("recipes") \
             .select("slug, quality_score") \
             .eq("status", "draft") \
             .execute()
-        
+
         if not drafts.data:
             return {"message": "No draft recipes found", "published": 0}
-        
+
         # Publish ALL drafts (they're all enhanced and good quality)
         published_recipes = [r["slug"] for r in drafts.data]
-        
+
         agent.client.table("recipes") \
             .update({
                 "status": "published",
@@ -686,13 +696,13 @@ async def publish_all_recipes():
             }) \
             .eq("status", "draft") \
             .execute()
-        
+
         return {
             "message": f"Published {len(published_recipes)} recipes",
             "published": len(published_recipes),
             "recipes": published_recipes
         }
-        
+
     except Exception as e:
         logger.error(f"Failed to publish recipes: {e}")
         raise HTTPException(status_code=500, detail=str(e))

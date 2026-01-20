@@ -10,17 +10,20 @@ python = "^3.11"
 pydantic = "^2.9.2"
 docstring-parser = "^0.16"
 certifi = "^2024.8.30"
-pyaudio = "^0.2.14"
+pyaudio = { version = "^0.2.14", optional = true }
 deepgram-sdk = "^3.7.6"
 mailjet-rest = "^1.4.0"
 langfuse = "^3.3.0"
+
+[tool.poetry.extras]
+audio = ["pyaudio"]
 
 
 [tool.poetry.group.dev.dependencies]
 openai = "^1.51.2"
 python-dotenv = "^1.0.1"
 groq = "^0.11.0"
-pyaudio = "^0.2.14"
+pyaudio = { version = "^0.2.14", optional = true }
 aioboto3 = "^13.2.0"
 aiofiles = "^24.1.0"
 snakeviz = "^2.2.0"

@@ -2,13 +2,23 @@ import asyncio
 import audioop
 import time
 
-import pyaudio
+try:
+    import pyaudio
+except ImportError:
+    pyaudio = None  # pyaudio is optional (only needed for LocalAudioOutput)
+
 import threading
 from ccai.core.audio_interface.audio_output.audio_output_service import AudioOutputService
 
 
 class LocalAudioOutput(AudioOutputService):
     def __init__(self, sample_rate: int = 8000, output_device_index=None):
+        if pyaudio is None:
+            raise ImportError(
+                "pyaudio is required for LocalAudioOutput. "
+                "Install it with: pip install pyaudio or pip install ccai[audio]"
+            )
+
         self.sample_rate = sample_rate
         self.chunk_size = 1024  # Adjust as needed
         self.audio_queue = asyncio.Queue()
