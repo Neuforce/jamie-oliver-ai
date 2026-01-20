@@ -11,7 +11,7 @@ pydantic = "^2.9.2"
 docstring-parser = "^0.16"
 certifi = "^2024.8.30"
 pyaudio = { version = "^0.2.14", optional = true }
-deepgram-sdk = "^3.7.6"
+deepgram-sdk = ">=3.7.6,<4.0.0"
 mailjet-rest = "^1.4.0"
 langfuse = "^3.3.0"
 
