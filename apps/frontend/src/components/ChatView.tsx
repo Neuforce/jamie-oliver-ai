@@ -117,9 +117,15 @@ const getToolIntroForMessage = (message: Message) => {
 const applyToolDominantCopy = (message: Message, content: string) => {
   if (!hasToolPayload(message)) return content;
   if (!content.trim()) return getToolIntroForMessage(message);
-  if (content.length > TOOL_INTRO_MAX_CHARS) {
+
+  const normalized = content.trim();
+  const lineCount = normalized.split('\n').length;
+  const looksLikeList = /^[\s>*-]*\d+\.|^[\s>*-]*[-*•]/m.test(normalized);
+
+  if (normalized.length > TOOL_INTRO_MAX_CHARS || lineCount > 2 || looksLikeList) {
     return getToolIntroForMessage(message);
   }
+
   return content;
 };
 
