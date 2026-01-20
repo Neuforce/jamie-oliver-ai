@@ -206,20 +206,34 @@ class DiscoveryChatAgent:
         
         # Track tool calls to emit their results after processing
         pending_tool_calls: Dict[str, str] = {}  # tool_call_id -> function_name
+        tool_calls_seen: set[str] = set()
+        tool_results_emitted = False
+
+        # Tool-dominant response policy
+        max_tool_intro_chars = 240
+        tool_intro_chars_sent = 0
+        tool_used = False
         
         try:
             # Process message through brain
             async for event in brain.process(user_msg):
                 if isinstance(event, ChunkResponse):
                     # Text chunk from LLM
-                    yield ChatEvent(
-                        type="text_chunk",
-                        content=event.content,
-                    )
+                    if tool_used:
+                        remaining = max_tool_intro_chars - tool_intro_chars_sent
+                        if remaining <= 0:
+                            continue
+                        chunk = event.content[:remaining]
+                        tool_intro_chars_sent += len(chunk)
+                        yield ChatEvent(type="text_chunk", content=chunk)
+                    else:
+                        yield ChatEvent(type="text_chunk", content=event.content)
                 elif isinstance(event, FunctionCallResponse):
+                    tool_used = True
+                    tool_calls_seen.add(event.function_name)
                     # Track this tool call
                     pending_tool_calls[event.tool_call_id] = event.function_name
-                    
+
                     # Tool call event
                     yield ChatEvent(
                         type="tool_call",
@@ -257,6 +271,7 @@ class DiscoveryChatAgent:
                                         }
                                     )
                                     logger.info(f"Emitted {len(result['recipes'])} recipes")
+                                    tool_results_emitted = True
                             
                             elif func_name == 'plan_meal':
                                 yield ChatEvent(
@@ -269,6 +284,7 @@ class DiscoveryChatAgent:
                                     }
                                 )
                                 logger.info(f"Emitted meal_plan for {result.get('occasion')}")
+                                tool_results_emitted = True
                             
                             elif func_name == 'get_recipe_details':
                                 if result.get('recipe'):
@@ -280,6 +296,7 @@ class DiscoveryChatAgent:
                                         }
                                     )
                                     logger.info(f"Emitted recipe_detail for {result['recipe'].get('title')}")
+                                    tool_results_emitted = True
                             
                             elif func_name == 'create_shopping_list':
                                 yield ChatEvent(
@@ -292,6 +309,7 @@ class DiscoveryChatAgent:
                                     }
                                 )
                                 logger.info(f"Emitted shopping_list with {result.get('total_items')} items")
+                                tool_results_emitted = True
                         
                         except (json.JSONDecodeError, KeyError) as e:
                             logger.warning(f"Failed to parse tool result for {func_name}: {e}")
@@ -303,6 +321,18 @@ class DiscoveryChatAgent:
                         if not pending_tool_calls:
                             break
             
+            # If tools were used but no intro text was sent, provide a short default intro
+            if tool_used and tool_intro_chars_sent == 0 and tool_results_emitted:
+                if "plan_meal" in tool_calls_seen:
+                    intro = "Here’s a meal plan I put together for you."
+                elif "get_recipe_details" in tool_calls_seen:
+                    intro = "Here are the details for that recipe."
+                elif "create_shopping_list" in tool_calls_seen:
+                    intro = "Here’s your shopping list."
+                else:
+                    intro = "Here are some great options for you."
+                yield ChatEvent(type="text_chunk", content=intro)
+
             # Signal completion
             yield ChatEvent(type="done", content="")
             
