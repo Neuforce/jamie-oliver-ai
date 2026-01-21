@@ -5,7 +5,7 @@ import { RecipeCarousel } from './RecipeCarousel';
 import { MealPlanCard } from './MealPlanCard';
 import { RecipeQuickView } from './RecipeQuickView';
 import { ShoppingListCard } from './ShoppingListCard';
-import { ArrowUp, ArrowDown } from 'lucide-react';
+import { ArrowUp, ArrowDown, Clock, Users, ChefHat, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GlowEffect } from '../design-system/components/GlowEffect';
 import { AvatarWithGlow } from '../design-system/components/AvatarWithGlow';
@@ -31,6 +31,7 @@ interface Message {
   id: string;
   type: 'user' | 'jamie';
   content: string;
+  originalContent?: string; // Preserve original streaming text before tool-dominant copy replacement
   recipes?: Recipe[];
   mealPlan?: MealPlanData;
   recipeDetail?: RecipeDetailData;
@@ -217,6 +218,7 @@ export function ChatView({
   const [isTyping, setIsTyping] = useState(false);
   const [thinkingStatus, setThinkingStatus] = useState<string | null>(null);
   const [displayedThinkingText, setDisplayedThinkingText] = useState('');
+  const [expandedOriginalContent, setExpandedOriginalContent] = useState<Set<string>>(new Set());
   const [showScrollButton, setShowScrollButton] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
@@ -371,7 +373,13 @@ export function ChatView({
                 ? getToolIntroForMessage(msg)
                 : "I'm here to help! What would you like to cook today?";
             }
-            return { ...msg, content: applyToolDominantCopy(msg, content), isStreaming: false };
+            // Preserve original content if tool dominant copy will change it
+            const finalContent = applyToolDominantCopy(msg, content);
+            const updated = { ...msg, content: finalContent, isStreaming: false };
+            if (hasToolPayload(updated) && finalContent !== content && content.trim()) {
+              updated.originalContent = content;
+            }
+            return updated;
           }
           return msg;
         }));
@@ -660,7 +668,12 @@ export function ChatView({
               isStreaming: false,
               recipes: recipes.length > 0 ? recipes : msg.recipes,
             };
-            return { ...updated, content: applyToolDominantCopy(updated, updated.content) };
+            // Preserve original content if tool dominant copy will change it
+            const finalContent = applyToolDominantCopy(updated, updated.content);
+            if (hasToolPayload(updated) && finalContent !== fullResponse && fullResponse.trim()) {
+              updated.originalContent = fullResponse;
+            }
+            return { ...updated, content: finalContent };
           }));
         } else if (event.type === 'error') {
           console.error('Chat error:', event.content);
@@ -945,6 +958,93 @@ export function ChatView({
                       </div>
                     )}
 
+                    {/* Collapsible Original Content */}
+                    {message.originalContent &&
+                     message.originalContent !== message.content &&
+                     hasToolPayload(message) && (
+                      <div className="mt-2">
+                        <button
+                          onClick={() => {
+                            setExpandedOriginalContent(prev => {
+                              const next = new Set(prev);
+                              if (next.has(message.id)) {
+                                next.delete(message.id);
+                              } else {
+                                next.add(message.id);
+                              }
+                              return next;
+                            });
+                          }}
+                          className="flex items-center gap-1.5 text-sm italic"
+                          style={{
+                            fontFamily: 'var(--font-chat)',
+                            color: 'var(--jamie-text-muted, #717182)',
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            padding: '4px 0',
+                          }}
+                        >
+                          {expandedOriginalContent.has(message.id) ? (
+                            <>
+                              <ChevronUp className="size-3" />
+                              <span>Hide full response</span>
+                            </>
+                          ) : (
+                            <>
+                              <ChevronDown className="size-3" />
+                              <span>Show full response</span>
+                            </>
+                          )}
+                        </button>
+                        {expandedOriginalContent.has(message.id) && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.2 }}
+                            className="mt-2 pt-2"
+                            style={{
+                              borderTop: '1px solid rgba(0, 0, 0, 0.05)',
+                            }}
+                          >
+                            <div
+                              className="text-sm prose prose-sm max-w-none"
+                              style={{
+                                fontFamily: 'var(--font-chat)',
+                                lineHeight: 1.5,
+                                color: 'var(--jamie-text-body)',
+                              }}
+                            >
+                              <ReactMarkdown
+                                components={{
+                                  p: ({ children }) => (
+                                    <p className="mb-2 last:mb-0">{children}</p>
+                                  ),
+                                  strong: ({ children }) => (
+                                    <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>
+                                      {children}
+                                    </strong>
+                                  ),
+                                  ul: ({ children }) => (
+                                    <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>
+                                  ),
+                                  ol: ({ children }) => (
+                                    <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>
+                                  ),
+                                  li: ({ children }) => (
+                                    <li className="mb-1">{children}</li>
+                                  ),
+                                }}
+                              >
+                                {message.originalContent}
+                              </ReactMarkdown>
+                            </div>
+                          </motion.div>
+                        )}
+                      </div>
+                    )}
+
                     {/* Recipe Carousel */}
                     {message.recipes && message.recipes.length > 0 && (
                       <div className="mt-4">
@@ -1006,6 +1106,177 @@ export function ChatView({
                             }
                           }}
                         />
+                      </div>
+                    )}
+
+                    {/* Recipe Detail Card - Inline display */}
+                    {message.recipeDetail && (
+                      <div className="mt-4">
+                        <div
+                          className="bg-white overflow-hidden"
+                          style={{
+                            borderRadius: '24px',
+                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                          }}
+                        >
+                          {/* Header */}
+                          <div style={{ padding: '20px 24px' }}>
+                            <h3
+                              style={{
+                                fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                                fontSize: '18px',
+                                fontWeight: 700,
+                                color: 'var(--jamie-text-heading, #2C5F5D)',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.5px',
+                                margin: 0,
+                                lineHeight: 1.3,
+                              }}
+                            >
+                              {message.recipeDetail.title}
+                            </h3>
+
+                            {/* Meta info */}
+                            <div
+                              style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '16px',
+                                marginTop: '12px',
+                                fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                                fontSize: '14px',
+                                color: 'var(--jamie-text-muted, #717182)',
+                              }}
+                            >
+                              {message.recipeDetail.estimated_time && (
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <Clock className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+                                  {message.recipeDetail.estimated_time.replace('PT', '').replace('H', 'h ').replace('M', 'm').trim() || message.recipeDetail.estimated_time}
+                                </span>
+                              )}
+                              {message.recipeDetail.servings && (
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <Users className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+                                  {message.recipeDetail.servings}
+                                </span>
+                              )}
+                              {message.recipeDetail.difficulty && (
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                  <ChefHat className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
+                                  {message.recipeDetail.difficulty}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Description */}
+                          {message.recipeDetail.description && (
+                            <div style={{ padding: '0 24px 20px' }}>
+                              <p
+                                style={{
+                                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                                  fontSize: '15px',
+                                  lineHeight: 1.6,
+                                  color: 'var(--jamie-text-primary, #234252)',
+                                  margin: 0,
+                                }}
+                              >
+                                {message.recipeDetail.description}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Ingredients preview */}
+                          {message.recipeDetail.ingredients && message.recipeDetail.ingredients.length > 0 && (
+                            <div style={{ padding: '0 24px 20px' }}>
+                              <h4
+                                style={{
+                                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                                  fontSize: '11px',
+                                  fontWeight: 700,
+                                  color: 'var(--jamie-text-muted, #717182)',
+                                  letterSpacing: '0.1em',
+                                  textTransform: 'uppercase',
+                                  marginBottom: '12px',
+                                }}
+                              >
+                                {message.recipeDetail.ingredients.length} Ingredients
+                              </h4>
+                              <p
+                                style={{
+                                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                                  fontSize: '14px',
+                                  color: 'var(--jamie-text-muted, #717182)',
+                                  lineHeight: 1.5,
+                                  margin: 0,
+                                }}
+                              >
+                                {message.recipeDetail.ingredients.slice(0, 5).join(' · ')}
+                                {message.recipeDetail.ingredients.length > 5 && ` · +${message.recipeDetail.ingredients.length - 5} more`}
+                              </p>
+                            </div>
+                          )}
+
+                          {/* View Full Recipe button */}
+                          <div style={{ padding: '0 24px 24px' }}>
+                            <button
+                              onClick={async () => {
+                                const recipeId = message.recipeDetail!.recipe_id;
+                                const localRecipe = await loadRecipeFromLocal(recipeId);
+                                if (localRecipe) {
+                                  const transformed = transformRecipeMatch(
+                                    {
+                                      recipe_id: recipeId,
+                                      title: localRecipe.recipe?.title || recipeId,
+                                      similarity_score: 1,
+                                      combined_score: 1,
+                                      file_path: '',
+                                      match_explanation: '',
+                                      matching_chunks: [],
+                                    },
+                                    localRecipe,
+                                    0
+                                  );
+                                  onRecipeClick(transformed);
+                                }
+                              }}
+                              style={{
+                                width: '100%',
+                                height: '50px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                padding: '0 14px 0 24px',
+                                borderRadius: '24px',
+                                border: 'none',
+                                background: '#29514F',
+                                color: 'white',
+                                fontFamily: 'var(--font-display, Poppins, sans-serif)',
+                                fontSize: '15px',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                transition: 'background 0.2s ease',
+                              }}
+                              onMouseEnter={(e) => (e.currentTarget.style.background = '#1f423f')}
+                              onMouseLeave={(e) => (e.currentTarget.style.background = '#29514F')}
+                            >
+                              <span>View Full Recipe</span>
+                              <span
+                                style={{
+                                  width: '32px',
+                                  height: '32px',
+                                  borderRadius: '9px',
+                                  background: 'rgba(255,255,255,0.1)',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                }}
+                              >
+                                <ArrowRight className="size-4" />
+                              </span>
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     )}
 
