@@ -62,7 +62,7 @@ export interface ShoppingListData {
 }
 
 export interface ChatEvent {
-  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'done' | 'error';
+  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'original_content' | 'done' | 'error';
   content: string;
   metadata?: {
     // Tool call info
@@ -205,9 +205,9 @@ export async function searchRecipes(
 
 /**
  * Chat with Jamie Oliver discovery agent using Server-Sent Events (SSE).
- * 
+ *
  * Yields ChatEvent objects as they are received from the server.
- * 
+ *
  * @param message - The user's message
  * @param sessionId - Session ID for conversation continuity
  * @yields ChatEvent objects
@@ -243,15 +243,15 @@ export async function* chatWithAgent(
   try {
     while (true) {
       const { done, value } = await reader.read();
-      
+
       if (done) break;
-      
+
       buffer += decoder.decode(value, { stream: true });
-      
+
       // Process complete SSE events
       const lines = buffer.split('\n');
       buffer = lines.pop() || ''; // Keep incomplete line in buffer
-      
+
       for (const line of lines) {
         if (line.startsWith('data: ')) {
           const data = line.slice(6);
@@ -259,7 +259,7 @@ export async function* chatWithAgent(
             try {
               const event: ChatEvent = JSON.parse(data);
               yield event;
-              
+
               // Stop if we receive done or error
               if (event.type === 'done' || event.type === 'error') {
                 return;
@@ -278,9 +278,9 @@ export async function* chatWithAgent(
 
 /**
  * Chat with Jamie Oliver discovery agent (non-streaming).
- * 
+ *
  * Returns the complete response instead of streaming.
- * 
+ *
  * @param message - The user's message
  * @param sessionId - Session ID for conversation continuity
  * @returns Complete chat response
@@ -310,7 +310,7 @@ export async function chatWithAgentSync(
 
 /**
  * Clear a chat session's memory.
- * 
+ *
  * @param sessionId - Session ID to clear
  */
 export async function clearChatSession(sessionId: string): Promise<void> {

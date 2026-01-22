@@ -573,7 +573,8 @@ export function ChatView({
       // Stream response from chat agent
       for await (const event of chatWithAgent(text, sessionId)) {
         if (event.type === 'text_chunk') {
-          fullResponse += event.content;
+          const chunk = event.content;
+          fullResponse += chunk;
 
           // Update streaming message with new content
           setMessages(prev => prev.map(msg =>
@@ -647,6 +648,13 @@ export function ChatView({
                 : msg
             ));
           }
+        } else if (event.type === 'original_content') {
+          // Backend sent the full original content (when tool-dominant copy was truncated)
+          // Update the message with the full original content
+          setMessages(prev => prev.map(msg => {
+            if (msg.id !== streamingMessageId) return msg;
+            return { ...msg, originalContent: event.content };
+          }));
         } else if (event.type === 'done') {
           // Finalize the message
           setThinkingStatus(null);
@@ -656,8 +664,6 @@ export function ChatView({
           // Don't do fallback searches - they often return irrelevant results
           // when the agent is asking clarifying questions
           const recipes = agentRecipes;
-
-          console.log('Final recipe count:', recipes.length);
 
           // Update message to final state with all accumulated data
           setMessages(prev => prev.map(msg => {
@@ -669,8 +675,9 @@ export function ChatView({
               recipes: recipes.length > 0 ? recipes : msg.recipes,
             };
             // Preserve original content if tool dominant copy will change it
+            // Only set originalContent if it wasn't already set by the backend's original_content event
             const finalContent = applyToolDominantCopy(updated, updated.content);
-            if (hasToolPayload(updated) && finalContent !== fullResponse && fullResponse.trim()) {
+            if (!updated.originalContent && hasToolPayload(updated) && finalContent !== fullResponse && fullResponse.trim()) {
               updated.originalContent = fullResponse;
             }
             return { ...updated, content: finalContent };
@@ -999,13 +1006,16 @@ export function ChatView({
                         </button>
                         {expandedOriginalContent.has(message.id) && (
                           <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
                             className="mt-2 pt-2"
                             style={{
                               borderTop: '1px solid rgba(0, 0, 0, 0.05)',
+                              overflow: 'visible',
+                              maxHeight: 'none',
+                              height: 'auto',
                             }}
                           >
                             <div
@@ -1014,18 +1024,42 @@ export function ChatView({
                                 fontFamily: 'var(--font-chat)',
                                 lineHeight: 1.5,
                                 color: 'var(--jamie-text-body)',
+                                overflow: 'visible',
+                                maxHeight: 'none',
+                                height: 'auto',
+                                wordWrap: 'break-word',
+                                overflowWrap: 'break-word',
                               }}
                             >
                               <ReactMarkdown
                                 components={{
+                                  // Headings
+                                  h1: ({ children }) => (
+                                    <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>
+                                      {children}
+                                    </h3>
+                                  ),
+                                  h2: ({ children }) => (
+                                    <h4 className="text-base font-bold mt-3 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>
+                                      {children}
+                                    </h4>
+                                  ),
+                                  h3: ({ children }) => (
+                                    <h5 className="text-base font-semibold mt-3 mb-1" style={{ color: 'var(--jamie-text-heading)' }}>
+                                      {children}
+                                    </h5>
+                                  ),
+                                  // Paragraphs
                                   p: ({ children }) => (
                                     <p className="mb-2 last:mb-0">{children}</p>
                                   ),
+                                  // Strong/bold
                                   strong: ({ children }) => (
                                     <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>
                                       {children}
                                     </strong>
                                   ),
+                                  // Lists
                                   ul: ({ children }) => (
                                     <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>
                                   ),
@@ -1034,6 +1068,10 @@ export function ChatView({
                                   ),
                                   li: ({ children }) => (
                                     <li className="mb-1">{children}</li>
+                                  ),
+                                  // Horizontal rule
+                                  hr: () => (
+                                    <hr className="my-3 border-black/10" />
                                   ),
                                 }}
                               >
