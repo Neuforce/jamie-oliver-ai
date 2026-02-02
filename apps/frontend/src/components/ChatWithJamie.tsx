@@ -58,7 +58,7 @@ const loadMessagesFromStorage = (): Message[] => {
     {
       id: '1',
       type: 'jamie' as const,
-      content: "Hello there! I'm Jamie Oliver, and I'm here to help you discover amazing recipes. What are you in the mood for today?",
+      content: "Hi - I'm jAImie, Jamie Oliver's AI cooking companion. I'll walk or talk you through recipes step-by-step. What are you in the mood for?",
       timestamp: new Date(),
     },
   ];
@@ -172,7 +172,7 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
         setInputValue('');
         setIsTyping(true);
         setError(null);
-        setThinkingStatus("Searching for recipes...");
+        setThinkingStatus("looking through my recipes...");
         setLoadingRecipes(true);
 
         try {
@@ -262,7 +262,7 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
           const errorMessage: Message = {
             id: (Date.now() + 3).toString(),
             type: 'jamie',
-            content: "Sorry, I encountered an error while searching for recipes. Please try again!",
+            content: "Sorry, I encountered an error while looking through my recipes. Please try again!",
             timestamp: new Date(),
           };
           setMessages(prev => [...prev, errorMessage]);
@@ -308,7 +308,7 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
     setInputValue('');
     setIsTyping(true);
     setError(null);
-    setThinkingStatus("Searching for recipes...");
+    setThinkingStatus("looking through my recipes...");
     setLoadingRecipes(true);
 
     try {
@@ -394,7 +394,7 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
       console.error('Error searching recipes:', error);
       setThinkingStatus(null);
               setLoadingRecipes(false);
-      setError(error instanceof Error ? error.message : 'An error occurred while searching for recipes');
+      setError(error instanceof Error ? error.message : 'An error occurred while looking through my recipes');
 
       // Show error message to user
       const errorMessage: Message = {
@@ -402,7 +402,7 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
         type: 'jamie',
         content: error instanceof Error && error.message.includes('connect')
           ? "I'm having trouble connecting to the recipe search service. Please make sure the backend is running and try again!"
-          : "Sorry, something went wrong while searching for recipes. Please try again!",
+          : "Sorry, something went wrong while looking through my recipes. Please try again!",
         timestamp: new Date(),
       };
       setMessages(prev => [...prev, errorMessage]);

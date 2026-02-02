@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { MessageCircle, BookOpen, X } from 'lucide-react';
+import { MessageCircle, BookOpen, X, Menu } from 'lucide-react';
 // @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 
@@ -21,6 +21,7 @@ interface TabNavProps {
  */
 export function TabNav({ activeTab, onTabChange, onCloseChat }: TabNavProps) {
   const isChatView = activeTab === 'chat';
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <header
@@ -32,12 +33,12 @@ export function TabNav({ activeTab, onTabChange, onCloseChat }: TabNavProps) {
       }}
     >
       <div className="flex items-center justify-between">
-        {/* Left Button - X (Close) in both views */}
+        {/* Left Button - Menu (Hamburger) */}
         <IconTabButton
           isActive={false}
-          onClick={() => onCloseChat?.()}
-          icon={<X className="w-5 h-5" />}
-          label={isChatView ? "Close Chat" : "Close"}
+          onClick={() => setIsMenuOpen(true)}
+          icon={<Menu className="w-5 h-5" />}
+          label="Open menu"
         />
 
         {/* Logo - Center (Always non-clickable, decorative only) */}
@@ -67,6 +68,69 @@ export function TabNav({ activeTab, onTabChange, onCloseChat }: TabNavProps) {
           />
         )}
       </div>
+
+      {isMenuOpen && (
+        <div className="fixed inset-0 z-50">
+          <button
+            type="button"
+            className="absolute inset-0 bg-black/20"
+            aria-label="Close menu"
+            onClick={() => setIsMenuOpen(false)}
+          />
+          <div className="absolute left-0 top-0 h-full w-[280px] bg-white shadow-xl flex flex-col">
+            <div className="flex items-center justify-between px-4 py-4 border-b border-gray-100">
+              <span
+                className="text-base font-semibold text-[var(--jamie-text-heading)]"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                Menu
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsMenuOpen(false)}
+                aria-label="Close menu"
+                className="rounded-full p-2 hover:bg-black/5 transition-colors"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="px-4 py-3 flex flex-col items-stretch gap-2 text-left">
+              {isChatView ? (
+                <MenuItem
+                  label="Recipes"
+                  onClick={() => {
+                    onTabChange('recipes');
+                    setIsMenuOpen(false);
+                  }}
+                />
+              ) : (
+                <MenuItem
+                  label="Chat"
+                  onClick={() => {
+                    onTabChange('chat');
+                    setIsMenuOpen(false);
+                  }}
+                />
+              )}
+              {onCloseChat && isChatView && (
+                <MenuItem
+                  label="Reset chat"
+                  onClick={() => {
+                    onCloseChat();
+                    setIsMenuOpen(false);
+                  }}
+                />
+              )}
+            </div>
+            <div
+              className="mt-auto px-4 py-4 text-sm text-[#9CA3AF]"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              More options coming soon.
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
@@ -105,6 +169,24 @@ function IconTabButton({ isActive, onClick, icon, label }: IconTabButtonProps) {
         {icon}
       </span>
     </motion.button>
+  );
+}
+
+interface MenuItemProps {
+  label: string;
+  onClick: () => void;
+}
+
+function MenuItem({ label, onClick }: MenuItemProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="w-full flex items-center justify-start text-left rounded-lg px-3 py-2 text-sm text-[var(--jamie-text-primary)] hover:bg-black/5 transition-colors"
+      style={{ fontFamily: 'var(--font-display)' }}
+    >
+      {label}
+    </button>
   );
 }
 

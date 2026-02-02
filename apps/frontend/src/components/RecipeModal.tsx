@@ -206,13 +206,8 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#1f423f')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#3D6E6C')}
                 >
-                  <span
-                    style={{
-                      marginLeft: '32px',
-                      textTransform: 'uppercase',
-                    }}
-                  >
-                    Cook with Jamie
+                  <span style={{ marginLeft: '32px' }}>
+                    Start a voice-guided cooking session with Jamie
                   </span>
                   <span
                     className="inline-flex items-center justify-center"
