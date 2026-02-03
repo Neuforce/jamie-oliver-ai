@@ -593,7 +593,7 @@ export function ChatView({
           console.log('Tool call:', toolName, event.metadata?.arguments);
 
           if (toolName === 'search_recipes') {
-            setThinkingStatus("Searching for recipes...");
+            setThinkingStatus("looking through my recipes...");
           } else if (toolName === 'suggest_recipes_for_mood') {
             setThinkingStatus("Finding recipes for your mood...");
           } else if (toolName === 'get_recipe_details') {
@@ -708,7 +708,7 @@ export function ChatView({
 
       if (isConnectionError) {
         // Fall back to simple recipe search using the user's query directly
-        setThinkingStatus("Searching for recipes...");
+        setThinkingStatus("looking through my recipes...");
         try {
           const recipes = await loadRecipesForQuery(text);
 
@@ -835,7 +835,7 @@ export function ChatView({
                     maxWidth: '307px',
                   }}
                 >
-                  Hello there! I'm Jamie Oliver, and I'm here to help you discover amazing recipes. Tell me what you're in the mood for!
+                  Hi - I'm jAImie, Jamie Oliver's AI cooking companion. I'll walk or talk you through recipes step-by-step. What are you in the mood for?
                 </p>
               </motion.div>
 
