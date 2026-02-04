@@ -476,7 +476,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           // Automatically restore session without toast - user already clicked "Continue Cooking"
           setCurrentStep(session.currentStep);
           setCompletedSteps(session.completedSteps);
-          
+
           // Mark as interacted since user is continuing a previous session
           setHasUserInteracted(true);
 
@@ -837,7 +837,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           const stepDesc = instructions[currentStep];
           wsSendMessage({
             event: 'text',
-            message: `I completed the current step: ${stepDesc}`,
+            data: { message: `I completed the current step: ${stepDesc}` },
           });
           console.log('📤 Sent step completion via WebSocket text message');
         }
@@ -848,12 +848,12 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   // Start a backend timer for the current step (parallel cooking support)
   const startBackendTimer = async (stepId?: string) => {
     const targetStepId = stepId || recipe?.backendSteps?.[currentStep]?.id;
-    
+
     if (!targetStepId || !sessionInfo?.session_id) {
       console.warn('Cannot start backend timer: missing stepId or session');
       return false;
     }
-    
+
     try {
       // @ts-expect-error - Vite provides import.meta.env
       const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
@@ -899,7 +899,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       console.warn('Cannot cancel timer: missing session');
       return false;
     }
-    
+
     try {
       // @ts-expect-error - Vite provides import.meta.env
       const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
@@ -968,8 +968,10 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   // 2. The current step is a timer step (type='timer' or has duration)
   useEffect(() => {
     const backendStep = recipe?.backendSteps?.[currentStep];
-    const isTimerStep = backendStep?.type === 'timer' ||
-                       (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0);
+    const isTimerStep = Boolean(
+      backendStep?.type === 'timer' ||
+      (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0)
+    );
 
     setShouldShowTimer(timerRunning || isTimerStep);
   }, [timerSeconds, timerRunning, recipe, currentStep, parseIsoDurationToSeconds]);
@@ -1063,7 +1065,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     if (isWebSocketConnected) {
       wsSendMessage({
         event: 'text',
-        message: 'I finished the recipe',
+        data: { message: 'I finished the recipe' },
       });
     }
 
@@ -1077,7 +1079,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   };
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 bg-background"
       style={{
         display: 'flex',
@@ -1333,14 +1335,14 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           <p className="text-center text-sm text-muted-foreground mt-4">
             Tap +/− to adjust time by minute
           </p>
-          
+
           {/* Backend Timer Start - for parallel cooking */}
           {(() => {
             const backendStep = recipe?.backendSteps?.[currentStep];
-            const isTimerStep = backendStep?.type === 'timer' || 
+            const isTimerStep = backendStep?.type === 'timer' ||
                                (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0);
             const hasActiveBackendTimer = backendStep && activeTimers.some(t => t.step_id === backendStep.id);
-            
+
             if (isTimerStep && !hasActiveBackendTimer) {
               return (
                 <div className="mt-6 pt-6 border-t border-border/30">
@@ -1386,7 +1388,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
               const hasTimer = stepHasActiveTimer(idx);
               const isCurrentStep = idx === currentStep;
               const isCompleted = completedSteps.includes(idx);
-              
+
               return (
                 <button
                   key={idx}
