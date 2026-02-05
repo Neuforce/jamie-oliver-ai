@@ -75,6 +75,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   const [voiceText, setVoiceText] = useState('');
   const [voiceError, setVoiceError] = useState('');
   const [voiceSupported, setVoiceSupported] = useState(true);
+  const [voicePausedByVisibility, setVoicePausedByVisibility] = useState(false);
   const recognitionRef = useRef(null as any);
 
   // WebSocket and Audio states
@@ -631,6 +632,25 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     audioCapture.setMuted(shouldMute);
   }, [isMicMuted, isWebSocketConnected, audioCapture]);
 
+  // NEU-467: Release mic when user leaves the experience (tab switch, app background, lock screen).
+  // On return we do not auto-restart; user must tap "Continue" to resume.
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        if (audioCaptureStartedRef.current) {
+          console.log('[CookWithJamie] Page hidden – releasing microphone');
+          audioCapture.stopCapture();
+          audioCaptureStartedRef.current = false;
+          setIsListening(false);
+          wsDisconnect();
+          setVoicePausedByVisibility(true);
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [audioCapture, wsDisconnect]);
+
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     if (timerRunning && timerSeconds > 0) {
@@ -712,6 +732,11 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   };
 
   const toggleVoiceListening = async () => {
+    // If voice was paused by leaving the app, resume on tap
+    if (voicePausedByVisibility) {
+      await resumeVoiceAfterVisibility();
+      return;
+    }
     // If WebSocket is not connected, try to connect first
     if (!isWebSocketConnected && !isWebSocketConnecting) {
       console.log('🔌 WebSocket not connected, attempting to connect from mic button...');
@@ -732,6 +757,29 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     // This now controls mic mute/unmute for WebSocket audio
     toggleMicMute();
   };
+
+  /** NEU-467: Resume voice after user returned from background (tap to continue). */
+  const resumeVoiceAfterVisibility = useCallback(async () => {
+    if (!recipe) return;
+    setVoicePausedByVisibility(false);
+    setVoiceError('');
+    try {
+      await navigator.mediaDevices.getUserMedia({ audio: true });
+      const audioContext = await audioPlayback.initAudioContext();
+      if (audioContext?.state === 'suspended') await audioContext.resume();
+      wsConnect();
+      await audioCapture.startCapture();
+      audioCaptureStartedRef.current = true;
+      setIsListening(true);
+      setIsMicMuted(false);
+      audioCapture.setMuted(false);
+      toast.success('Voice resumed', { duration: 2000 });
+    } catch (err: any) {
+      console.error('Failed to resume voice:', err);
+      setVoiceError(err?.message || 'Could not resume microphone');
+      setVoicePausedByVisibility(true);
+    }
+  }, [recipe, audioPlayback, audioCapture, wsConnect]);
 
   const handleVoiceCommand = (command: string) => {
     const lowerCommand = command.toLowerCase();
@@ -1143,11 +1191,13 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                   backgroundColor: '#F9FAFB',
                 }}
                 title={
-                  !isWebSocketConnected
-                    ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
-                    : isMicMuted
-                      ? 'Microphone muted - tap to enable'
-                      : 'Microphone active - tap to mute'
+                  voicePausedByVisibility
+                    ? 'Voice paused – tap to continue with Jamie'
+                    : !isWebSocketConnected
+                      ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
+                      : isMicMuted
+                        ? 'Microphone muted - tap to enable'
+                        : 'Microphone active - tap to mute'
                 }
               >
                 <div
@@ -1186,6 +1236,26 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
             </div>
           </div>
       </header>
+
+      {/* NEU-467: Banner when voice was paused because user left the app */}
+      {voicePausedByVisibility && (
+        <div
+          className="flex items-center justify-between gap-3 px-4 py-2 bg-amber-500/10 border-b border-amber-500/20"
+          style={{ paddingLeft: 'clamp(16px, 24px)', paddingRight: 'clamp(16px, 24px)' }}
+        >
+          <p className="text-sm text-amber-800 dark:text-amber-200">
+            Voice paused because you left the app. Tap the mic to continue with Jamie.
+          </p>
+          <Button
+            size="sm"
+            variant="outline"
+            className="shrink-0 border-amber-500/50 text-amber-700 hover:bg-amber-500/20"
+            onClick={resumeVoiceAfterVisibility}
+          >
+            Continue
+          </Button>
+        </div>
+      )}
 
       {/* Scrollable Content */}
       <div
