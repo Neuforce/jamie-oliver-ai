@@ -41,6 +41,7 @@ import { useAudioCapture } from '../hooks/useAudioCapture';
 import { useAudioPlayback } from '../hooks/useAudioPlayback';
 import { RecipeCard } from './RecipeCard';
 import { TimerPanel, type ActiveTimer } from './TimerPanel';
+import { VoicePausedBanner } from './VoiceModeIndicator';
 import { clearChatHistory } from './ChatView';
 // @ts-ignore - handled by Vite
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
@@ -1237,23 +1238,20 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           </div>
       </header>
 
-      {/* NEU-467: Banner when voice was paused because user left the app */}
+      {/* NEU-467: Voice paused banner – same strip style as VoiceModeIndicator */}
       {voicePausedByVisibility && (
         <div
-          className="flex items-center justify-between gap-3 px-4 py-2 bg-amber-500/10 border-b border-amber-500/20"
-          style={{ paddingLeft: 'clamp(16px, 24px)', paddingRight: 'clamp(16px, 24px)' }}
+          className="bg-white border-b border-black/5"
+          style={{
+            paddingLeft: 'clamp(16px, 24px)',
+            paddingRight: 'clamp(16px, 24px)',
+            paddingTop: '12px',
+            paddingBottom: '12px',
+          }}
         >
-          <p className="text-sm text-amber-800 dark:text-amber-200">
-            Voice paused because you left the app. Tap the mic to continue with Jamie.
-          </p>
-          <Button
-            size="sm"
-            variant="outline"
-            className="shrink-0 border-amber-500/50 text-amber-700 hover:bg-amber-500/20"
-            onClick={resumeVoiceAfterVisibility}
-          >
-            Continue
-          </Button>
+          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <VoicePausedBanner onResume={resumeVoiceAfterVisibility} />
+          </div>
         </div>
       )}
 

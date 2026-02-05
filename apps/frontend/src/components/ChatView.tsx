@@ -9,7 +9,7 @@ import { ArrowUp, ArrowDown, Clock, Users, ChefHat, ArrowRight, ChevronDown, Che
 import { motion, AnimatePresence } from 'motion/react';
 import { GlowEffect } from '../design-system/components/GlowEffect';
 import { AvatarWithGlow } from '../design-system/components/AvatarWithGlow';
-import { VoiceModeButton, VoiceModeIndicator, AudioWaveform, StopGenerationButton } from './VoiceModeIndicator';
+import { VoiceModeButton, VoiceModeIndicator, VoicePausedBanner, AudioWaveform, StopGenerationButton } from './VoiceModeIndicator';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 // @ts-expect-error - Vite resolves figma:asset imports
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
@@ -253,7 +253,8 @@ export function ChatView({
   } = useVoiceChat({
     sessionId,  // Share session ID between voice and text chat
     onTranscript: (text, isFinal) => {
-      console.log('🎤 Transcript received:', { text, isFinal });
+      // DEBUG voice: uncomment to trace WebSocket transcript
+      // console.log('🎤 Transcript received:', { text, isFinal });
 
       if (isFinal && text.trim()) {
         // Create user message from voice transcript
@@ -269,7 +270,8 @@ export function ChatView({
         voiceMessageIdRef.current = streamingId;
         voiceResponseAccumulatorRef.current = '';
 
-        console.log('🎤 Created voice message placeholder:', streamingId);
+        // DEBUG voice: uncomment to trace message placeholder
+        // console.log('🎤 Created voice message placeholder:', streamingId);
 
         const streamingMessage: Message = {
           id: streamingId,
@@ -288,11 +290,12 @@ export function ChatView({
       // Accumulate voice response text
       voiceResponseAccumulatorRef.current += text;
 
-      console.log('🎤 Text chunk received:', {
-        chunk: text.substring(0, 50),
-        totalLength: voiceResponseAccumulatorRef.current.length,
-        messageId: voiceMessageIdRef.current
-      });
+      // DEBUG voice: uncomment to trace every WebSocket text chunk (can be very verbose)
+      // console.log('🎤 Text chunk received:', {
+      //   chunk: text.substring(0, 50),
+      //   totalLength: voiceResponseAccumulatorRef.current.length,
+      //   messageId: voiceMessageIdRef.current
+      // });
 
       if (voiceMessageIdRef.current) {
         setMessages(prev => prev.map(msg =>
@@ -308,7 +311,8 @@ export function ChatView({
       }
     },
     onRecipes: (data) => {
-      console.log('🎤 Recipes received:', { count: data?.recipes?.length, messageId: voiceMessageIdRef.current });
+      // DEBUG voice: uncomment to trace WebSocket recipes
+      // console.log('🎤 Recipes received:', { count: data?.recipes?.length, messageId: voiceMessageIdRef.current });
 
       // Transform backend recipe summaries to Recipe format for display
       const recipeData = data?.recipes || [];
@@ -316,7 +320,8 @@ export function ChatView({
         transformRecipeFromSummary(r, index)
       );
 
-      console.log('🎤 Transformed recipes for voice:', recipes.length);
+      // DEBUG voice: uncomment to trace transformed recipes
+      // console.log('🎤 Transformed recipes for voice:', recipes.length);
 
       if (voiceMessageIdRef.current && recipes.length > 0) {
         setMessages(prev => prev.map(msg =>
@@ -327,7 +332,8 @@ export function ChatView({
       }
     },
     onMealPlan: (data) => {
-      console.log('🎤 Meal plan received:', { hasData: !!data?.meal_plan, messageId: voiceMessageIdRef.current });
+      // DEBUG voice: uncomment to trace WebSocket meal_plan
+      // console.log('🎤 Meal plan received:', { hasData: !!data?.meal_plan, messageId: voiceMessageIdRef.current });
 
       if (voiceMessageIdRef.current && data?.meal_plan) {
         setMessages(prev => prev.map(msg =>
@@ -338,7 +344,8 @@ export function ChatView({
       }
     },
     onRecipeDetail: (data) => {
-      console.log('🎤 Recipe detail received:', { hasData: !!data?.recipe, messageId: voiceMessageIdRef.current });
+      // DEBUG voice: uncomment to trace WebSocket recipe_detail
+      // console.log('🎤 Recipe detail received:', { hasData: !!data?.recipe, messageId: voiceMessageIdRef.current });
 
       if (voiceMessageIdRef.current && data?.recipe) {
         setMessages(prev => prev.map(msg =>
@@ -349,7 +356,8 @@ export function ChatView({
       }
     },
     onShoppingList: (data) => {
-      console.log('🎤 Shopping list received:', { hasData: !!data?.shopping_list, messageId: voiceMessageIdRef.current });
+      // DEBUG voice: uncomment to trace WebSocket shopping_list
+      // console.log('🎤 Shopping list received:', { hasData: !!data?.shopping_list, messageId: voiceMessageIdRef.current });
 
       if (voiceMessageIdRef.current && data?.shopping_list) {
         setMessages(prev => prev.map(msg =>
@@ -365,7 +373,8 @@ export function ChatView({
         const messageId = voiceMessageIdRef.current;
         const accumulatedText = voiceResponseAccumulatorRef.current;
 
-        console.log('🎤 Voice response done:', { messageId, textLength: accumulatedText.length });
+        // DEBUG voice: uncomment to trace response completion
+        // console.log('🎤 Voice response done:', { messageId, textLength: accumulatedText.length });
 
         setMessages(prev => prev.map(msg => {
           if (msg.id === messageId) {
@@ -1415,19 +1424,12 @@ export function ChatView({
         )}
       </AnimatePresence>
 
-      {/* NEU-467: Banner when voice was paused because user left the app */}
+      {/* NEU-467: Voice paused banner – same strip as VoiceModeIndicator for consistency */}
       {isPausedByVisibility && (
-        <div className="flex items-center justify-between gap-3 px-5 py-2 bg-amber-500/10 border-t border-amber-500/20" style={{ flexShrink: 0 }}>
-          <p className="text-sm text-amber-800 dark:text-amber-200">
-            Voice paused because you left the app. Tap the mic or Continue to talk to Jamie again.
-          </p>
-          <button
-            type="button"
-            onClick={resumeFromVisibility}
-            className="shrink-0 px-3 py-1.5 text-sm font-medium rounded-full border border-amber-500/50 text-amber-700 hover:bg-amber-500/20 transition-colors"
-          >
-            Continue
-          </button>
+        <div className="px-5 py-3 bg-white border-t border-black/5" style={{ flexShrink: 0 }}>
+          <div className="max-w-[380px] mx-auto">
+            <VoicePausedBanner onResume={resumeFromVisibility} />
+          </div>
         </div>
       )}
 
@@ -1553,8 +1555,11 @@ export function ChatView({
           )}
           {isPausedByVisibility && (
             <p
-              className="text-center mt-2 text-xs text-amber-700 dark:text-amber-300"
-              style={{ fontFamily: 'var(--font-display)' }}
+              className="text-center mt-2 text-xs"
+              style={{
+                fontFamily: 'var(--font-display)',
+                color: 'var(--jamie-text-muted, #5d5d5d)',
+              }}
             >
               Voice paused – tap the mic or Continue above to resume
             </p>

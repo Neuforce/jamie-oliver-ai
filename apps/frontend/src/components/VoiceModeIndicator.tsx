@@ -9,8 +9,67 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Mic, MicOff, Loader2, Volume2, X, Square } from 'lucide-react';
+import { Mic, MicOff, Loader2, Volume2, X, Square, Play } from 'lucide-react';
 import type { VoiceChatState } from '../hooks/useVoiceChat';
+
+/**
+ * VoicePausedBanner - Standard banner when voice was paused (e.g. user left the app).
+ * Matches VoiceModeIndicator styling: same strip look, jamie-primary palette, pill action.
+ */
+export interface VoicePausedBannerProps {
+  onResume: () => void;
+  className?: string;
+}
+
+export function VoicePausedBanner({ onResume, className = '' }: VoicePausedBannerProps) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className={`flex items-center justify-between w-full gap-3 ${className}`}
+    >
+      <div className="flex items-center gap-3 min-w-0">
+        <div className="relative shrink-0">
+          <MicOff
+            size={20}
+            style={{ color: 'var(--jamie-primary-dark, #327179)' }}
+          />
+        </div>
+        <div className="flex flex-col min-w-0">
+          <span
+            className="text-xs font-medium uppercase tracking-wide"
+            style={{
+              fontFamily: 'var(--font-display, Poppins, sans-serif)',
+              color: 'var(--jamie-primary-dark, #327179)',
+            }}
+          >
+            Voice paused
+          </span>
+          <span
+            className="text-sm truncate"
+            style={{
+              fontFamily: 'var(--font-body, Inter, sans-serif)',
+              color: 'var(--jamie-text-muted, #5d5d5d)',
+            }}
+          >
+            Tap the mic or Continue to talk to Jamie again.
+          </span>
+        </div>
+      </div>
+      <motion.button
+        type="button"
+        onClick={onResume}
+        className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/5 hover:bg-[var(--jamie-primary,#46BEA8)] hover:text-white transition-colors shrink-0"
+        style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)' }}
+        whileTap={{ scale: 0.98 }}
+      >
+        <Play size={12} fill="currentColor" />
+        <span className="text-xs font-medium">Continue</span>
+      </motion.button>
+    </motion.div>
+  );
+}
 
 interface VoiceModeIndicatorProps {
   state: VoiceChatState;

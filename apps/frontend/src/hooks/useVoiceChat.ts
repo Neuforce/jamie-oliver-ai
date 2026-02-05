@@ -120,7 +120,8 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
 
     switch (event) {
       case 'session_info':
-        console.log('🎤 Voice session started:', data);
+        // DEBUG voice: uncomment to trace WebSocket session
+        // console.log('🎤 Voice session started:', data);
         break;
 
       case 'listening':
@@ -170,7 +171,8 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         break;
 
       case 'tool_call':
-        console.log('🔧 Tool called:', data?.name);
+        // DEBUG voice: uncomment to trace tool calls
+        // console.log('🔧 Tool called:', data?.name);
         break;
 
       case 'done':
@@ -184,14 +186,16 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         break;
 
       default:
-        console.log('🎤 Unhandled voice chat event:', event, data);
+        // DEBUG voice: uncomment to trace unhandled events
+        // console.log('🎤 Unhandled voice chat event:', event, data);
+        break;
     }
   }, [playAudio]);
 
   // Connect to voice chat WebSocket
   const connect = useCallback(async () => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
-      console.log('🎤 Already connected');
+      // DEBUG voice: console.log('🎤 Already connected');
       return;
     }
 
@@ -202,14 +206,14 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     await initAudioContext();
 
     const wsUrl = getWebSocketUrl();
-    console.log('🎤 Connecting to voice chat:', wsUrl);
+    // DEBUG voice: console.log('🎤 Connecting to voice chat:', wsUrl);
 
     try {
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
 
       ws.onopen = async () => {
-        console.log('🎤 Voice chat WebSocket connected');
+        // DEBUG voice: console.log('🎤 Voice chat WebSocket connected');
         setIsConnected(true);
 
         // Send start message with shared session ID
@@ -248,7 +252,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       };
 
       ws.onclose = (event) => {
-        console.log('🎤 Voice chat WebSocket closed:', event.code, event.reason);
+        // DEBUG voice: console.log('🎤 Voice chat WebSocket closed:', event.code, event.reason);
         setIsConnected(false);
         isVoiceModeActiveRef.current = false;
         setState('idle');
@@ -317,7 +321,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden') {
         if (isVoiceModeActiveRef.current || isConnected) {
-          console.log('[useVoiceChat] Page hidden – releasing microphone and disconnecting');
+          // DEBUG voice: console.log('[useVoiceChat] Page hidden – releasing microphone and disconnecting');
           isVoiceModeActiveRef.current = false;
           stopCapture();
           if (wsRef.current) {
