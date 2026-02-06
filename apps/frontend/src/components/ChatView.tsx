@@ -248,6 +248,8 @@ export function ChatView({
     isProcessing,
     isSpeaking,
     isActive: isVoiceActive,
+    isPausedByVisibility,
+    resumeFromVisibility,
   } = useVoiceChat({
     sessionId,  // Share session ID between voice and text chat
     onTranscript: (text, isFinal) => {
@@ -1413,6 +1415,22 @@ export function ChatView({
         )}
       </AnimatePresence>
 
+      {/* NEU-467: Banner when voice was paused because user left the app */}
+      {isPausedByVisibility && (
+        <div className="flex items-center justify-between gap-3 px-5 py-2 bg-amber-500/10 border-t border-amber-500/20" style={{ flexShrink: 0 }}>
+          <p className="text-sm text-amber-800 dark:text-amber-200">
+            Voice paused because you left the app. Tap the mic or Continue to talk to Jamie again.
+          </p>
+          <button
+            type="button"
+            onClick={resumeFromVisibility}
+            className="shrink-0 px-3 py-1.5 text-sm font-medium rounded-full border border-amber-500/50 text-amber-700 hover:bg-amber-500/20 transition-colors"
+          >
+            Continue
+          </button>
+        </div>
+      )}
+
       {/* Voice Mode Indicator - Shows when voice is active */}
       <AnimatePresence>
         {isVoiceActive && (
@@ -1487,10 +1505,10 @@ export function ChatView({
 
                   {/* Voice Mode Button */}
                   <VoiceModeButton
-                    isActive={isVoiceActive}
+                    isActive={isVoiceActive || isPausedByVisibility}
                     isConnecting={voiceState === 'connecting'}
-                    onClick={toggleVoiceMode}
-                    disabled={isTyping && !isVoiceActive}
+                    onClick={isPausedByVisibility ? resumeFromVisibility : toggleVoiceMode}
+                    disabled={isTyping && !isVoiceActive && !isPausedByVisibility}
                     className="shrink-0"
                   />
 
@@ -1522,7 +1540,7 @@ export function ChatView({
           </div>
 
           {/* Voice mode hint */}
-          {!isVoiceActive && !hasMessages && (
+          {!isVoiceActive && !hasMessages && !isPausedByVisibility && (
             <p
               className="text-center mt-2 text-xs"
               style={{
@@ -1531,6 +1549,14 @@ export function ChatView({
               }}
             >
               Tap the mic to talk to Jamie
+            </p>
+          )}
+          {isPausedByVisibility && (
+            <p
+              className="text-center mt-2 text-xs text-amber-700 dark:text-amber-300"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Voice paused – tap the mic or Continue above to resume
             </p>
           )}
         </div>
