@@ -783,6 +783,17 @@ export function ChatView({
         minHeight: 0,
       }}
     >
+      <div
+        style={{
+          width: '100%',
+          maxWidth: '600px',
+          margin: '0 auto',
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: 0,
+        }}
+      >
       {/* Empty State with Landing-style prompts */}
       {!hasMessages && !isTyping ? (
         <div
@@ -1565,6 +1576,7 @@ export function ChatView({
             </p>
           )}
         </div>
+      </div>
       </div>
     </div>
   );
