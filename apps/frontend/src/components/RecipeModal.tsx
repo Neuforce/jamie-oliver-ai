@@ -51,7 +51,7 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
   const hasUtensils = recipe.utensils && recipe.utensils.length > 0;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 bg-background"
       style={{
         display: 'flex',
@@ -104,7 +104,7 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
       </header>
 
       {/* Scrollable Content */}
-      <div 
+      <div
         style={{
           flex: 1,
           minHeight: 0,
@@ -207,7 +207,7 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#3D6E6C')}
                 >
                   <span style={{ marginLeft: '32px' }}>
-                    Start a voice-guided cooking session with Jamie
+                    Voice guided cooking with Jamie
                   </span>
                   <span
                     className="inline-flex items-center justify-center"
