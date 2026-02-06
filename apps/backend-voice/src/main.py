@@ -38,7 +38,7 @@ DEFAULT_HELLO_MESSAGE = (
 async def lifespan(app: FastAPI):
     """Manage application lifespan - startup and shutdown events."""
     logger.info("🚀 Starting Jamie Oliver AI Backend...")
-    
+
     # Initialize OpenTelemetry tracing (if available)
     tracing_enabled = init_tracing(
         service_name="jamie-voice",
@@ -46,13 +46,13 @@ async def lifespan(app: FastAPI):
     )
     if tracing_enabled:
         logger.info("📊 OpenTelemetry tracing enabled")
-    
+
     # Validate configuration
     if not settings.validate():
         logger.warning("⚠️  Some API keys are missing. Check your .env file.")
-    
+
     yield
-    
+
     logger.info("🛑 Shutting down Jamie Oliver AI Backend...")
 
 
@@ -99,15 +99,15 @@ async def confirm_step_for_session(session_id: str, step_id: str):
     """
     Confirm a recipe step for a given session.
     Allows the frontend to mark a step as done without voice input.
-    
+
     If the step is in READY status, it will be started first then completed.
     """
     from src.tools.recipe_tools import start_step as start_step_tool
-    
+
     engine = session_service.get_engine(session_id)
     if not engine:
         raise HTTPException(status_code=404, detail="Session not found")
-    
+
     step = engine.recipe.steps.get(step_id)
     if not step:
         raise HTTPException(status_code=404, detail="Step not found for current recipe")
@@ -116,7 +116,7 @@ async def confirm_step_for_session(session_id: str, step_id: str):
     state = engine.get_state()
     step_info = state["steps"].get(step_id, {})
     step_status = step_info.get("status", "unknown")
-    
+
     logger.info(f"Manual completion requested for step '{step_id}' with status '{step_status}'")
 
     try:
@@ -128,7 +128,7 @@ async def confirm_step_for_session(session_id: str, step_id: str):
                 start_step_tool,
                 step_id=step_id,
             )
-        
+
         # Now complete the step
         tool_message = await run_recipe_tool(
             session_id,
@@ -142,7 +142,7 @@ async def confirm_step_for_session(session_id: str, step_id: str):
     # Check what happened based on tool response
     step_completed = tool_message.startswith("[DONE]") or "completed" in tool_message.lower()
     timer_active = tool_message.startswith("[TIMER_ACTIVE]")
-    
+
     assistant = session_service.get_assistant(session_id)
     if assistant and step_completed:
         try:
@@ -170,7 +170,7 @@ async def confirm_step_for_session(session_id: str, step_id: str):
         logger.warning(f"Step '{step_id}' was NOT completed (response: {tool_message}), skipping success message")
     else:
         logger.debug(f"No assistant registered for session {session_id}, skipping system message injection")
-    
+
     state = engine.get_state()
     state["has_recipe"] = True
     return {"state": state, "message": tool_message}
@@ -181,39 +181,39 @@ async def start_timer_for_step_api(session_id: str, step_id: str):
     """
     Start a timer for a specific step.
     Allows the frontend to start timers via UI without voice input.
-    
+
     The step must be in ACTIVE status to start a timer.
     """
     from src.tools.recipe_tools import start_timer_for_step as start_timer_tool
     from src.tools.recipe_tools import start_step as start_step_tool
-    
+
     engine = session_service.get_engine(session_id)
     if not engine:
         raise HTTPException(status_code=404, detail="Session not found")
-    
+
     step = engine.recipe.steps.get(step_id)
     if not step:
         raise HTTPException(status_code=404, detail="Step not found for current recipe")
-    
+
     # Check step status
     state = engine.get_state()
     step_info = state["steps"].get(step_id, {})
     step_status = step_info.get("status", "unknown")
-    
+
     logger.info(f"Timer start requested for step '{step_id}' with status '{step_status}'")
-    
+
     try:
         # If step is READY, start it first
         if step_status == "ready":
             logger.info(f"Step '{step_id}' is READY - starting it first before timer")
             await run_recipe_tool(session_id, start_step_tool, step_id=step_id)
-        
+
         # Now start the timer
         tool_message = await run_recipe_tool(session_id, start_timer_tool, step_id=step_id)
     except Exception as exc:
         logger.error(f"Failed to start timer for step {step_id}: {exc}", exc_info=True)
         raise HTTPException(status_code=400, detail=f"Unable to start timer: {exc}")
-    
+
     # Notify agent that user started a timer via UI
     assistant = session_service.get_assistant(session_id)
     if assistant:
@@ -226,7 +226,7 @@ async def start_timer_for_step_api(session_id: str, step_id: str):
             logger.info(f"⏰ Injected timer start message to assistant for step: {step_id}")
         except Exception as e:
             logger.warning(f"Failed to inject timer start message: {e}")
-    
+
     state = engine.get_state()
     state["has_recipe"] = True
     return {"state": state, "message": tool_message}
@@ -241,17 +241,17 @@ async def cancel_timer_api(session_id: str, timer_id: str):
     engine = session_service.get_engine(session_id)
     if not engine:
         raise HTTPException(status_code=404, detail="Session not found")
-    
+
     # Get timer info before cancelling for the response
     timer = engine._timer_manager.get_timer_by_id(timer_id)
     if not timer:
         raise HTTPException(status_code=404, detail="Timer not found")
-    
+
     label = timer.label
     step_id = timer.step_id
-    
+
     logger.info(f"Timer cancel requested: '{timer_id}' ({label})")
-    
+
     try:
         result = await engine._timer_manager.cancel_timer(timer_id, emit_event=True)
         if not result:
@@ -259,7 +259,7 @@ async def cancel_timer_api(session_id: str, timer_id: str):
     except Exception as exc:
         logger.error(f"Failed to cancel timer {timer_id}: {exc}", exc_info=True)
         raise HTTPException(status_code=400, detail=f"Unable to cancel timer: {exc}")
-    
+
     # Notify agent
     assistant = session_service.get_assistant(session_id)
     if assistant:
@@ -273,7 +273,7 @@ async def cancel_timer_api(session_id: str, timer_id: str):
             logger.info(f"⏰ Injected timer cancel message to assistant")
         except Exception as e:
             logger.warning(f"Failed to inject timer cancel message: {e}")
-    
+
     state = engine.get_state()
     return {"state": state, "message": f"Timer '{label}' cancelled"}
 
@@ -287,7 +287,7 @@ async def voice_websocket_endpoint(websocket: WebSocket):
     session_id = None
     assistant = None
     assistant_task = None
-    
+
     try:
         # Initialize WebSocket audio interface
         logger.info("Initializing WebSocket audio interface")
@@ -295,29 +295,29 @@ async def voice_websocket_endpoint(websocket: WebSocket):
             websocket=websocket,
             sample_rate=settings.SAMPLE_RATE
         )
-        
+
         # Start the audio interface (accepts WebSocket and does handshake)
         await audio_interface.start()
-        
+
         custom_parameters = audio_interface.custom_parameters or {}
-        
+
         # Get session ID and channels
         session_id = audio_interface._input_service.session_id
         logger.info(f"Voice session started: {session_id}")
-        
+
         # Set session_id in context variables for function access
         context_variables.set("session_id", session_id)
-        
+
         input_channel = audio_interface.get_input_service()
         output_channel = audio_interface.get_output_service()
         session_service.register_output_channel(session_id, output_channel)
-        
+
         # Create voice assistant
         assistant = AssistantFactory.create_voice_assistant(
             input_channel=input_channel,
             output_channel=output_channel,
         )
-        
+
         # Set up recipe event handler
         event_handler = RecipeEventHandler(
             session_id=session_id,
@@ -325,18 +325,18 @@ async def voice_websocket_endpoint(websocket: WebSocket):
             get_engine_func=session_service.get_engine,
             assistant=assistant
         )
-        
+
         # Register event callback for this session
         session_service.register_event_callback(
             session_id,
             event_handler.handle_event
         )
         logger.info(f"✅ Recipe event handler registered for session: {session_id}")
-        
+
         # Register assistant for this session (so it can be notified of step confirmations)
         session_service.register_assistant(session_id, assistant)
         logger.info(f"✅ Assistant registered for session: {session_id}")
-        
+
         # Send diagnostic message to confirm WebSocket connection
         try:
             await output_channel.send_event(
@@ -346,13 +346,13 @@ async def voice_websocket_endpoint(websocket: WebSocket):
             logger.info("📡 Sent diagnostic recipe_message to frontend")
         except Exception as e:
             logger.error(f"Failed to send diagnostic event: {e}")
-        
+
         # Prepare recipe context (auto-start when frontend is already in cooking mode)
         initial_greeting, active_recipe_id = await _prepare_initial_context(
             session_id=session_id,
             custom_parameters=custom_parameters,
         )
-        
+
         # Share session metadata with the frontend (needed for UI coordination)
         try:
             await output_channel.send_event(
@@ -366,7 +366,7 @@ async def voice_websocket_endpoint(websocket: WebSocket):
             logger.info(f"📡 Sent session_info to frontend for session {session_id}")
         except Exception as exc:
             logger.error(f"Failed to send session_info event: {exc}")
-        
+
         # Start the voice assistant
         logger.info(f"Starting voice assistant for session {session_id}")
         assistant_task = asyncio.create_task(
@@ -374,41 +374,41 @@ async def voice_websocket_endpoint(websocket: WebSocket):
                 hello_message=initial_greeting
             )
         )
-        
+
         # Wait for the assistant to finish or for WebSocket to disconnect
         await assistant_task
         logger.info(f"Voice session ended normally: {session_id}")
-        
+
     except WebSocketDisconnect:
         logger.info(f"WebSocket disconnected for session: {session_id}")
         await _cancel_assistant_task(assistant_task, session_id)
-        
+
     except asyncio.CancelledError:
         logger.info(f"Voice session cancelled for session: {session_id}")
         await _cancel_assistant_task(assistant_task, session_id)
         raise
-        
+
     except Exception as e:
         logger.error(f"Error in voice WebSocket: {e}", exc_info=True)
         await _cancel_assistant_task(assistant_task, session_id)
-        
+
         # Try to close gracefully
         try:
             if websocket.client_state.CONNECTED:
                 await websocket.close(code=1011, reason="Internal server error")
         except:
             pass
-            
+
     finally:
         logger.info(f"Cleaning up session: {session_id}")
-        
+
         # Stop assistant
         if assistant:
             try:
                 await assistant.stop()
             except Exception as e:
                 logger.error(f"Error stopping assistant: {e}")
-        
+
         # Clean up session resources
         if session_id:
             try:
@@ -434,7 +434,7 @@ async def _prepare_initial_context(
 ) -> tuple[str, Optional[str]]:
     """
     Auto-start the recipe when the frontend indicates it is already in cooking mode.
-    
+
     Returns:
         Tuple containing the greeting the assistant should use and the active recipe id.
     """
@@ -514,7 +514,7 @@ def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
     recipe_meta = recipe_payload.get("recipe", {})
     title = recipe_meta.get("title") or "something delicious"
     description = recipe_meta.get("description", "")
-    
+
     # Build a warm, conversational intro (no first step yet)
     greetings = [
         f"Alright! {title} - this is going to be gorgeous!",
@@ -522,13 +522,13 @@ def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
         f"Lovely choice! {title} is absolutely delicious.",
         f"Oh brilliant, {title}! You're going to love this one.",
     ]
-    
+
     import random
     greeting = random.choice(greetings)
-    
+
     if description:
         greeting += f" {description}."
-    
+
     # Readiness check before first step (do not append first_step_say here)
     readiness_lines = [
         " Have you got your ingredients ready? Just say when and we'll get started!",
@@ -536,7 +536,7 @@ def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
         " When you're ready to start, just say the word!",
     ]
     greeting += random.choice(readiness_lines)
-    
+
     return greeting
 
 
@@ -545,13 +545,13 @@ def _get_first_step_say_text(recipe_payload: Dict[str, Any]) -> Optional[str]:
     steps = recipe_payload.get("steps") or []
     if not steps:
         return None
-    
+
     # Find first step without dependencies
     prioritized = sorted(
         steps,
         key=lambda step: len(step.get("depends_on") or []),
     )
-    
+
     for step in prioritized:
         if not step.get("depends_on"):
             # Prefer on_enter.say (TTS-friendly) over descr/instructions
@@ -564,7 +564,7 @@ def _get_first_step_say_text(recipe_payload: Dict[str, Any]) -> Optional[str]:
                 return on_enter["say"]
             # Fallback: don't use descr/instructions as they may have symbols
             return None
-    
+
     return None
 
 
@@ -573,7 +573,7 @@ def _get_first_step_description(recipe_payload: Dict[str, Any]) -> Optional[str]
     steps = recipe_payload.get("steps") or []
     if not steps:
         return None
-    
+
     prioritized = sorted(
         steps,
         key=lambda step: len(step.get("depends_on") or []),
@@ -581,7 +581,7 @@ def _get_first_step_description(recipe_payload: Dict[str, Any]) -> Optional[str]
     for step in prioritized:
         if not step.get("depends_on"):
             return step.get("instructions") or step.get("descr")
-    
+
     # Fallback to the first step if all have dependencies defined
     step = steps[0]
     return step.get("instructions") or step.get("descr")
@@ -599,7 +599,7 @@ def _extract_recipe_payload(custom_parameters: Dict[str, Any]) -> Optional[Dict[
 
 if __name__ == "__main__":
     import uvicorn
-    
+
     uvicorn.run(
         "main:app",
         host=settings.HOST,
