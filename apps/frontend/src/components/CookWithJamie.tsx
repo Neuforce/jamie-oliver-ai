@@ -144,6 +144,28 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
+    if (recipe) {
+      const savedSession = localStorage.getItem(`cooking-session-${recipe.id}`);
+      if (savedSession) {
+        const session = JSON.parse(savedSession);
+        const now = new Date().getTime();
+        const sessionAge = now - session.timestamp;
+
+        // Only restore if session is less than 24 hours old
+        if (sessionAge < 24 * 60 * 60 * 1000) {
+          // Verify the session is for this recipe (extra safety check)
+          if (session.recipeId !== recipe.id) {
+            console.warn('[CookWithJamie] Session recipeId mismatch, clearing:', session.recipeId, 'vs', recipe.id);
+            localStorage.removeItem(`cooking-session-${recipe.id}`);
+            return;
+          }
+
+          // Automatically restore session without toast - user already clicked "Continue Cooking"
+          setCurrentStep(session.currentStep);
+          setCompletedSteps(session.completedSteps);
+
+          // Mark as interacted since user is continuing a previous session
+          setHasUserInteracted(true);
 
   // Auto-focus input when component mounts
   useEffect(() => {
@@ -365,6 +387,39 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
           // Continue with other recipes
         }
       }
+          console.error('Error confirming step with backend:', error);
+          // Don't revert local state - the user action should still "feel" complete
+        }
+      } else {
+        // If no backend step ID, try sending via WebSocket as a text message
+        if (isWebSocketConnected) {
+          const stepDesc = instructions[currentStep];
+          wsSendMessage({
+            event: 'text',
+            data: { message: `I completed the current step: ${stepDesc}` },
+          });
+          console.log('📤 Sent step completion via WebSocket text message');
+        }
+      }
+    }
+  };
+
+  // Start a backend timer for the current step (parallel cooking support)
+  const startBackendTimer = async (stepId?: string) => {
+    const targetStepId = stepId || recipe?.backendSteps?.[currentStep]?.id;
+
+    if (!targetStepId || !sessionInfo?.session_id) {
+      console.warn('Cannot start backend timer: missing stepId or session');
+      return false;
+    }
+
+    try {
+      // @ts-expect-error - Vite provides import.meta.env
+      const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
+      const apiBaseUrl = wsUrl
+        .replace('wss://', 'https://')
+        .replace('ws://', 'http://')
+        .replace('/ws/voice', '');
 
       if (transformedRecipes.length === 0) {
         // All recipes failed to transform
@@ -408,6 +463,142 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
       setMessages(prev => [...prev, errorMessage]);
             setIsTyping(false);
           }
+  // Cancel a backend timer
+  const cancelBackendTimer = async (timerId: string) => {
+    if (!sessionInfo?.session_id) {
+      console.warn('Cannot cancel timer: missing session');
+      return false;
+    }
+
+    try {
+      // @ts-expect-error - Vite provides import.meta.env
+      const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
+      const apiBaseUrl = wsUrl
+        .replace('wss://', 'https://')
+        .replace('ws://', 'http://')
+        .replace('/ws/voice', '');
+
+      const response = await fetch(
+        `${apiBaseUrl}/sessions/${sessionInfo.session_id}/timers/${timerId}/cancel`,
+        { method: 'POST' }
+      );
+
+      if (response.ok) {
+        console.log(`⏰ Cancelled timer ${timerId}`);
+        return true;
+      } else {
+        console.warn(`⚠️ Failed to cancel timer:`, response.status);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error cancelling timer:', error);
+      return false;
+    }
+  };
+
+  const startTimer = () => {
+    setHasUserInteracted(true);
+    if (timerSeconds === 0) {
+      setTimerSeconds(timerMinutes * 60);
+    }
+    setTimerRunning(true);
+  };
+
+  const pauseTimer = () => {
+    setHasUserInteracted(true);
+    setTimerRunning(false);
+  };
+
+  const resetTimer = () => {
+    setHasUserInteracted(true);
+    setTimerRunning(false);
+    setTimerSeconds(timerMinutes * 60);
+  };
+
+  const addMinute = () => {
+    setHasUserInteracted(true);
+    setTimerSeconds(prev => prev + 60);
+  };
+
+  const subtractMinute = () => {
+    setHasUserInteracted(true);
+    setTimerSeconds(prev => Math.max(0, prev - 60));
+  };
+
+  const [shouldShowTimer, setShouldShowTimer] = useState(false);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  // Only show timer when:
+  // 1. A timer is actively running, OR
+  // 2. The current step is a timer step (type='timer' or has duration)
+  useEffect(() => {
+    const backendStep = recipe?.backendSteps?.[currentStep];
+    const isTimerStep = Boolean(
+      backendStep?.type === 'timer' ||
+      (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0)
+    );
+
+    setShouldShowTimer(timerRunning || isTimerStep);
+  }, [timerSeconds, timerRunning, recipe, currentStep, parseIsoDurationToSeconds]);
+
+  const handleExitClick = () => {
+    console.log('Exit clicked - currentStep:', currentStep, 'completedSteps:', completedSteps, 'timerRunning:', timerRunning, 'timerSeconds:', timerSeconds);
+
+    // Check if there's any progress: moved from step 0, completed steps, or has active/running timer
+    const hasProgress = currentStep > 0 ||
+                       completedSteps.length > 0 ||
+                       timerRunning ||
+                       timerSeconds > 0;
+
+    if (!hasProgress) {
+      console.log('No progress, exiting directly to chat');
+      onClose();
+      // Navigate back to chat modal
+      if (onBackToChat) {
+        onBackToChat();
+      }
+      return;
+    }
+
+    // Otherwise show confirmation
+    console.log('Showing exit confirmation dialog - user has progress');
+    setShowExitConfirmation(true);
+  };
+
+  const handleExitWithoutSaving = () => {
+    console.log('Exit without saving');
+    if (recipe) {
+      localStorage.removeItem(`cooking-session-${recipe.id}`);
+    }
+    toast.info('Session discarded', {
+      description: 'Your progress was not saved'
+    });
+    setShowExitConfirmation(false);
+    onClose();
+    // Navigate back to chat modal
+    if (onBackToChat) {
+      onBackToChat();
+    }
+  };
+
+  const handleSaveAndExit = () => {
+    console.log('Save and exit');
+    // Session is already being saved automatically - no toast needed
+    setShowExitConfirmation(false);
+    // Cleanup WebSocket and audio
+    audioCapture.stopCapture();
+    audioPlayback.cleanup();
+    wsDisconnect();
+    onClose();
+    // Navigate back to chat modal
+    if (onBackToChat) {
+      onBackToChat();
+    }
   };
 
   const handleKeyPress = (e: any) => {
@@ -425,6 +616,48 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
       transition={{
         duration: 0.3,
         ease: [0.16, 1, 0.3, 1] // Custom easing for smooth spring-like motion
+  const handleFinishCooking = () => {
+    if (!recipe) return;
+
+    // Mark recipe as completed
+    const completedRecipe = {
+      recipeId: recipe.id,
+      completedAt: new Date().getTime(),
+      completedSteps: completedSteps,
+      totalSteps: instructions.length
+    };
+    localStorage.setItem(`completed-recipe-${recipe.id}`, JSON.stringify(completedRecipe));
+
+    // Remove the cooking session so it doesn't show as "in progress"
+    localStorage.removeItem(`cooking-session-${recipe.id}`);
+
+    // Clear chat history when recipe is completed
+    clearChatHistory();
+
+    // Send finish message to WebSocket if connected
+    if (isWebSocketConnected) {
+      wsSendMessage({
+        event: 'text',
+        data: { message: 'I finished the recipe' },
+      });
+    }
+
+    // Cleanup WebSocket and audio
+    audioCapture.stopCapture();
+    audioPlayback.cleanup();
+    wsDisconnect();
+
+    // Show completion modal instead of toast
+    setShowCompletionModal(true);
+  };
+
+  return (
+    <div
+      className="fixed inset-0 z-50 bg-background"
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%',
       }}
       className="fixed inset-0 bg-white z-50 flex flex-col"
       onClick={(e) => e.stopPropagation()}
@@ -510,6 +743,31 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
                   {/* Message Content */}
                   <p className="flex-1 font-['Work_Sans',sans-serif] leading-[1.5] text-[#2c2c2c] text-base whitespace-pre-wrap">
                     {message.content}
+          <p className="text-center text-sm text-muted-foreground mt-4">
+            Tap +/− to adjust time by minute
+          </p>
+
+          {/* Backend Timer Start - for parallel cooking */}
+          {(() => {
+            const backendStep = recipe?.backendSteps?.[currentStep];
+            const isTimerStep = backendStep?.type === 'timer' ||
+                               (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0);
+            const hasActiveBackendTimer = backendStep && activeTimers.some(t => t.step_id === backendStep.id);
+
+            if (isTimerStep && !hasActiveBackendTimer) {
+              return (
+                <div className="mt-6 pt-6 border-t border-border/30">
+                  <Button
+                    onClick={() => startBackendTimer()}
+                    variant="outline"
+                    size="lg"
+                    className="w-full gap-2 border-amber-500/50 text-amber-600 hover:bg-amber-500/10"
+                  >
+                    <Bell className="size-4" />
+                    Start Step Timer (runs in background)
+                  </Button>
+                  <p className="text-center text-xs text-muted-foreground mt-2">
+                    Timer will continue while you work on other steps
                   </p>
                 </div>
                 )
@@ -579,6 +837,55 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
                     transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
                     className="size-6 rounded-full border-2 border-[#46BEA8]/20 border-t-[#46BEA8]"
                   />
+              <div
+                className="mb-8 flex flex-col items-center"
+                style={{ gap: '24px', marginTop: '24px' }}
+              >
+                <div className="w-full max-w-[420px] flex gap-2">
+            {instructions.map((_, idx) => {
+              const hasTimer = stepHasActiveTimer(idx);
+              const isCurrentStep = idx === currentStep;
+              const isCompleted = completedSteps.includes(idx);
+
+              return (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentStep(idx)}
+                  className={`relative h-1 flex-1 rounded-full transition-colors ${
+                    isCurrentStep
+                      ? 'bg-[#0A7E6C]'
+                      : isCompleted
+                        ? 'bg-[#81EB67]'
+                        : hasTimer
+                          ? 'bg-amber-500'
+                          : 'bg-muted-foreground/20'
+                  }`}
+                  aria-label={`Go to step ${idx + 1}${hasTimer ? ' (timer running)' : ''}`}
+                >
+                  {/* Pulsing indicator for steps with active timers */}
+                  {hasTimer && !isCurrentStep && (
+                    <span className="absolute inset-0 rounded-full bg-amber-500 animate-pulse" />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+                <div className="w-full max-w-[420px]">
+                  <div
+                    className="rounded-full bg-[#0A7E6C]/10 px-4 py-3"
+                    style={{ width: '100%', textAlign: 'center' }}
+                  >
+                    <span className="text-sm font-medium text-[#0A7E6C]">
+                      Step {currentStep + 1} of {totalSteps}
+                    </span>
+                  </div>
+          </div>
+
+                {/* Step Instructions - Clean and prominent */}
+                <div className="w-full max-w-[420px]">
+                  <p className="text-xl leading-relaxed text-foreground/90">
+                    {instructions[currentStep]}
+                  </p>
                 </div>
               </div>
             </motion.div>
