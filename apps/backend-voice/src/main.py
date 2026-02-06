@@ -505,7 +505,9 @@ def _extract_recipe_id(custom_parameters: Dict[str, Any]) -> Optional[str]:
 
 
 def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
-    """Generate a warm, Jamie Oliver-style greeting."""
+    """Generate a warm, Jamie Oliver-style greeting (intro only, no first step).
+    NEU-469: avoid diving straight into the first instruction; orient the user
+    and ask readiness so they can confirm before we start step one."""
     if not recipe_payload:
         return DEFAULT_HELLO_MESSAGE
 
@@ -513,7 +515,7 @@ def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
     title = recipe_meta.get("title") or "something delicious"
     description = recipe_meta.get("description", "")
     
-    # Build a warm, conversational greeting
+    # Build a warm, conversational intro (no first step yet)
     greetings = [
         f"Alright! {title} - this is going to be gorgeous!",
         f"Right then, let's make some {title}!",
@@ -527,13 +529,13 @@ def _build_cooking_greeting(recipe_payload: Optional[Dict[str, Any]]) -> str:
     if description:
         greeting += f" {description}."
     
-    # Get the first step's on_enter.say text (already TTS-friendly)
-    # This avoids symbols like °C that don't pronounce well
-    first_step_say = _get_first_step_say_text(recipe_payload)
-    if first_step_say:
-        greeting += f" {first_step_say}"
-    else:
-        greeting += " Let's get started!"
+    # Readiness check before first step (do not append first_step_say here)
+    readiness_lines = [
+        " Have you got your ingredients ready? Just say when and we'll get started!",
+        " Got everything out? Say when you're ready and we'll dive in!",
+        " When you're ready to start, just say the word!",
+    ]
+    greeting += random.choice(readiness_lines)
     
     return greeting
 
