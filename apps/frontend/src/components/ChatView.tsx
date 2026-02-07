@@ -51,6 +51,9 @@ const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
 const SESSION_ID_KEY = 'jamie-oliver-chat-session';
 const TOOL_INTRO_MAX_CHARS = 240;
 
+/** Max width for chat content; matches TabNav for consistent layout (NEU-470). */
+const CHAT_CONTENT_MAX_WIDTH = 600;
+
 // Export function to clear chat history (used when recipe is completed)
 export const clearChatHistory = async () => {
   try {
@@ -834,7 +837,7 @@ export function ChatView({
                     fontSize: '16px',
                     lineHeight: 1.5,
                     color: 'var(--jamie-text-primary)',
-                    maxWidth: '307px',
+                    maxWidth: CHAT_CONTENT_MAX_WIDTH,
                   }}
                 >
                   Hi - I'm jAImie, Jamie Oliver's AI cooking companion. I'll walk or talk you through recipes step-by-step. What are you in the mood for?
@@ -846,7 +849,8 @@ export function ChatView({
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="flex flex-col items-center gap-3 mb-6 max-w-md mx-auto"
+                className="flex flex-col items-center gap-3 mb-6 mx-auto"
+            style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}
               >
                 {PROMPT_SUGGESTIONS.map((prompt, index) => (
                   <button
@@ -881,7 +885,7 @@ export function ChatView({
             overflowY: 'auto',
           }}
         >
-          <div className="max-w-[380px] mx-auto space-y-4">
+          <div className="mx-auto space-y-4" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
             {messages.map((message, index) => (
               <div key={message.id}>
                 {/* Separator */}
@@ -1441,7 +1445,7 @@ export function ChatView({
             className="px-5 py-3 bg-white border-t border-black/5"
             style={{ flexShrink: 0 }}
           >
-            <div className="max-w-[380px] mx-auto">
+            <div className="mx-auto" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
               <VoiceModeIndicator
                 state={voiceState}
                 transcript={currentTranscript}
@@ -1475,7 +1479,7 @@ export function ChatView({
           flexShrink: 0,
         }}
       >
-        <div className="max-w-[380px] mx-auto">
+        <div className="mx-auto" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
           <div
             className="bg-white relative rounded-full border border-black/10"
             style={{

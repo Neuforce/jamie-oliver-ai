@@ -1,31 +1,53 @@
-import React, { useState, useRef, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Recipe } from '../data/recipes';
-import { motion, AnimatePresence } from 'motion/react';
-import { Play, Pause, Plus, Minus, RotateCcw, Bell } from 'lucide-react';
+import {
+  ArrowLeft,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
+  Timer,
+  Play,
+  Pause,
+  RotateCcw,
+  Plus,
+  Minus,
+  Mic,
+  Volume2,
+  X,
+  AlertCircle,
+  RefreshCw,
+  Save,
+  Trash2,
+  MicOff,
+  ArrowRight,
+  Bell
+} from 'lucide-react';
 import { Button } from './ui/button';
+import { Progress } from './ui/progress';
+import { motion, AnimatePresence } from 'motion/react';
+import { toast } from 'sonner';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from './ui/alert-dialog';
+import { useWebSocket, type RecipeState, type ActiveTimerInfo } from '../hooks/useWebSocket';
+import { useAudioCapture } from '../hooks/useAudioCapture';
+import { useAudioPlayback } from '../hooks/useAudioPlayback';
 import { RecipeCard } from './RecipeCard';
 import { TimerPanel, type ActiveTimer } from './TimerPanel';
-import { useWebSocket, type RecipeState, type ActiveTimerInfo } from '../hooks/useWebSocket';
-import { useAudioPlayback } from '../hooks/useAudioPlayback';
-import { useAudioCapture } from '../hooks/useAudioCapture';
-import { toast } from 'sonner';
-// @ts-expect-error - Vite resolves figma:asset imports via alias configuration
+import { clearChatHistory } from './ChatView';
+// @ts-ignore - handled by Vite
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
-
 const jamieLogo = typeof jamieLogoImport === 'string' ? jamieLogoImport : (jamieLogoImport as any).src || jamieLogoImport;
-const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
-
-// Export function to clear chat history (used when recipe is completed)
-export const clearChatHistory = () => {
-  try {
-    localStorage.removeItem(CHAT_STORAGE_KEY);
-  } catch (error) {
-    console.error('Error clearing chat history:', error);
-  }
-};
 
 interface CookWithJamieProps {
-  recipe: Recipe;
+  recipe: Recipe | null;
   onClose: () => void;
   onBackToChat?: () => void;
   onExploreRecipes?: () => void;
@@ -33,13 +55,17 @@ interface CookWithJamieProps {
 
 export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes }: CookWithJamieProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const [timerRunning, setTimerRunning] = useState(false);
-  const [timerSeconds, setTimerSeconds] = useState(0);
-  const [timerMinutes, setTimerMinutes] = useState(5);
-  const [activeTimers, setActiveTimers] = useState<ActiveTimer[]>([]);
+  const [completedSteps, setCompletedSteps] = useState([] as number[]);
   const [showExitConfirmation, setShowExitConfirmation] = useState(false);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
+
+  // Timer states
+  const [timerSeconds, setTimerSeconds] = useState(0);
+  const [timerRunning, setTimerRunning] = useState(false);
+  const [timerMinutes, setTimerMinutes] = useState(10); // Default timer
+
+  // Active timers from backend (parallel cooking support)
+  const [activeTimers, setActiveTimers] = useState<ActiveTimer[]>([]);
 
   // Session tracking - only save when user has made deliberate progress
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
@@ -49,7 +75,6 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   const [voiceText, setVoiceText] = useState('');
   const [voiceError, setVoiceError] = useState('');
   const [voiceSupported, setVoiceSupported] = useState(true);
-  const [voicePausedByVisibility, setVoicePausedByVisibility] = useState(false);
   const recognitionRef = useRef(null as any);
 
   // WebSocket and Audio states
@@ -178,56 +203,6 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     return activeTimers.find(timer => timer.step_id === backendStep.id);
   }, [recipe, activeTimers]);
 
-  const syncRecipeStateFromBackend = useCallback((state: RecipeState) => {
-    if (!state || !recipe) return;
-
-    const resolveStepIndex = (stepId?: string, descr?: string): number | null => {
-      if (stepId && stepIdToIndex.has(stepId)) return stepIdToIndex.get(stepId)!;
-      if (descr && recipe.backendSteps?.length) {
-        const descrMatch = recipe.backendSteps.findIndex(
-          (step) => step.descr?.toLowerCase() === descr.toLowerCase()
-        );
-        if (descrMatch >= 0) return descrMatch;
-      }
-      const normalizedId = stepId?.toLowerCase();
-      const normalizedDescr = descr?.toLowerCase();
-      const fallbackIndex = instructions.findIndex((inst, idx) => {
-        const instLower = String(inst).toLowerCase();
-        if (normalizedId && instLower.includes(normalizedId)) return true;
-        if (normalizedDescr && instLower.includes(normalizedDescr)) return true;
-        if (stepId && String(idx) === stepId) return true;
-        return false;
-      });
-      return fallbackIndex >= 0 ? fallbackIndex : null;
-    };
-
-    if (state.steps) {
-      const stepsArray = Object.values(state.steps);
-      const activeStep = stepsArray.find(step => step.status === 'active' || step.status === 'waiting_ack')
-        || stepsArray.find(step => step.status === 'ready');
-      if (activeStep) {
-        const stepIndex = resolveStepIndex(activeStep.id, activeStep.descr);
-        if (stepIndex !== null) {
-          setCurrentStep((prev) => (prev === 0 || stepIndex > prev ? stepIndex : prev));
-        }
-      }
-      const completedIndices = stepsArray
-        .filter(step => step.status === 'completed')
-        .map(step => resolveStepIndex(step.id, step.descr))
-        .filter((idx): idx is number => idx !== null);
-      setCompletedSteps(completedIndices);
-    } else if (Array.isArray(state.completed_steps)) {
-      const completedIndices = state.completed_steps
-        .map(step => (typeof step === 'number' ? step : resolveStepIndex(String(step))))
-        .filter((idx): idx is number => typeof idx === 'number' && idx >= 0);
-      setCompletedSteps(completedIndices);
-    }
-    if (state.current_step !== undefined && state.current_step >= 0) {
-      const boundedIndex = instructions.length > 0 ? Math.min(state.current_step, instructions.length - 1) : 0;
-      setCurrentStep((prev) => (prev === 0 || boundedIndex > prev ? boundedIndex : prev));
-    }
-  }, [instructions, recipe, stepIdToIndex]);
-
   const handleControl = useCallback(
     (action: string, data?: any) => {
       console.log('🕐 [CONTROL-FE] handleControl received:', { action, data });
@@ -268,9 +243,11 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     context: websocketContext,
     onRecipeState: (state) => {
       setWsRecipeState(state);
+      // Sync state from backend
       syncRecipeStateFromBackend(state);
     },
     onRecipeMessage: (message) => {
+      // Keep logs for debugging but avoid UI interruptions
       console.log('[WebSocket] Recipe message:', message);
     },
     onRecipeError: (error) => {
@@ -285,6 +262,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     },
     onTimerListUpdate: (timers: ActiveTimerInfo[]) => {
       console.log('🕐 Active timers updated:', timers.length);
+      // Convert to ActiveTimer format for TimerPanel
       const panelTimers: ActiveTimer[] = timers.map(t => ({
         id: t.id,
         step_id: t.step_id,
@@ -295,37 +273,241 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       }));
       setActiveTimers(panelTimers);
     },
+    onAudio: (base64Audio) => {
+      // Play audio response from backend
+      console.log('🎵 Received audio from backend, length:', base64Audio?.length || 0);
+      if (base64Audio) {
+        audioPlayback.playAudio(base64Audio).catch((err) => {
+          console.error('Error playing audio:', err);
+        });
+      } else {
+        console.warn('Received empty audio data');
+      }
+    },
+    onControl: handleControl,
+    onStop: () => {
+      // Backend requested stop
+      handleSaveAndExit();
+    },
   });
 
-  const audioCapture = useAudioCapture({
-    onAudioData: (base64Audio: string) => wsSendAudio(base64Audio),
-  });
-
-  const speakText = useCallback((text: string) => {
-    if (typeof window !== 'undefined' && window.speechSynthesis) {
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'es-ES';
-      window.speechSynthesis.speak(u);
+  useEffect(() => {
+    if (sessionInfo) {
+      console.log('[WebSocket] Session info received:', sessionInfo);
     }
-  }, []);
+  }, [sessionInfo]);
 
-  const micIconSrc = isMicMuted ? '/assets/tabler-icon-microphone-off.svg' : '/assets/tabler-icon-microphone.svg';
-  const micRingSrc = isMicMuted ? '/assets/Ellipse-red.svg' : '/assets/Ellipse-green.svg';
-  const micIconAlt = isMicMuted ? 'Microphone muted' : 'Microphone active';
+  // Audio capture hook - only send audio when mic is active
+  const audioCapture = useAudioCapture({
+    sampleRate: 16000,
+    onAudioData: (base64Audio) => {
+      // Send audio to WebSocket only when the connection is open and mic is active
+      if (!canStreamAudioRef.current) {
+        return;
+      }
+      wsSendAudio(base64Audio);
+    },
+  });
 
-  // Session restore on mount (e.g. user clicked "Continue Cooking")
+  useEffect(() => {
+    canStreamAudioRef.current = isWebSocketConnected && !isMicMuted;
+  }, [isWebSocketConnected, isMicMuted]);
+
   useEffect(() => {
     if (!recipe) return;
-    const saved = localStorage.getItem(`cooking-session-${recipe.id}`);
-    if (saved) {
-      try {
-        const session = JSON.parse(saved);
-        if (session.currentStep !== undefined) {
-          setCurrentStep(session.currentStep);
-          setCompletedSteps(session.completedSteps || []);
-          setHasUserInteracted(true);
+    const backendStep = recipe.backendSteps?.[currentStep];
+    const candidateSeconds =
+      parseIsoDurationToSeconds(backendStep?.duration) ||
+      extractSecondsFromInstruction(backendStep?.instructions) ||
+      extractSecondsFromInstruction(instructions[currentStep]);
+
+    if (
+      candidateSeconds > 0 &&
+      lastAutoTimerStepRef.current !== currentStep
+    ) {
+      setTimerSeconds(candidateSeconds);
+      setTimerMinutes(Math.max(1, Math.round(candidateSeconds / 60) || 1));
+      setTimerRunning(false);
+      lastAutoTimerStepRef.current = currentStep;
+    }
+  }, [
+    recipe,
+    currentStep,
+    instructions,
+    parseIsoDurationToSeconds,
+    extractSecondsFromInstruction,
+  ]);
+
+  // Sync recipe state from backend WebSocket
+  const syncRecipeStateFromBackend = useCallback((state: RecipeState) => {
+    if (!state || !recipe) return;
+
+    // CRITICAL: Only apply state if it's for the current recipe
+    // This prevents ghost sessions from stale backend state
+    const currentRecipeId = recipe.backendId || String(recipe.id);
+    if (state.recipe_id && state.recipe_id !== currentRecipeId) {
+      console.warn('[CookWithJamie] Ignoring state for different recipe:', state.recipe_id, 'vs', currentRecipeId);
+      return;
+    }
+
+    const resolveStepIndex = (stepId?: string, descr?: string): number | null => {
+      if (stepId && stepIdToIndex.has(stepId)) {
+        return stepIdToIndex.get(stepId)!;
+      }
+      if (descr && recipe.backendSteps?.length) {
+        const descrMatch = recipe.backendSteps.findIndex(
+          (step) => step.descr.toLowerCase() === descr.toLowerCase()
+        );
+        if (descrMatch >= 0) {
+          return descrMatch;
         }
-      } catch (e) { /* ignore */ }
+      }
+
+      const normalizedId = stepId?.toLowerCase();
+      const normalizedDescr = descr?.toLowerCase();
+      const fallbackIndex = instructions.findIndex((inst, idx) => {
+        const instLower = String(inst).toLowerCase();
+        if (normalizedId && instLower.includes(normalizedId)) return true;
+        if (normalizedDescr && instLower.includes(normalizedDescr)) return true;
+        if (stepId && String(idx) === stepId) return true;
+        return false;
+      });
+
+      return fallbackIndex >= 0 ? fallbackIndex : null;
+    };
+
+    if (state.steps) {
+      const stepsArray = Object.values(state.steps);
+      const activeStep = stepsArray.find(step => step.status === 'active' || step.status === 'waiting_ack')
+        || stepsArray.find(step => step.status === 'ready');
+
+      if (activeStep) {
+        const stepIndex = resolveStepIndex(activeStep.id, activeStep.descr);
+        if (stepIndex !== null) {
+          setCurrentStep((prev) => {
+            if (prev === 0 || stepIndex > prev) {
+              return stepIndex;
+            }
+            return prev;
+          });
+        }
+      }
+
+      const completedIndices = stepsArray
+        .filter(step => step.status === 'completed')
+        .map(step => resolveStepIndex(step.id, step.descr))
+        .filter((idx): idx is number => idx !== null);
+
+        setCompletedSteps(completedIndices);
+
+      const stepWithTimer = stepsArray.find(step => step.timer && (step.status === 'active' || step.status === 'waiting_ack'));
+      if (stepWithTimer?.timer) {
+        const { remaining_secs, end_ts, duration_secs } = stepWithTimer.timer;
+        const remaining = typeof remaining_secs === 'number'
+          ? remaining_secs
+          : end_ts
+            ? Math.max(0, Math.floor(end_ts - Date.now() / 1000))
+            : duration_secs ?? 0;
+        setTimerSeconds(remaining);
+        setTimerRunning(remaining > 0);
+      } else if (!state.timers || state.timers.length === 0) {
+        setTimerRunning(false);
+      }
+    } else if (Array.isArray(state.completed_steps)) {
+      const completedIndices = state.completed_steps
+        .map(step => {
+          if (typeof step === 'number') {
+            return step;
+          }
+          return resolveStepIndex(String(step));
+        })
+        .filter((idx): idx is number => typeof idx === 'number' && idx >= 0);
+      setCompletedSteps(completedIndices);
+    }
+
+    if (state.current_step !== undefined && state.current_step >= 0) {
+      const boundedIndex = instructions.length > 0
+        ? Math.min(state.current_step, instructions.length - 1)
+        : 0;
+      setCurrentStep((prev) => {
+        if (prev === 0 || boundedIndex > prev) {
+          return boundedIndex;
+        }
+        return prev;
+      });
+    }
+
+    if (state.timers && state.timers.length > 0) {
+      const activeTimer = state.timers[0];
+      if (activeTimer.remaining !== undefined) {
+        setTimerSeconds(activeTimer.remaining);
+        setTimerRunning(activeTimer.remaining > 0);
+      }
+    }
+  }, [instructions, recipe, stepIdToIndex]);
+
+  useEffect(() => {
+    currentStepRef.current = currentStep;
+  }, [currentStep]);
+
+  // Mic UI assets switch based on mute state
+  const micIconSrc = isMicMuted ? '/assets/tabler-icon-microphone-off.svg' : '/assets/tabler-icon-microphone.svg';
+  const micRingSrc = isMicMuted ? '/assets/Ellipse-red.svg' : '/assets/Ellipse-green.svg';
+  const micIconAlt = isMicMuted ? 'Mic off' : 'Mic on';
+
+  // Load saved session on mount
+  useEffect(() => {
+    if (recipe) {
+      const savedSession = localStorage.getItem(`cooking-session-${recipe.id}`);
+      if (savedSession) {
+        const session = JSON.parse(savedSession);
+        const now = new Date().getTime();
+        const sessionAge = now - session.timestamp;
+
+        // Only restore if session is less than 24 hours old
+        if (sessionAge < 24 * 60 * 60 * 1000) {
+          // Verify the session is for this recipe (extra safety check)
+          if (session.recipeId !== recipe.id) {
+            console.warn('[CookWithJamie] Session recipeId mismatch, clearing:', session.recipeId, 'vs', recipe.id);
+            localStorage.removeItem(`cooking-session-${recipe.id}`);
+            return;
+          }
+
+          // Automatically restore session without toast - user already clicked "Continue Cooking"
+          setCurrentStep(session.currentStep);
+          setCompletedSteps(session.completedSteps);
+
+          // Mark as interacted since user is continuing a previous session
+          setHasUserInteracted(true);
+
+          // Handle timer restoration - check if timer was kept active
+          if (session.timerEndTime && session.timerEndTime > now) {
+            // Timer was running in background and still has time left
+            const remainingSeconds = Math.ceil((session.timerEndTime - now) / 1000);
+            setTimerSeconds(remainingSeconds);
+            setTimerRunning(true);
+            toast.success('Timer restored', {
+              description: `Still running - ${formatTime(remainingSeconds)} remaining`,
+              duration: 3000
+            });
+          } else if (session.timerEndTime && session.timerEndTime <= now) {
+            // Timer finished while user was away
+            setTimerSeconds(0);
+            setTimerRunning(false);
+            toast.info('Timer finished!', {
+              description: 'Your timer completed while you were away',
+              duration: 5000
+            });
+          } else {
+            // Timer was paused
+            setTimerSeconds(session.timerSeconds || 0);
+            setTimerRunning(false);
+          }
+        } else {
+          // Clear old session
+          localStorage.removeItem(`cooking-session-${recipe.id}`);
+        }
+      }
     }
   }, [recipe]);
 
@@ -370,12 +552,18 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
         console.log('✅ Microphone permission granted');
 
         // Initialize and resume AudioContext for playback BEFORE starting capture
+        // This is critical - AudioContext must be resumed after user interaction
+        // Since this runs in useEffect after mount (which happens after user click), it should work
         try {
           console.log('🔊 Initializing AudioContext for playback...');
           const audioContext = await audioPlayback.initAudioContext();
           console.log('✅ AudioContext initialized, state:', audioContext?.state);
           if (audioContext && audioContext.state === 'suspended') {
+            console.log('⏸️ AudioContext is suspended, attempting to resume...');
             await audioContext.resume();
+            console.log('✅ AudioContext resumed, new state:', audioContext.state);
+          } else {
+            console.log('✅ AudioContext is already running');
           }
         } catch (err: any) {
           console.error('❌ Error initializing AudioContext for playback:', err);
@@ -388,10 +576,21 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           audioCaptureStartedRef.current = true;
           setIsListening(true);
           setVoiceError('');
+          console.log('✅ Audio capture started successfully');
+          // Ensure mic is not muted (active by default)
           setIsMicMuted(false);
           audioCapture.setMuted(false);
+          console.log('✅ Microphone is active (not muted)');
+          console.log('🔌 WebSocket connection status:', {
+            connected: isWebSocketConnected,
+            connecting: isWebSocketConnecting,
+            error: wsError,
+            recipeId: recipeId,
+          });
 
+          // If WebSocket is not connected, try to connect manually
           if (!isWebSocketConnected && !isWebSocketConnecting) {
+            console.log('⚠️ WebSocket not connected, attempting manual connection...');
             wsConnect();
           }
         } catch (err: any) {
@@ -401,12 +600,19 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       } catch (err: any) {
         console.error('❌ Microphone permission error:', err);
         setVoiceError('Microphone permission denied');
+        // Don't block the UI - user can still use text chat
+        // Mic will remain muted/inactive
         setIsMicMuted(true);
       }
     };
 
-    const timeoutId = setTimeout(() => initializeAudio(), 100);
+    // Use a small timeout to ensure the component is fully mounted
+    // This helps ensure the AudioContext can be resumed after user interaction
+    const timeoutId = setTimeout(() => {
+      initializeAudio();
+    }, 100);
 
+    // Cleanup on unmount
     return () => {
       clearTimeout(timeoutId);
       if (audioCaptureStartedRef.current) {
@@ -416,7 +622,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       wsDisconnect();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [recipe]);
+  }, [recipe]); // Only depend on recipe, not on hooks to avoid loops
 
   // Update mic mute state (also mute when WS disconnects to avoid spam)
   useEffect(() => {
@@ -425,24 +631,6 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     audioCapture.setMuted(shouldMute);
   }, [isMicMuted, isWebSocketConnected, audioCapture]);
 
-  // NEU-467: Release mic when user leaves the experience (tab switch, app background, lock screen).
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        if (audioCaptureStartedRef.current) {
-          console.log('[CookWithJamie] Page hidden – releasing microphone');
-          audioCapture.stopCapture();
-          audioCaptureStartedRef.current = false;
-          setIsListening(false);
-          wsDisconnect();
-          setVoicePausedByVisibility(true);
-        }
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [audioCapture, wsDisconnect]);
-
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     if (timerRunning && timerSeconds > 0) {
@@ -450,6 +638,8 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
         setTimerSeconds((prev) => {
           if (prev <= 1) {
             setTimerRunning(false);
+            // Timer finished - backend agent will announce via voice
+            // Don't use speakText here to avoid audio clash with ElevenLabs
             console.log('⏰ Frontend timer finished');
             return 0;
           }
@@ -476,11 +666,14 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       };
 
       recognitionRef.current.onerror = (event: any) => {
+        // Silently handle permission denied and user aborted errors
         if (event.error === 'not-allowed' || event.error === 'aborted') {
           setIsListening(false);
           setVoiceError('');
           return;
         }
+
+        // Only show error for other types
         console.warn('Speech recognition error:', event.error);
         setIsListening(false);
         setVoiceError(event.error);
@@ -489,17 +682,36 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       recognitionRef.current.onend = () => {
         setIsListening(false);
       };
+    } else {
+      setVoiceSupported(false);
     }
+
+    return () => {
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
+    };
   }, []);
 
-  const toggleMicMute = () => setIsMicMuted(prev => !prev);
+  const speakText = (text: string) => {
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'es-ES';
+      utterance.rate = 0.9;
+      window.speechSynthesis.speak(utterance);
+    }
+  };
+
+  const toggleMicMute = () => {
+    setIsMicMuted(!isMicMuted);
+    if (!isMicMuted) {
+      toast.info('Microphone muted', { duration: 2000 });
+    } else {
+      toast.info('Microphone active', { duration: 2000 });
+    }
+  };
 
   const toggleVoiceListening = async () => {
-    // If voice was paused by leaving the app, resume on tap
-    if (voicePausedByVisibility) {
-      await resumeVoiceAfterVisibility();
-      return;
-    }
     // If WebSocket is not connected, try to connect first
     if (!isWebSocketConnected && !isWebSocketConnecting) {
       console.log('🔌 WebSocket not connected, attempting to connect from mic button...');
@@ -520,29 +732,6 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     // This now controls mic mute/unmute for WebSocket audio
     toggleMicMute();
   };
-
-  /** NEU-467: Resume voice after user returned from background (tap to continue). */
-  const resumeVoiceAfterVisibility = useCallback(async () => {
-    if (!recipe) return;
-    setVoicePausedByVisibility(false);
-    setVoiceError('');
-    try {
-      await navigator.mediaDevices.getUserMedia({ audio: true });
-      const audioContext = await audioPlayback.initAudioContext();
-      if (audioContext?.state === 'suspended') await audioContext.resume();
-      wsConnect();
-      await audioCapture.startCapture();
-      audioCaptureStartedRef.current = true;
-      setIsListening(true);
-      setIsMicMuted(false);
-      audioCapture.setMuted(false);
-      toast.success('Voice resumed', { duration: 2000 });
-    } catch (err: any) {
-      console.error('Failed to resume voice:', err);
-      setVoiceError(err?.message || 'Could not resume microphone');
-      setVoicePausedByVisibility(true);
-    }
-  }, [recipe, audioPlayback, audioCapture, wsConnect]);
 
   const handleVoiceCommand = (command: string) => {
     const lowerCommand = command.toLowerCase();
@@ -640,8 +829,10 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           }
         } catch (error) {
           console.error('Error confirming step with backend:', error);
+          // Don't revert local state - the user action should still "feel" complete
         }
       } else {
+        // If no backend step ID, try sending via WebSocket as a text message
         if (isWebSocketConnected) {
           const stepDesc = instructions[currentStep];
           wsSendMessage({
@@ -693,7 +884,11 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
         return false;
       }
     } catch (error) {
-      console.error('Error starting timer:', error);
+      console.error('Error starting backend timer:', error);
+      toast.error('Timer error', {
+        description: 'Could not connect to server.',
+        duration: 3000,
+      });
       return false;
     }
   };
@@ -885,29 +1080,43 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-background flex flex-col"
+      className="fixed inset-0 z-50 bg-background"
       style={{
         display: 'flex',
         flexDirection: 'column',
         height: '100%',
       }}
-      onClick={(e) => e.stopPropagation()}
     >
-      {/* Header Nav */}
-      <div className="bg-white rounded-bl-[16px] rounded-br-[16px] h-[56px] shrink-0">
-        <div className="mx-auto grid grid-cols-3 items-center px-4" style={{ width: '600px', height: '100%', boxSizing: 'border-box' }}>
-        {/* Close Button */}
+      {/* Sticky Header - Back, Logo, Mic */}
+      <header
+        style={{
+          flexShrink: 0,
+          backgroundColor: 'white',
+          zIndex: 10,
+          paddingTop: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          paddingBottom: '12px',
+          paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
+          boxSizing: 'border-box',
+        }}
+      >
+        <div className="grid grid-cols-3 items-center gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
+          {/* Back Button */}
           <div className="flex items-center">
-        <button
-          onClick={onClose}
-              className="size-[24px] flex items-center justify-center z-10"
-        >
-          <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
-            <path d="M18 6L6 18M6 6L18 18" stroke="#327179" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-          </svg>
-        </button>
+            <button
+              onClick={handleExitClick}
+              className="inline-flex items-center justify-center"
+              style={{ padding: 0, background: 'transparent' }}
+              aria-label="Back"
+            >
+              <img
+                src="/assets/Back.svg"
+                alt="Back"
+                style={{ width: '24px', height: '24px', display: 'block' }}
+              />
+            </button>
           </div>
-          {/* Logo - Centered */}
+          {/* Logo - Centered (consistent 24px height across all layouts) */}
           <div className="flex items-center justify-center">
             <img
               src={jamieLogo}
@@ -934,13 +1143,11 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                   backgroundColor: '#F9FAFB',
                 }}
                 title={
-                  voicePausedByVisibility
-                    ? 'Voice paused – tap to continue with Jamie'
-                    : !isWebSocketConnected
-                      ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
-                      : isMicMuted
-                        ? 'Microphone muted - tap to enable'
-                        : 'Microphone active - tap to mute'
+                  !isWebSocketConnected
+                    ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
+                    : isMicMuted
+                      ? 'Microphone muted - tap to enable'
+                      : 'Microphone active - tap to mute'
                 }
               >
                 <div
@@ -978,27 +1185,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
               </button>
             </div>
           </div>
-      </div>
-
-      {/* NEU-467: Banner when voice was paused because user left the app */}
-      {voicePausedByVisibility && (
-        <div
-          className="flex items-center justify-between gap-3 px-4 py-2 bg-amber-500/10 border-b border-amber-500/20"
-          style={{ paddingLeft: 'clamp(16px, 24px)', paddingRight: 'clamp(16px, 24px)' }}
-        >
-          <p className="text-sm text-amber-800 dark:text-amber-200">
-            Voice paused because you left the app. Tap the mic to continue with Jamie.
-          </p>
-          <Button
-            size="sm"
-            variant="outline"
-            className="shrink-0 border-amber-500/50 text-amber-700 hover:bg-amber-500/20"
-            onClick={resumeVoiceAfterVisibility}
-          >
-            Continue
-          </Button>
-        </div>
-      )}
+      </header>
 
       {/* Scrollable Content */}
       <div
@@ -1013,25 +1200,88 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           <div className="w-full flex items-center justify-center">
             <div className="pointer-events-none select-none flex items-center justify-center" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
               <RecipeCard recipe={recipe} onClick={() => {}} variant="cooking" />
-            </div>
-          </div>
-
-        {/* Recipe Title - Outside RecipeCard, 24px below image */}
-        <div className="w-full flex items-center justify-center" style={{ marginTop: '24px', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
-          <h2 className="text-lg font-semibold text-foreground">{recipe.title}</h2>
-        </div>
         </div>
       </div>
 
-      {/* Timer section - when step has timer or timer is running */}
+        {/* Recipe Title - Outside RecipeCard, 24px below image */}
+        <div className="w-full flex items-center justify-center" style={{ marginTop: '24px', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+          <div
+            style={{
+              width: '100%',
+              maxWidth: '600px',
+              textAlign: 'left',
+              margin: '0 auto'
+            }}
+          >
+            <h3
+              style={{
+                color: '#2C5F5D',
+                fontFamily: 'Poppins, sans-serif',
+                fontSize: 'clamp(20px, calc(100vw * 26 / 390), 26px)',
+                fontWeight: 700,
+                letterSpacing: '0.087px',
+                lineHeight: '24px',
+                textTransform: 'uppercase',
+                margin: 0,
+              }}
+            >
+              {recipe.title}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      {/* Active Timers Panel (Parallel Cooking Support) */}
+      {activeTimers.length > 0 && (
+        <div className="px-6 py-4">
+          <div className="max-w-2xl mx-auto">
+            <TimerPanel
+              timers={activeTimers}
+              onTimerComplete={(timer) => {
+                toast.info('Timer Complete!', {
+                  description: `${timer.label} is done!`,
+                  duration: 5000,
+                });
+              }}
+              onTimerCancel={(timerId) => {
+                // Cancel timer via backend API
+                cancelBackendTimer(timerId);
+              }}
+              onTimerSelect={(timer) => {
+                // Navigate to the step if it has one
+                if (timer.step_id && recipe) {
+                  const stepIndex = stepIdToIndex.get(timer.step_id);
+                  if (stepIndex !== undefined && stepIndex !== currentStep) {
+                    setCurrentStep(stepIndex);
+                  }
+                }
+              }}
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Timer Section - Redesigned */}
       {shouldShowTimer && (
-        <div className="p-6 border-t border-border/30">
-          <TimerPanel
-            timers={activeTimers}
-            onTimerCancel={cancelBackendTimer}
-          />
+        <div className="px-6 py-8 border-b border-border/50">
+          <div className="max-w-2xl mx-auto">
+          {/* Timer Display */}
+          <div className="text-center mb-6">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <Timer className={`size-5 transition-colors ${
+                timerRunning ? 'text-[#0A7E6C]' : 'text-muted-foreground'
+              }`} />
+              <span className="text-sm text-muted-foreground">Kitchen Timer</span>
+            </div>
+            <div className={`text-7xl tabular-nums transition-colors ${
+              timerRunning ? 'text-[#0A7E6C]' : 'text-foreground'
+            }`}>
+              {formatTime(timerSeconds)}
+            </div>
+          </div>
+
           {/* Timer Controls - Clean and minimal */}
-          <div className="flex items-center justify-center gap-3 mt-4">
+          <div className="flex items-center justify-center gap-3">
             <Button
               onClick={subtractMinute}
               variant="ghost"
@@ -1113,6 +1363,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
             }
             return null;
           })()}
+      </div>
         </div>
       )}
 
@@ -1178,16 +1429,407 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                     {instructions[currentStep]}
                   </p>
                 </div>
-                <div className="mt-6">
-                  <Button onClick={toggleStepComplete} variant={isCurrentStepCompleted ? 'outline' : 'default'} className="w-full">
-                    {isCurrentStepCompleted ? 'Mark step incomplete' : 'Mark step complete'}
-                  </Button>
-                </div>
               </div>
             </motion.div>
           </AnimatePresence>
+
+          {/* Mark Complete */}
+          <Button
+            onClick={toggleStepComplete}
+            variant="ghost"
+            size="lg"
+            className="mb-8 flex items-center justify-center gap-2"
+            style={{
+              marginTop: '24px',
+              height: '48px',
+              padding: '14px 26px',
+              gap: '9px',
+              borderRadius: '33554400px',
+              border: isCurrentStepCompleted ? '2px solid #007AFF' : '2px solid #3D6E6C',
+              backgroundColor: isCurrentStepCompleted ? 'rgba(0, 122, 255, 0.1)' : 'transparent',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}
+          >
+            <CheckCircle2
+              className="size-5"
+                style={{ color: isCurrentStepCompleted ? '#007AFF' : '#3D6E6C' }}
+            />
+              <span style={{ color: isCurrentStepCompleted ? '#007AFF' : '#3D6E6C' }}>
+                {isCurrentStepCompleted ? 'COMPLETED' : 'MARK COMPLETE'}
+              </span>
+          </Button>
+
+          {/* Navigation Buttons - Clean */}
+          <div className="flex items-center justify-between gap-3">
+            <Button
+              onClick={handlePrevious}
+              disabled={currentStep === 0}
+              variant="ghost"
+              size="lg"
+              className="gap-2 text-[14px]"
+              style={{
+                display: 'flex',
+                height: '48px',
+                padding: '14px 24px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '9px',
+                borderRadius: '33554400px',
+                opacity: 0.5,
+              }}
+            >
+              <ChevronLeft className="size-5" />
+              Previous
+            </Button>
+
+            {currentStep === totalSteps - 1 ? (
+              <Button
+                onClick={handleFinishCooking}
+                size="lg"
+                className="gap-2 bg-[#3D6E6C] hover:bg-[#2c5654] text-[14px]"
+                style={{
+                  display: 'flex',
+                  height: '48px',
+                  padding: '14px 25px 14px 24px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '8px',
+                  borderRadius: '33554400px',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                  backgroundColor: '#3D6E6C',
+                  color: '#FFFFFF',
+                }}
+              >
+                Finish Cooking
+                <CheckCircle2 className="size-5" />
+              </Button>
+            ) : (
+              <Button
+                onClick={handleNext}
+                size="lg"
+                className="gap-2 bg-[#3D6E6C] hover:bg-[#2c5654] text-[14px]"
+                style={{
+                  display: 'flex',
+                  height: '48px',
+                  padding: '14px 25px 14px 24px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '8px',
+                  borderRadius: '33554400px',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                  backgroundColor: '#3D6E6C',
+                  color: '#FFFFFF',
+                }}
+              >
+                Next Step
+                <ChevronRight className="size-5" />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
+
+      {/* Completion Celebration */}
+      {currentStep === totalSteps - 1 && completedSteps.length === totalSteps && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 p-6"
+        >
+          <motion.div
+            initial={{ scale: 0.9, y: 20 }}
+            animate={{ scale: 1, y: 0 }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
+          >
+            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#0A7E6C]/10 flex items-center justify-center">
+              <CheckCircle2 className="w-12 h-12 text-[#0A7E6C]" />
+            </div>
+            <h2 className="text-2xl font-bold text-[#2C5F5D] mb-2">
+              Brilliant! You Did It!
+            </h2>
+            <p className="text-gray-600 mb-8 leading-relaxed">
+              Your <span className="font-medium">{recipe.title}</span> is ready to serve.
+              Enjoy your delicious creation!
+            </p>
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={onClose}
+                size="lg"
+                className="w-full bg-[#3D6E6C] hover:bg-[#2c5654] rounded-full h-12"
+              >
+                Done
+              </Button>
+              <Button
+                onClick={onClose}
+                variant="ghost"
+                size="lg"
+                className="w-full text-gray-500 rounded-full h-12"
+              >
+                Cook again
+            </Button>
+          </div>
+          </motion.div>
+        </motion.div>
+      )}
+      </div>
+      {/* End Scrollable Content */}
+
+      {/* Exit Confirmation Dialog */}
+      <AlertDialog open={showExitConfirmation} onOpenChange={setShowExitConfirmation}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {timerRunning && timerSeconds > 0
+                ? `Active timer: ${formatTime(timerSeconds)}`
+                : 'Leave cooking session?'}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {timerRunning && timerSeconds > 0
+                ? 'Your timer is still running. What would you like to do?'
+                : 'Would you like to save your progress for later?'}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex flex-col gap-2 mt-4">
+            {timerRunning && timerSeconds > 0 ? (
+              <>
+                <Button
+                  onClick={handleExitKeepTimerActive}
+                  style={{ backgroundColor: 'var(--jamie-primary-dark)' }}
+                  className="w-full"
+                >
+                  Keep timer running
+                </Button>
+                <Button
+                  onClick={handleSaveAndExit}
+                  variant="outline"
+                  className="w-full"
+                >
+                  Pause timer & save
+                </Button>
+                <Button
+                  onClick={handleExitWithoutSaving}
+                  variant="ghost"
+                  className="w-full text-red-600 hover:text-red-700 hover:bg-red-50"
+                >
+                  Discard session
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={handleSaveAndExit}
+                  style={{ backgroundColor: 'var(--jamie-primary-dark)' }}
+                  className="w-full"
+                >
+                  Save & exit
+                </Button>
+                <Button
+                  onClick={handleExitWithoutSaving}
+                  variant="outline"
+                  className="w-full"
+                >
+                  Exit without saving
+                </Button>
+              </>
+            )}
+            <Button
+              onClick={() => setShowExitConfirmation(false)}
+              variant="ghost"
+              className="w-full"
+            >
+              Keep cooking
+            </Button>
+          </div>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Completion Modal */}
+      <AnimatePresence>
+        {showCompletionModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-background flex flex-col"
+          >
+            {/* Header */}
+            <div className="px-6 pt-8 pb-6 flex-shrink-0">
+              <div className="flex items-center justify-center w-full" style={{ paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
+                <div className="grid grid-cols-3 items-start gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
+                  {/* Close Button */}
+                  <div className="flex items-start">
+                    <button
+                      onClick={() => {
+                        setShowCompletionModal(false);
+                        onClose();
+                        if (onExploreRecipes) {
+                          onExploreRecipes();
+                        }
+                      }}
+                      className="inline-flex items-center justify-center"
+                      style={{ marginTop: '16px', padding: 0, background: 'transparent' }}
+                      aria-label="Close"
+                    >
+                      <svg className="block size-6" fill="none" preserveAspectRatio="none" viewBox="0 0 24 24">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="#327179" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                      </svg>
+                    </button>
+                  </div>
+                  {/* Logo - Centered */}
+                  <div className="flex items-center justify-center">
+                    <div
+                      className="flex items-center justify-center"
+                      style={{
+                        marginTop: '17px',
+                        height: 'clamp(20px, calc(100vw * 24 / 390), 24px)',
+                        width: 'clamp(140px, calc(100vw * 171.75 / 390), 171.75px)',
+                        maxWidth: '171.75px'
+                      }}
+                    >
+                      <img
+                        src={jamieLogo}
+                        alt="Jamie Oliver"
+                        className="h-full w-full object-contain"
+                        style={{ maxWidth: '100%', maxHeight: '100%' }}
+                      />
+                    </div>
+                  </div>
+                  {/* Mic Control */}
+                  <div className="flex items-start justify-end">
+                    <button
+                      onClick={toggleVoiceListening}
+                      className="inline-flex rounded-full transition-colors"
+                      title={isMicMuted ? 'Microphone muted - tap to enable' : 'Microphone active - tap to mute'}
+                      style={{
+                        marginTop: '7px',
+                        padding: '0 0 0 12px',
+                        height: '42px',
+                        width: '93px',
+                        borderRadius: '999px',
+                        boxShadow: '0 2px 9px rgba(0, 0, 0, 0.08)',
+                        border: '1px solid rgba(0, 0, 0, 0.08)',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: 0,
+                        backgroundColor: '#F9FAFB',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: '24px',
+                          height: '24px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <img
+                          src={micIconSrc}
+                          alt={micIconAlt}
+                          style={{ width: '18px', height: '18px' }}
+                        />
+                      </div>
+                      <div
+                        style={{
+                          width: '42px',
+                          height: '42px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          marginLeft: 'auto',
+                          flexShrink: 0,
+                        }}
+                      >
+                        <img
+                          src={micRingSrc}
+                          alt={isMicMuted ? 'Microphone muted' : 'Microphone active'}
+                          style={{ display: 'block' }}
+                        />
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Content - Centered vertically */}
+            <div className="flex-1 flex items-center justify-center px-6">
+              <div style={{ width: '300px', boxSizing: 'border-box' }}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-center"
+                >
+                  <h2
+                    style={{
+                      color: '#2C5F5D',
+                      fontFamily: 'Poppins, sans-serif',
+                      fontSize: '32px',
+                      fontWeight: 700,
+                      lineHeight: '1.2',
+                      marginBottom: '16px',
+                    }}
+                  >
+                    WELL DONE!
+                  </h2>
+                  <p
+                    style={{
+                      color: '#2C5F5D',
+                      fontFamily: 'Poppins, sans-serif',
+                      fontSize: '16px',
+                      fontWeight: 400,
+                      lineHeight: '1.5',
+                      textAlign: 'left',
+                      marginBottom: '32px',
+                    }}
+                  >
+                    You've just finished the recipe. Thanks for cooking with Jamie — hope you enjoyed every step.
+                  </p>
+                  <button
+                    onClick={() => {
+                      setShowCompletionModal(false);
+                      onClose();
+                      if (onExploreRecipes) {
+                        onExploreRecipes();
+                      }
+                    }}
+                    className="w-full inline-flex items-center justify-between text-white font-semibold uppercase rounded-full transition-opacity"
+                    style={{
+                      height: '50px',
+                      padding: '9px 14px 9px 24px',
+                      borderRadius: '24px',
+                      backgroundColor: '#3D6A6C',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = '0.9';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = '1';
+                    }}
+                  >
+                    <span>EXPLORE MORE RECIPES</span>
+                    <span
+                      className="inline-flex items-center justify-center"
+                      style={{
+                        width: '32px',
+                        height: '32px',
+                        borderRadius: '9px',
+                        background: '#29514F',
+                      }}
+                    >
+                      <ArrowRight className="size-4" />
+                    </span>
+                  </button>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
