@@ -1,0 +1,34 @@
+---
+description: Linear integration via API; use scripts/linear.sh, do not claim "cannot integrate"
+alwaysApply: true
+---
+
+# Linear – API integration
+
+## How it works
+
+- **Linear is integrated**: use the GraphQL API via `scripts/linear.sh` (which uses curl under the hood).
+- Endpoint: `https://api.linear.app/graphql`
+- Auth: header `Authorization: <API_KEY>` (no "Bearer "; Linear returns 401 if you use "Bearer ").
+
+## Required behavior
+
+1. **When the user asks to query or create items in Linear**, always use the script `scripts/linear.sh` (from repo root `jamie-oliver-ai`). The script loads the API key from `scripts/.env`.
+
+2. **Do not claim** that "Linear cannot be queried" or "there is no integration". The integration is `scripts/linear.sh` + `scripts/.env`.
+
+3. **If it fails due to missing key:** tell the user to copy `scripts/.env.example` to `scripts/.env` and set `LINEAR_API_KEY` (Linear → Settings → API).
+
+## Using `scripts/linear.sh`
+
+- **List by state:**  
+  `./scripts/linear.sh list [State]` (terminal table).  
+  **In chat/UI:** use `./scripts/linear.sh list --md` (or `list Backlog --md`) and paste the output in your reply so the Markdown table renders for the user.
+
+- **Create issue:**  
+  `./scripts/linear.sh create "Issue title" [Description]`
+
+- **Get issue details:**  
+  `./scripts/linear.sh get NEU-470`
+
+Requirement: `scripts/.env` must exist with `LINEAR_API_KEY=lin_api_...` (no "Bearer ").
