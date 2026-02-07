@@ -75,6 +75,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentTranscript, setCurrentTranscript] = useState('');
+  const [isPausedByVisibility, setIsPausedByVisibility] = useState(false);
 
   // Refs
   const wsRef = useRef<WebSocket | null>(null);
@@ -311,6 +312,39 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     };
   }, [disconnect, cleanupAudio]);
 
+  // NEU-467: Release mic when user leaves the page (tab switch, app background). Do not auto-resume.
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        if (isVoiceModeActiveRef.current || isConnected) {
+          console.log('[useVoiceChat] Page hidden – releasing microphone and disconnecting');
+          isVoiceModeActiveRef.current = false;
+          stopCapture();
+          if (wsRef.current) {
+            if (wsRef.current.readyState === WebSocket.OPEN) {
+              wsRef.current.send(JSON.stringify({ event: 'stop' }));
+            }
+            wsRef.current.close(1000, 'Visibility hidden');
+            wsRef.current = null;
+          }
+          stopAllAudio();
+          setIsConnected(false);
+          setState('idle');
+          setCurrentTranscript('');
+          setIsPausedByVisibility(true);
+        }
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [isConnected, stopCapture, stopAllAudio]);
+
+  /** NEU-467: Resume voice after user returned from background (tap to continue). */
+  const resumeFromVisibility = useCallback(() => {
+    setIsPausedByVisibility(false);
+    connect();
+  }, [connect]);
+
   // Cancel current operation and stay in voice mode
   const cancel = useCallback(() => {
     if (state === 'speaking') {
@@ -331,6 +365,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     isConnected,
     error,
     currentTranscript,
+    isPausedByVisibility,
 
     // Actions
     connect,
@@ -339,6 +374,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     interrupt,
     cancel,
     setMicMuted,
+    resumeFromVisibility,
 
     // Derived
     isListening: state === 'listening',
