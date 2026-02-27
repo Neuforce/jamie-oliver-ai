@@ -44,11 +44,13 @@ _cmd_list() {
   done
   local state_filter=""
   if [ -n "$state_arg" ]; then
-    state_filter=", filter: { state: { name: { eq: \"$state_arg\" } } }"
+    state_filter="state: { name: { eq: \"$state_arg\" } }"
   else
-    state_filter=", filter: { state: { type: { nin: [\"completed\", \"canceled\"] } } }"
+    state_filter="state: { type: { nin: [\"completed\", \"canceled\"] } }"
   fi
-  local query="query { team(id: \"$LINEAR_TEAM_ID\") { name issues(first: 100 $state_filter, orderBy: updatedAt) { nodes { identifier title state { name } } } } }"
+
+  # Restrict to Jamie Oliver project by default (LINEAR_PROJECT_ID)
+  local query="query { team(id: \"$LINEAR_TEAM_ID\") { name issues(first: 100, filter: { project: { id: { eq: \"$LINEAR_PROJECT_ID\" } }, $state_filter }, orderBy: updatedAt) { nodes { identifier title state { name } } } } }"
   if [ "$out_md" -eq 1 ]; then
     _curl_linear --data "{\"query\": $(echo "$query" | jq -Rs .)}" | jq -r '
       if .errors then (.errors | tostring)
