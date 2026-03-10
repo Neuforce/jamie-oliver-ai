@@ -14,3 +14,9 @@ build/
 logs/
 apps/frontend/package-lock.jsonapps/backend-search/data/media/
 .github/pull_request_template_filled.md
+
+# Linear API key para el agente (opcional)
+.cursor/environment.json
+
+# Linear API key para scripts (scripts/linear.sh)
+scripts/.env

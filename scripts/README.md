@@ -136,6 +136,28 @@ curl -X POST http://localhost:8000/api/v1/recipes/publish-all
 
 ---
 
+### `linear.sh`
+Linear integration: list issues by state, create issues, and get issue details.
+
+**Setup:** copy `scripts/.env.example` to `scripts/.env` and add your Linear API key (Settings → API). Do not use a "Bearer " prefix.
+
+```bash
+# List issues (all non-completed/non-canceled)
+./scripts/linear.sh list
+
+# List by state
+./scripts/linear.sh list Backlog
+./scripts/linear.sh list "In Progress"
+
+# Create an issue
+./scripts/linear.sh create "Issue title" "Optional description"
+
+# Get issue details
+./scripts/linear.sh get NEU-470
+```
+
+---
+
 ### `session_cleanup.sh`
 Script para hacer commit de cambios de sesión con mensajes apropiados.
 

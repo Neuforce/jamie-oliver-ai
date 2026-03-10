@@ -51,6 +51,9 @@ const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
 const SESSION_ID_KEY = 'jamie-oliver-chat-session';
 const TOOL_INTRO_MAX_CHARS = 240;
 
+/** Max width for chat content; matches TabNav for consistent layout (NEU-470). */
+const CHAT_CONTENT_MAX_WIDTH = 600;
+
 // Export function to clear chat history (used when recipe is completed)
 export const clearChatHistory = async () => {
   try {
@@ -248,6 +251,8 @@ export function ChatView({
     isProcessing,
     isSpeaking,
     isActive: isVoiceActive,
+    isPausedByVisibility,
+    resumeFromVisibility,
   } = useVoiceChat({
     sessionId,  // Share session ID between voice and text chat
     onTranscript: (text, isFinal) => {
@@ -832,7 +837,7 @@ export function ChatView({
                     fontSize: '16px',
                     lineHeight: 1.5,
                     color: 'var(--jamie-text-primary)',
-                    maxWidth: '307px',
+                    maxWidth: CHAT_CONTENT_MAX_WIDTH,
                   }}
                 >
                   Hi - I'm jAImie, Jamie Oliver's AI cooking companion. I'll walk or talk you through recipes step-by-step. What are you in the mood for?
@@ -844,7 +849,8 @@ export function ChatView({
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="flex flex-col items-center gap-3 mb-6 max-w-md mx-auto"
+                className="flex flex-col items-center gap-3 mb-6 mx-auto"
+            style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}
               >
                 {PROMPT_SUGGESTIONS.map((prompt, index) => (
                   <button
@@ -879,7 +885,7 @@ export function ChatView({
             overflowY: 'auto',
           }}
         >
-          <div className="max-w-[380px] mx-auto space-y-4">
+          <div className="mx-auto space-y-4" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
             {messages.map((message, index) => (
               <div key={message.id}>
                 {/* Separator */}
@@ -1413,6 +1419,22 @@ export function ChatView({
         )}
       </AnimatePresence>
 
+      {/* NEU-467: Banner when voice was paused because user left the app */}
+      {isPausedByVisibility && (
+        <div className="flex items-center justify-between gap-3 px-5 py-2 bg-amber-500/10 border-t border-amber-500/20" style={{ flexShrink: 0 }}>
+          <p className="text-sm text-amber-800 dark:text-amber-200">
+            Voice paused because you left the app. Tap the mic or Continue to talk to Jamie again.
+          </p>
+          <button
+            type="button"
+            onClick={resumeFromVisibility}
+            className="shrink-0 px-3 py-1.5 text-sm font-medium rounded-full border border-amber-500/50 text-amber-700 hover:bg-amber-500/20 transition-colors"
+          >
+            Continue
+          </button>
+        </div>
+      )}
+
       {/* Voice Mode Indicator - Shows when voice is active */}
       <AnimatePresence>
         {isVoiceActive && (
@@ -1423,7 +1445,7 @@ export function ChatView({
             className="px-5 py-3 bg-white border-t border-black/5"
             style={{ flexShrink: 0 }}
           >
-            <div className="max-w-[380px] mx-auto">
+            <div className="mx-auto" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
               <VoiceModeIndicator
                 state={voiceState}
                 transcript={currentTranscript}
@@ -1457,7 +1479,7 @@ export function ChatView({
           flexShrink: 0,
         }}
       >
-        <div className="max-w-[380px] mx-auto">
+        <div className="mx-auto" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
           <div
             className="bg-white relative rounded-full border border-black/10"
             style={{
@@ -1487,10 +1509,10 @@ export function ChatView({
 
                   {/* Voice Mode Button */}
                   <VoiceModeButton
-                    isActive={isVoiceActive}
+                    isActive={isVoiceActive || isPausedByVisibility}
                     isConnecting={voiceState === 'connecting'}
-                    onClick={toggleVoiceMode}
-                    disabled={isTyping && !isVoiceActive}
+                    onClick={isPausedByVisibility ? resumeFromVisibility : toggleVoiceMode}
+                    disabled={isTyping && !isVoiceActive && !isPausedByVisibility}
                     className="shrink-0"
                   />
 
@@ -1522,7 +1544,7 @@ export function ChatView({
           </div>
 
           {/* Voice mode hint */}
-          {!isVoiceActive && !hasMessages && (
+          {!isVoiceActive && !hasMessages && !isPausedByVisibility && (
             <p
               className="text-center mt-2 text-xs"
               style={{
@@ -1531,6 +1553,14 @@ export function ChatView({
               }}
             >
               Tap the mic to talk to Jamie
+            </p>
+          )}
+          {isPausedByVisibility && (
+            <p
+              className="text-center mt-2 text-xs text-amber-700 dark:text-amber-300"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Voice paused – tap the mic or Continue above to resume
             </p>
           )}
         </div>
