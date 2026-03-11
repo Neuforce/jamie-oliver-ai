@@ -204,133 +204,176 @@ interface MyTabCardProps {
 }
 
 function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTabCardProps) {
-  const badgeLabel = isLoading
-    ? 'Syncing'
-    : card.siteName || 'Supertab';
   const CircleIcon = card.messageTone === 'error'
     ? AlertCircle
     : card.status === 'signed_in'
       ? CheckCircle2
       : CreditCard;
-  const circleValue = card.status === 'signed_in' ? (card.totalLabel ?? 'My Tab') : badgeLabel;
+  const statusLabel = isLoading
+    ? 'Syncing'
+    : card.status === 'signed_in'
+      ? 'Connected'
+      : card.status === 'unavailable'
+        ? 'Unavailable'
+        : 'Not active';
+  const circleValue = card.status === 'signed_in'
+    ? (card.totalLabel ?? 'My Tab')
+    : card.status === 'signed_out'
+      ? 'Start'
+      : 'My Tab';
+  const compactDescription = card.status === 'signed_in'
+    ? card.description
+    : 'Unlock your first recipe with Supertab and your My Tab account will appear here.';
 
   return (
     <div
-      className="rounded-[26px] border border-[#E7E2D9] bg-[#FCFBF8] px-4 py-4 shadow-[0_18px_35px_rgba(15,23,42,0.08)]"
+      className="overflow-hidden rounded-[24px] border border-[#EDE7DE] bg-[#FFFDF9] shadow-[0_14px_30px_rgba(17,24,39,0.06)]"
       style={{ fontFamily: 'var(--font-display)' }}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1F2937]">
-              {card.title}
-            </span>
-            <span className="rounded-full bg-[#F3EFE7] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#111827]">
-              Powered by Supertab
-            </span>
-            {card.isTestMode && (
-              <span className="rounded-full bg-[#FDEAD7] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#C2410C]">
-                Test
+      <div className="h-1.5 bg-[linear-gradient(90deg,#F6A37F_0%,#D77A5F_55%,#C96A50_100%)]" />
+
+      <div className="px-4 py-4">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#D77A5F] text-white shadow-[0_10px_20px_rgba(215,122,95,0.28)]">
+                <TabGlyph />
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="text-[13px] font-semibold text-[#111827]">
+                    {card.title}
+                  </span>
+                  <span className="rounded-full bg-[#F6F2EA] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#111827]">
+                    Powered by Supertab
+                  </span>
+                  {card.isTestMode && (
+                    <span className="rounded-full bg-[#FFF1E6] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#C2410C]">
+                      Test
+                    </span>
+                  )}
+                </div>
+                {card.siteName && (
+                  <div className="mt-1 flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#8C7E69]">
+                    {card.siteLogoUrl ? (
+                      <div className="flex h-5 w-5 items-center justify-center overflow-hidden rounded-full border border-[#EEE4D8] bg-white">
+                        <img
+                          src={card.siteLogoUrl}
+                          alt={card.siteName || 'Supertab site'}
+                          className="h-3.5 w-3.5 object-contain"
+                        />
+                      </div>
+                    ) : null}
+                    <span className="truncate">{card.siteName}</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className="shrink-0 rounded-full border border-[#EEE4D8] bg-white px-3 py-2 shadow-[0_6px_14px_rgba(17,24,39,0.05)]">
+            <div className="flex items-center gap-2">
+              <CircleIcon className="h-3.5 w-3.5 text-[#111827]" />
+              <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#8C7E69]">
+                {statusLabel}
               </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-4 flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <div className="text-[22px] font-semibold leading-none text-[#111827]">
+              {isLoading ? 'Loading My Tab...' : card.headline}
+            </div>
+            <div className="mt-2 max-w-[190px] text-[13px] leading-5 text-[#4B5563]">
+              {compactDescription}
+            </div>
+          </div>
+          <div className="shrink-0">
+            <div className="flex h-[72px] w-[72px] flex-col items-center justify-center rounded-[22px] border border-[#E6DDD0] bg-white text-center shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
+              <div className="mb-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#F9E7E1] text-[#C96A50]">
+                <TabGlyph compact />
+              </div>
+              <div className="px-2 text-[12px] font-semibold leading-4 text-[#111827]">
+                {circleValue}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {(card.userLabel || card.purchaseCountLabel || card.limitLabel) && (
+          <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-3 rounded-[20px] border border-[#EFE7DB] bg-[#FFFFFF] px-3 py-3">
+            {card.userLabel && (
+              <StatLine label="Account" value={card.userLabel} />
+            )}
+            {card.purchaseCountLabel && (
+              <StatLine label="Recipes" value={card.purchaseCountLabel} />
+            )}
+            {card.limitLabel && (
+              <StatLine label="Limit" value={card.limitLabel} />
+            )}
+            {card.recentPurchaseLabel && (
+              <StatLine label="Latest" value={card.recentPurchaseLabel} />
             )}
           </div>
-          <div className="mt-3 flex items-center gap-3">
-            {card.siteLogoUrl ? (
-              <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-[#E7E2D9] bg-white">
-                <img
-                  src={card.siteLogoUrl}
-                  alt={card.siteName || 'Supertab site'}
-                  className="h-7 w-7 object-contain"
-                />
-              </div>
-            ) : null}
-            <div className="min-w-0">
-              {card.siteName && (
-                <div className="truncate text-xs uppercase tracking-[0.18em] text-[#8C7E69]">
-                  {card.siteName}
-                </div>
-              )}
-              <div className="text-base font-semibold text-[#111827]">
-                {isLoading ? 'Loading My Tab...' : card.headline}
-              </div>
-            </div>
+        )}
+
+        {card.helperText && (
+          <div className="mt-3 text-[11px] leading-5 text-[#7A746A]">
+            {card.helperText}
           </div>
-          <div className="mt-2 text-sm leading-5 text-[#4B5563]">
-            {card.description}
+        )}
+
+        {card.message && (
+          <div
+            className={`mt-3 rounded-2xl px-3 py-2 text-xs leading-5 ${
+              card.messageTone === 'error'
+                ? 'bg-[#FDECEC] text-[#9F3A38]'
+                : 'bg-[#F7F3EC] text-[#6B7280]'
+            }`}
+          >
+            {card.message}
           </div>
-        </div>
-        <div className="shrink-0">
-          <div className="flex h-[72px] w-[72px] flex-col items-center justify-center rounded-full border border-[#D8D1C4] bg-white text-center shadow-[0_8px_24px_rgba(17,24,39,0.08)]">
-            <CircleIcon className="mb-1 h-4 w-4 text-[#111827]" />
-            <div className="px-2 text-[11px] font-semibold leading-4 text-[#111827]">
-              {circleValue}
-            </div>
+        )}
+
+        {(card.primaryActionLabel || card.secondaryActionLabel) && (
+          <div className="mt-4 space-y-2">
+            {card.primaryActionLabel && (
+              <button
+                type="button"
+                onClick={onPrimaryAction}
+                disabled={isLoading}
+                className="w-full rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-70"
+                style={{
+                  backgroundColor: '#D77A5F',
+                }}
+              >
+                {card.primaryActionLabel}
+              </button>
+            )}
+            {card.secondaryActionLabel && (
+              <button
+                type="button"
+                onClick={onSecondaryAction}
+                disabled={isLoading}
+                className="w-full rounded-full border border-[#E6DDD0] bg-white px-4 py-3 text-sm font-semibold text-[#111827] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
+              >
+                {isLoading ? 'Refreshing My Tab...' : card.secondaryActionLabel}
+              </button>
+            )}
           </div>
-        </div>
+        )}
       </div>
+    </div>
+  );
+}
 
-      {(card.userLabel || card.purchaseCountLabel || card.limitLabel) && (
-        <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 rounded-[22px] border border-[#E7E2D9] bg-white px-3 py-3">
-          {card.userLabel && (
-            <StatLine label="Account" value={card.userLabel} />
-          )}
-          {card.purchaseCountLabel && (
-            <StatLine label="Recipes" value={card.purchaseCountLabel} />
-          )}
-          {card.limitLabel && (
-            <StatLine label="Limit" value={card.limitLabel} />
-          )}
-          {card.recentPurchaseLabel && (
-            <StatLine label="Latest" value={card.recentPurchaseLabel} />
-          )}
-        </div>
-      )}
-
-      {card.helperText && (
-        <div className="mt-3 text-xs leading-5 text-[#6B7280]">
-          {card.helperText}
-        </div>
-      )}
-
-      {card.message && (
-        <div
-          className={`mt-3 rounded-2xl px-3 py-2 text-xs leading-5 ${
-            card.messageTone === 'error'
-              ? 'bg-[#FDECEC] text-[#9F3A38]'
-              : 'bg-white text-[#6B7280]'
-          }`}
-        >
-          {card.message}
-        </div>
-      )}
-
-      {(card.primaryActionLabel || card.secondaryActionLabel) && (
-        <div className="mt-4 space-y-2">
-          {card.primaryActionLabel && (
-            <button
-              type="button"
-              onClick={onPrimaryAction}
-              disabled={isLoading}
-              className="w-full rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-70"
-              style={{
-                backgroundColor: '#7C5AC3',
-              }}
-            >
-              {card.primaryActionLabel}
-            </button>
-          )}
-          {card.secondaryActionLabel && (
-            <button
-              type="button"
-              onClick={onSecondaryAction}
-              disabled={isLoading}
-              className="w-full rounded-full border border-[#D8D1C4] bg-white px-4 py-3 text-sm font-semibold text-[#111827] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              {isLoading ? 'Refreshing My Tab...' : card.secondaryActionLabel}
-            </button>
-          )}
-        </div>
-      )}
+function TabGlyph({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className={`relative ${compact ? 'h-3.5 w-3.5' : 'h-4.5 w-4.5'}`}>
+      <div className="absolute inset-0 rounded-[4px] border-2 border-current opacity-90" />
+      <div className="absolute left-[18%] right-[18%] top-[18%] h-[24%] rounded-[3px] bg-current" />
+      <div className="absolute bottom-[18%] left-[18%] right-[18%] top-[48%] rounded-[3px] border border-current opacity-80" />
     </div>
   );
 }
@@ -343,7 +386,7 @@ interface StatLineProps {
 function StatLine({ label, value }: StatLineProps) {
   return (
     <div className="min-w-0">
-      <div className="text-[10px] uppercase tracking-[0.14em] text-[#8C7E69]">
+      <div className="text-[10px] uppercase tracking-[0.14em] text-[#A08D72]">
         {label}
       </div>
       <div className="mt-1 truncate text-sm font-medium text-[#111827]">
