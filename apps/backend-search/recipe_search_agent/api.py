@@ -20,6 +20,9 @@ from dotenv import load_dotenv
 from supabase import create_client
 
 from recipe_search_agent.search import RecipeSearchAgent, SearchFilters, RecipeMatch
+from recipe_search_agent.identity_service import IdentityService
+from recipe_search_agent.access_service import AccessService
+from recipe_search_agent.purchase_sync_service import PurchaseSyncService
 
 # Configurar logging
 logging.basicConfig(level=logging.INFO)
@@ -167,6 +170,9 @@ class ChatResponse(BaseModel):
 
 # Chat Agent singleton
 _chat_agent = None
+_identity_service = None
+_access_service = None
+_purchase_sync_service = None
 
 
 def get_chat_agent():
@@ -192,6 +198,58 @@ def get_chat_agent():
         logger.info("Chat agent initialized")
 
     return _chat_agent
+
+
+def get_identity_service() -> IdentityService:
+    """Get or create the identity service singleton."""
+    global _identity_service
+    if _identity_service is None:
+        _identity_service = IdentityService()
+    return _identity_service
+
+
+def get_access_service() -> AccessService:
+    """Get or create the access service singleton."""
+    global _access_service
+    if _access_service is None:
+        _access_service = AccessService()
+    return _access_service
+
+
+def get_purchase_sync_service() -> PurchaseSyncService:
+    """Get or create the purchase sync service singleton."""
+    global _purchase_sync_service
+    if _purchase_sync_service is None:
+        _purchase_sync_service = PurchaseSyncService()
+    return _purchase_sync_service
+
+
+class SupertabBootstrapRequest(BaseModel):
+    provider: str = Field(..., description="External identity provider", example="supertab")
+    external_subject_id: str = Field(..., description="External provider subject ID")
+    profile: dict = Field(default_factory=dict, description="Raw profile data from Supertab")
+
+
+class UserSummaryResponse(BaseModel):
+    id: str
+    email: Optional[str] = None
+    display_name: Optional[str] = None
+
+
+class RecipeAccessResponse(BaseModel):
+    recipeId: str
+    recipeUuid: str
+    accessState: str
+    offering: Optional[dict] = None
+    entitlement: Optional[dict] = None
+    activeSession: Optional[dict] = None
+
+
+class SupertabPurchaseSyncRequest(BaseModel):
+    user_id: str
+    recipe_id: str
+    purchase: Optional[dict] = None
+    prior_entitlement: list[dict] = Field(default_factory=list)
 
 
 # Endpoints
@@ -221,6 +279,92 @@ async def health():
             "status": "unhealthy",
             "error": str(e)
         }
+
+
+@app.post("/api/v1/auth/supertab/bootstrap")
+async def bootstrap_supertab_identity(request: SupertabBootstrapRequest):
+    """Create or retrieve a Jamie user from Supertab-linked identity data."""
+    if request.provider.strip().lower() != "supertab":
+        raise HTTPException(status_code=400, detail="Only supertab provider is supported")
+
+    try:
+        identity_service = get_identity_service()
+        user = identity_service.get_or_create_user_from_supertab(
+            external_subject_id=request.external_subject_id,
+            profile=request.profile,
+        )
+        return {
+            "user": {
+                "id": user["id"],
+                "email": user.get("email"),
+                "displayName": user.get("display_name") or user.get("displayName"),
+            }
+        }
+    except Exception as e:
+        logger.error(f"Failed to bootstrap identity: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to bootstrap identity: {str(e)}")
+
+
+@app.get("/api/v1/me")
+async def get_current_user(user_id: str = Query(..., description="Jamie internal user ID")):
+    """Return a minimal Jamie user summary."""
+    try:
+        identity_service = get_identity_service()
+        user = identity_service.get_user(user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+        return {
+            "user": {
+                "id": user["id"],
+                "email": user.get("email"),
+                "displayName": user.get("display_name") or user.get("displayName"),
+            }
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to get user: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to get user: {str(e)}")
+
+
+@app.get("/api/v1/recipes/{recipe_id}/access", response_model=RecipeAccessResponse)
+async def get_recipe_access(
+    recipe_id: str,
+    user_id: Optional[str] = Query(None, description="Jamie internal user ID"),
+):
+    """Resolve whether the recipe is free, locked, or owned for the given user."""
+    try:
+        access_service = get_access_service()
+        access = access_service.get_recipe_access(recipe_id, user_id=user_id)
+        return RecipeAccessResponse(**access)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to get access state for recipe {recipe_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to get recipe access: {str(e)}")
+
+
+@app.post("/api/v1/purchases/supertab/sync")
+async def sync_supertab_purchase(request: SupertabPurchaseSyncRequest):
+    """Persist Supertab purchase outcomes into Jamie purchases and entitlements."""
+    try:
+        sync_service = get_purchase_sync_service()
+        result = sync_service.sync_supertab_state(
+            user_id=request.user_id,
+            recipe_slug_or_id=request.recipe_id,
+            purchase=request.purchase,
+            prior_entitlement=request.prior_entitlement,
+        )
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to sync Supertab purchase: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to sync Supertab purchase: {str(e)}")
 
 
 @app.post("/api/v1/recipes/search", response_model=SearchResponse)

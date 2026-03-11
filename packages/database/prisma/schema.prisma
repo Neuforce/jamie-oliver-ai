@@ -16,33 +16,36 @@ datasource db {
 // =============================================================================
 
 model Recipe {
-  id        String   @id @default(uuid()) @db.Uuid
-  slug      String   @unique @db.VarChar(255)
-  version   Int      @default(1)
-  
+  id      String @id @default(uuid()) @db.Uuid
+  slug    String @unique @db.VarChar(255)
+  version Int    @default(1)
+
   // Full JOAv0 recipe document
-  recipeJson Json    @map("recipe_json")
-  
+  recipeJson Json @map("recipe_json")
+
   // Computed metadata for fast queries
-  metadata   Json    @default("{}")
-  
+  metadata Json @default("{}")
+
   // Lifecycle
   status       RecipeStatus @default(draft)
   qualityScore Int?         @map("quality_score") @db.SmallInt
-  
+
   // Provenance
-  sourceUrl  String?      @map("source_url")
-  sourceType SourceType   @default(manual) @map("source_type")
-  
+  sourceUrl  String?    @map("source_url")
+  sourceType SourceType @default(manual) @map("source_type")
+
   // Timestamps
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
   publishedAt DateTime? @map("published_at")
-  
+
   // Relations
-  versions RecipeVersion[]
-  chunks   RecipeChunk[]
-  
+  versions        RecipeVersion[]
+  chunks          RecipeChunk[]
+  offerings       RecipeOffering[]
+  entitlements    Entitlement[]
+  cookingSessions CookingSession[]
+
   @@index([status])
   @@index([qualityScore(sort: Desc)])
   @@index([publishedAt(sort: Desc)])
@@ -50,22 +53,22 @@ model Recipe {
 }
 
 model RecipeVersion {
-  id        String @id @default(uuid()) @db.Uuid
-  
+  id String @id @default(uuid()) @db.Uuid
+
   // Reference to recipe
-  recipeId  String @map("recipe_id") @db.Uuid
-  recipe    Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
-  version   Int
-  
+  recipeId String @map("recipe_id") @db.Uuid
+  recipe   Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  version  Int
+
   // Snapshot
   recipeJson Json @map("recipe_json")
   metadata   Json
-  
+
   // Change tracking
   changeSummary String? @map("change_summary")
-  
+
   createdAt DateTime @default(now()) @map("created_at")
-  
+
   @@unique([recipeId, version])
   @@index([recipeId])
   @@index([createdAt(sort: Desc)])
@@ -77,34 +80,34 @@ model RecipeVersion {
 // =============================================================================
 
 model RecipeIndex {
-  id              String  @id @db.VarChar(255)
-  title           String
-  
+  id    String @id @db.VarChar(255)
+  title String
+
   // Exact match filters
-  category        String? @db.VarChar(100)
-  mood            String? @db.VarChar(100)
-  complexity      String? @db.VarChar(50)
-  cost            String? @db.VarChar(50)
-  
+  category   String? @db.VarChar(100)
+  mood       String? @db.VarChar(100)
+  complexity String? @db.VarChar(50)
+  cost       String? @db.VarChar(50)
+
   // Text search
   ingredientsText String? @map("ingredients_text")
-  
+
   // For embedding search
   fullContentForEmbedding String? @map("full_content_for_embedding")
-  
+
   // Vector embedding (384 dimensions for MiniLM)
   // Note: Prisma doesn't natively support pgvector, we'll handle this with raw SQL
   // embedding Vector(384)?
-  
+
   // Reference to source
   filePath    String   @map("file_path") @db.VarChar(500)
   fileHash    String?  @map("file_hash") @db.VarChar(64)
   lastIndexed DateTime @default(now()) @map("last_indexed")
   createdAt   DateTime @default(now()) @map("created_at")
-  
+
   // Optional link to recipes table
   recipeUuid String? @map("recipe_uuid") @db.Uuid
-  
+
   @@index([category])
   @@index([mood])
   @@index([complexity])
@@ -117,37 +120,182 @@ model RecipeIndex {
 // =============================================================================
 
 model RecipeChunk {
-  id        String @id @default(uuid()) @db.Uuid
-  
+  id String @id @default(uuid()) @db.Uuid
+
   // Link to recipe
-  recipeId  String @map("recipe_id")
-  
+  recipeId String @map("recipe_id")
+
   // Optional link to recipes table
   recipeUuid String? @map("recipe_uuid") @db.Uuid
   recipe     Recipe? @relation(fields: [recipeUuid], references: [id], onDelete: SetNull)
-  
+
   // Chunk content
   chunkText String @map("chunk_text")
   chunkHash String @map("chunk_hash")
-  
+
   // LLM metadata
   searchIntent String? @map("search_intent")
   llmAnalysis  Json?   @map("llm_analysis")
-  
+
   // Vector embedding - handled via raw SQL for pgvector
   // embedding Vector(384)?
-  
+
   // Provenance
   filePath String? @map("file_path")
   fileHash String? @map("file_hash") @db.VarChar(64)
-  
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-  
+
   @@unique([recipeId, chunkHash])
   @@index([recipeId])
   @@index([searchIntent])
   @@map("intelligent_recipe_chunks")
+}
+
+// =============================================================================
+// USERS, IDENTITIES, OFFERINGS, ENTITLEMENTS
+// =============================================================================
+
+model User {
+  id          String     @id @default(uuid()) @db.Uuid
+  email       String?    @db.VarChar(255)
+  firstName   String?    @map("first_name") @db.VarChar(255)
+  lastName    String?    @map("last_name") @db.VarChar(255)
+  displayName String?    @map("display_name") @db.VarChar(255)
+  isGuest     Boolean    @default(false) @map("is_guest")
+  status      UserStatus @default(active)
+  metadata    Json       @default("{}")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+
+  identities      ExternalIdentity[]
+  purchases       Purchase[]
+  entitlements    Entitlement[]
+  cookingSessions CookingSession[]
+
+  @@index([email])
+  @@index([status])
+  @@map("users")
+}
+
+model ExternalIdentity {
+  id                String           @id @default(uuid()) @db.Uuid
+  userId            String           @map("user_id") @db.Uuid
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  provider          IdentityProvider
+  externalSubjectId String           @map("external_subject_id") @db.VarChar(255)
+  email             String?          @db.VarChar(255)
+  rawProfile        Json?            @map("raw_profile")
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+
+  @@unique([provider, externalSubjectId])
+  @@index([userId])
+  @@map("external_identities")
+}
+
+model RecipeOffering {
+  id                   String         @id @default(uuid()) @db.Uuid
+  recipeId             String         @map("recipe_id") @db.Uuid
+  recipe               Recipe         @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  isFree               Boolean        @default(false) @map("is_free")
+  supertabOfferingId   String?        @map("supertab_offering_id") @db.VarChar(255)
+  supertabExperienceId String?        @map("supertab_experience_id") @db.VarChar(255)
+  contentKey           String?        @map("content_key") @db.VarChar(255)
+  priceAmount          Int?           @map("price_amount")
+  currencyCode         String?        @map("currency_code") @db.VarChar(10)
+  status               OfferingStatus @default(active)
+  metadata             Json           @default("{}")
+  createdAt            DateTime       @default(now()) @map("created_at")
+  updatedAt            DateTime       @updatedAt @map("updated_at")
+
+  purchases Purchase[]
+
+  @@unique([recipeId])
+  @@index([isFree])
+  @@index([status])
+  @@index([contentKey])
+  @@map("recipe_offerings")
+}
+
+model Purchase {
+  id                 String           @id @default(uuid()) @db.Uuid
+  userId             String           @map("user_id") @db.Uuid
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipeOfferingId   String           @map("recipe_offering_id") @db.Uuid
+  recipeOffering     RecipeOffering   @relation(fields: [recipeOfferingId], references: [id], onDelete: Cascade)
+  provider           PurchaseProvider
+  providerPurchaseId String?          @map("provider_purchase_id") @db.VarChar(255)
+  providerOfferingId String?          @map("provider_offering_id") @db.VarChar(255)
+  status             PurchaseStatus   @default(pending)
+  priceAmount        Int?             @map("price_amount")
+  currencyCode       String?          @map("currency_code") @db.VarChar(10)
+  purchasedAt        DateTime?        @map("purchased_at")
+  completedAt        DateTime?        @map("completed_at")
+  providerPayload    Json?            @map("provider_payload")
+  metadata           Json             @default("{}")
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+
+  entitlements Entitlement[]
+
+  @@index([userId])
+  @@index([recipeOfferingId])
+  @@index([status])
+  @@index([provider, providerPurchaseId])
+  @@map("purchases")
+}
+
+model Entitlement {
+  id                 String            @id @default(uuid()) @db.Uuid
+  userId             String            @map("user_id") @db.Uuid
+  user               User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipeId           String            @map("recipe_id") @db.Uuid
+  recipe             Recipe            @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  purchaseId         String?           @map("purchase_id") @db.Uuid
+  purchase           Purchase?         @relation(fields: [purchaseId], references: [id], onDelete: SetNull)
+  provider           PurchaseProvider
+  providerContentKey String?           @map("provider_content_key") @db.VarChar(255)
+  status             EntitlementStatus @default(active)
+  grantedAt          DateTime          @default(now()) @map("granted_at")
+  expiresAt          DateTime?         @map("expires_at")
+  recursAt           DateTime?         @map("recurs_at")
+  createdAt          DateTime          @default(now()) @map("created_at")
+  updatedAt          DateTime          @updatedAt @map("updated_at")
+
+  cookingSessions CookingSession[]
+
+  @@index([userId, recipeId])
+  @@index([status])
+  @@index([providerContentKey])
+  @@map("entitlements")
+}
+
+model CookingSession {
+  id               String               @id @default(uuid()) @db.Uuid
+  userId           String               @map("user_id") @db.Uuid
+  user             User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  recipeId         String               @map("recipe_id") @db.Uuid
+  recipe           Recipe               @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  entitlementId    String?              @map("entitlement_id") @db.Uuid
+  entitlement      Entitlement?         @relation(fields: [entitlementId], references: [id], onDelete: SetNull)
+  status           CookingSessionStatus @default(active)
+  currentStepIndex Int                  @default(0) @map("current_step_index")
+  completedStepIds Json                 @default("[]") @map("completed_step_ids")
+  timerState       Json?                @map("timer_state")
+  snapshotVersion  Int                  @default(1) @map("snapshot_version")
+  startedAt        DateTime             @default(now()) @map("started_at")
+  lastActiveAt     DateTime             @default(now()) @map("last_active_at")
+  pausedAt         DateTime?            @map("paused_at")
+  completedAt      DateTime?            @map("completed_at")
+  createdAt        DateTime             @default(now()) @map("created_at")
+  updatedAt        DateTime             @updatedAt @map("updated_at")
+
+  @@index([userId, recipeId])
+  @@index([status])
+  @@index([lastActiveAt(sort: Desc)])
+  @@map("cooking_sessions")
 }
 
 // =============================================================================
@@ -158,7 +306,7 @@ enum RecipeStatus {
   draft
   published
   archived
-  
+
   @@map("recipe_status")
 }
 
@@ -167,6 +315,61 @@ enum SourceType {
   scraped
   imported
   enhanced
-  
+
   @@map("source_type")
+}
+
+enum UserStatus {
+  active
+  disabled
+
+  @@map("user_status")
+}
+
+enum IdentityProvider {
+  supertab
+
+  @@map("identity_provider")
+}
+
+enum OfferingStatus {
+  draft
+  active
+  inactive
+
+  @@map("offering_status")
+}
+
+enum PurchaseProvider {
+  supertab
+
+  @@map("purchase_provider")
+}
+
+enum PurchaseStatus {
+  pending
+  completed
+  abandoned
+  refunded
+
+  @@map("purchase_status")
+}
+
+enum EntitlementStatus {
+  active
+  pending
+  expired
+  revoked
+
+  @@map("entitlement_status")
+}
+
+enum CookingSessionStatus {
+  active
+  paused
+  completed
+  abandoned
+  expired
+
+  @@map("cooking_session_status")
 }

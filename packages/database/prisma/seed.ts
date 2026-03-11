@@ -8,11 +8,15 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-import { PrismaClient, RecipeStatus, SourceType } from '@prisma/client';
+import { PrismaClient, RecipeStatus, SourceType, OfferingStatus, PurchaseProvider } from '@prisma/client';
 import * as fs from 'fs';
 import * as path from 'path';
 
 const prisma = new PrismaClient();
+const FREE_RECIPE_SLUGS = new Set([
+  'fluffy-pancakes',
+  'fresh-tomato-soup',
+]);
 
 interface RecipeJson {
   recipe: {
@@ -130,7 +134,7 @@ async function main() {
       const existing = await prisma.recipe.findUnique({ where: { slug } });
       
       if (existing) {
-        await prisma.recipe.update({
+        const recipe = await prisma.recipe.update({
           where: { slug },
           data: {
             recipeJson: recipeJson as any,
@@ -139,10 +143,38 @@ async function main() {
             sourceType: SourceType.imported,
           },
         });
+        await prisma.recipeOffering.upsert({
+          where: { recipeId: recipe.id },
+          update: {
+            isFree: FREE_RECIPE_SLUGS.has(slug),
+            contentKey: `recipe:${slug}:cook`,
+            status: OfferingStatus.active,
+            currencyCode: 'USD',
+            priceAmount: FREE_RECIPE_SLUGS.has(slug) ? 0 : 199,
+            metadata: {
+              provider: PurchaseProvider.supertab,
+              recipeSlug: slug,
+              unlockType: 'cooking_session',
+            } as any,
+          },
+          create: {
+            recipeId: recipe.id,
+            isFree: FREE_RECIPE_SLUGS.has(slug),
+            contentKey: `recipe:${slug}:cook`,
+            status: OfferingStatus.active,
+            currencyCode: 'USD',
+            priceAmount: FREE_RECIPE_SLUGS.has(slug) ? 0 : 199,
+            metadata: {
+              provider: PurchaseProvider.supertab,
+              recipeSlug: slug,
+              unlockType: 'cooking_session',
+            } as any,
+          },
+        });
         updated++;
         console.log(`  Updated: ${slug} (score: ${qualityScore})`);
       } else {
-        await prisma.recipe.create({
+        const recipe = await prisma.recipe.create({
           data: {
             slug,
             recipeJson: recipeJson as any,
@@ -150,6 +182,21 @@ async function main() {
             qualityScore,
             status: RecipeStatus.draft,
             sourceType: SourceType.imported,
+          },
+        });
+        await prisma.recipeOffering.create({
+          data: {
+            recipeId: recipe.id,
+            isFree: FREE_RECIPE_SLUGS.has(slug),
+            contentKey: `recipe:${slug}:cook`,
+            status: OfferingStatus.active,
+            currencyCode: 'USD',
+            priceAmount: FREE_RECIPE_SLUGS.has(slug) ? 0 : 199,
+            metadata: {
+              provider: PurchaseProvider.supertab,
+              recipeSlug: slug,
+              unlockType: 'cooking_session',
+            } as any,
           },
         });
         created++;

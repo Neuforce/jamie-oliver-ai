@@ -107,6 +107,27 @@ class RecipeService:
             return frontend_payload
         
         return None
+
+    async def get_recipe_for_cooking(
+        self,
+        recipe_id: str,
+        *,
+        user_id: str | None = None,
+        frontend_payload: dict | None = None,
+    ) -> dict | None:
+        """
+        Fetch recipe payload for cooking mode.
+
+        This method is the future entitlement-enforcement seam. In the current
+        foundations phase it delegates to the existing source-of-truth lookup,
+        but keeps the calling contract explicit for authenticated cooking flows.
+        """
+        logger.info(
+            "RecipeService: get_recipe_for_cooking(recipe_id=%s, user_id=%s)",
+            recipe_id,
+            user_id,
+        )
+        return await self.get_recipe_with_fallback(recipe_id, frontend_payload=frontend_payload)
     
     async def _fetch_from_supabase(self, recipe_id: str) -> dict | None:
         """Fetch recipe from Supabase by ID or slug."""

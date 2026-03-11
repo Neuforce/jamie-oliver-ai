@@ -1,9 +1,13 @@
 """Session management service."""
 
+import os
+import uuid
+from datetime import datetime, timezone
 from typing import Dict, Callable, Optional, Any
 
 from ccai.core.logger import configure_logger
 from src.recipe_engine import RecipeSessionManager
+from src.services.persisted_session_repository import PersistedSessionRepository
 
 logger = configure_logger(__name__)
 
@@ -11,7 +15,7 @@ logger = configure_logger(__name__)
 class SessionService:
     """Manages sessions and their associated callbacks."""
     
-    def __init__(self):
+    def __init__(self, persisted_session_repository: PersistedSessionRepository | None = None):
         """Initialize the session service."""
         self._session_manager = RecipeSessionManager()
         self._event_callbacks: Dict[str, Callable] = {}
@@ -20,6 +24,13 @@ class SessionService:
         self._assistants: Dict[str, Any] = {}
         self._output_channels: Dict[str, Any] = {}
         self._kitchen_timers: Dict[str, Dict[str, Any]] = {}
+        if persisted_session_repository:
+            self._persisted_sessions = persisted_session_repository
+        elif os.getenv("SUPABASE_URL") and os.getenv("SUPABASE_SERVICE_ROLE_KEY"):
+            self._persisted_sessions = PersistedSessionRepository()
+        else:
+            self._persisted_sessions = None
+            logger.info("SessionService: Supabase not configured, persistent cooking sessions disabled")
     
     def get_session_manager(self) -> RecipeSessionManager:
         """Get the recipe session manager."""
@@ -141,6 +152,71 @@ class SessionService:
     def get_kitchen_timer_state(self, session_id: str) -> Dict[str, Any]:
         """Return current timer state for a session."""
         return self._kitchen_timers.get(session_id, {"running": False, "seconds": 0})
+
+    def create_or_resume_persisted_session(
+        self,
+        *,
+        user_id: str,
+        recipe_id: str,
+        entitlement_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Create or return the latest active/paused persisted cooking session."""
+        if not self._persisted_sessions:
+            raise RuntimeError("Persistent cooking sessions require SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY")
+
+        existing = self._persisted_sessions.find_active_session(user_id, recipe_id)
+        if existing:
+            return existing
+
+        now = datetime.now(timezone.utc).isoformat()
+        created = self._persisted_sessions.create_session(
+            {
+                "id": str(uuid.uuid4()),
+                "user_id": user_id,
+                "recipe_id": recipe_id,
+                "entitlement_id": entitlement_id,
+                "status": "active",
+                "current_step_index": 0,
+                "completed_step_ids": [],
+                "timer_state": None,
+                "snapshot_version": 1,
+                "started_at": now,
+                "last_active_at": now,
+            }
+        )
+        if not created:
+            raise RuntimeError("Failed to create cooking session")
+        return created
+
+    def get_persisted_session(self, session_id: str) -> Optional[Dict[str, Any]]:
+        """Retrieve a persisted cooking session snapshot by ID."""
+        if not self._persisted_sessions:
+            return None
+        return self._persisted_sessions.get_session(session_id)
+
+    def save_session_snapshot(
+        self,
+        session_id: str,
+        *,
+        current_step_index: int,
+        completed_step_ids: list[str] | list[int],
+        timer_state: Optional[Dict[str, Any]] = None,
+        status: Optional[str] = None,
+    ) -> Optional[Dict[str, Any]]:
+        """Persist the latest cooking-session snapshot."""
+        if not self._persisted_sessions:
+            return None
+
+        updates: Dict[str, Any] = {
+            "current_step_index": current_step_index,
+            "completed_step_ids": completed_step_ids,
+            "timer_state": timer_state,
+            "last_active_at": datetime.now(timezone.utc).isoformat(),
+        }
+        if status:
+            updates["status"] = status
+
+        return self._persisted_sessions.update_session(session_id, updates)
     
     async def cleanup_session(self, session_id: str) -> None:
         """

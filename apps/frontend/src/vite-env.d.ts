@@ -3,7 +3,9 @@
 interface ImportMetaEnv {
   readonly VITE_API_BASE_URL?: string;
   readonly VITE_WS_URL?: string;
-  // Add other env variables here as needed
+  readonly VITE_SUPERTAB_CLIENT_ID?: string;
+  readonly VITE_SUPERTAB_PAYWALL_EXPERIENCE_ID?: string;
+  readonly VITE_SUPERTAB_PURCHASE_BUTTON_EXPERIENCE_ID?: string;
 }
 
 // Support for figma:asset imports

@@ -99,6 +99,66 @@ export interface ChatSyncResponse {
   session_id: string;
 }
 
+export interface JamieUserSummary {
+  id: string;
+  email?: string | null;
+  displayName?: string | null;
+}
+
+export interface RecipeAccessResponse {
+  recipeId: string;
+  recipeUuid: string;
+  accessState: 'free' | 'locked' | 'owned';
+  offering: {
+    id: string;
+    isFree: boolean;
+    contentKey?: string | null;
+    priceAmount?: number | null;
+    currencyCode?: string | null;
+    supertabOfferingId?: string | null;
+    supertabExperienceId?: string | null;
+  } | null;
+  entitlement: {
+    id: string;
+    status: string;
+    grantedAt?: string | null;
+    expiresAt?: string | null;
+    recursAt?: string | null;
+  } | null;
+  activeSession: {
+    sessionId: string;
+    status: string;
+    currentStepIndex: number;
+    completedStepIds: Array<string | number>;
+    lastActiveAt?: string | null;
+  } | null;
+}
+
+export interface SupertabBootstrapRequest {
+  provider: 'supertab';
+  external_subject_id: string;
+  profile?: Record<string, unknown>;
+}
+
+export interface SupertabBootstrapResponse {
+  user: JamieUserSummary;
+}
+
+export interface SupertabPurchaseSyncRequest {
+  user_id: string;
+  recipe_id: string;
+  purchase?: Record<string, unknown> | null;
+  prior_entitlement?: Array<Record<string, unknown>>;
+}
+
+export interface SupertabPurchaseSyncResponse {
+  recipeId: string;
+  recipeUuid: string;
+  offeringId: string;
+  purchase?: Record<string, unknown> | null;
+  entitlement?: Record<string, unknown> | null;
+}
+
 // =============================================================================
 // RECIPE SEARCH TYPES
 // =============================================================================
@@ -329,4 +389,69 @@ export async function clearChatSession(sessionId: string): Promise<void> {
  */
 export function generateSessionId(): string {
   return `chat-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+}
+
+export async function bootstrapSupertabIdentity(
+  request: SupertabBootstrapRequest
+): Promise<SupertabBootstrapResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/auth/supertab/bootstrap`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to bootstrap Supertab identity: ${response.status} ${errorText}`);
+  }
+
+  return response.json();
+}
+
+export async function getJamieUser(userId: string): Promise<{ user: JamieUserSummary }> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/me?user_id=${encodeURIComponent(userId)}`);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to get Jamie user: ${response.status} ${errorText}`);
+  }
+
+  return response.json();
+}
+
+export async function getRecipeAccess(recipeId: string, userId?: string): Promise<RecipeAccessResponse> {
+  const url = new URL(`${API_BASE_URL}/api/v1/recipes/${encodeURIComponent(recipeId)}/access`);
+  if (userId) {
+    url.searchParams.set('user_id', userId);
+  }
+
+  const response = await fetch(url.toString());
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to get recipe access: ${response.status} ${errorText}`);
+  }
+
+  return response.json();
+}
+
+export async function syncSupertabPurchase(
+  request: SupertabPurchaseSyncRequest
+): Promise<SupertabPurchaseSyncResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/purchases/supertab/sync`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to sync Supertab purchase: ${response.status} ${errorText}`);
+  }
+
+  return response.json();
 }
