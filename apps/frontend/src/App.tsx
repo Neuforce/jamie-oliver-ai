@@ -28,6 +28,7 @@ import { getJamieUser, getRecipeAccess, type JamieUserSummary, type RecipeAccess
 import {
   loadMyTabSnapshot,
   getStoredJamieAccessUserId,
+  launchRecipePaywall,
   openMyTab,
   type MyTabAccountSummary,
   type MyTabMessageTone,
@@ -249,7 +250,43 @@ export default function App() {
     }
 
     if (access.accessState === 'locked') {
-      setSelectedRecipe(recipe);
+      try {
+        const paywallResult = await launchRecipePaywall(access);
+
+        if (paywallResult.userId && paywallResult.refreshedAccess) {
+          setRecipeAccessMap(prev => ({
+            ...prev,
+            [getRecipeAccessKey(recipe)]: paywallResult.refreshedAccess!,
+          }));
+        }
+
+        if (paywallResult.status === 'unavailable') {
+          toast.error('Supertab paywall is not configured yet', {
+            description: 'Add the paywall experience to validate the hosted purchase flow.',
+          });
+          return;
+        }
+
+        const refreshedAccess = paywallResult.refreshedAccess;
+        if (refreshedAccess && (refreshedAccess.accessState === 'owned' || refreshedAccess.accessState === 'free')) {
+          toast.success('Recipe unlocked', {
+            description: 'Jamie is ready to start cooking with you.',
+          });
+          startCookingOverlay(recipe);
+          return;
+        }
+
+        toast.message('Paywall flow closed', {
+          description: 'The Supertab paywall opened. If no purchase was completed, your recipe will remain locked.',
+        });
+      } catch (error) {
+        console.error('Supertab paywall validation failed:', error);
+        toast.error('Supertab paywall failed to open', {
+          description: error instanceof Error
+            ? error.message
+            : 'We could not validate the hosted Supertab paywall flow.',
+        });
+      }
       return;
     }
 

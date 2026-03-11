@@ -204,10 +204,20 @@ export function RecipeModal({
             ) : (
               <div className="space-y-3">
                 {isLocked && recipeAccess ? (
-                  <SupertabPurchaseButton
-                    access={recipeAccess}
-                    onResolved={onPurchaseResolved}
-                  />
+                  <>
+                    <SupertabPurchaseButton
+                      access={recipeAccess}
+                      onResolved={onPurchaseResolved}
+                    />
+                    <Button
+                      onClick={onCookWithJamie}
+                      variant="outline"
+                      className="w-full"
+                      size="lg"
+                    >
+                      Try hosted Supertab paywall
+                    </Button>
+                  </>
                 ) : (
                   <div
                     style={{

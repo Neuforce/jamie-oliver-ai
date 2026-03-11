@@ -14,6 +14,9 @@ type RawSupertabCustomer = Awaited<ReturnType<SupertabClient['api']['retrieveCus
 type RawSupertabCustomerUser = NonNullable<RawSupertabCustomer['user']>;
 type RawSupertabSite = Awaited<ReturnType<SupertabClient['api']['retrieveSite']>>;
 type SupertabPurchaseButtonState = Awaited<ReturnType<SupertabClient['createPurchaseButton']>>['initialState'];
+type SupertabPurchaseButtonHandle = Awaited<ReturnType<SupertabClient['createPurchaseButton']>> & {
+  show?: () => Promise<unknown>;
+};
 
 let supertabClientPromise: Promise<SupertabClient> | null = null;
 
@@ -364,7 +367,34 @@ export async function mountRecipePurchaseButton({
         onError?.('We could not sync your Supertab purchase back to Jamie.');
       });
     },
-  });
+  }) as SupertabPurchaseButtonHandle;
+
+  let isLaunchingFromShow = false;
+  let detachShowHandler = () => undefined;
+
+  if (typeof button.show === 'function') {
+    console.info('Supertab purchase button exposes show(); wiring explicit launch fallback.');
+    const handleContainerClick = () => {
+      if (isLaunchingFromShow) {
+        return;
+      }
+
+      isLaunchingFromShow = true;
+      void button.show?.().catch((error) => {
+        console.error('Supertab purchase button show() failed:', error);
+        onError?.('Supertab could not launch the purchase button flow.');
+      }).finally(() => {
+        isLaunchingFromShow = false;
+      });
+    };
+
+    containerElement.addEventListener('click', handleContainerClick);
+    detachShowHandler = () => {
+      containerElement.removeEventListener('click', handleContainerClick);
+    };
+  } else {
+    console.info('Supertab purchase button returned no show(); relying on embedded widget click handling.');
+  }
 
   if ('initialState' in button && button.initialState) {
     void resolvePurchaseOutcome(access, button.initialState, onResolved).catch((error) => {
@@ -373,7 +403,10 @@ export async function mountRecipePurchaseButton({
   }
 
   return {
-    destroy: button.destroy,
+    destroy: () => {
+      detachShowHandler();
+      button.destroy();
+    },
   };
 }
 
