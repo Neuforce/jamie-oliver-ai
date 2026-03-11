@@ -11,6 +11,7 @@ from typing import Any, Dict, Optional
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 from ccai.core.audio_interface.websocket_audio_interface import WebSocketAudioInterface
 from ccai.core.logger import configure_logger
@@ -32,6 +33,19 @@ DEFAULT_HELLO_MESSAGE = (
     "Hello! I'm your cooking assistant. Ask me what recipes are available "
     "or tell me what you'd like to cook, and I'll guide you step by step."
 )
+
+
+class CookingSessionCreateRequest(BaseModel):
+    userId: str
+    recipeId: str
+    entitlementId: Optional[str] = None
+
+
+class CookingSessionSnapshotUpdateRequest(BaseModel):
+    currentStepIndex: int
+    completedStepIds: list[str] | list[int] = []
+    timerState: Optional[Dict[str, Any]] = None
+    status: Optional[str] = None
 
 
 @asynccontextmanager
@@ -92,6 +106,73 @@ async def health_check():
         "service": "jamie-oliver-ai-backend",
         "version": settings.APP_VERSION,
         "environment": settings.ENVIRONMENT
+    }
+
+
+@app.post("/api/v1/cooking/sessions")
+async def create_or_resume_cooking_session(request: CookingSessionCreateRequest):
+    """Create or resume a persisted cooking session for a user and recipe."""
+    try:
+        session = session_service.create_or_resume_persisted_session(
+            user_id=request.userId,
+            recipe_id=request.recipeId,
+            entitlement_id=request.entitlementId,
+        )
+        return {
+            "sessionId": session["id"],
+            "recipeId": session["recipe_id"],
+            "status": session["status"],
+            "currentStepIndex": session.get("current_step_index", 0),
+            "completedStepIds": session.get("completed_step_ids", []),
+            "timerState": session.get("timer_state"),
+            "lastActiveAt": session.get("last_active_at"),
+        }
+    except Exception as exc:
+        logger.error(f"Failed to create or resume cooking session: {exc}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to create or resume cooking session: {exc}")
+
+
+@app.get("/api/v1/cooking/sessions/{session_id}")
+async def get_cooking_session(session_id: str):
+    """Retrieve a persisted cooking session snapshot."""
+    session = session_service.get_persisted_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Cooking session not found")
+    return {
+        "sessionId": session["id"],
+        "userId": session["user_id"],
+        "recipeId": session["recipe_id"],
+        "entitlementId": session.get("entitlement_id"),
+        "status": session["status"],
+        "currentStepIndex": session.get("current_step_index", 0),
+        "completedStepIds": session.get("completed_step_ids", []),
+        "timerState": session.get("timer_state"),
+        "startedAt": session.get("started_at"),
+        "lastActiveAt": session.get("last_active_at"),
+        "pausedAt": session.get("paused_at"),
+        "completedAt": session.get("completed_at"),
+    }
+
+
+@app.put("/api/v1/cooking/sessions/{session_id}")
+async def update_cooking_session(session_id: str, request: CookingSessionSnapshotUpdateRequest):
+    """Persist the latest cooking-session snapshot state."""
+    updated = session_service.save_session_snapshot(
+        session_id,
+        current_step_index=request.currentStepIndex,
+        completed_step_ids=request.completedStepIds,
+        timer_state=request.timerState,
+        status=request.status,
+    )
+    if not updated:
+        raise HTTPException(status_code=404, detail="Cooking session not found")
+    return {
+        "sessionId": updated["id"],
+        "status": updated["status"],
+        "currentStepIndex": updated.get("current_step_index", 0),
+        "completedStepIds": updated.get("completed_step_ids", []),
+        "timerState": updated.get("timer_state"),
+        "lastActiveAt": updated.get("last_active_at"),
     }
 
 @app.post("/sessions/{session_id}/steps/{step_id}/confirm")

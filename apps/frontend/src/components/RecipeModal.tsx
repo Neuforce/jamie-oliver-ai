@@ -5,7 +5,10 @@ import { Button } from './ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { useEffect, useState } from 'react';
 import { RecipeCard } from './RecipeCard';
+import { SupertabPurchaseButton } from './SupertabPurchaseButton';
 import { toast } from './ui/sonner';
+import type { RecipeAccessResponse } from '../lib/api';
+import type { RecipePurchaseResolution } from '../lib/supertab';
 // @ts-ignore - Vite handles image imports
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 
@@ -15,9 +18,19 @@ interface RecipeModalProps {
   recipe: Recipe | null;
   onClose: () => void;
   onCookWithJamie: () => void;
+  recipeAccess?: RecipeAccessResponse | null;
+  isAccessLoading?: boolean;
+  onPurchaseResolved?: (resolution: RecipePurchaseResolution) => void;
 }
 
-export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalProps) {
+export function RecipeModal({
+  recipe,
+  onClose,
+  onCookWithJamie,
+  recipeAccess,
+  isAccessLoading = false,
+  onPurchaseResolved,
+}: RecipeModalProps) {
   const [savedSession, setSavedSession] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('ingredients');
 
@@ -49,6 +62,16 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
   if (!recipe) return null;
 
   const hasUtensils = recipe.utensils && recipe.utensils.length > 0;
+  const isLocked = recipeAccess?.accessState === 'locked';
+  const canResumeSavedSession = !!savedSession && !isLocked;
+  const primaryCtaLabel = isAccessLoading
+    ? 'Checking recipe access...'
+    : 'Start a voice-guided cooking session with Jamie';
+  const secondaryCtaCopy = isLocked
+    ? 'Supertab will handle the recipe unlock, then Jamie can take over the cooking session.'
+    : recipeAccess?.accessState === 'owned'
+      ? 'This recipe is already owned in My Tab, so you can start cooking right away.'
+      : null;
 
   return (
     <div
@@ -124,7 +147,7 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
         {/* Cook with Jamie CTA */}
         <div className="flex items-center justify-center w-full" style={{ marginTop: '24px', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
           <div style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
-            {savedSession ? (
+            {canResumeSavedSession ? (
               <div className="space-y-3">
                 <Button
                   onClick={onCookWithJamie}
@@ -179,48 +202,74 @@ export function RecipeModal({ recipe, onClose, onCookWithJamie }: RecipeModalPro
                 </Button>
               </div>
             ) : (
-              <div
-                style={{
-                  width: '100%',
-                  minHeight: '58px',
-                  borderRadius: '24px',
-                  background: 'rgba(232, 235, 237, 0.5)',
-                  padding: '8px 0 0 0',
-                  alignSelf: 'stretch',
-                  display: 'flex',
-                  alignItems: 'flex-end',
-                  overflow: 'hidden',
-                }}
-              >
-                <Button
-                  onClick={onCookWithJamie}
-                  className="w-full justify-between text-white"
-                  size="lg"
-                  style={{
-                    height: '50px',
-                    padding: '9px 14px 9px 32px',
-                    borderRadius: '24px',
-                    backgroundColor: '#3D6E6C',
-                    transition: 'background-color 0.2s ease',
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#1f423f')}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#3D6E6C')}
-                >
-                  <span style={{ marginLeft: '32px' }}>
-                    Voice guided cooking with Jamie
-                  </span>
-                  <span
-                    className="inline-flex items-center justify-center"
+              <div className="space-y-3">
+                {isLocked && recipeAccess ? (
+                  <SupertabPurchaseButton
+                    access={recipeAccess}
+                    onResolved={onPurchaseResolved}
+                  />
+                ) : (
+                  <div
                     style={{
-                      width: '24px',
-                      height: '24px',
-                      borderRadius: '9px',
-                      background: '#29514F',
+                      width: '100%',
+                      minHeight: '58px',
+                      borderRadius: '24px',
+                      background: 'rgba(232, 235, 237, 0.5)',
+                      padding: '8px 0 0 0',
+                      alignSelf: 'stretch',
+                      display: 'flex',
+                      alignItems: 'flex-end',
+                      overflow: 'hidden',
                     }}
                   >
-                    <ArrowRight className="size-4" />
-                  </span>
-                </Button>
+                    <Button
+                      onClick={onCookWithJamie}
+                      disabled={isAccessLoading}
+                      className="w-full justify-between text-white disabled:opacity-100"
+                      size="lg"
+                      style={{
+                        height: '50px',
+                        padding: '9px 14px 9px 32px',
+                        borderRadius: '24px',
+                        backgroundColor: '#3D6E6C',
+                        transition: 'background-color 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isAccessLoading) {
+                          e.currentTarget.style.backgroundColor = '#1f423f';
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = '#3D6E6C';
+                      }}
+                    >
+                      <span style={{ marginLeft: '32px' }}>
+                        {primaryCtaLabel}
+                      </span>
+                      <span
+                        className="inline-flex items-center justify-center"
+                        style={{
+                          width: '24px',
+                          height: '24px',
+                          borderRadius: '9px',
+                          background: '#29514F',
+                        }}
+                      >
+                        <ArrowRight className="size-4" />
+                      </span>
+                    </Button>
+                  </div>
+                )}
+                {secondaryCtaCopy && (
+                  <p className="text-sm text-center text-muted-foreground">
+                    {secondaryCtaCopy}
+                  </p>
+                )}
+                {savedSession && isLocked && (
+                  <p className="text-sm text-center text-muted-foreground">
+                    Unlock this recipe to resume your saved progress.
+                  </p>
+                )}
               </div>
             )}
           </div>

@@ -1,10 +1,10 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
 import { RecipeCard } from './components/RecipeCard';
 import { RecipeModal } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
 import { ChatView, clearChatHistory } from './components/ChatView';
-import { TabNav, TabView } from './components/TabNav';
+import { TabNav, TabView, type MyTabCardData } from './components/TabNav';
 import { Button } from './components/ui/button';
 import { Search, ChefHat, Grid3x3, LayoutList, Clock, SlidersHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -24,6 +24,16 @@ import { GlowEffect } from './design-system/components/GlowEffect';
 import { AvatarWithGlow } from './design-system/components/AvatarWithGlow';
 import { SearchInput } from './design-system/components/SearchInput';
 import { RecipeSkeletonLoader } from './components/ui/skeleton-loader';
+import { getJamieUser, getRecipeAccess, type JamieUserSummary, type RecipeAccessResponse } from './lib/api';
+import {
+  loadMyTabSnapshot,
+  getStoredJamieAccessUserId,
+  openMyTab,
+  type MyTabAccountSummary,
+  type MyTabMessageTone,
+  type RecipePurchaseResolution,
+  type MyTabStatus,
+} from './lib/supertab';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -45,9 +55,12 @@ export default function App() {
   const [recipesInProgress, setRecipesInProgress] = useState<Recipe[]>([]);
   const [showSessionWarning, setShowSessionWarning] = useState(false);
   const [pendingRecipe, setPendingRecipe] = useState<Recipe | null>(null);
+  const [pendingRecipeAction, setPendingRecipeAction] = useState<'view' | 'cook'>('view');
 
   // Loading states
   const [isLoading, setIsLoading] = useState(false);
+  const [recipeAccessMap, setRecipeAccessMap] = useState<Record<string, RecipeAccessResponse>>({});
+  const [recipeAccessLoadingId, setRecipeAccessLoadingId] = useState<string | null>(null);
 
   // Data state
   const [loadedRecipes, setLoadedRecipes] = useState<Recipe[]>(recipes);
@@ -56,6 +69,13 @@ export default function App() {
   // Chat state
   const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>(undefined);
   const [chatKey, setChatKey] = useState(0); // Key to force ChatView remount when clearing
+  const [myTabStatus, setMyTabStatus] = useState<MyTabStatus>('unavailable');
+  const [isMyTabLoading, setIsMyTabLoading] = useState(false);
+  const [myTabAccount, setMyTabAccount] = useState<MyTabAccountSummary | null>(null);
+  const [myTabJamieUser, setMyTabJamieUser] = useState<JamieUserSummary | null>(null);
+  const [myTabMessage, setMyTabMessage] = useState<string | null>(null);
+  const [myTabMessageTone, setMyTabMessageTone] = useState<MyTabMessageTone | undefined>(undefined);
+  const normalizedSearchQuery = typeof searchQuery === 'string' ? searchQuery : '';
 
   // Load recipes asynchronously in production (when recipes array is empty)
   useEffect(() => {
@@ -70,6 +90,66 @@ export default function App() {
       setAvailableCategories(getCategories(recipes));
     }
   }, []);
+
+  const hydrateJamieUser = useCallback(async (userId?: string, isMounted?: () => boolean) => {
+    if (!userId) {
+      if (!isMounted || isMounted()) {
+        setMyTabJamieUser(null);
+      }
+      return;
+    }
+
+    try {
+      const response = await getJamieUser(userId);
+      if (!isMounted || isMounted()) {
+        setMyTabJamieUser(response.user);
+      }
+    } catch (error) {
+      console.error('Failed to load Jamie user for My Tab:', error);
+      if (!isMounted || isMounted()) {
+        setMyTabJamieUser(null);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const resolveMyTabState = async () => {
+      setIsMyTabLoading(true);
+      try {
+        const snapshot = await loadMyTabSnapshot();
+        if (!isMounted) {
+          return;
+        }
+
+        setMyTabStatus(snapshot.status);
+        setMyTabAccount(snapshot.account ?? null);
+        setMyTabMessage(snapshot.message ?? null);
+        setMyTabMessageTone(snapshot.messageTone);
+        await hydrateJamieUser(snapshot.userId, () => isMounted);
+      } catch (error) {
+        console.error('Failed to resolve My Tab status:', error);
+        if (isMounted) {
+          setMyTabStatus('signed_out');
+          setMyTabAccount(null);
+          setMyTabJamieUser(null);
+          setMyTabMessage('We could not load My Tab right now. Please try again in a moment.');
+          setMyTabMessageTone('error');
+        }
+      } finally {
+        if (isMounted) {
+          setIsMyTabLoading(false);
+        }
+      }
+    };
+
+    void resolveMyTabState();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [hydrateJamieUser]);
 
   // Check for recipes with saved sessions
   useEffect(() => {
@@ -119,16 +199,74 @@ export default function App() {
     return null;
   };
 
+  const getRecipeAccessKey = useCallback((recipe: Recipe) => recipe.backendId || String(recipe.id), []);
+
+  const loadRecipeAccess = useCallback(async (
+    recipe: Recipe,
+    options: { force?: boolean; userId?: string } = {}
+  ): Promise<RecipeAccessResponse | null> => {
+    if (!recipe.backendId) {
+      return null;
+    }
+
+    const key = getRecipeAccessKey(recipe);
+    if (!options.force && recipeAccessMap[key]) {
+      return recipeAccessMap[key];
+    }
+
+    setRecipeAccessLoadingId(key);
+    try {
+      const access = await getRecipeAccess(
+        recipe.backendId,
+        options.userId ?? getStoredJamieAccessUserId() ?? undefined
+      );
+      setRecipeAccessMap(prev => ({ ...prev, [key]: access }));
+      return access;
+    } catch (error) {
+      console.error('Failed to load recipe access:', error);
+      toast.error('Could not load recipe access', {
+        description: 'Please try again in a moment.',
+      });
+      return null;
+    } finally {
+      setRecipeAccessLoadingId(current => (current === key ? null : current));
+    }
+  }, [getRecipeAccessKey, recipeAccessMap]);
+
+  const startCookingOverlay = useCallback((recipe: Recipe) => {
+    setIsLoading(true);
+    setSelectedRecipe(null);
+    setTimeout(() => {
+      setCookingRecipe(recipe);
+      setIsLoading(false);
+    }, 500);
+  }, []);
+
+  const startCookingForRecipe = useCallback(async (recipe: Recipe) => {
+    const access = await loadRecipeAccess(recipe, { force: true });
+    if (!access) {
+      return;
+    }
+
+    if (access.accessState === 'locked') {
+      setSelectedRecipe(recipe);
+      return;
+    }
+
+    startCookingOverlay(recipe);
+  }, [getRecipeAccessKey, loadRecipeAccess, startCookingOverlay]);
+
   // Filter recipes based on search and category
   const filteredRecipes = useMemo(() => {
+    const normalizedQuery = normalizedSearchQuery.toLowerCase();
     return loadedRecipes.filter(recipe => {
-      const matchesSearch = recipe.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           recipe.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           recipe.category.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = recipe.title.toLowerCase().includes(normalizedQuery) ||
+                           recipe.description.toLowerCase().includes(normalizedQuery) ||
+                           recipe.category.toLowerCase().includes(normalizedQuery);
       const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, selectedCategory, loadedRecipes]);
+  }, [normalizedSearchQuery, selectedCategory, loadedRecipes]);
 
   // Recipe interaction handlers
   const handleCookWithJamie = () => {
@@ -137,21 +275,18 @@ export default function App() {
     const otherActiveSessions = recipesInProgress.filter(r => r.id !== selectedRecipe.id);
     if (otherActiveSessions.length > 0) {
       setPendingRecipe(selectedRecipe);
+      setPendingRecipeAction('cook');
       setShowSessionWarning(true);
       return;
     }
 
-    setIsLoading(true);
-    setSelectedRecipe(null);
-    setTimeout(() => {
-      setCookingRecipe(selectedRecipe);
-      setIsLoading(false);
-    }, 500);
+    void startCookingForRecipe(selectedRecipe);
   };
 
   const handleRecipeClick = (recipe: Recipe) => {
     if (cookingRecipe && cookingRecipe.id !== recipe.id) {
       setPendingRecipe(recipe);
+      setPendingRecipeAction('view');
       setShowSessionWarning(true);
       return;
     }
@@ -166,13 +301,21 @@ export default function App() {
   const handleContinueWithNewRecipe = () => {
     setShowSessionWarning(false);
     if (pendingRecipe) {
+      const nextRecipe = pendingRecipe;
       setIsLoading(true);
       setCookingRecipe(null);
       setSelectedRecipe(null);
       setTimeout(() => {
-        setCookingRecipe(pendingRecipe);
+        if (pendingRecipeAction === 'cook') {
+          setIsLoading(false);
+          void startCookingForRecipe(nextRecipe);
+        } else {
+          setSelectedRecipe(nextRecipe);
+          void loadRecipeAccess(nextRecipe);
+          setIsLoading(false);
+        }
         setPendingRecipe(null);
-        setIsLoading(false);
+        setPendingRecipeAction('view');
       }, 500);
     }
   };
@@ -184,11 +327,7 @@ export default function App() {
 
   // Resume cooking directly (from Continue Cooking section)
   const handleResumeCooking = (recipe: Recipe) => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setCookingRecipe(recipe);
-      setIsLoading(false);
-    }, 300);
+    void startCookingForRecipe(recipe);
   };
 
   // Discard a saved session
@@ -210,6 +349,7 @@ export default function App() {
   // Handle recipe selection from Chat view
   const handleChatRecipeClick = (recipe: Recipe) => {
     setSelectedRecipe(recipe);
+    void loadRecipeAccess(recipe);
   };
 
   // Handle logo click - return to home (Chat with fresh state)
@@ -226,6 +366,108 @@ export default function App() {
     setChatKey(prev => prev + 1); // Force ChatView to remount with fresh state
     setInitialChatMessage(undefined);
     // Stay in chat view but with cleared state
+  };
+
+  const handleOpenMyTab = useCallback(async () => {
+    setIsMyTabLoading(true);
+    try {
+      const snapshot = await openMyTab();
+      setMyTabStatus(snapshot.status);
+      setMyTabAccount(snapshot.account ?? null);
+      setMyTabMessage(snapshot.message ?? null);
+      setMyTabMessageTone(snapshot.messageTone);
+      await hydrateJamieUser(snapshot.userId);
+    } catch (error) {
+      console.error('Failed to open My Tab:', error);
+      setMyTabStatus('signed_out');
+      setMyTabAccount(null);
+      setMyTabJamieUser(null);
+      setMyTabMessage('We could not open My Tab right now. Please try again in a moment.');
+      setMyTabMessageTone('error');
+    } finally {
+      setIsMyTabLoading(false);
+    }
+  }, [hydrateJamieUser]);
+
+  const handleRecipePurchaseResolved = useCallback(async (
+    recipe: Recipe,
+    resolution: RecipePurchaseResolution
+  ) => {
+    setMyTabStatus(resolution.snapshot.status);
+    setMyTabAccount(resolution.snapshot.account ?? null);
+    setMyTabMessage(resolution.snapshot.message ?? null);
+    setMyTabMessageTone(resolution.snapshot.messageTone);
+    await hydrateJamieUser(resolution.snapshot.userId);
+
+    if (resolution.refreshedAccess) {
+      setRecipeAccessMap(prev => ({
+        ...prev,
+        [getRecipeAccessKey(recipe)]: resolution.refreshedAccess!,
+      }));
+    }
+
+    const purchaseCompleted = resolution.state.purchase?.status === 'completed';
+    const alreadyOwned = resolution.priorEntitlements.length > 0;
+    const refreshedAccess = resolution.refreshedAccess;
+
+    if (
+      refreshedAccess
+      && (refreshedAccess.accessState === 'owned' || refreshedAccess.accessState === 'free')
+      && (purchaseCompleted || alreadyOwned)
+    ) {
+      toast.success('Recipe unlocked', {
+        description: 'Jamie is ready to start cooking with you.',
+      });
+      startCookingOverlay(recipe);
+    }
+  }, [getRecipeAccessKey, hydrateJamieUser, startCookingOverlay]);
+
+  useEffect(() => {
+    if (selectedRecipe) {
+      void loadRecipeAccess(selectedRecipe);
+    }
+  }, [selectedRecipe, loadRecipeAccess]);
+
+  const selectedRecipeAccess = selectedRecipe
+    ? recipeAccessMap[getRecipeAccessKey(selectedRecipe)] ?? null
+    : null;
+  const isSelectedRecipeAccessLoading = selectedRecipe
+    ? recipeAccessLoadingId === getRecipeAccessKey(selectedRecipe)
+    : false;
+  const myTabHeadline = myTabStatus === 'signed_in'
+    ? (myTabAccount?.totalLabel ?? 'Connected')
+    : myTabStatus === 'unavailable'
+      ? 'Configuration needed'
+      : 'Activates after purchase';
+  const myTabDescription = myTabStatus === 'signed_in'
+    ? 'Your Supertab account is connected and ready for recipe unlocks.'
+    : myTabStatus === 'unavailable'
+      ? 'My Tab cannot load until the frontend Supertab config is available.'
+      : 'Unlock any paid recipe with the Supertab button and My Tab will keep that ownership attached to you.';
+  const myTabUserLabel = myTabJamieUser?.displayName
+    || myTabJamieUser?.email
+    || myTabAccount?.displayName
+    || myTabAccount?.email
+    || (myTabAccount?.isGuest ? 'Guest session' : undefined);
+  const myTabCard: MyTabCardData = {
+    status: myTabStatus,
+    title: 'My Tab',
+    headline: myTabHeadline,
+    description: myTabDescription,
+    userLabel: myTabUserLabel,
+    totalLabel: myTabAccount?.totalLabel ?? undefined,
+    limitLabel: myTabAccount?.limitLabel ?? undefined,
+    purchaseCountLabel: myTabAccount
+      ? `${myTabAccount.purchaseCount} ${myTabAccount.purchaseCount === 1 ? 'purchase' : 'purchases'}`
+      : undefined,
+    recentPurchaseLabel: myTabAccount?.recentPurchaseLabel ?? undefined,
+    helperText: myTabStatus === 'signed_in'
+      ? 'Locked recipes unlock from each recipe detail using Supertab\'s native purchase flow.'
+      : 'Your first Supertab recipe unlock creates the account state that appears here.',
+    actionLabel: myTabStatus === 'signed_in' ? 'Refresh My Tab' : undefined,
+    message: myTabMessage,
+    messageTone: myTabMessageTone,
+    isTestMode: myTabAccount?.isTestMode,
   };
 
   return (
@@ -265,6 +507,9 @@ export default function App() {
               activeTab={activeView}
               onTabChange={setActiveView}
               onCloseChat={handleCloseChat}
+              myTabCard={myTabCard}
+              onOpenMyTab={handleOpenMyTab}
+              isMyTabLoading={isMyTabLoading}
             />
           </header>
 
@@ -370,8 +615,8 @@ export default function App() {
                           className="max-w-md mx-auto"
                         >
                           <SearchInput
-                            value={searchQuery}
-                            onSearch={(value) => setSearchQuery(value)}
+                            value={normalizedSearchQuery}
+                            onSearch={(value) => setSearchQuery(typeof value === 'string' ? value : '')}
                             placeholder="Search recipes by name, ingredie..."
                           />
                         </motion.div>
@@ -769,6 +1014,9 @@ export default function App() {
           recipe={selectedRecipe}
           onClose={() => setSelectedRecipe(null)}
           onCookWithJamie={handleCookWithJamie}
+          recipeAccess={selectedRecipeAccess}
+          isAccessLoading={isSelectedRecipeAccessLoading}
+          onPurchaseResolved={(resolution) => handleRecipePurchaseResolved(selectedRecipe, resolution)}
         />
       )}
 

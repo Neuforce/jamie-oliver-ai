@@ -12,12 +12,14 @@ export function SearchInput(props: SearchInputProps) {
     placeholder = "Search recipes by name, ingredie...", 
     onSearch,
     onChange,
+    value,
     ...inputProps 
   } = props;
+  const normalizedValue = typeof value === 'string' ? value : (value ?? '').toString();
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange?.(e);
-    onSearch?.(e.target.value);
+    onSearch?.(e.target.value ?? '');
   };
 
   return (
@@ -29,6 +31,7 @@ export function SearchInput(props: SearchInputProps) {
           onChange={handleChange}
           className="flex-1 text-base leading-[21px] text-[#5d5d5d] placeholder:text-[#5d5d5d] bg-transparent outline-none font-['Work_Sans',sans-serif]"
           {...inputProps}
+          value={normalizedValue}
         />
         <Search className="size-6 text-[#327179] flex-shrink-0" strokeWidth={1.5} />
       </div>

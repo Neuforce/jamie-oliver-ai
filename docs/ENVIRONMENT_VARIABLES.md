@@ -7,8 +7,8 @@ Este documento lista todas las variables de entorno necesarias para cada aplicac
 | App | Variables Requeridas | Variables Opcionales |
 |-----|---------------------|---------------------|
 | **Frontend** | `VITE_WS_URL`, `VITE_API_BASE_URL` | - |
-| **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS` |
-| **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `RECIPE_*` (varias) |
+| **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
+| **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `SUPERTAB_*`, `RECIPE_*` (varias) |
 
 ---
 
@@ -64,6 +64,10 @@ ENVIRONMENT=development         # development, staging, production
 
 # CORS Origins (lista separada por comas)
 CORS_ORIGINS=http://localhost:3000,http://localhost:3100,https://your-frontend.vercel.app
+
+# Persistencia de sesiones de cooking (opcional, pero necesaria para sesiones durables)
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 ```
 
 ### Descripción
@@ -72,6 +76,8 @@ CORS_ORIGINS=http://localhost:3000,http://localhost:3100,https://your-frontend.v
 - **`DEEPGRAM_API_KEY`**: Clave API de Deepgram para convertir audio a texto.
 - **`ELEVENLABS_API_KEY`**: Clave API de ElevenLabs para convertir texto a audio.
 - **`ELEVENLABS_VOICE_ID`**: ID de la voz en ElevenLabs. Encuéntralo en [ElevenLabs Voice Library](https://elevenlabs.io/app/voice-library).
+- **`SUPABASE_URL`**: URL de Supabase utilizada para persistir snapshots de sesiones de cooking.
+- **`SUPABASE_SERVICE_ROLE_KEY`**: Clave con acceso backend para crear y recuperar sesiones persistidas.
 
 ### Archivo
 - `.env.example`: `apps/backend-voice/.env.example`
@@ -99,6 +105,15 @@ RECIPE_PDF_LOG_LEVEL=INFO       # DEBUG, INFO, WARNING, ERROR
 
 # Supabase Table
 RECIPE_PDF_SUPABASE_TABLE=recipe_index
+```
+
+### Variables Opcionales - Supertab Foundations
+
+```bash
+# IDs/configuración de Supertab para monetización de recipes
+SUPERTAB_CLIENT_ID=test_client.your-client-id
+SUPERTAB_PAYWALL_EXPERIENCE_ID=experience.your-paywall-id
+SUPERTAB_PURCHASE_BUTTON_EXPERIENCE_ID=experience.your-button-id
 ```
 
 ### Variables Opcionales - Recipe PDF Agent Llama
