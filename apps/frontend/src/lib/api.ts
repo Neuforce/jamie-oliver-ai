@@ -134,6 +134,31 @@ export interface RecipeAccessResponse {
   } | null;
 }
 
+export interface OwnedRecipeSummary {
+  recipeId: string;
+  recipeUuid: string;
+  title: string;
+  description?: string | null;
+  category?: string | null;
+  imageUrl?: string | null;
+  purchaseStatus?: string | null;
+  ownedAt?: string | null;
+  expiresAt?: string | null;
+  lastCookedAt?: string | null;
+  activeSession: {
+    sessionId: string;
+    status: string;
+    currentStepIndex: number;
+    completedStepIds: Array<string | number>;
+    lastActiveAt?: string | null;
+  } | null;
+}
+
+export interface MyRecipesResponse {
+  recipes: OwnedRecipeSummary[];
+  total: number;
+}
+
 export interface SupertabBootstrapRequest {
   provider: 'supertab';
   external_subject_id: string;
@@ -432,6 +457,17 @@ export async function getRecipeAccess(recipeId: string, userId?: string): Promis
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Failed to get recipe access: ${response.status} ${errorText}`);
+  }
+
+  return response.json();
+}
+
+export async function getMyRecipes(userId: string): Promise<MyRecipesResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/me/recipes?user_id=${encodeURIComponent(userId)}`);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to get owned recipes: ${response.status} ${errorText}`);
   }
 
   return response.json();

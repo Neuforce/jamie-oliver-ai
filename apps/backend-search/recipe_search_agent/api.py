@@ -252,6 +252,20 @@ class SupertabPurchaseSyncRequest(BaseModel):
     prior_entitlement: list[dict] = Field(default_factory=list)
 
 
+class OwnedRecipeSummaryResponse(BaseModel):
+    recipeId: str
+    recipeUuid: str
+    title: str
+    description: Optional[str] = None
+    category: Optional[str] = None
+    imageUrl: Optional[str] = None
+    purchaseStatus: Optional[str] = None
+    ownedAt: Optional[str] = None
+    expiresAt: Optional[str] = None
+    lastCookedAt: Optional[str] = None
+    activeSession: Optional[dict] = None
+
+
 # Endpoints
 
 @app.get("/")
@@ -344,6 +358,23 @@ async def get_recipe_access(
     except Exception as e:
         logger.error(f"Failed to get access state for recipe {recipe_id}: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to get recipe access: {str(e)}")
+
+
+@app.get("/api/v1/me/recipes")
+async def get_owned_recipes(user_id: str = Query(..., description="Jamie internal user ID")):
+    """Return the current user's owned recipe library from Jamie entitlements."""
+    try:
+        access_service = get_access_service()
+        recipes = access_service.list_owned_recipes(user_id)
+        return {
+            "recipes": [OwnedRecipeSummaryResponse(**recipe).model_dump() for recipe in recipes],
+            "total": len(recipes),
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to list owned recipes for user {user_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to list owned recipes: {str(e)}")
 
 
 @app.post("/api/v1/purchases/supertab/sync")

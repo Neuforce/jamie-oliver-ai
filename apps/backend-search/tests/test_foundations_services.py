@@ -30,6 +30,7 @@ class FakeEntitlementsService:
         self.offering = offering
         self.entitlement = entitlement
         self.active_session = active_session
+        self.owned_recipes = []
 
     def get_recipe(self, recipe_slug_or_id):
         return {
@@ -47,6 +48,9 @@ class FakeEntitlementsService:
 
     def get_active_session(self, user_id, recipe_id):
         return self.active_session
+
+    def list_owned_recipes(self, user_id):
+        return list(self.owned_recipes)
 
 
 class FakeMonetizationRepository:
@@ -162,3 +166,36 @@ def test_purchase_sync_service_creates_purchase_and_entitlement_for_completed_pu
 
     assert result["purchase"]["provider_purchase_id"] == "purchase-1"
     assert result["entitlement"]["provider_content_key"] == "recipe:avocado-toast:cook"
+
+
+def test_access_service_lists_owned_recipes():
+    entitlements_service = FakeEntitlementsService()
+    entitlements_service.owned_recipes = [
+        {
+            "recipeId": "banana-bread",
+            "recipeUuid": "recipe-uuid-1",
+            "title": "Banana Bread",
+            "description": "Moist and comforting.",
+            "category": "Baking",
+            "imageUrl": "https://example.com/banana-bread.jpg",
+            "purchaseStatus": "completed",
+            "ownedAt": "2026-03-11T20:00:00Z",
+            "expiresAt": None,
+            "lastCookedAt": "2026-03-11T21:00:00Z",
+            "activeSession": {
+                "sessionId": "sess-1",
+                "status": "active",
+                "currentStepIndex": 1,
+                "completedStepIds": ["prep"],
+                "lastActiveAt": "2026-03-11T21:00:00Z",
+            },
+        }
+    ]
+    service = AccessService(entitlements_service=entitlements_service)
+
+    recipes = service.list_owned_recipes("user-1")
+
+    assert len(recipes) == 1
+    assert recipes[0]["recipeId"] == "banana-bread"
+    assert recipes[0]["purchaseStatus"] == "completed"
+    assert recipes[0]["activeSession"]["sessionId"] == "sess-1"

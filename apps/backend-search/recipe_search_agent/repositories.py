@@ -107,6 +107,17 @@ class MonetizationRepository:
         )
         return first_row(response)
 
+    def list_active_entitlements(self, user_id: str) -> list[dict[str, Any]]:
+        response = (
+            self._client.table("entitlements")
+            .select("id, user_id, recipe_id, purchase_id, provider_content_key, status, granted_at, expires_at, recurs_at")
+            .eq("user_id", user_id)
+            .eq("status", "active")
+            .order("granted_at", desc=True)
+            .execute()
+        )
+        return getattr(response, "data", None) or []
+
     def get_latest_active_session(self, user_id: str, recipe_id: str) -> Optional[dict[str, Any]]:
         response = (
             self._client.table("cooking_sessions")
@@ -120,6 +131,33 @@ class MonetizationRepository:
         )
         return first_row(response)
 
+    def list_latest_active_sessions(self, user_id: str, recipe_ids: list[str]) -> list[dict[str, Any]]:
+        if not recipe_ids:
+            return []
+
+        response = (
+            self._client.table("cooking_sessions")
+            .select("id, recipe_id, status, current_step_index, completed_step_ids, last_active_at")
+            .eq("user_id", user_id)
+            .in_("recipe_id", recipe_ids)
+            .in_("status", ["active", "paused"])
+            .order("last_active_at", desc=True)
+            .execute()
+        )
+        return getattr(response, "data", None) or []
+
+    def get_recipes_by_ids(self, recipe_ids: list[str]) -> list[dict[str, Any]]:
+        if not recipe_ids:
+            return []
+
+        response = (
+            self._client.table("recipes")
+            .select("id, slug, status, metadata")
+            .in_("id", recipe_ids)
+            .execute()
+        )
+        return getattr(response, "data", None) or []
+
     def get_purchase_by_provider_id(self, provider: str, provider_purchase_id: str) -> Optional[dict[str, Any]]:
         response = (
             self._client.table("purchases")
@@ -130,6 +168,18 @@ class MonetizationRepository:
             .execute()
         )
         return first_row(response)
+
+    def get_purchases_by_ids(self, purchase_ids: list[str]) -> list[dict[str, Any]]:
+        if not purchase_ids:
+            return []
+
+        response = (
+            self._client.table("purchases")
+            .select("id, status, purchased_at, completed_at")
+            .in_("id", purchase_ids)
+            .execute()
+        )
+        return getattr(response, "data", None) or []
 
     def create_purchase(self, payload: dict[str, Any]) -> dict[str, Any]:
         response = self._client.table("purchases").insert(payload).execute()

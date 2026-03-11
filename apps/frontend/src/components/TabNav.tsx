@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { MessageCircle, BookOpen, X, Menu, CreditCard, CheckCircle2, AlertCircle } from 'lucide-react';
+import { MessageCircle, BookOpen, X, Menu, CreditCard, CheckCircle2, AlertCircle, Library } from 'lucide-react';
 // @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 
-export type TabView = 'chat' | 'recipes';
+export type TabView = 'chat' | 'recipes' | 'my-recipes';
 export type MyTabCardStatus = 'unavailable' | 'signed_out' | 'signed_in';
 
 export interface MyTabCardData {
   status: MyTabCardStatus;
   title: string;
+  siteName?: string;
+  siteLogoUrl?: string;
   headline: string;
   description: string;
   userLabel?: string;
@@ -18,7 +20,8 @@ export interface MyTabCardData {
   purchaseCountLabel?: string;
   recentPurchaseLabel?: string;
   helperText?: string;
-  actionLabel?: string;
+  primaryActionLabel?: string;
+  secondaryActionLabel?: string;
   message?: string | null;
   messageTone?: 'neutral' | 'error';
   isTestMode?: boolean;
@@ -30,7 +33,9 @@ interface TabNavProps {
   onCloseChat?: () => void; // Function for closing chat/clearing storage
   myTabCard?: MyTabCardData;
   onOpenMyTab?: () => void;
+  onOpenMyRecipes?: () => void;
   isMyTabLoading?: boolean;
+  myRecipesCount?: number;
 }
 
 /**
@@ -46,7 +51,9 @@ export function TabNav({
   onCloseChat,
   myTabCard,
   onOpenMyTab,
+  onOpenMyRecipes,
   isMyTabLoading = false,
+  myRecipesCount = 0,
 }: TabNavProps) {
   const isChatView = activeTab === 'chat';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -127,11 +134,28 @@ export function TabNav({
                 <MyTabCard
                   card={myTabCard}
                   isLoading={isMyTabLoading}
-                  onAction={() => {
+                  onPrimaryAction={() => {
+                    if (!onOpenMyRecipes) {
+                      return;
+                    }
+                    onOpenMyRecipes();
+                    setIsMenuOpen(false);
+                  }}
+                  onSecondaryAction={() => {
                     onOpenMyTab();
+                    setIsMenuOpen(false);
                   }}
                 />
               )}
+              <MenuItem
+                label="My Recipes"
+                meta={myRecipesCount > 0 ? `${myRecipesCount}` : undefined}
+                icon={<Library className="size-4" />}
+                onClick={() => {
+                  onOpenMyRecipes?.();
+                  setIsMenuOpen(false);
+                }}
+              />
               {isChatView ? (
                 <MenuItem
                   label="Recipes"
@@ -175,17 +199,14 @@ export function TabNav({
 interface MyTabCardProps {
   card: MyTabCardData;
   isLoading: boolean;
-  onAction: () => void;
+  onPrimaryAction: () => void;
+  onSecondaryAction: () => void;
 }
 
-function MyTabCard({ card, isLoading, onAction }: MyTabCardProps) {
+function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTabCardProps) {
   const badgeLabel = isLoading
     ? 'Syncing'
-    : card.status === 'signed_in'
-      ? 'Connected'
-      : card.status === 'unavailable'
-        ? 'Unavailable'
-        : 'My Tab';
+    : card.siteName || 'Supertab';
   const CircleIcon = card.messageTone === 'error'
     ? AlertCircle
     : card.status === 'signed_in'
@@ -195,35 +216,53 @@ function MyTabCard({ card, isLoading, onAction }: MyTabCardProps) {
 
   return (
     <div
-      className="rounded-[28px] border border-[#E7DDF8] bg-[linear-gradient(180deg,#F7F2FF_0%,#FBF9FF_100%)] px-4 py-4 shadow-[0_16px_40px_rgba(112,76,188,0.10)]"
+      className="rounded-[26px] border border-[#E7E2D9] bg-[#FCFBF8] px-4 py-4 shadow-[0_18px_35px_rgba(15,23,42,0.08)]"
       style={{ fontFamily: 'var(--font-display)' }}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#7C5AC3]">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#1F2937]">
               {card.title}
             </span>
-            <span className="rounded-full bg-white px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#7C5AC3]">
+            <span className="rounded-full bg-[#F3EFE7] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#111827]">
               Powered by Supertab
             </span>
             {card.isTestMode && (
-              <span className="rounded-full bg-[#EEE7FF] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#6E48BC]">
+              <span className="rounded-full bg-[#FDEAD7] px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#C2410C]">
                 Test
               </span>
             )}
           </div>
-          <div className="mt-2 text-base font-semibold text-[#2E2147]">
-            {isLoading ? 'Loading My Tab...' : card.headline}
+          <div className="mt-3 flex items-center gap-3">
+            {card.siteLogoUrl ? (
+              <div className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl border border-[#E7E2D9] bg-white">
+                <img
+                  src={card.siteLogoUrl}
+                  alt={card.siteName || 'Supertab site'}
+                  className="h-7 w-7 object-contain"
+                />
+              </div>
+            ) : null}
+            <div className="min-w-0">
+              {card.siteName && (
+                <div className="truncate text-xs uppercase tracking-[0.18em] text-[#8C7E69]">
+                  {card.siteName}
+                </div>
+              )}
+              <div className="text-base font-semibold text-[#111827]">
+                {isLoading ? 'Loading My Tab...' : card.headline}
+              </div>
+            </div>
           </div>
-          <div className="mt-1 text-sm leading-5 text-[#5B4D75]">
+          <div className="mt-2 text-sm leading-5 text-[#4B5563]">
             {card.description}
           </div>
         </div>
         <div className="shrink-0">
-          <div className="flex h-[82px] w-[82px] flex-col items-center justify-center rounded-full border border-[#DCCEFF] bg-white text-center shadow-[0_8px_24px_rgba(124,90,195,0.12)]">
-            <CircleIcon className="mb-1 h-4 w-4 text-[#7C5AC3]" />
-            <div className="px-2 text-[11px] font-semibold leading-4 text-[#2E2147]">
+          <div className="flex h-[72px] w-[72px] flex-col items-center justify-center rounded-full border border-[#D8D1C4] bg-white text-center shadow-[0_8px_24px_rgba(17,24,39,0.08)]">
+            <CircleIcon className="mb-1 h-4 w-4 text-[#111827]" />
+            <div className="px-2 text-[11px] font-semibold leading-4 text-[#111827]">
               {circleValue}
             </div>
           </div>
@@ -231,24 +270,24 @@ function MyTabCard({ card, isLoading, onAction }: MyTabCardProps) {
       </div>
 
       {(card.userLabel || card.purchaseCountLabel || card.limitLabel) && (
-        <div className="mt-4 grid grid-cols-2 gap-2">
+        <div className="mt-4 grid grid-cols-2 gap-x-4 gap-y-3 rounded-[22px] border border-[#E7E2D9] bg-white px-3 py-3">
           {card.userLabel && (
-            <StatTile label="Account" value={card.userLabel} />
+            <StatLine label="Account" value={card.userLabel} />
           )}
           {card.purchaseCountLabel && (
-            <StatTile label="Recipes" value={card.purchaseCountLabel} />
+            <StatLine label="Recipes" value={card.purchaseCountLabel} />
           )}
           {card.limitLabel && (
-            <StatTile label="Limit" value={card.limitLabel} />
+            <StatLine label="Limit" value={card.limitLabel} />
           )}
           {card.recentPurchaseLabel && (
-            <StatTile label="Latest" value={card.recentPurchaseLabel} />
+            <StatLine label="Latest" value={card.recentPurchaseLabel} />
           )}
         </div>
       )}
 
       {card.helperText && (
-        <div className="mt-3 text-xs leading-5 text-[#6B5F81]">
+        <div className="mt-3 text-xs leading-5 text-[#6B7280]">
           {card.helperText}
         </div>
       )}
@@ -258,42 +297,56 @@ function MyTabCard({ card, isLoading, onAction }: MyTabCardProps) {
           className={`mt-3 rounded-2xl px-3 py-2 text-xs leading-5 ${
             card.messageTone === 'error'
               ? 'bg-[#FDECEC] text-[#9F3A38]'
-              : 'bg-white text-[#6B5F81]'
+              : 'bg-white text-[#6B7280]'
           }`}
         >
           {card.message}
         </div>
       )}
 
-      {card.actionLabel && (
-        <button
-          type="button"
-          onClick={onAction}
-          disabled={isLoading}
-          className="mt-4 w-full rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-70"
-          style={{
-            backgroundColor: '#7C5AC3',
-          }}
-        >
-          {isLoading ? 'Refreshing My Tab...' : card.actionLabel}
-        </button>
+      {(card.primaryActionLabel || card.secondaryActionLabel) && (
+        <div className="mt-4 space-y-2">
+          {card.primaryActionLabel && (
+            <button
+              type="button"
+              onClick={onPrimaryAction}
+              disabled={isLoading}
+              className="w-full rounded-full px-4 py-3 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed disabled:opacity-70"
+              style={{
+                backgroundColor: '#7C5AC3',
+              }}
+            >
+              {card.primaryActionLabel}
+            </button>
+          )}
+          {card.secondaryActionLabel && (
+            <button
+              type="button"
+              onClick={onSecondaryAction}
+              disabled={isLoading}
+              className="w-full rounded-full border border-[#D8D1C4] bg-white px-4 py-3 text-sm font-semibold text-[#111827] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {isLoading ? 'Refreshing My Tab...' : card.secondaryActionLabel}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
 }
 
-interface StatTileProps {
+interface StatLineProps {
   label: string;
   value: string;
 }
 
-function StatTile({ label, value }: StatTileProps) {
+function StatLine({ label, value }: StatLineProps) {
   return (
-    <div className="rounded-2xl bg-white px-3 py-2 shadow-[0_6px_18px_rgba(124,90,195,0.05)]">
-      <div className="text-[10px] uppercase tracking-[0.14em] text-[#A18BCF]">
+    <div className="min-w-0">
+      <div className="text-[10px] uppercase tracking-[0.14em] text-[#8C7E69]">
         {label}
       </div>
-      <div className="mt-1 truncate text-sm font-medium text-[#2E2147]">
+      <div className="mt-1 truncate text-sm font-medium text-[#111827]">
         {value}
       </div>
     </div>

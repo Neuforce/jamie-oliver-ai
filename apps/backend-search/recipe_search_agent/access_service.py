@@ -69,3 +69,6 @@ class AccessService:
                 else None
             ),
         }
+
+    def list_owned_recipes(self, user_id: str) -> list[dict[str, Any]]:
+        return self._entitlements.list_owned_recipes(user_id)
