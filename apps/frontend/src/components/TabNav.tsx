@@ -136,10 +136,14 @@ export function TabNav({
                   card={myTabCard}
                   isLoading={isMyTabLoading}
                   onPrimaryAction={() => {
-                    if (!onOpenMyRecipes) {
-                      return;
+                    if (myTabCard.status === 'signed_in') {
+                      if (!onOpenMyRecipes) {
+                        return;
+                      }
+                      onOpenMyRecipes();
+                    } else {
+                      onTabChange('recipes');
                     }
-                    onOpenMyRecipes();
                     setIsMenuOpen(false);
                   }}
                   onSecondaryAction={() => {
@@ -217,15 +221,10 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
       : card.status === 'unavailable'
         ? 'Unavailable'
         : 'Not active';
-  const circleValue = card.status === 'signed_in'
-    ? (card.totalLabel ?? 'My Tab')
-    : card.status === 'signed_out'
-      ? 'Start'
-      : 'My Tab';
-  const compactDescription = card.status === 'signed_in'
-    ? card.description
-    : 'Unlock your first recipe with Supertab and your My Tab account will appear here.';
   const hasSiteLogo = typeof card.siteLogoUrl === 'string' && card.siteLogoUrl.length > 0;
+  const balanceSummary = card.totalLabel && card.limitLabel
+    ? `${card.totalLabel} of ${card.limitLabel}`
+    : card.totalLabel || card.limitLabel || undefined;
 
   return (
     <div
@@ -259,20 +258,6 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
                     </span>
                   )}
                 </div>
-                {card.siteName && (
-                  <div className="mt-1 flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#8C7E69]">
-                    {hasSiteLogo ? (
-                      <div className="flex h-5 w-5 items-center justify-center overflow-hidden rounded-full border border-[#EEE4D8] bg-white">
-                        <img
-                          src={card.siteLogoUrl}
-                          alt={card.siteName || 'Supertab site'}
-                          className="h-3.5 w-3.5 object-contain"
-                        />
-                      </div>
-                    ) : null}
-                    <span className="truncate">{card.siteName}</span>
-                  </div>
-                )}
               </div>
             </div>
           </div>
@@ -286,66 +271,39 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
           </div>
         </div>
 
-        <div className="mt-4 flex items-start justify-between gap-3">
-          <div className="min-w-0 flex-1">
-            <div className="text-[22px] font-semibold leading-none text-[#111827]">
-              {isLoading ? 'Loading My Tab...' : card.headline}
-            </div>
-            <div className="mt-2 max-w-[190px] text-[13px] leading-5 text-[#4B5563]">
-              {compactDescription}
-            </div>
+        <div className="mt-4">
+          <div className="text-[24px] font-semibold leading-none text-[#111827]">
+            {isLoading ? 'Loading My Tab...' : card.headline}
           </div>
-          <div className="shrink-0">
-            {card.status === 'signed_in' ? (
-              <div className="flex h-[72px] w-[72px] flex-col items-center justify-center rounded-[22px] border border-[#E6DDD0] bg-white text-center shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
-                <div className="mb-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#F9E7E1]">
+          {(card.siteName || card.userLabel) && (
+            <div className="mt-2 flex items-center gap-2 text-[12px] text-[#8C7E69]">
+              {hasSiteLogo ? (
+                <div className="flex h-5 w-5 items-center justify-center overflow-hidden rounded-full border border-[#EEE4D8] bg-white">
                   <img
-                    src={supertabFavicon}
-                    alt="Supertab"
+                    src={card.siteLogoUrl}
+                    alt={card.siteName || 'Supertab site'}
                     className="h-3.5 w-3.5 object-contain"
                   />
                 </div>
-                <div className="px-2 text-[12px] font-semibold leading-4 text-[#111827]">
-                  {circleValue}
-                </div>
-              </div>
-            ) : (
-              <div className="flex min-w-[84px] flex-col items-center justify-center rounded-full border border-[#E6DDD0] bg-white px-4 py-3 text-center shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
-                <div className="mb-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-[#F9E7E1]">
-                  <img
-                    src={supertabFavicon}
-                    alt="Supertab"
-                    className="h-4 w-4 object-contain"
-                  />
-                </div>
-                <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#111827]">
-                  {circleValue}
-                </div>
-              </div>
-            )}
+              ) : null}
+              {card.siteName && <span className="truncate">{card.siteName}</span>}
+              {card.siteName && card.userLabel && <span className="text-[#D5CCBF]">•</span>}
+              {card.userLabel && <span className="truncate">{card.userLabel}</span>}
+            </div>
+          )}
+          <div className="mt-2 max-w-[260px] text-[14px] leading-5 text-[#4B5563]">
+            {card.description}
           </div>
         </div>
 
-        {(card.userLabel || card.purchaseCountLabel || card.limitLabel) && (
-          <div className="mt-4 grid grid-cols-2 gap-x-5 gap-y-3 rounded-[20px] border border-[#EFE7DB] bg-[#FFFFFF] px-3 py-3">
-            {card.userLabel && (
-              <StatLine label="Account" value={card.userLabel} />
-            )}
+        {card.status === 'signed_in' && (card.purchaseCountLabel || balanceSummary) && (
+          <div className="mt-4 grid grid-cols-2 gap-3">
             {card.purchaseCountLabel && (
-              <StatLine label="Recipes" value={card.purchaseCountLabel} />
+              <MetricTile label="Recipes owned" value={card.purchaseCountLabel} />
             )}
-            {card.limitLabel && (
-              <StatLine label="Limit" value={card.limitLabel} />
+            {balanceSummary && (
+              <MetricTile label="Tab balance" value={balanceSummary} />
             )}
-            {card.recentPurchaseLabel && (
-              <StatLine label="Latest" value={card.recentPurchaseLabel} />
-            )}
-          </div>
-        )}
-
-        {card.helperText && (
-          <div className="mt-3 text-[11px] leading-5 text-[#7A746A]">
-            {card.helperText}
           </div>
         )}
 
@@ -362,7 +320,7 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
         )}
 
         {(card.primaryActionLabel || card.secondaryActionLabel) && (
-          <div className="mt-4 space-y-2">
+          <div className="mt-4">
             {card.primaryActionLabel && (
               <button
                 type="button"
@@ -381,11 +339,17 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
                 type="button"
                 onClick={onSecondaryAction}
                 disabled={isLoading}
-                className="w-full rounded-full border border-[#E6DDD0] bg-white px-4 py-3 text-sm font-semibold text-[#111827] transition-colors disabled:cursor-not-allowed disabled:opacity-70"
+                className="mt-2 w-full text-center text-sm font-medium text-[#8C7E69] transition-colors hover:text-[#111827] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                {isLoading ? 'Refreshing My Tab...' : card.secondaryActionLabel}
+                {isLoading ? 'Refreshing...' : card.secondaryActionLabel}
               </button>
             )}
+          </div>
+        )}
+
+        {card.helperText && (
+          <div className="mt-3 text-[11px] leading-5 text-[#7A746A]">
+            {card.helperText}
           </div>
         )}
       </div>
@@ -393,14 +357,14 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
   );
 }
 
-interface StatLineProps {
+interface MetricTileProps {
   label: string;
   value: string;
 }
 
-function StatLine({ label, value }: StatLineProps) {
+function MetricTile({ label, value }: MetricTileProps) {
   return (
-    <div className="min-w-0">
+    <div className="rounded-[18px] border border-[#EFE7DB] bg-[#FFFFFF] px-3 py-3">
       <div className="text-[10px] uppercase tracking-[0.14em] text-[#A08D72]">
         {label}
       </div>

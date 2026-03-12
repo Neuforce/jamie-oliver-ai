@@ -513,16 +513,19 @@ export default function App() {
   const isSelectedRecipeAccessLoading = selectedRecipe
     ? recipeAccessLoadingId === getRecipeAccessKey(selectedRecipe)
     : false;
+  const unlockedRecipesLabel = `${myRecipes.length} ${myRecipes.length === 1 ? 'recipe' : 'recipes'} unlocked`;
   const myTabHeadline = myTabStatus === 'signed_in'
-    ? (myTabAccount?.totalLabel ?? 'Connected')
+    ? unlockedRecipesLabel
     : myTabStatus === 'unavailable'
-      ? 'Configuration needed'
-      : 'Activates after purchase';
+      ? 'My Tab unavailable'
+      : 'Unlock recipes with My Tab';
   const myTabDescription = myTabStatus === 'signed_in'
-    ? 'Your Supertab account is connected and ready for recipe unlocks.'
+    ? ((myTabAccount?.totalLabel && myTabAccount?.limitLabel)
+      ? `Balance ${myTabAccount.totalLabel} of ${myTabAccount.limitLabel} tab limit.`
+      : 'Your Supertab account is connected and ready for recipe unlocks.')
     : myTabStatus === 'unavailable'
       ? 'My Tab cannot load until the frontend Supertab config is available.'
-      : 'Unlock any paid recipe with the Supertab button and My Tab will keep that ownership attached to you.';
+      : 'Buy once and your unlocked recipes stay here.';
   const myTabUserLabel = myTabJamieUser?.displayName
     || myTabJamieUser?.email
     || myTabAccount?.displayName
@@ -539,16 +542,20 @@ export default function App() {
     totalLabel: myTabAccount?.totalLabel ?? undefined,
     limitLabel: myTabAccount?.limitLabel ?? undefined,
     purchaseCountLabel: myTabStatus === 'signed_in'
-      ? `${myRecipes.length} ${myRecipes.length === 1 ? 'recipe' : 'recipes'}`
+      ? unlockedRecipesLabel
       : myTabAccount
         ? `${myTabAccount.purchaseCount} ${myTabAccount.purchaseCount === 1 ? 'purchase' : 'purchases'}`
       : undefined,
-    recentPurchaseLabel: myTabAccount?.recentPurchaseLabel ?? undefined,
+    recentPurchaseLabel: undefined,
     helperText: myTabStatus === 'signed_in'
-      ? 'Owned recipes synced into Jamie appear in My Recipes, while new unlocks still happen through Supertab\'s native purchase flow.'
-      : 'Your first Supertab recipe unlock creates the account state that appears here.',
-    primaryActionLabel: myTabStatus === 'signed_in' ? 'Open My Recipes' : undefined,
-    secondaryActionLabel: myTabStatus === 'signed_in' ? 'Refresh My Tab' : undefined,
+      ? 'Your owned recipes stay synced into My Recipes.'
+      : 'Use the Supertab purchase flow on any locked recipe to get started.',
+    primaryActionLabel: myTabStatus === 'signed_in'
+      ? 'Open My Recipes'
+      : myTabStatus === 'signed_out'
+        ? 'Browse Recipes'
+        : undefined,
+    secondaryActionLabel: myTabStatus === 'signed_in' ? 'Refresh' : undefined,
     message: myTabMessage,
     messageTone: myTabMessageTone,
     isTestMode: myTabAccount?.isTestMode,
