@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { MessageCircle, BookOpen, X, Menu, CreditCard, CheckCircle2, AlertCircle, Library } from 'lucide-react';
 // @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
+import supertabFavicon from '../../../../docs/supertab_favicon.svg';
 
 export type TabView = 'chat' | 'recipes' | 'my-recipes';
 export type MyTabCardStatus = 'unavailable' | 'signed_out' | 'signed_in';
@@ -224,6 +225,7 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
   const compactDescription = card.status === 'signed_in'
     ? card.description
     : 'Unlock your first recipe with Supertab and your My Tab account will appear here.';
+  const hasSiteLogo = typeof card.siteLogoUrl === 'string' && card.siteLogoUrl.length > 0;
 
   return (
     <div
@@ -237,7 +239,11 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
           <div className="min-w-0">
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-[14px] bg-[#D77A5F] text-white shadow-[0_10px_20px_rgba(215,122,95,0.28)]">
-                <TabGlyph />
+                <img
+                  src={supertabFavicon}
+                  alt="Supertab"
+                  className="h-5 w-5 object-contain"
+                />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -255,7 +261,7 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
                 </div>
                 {card.siteName && (
                   <div className="mt-1 flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-[#8C7E69]">
-                    {card.siteLogoUrl ? (
+                    {hasSiteLogo ? (
                       <div className="flex h-5 w-5 items-center justify-center overflow-hidden rounded-full border border-[#EEE4D8] bg-white">
                         <img
                           src={card.siteLogoUrl}
@@ -290,14 +296,33 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
             </div>
           </div>
           <div className="shrink-0">
-            <div className="flex h-[72px] w-[72px] flex-col items-center justify-center rounded-[22px] border border-[#E6DDD0] bg-white text-center shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
-              <div className="mb-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#F9E7E1] text-[#C96A50]">
-                <TabGlyph compact />
+            {card.status === 'signed_in' ? (
+              <div className="flex h-[72px] w-[72px] flex-col items-center justify-center rounded-[22px] border border-[#E6DDD0] bg-white text-center shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
+                <div className="mb-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-[#F9E7E1]">
+                  <img
+                    src={supertabFavicon}
+                    alt="Supertab"
+                    className="h-3.5 w-3.5 object-contain"
+                  />
+                </div>
+                <div className="px-2 text-[12px] font-semibold leading-4 text-[#111827]">
+                  {circleValue}
+                </div>
               </div>
-              <div className="px-2 text-[12px] font-semibold leading-4 text-[#111827]">
-                {circleValue}
+            ) : (
+              <div className="flex min-w-[84px] flex-col items-center justify-center rounded-full border border-[#E6DDD0] bg-white px-4 py-3 text-center shadow-[0_8px_18px_rgba(17,24,39,0.06)]">
+                <div className="mb-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-[#F9E7E1]">
+                  <img
+                    src={supertabFavicon}
+                    alt="Supertab"
+                    className="h-4 w-4 object-contain"
+                  />
+                </div>
+                <div className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#111827]">
+                  {circleValue}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
 
@@ -364,16 +389,6 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
           </div>
         )}
       </div>
-    </div>
-  );
-}
-
-function TabGlyph({ compact = false }: { compact?: boolean }) {
-  return (
-    <div className={`relative ${compact ? 'h-3.5 w-3.5' : 'h-4.5 w-4.5'}`}>
-      <div className="absolute inset-0 rounded-[4px] border-2 border-current opacity-90" />
-      <div className="absolute left-[18%] right-[18%] top-[18%] h-[24%] rounded-[3px] bg-current" />
-      <div className="absolute bottom-[18%] left-[18%] right-[18%] top-[48%] rounded-[3px] border border-current opacity-80" />
     </div>
   );
 }
