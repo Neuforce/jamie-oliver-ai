@@ -1,6 +1,7 @@
 import time
 
 import aiohttp
+from typing import Optional
 
 from .base import BaseTextToSpeech
 
@@ -16,8 +17,9 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
         self,
         api_key: str,
         voice_id: str,
-        similarity_boost: int = 0.5,
-        stability: int = 0.5,
+        model_id: Optional[str] = None,
+        similarity_boost: float = 0.5,
+        stability: float = 0.5,
         speed: float = 1.0,
         speaker_boost: bool = True,
         output_format: str = "ulaw_8000",
@@ -29,6 +31,7 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
 
         self.api_key = api_key
         self.voice_id = voice_id
+        self.model_id = str(model_id).strip() if model_id is not None and str(model_id).strip() else None
         self.similarity_boost = similarity_boost
         self.stability = stability
         self.speaker_boost = speaker_boost
@@ -44,7 +47,6 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
         }
 
         payload = {
-            "model_id": "eleven_flash_v2_5",
             "text": text,
             "voice_settings": {
                 "similarity_boost": self.similarity_boost,
@@ -54,6 +56,8 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
                 # "style": 0.3,
             },
         }
+        if self.model_id:
+            payload["model_id"] = self.model_id
         headers = {
             "xi-api-key": self.api_key,
             "Content-Type": "application/json",
