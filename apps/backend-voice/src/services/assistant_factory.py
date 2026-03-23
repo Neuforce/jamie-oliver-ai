@@ -152,6 +152,7 @@ class AssistantFactory:
             tts=ElevenLabsTextToSpeech(
                 api_key=settings.ELEVENLABS_API_KEY,
                 voice_id=settings.ELEVENLABS_VOICE_ID,
+                model_id=settings.ELEVENLABS_MODEL_ID or None,
                 speed=settings.TTS_SPEED,
                 output_format=settings.TTS_OUTPUT_FORMAT,
             ),

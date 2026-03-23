@@ -33,6 +33,7 @@ class VoiceConfig:
     deepgram_api_key: str
     elevenlabs_api_key: str
     elevenlabs_voice_id: str
+    elevenlabs_model_id: Optional[str] = None
     sample_rate: int = 16000
     tts_output_format: str = "pcm_16000"  # PCM for browser playback
     tts_speed: float = 1.0
@@ -45,6 +46,7 @@ def get_voice_config() -> VoiceConfig:
     deepgram_key = os.getenv("DEEPGRAM_API_KEY")
     elevenlabs_key = os.getenv("ELEVENLABS_API_KEY")
     elevenlabs_voice = os.getenv("ELEVENLABS_VOICE_ID")
+    elevenlabs_model_id = os.getenv("ELEVENLABS_MODEL_ID")
     
     if not deepgram_key:
         raise ValueError("DEEPGRAM_API_KEY is required for voice chat")
@@ -57,6 +59,7 @@ def get_voice_config() -> VoiceConfig:
         deepgram_api_key=deepgram_key,
         elevenlabs_api_key=elevenlabs_key,
         elevenlabs_voice_id=elevenlabs_voice,
+        elevenlabs_model_id=elevenlabs_model_id.strip() if elevenlabs_model_id else None,
         sample_rate=int(os.getenv("VOICE_SAMPLE_RATE", "16000")),
         tts_speed=float(os.getenv("TTS_SPEED", "1.0")),
         stt_language=os.getenv("STT_LANGUAGE", "en-US"),
@@ -106,6 +109,7 @@ class VoiceChatHandler:
         self.tts = ElevenLabsTextToSpeech(
             api_key=config.elevenlabs_api_key,
             voice_id=config.elevenlabs_voice_id,
+            model_id=config.elevenlabs_model_id,
             speed=config.tts_speed,
             output_format=config.tts_output_format,
         )

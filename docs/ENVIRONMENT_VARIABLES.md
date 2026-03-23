@@ -7,8 +7,8 @@ Este documento lista todas las variables de entorno necesarias para cada aplicac
 | App | Variables Requeridas | Variables Opcionales |
 |-----|---------------------|---------------------|
 | **Frontend** | `VITE_WS_URL`, `VITE_API_BASE_URL` | - |
-| **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
-| **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `SUPERTAB_*`, `RECIPE_*` (varias) |
+| **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `ELEVENLABS_MODEL_ID`, `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
+| **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `SUPERTAB_*`, `RECIPE_*` (varias), `DEEPGRAM_API_KEY`, `ELEVENLABS_*` (Voice Chat) |
 
 ---
 
@@ -57,6 +57,9 @@ ELEVENLABS_VOICE_ID=your-elevenlabs-voice-id
 ### Variables Opcionales
 
 ```bash
+# Modelo de ElevenLabs (TTS) (opcional; recomendado fijarlo para consistencia)
+ELEVENLABS_MODEL_ID=eleven_multilingual_v2
+
 # Configuración del servidor
 HOST=0.0.0.0                    # Default: 0.0.0.0
 PORT=8100                       # Default: 8100
@@ -76,6 +79,7 @@ SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 - **`DEEPGRAM_API_KEY`**: Clave API de Deepgram para convertir audio a texto.
 - **`ELEVENLABS_API_KEY`**: Clave API de ElevenLabs para convertir texto a audio.
 - **`ELEVENLABS_VOICE_ID`**: ID de la voz en ElevenLabs. Encuéntralo en [ElevenLabs Voice Library](https://elevenlabs.io/app/voice-library).
+- **`ELEVENLABS_MODEL_ID`**: `model_id` del modelo TTS de ElevenLabs (opcional; si se omite, ElevenLabs usa su default según cuenta/plan).
 - **`SUPABASE_URL`**: URL de Supabase utilizada para persistir snapshots de sesiones de cooking.
 - **`SUPABASE_SERVICE_ROLE_KEY`**: Clave con acceso backend para crear y recuperar sesiones persistidas.
 
@@ -114,6 +118,20 @@ RECIPE_PDF_SUPABASE_TABLE=recipe_index
 SUPERTAB_CLIENT_ID=test_client.your-client-id
 SUPERTAB_PAYWALL_EXPERIENCE_ID=experience.your-paywall-id
 SUPERTAB_PURCHASE_BUTTON_EXPERIENCE_ID=experience.your-button-id
+```
+
+### Variables Opcionales - Voice Chat (WebSocket)
+
+```bash
+# Deepgram (Speech-to-Text)
+DEEPGRAM_API_KEY=your-deepgram-api-key
+
+# ElevenLabs (Text-to-Speech)
+ELEVENLABS_API_KEY=your-elevenlabs-api-key
+ELEVENLABS_VOICE_ID=your-elevenlabs-voice-id
+
+# Optional: pin model for consistent TTS behavior
+ELEVENLABS_MODEL_ID=eleven_multilingual_v2
 ```
 
 ### Variables Opcionales - Recipe PDF Agent Llama
