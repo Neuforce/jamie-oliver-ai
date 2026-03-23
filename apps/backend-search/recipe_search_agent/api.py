@@ -809,6 +809,7 @@ async def voice_chat_websocket(websocket: WebSocket):
     - DEEPGRAM_API_KEY: For speech-to-text
     - ELEVENLABS_API_KEY: For text-to-speech
     - ELEVENLABS_VOICE_ID: Voice ID for Jamie
+    - ELEVENLABS_MODEL_ID: (Optional) ElevenLabs TTS model_id override
     """
     try:
         from recipe_search_agent.voice_handler import handle_voice_chat
