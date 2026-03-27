@@ -50,6 +50,7 @@ interface ChatViewProps {
 const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
 const SESSION_ID_KEY = 'jamie-oliver-chat-session';
 const TOOL_INTRO_MAX_CHARS = 240;
+const IGNORED_VOICE_TRANSCRIPTS = new Set(['[Connection restored]']);
 
 /** Max width for chat content; matches TabNav for consistent layout (NEU-470). */
 const CHAT_CONTENT_MAX_WIDTH = 600;
@@ -258,12 +259,18 @@ export function ChatView({
     onTranscript: (text, isFinal) => {
       console.log('🎤 Transcript received:', { text, isFinal });
 
-      if (isFinal && text.trim()) {
+      const normalizedText = text.trim();
+      if (IGNORED_VOICE_TRANSCRIPTS.has(normalizedText)) {
+        console.warn('Ignoring synthetic voice transcript marker:', normalizedText);
+        return;
+      }
+
+      if (isFinal && normalizedText) {
         // Create user message from voice transcript
         const userMessage: Message = {
           id: Date.now().toString(),
           type: 'user',
-          content: text,
+          content: normalizedText,
           timestamp: new Date(),
         };
 
@@ -1484,9 +1491,10 @@ export function ChatView({
             className="bg-white relative rounded-full border border-black/10"
             style={{
               boxShadow: '0px 2px 5px 0px rgba(0,0,0,0.06), 0px 9px 9px 0px rgba(0,0,0,0.01)',
+              minHeight: '56px',
             }}
           >
-            <div className="flex items-center gap-2 p-2 pl-3">
+            <div className="flex min-h-14 items-center gap-2 p-2 pl-3">
               {/* Text Input - Hidden when voice mode is active and listening */}
               {!isVoiceActive || voiceState === 'idle' ? (
                 <>
@@ -1536,7 +1544,7 @@ export function ChatView({
                 </>
               ) : (
                 /* Voice Mode Active - Show waveform */
-                <div className="flex-1 flex items-center justify-center py-2">
+                <div className="flex h-10 flex-1 items-center justify-center">
                   <AudioWaveform isActive={isListening || isSpeaking} bars={7} />
                 </div>
               )}

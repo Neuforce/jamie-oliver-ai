@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any, Optional
 
 from recipe_search_agent.repositories import MonetizationRepository
+
+logger = logging.getLogger(__name__)
 
 
 class EntitlementsService:
@@ -40,7 +43,17 @@ class EntitlementsService:
         purchases = self._repository.get_purchases_by_ids(
             [entitlement["purchase_id"] for entitlement in latest_entitlement_by_recipe.values() if entitlement.get("purchase_id")]
         )
-        active_sessions = self._repository.list_latest_active_sessions(user_id, recipe_ids)
+        try:
+            active_sessions = self._repository.list_latest_active_sessions(user_id, recipe_ids)
+        except Exception as exc:
+            # Active session metadata is useful for resume UX, but owned recipes should
+            # still load even if the session lookup is temporarily slow or unavailable.
+            logger.warning(
+                "Failed to fetch active cooking sessions while listing owned recipes for user %s: %s",
+                user_id,
+                exc,
+            )
+            active_sessions = []
 
         recipe_by_id = {recipe["id"]: recipe for recipe in recipes}
         purchase_by_id = {purchase["id"]: purchase for purchase in purchases}

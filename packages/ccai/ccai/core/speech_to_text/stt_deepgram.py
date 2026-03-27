@@ -338,9 +338,11 @@ class DeepgramSTTService(BaseSpeechToText):
                 if not transcript:
                     break
 
-                # Handle reconnection signal
+                # Reconnection is an internal transport event, not user speech.
+                # Break so the caller can restart listening without surfacing a fake
+                # transcript like "[Connection restored]" into the chat UX.
                 if transcript == "RECONNECTED":
-                    yield Transcription(content="[Connection restored]", is_final=True)
+                    logger.info("Deepgram stream reconnected; restarting transcription loop")
                     break
 
                 clean_transcript = await self.preprocess_transcription(transcript)
