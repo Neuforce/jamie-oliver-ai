@@ -7,8 +7,8 @@ Este documento lista todas las variables de entorno necesarias para cada aplicac
 | App | Variables Requeridas | Variables Opcionales |
 |-----|---------------------|---------------------|
 | **Frontend** | `VITE_WS_URL`, `VITE_API_BASE_URL` | - |
-| **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
-| **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `SUPERTAB_*`, `RECIPE_*` (varias) |
+| **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `ELEVENLABS_MODEL_ID`, `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
+| **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `SUPERTAB_*`, `RECIPE_*` (varias), `DEEPGRAM_API_KEY`, `ELEVENLABS_*` (Voice Chat) |
 
 ---
 
@@ -118,6 +118,20 @@ RECIPE_PDF_SUPABASE_TABLE=recipe_index
 SUPERTAB_CLIENT_ID=test_client.your-client-id
 SUPERTAB_PAYWALL_EXPERIENCE_ID=experience.your-paywall-id
 SUPERTAB_PURCHASE_BUTTON_EXPERIENCE_ID=experience.your-button-id
+```
+
+### Variables Opcionales - Voice Chat (WebSocket)
+
+```bash
+# Deepgram (Speech-to-Text)
+DEEPGRAM_API_KEY=your-deepgram-api-key
+
+# ElevenLabs (Text-to-Speech)
+ELEVENLABS_API_KEY=your-elevenlabs-api-key
+ELEVENLABS_VOICE_ID=your-elevenlabs-voice-id
+
+# Optional: pin model for consistent TTS behavior
+ELEVENLABS_MODEL_ID=eleven_multilingual_v2
 ```
 
 ### Variables Opcionales - Recipe PDF Agent Llama

@@ -117,6 +117,11 @@ class AssistantFactory:
                 "ELEVENLABS_VOICE_ID is required but not set. "
                 "Please set it in your environment variables or .env file."
             )
+        if not settings.ELEVENLABS_MODEL_ID or not settings.ELEVENLABS_MODEL_ID.strip():
+            raise ValueError(
+                "ELEVENLABS_MODEL_ID is required but not set. "
+                "Please set it in your environment variables or .env file."
+            )
         if not settings.DEEPGRAM_API_KEY or not settings.DEEPGRAM_API_KEY.strip():
             raise ValueError(
                 "DEEPGRAM_API_KEY is required but not set. "
