@@ -32,6 +32,14 @@ export function VoiceModeIndicator({
   }
 
   const showCancelButton = state === 'processing' || state === 'speaking';
+  const supportingText =
+    state === 'listening'
+      ? transcript
+        ? `"${transcript}"`
+        : 'Waiting for your voice...'
+      : state === 'processing'
+        ? 'Working on your request...'
+        : 'Jamie is responding...';
 
   return (
     <AnimatePresence>
@@ -39,7 +47,7 @@ export function VoiceModeIndicator({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
-        className={`flex items-center justify-between w-full ${className}`}
+        className={`flex min-h-[52px] items-center justify-between gap-3 w-full ${className}`}
       >
         <div className="flex items-center gap-3">
           {/* State Icon */}
@@ -91,7 +99,7 @@ export function VoiceModeIndicator({
           </div>
 
           {/* State Label */}
-          <div className="flex flex-col">
+          <div className="flex min-w-0 flex-col justify-center">
             <span
               className="text-xs font-medium uppercase tracking-wide"
               style={{
@@ -108,20 +116,18 @@ export function VoiceModeIndicator({
               {state === 'speaking' && 'Jamie is speaking'}
             </span>
 
-            {/* Show transcript while listening */}
-            {state === 'listening' && transcript && (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="text-sm italic max-w-[200px] truncate"
-                style={{
-                  fontFamily: 'var(--font-body, Inter, sans-serif)',
-                  color: 'var(--jamie-text-muted, #5d5d5d)'
-                }}
-              >
-                "{transcript}"
-              </motion.span>
-            )}
+            <motion.span
+              key={`${state}:${supportingText}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="min-h-[20px] max-w-[220px] truncate text-sm italic"
+              style={{
+                fontFamily: 'var(--font-body, Inter, sans-serif)',
+                color: 'var(--jamie-text-muted, #5d5d5d)'
+              }}
+            >
+              {supportingText}
+            </motion.span>
           </div>
         </div>
 

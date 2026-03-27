@@ -1,6 +1,7 @@
 """Unit tests for Supertab foundation services."""
 
 from recipe_search_agent.access_service import AccessService
+from recipe_search_agent.entitlements_service import EntitlementsService
 from recipe_search_agent.identity_service import IdentityService
 from recipe_search_agent.purchase_sync_service import PurchaseSyncService
 
@@ -81,6 +82,57 @@ class FakeMonetizationRepository:
     def create_entitlement(self, payload):
         self.entitlement = payload
         return payload
+
+
+class FakeOwnedRecipesRepository:
+    def __init__(self, *, active_sessions=None, fail_sessions=False):
+        self._active_sessions = active_sessions or []
+        self._fail_sessions = fail_sessions
+
+    def list_active_entitlements(self, user_id):
+        return [
+            {
+                "id": "ent-1",
+                "user_id": user_id,
+                "recipe_id": "recipe-uuid-1",
+                "purchase_id": "purchase-1",
+                "provider_content_key": "recipe:banana-bread:cook",
+                "status": "active",
+                "granted_at": "2026-03-11T20:00:00Z",
+                "expires_at": None,
+                "recurs_at": None,
+            }
+        ]
+
+    def get_recipes_by_ids(self, recipe_ids):
+        return [
+            {
+                "id": "recipe-uuid-1",
+                "slug": "banana-bread",
+                "status": "published",
+                "metadata": {
+                    "title": "Banana Bread",
+                    "description": "Moist and comforting.",
+                    "categories": ["Baking"],
+                    "image_url": "https://example.com/banana-bread.jpg",
+                },
+            }
+        ]
+
+    def get_purchases_by_ids(self, purchase_ids):
+        return [
+            {
+                "id": "purchase-1",
+                "status": "completed",
+                "purchased_at": "2026-03-11T20:00:00Z",
+                "completed_at": "2026-03-11T20:00:00Z",
+            }
+        ]
+
+    def list_latest_active_sessions(self, user_id, recipe_ids):
+        if self._fail_sessions:
+            raise TimeoutError("session lookup timed out")
+        return list(self._active_sessions)
 
 
 def test_identity_service_reuses_existing_external_identity():
@@ -199,3 +251,15 @@ def test_access_service_lists_owned_recipes():
     assert recipes[0]["recipeId"] == "banana-bread"
     assert recipes[0]["purchaseStatus"] == "completed"
     assert recipes[0]["activeSession"]["sessionId"] == "sess-1"
+
+
+def test_entitlements_service_lists_owned_recipes_without_sessions_when_lookup_times_out():
+    service = EntitlementsService(repository=FakeOwnedRecipesRepository(fail_sessions=True))
+
+    recipes = service.list_owned_recipes("user-1")
+
+    assert len(recipes) == 1
+    assert recipes[0]["recipeId"] == "banana-bread"
+    assert recipes[0]["purchaseStatus"] == "completed"
+    assert recipes[0]["lastCookedAt"] is None
+    assert recipes[0]["activeSession"] is None
