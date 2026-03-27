@@ -117,6 +117,11 @@ class AssistantFactory:
                 "ELEVENLABS_VOICE_ID is required but not set. "
                 "Please set it in your environment variables or .env file."
             )
+        if not settings.ELEVENLABS_MODEL_ID or not settings.ELEVENLABS_MODEL_ID.strip():
+            raise ValueError(
+                "ELEVENLABS_MODEL_ID is required but not set. "
+                "Please set it in your environment variables or .env file."
+            )
         if not settings.DEEPGRAM_API_KEY or not settings.DEEPGRAM_API_KEY.strip():
             raise ValueError(
                 "DEEPGRAM_API_KEY is required but not set. "
@@ -152,7 +157,7 @@ class AssistantFactory:
             tts=ElevenLabsTextToSpeech(
                 api_key=settings.ELEVENLABS_API_KEY,
                 voice_id=settings.ELEVENLABS_VOICE_ID,
-                model_id=settings.ELEVENLABS_MODEL_ID or None,
+                model_id=settings.ELEVENLABS_MODEL_ID,
                 speed=settings.TTS_SPEED,
                 output_format=settings.TTS_OUTPUT_FORMAT,
             ),
