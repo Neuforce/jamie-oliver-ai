@@ -52,6 +52,7 @@ class Settings:
     DEEPGRAM_API_KEY: str = os.getenv("DEEPGRAM_API_KEY", "").strip()
     ELEVENLABS_API_KEY: str = os.getenv("ELEVENLABS_API_KEY", "").strip()
     ELEVENLABS_VOICE_ID: str = os.getenv("ELEVENLABS_VOICE_ID", "").strip()
+    ELEVENLABS_MODEL_ID: str = os.getenv("ELEVENLABS_MODEL_ID", "").strip()
     
     # Server Configuration
     HOST: str = os.getenv("HOST", "0.0.0.0")
@@ -109,6 +110,7 @@ class Settings:
             self.DEEPGRAM_API_KEY,
             self.ELEVENLABS_API_KEY,
             self.ELEVENLABS_VOICE_ID,
+            self.ELEVENLABS_MODEL_ID,
         ]
         return all(required)
 

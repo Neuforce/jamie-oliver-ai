@@ -30,7 +30,7 @@ class ElevenLabsWebSocketTTS(BaseTextToSpeech):
         speed: float = 1.0,
         speaker_boost: bool = True,
         output_format: str = "ulaw_8000",
-        model_id: str = "eleven_flash_v2_5",
+        model_id: str = "eleven_multilingual_v2",
         enable_ssml_parsing: bool = False,
         auto_mode: bool = False,
         sync_alignment: bool = False,

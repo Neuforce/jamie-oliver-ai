@@ -51,7 +51,10 @@ DEEPGRAM_API_KEY=your-deepgram-api-key
 ELEVENLABS_API_KEY=your-elevenlabs-api-key
 
 # ElevenLabs Voice ID (para selección de voz)
-ELEVENLABS_VOICE_ID=your-elevenlabs-voice-id
+ELEVENLABS_VOICE_ID=vinj1qyMFj0KgswzTjUi
+
+# ElevenLabs model ID (para seleccionar el modelo de síntesis)
+ELEVENLABS_MODEL_ID=eleven_multilingual_v2
 ```
 
 ### Variables Opcionales
@@ -75,7 +78,8 @@ SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 - **`OPENAI_API_KEY`**: Clave API de OpenAI para el modelo de lenguaje (GPT-4).
 - **`DEEPGRAM_API_KEY`**: Clave API de Deepgram para convertir audio a texto.
 - **`ELEVENLABS_API_KEY`**: Clave API de ElevenLabs para convertir texto a audio.
-- **`ELEVENLABS_VOICE_ID`**: ID de la voz en ElevenLabs. Encuéntralo en [ElevenLabs Voice Library](https://elevenlabs.io/app/voice-library).
+- **`ELEVENLABS_VOICE_ID`**: ID de la voz en ElevenLabs. El valor esperado actualmente es `vinj1qyMFj0KgswzTjUi`.
+- **`ELEVENLABS_MODEL_ID`**: Modelo de ElevenLabs para TTS. El valor esperado actualmente es `eleven_multilingual_v2`.
 - **`SUPABASE_URL`**: URL de Supabase utilizada para persistir snapshots de sesiones de cooking.
 - **`SUPABASE_SERVICE_ROLE_KEY`**: Clave con acceso backend para crear y recuperar sesiones persistidas.
 

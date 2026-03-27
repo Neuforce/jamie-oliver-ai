@@ -10,6 +10,7 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const processorRef = useRef<ScriptProcessorNode | null>(null);
+  const silentGainRef = useRef<GainNode | null>(null);
   const isMutedRef = useRef(false);
 
   const startCapture = useCallback(async () => {
@@ -36,7 +37,10 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
 
       const source = audioContext.createMediaStreamSource(stream);
       const processor = audioContext.createScriptProcessor(4096, 1, 1);
+      const silentGain = audioContext.createGain();
+      silentGain.gain.value = 0;
       processorRef.current = processor;
+      silentGainRef.current = silentGain;
 
       let audioChunkCount = 0;
       processor.onaudioprocess = (e) => {
@@ -77,7 +81,9 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
       };
 
       source.connect(processor);
-      processor.connect(audioContext.destination);
+      // Keep the processor alive without routing live mic audio back to the speakers.
+      processor.connect(silentGain);
+      silentGain.connect(audioContext.destination);
 
       return true;
     } catch (err) {
@@ -90,6 +96,11 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
     if (processorRef.current) {
       processorRef.current.disconnect();
       processorRef.current = null;
+    }
+
+    if (silentGainRef.current) {
+      silentGainRef.current.disconnect();
+      silentGainRef.current = null;
     }
 
     if (mediaStreamRef.current) {

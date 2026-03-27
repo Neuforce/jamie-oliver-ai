@@ -21,6 +21,7 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
         speed: float = 1.0,
         speaker_boost: bool = True,
         output_format: str = "ulaw_8000",
+        model_id: str = "eleven_multilingual_v2",
     ):
         if not api_key or not api_key.strip():
             raise ValueError("ELEVENLABS_API_KEY is required but not provided or is empty")
@@ -34,6 +35,7 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
         self.speaker_boost = speaker_boost
         self.output_format = output_format
         self.speed = speed
+        self.model_id = model_id
 
     @observe_speech_processing("synthesis", "elevenlabs")
     async def synthesize(self, text: str):
@@ -44,7 +46,7 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
         }
 
         payload = {
-            "model_id": "eleven_flash_v2_5",
+            "model_id": self.model_id,
             "text": text,
             "voice_settings": {
                 "similarity_boost": self.similarity_boost,

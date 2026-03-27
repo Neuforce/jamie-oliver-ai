@@ -62,6 +62,8 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         # System message queue for events from recipe engine, timers, etc.
         self.system_message_queue = asyncio.Queue()
         self.system_message_task = None
+        self.initial_greeting_started_at: Optional[float] = None
+        self.initial_greeting_grace_period_seconds = 2.0
 
     async def start(self, hello_message: Optional[str] = None):
         """
@@ -82,10 +84,14 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
 
         # Queue the initial greeting (non-blocking)
         if hello_message:
+            self.initial_greeting_started_at = time.monotonic()
             self.brain.chat_memory.add_assistant_message(content=hello_message)
             await self.synth_and_send(hello_message)
 
         async for transcription in self.stt.transcribe(self.input_channel):
+            if self._should_ignore_startup_transcription(transcription.content, transcription.is_final, transcription.confidence):
+                continue
+
             # Interrupt any ongoing speech output if there's new input
             if transcription.content:
                 logger.info("Interrupting current output")
@@ -103,6 +109,32 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
             if transcription.is_final:
                 # Send the transcription to the brain queue
                 await self.brain_queue.put(transcription.content)
+
+    def _should_ignore_startup_transcription(
+        self,
+        content: str,
+        is_final: bool,
+        confidence: Optional[float],
+    ) -> bool:
+        """Ignore early low-confidence partials so the greeting is not cut off by startup noise."""
+        if not content or is_final or self.initial_greeting_started_at is None:
+            return False
+
+        elapsed = time.monotonic() - self.initial_greeting_started_at
+        if elapsed > self.initial_greeting_grace_period_seconds:
+            return False
+
+        confidence_value = confidence or 0.0
+        if confidence_value >= 0.2:
+            return False
+
+        logger.debug(
+            "Ignoring startup partial transcription during greeting: %s (confidence=%.2f, elapsed=%.2fs)",
+            content,
+            confidence_value,
+            elapsed,
+        )
+        return True
 
     def _clear_audio_queue(self):
         """Clear all pending items from the audio queue."""
