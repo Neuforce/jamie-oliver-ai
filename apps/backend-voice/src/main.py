@@ -368,6 +368,7 @@ async def voice_websocket_endpoint(websocket: WebSocket):
     session_id = None
     assistant = None
     assistant_task = None
+    control_task = None
 
     try:
         # Initialize WebSocket audio interface
@@ -391,6 +392,7 @@ async def voice_websocket_endpoint(websocket: WebSocket):
 
         input_channel = audio_interface.get_input_service()
         output_channel = audio_interface.get_output_service()
+        control_queue = audio_interface.get_input_control_queue()
         session_service.register_output_channel(session_id, output_channel)
 
         # Create voice assistant
@@ -455,6 +457,9 @@ async def voice_websocket_endpoint(websocket: WebSocket):
                 hello_message=initial_greeting
             )
         )
+        control_task = asyncio.create_task(
+            _monitor_voice_controls(control_queue, assistant, output_channel, session_id)
+        )
 
         # Wait for the assistant to finish or for WebSocket to disconnect
         await assistant_task
@@ -463,15 +468,18 @@ async def voice_websocket_endpoint(websocket: WebSocket):
     except WebSocketDisconnect:
         logger.info(f"WebSocket disconnected for session: {session_id}")
         await _cancel_assistant_task(assistant_task, session_id)
+        await _cancel_control_task(control_task, session_id)
 
     except asyncio.CancelledError:
         logger.info(f"Voice session cancelled for session: {session_id}")
         await _cancel_assistant_task(assistant_task, session_id)
+        await _cancel_control_task(control_task, session_id)
         raise
 
     except Exception as e:
         logger.error(f"Error in voice WebSocket: {e}", exc_info=True)
         await _cancel_assistant_task(assistant_task, session_id)
+        await _cancel_control_task(control_task, session_id)
 
         # Try to close gracefully
         try:
@@ -507,6 +515,34 @@ async def _cancel_assistant_task(assistant_task, session_id: str) -> None:
             await assistant_task
         except asyncio.CancelledError:
             logger.info(f"Assistant task cancelled successfully for session: {session_id}")
+
+
+async def _cancel_control_task(control_task, session_id: str) -> None:
+    """Cancel the voice-control monitor task gracefully."""
+    if control_task and not control_task.done():
+        logger.info(f"Cancelling control task for session: {session_id}")
+        control_task.cancel()
+        try:
+            await control_task
+        except asyncio.CancelledError:
+            logger.info(f"Control task cancelled successfully for session: {session_id}")
+
+
+async def _monitor_voice_controls(control_queue, assistant, output_channel, session_id: str) -> None:
+    """Forward interrupt/cancel control messages from the client to the active assistant."""
+    while True:
+        try:
+            event_type = await control_queue.get()
+            logger.info(f"Voice control event received for session {session_id}: {event_type}")
+            if event_type in {"interrupt", "cancel"}:
+                await assistant.interrupt(reason=event_type)
+                await output_channel.send_event("interrupted", {"reason": event_type})
+            control_queue.task_done()
+        except asyncio.CancelledError:
+            logger.info(f"Voice control monitor cancelled for session: {session_id}")
+            break
+        except Exception as exc:
+            logger.error(f"Error processing voice control for session {session_id}: {exc}", exc_info=True)
 
 
 async def _prepare_initial_context(

@@ -1,27 +1,35 @@
 /**
- * useVoiceChat - Voice chat hook for recipe discovery
+ * useVoiceChat – Voice chat hook for recipe discovery.
  *
- * Provides voice input/output capabilities for the chat view:
- * - Microphone capture and streaming to backend
- * - Real-time transcription display
- * - Audio response playback
- * - Text transcript alongside audio
+ * Design
+ * ──────
+ * The browser captures mic audio continuously and streams every chunk to the
+ * backend over WebSocket.  The BACKEND is the sole source of truth for turn
+ * state (listening / processing / speaking) and barge-in detection.
+ *
+ * Why server-side barge-in?
+ *   • Deepgram's VAD already runs on the audio stream – no need to duplicate
+ *     amplitude detection in JavaScript.
+ *   • Browser AEC (echoCancellation: true on getUserMedia) prevents Jamie's
+ *     own voice from being transcribed as user speech.
+ *   • Removes a major source of fragility: complex client-state machines that
+ *     had to mirror server state under network jitter.
+ *
+ * The hook still responds to server "interrupted" events to stop local audio
+ * playback immediately, and still supports manual interrupt / cancel buttons.
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useAudioCapture } from './useAudioCapture';
 import { useAudioPlayback } from './useAudioPlayback';
+import type { VoiceTurnState } from './voiceTurnUtils';
 
-export type VoiceChatState =
-  | 'idle'           // Not listening, not speaking
-  | 'connecting'     // WebSocket connecting
-  | 'listening'      // Listening for user speech
-  | 'processing'     // Processing user message
-  | 'speaking';      // Jamie is speaking
+export type VoiceChatState = VoiceTurnState;
 
 export interface VoiceChatMessage {
   event: string;
   data?: any;
+  responseId?: string;
 }
 
 export interface VoiceChatRecipes {
@@ -58,7 +66,7 @@ export interface UseVoiceChatOptions {
 
 export function useVoiceChat(options: UseVoiceChatOptions) {
   const {
-    sessionId,  // Use shared session ID for unified chat experience
+    sessionId,
     onTranscript,
     onTextChunk,
     onRecipes,
@@ -70,52 +78,78 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     sampleRate = 16000,
   } = options;
 
-  // State
+  // ── state ──────────────────────────────────────────────────────────────
   const [state, setState] = useState<VoiceChatState>('idle');
   const [isConnected, setIsConnected] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentTranscript, setCurrentTranscript] = useState('');
   const [isPausedByVisibility, setIsPausedByVisibility] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
-  // Refs
-  const wsRef = useRef<WebSocket | null>(null);
+  // ── refs ───────────────────────────────────────────────────────────────
+  const wsRef                = useRef<WebSocket | null>(null);
   const isVoiceModeActiveRef = useRef(false);
+  const isMicManuallyMutedRef = useRef(false);
+  // Deferred state transitions while audio is still playing
+  const pendingDoneRef   = useRef(false);
+  const pendingListenRef = useRef(false);
+  // Track the active response so stale audio from a previous turn is discarded
+  const activeResponseIdRef = useRef<string | null>(null);
 
-  // Store callbacks in refs to avoid stale closures
+  // Keep callbacks stable via ref so closures don't go stale
   const callbacksRef = useRef(options);
-  useEffect(() => {
-    callbacksRef.current = options;
-  }, [options]);
+  useEffect(() => { callbacksRef.current = options; }, [options]);
 
-  // Audio capture
+  // ── helpers ────────────────────────────────────────────────────────────
+
+  const sendSocketEvent = useCallback((event: string, data?: unknown) => {
+    if (wsRef.current?.readyState !== WebSocket.OPEN) return;
+    const payload: Record<string, unknown> = { event };
+    if (data !== undefined) payload.data = data;
+    wsRef.current.send(JSON.stringify(payload));
+  }, []);
+
+  const resetActiveResponse = useCallback(() => {
+    activeResponseIdRef.current = null;
+  }, []);
+
+  const isCurrentResponse = useCallback((responseId?: string) => {
+    if (!responseId) return false;
+    return activeResponseIdRef.current === responseId;
+  }, []);
+
+  // ── audio playback ─────────────────────────────────────────────────────
+  const { playAudio, stopAllAudio, cleanup: cleanupAudio, initAudioContext } = useAudioPlayback({
+    onPlaybackStateChange: setIsAudioPlaying,
+  });
+
+  // ── audio capture ──────────────────────────────────────────────────────
+  // Always stream mic audio to the backend.  The server (Deepgram) decides
+  // whether the user is speaking and triggers barge-in server-side.
   const { startCapture, stopCapture, setMuted } = useAudioCapture({
     sampleRate,
     onAudioData: useCallback((base64Audio: string) => {
-      if (wsRef.current?.readyState === WebSocket.OPEN && isVoiceModeActiveRef.current) {
-        wsRef.current.send(JSON.stringify({
-          event: 'audio',
-          data: base64Audio,
-        }));
+      if (
+        wsRef.current?.readyState !== WebSocket.OPEN
+        || !isVoiceModeActiveRef.current
+        || isMicManuallyMutedRef.current
+      ) {
+        return;
       }
+      wsRef.current.send(JSON.stringify({ event: 'audio', data: base64Audio }));
     }, []),
   });
 
-  // Audio playback
-  const { playAudio, stopAllAudio, cleanup: cleanupAudio, initAudioContext } = useAudioPlayback();
-
-  // Get WebSocket URL for voice chat
+  // ── WebSocket URL ──────────────────────────────────────────────────────
   const getWebSocketUrl = useCallback(() => {
-    // Use the backend-search WebSocket URL from VITE_API_BASE_URL
-    // @ts-expect-error - Vite provides import.meta.env
     const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
     const wsProtocol = baseUrl.startsWith('https') ? 'wss' : 'ws';
-    const wsUrl = baseUrl.replace(/^https?/, wsProtocol);
-    return `${wsUrl}/ws/chat-voice`;
+    return `${baseUrl.replace(/^https?/, wsProtocol)}/ws/chat-voice`;
   }, []);
 
-  // Handle incoming WebSocket messages
+  // ── message handler ────────────────────────────────────────────────────
   const handleMessage = useCallback((message: VoiceChatMessage) => {
-    const { event, data } = message;
+    const { event, data, responseId } = message;
     const callbacks = callbacksRef.current;
 
     switch (event) {
@@ -124,33 +158,54 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         break;
 
       case 'listening':
-        setState('listening');
-        setCurrentTranscript('');
+        // Server is ready for the next user turn.  If the browser still has
+        // buffered TTS audio playing, defer the state transition.
+        if (isAudioPlaying) {
+          pendingListenRef.current = true;
+        } else {
+          resetActiveResponse();
+          setState('listening');
+          setCurrentTranscript('');
+        }
         break;
 
       case 'transcript_interim':
+        setState('user_speaking');
         setCurrentTranscript(data || '');
         callbacks.onTranscript?.(data || '', false);
         break;
 
       case 'transcript_final':
+        // New user utterance confirmed – any in-flight assistant audio is stale.
+        stopAllAudio();
+        resetActiveResponse();
+        setState('user_speaking');
         setCurrentTranscript(data || '');
         callbacks.onTranscript?.(data || '', true);
         break;
 
       case 'processing':
+        if (!responseId) {
+          console.warn('[useVoiceChat] Ignoring processing event without responseId');
+          break;
+        }
+        // New response turn – drop any audio from the previous one.
+        if (activeResponseIdRef.current && activeResponseIdRef.current !== responseId) {
+          stopAllAudio();
+        }
+        activeResponseIdRef.current = responseId;
         setState('processing');
         break;
 
       case 'text_chunk':
-        setState('speaking');
+        if (!isCurrentResponse(responseId)) return;
+        setState('assistant_speaking');
         callbacks.onTextChunk?.(data || '');
         break;
 
       case 'audio':
-        if (data) {
-          playAudio(data);
-        }
+        if (!isCurrentResponse(responseId)) return;
+        if (data) playAudio(data);
         break;
 
       case 'recipes':
@@ -174,8 +229,23 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         break;
 
       case 'done':
+        if (!isCurrentResponse(responseId)) return;
+        pendingDoneRef.current = true;
+        if (!isAudioPlaying) {
+          pendingDoneRef.current = false;
+          resetActiveResponse();
+          setState('listening');
+          setCurrentTranscript('');
+          callbacks.onDone?.();
+        }
+        break;
+
+      case 'interrupted':
+        // Server confirmed barge-in or cancel – stop local playback immediately.
+        stopAllAudio();
+        resetActiveResponse();
         setState('listening');
-        callbacks.onDone?.();
+        setCurrentTranscript('');
         break;
 
       case 'error':
@@ -186,9 +256,30 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       default:
         console.log('🎤 Unhandled voice chat event:', event, data);
     }
-  }, [playAudio]);
+  }, [isAudioPlaying, isCurrentResponse, playAudio, resetActiveResponse, stopAllAudio]);
 
-  // Connect to voice chat WebSocket
+  // ── pending state transitions (audio drain) ────────────────────────────
+  useEffect(() => {
+    if (isAudioPlaying) return;
+    const callbacks = callbacksRef.current;
+    if (pendingDoneRef.current) {
+      pendingDoneRef.current  = false;
+      pendingListenRef.current = false;
+      resetActiveResponse();
+      setState('listening');
+      setCurrentTranscript('');
+      callbacks.onDone?.();
+      return;
+    }
+    if (pendingListenRef.current) {
+      pendingListenRef.current = false;
+      resetActiveResponse();
+      setState('listening');
+      setCurrentTranscript('');
+    }
+  }, [isAudioPlaying, resetActiveResponse]);
+
+  // ── connect / disconnect ───────────────────────────────────────────────
   const connect = useCallback(async () => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
       console.log('🎤 Already connected');
@@ -197,8 +288,6 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
 
     setState('connecting');
     setError(null);
-
-    // Initialize audio context (requires user gesture)
     await initAudioContext();
 
     const wsUrl = getWebSocketUrl();
@@ -212,14 +301,8 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         console.log('🎤 Voice chat WebSocket connected');
         setIsConnected(true);
 
-        // Send start message with shared session ID
-        ws.send(JSON.stringify({
-          event: 'start',
-          sessionId,  // Use shared session ID for unified experience
-          sampleRate,
-        }));
+        ws.send(JSON.stringify({ event: 'start', sessionId, sampleRate }));
 
-        // Start audio capture
         try {
           await startCapture();
           isVoiceModeActiveRef.current = true;
@@ -231,24 +314,22 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         }
       };
 
-      ws.onmessage = (event) => {
+      ws.onmessage = (ev) => {
         try {
-          const message = JSON.parse(event.data);
-          handleMessage(message);
+          handleMessage(JSON.parse(ev.data));
         } catch (err) {
           console.error('Error parsing voice chat message:', err);
         }
       };
 
-      ws.onerror = (event) => {
-        console.error('🎤 Voice chat WebSocket error:', event);
+      ws.onerror = () => {
         setError('Connection error');
         setIsConnected(false);
         setState('idle');
       };
 
-      ws.onclose = (event) => {
-        console.log('🎤 Voice chat WebSocket closed:', event.code, event.reason);
+      ws.onclose = (ev) => {
+        console.log('🎤 Voice chat WebSocket closed:', ev.code, ev.reason);
         setIsConnected(false);
         isVoiceModeActiveRef.current = false;
         setState('idle');
@@ -261,15 +342,14 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     }
   }, [sessionId, getWebSocketUrl, sampleRate, startCapture, stopCapture, handleMessage, initAudioContext, onError]);
 
-  // Disconnect from voice chat
   const disconnect = useCallback(() => {
     isVoiceModeActiveRef.current = false;
+    pendingDoneRef.current   = false;
+    pendingListenRef.current = false;
+    resetActiveResponse();
 
     if (wsRef.current) {
-      // Send stop event
-      if (wsRef.current.readyState === WebSocket.OPEN) {
-        wsRef.current.send(JSON.stringify({ event: 'stop' }));
-      }
+      if (wsRef.current.readyState === WebSocket.OPEN) sendSocketEvent('stop');
       wsRef.current.close(1000, 'User disconnected');
       wsRef.current = null;
     }
@@ -279,32 +359,79 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     setIsConnected(false);
     setState('idle');
     setCurrentTranscript('');
-  }, [stopCapture, stopAllAudio]);
+  }, [resetActiveResponse, sendSocketEvent, stopCapture, stopAllAudio]);
 
-  // Interrupt Jamie while speaking
+  // ── controls ───────────────────────────────────────────────────────────
+
+  /** Interrupt Jamie while she is speaking (from a UI button). */
   const interrupt = useCallback(() => {
-    if (wsRef.current?.readyState === WebSocket.OPEN && state === 'speaking') {
-      wsRef.current.send(JSON.stringify({ event: 'interrupt' }));
+    if (wsRef.current?.readyState === WebSocket.OPEN && state === 'assistant_speaking') {
+      pendingDoneRef.current   = false;
+      pendingListenRef.current = false;
+      resetActiveResponse();
       stopAllAudio();
+      sendSocketEvent('interrupt');
       setState('listening');
     }
-  }, [state, stopAllAudio]);
+  }, [resetActiveResponse, sendSocketEvent, state, stopAllAudio]);
 
-  // Toggle voice mode
-  const toggleVoiceMode = useCallback(async () => {
-    if (isConnected) {
-      disconnect();
-    } else {
-      await connect();
+  /** Cancel current operation and stay in voice mode. */
+  const cancel = useCallback(() => {
+    pendingDoneRef.current   = false;
+    pendingListenRef.current = false;
+    resetActiveResponse();
+    if (state === 'assistant_speaking') {
+      stopAllAudio();
+      sendSocketEvent('interrupt');
+    } else if (state === 'processing') {
+      sendSocketEvent('cancel');
     }
+    setState('listening');
+    setCurrentTranscript('');
+  }, [resetActiveResponse, sendSocketEvent, state, stopAllAudio]);
+
+  const toggleVoiceMode = useCallback(async () => {
+    if (isConnected) disconnect();
+    else await connect();
   }, [isConnected, connect, disconnect]);
 
-  // Mute/unmute microphone
   const setMicMuted = useCallback((muted: boolean) => {
+    isMicManuallyMutedRef.current = muted;
     setMuted(muted);
   }, [setMuted]);
 
-  // Cleanup on unmount
+  // ── visibility: release mic when user leaves the tab ───────────────────
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden' && (isVoiceModeActiveRef.current || isConnected)) {
+        console.log('[useVoiceChat] Page hidden – releasing microphone and disconnecting');
+        isVoiceModeActiveRef.current = false;
+        stopCapture();
+        if (wsRef.current) {
+          if (wsRef.current.readyState === WebSocket.OPEN) {
+            wsRef.current.send(JSON.stringify({ event: 'stop' }));
+          }
+          wsRef.current.close(1000, 'Visibility hidden');
+          wsRef.current = null;
+        }
+        stopAllAudio();
+        setIsConnected(false);
+        setState('idle');
+        setCurrentTranscript('');
+        setIsPausedByVisibility(true);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [isConnected, stopCapture, stopAllAudio]);
+
+  /** Resume voice after returning from background. */
+  const resumeFromVisibility = useCallback(() => {
+    setIsPausedByVisibility(false);
+    connect();
+  }, [connect]);
+
+  // ── cleanup on unmount ─────────────────────────────────────────────────
   useEffect(() => {
     return () => {
       disconnect();
@@ -312,62 +439,14 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     };
   }, [disconnect, cleanupAudio]);
 
-  // NEU-467: Release mic when user leaves the page (tab switch, app background). Do not auto-resume.
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'hidden') {
-        if (isVoiceModeActiveRef.current || isConnected) {
-          console.log('[useVoiceChat] Page hidden – releasing microphone and disconnecting');
-          isVoiceModeActiveRef.current = false;
-          stopCapture();
-          if (wsRef.current) {
-            if (wsRef.current.readyState === WebSocket.OPEN) {
-              wsRef.current.send(JSON.stringify({ event: 'stop' }));
-            }
-            wsRef.current.close(1000, 'Visibility hidden');
-            wsRef.current = null;
-          }
-          stopAllAudio();
-          setIsConnected(false);
-          setState('idle');
-          setCurrentTranscript('');
-          setIsPausedByVisibility(true);
-        }
-      }
-    };
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
-  }, [isConnected, stopCapture, stopAllAudio]);
-
-  /** NEU-467: Resume voice after user returned from background (tap to continue). */
-  const resumeFromVisibility = useCallback(() => {
-    setIsPausedByVisibility(false);
-    connect();
-  }, [connect]);
-
-  // Cancel current operation and stay in voice mode
-  const cancel = useCallback(() => {
-    if (state === 'speaking') {
-      // Stop audio and go back to listening
-      stopAllAudio();
-      wsRef.current?.send(JSON.stringify({ event: 'interrupt' }));
-    } else if (state === 'processing') {
-      // Cancel processing, go back to listening
-      wsRef.current?.send(JSON.stringify({ event: 'cancel' }));
-    }
-    setState('listening');
-    setCurrentTranscript('');
-  }, [state, stopAllAudio]);
-
+  // ── public API ─────────────────────────────────────────────────────────
   return {
-    // State
     state,
     isConnected,
     error,
     currentTranscript,
     isPausedByVisibility,
 
-    // Actions
     connect,
     disconnect,
     toggleVoiceMode,
@@ -376,10 +455,9 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     setMicMuted,
     resumeFromVisibility,
 
-    // Derived
-    isListening: state === 'listening',
+    isListening:  state === 'listening',
     isProcessing: state === 'processing',
-    isSpeaking: state === 'speaking',
-    isActive: isConnected && state !== 'idle',
+    isSpeaking:   state === 'assistant_speaking' || state === 'barge_in_pending',
+    isActive:     isConnected && state !== 'idle',
   };
 }

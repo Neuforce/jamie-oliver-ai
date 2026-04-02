@@ -3,6 +3,8 @@
 interface ImportMetaEnv {
   readonly VITE_API_BASE_URL?: string;
   readonly VITE_WS_URL?: string;
+  readonly VITE_AUDIO_CAPTURE_ENGINE?: 'auto' | 'worklet' | 'legacy';
+  readonly VITE_VOICE_BARGE_IN_ENABLED?: string;
   readonly VITE_SUPERTAB_CLIENT_ID?: string;
   readonly VITE_SUPERTAB_PAYWALL_EXPERIENCE_ID?: string;
   readonly VITE_SUPERTAB_PURCHASE_BUTTON_EXPERIENCE_ID?: string;

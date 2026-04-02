@@ -6,7 +6,7 @@ Este documento lista todas las variables de entorno necesarias para cada aplicac
 
 | App | Variables Requeridas | Variables Opcionales |
 |-----|---------------------|---------------------|
-| **Frontend** | `VITE_WS_URL`, `VITE_API_BASE_URL` | - |
+| **Frontend** | `VITE_WS_URL`, `VITE_API_BASE_URL` | `VITE_AUDIO_CAPTURE_ENGINE`, `VITE_VOICE_BARGE_IN_ENABLED` |
 | **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `ELEVENLABS_MODEL_ID`, `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
 | **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `SUPERTAB_*`, `RECIPE_*` (varias), `DEEPGRAM_API_KEY`, `ELEVENLABS_*` (Voice Chat) |
 
@@ -24,12 +24,23 @@ VITE_WS_URL=ws://localhost:8100/ws/voice
 # API Base URL para backend-search
 VITE_API_BASE_URL=http://localhost:8000
 # Producción: https://your-backend-search-url.vercel.app
+
+# Estrategia de captura de audio en frontend
+# auto = AudioWorklet si está disponible, con fallback automático
+# worklet = fuerza AudioWorklet y cae a legacy si el navegador no lo soporta
+# legacy = usa ScriptProcessorNode temporalmente
+VITE_AUDIO_CAPTURE_ENGINE=auto
+
+# Rollout del barge-in por voz
+VITE_VOICE_BARGE_IN_ENABLED=true
 ```
 
 ### Descripción
 
 - **`VITE_WS_URL`**: URL del WebSocket del backend-voice para comunicación de voz durante el modo de cocción.
 - **`VITE_API_BASE_URL`**: URL base del backend-search para búsqueda semántica de recetas.
+- **`VITE_AUDIO_CAPTURE_ENGINE`**: Controla el rollout del capture engine de micrófono en frontend. `auto` intenta `AudioWorklet` y hace fallback a `ScriptProcessorNode`.
+- **`VITE_VOICE_BARGE_IN_ENABLED`**: Activa el nuevo flujo de barge-in con captura continua e interrupción por voz. Si se desactiva, la app vuelve al comportamiento conservador de no enviar audio mientras Jamie está ocupado.
 
 ### Archivo
 - `.env.example`: `apps/frontend/.env.example`
@@ -71,12 +82,22 @@ CORS_ORIGINS=http://localhost:3000,http://localhost:3100,https://your-frontend.v
 # Persistencia de sesiones de cooking (opcional, pero necesaria para sesiones durables)
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
+
+# Turn-taking de Deepgram (opcional, recomendado para tuning de voz)
+STT_LANGUAGE=en-US
+STT_INTERIM_RESULTS=true
+STT_UTTERANCE_END_MS=1000
+STT_ENDPOINTING_MS=200
 ```
 
 ### Descripción
 
 - **`OPENAI_API_KEY`**: Clave API de OpenAI para el modelo de lenguaje (GPT-4).
 - **`DEEPGRAM_API_KEY`**: Clave API de Deepgram para convertir audio a texto.
+- **`STT_LANGUAGE`**: Idioma usado por Deepgram para el reconocimiento en tiempo real.
+- **`STT_INTERIM_RESULTS`**: Activa resultados parciales para mejorar el turn-taking y la detección de interrupciones.
+- **`STT_UTTERANCE_END_MS`**: Tiempo para que Deepgram emita `UtteranceEnd` y cierre una intervención del usuario.
+- **`STT_ENDPOINTING_MS`**: Milisegundos de silencio antes de finalizar una frase. Afecta directamente qué tan agresivo o paciente es el turn-taking.
 - **`ELEVENLABS_API_KEY`**: Clave API de ElevenLabs para convertir texto a audio.
 - **`ELEVENLABS_VOICE_ID`**: ID de la voz en ElevenLabs. El valor esperado actualmente es `vinj1qyMFj0KgswzTjUi`.
 - **`ELEVENLABS_MODEL_ID`**: Modelo de ElevenLabs para TTS. El valor esperado actualmente es `eleven_multilingual_v2`.
@@ -132,6 +153,12 @@ ELEVENLABS_VOICE_ID=your-elevenlabs-voice-id
 
 # Optional: pin model for consistent TTS behavior
 ELEVENLABS_MODEL_ID=eleven_multilingual_v2
+
+# Optional: tune Deepgram turn-taking for voice chat
+STT_LANGUAGE=en-US
+STT_INTERIM_RESULTS=true
+STT_UTTERANCE_END_MS=1000
+STT_ENDPOINTING_MS=250
 ```
 
 ### Variables Opcionales - Recipe PDF Agent Llama

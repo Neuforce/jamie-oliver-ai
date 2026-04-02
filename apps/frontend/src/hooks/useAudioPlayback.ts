@@ -1,10 +1,23 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState } from 'react';
 
-export function useAudioPlayback() {
+interface UseAudioPlaybackOptions {
+  onPlaybackStateChange?: (isPlaying: boolean) => void;
+}
+
+export function useAudioPlayback(options: UseAudioPlaybackOptions = {}) {
+  const { onPlaybackStateChange } = options;
+  const PLAYBACK_GAP_TOLERANCE_MS = 300;
   const audioQueueRef = useRef<AudioBufferSourceNode[]>([]);
   const nextPlayTimeRef = useRef(0);
   const audioContextRef = useRef<AudioContext | null>(null);
   const leftoverByteRef = useRef<Uint8Array | null>(null);
+  const playbackStopTimerRef = useRef<number | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const updatePlaybackState = useCallback((playing: boolean) => {
+    setIsPlaying(playing);
+    onPlaybackStateChange?.(playing);
+  }, [onPlaybackStateChange]);
 
   const initAudioContext = useCallback(async () => {
     if (!audioContextRef.current) {
@@ -28,6 +41,11 @@ export function useAudioPlayback() {
 
   const playAudio = useCallback(async (base64Audio: string) => {
     try {
+      if (playbackStopTimerRef.current !== null) {
+        window.clearTimeout(playbackStopTimerRef.current);
+        playbackStopTimerRef.current = null;
+      }
+
       console.log('🔊 playAudio called, initializing AudioContext...');
       const audioContext = await initAudioContext();
       if (!audioContext) {
@@ -108,12 +126,29 @@ export function useAudioPlayback() {
 
       // Track source for cleanup
       audioQueueRef.current.push(source);
+      if (audioQueueRef.current.length === 1) {
+        updatePlaybackState(true);
+      }
 
       source.onended = () => {
         console.log('✅ Audio playback finished');
         const index = audioQueueRef.current.indexOf(source);
         if (index > -1) {
           audioQueueRef.current.splice(index, 1);
+        }
+        if (audioQueueRef.current.length === 0) {
+          nextPlayTimeRef.current = 0;
+          if (playbackStopTimerRef.current !== null) {
+            window.clearTimeout(playbackStopTimerRef.current);
+          }
+          playbackStopTimerRef.current = window.setTimeout(() => {
+            // Keep "playing" briefly so tiny inter-chunk gaps do not
+            // toggle turn-state and leak mic audio while assistant is speaking.
+            if (audioQueueRef.current.length === 0) {
+              updatePlaybackState(false);
+            }
+            playbackStopTimerRef.current = null;
+          }, PLAYBACK_GAP_TOLERANCE_MS);
         }
       };
       
@@ -123,9 +158,13 @@ export function useAudioPlayback() {
     } catch (err) {
       console.error('❌ Error playing audio:', err);
     }
-  }, [initAudioContext]);
+  }, [initAudioContext, updatePlaybackState]);
 
   const stopAllAudio = useCallback(() => {
+    if (playbackStopTimerRef.current !== null) {
+      window.clearTimeout(playbackStopTimerRef.current);
+      playbackStopTimerRef.current = null;
+    }
     audioQueueRef.current.forEach((source) => {
       try {
         source.stop();
@@ -135,7 +174,9 @@ export function useAudioPlayback() {
     });
     audioQueueRef.current = [];
     nextPlayTimeRef.current = 0;
-  }, []);
+    leftoverByteRef.current = null;
+    updatePlaybackState(false);
+  }, [updatePlaybackState]);
 
   const cleanup = useCallback(() => {
     stopAllAudio();
@@ -150,5 +191,6 @@ export function useAudioPlayback() {
     stopAllAudio,
     cleanup,
     initAudioContext,
+    isPlaying,
   };
 }

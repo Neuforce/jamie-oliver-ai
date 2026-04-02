@@ -147,6 +147,8 @@ class AssistantFactory:
                 api_key=settings.DEEPGRAM_API_KEY,
                 sample_rate=settings.SAMPLE_RATE,
                 language=settings.STT_LANGUAGE,
+                interim_results=settings.STT_INTERIM_RESULTS,
+                utterance_end_ms=settings.STT_UTTERANCE_END_MS,
                 endpointing=settings.STT_ENDPOINTING_MS,
             ),
             brain=SimpleBrain(

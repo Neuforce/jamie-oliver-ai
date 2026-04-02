@@ -60,6 +60,7 @@ export interface UseWebSocketOptions {
   onStop?: () => void;
   onControl?: (action: string, data?: any) => void;
   onSessionInfo?: (info: SessionInfo) => void;
+  onAssistantState?: (state: string, data?: any) => void;
   // New sync events for AI-native experience
   onFocusStep?: (stepId: string, stepIndex: number) => void;
   onHighlightIngredient?: (ingredientName: string) => void;
@@ -82,6 +83,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
     onStop,
     onControl,
     onSessionInfo,
+    onAssistantState,
     onFocusStep,
     onHighlightIngredient,
     onTimerAdjust,
@@ -425,6 +427,12 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           }
           break;
 
+        case 'assistant_state':
+          if (onAssistantState) {
+            onAssistantState(data?.state || '', data);
+          }
+          break;
+
         case 'timer_list':
           // Handle active timers list update (for timer panel)
           if (onTimerListUpdate && data?.timers) {
@@ -476,7 +484,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           console.log('Unhandled WebSocket message:', message);
       }
     },
-    [onRecipeState, onRecipeMessage, onRecipeError, onTimerDone, onReminderTick, onTimerListUpdate, onAudio, onStop, onControl, disconnect, onSessionInfo, onFocusStep, onHighlightIngredient, onTimerAdjust, onTimerCancel]
+    [onRecipeState, onRecipeMessage, onRecipeError, onTimerDone, onReminderTick, onTimerListUpdate, onAudio, onStop, onControl, disconnect, onSessionInfo, onAssistantState, onFocusStep, onHighlightIngredient, onTimerAdjust, onTimerCancel]
   );
 
   // Auto-connect if enabled

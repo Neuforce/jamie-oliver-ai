@@ -24,6 +24,7 @@ class WebSocketAudioInput(AudioInputService):
         self.is_paused = False
         self.running = False
         self.logger = logging.getLogger(__name__)
+        self.control_queue: asyncio.Queue[str] = asyncio.Queue()
 
     async def start_client(self):
         """Accept WebSocket connection and wait for initial handshake."""
@@ -80,6 +81,10 @@ class WebSocketAudioInput(AudioInputService):
                     self.running = False
                     break
 
+                elif event_type in {"interrupt", "cancel"}:
+                    self.logger.info(f"Control event received for session {self.session_id}: {event_type}")
+                    await self.control_queue.put(event_type)
+
         except WebSocketDisconnect:
             self.logger.warning("WebSocket disconnected")
             self.running = False
@@ -125,4 +130,7 @@ class WebSocketAudioInput(AudioInputService):
             self.websocket.application_state == WebSocketState.CONNECTED
             and self.websocket.client_state == WebSocketState.CONNECTED
         )
+
+    def get_control_queue(self) -> asyncio.Queue[str]:
+        return self.control_queue
 
