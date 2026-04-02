@@ -64,6 +64,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         self.system_message_task = None
         self.initial_greeting_started_at: Optional[float] = None
         self.initial_greeting_grace_period_seconds = 2.0
+        self.interrupt_requested = asyncio.Event()
 
     async def start(self, hello_message: Optional[str] = None):
         """
@@ -88,6 +89,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
             self.brain.chat_memory.add_assistant_message(content=hello_message)
             await self.synth_and_send(hello_message)
 
+        await self._send_assistant_state("listening")
         async for transcription in self.stt.transcribe(self.input_channel):
             if self._should_ignore_startup_transcription(transcription.content, transcription.is_final, transcription.confidence):
                 continue
@@ -95,18 +97,17 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
             # Interrupt any ongoing speech output if there's new input
             if transcription.content:
                 logger.info("Interrupting current output")
-                await self.output_channel.clear()
-                # Clear the audio queue
-                self._clear_audio_queue()
-                self.is_speaking = False
+                await self.interrupt(reason="user_speaking")
 
                 # Update the current transcription to the latest one
                 self.current_transcription = transcription.content
+                await self._send_assistant_state("user_speaking")
 
             logger.debug(f"Received transcription: {transcription}")
 
             # Add final transcriptions to the brain queue for processing
             if transcription.is_final:
+                self.interrupt_requested.clear()
                 # Send the transcription to the brain queue
                 await self.brain_queue.put(transcription.content)
 
@@ -145,6 +146,23 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
             except asyncio.QueueEmpty:
                 break
 
+    async def _send_assistant_state(self, state: str, **metadata: Any):
+        if hasattr(self.output_channel, "send_event"):
+            payload: Dict[str, Any] = {"state": state}
+            payload.update(metadata)
+            try:
+                await self.output_channel.send_event("assistant_state", payload)
+            except Exception as exc:
+                logger.debug(f"Failed to send assistant_state={state}: {exc}")
+
+    async def interrupt(self, reason: str = "client"):
+        logger.info("Interrupt requested: %s", reason)
+        self.interrupt_requested.set()
+        await self.output_channel.clear()
+        self._clear_audio_queue()
+        self.is_speaking = False
+        await self._send_assistant_state("interrupted", reason=reason)
+
     async def _process_output_queue(self):
         """
         Process the audio output queue continuously.
@@ -164,14 +182,20 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                     # When processing a "synthesize" command
                     if text:
                         self.is_speaking = True
+                        await self._send_assistant_state("assistant_speaking")
                         try:
                             async for audio_chunk in self.tts.synthesize(text):
+                                if self.interrupt_requested.is_set():
+                                    logger.info("Stopping TTS stream because an interrupt was requested")
+                                    break
                                 # Send audio chunk directly to output instead of requeuing
                                 await self.output_channel.send_audio(audio_chunk)
                         except Exception as e:
                             logger.error(f"Error during synthesis: {e}", exc_info=True)
                         finally:
                             self.is_speaking = False
+                            if not self.interrupt_requested.is_set():
+                                await self._send_assistant_state("listening")
                 else:
                     # It's an audio chunk, send it directly
                     try:
@@ -200,6 +224,8 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
 
                 # Set processing flag to true
                 self.brain_processing = True
+                self.interrupt_requested.clear()
+                await self._send_assistant_state("processing")
 
                 try:
                     # Handle the transcription
@@ -214,6 +240,8 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                     # Mark task as done and reset processing flag
                     self.brain_queue.task_done()
                     self.brain_processing = False
+                    if not self.is_speaking and not self.interrupt_requested.is_set():
+                        await self._send_assistant_state("listening")
 
             except asyncio.CancelledError:
                 logger.info("Brain queue processor was cancelled")
@@ -360,6 +388,9 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                     continue
 
                 sentence, remainder = self.contains_punctuation(buffer)
+                if self.interrupt_requested.is_set():
+                    logger.info("Stopping brain processing because an interrupt was requested")
+                    break
                 if sentence:
                     # Queue the sentence for synthesis (non-blocking)
                     await self.synth_and_send(sentence)
@@ -373,7 +404,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                     buffer = remainder or ""
 
             # Queue any remaining text for synthesis
-            if buffer:
+            if buffer and not self.interrupt_requested.is_set():
                 await self.synth_and_send(buffer)
 
             return full_content

@@ -33,6 +33,8 @@ Crea archivos `.env` en cada app:
 ```bash
 VITE_WS_URL=ws://localhost:8100/ws/voice
 VITE_API_BASE_URL=http://localhost:8000
+VITE_AUDIO_CAPTURE_ENGINE=auto
+VITE_VOICE_BARGE_IN_ENABLED=true
 ```
 
 **`apps/backend-voice/.env`:**
@@ -41,6 +43,11 @@ OPENAI_API_KEY=your-key
 DEEPGRAM_API_KEY=your-key
 ELEVENLABS_API_KEY=your-key
 ELEVENLABS_VOICE_ID=your-voice-id
+ELEVENLABS_MODEL_ID=eleven_multilingual_v2
+STT_LANGUAGE=en-US
+STT_INTERIM_RESULTS=true
+STT_UTTERANCE_END_MS=1000
+STT_ENDPOINTING_MS=200
 HOST=0.0.0.0
 PORT=8100
 ENVIRONMENT=development
@@ -51,6 +58,14 @@ ENVIRONMENT=development
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
 PYTHON_VERSION=3.11
+DEEPGRAM_API_KEY=your-key
+ELEVENLABS_API_KEY=your-key
+ELEVENLABS_VOICE_ID=vinj1qyMFj0KgswzTjUi
+ELEVENLABS_MODEL_ID=eleven_multilingual_v2
+STT_LANGUAGE=en-US
+STT_INTERIM_RESULTS=true
+STT_UTTERANCE_END_MS=1000
+STT_ENDPOINTING_MS=250
 ```
 
 ## Ejecutar Servicios

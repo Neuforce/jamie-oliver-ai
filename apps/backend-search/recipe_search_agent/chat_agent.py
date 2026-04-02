@@ -173,6 +173,27 @@ class DiscoveryChatAgent:
             "message_count": len(session.chat_memory.get_messages()),
         }
 
+    def commit_partial_response(self, session_id: str, content: str) -> None:
+        """
+        Commit a partial assistant response to the session's chat memory.
+
+        Called by DiscoveryVoiceHandler when a turn is interrupted mid-LLM-stream
+        so that the next LLM call sees a well-formed conversation history rather
+        than an orphaned user message with no reply.
+
+        Args:
+            session_id: Session to update.
+            content: Partial assistant text accumulated before the interrupt.
+        """
+        session = self._sessions.get(session_id)
+        if session and content:
+            session.chat_memory.add_assistant_message(content=content)
+            logger.debug(
+                "Committed partial response (%d chars) for session %s",
+                len(content),
+                session_id,
+            )
+
     async def chat(
         self,
         message: str,

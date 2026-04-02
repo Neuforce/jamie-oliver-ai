@@ -31,14 +31,18 @@ export function VoiceModeIndicator({
     return null;
   }
 
-  const showCancelButton = state === 'processing' || state === 'speaking';
+  const isListeningState = state === 'listening' || state === 'user_speaking';
+  const isAssistantSpeakingState = state === 'assistant_speaking' || state === 'barge_in_pending';
+  const showCancelButton = state === 'processing' || isAssistantSpeakingState;
   const supportingText =
-    state === 'listening'
+    isListeningState
       ? transcript
         ? `"${transcript}"`
         : 'Waiting for your voice...'
       : state === 'processing'
         ? 'Working on your request...'
+        : state === 'barge_in_pending'
+          ? 'Interrupting Jamie...'
         : 'Jamie is responding...';
 
   return (
@@ -52,7 +56,7 @@ export function VoiceModeIndicator({
         <div className="flex items-center gap-3">
           {/* State Icon */}
           <div className="relative">
-            {state === 'listening' && (
+            {isListeningState && (
               <motion.div
                 className="relative"
                 animate={{ scale: [1, 1.1, 1] }}
@@ -85,7 +89,7 @@ export function VoiceModeIndicator({
               </motion.div>
             )}
 
-            {state === 'speaking' && (
+            {isAssistantSpeakingState && (
               <motion.div
                 animate={{ scale: [1, 1.15, 1] }}
                 transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut' }}
@@ -104,16 +108,16 @@ export function VoiceModeIndicator({
               className="text-xs font-medium uppercase tracking-wide"
               style={{
                 fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                color: state === 'listening'
+                color: isListeningState
                   ? 'var(--jamie-primary, #46BEA8)'
-                  : state === 'speaking'
+                  : isAssistantSpeakingState
                     ? 'var(--jamie-primary, #46BEA8)'
                     : 'var(--jamie-primary-dark, #327179)'
               }}
             >
-              {state === 'listening' && 'Listening...'}
+              {isListeningState && 'Listening...'}
               {state === 'processing' && 'Thinking...'}
-              {state === 'speaking' && 'Jamie is speaking'}
+              {isAssistantSpeakingState && 'Jamie is speaking'}
             </span>
 
             <motion.span

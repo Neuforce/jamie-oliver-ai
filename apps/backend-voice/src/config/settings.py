@@ -81,8 +81,10 @@ class Settings:
     SAMPLE_RATE: int = 16000  # 16kHz - standard for speech recognition
     
     # STT Configuration (Deepgram)
-    STT_LANGUAGE: str = "en-US"
-    STT_ENDPOINTING_MS: int = 200  # milliseconds of silence before considering speech complete
+    STT_LANGUAGE: str = os.getenv("STT_LANGUAGE", "en-US").strip()
+    STT_INTERIM_RESULTS: bool = os.getenv("STT_INTERIM_RESULTS", "true").strip().lower() != "false"
+    STT_UTTERANCE_END_MS: int = int(os.getenv("STT_UTTERANCE_END_MS", "1000"))
+    STT_ENDPOINTING_MS: int = int(os.getenv("STT_ENDPOINTING_MS", "200"))  # milliseconds of silence before considering speech complete
     
     # LLM Configuration
     # Provider options: "openai", "gemini", "groq"

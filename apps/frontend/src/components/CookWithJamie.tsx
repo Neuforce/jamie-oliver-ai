@@ -39,6 +39,7 @@ import {
 import { useWebSocket, type RecipeState, type ActiveTimerInfo } from '../hooks/useWebSocket';
 import { useAudioCapture } from '../hooks/useAudioCapture';
 import { useAudioPlayback } from '../hooks/useAudioPlayback';
+import type { VoiceTurnState } from '../hooks/voiceTurnUtils';
 import { RecipeCard } from './RecipeCard';
 import { TimerPanel, type ActiveTimer } from './TimerPanel';
 import { clearChatHistory } from './ChatView';
@@ -80,6 +81,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   // WebSocket and Audio states
   const [isMicMuted, setIsMicMuted] = useState(false);
   const [wsRecipeState, setWsRecipeState] = useState(null as RecipeState | null);
+  const [assistantTurnState, setAssistantTurnState] = useState<VoiceTurnState>('connecting');
   const audioCaptureStartedRef = useRef(false);
   const canStreamAudioRef = useRef(false);
   const lastAutoTimerStepRef = useRef<number | null>(null);
@@ -289,6 +291,20 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       // Backend requested stop
       handleSaveAndExit();
     },
+    onAssistantState: (nextState) => {
+      if (!nextState) {
+        return;
+      }
+      if (
+        nextState === 'listening' ||
+        nextState === 'processing' ||
+        nextState === 'assistant_speaking' ||
+        nextState === 'user_speaking' ||
+        nextState === 'barge_in_pending'
+      ) {
+        setAssistantTurnState(nextState as VoiceTurnState);
+      }
+    },
   });
 
   useEffect(() => {
@@ -297,12 +313,13 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     }
   }, [sessionInfo]);
 
-  // Audio capture hook - only send audio when mic is active
+  // Audio capture hook – stream mic audio continuously.
+  // Barge-in is detected server-side by Deepgram / SimpleVoiceAssistant;
+  // browser AEC (echoCancellation: true) prevents Jamie's voice from leaking.
   const audioCapture = useAudioCapture({
     sampleRate: 16000,
     onAudioData: (base64Audio) => {
-      // Send audio to WebSocket only when the connection is open and mic is active
-      if (!canStreamAudioRef.current) {
+      if (!canStreamAudioRef.current || isMicMuted) {
         return;
       }
       wsSendAudio(base64Audio);

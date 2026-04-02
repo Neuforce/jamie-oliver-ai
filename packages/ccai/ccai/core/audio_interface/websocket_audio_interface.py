@@ -71,3 +71,7 @@ class WebSocketAudioInterface(AudioInterface):
         """Get the audio output service."""
         return self._output_service
 
+    def get_input_control_queue(self):
+        """Get the input control queue for interrupt/cancel events."""
+        return self._input_service.get_control_queue()
+

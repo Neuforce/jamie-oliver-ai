@@ -803,28 +803,51 @@ async def voice_chat_websocket(websocket: WebSocket):
     - Server sends: {"event": "recipe_detail", "data": {...}}
     - Server sends: {"event": "shopping_list", "data": {...}}
     - Server sends: {"event": "done"}
+    - Server sends: {"event": "interrupted", "data": {"reason": "..."}}
     - Server sends: {"event": "error", "data": "error message"}
 
     Requires environment variables:
     - DEEPGRAM_API_KEY: For speech-to-text
     - ELEVENLABS_API_KEY: For text-to-speech
     - ELEVENLABS_VOICE_ID: Voice ID for Jamie
-    - ELEVENLABS_MODEL_ID: (Optional) ElevenLabs TTS model_id override
+    - ELEVENLABS_MODEL_ID: ElevenLabs TTS model_id
     """
-    try:
-        from recipe_search_agent.voice_handler import handle_voice_chat
+    from ccai.core.audio_interface.websocket_audio_interface import WebSocketAudioInterface
+    from recipe_search_agent.voice_handler import DiscoveryVoiceHandler, get_voice_config
 
+    try:
+        config = get_voice_config()
+    except ValueError as exc:
+        await websocket.accept()
+        await websocket.send_json({"event": "error", "data": f"Voice not configured: {exc}"})
+        await websocket.close(code=1011, reason="Voice not configured")
+        return
+
+    try:
+        # WebSocketAudioInterface handles: accept(), receive "start" msg, extract sessionId.
+        audio_interface = WebSocketAudioInterface(websocket, sample_rate=config.sample_rate)
+        await audio_interface.start()
+
+        session_id = audio_interface._input_service.session_id or f"voice_{id(websocket)}"
         chat_agent = get_chat_agent()
-        await handle_voice_chat(websocket, chat_agent)
+
+        handler = DiscoveryVoiceHandler(
+            input_channel=audio_interface.get_input_service(),
+            output_channel=audio_interface.get_output_service(),
+            control_queue=audio_interface.get_input_control_queue(),
+            chat_agent=chat_agent,
+            config=config,
+            session_id=session_id,
+        )
+        await handler.handle()
 
     except WebSocketDisconnect:
-        logger.info("Voice chat WebSocket disconnected")
-    except Exception as e:
-        logger.error(f"Error in voice chat WebSocket: {e}", exc_info=True)
+        logger.info("Voice chat WebSocket disconnected [%s]", locals().get("session_id", "?"))
+    except Exception as exc:
+        logger.error("Error in voice chat WebSocket: %s", exc, exc_info=True)
         try:
-            if websocket.client_state.CONNECTED:
-                await websocket.close(code=1011, reason=str(e))
-        except:
+            await websocket.send_json({"event": "error", "data": str(exc)})
+        except Exception:
             pass
 
 
