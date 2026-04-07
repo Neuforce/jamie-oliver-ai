@@ -564,8 +564,12 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     const initializeAudio = async () => {
       try {
         console.log('🎤 Requesting microphone permission...');
-        // Request permission silently (no UI blocking)
-        await navigator.mediaDevices.getUserMedia({ audio: true });
+        // Request and immediately release a minimal stream just to prompt the
+        // browser permission dialog.  Keeping this stream alive alongside the
+        // one opened by startCapture() below created two concurrent raw mic
+        // inputs, causing static / interference on session start.
+        const permStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        permStream.getTracks().forEach(t => t.stop());
         console.log('✅ Microphone permission granted');
 
         // Initialize and resume AudioContext for playback BEFORE starting capture
