@@ -29,6 +29,8 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
   const { sampleRate = 16000, onAudioData } = options;
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
+  // When the caller provides a shared context, we must not close it on cleanup.
+  const ownsAudioContextRef = useRef(true);
   const sourceNodeRef = useRef<MediaStreamAudioSourceNode | null>(null);
   const processorRef = useRef<AudioCaptureNode | null>(null);
   const silentGainRef = useRef<GainNode | null>(null);
@@ -66,7 +68,7 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
     [onAudioData]
   );
 
-  const startCapture = useCallback(async () => {
+  const startCapture = useCallback(async (externalAudioContext?: AudioContext | null) => {
     try {
       if (audioContextRef.current || mediaStreamRef.current) {
         return true;
@@ -83,8 +85,18 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
 
       mediaStreamRef.current = stream;
 
-      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
-      const audioContext = new AudioContextClass({ sampleRate });
+      let audioContext: AudioContext;
+      if (externalAudioContext) {
+        // Reuse the caller's context — avoids running two audio threads at the
+        // same sample rate, which causes subtle interference / static on some
+        // devices (the OS audio mixer sees two independent 16 kHz graphs).
+        audioContext = externalAudioContext;
+        ownsAudioContextRef.current = false;
+      } else {
+        const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+        audioContext = new AudioContextClass({ sampleRate });
+        ownsAudioContextRef.current = true;
+      }
       audioContextRef.current = audioContext;
 
       // Resume AudioContext if suspended
@@ -188,10 +200,11 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
       mediaStreamRef.current = null;
     }
 
-    if (audioContextRef.current) {
+    if (audioContextRef.current && ownsAudioContextRef.current) {
       audioContextRef.current.close();
-      audioContextRef.current = null;
     }
+    audioContextRef.current = null;
+    ownsAudioContextRef.current = true;
 
     engineRef.current = 'legacy';
   }, []);

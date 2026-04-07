@@ -186,11 +186,14 @@ export function useAudioPlayback(options: UseAudioPlaybackOptions = {}) {
     }
   }, [stopAllAudio]);
 
+  const getAudioContext = useCallback(() => audioContextRef.current, []);
+
   return {
     playAudio,
     stopAllAudio,
     cleanup,
     initAudioContext,
+    getAudioContext,
     isPlaying,
   };
 }

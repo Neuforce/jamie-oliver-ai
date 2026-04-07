@@ -590,10 +590,13 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           console.error('❌ Error initializing AudioContext for playback:', err);
         }
 
-        // Start audio capture automatically
+        // Start audio capture automatically.
+        // Share the playback AudioContext so both capture and playback run on
+        // one audio thread — two contexts at the same sample rate can cause
+        // subtle interference / static at session start.
         try {
           console.log('🎙️ Starting audio capture...');
-          await audioCapture.startCapture();
+          await audioCapture.startCapture(audioPlayback.getAudioContext());
           audioCaptureStartedRef.current = true;
           setIsListening(true);
           setVoiceError('');
@@ -671,48 +674,10 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     return () => clearInterval(interval);
   }, [timerRunning, timerSeconds]);
 
-  // Initialize Web Speech API
-  useEffect(() => {
-    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
-      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = false;
-      recognitionRef.current.lang = 'es-ES';
-
-      recognitionRef.current.onresult = (event: any) => {
-        const transcript = event.results[0][0].transcript;
-        setVoiceText(transcript);
-        handleVoiceCommand(transcript);
-      };
-
-      recognitionRef.current.onerror = (event: any) => {
-        // Silently handle permission denied and user aborted errors
-        if (event.error === 'not-allowed' || event.error === 'aborted') {
-          setIsListening(false);
-          setVoiceError('');
-          return;
-        }
-
-        // Only show error for other types
-        console.warn('Speech recognition error:', event.error);
-        setIsListening(false);
-        setVoiceError(event.error);
-      };
-
-      recognitionRef.current.onend = () => {
-        setIsListening(false);
-      };
-    } else {
-      setVoiceSupported(false);
-    }
-
-    return () => {
-      if (recognitionRef.current) {
-        recognitionRef.current.stop();
-      }
-    };
-  }, []);
+  // Note: webkitSpeechRecognition was previously initialized here but was
+  // dead code (start() was never called).  Removed to prevent Chrome from
+  // pre-initializing its internal mic pipeline alongside our AudioWorklet
+  // capture stream, which could contribute to audio interference.
 
   const speakText = (text: string) => {
     if ('speechSynthesis' in window) {
