@@ -1,21 +1,22 @@
-// AudioWorklet modules run in an isolated scope and cannot import from the
-// main application bundle.  All dependencies must be inlined here.
-// DO NOT add any import statements — they will cause an AbortError in
-// production builds, forcing a fallback to the deprecated ScriptProcessorNode.
+// AudioWorklet processor — must be plain JavaScript (no TypeScript syntax).
+// Vite's ?url import copies .ts files as raw assets without compilation,
+// causing an AbortError when the browser tries to parse TypeScript as JS.
+// Using a .js file with the new URL(..., import.meta.url) pattern ensures
+// Vite compiles and hashes this correctly for production builds.
+//
+// All dependencies are inlined here. AudioWorklet modules run in a fully
+// isolated scope and cannot import from the main application bundle.
 
 const AUDIO_CAPTURE_CHUNK_SIZE = 4096;
 
 class Float32ChunkAccumulator {
-  private readonly targetFrames: number;
-  private bufferedFrames = 0;
-  private buffer: Float32Array;
-
   constructor(targetFrames = AUDIO_CAPTURE_CHUNK_SIZE) {
     this.targetFrames = targetFrames;
+    this.bufferedFrames = 0;
     this.buffer = new Float32Array(targetFrames);
   }
 
-  push(inputData: Float32Array, onChunk: (chunk: Float32Array) => void) {
+  push(inputData, onChunk) {
     let readOffset = 0;
 
     while (readOffset < inputData.length) {
@@ -39,12 +40,13 @@ class Float32ChunkAccumulator {
   }
 }
 
-const AUDIO_CAPTURE_PROCESSOR_NAME = 'audio-capture-processor';
-
 class AudioCaptureProcessor extends AudioWorkletProcessor {
-  private readonly accumulator = new Float32ChunkAccumulator(AUDIO_CAPTURE_CHUNK_SIZE);
+  constructor() {
+    super();
+    this.accumulator = new Float32ChunkAccumulator(AUDIO_CAPTURE_CHUNK_SIZE);
+  }
 
-  process(inputs: Float32Array[][]): boolean {
+  process(inputs) {
     const inputData = inputs[0]?.[0];
 
     if (!inputData?.length) {
@@ -53,10 +55,7 @@ class AudioCaptureProcessor extends AudioWorkletProcessor {
 
     this.accumulator.push(inputData, (chunk) => {
       this.port.postMessage(
-        {
-          type: 'audio-chunk',
-          payload: chunk.buffer,
-        },
+        { type: 'audio-chunk', payload: chunk.buffer },
         [chunk.buffer]
       );
     });
@@ -65,4 +64,4 @@ class AudioCaptureProcessor extends AudioWorkletProcessor {
   }
 }
 
-registerProcessor(AUDIO_CAPTURE_PROCESSOR_NAME, AudioCaptureProcessor);
+registerProcessor('audio-capture-processor', AudioCaptureProcessor);

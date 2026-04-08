@@ -1,5 +1,11 @@
 import { useRef, useCallback } from 'react';
-import audioCaptureProcessorUrl from '../worklets/audioCaptureProcessor.ts?url';
+// Import the worklet code as a raw string. Vite inlines small assets referenced
+// via new URL(...) as data: URLs, which Chrome rejects for audioWorklet.addModule().
+// Using ?raw + a Blob URL is the only reliable cross-environment approach:
+//   - In dev:  Vite serves the raw text; Blob URL loads fine.
+//   - In prod: the code string is embedded in the bundle; Blob URL loads fine.
+// blob: URLs are same-origin and always permitted for AudioWorklet modules.
+import audioCaptureProcessorCode from '../worklets/audioCaptureProcessor.js?raw';
 import {
   AUDIO_CAPTURE_SILENCE_THRESHOLD,
   getAverageAmplitude,
@@ -125,7 +131,13 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
       let processor: AudioCaptureNode;
       if (preferredEngine === 'worklet') {
         try {
-          await audioContext.audioWorklet.addModule(audioCaptureProcessorUrl);
+          const workletBlob = new Blob([audioCaptureProcessorCode], { type: 'application/javascript' });
+          const workletBlobUrl = URL.createObjectURL(workletBlob);
+          try {
+            await audioContext.audioWorklet.addModule(workletBlobUrl);
+          } finally {
+            URL.revokeObjectURL(workletBlobUrl);
+          }
           const workletNode = new AudioWorkletNode(audioContext, AUDIO_CAPTURE_PROCESSOR_NAME, {
             numberOfInputs: 1,
             numberOfOutputs: 1,
