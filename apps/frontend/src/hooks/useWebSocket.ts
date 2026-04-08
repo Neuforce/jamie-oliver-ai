@@ -120,8 +120,17 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
   }, []);
 
   const connect = useCallback(() => {
-    // Don't connect if already connected, connecting, or component unmounted
-    if (wsRef.current?.readyState === WebSocket.OPEN || isConnecting || !isMountedRef.current) {
+    // Don't connect if already connected/connecting, or component unmounted.
+    // Check the actual WebSocket readyState (not just React state) to prevent
+    // duplicate connections when React's state batch hasn't flushed yet — the
+    // most common cause of double-greeting: audio init fires between the
+    // autoConnect call and the isConnecting=true state update.
+    if (
+      wsRef.current?.readyState === WebSocket.OPEN ||
+      wsRef.current?.readyState === WebSocket.CONNECTING ||
+      isConnecting ||
+      !isMountedRef.current
+    ) {
       return;
     }
 

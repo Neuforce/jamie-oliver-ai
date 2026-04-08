@@ -97,7 +97,7 @@ class Settings:
     GROQ_API_KEY: str = os.getenv("GROQ_API_KEY", "").strip()
     
     # TTS Configuration (ElevenLabs)
-    TTS_SPEED: float = 1.1  # Slightly faster for natural flow
+    TTS_SPEED: float = 0.9
     TTS_OUTPUT_FORMAT: str = "pcm_16000"  # PCM at 16kHz - matches input sample rate
     
     # App Metadata

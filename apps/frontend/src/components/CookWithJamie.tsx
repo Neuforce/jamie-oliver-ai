@@ -605,18 +605,10 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           setIsMicMuted(false);
           audioCapture.setMuted(false);
           console.log('✅ Microphone is active (not muted)');
-          console.log('🔌 WebSocket connection status:', {
-            connected: isWebSocketConnected,
-            connecting: isWebSocketConnecting,
-            error: wsError,
-            recipeId: recipeId,
-          });
-
-          // If WebSocket is not connected, try to connect manually
-          if (!isWebSocketConnected && !isWebSocketConnecting) {
-            console.log('⚠️ WebSocket not connected, attempting manual connection...');
-            wsConnect();
-          }
+          // WebSocket connection is managed by autoConnect in useWebSocket.
+          // Do NOT call wsConnect() here — the auto-connect is already in
+          // progress when this runs, and calling it again causes a second
+          // start message and a duplicate greeting from the backend.
         } catch (err: any) {
           console.error('❌ Error starting audio capture:', err);
           setVoiceError('Failed to start audio capture');

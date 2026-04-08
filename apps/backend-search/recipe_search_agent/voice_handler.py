@@ -101,7 +101,7 @@ def get_voice_config() -> VoiceConfig:
         elevenlabs_voice_id=elevenlabs_voice,
         elevenlabs_model_id=elevenlabs_model,
         sample_rate=int(os.getenv("VOICE_SAMPLE_RATE", "16000")),
-        tts_speed=float(os.getenv("TTS_SPEED", "1.0")),
+        tts_speed=float(os.getenv("TTS_SPEED", "0.8")),
         stt_language=os.getenv("STT_LANGUAGE", "en-US"),
         stt_interim_results=os.getenv("STT_INTERIM_RESULTS", "true").strip().lower() != "false",
         stt_utterance_end_ms=int(os.getenv("STT_UTTERANCE_END_MS", "1500")),
