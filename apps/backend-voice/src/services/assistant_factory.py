@@ -161,6 +161,8 @@ class AssistantFactory:
                 voice_id=settings.ELEVENLABS_VOICE_ID,
                 model_id=settings.ELEVENLABS_MODEL_ID,
                 speed=settings.TTS_SPEED,
+                similarity_boost=0.8,
+                stability=0.5,
                 output_format=settings.TTS_OUTPUT_FORMAT,
             ),
             input_channel=input_channel,

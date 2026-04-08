@@ -200,6 +200,8 @@ class DiscoveryVoiceHandler:
             voice_id=config.elevenlabs_voice_id,
             model_id=config.elevenlabs_model_id,
             speed=config.tts_speed,
+            similarity_boost=0.8,
+            stability=0.5,
             output_format=config.tts_output_format,
         )
 
