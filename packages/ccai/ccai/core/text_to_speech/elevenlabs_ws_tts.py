@@ -121,6 +121,7 @@ class ElevenLabsWebSocketTTS(BaseTextToSpeech):
 
         init_message = {
             "text": " ",  # Initial space as per API docs
+            "apply_text_normalization": "auto",
             "voice_settings": {
                 "speed": self.speed,
                 "stability": self.stability,
@@ -218,7 +219,8 @@ class ElevenLabsWebSocketTTS(BaseTextToSpeech):
             # Send text to synthesize
             text_message = {
                 "text": text,
-                "try_trigger_generation": True
+                "apply_text_normalization": "auto",
+                "try_trigger_generation": True,
             }
 
             await self.websocket.send(json.dumps(text_message))

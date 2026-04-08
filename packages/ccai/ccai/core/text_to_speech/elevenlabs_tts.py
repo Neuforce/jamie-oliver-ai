@@ -48,6 +48,7 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
 
         payload = {
             "text": text,
+            "apply_text_normalization": "auto",
             "voice_settings": {
                 "similarity_boost": self.similarity_boost,
                 "stability": self.stability,
