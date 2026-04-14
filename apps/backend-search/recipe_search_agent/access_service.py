@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from typing import Any, Optional
 
+from recipe_search_agent.dev_access import is_development_paywall_bypass_enabled
 from recipe_search_agent.entitlements_service import EntitlementsService
 
 
@@ -28,6 +29,9 @@ class AccessService:
             access_state = "owned"
         else:
             access_state = "locked"
+
+        if access_state == "locked" and is_development_paywall_bypass_enabled():
+            access_state = "free"
 
         return {
             "recipeId": recipe["slug"],

@@ -69,7 +69,8 @@ if [ ! -f ".deps-installed" ] || ! python -c "import uvicorn" 2>/dev/null || ! p
     fi
     # Install ccai package (required for chat agent)
     # Note: pyaudio is optional and may fail on macOS, but backend-search doesn't need it
-    echo "   Installing ccai package..."
+    # First-time "pip install -e ccai" can take several minutes (build isolation / deps).
+    echo "   Installing ccai package (puede tardar varios minutos la primera vez)..."
     cd ../../packages/ccai
 
     # Try to install portaudio first (required for pyaudio on macOS)

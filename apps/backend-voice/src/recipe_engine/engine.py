@@ -15,6 +15,7 @@ from .models import (
 )
 from .utils import parse_iso_duration
 from .timer_manager import TimerManager
+from .ingredient_say_enrichment import enrich_say_with_ingredients
 
 logger = configure_logger(__name__)
 
@@ -101,9 +102,12 @@ class RecipeEngine:
         # Execute on_enter actions
         for action in step.on_enter:
             if "say" in action:
+                msg = action["say"]
+                if self.recipe.ingredients:
+                    msg = enrich_say_with_ingredients(msg, self.recipe.ingredients)
                 await self._emit_event(Event(
                     type=EventType.MESSAGE,
-                    payload={"step_id": step.id, "message": action["say"]}
+                    payload={"step_id": step.id, "message": msg}
                 ))
         
         # Build event payload

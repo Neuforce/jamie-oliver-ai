@@ -5,6 +5,7 @@ venv/
 *.dylib
 *.node
 *.pyc
+*.egg-info/
 .env
 dist/
 build/
