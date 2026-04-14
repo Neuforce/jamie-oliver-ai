@@ -42,6 +42,8 @@ VITE_VOICE_BARGE_IN_ENABLED=true
 - **`VITE_AUDIO_CAPTURE_ENGINE`**: Controla el rollout del capture engine de micrófono en frontend. `auto` intenta `AudioWorklet` y hace fallback a `ScriptProcessorNode`.
 - **`VITE_VOICE_BARGE_IN_ENABLED`**: Activa el nuevo flujo de barge-in con captura continua e interrupción por voz. Si se desactiva, la app vuelve al comportamiento conservador de no enviar audio mientras Jamie está ocupado.
 
+En **`vite dev`**, las recetas con paywall se pueden abrir para cocinar sin Supertab: el cliente normaliza `locked` → `free` (ver sección Backend-Search / desarrollo local). No requiere variables extra en builds de producción.
+
 ### Archivo
 - `.env.example`: `apps/frontend/.env.example`
 
@@ -120,6 +122,18 @@ SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 
 # Python Version (para Vercel)
 PYTHON_VERSION=3.11
+```
+
+### Desarrollo local: bypass del paywall (Supertab)
+
+Sin configurar nada en producción:
+
+- **Frontend (`vite dev`)**: si el API aún devuelve `accessState: locked`, el cliente trata la receta como `free` solo cuando `import.meta.env.DEV` es verdadero (no aplica al build de producción).
+- **Backend-search**: con `ENVIRONMENT=development` (o `dev` / `local`) o `VERCEL_ENV=development`, el endpoint `/api/v1/recipes/{id}/access` convierte respuestas `locked` en `free` para poder probar el modo cooking. Con `ENVIRONMENT=production` o `VERCEL_ENV=production` **nunca** se aplica este bypass.
+
+```bash
+# Solo en máquina local o preview de desarrollo (opcional)
+ENVIRONMENT=development
 ```
 
 ### Variables Opcionales - Recipe PDF Agent

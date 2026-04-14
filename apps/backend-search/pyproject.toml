@@ -15,9 +15,16 @@ dependencies = [
   "python-dotenv>=1.0.1",
   "jsonschema>=4.22.0",
   "watchdog>=4.0.1",
+  # Starlette 1.0 breaks FastAPI<0.129; FastAPI 0.128.x also caps starlette at <0.51 — stay in that range.
+  "starlette>=0.40.0,<0.51.0",
   "fastapi>=0.115.0",
   "uvicorn[standard]>=0.32.0",
   "mangum>=0.17.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
 ]
 
 [project.scripts]

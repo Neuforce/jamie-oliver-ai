@@ -26,6 +26,7 @@ from src.tools.recipe_tools import (
     confirm_step_done as confirm_step_tool,
 )
 from src.observability.tracing import init_tracing
+from src.recipe_engine.ingredient_say_enrichment import enrich_say_with_ingredients
 
 logger = configure_logger(__name__)
 
@@ -389,6 +390,8 @@ async def voice_websocket_endpoint(websocket: WebSocket):
 
         # Set session_id in context variables for function access
         context_variables.set("session_id", session_id)
+        # Cooking mode enables LLM→TTS ingredient quantity enrichment (see tts_ingredient_enrichment)
+        context_variables.set("voice_mode", custom_parameters.get("mode"))
 
         input_channel = audio_interface.get_input_service()
         output_channel = audio_interface.get_output_service()
@@ -669,6 +672,8 @@ def _get_first_step_say_text(recipe_payload: Dict[str, Any]) -> Optional[str]:
         key=lambda step: len(step.get("depends_on") or []),
     )
 
+    ingredients = recipe_payload.get("ingredients") or []
+
     for step in prioritized:
         if not step.get("depends_on"):
             # Prefer on_enter.say (TTS-friendly) over descr/instructions
@@ -676,9 +681,15 @@ def _get_first_step_say_text(recipe_payload: Dict[str, Any]) -> Optional[str]:
             if isinstance(on_enter, list):
                 for action in on_enter:
                     if isinstance(action, dict) and action.get("say"):
-                        return action["say"]
+                        say = action["say"]
+                        if ingredients:
+                            say = enrich_say_with_ingredients(say, ingredients)
+                        return say
             elif isinstance(on_enter, dict) and on_enter.get("say"):
-                return on_enter["say"]
+                say = on_enter["say"]
+                if ingredients:
+                    say = enrich_say_with_ingredients(say, ingredients)
+                return say
             # Fallback: don't use descr/instructions as they may have symbols
             return None
 

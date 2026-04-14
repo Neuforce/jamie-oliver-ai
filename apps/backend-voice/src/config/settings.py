@@ -98,7 +98,8 @@ class Settings:
     
     # TTS Configuration (ElevenLabs)
     TTS_SPEED: float = 0.9
-    TTS_OUTPUT_FORMAT: str = "pcm_16000"  # PCM at 16kHz - matches input sample rate
+    # Must match frontend decoder (useAudioPlayback expects PCM 16 kHz). Override via TTS_OUTPUT_FORMAT if needed.
+    TTS_OUTPUT_FORMAT: str = os.getenv("TTS_OUTPUT_FORMAT", "pcm_16000").strip()
     
     # App Metadata
     APP_TITLE: str = "Jamie Oliver AI Cooking Assistant"

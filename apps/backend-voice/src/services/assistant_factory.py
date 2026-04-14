@@ -10,7 +10,8 @@ from ccai.core.llm.llm_groq import GroqLLM
 from ccai.core.memory.chat_memory import SimpleChatMemory
 from ccai.core.speech_to_text.stt_deepgram import DeepgramSTTService
 from ccai.core.text_to_speech.elevenlabs_tts import ElevenLabsTextToSpeech
-from ccai.core.voice_assistant.simple_voice_assistant import SimpleVoiceAssistant
+
+from src.services.cooking_voice_assistant import CookingVoiceAssistant
 from ccai.core.logger import configure_logger
 
 from src.tools.recipe_tools import recipe_function_manager
@@ -93,7 +94,7 @@ class AssistantFactory:
     def create_voice_assistant(
         input_channel,
         output_channel,
-    ) -> SimpleVoiceAssistant:
+    ) -> CookingVoiceAssistant:
         """
         Create a configured voice assistant instance.
 
@@ -102,7 +103,7 @@ class AssistantFactory:
             output_channel: Audio output service
 
         Returns:
-            Configured SimpleVoiceAssistant instance
+            Configured CookingVoiceAssistant instance (TTS enrichment in cooking mode)
         """
         logger.info("Creating voice assistant")
 
@@ -142,7 +143,7 @@ class AssistantFactory:
         logger.info(f"Using LLM provider: {settings.LLM_PROVIDER}, model: {settings.LLM_MODEL}")
 
         # Create the voice assistant
-        assistant = SimpleVoiceAssistant(
+        assistant = CookingVoiceAssistant(
             stt=DeepgramSTTService(
                 api_key=settings.DEEPGRAM_API_KEY,
                 sample_rate=settings.SAMPLE_RATE,

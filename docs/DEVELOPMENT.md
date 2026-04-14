@@ -76,6 +76,8 @@ STT_ENDPOINTING_MS=250
 ./scripts/dev-all.sh
 ```
 
+La primera vez, **backend-search** puede tardar varios minutos instalando dependencias (p. ej. **ccai** con build isolation). El script espera hasta **180 s** por defecto; si hace falta más: `BACKEND_SEARCH_WAIT_SECS=300 ./scripts/dev-all.sh`. Seguimiento: `tail -f logs/backend-search.log`.
+
 Inicia:
 - Frontend en `http://localhost:3000`
 - Backend-Voice en `ws://localhost:8100/ws/voice`
@@ -194,9 +196,18 @@ pytest  # o poetry run pytest
 ```
 
 ### Backend-Search
+Las dependencias de test (`pytest`) están en el extra **`dev`**. Instálalas una vez:
+
 ```bash
 cd apps/backend-search
-pytest  # o poetry run pytest
+poetry install --extras dev
+# alternativa sin Poetry: pip install -e ".[dev]"
+```
+
+Luego:
+
+```bash
+poetry run pytest tests/test_foundations_services.py -v
 ```
 
 ## Troubleshooting
@@ -211,6 +222,15 @@ pytest  # o poetry run pytest
 ### Backend-Search no encuentra recetas
 - Verifica que `project_root` en `search.py` apunte a `data/recipes/`
 - Verifica que las rutas relativas funcionen desde `apps/backend-search/`
+
+### Backend-Search: `TypeError: Router.__init__() got an unexpected keyword argument 'on_startup'`
+Ocurre si **Starlette 1.x** se instaló junto a **FastAPI** antiguo. El `pyproject.toml` fija `starlette<1.0.0`. Reinstalá dependencias en `apps/backend-search`:
+
+```bash
+cd apps/backend-search
+pip install "starlette>=0.40,<0.51"
+# o: pip install -e .  (respeta pyproject.toml)
+```
 
 ### Docker Compose no inicia
 - Verifica que Docker Desktop esté corriendo
