@@ -93,6 +93,19 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
                 raise ValueError(
                     "ElevenLabs API authentication failed. Please verify ELEVENLABS_API_KEY is set correctly."
                 ) from e
+            if e.status == 404:
+                logger.error(
+                    "ElevenLabs API returned 404 Not Found for text-to-speech stream. "
+                    "This usually means ELEVENLABS_VOICE_ID does not exist for this API key "
+                    "(wrong id, deleted voice, or voice from another account). "
+                    "Copy the voice id from ElevenLabs Dashboard → Voices (or Voice Library). "
+                    "voice_id=%r output_format=%r",
+                    self.voice_id,
+                    self.output_format,
+                )
+                raise ValueError(
+                    "ElevenLabs TTS: voice not found (404). Check ELEVENLABS_VOICE_ID in your environment."
+                ) from e
             else:
                 logger.error(f"ElevenLabs API error ({e.status}): {e.message}")
                 raise

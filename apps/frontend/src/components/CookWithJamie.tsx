@@ -295,6 +295,11 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       if (!nextState) {
         return;
       }
+      if (nextState === 'assistant_speaking') {
+        console.log(
+          '[Jamie playback] assistant_speaking — TTS path: look for "📡 WebSocket received audio event" then "🎵 Received audio from backend" then "🔊 playAudio". If this line appears but none of those, the server is not sending audio frames.'
+        );
+      }
       if (
         nextState === 'listening' ||
         nextState === 'processing' ||

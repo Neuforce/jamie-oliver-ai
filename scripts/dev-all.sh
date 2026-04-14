@@ -241,8 +241,11 @@ mkdir -p "$PROJECT_ROOT/logs"
 BACKEND_SEARCH_PID=$!
 
 # Esperar y verificar que el servicio responda
-echo "   ⏳ Esperando que backend-search esté listo..."
-for i in {1..30}; do
+# La primera ejecución puede tardar varios minutos (onnxruntime, pip install -e ., ccai con build deps).
+BACKEND_SEARCH_WAIT_SECS="${BACKEND_SEARCH_WAIT_SECS:-180}"
+echo "   ⏳ Esperando que backend-search esté listo (hasta ${BACKEND_SEARCH_WAIT_SECS}s; la 1ª vez suele tardar más)..."
+echo "   📋 Log: tail -f $LOG_FILE"
+for i in $(seq 1 "$BACKEND_SEARCH_WAIT_SECS"); do
     if curl -s http://localhost:8000/health > /dev/null 2>&1; then
         echo -e "   ${GREEN}✅ Backend-search está corriendo${NC}"
         break
@@ -254,11 +257,14 @@ for i in {1..30}; do
         tail -20 "$LOG_FILE" 2>/dev/null || echo "   (no hay logs disponibles)"
         error_exit "Backend-search se detuvo inesperadamente"
     fi
-    if [ $i -eq 30 ]; then
+    if [ "$i" -eq "$BACKEND_SEARCH_WAIT_SECS" ]; then
         echo ""
         echo "   Últimos logs:"
-        tail -20 "$LOG_FILE" 2>/dev/null || echo "   (no hay logs disponibles)"
-        error_exit "Backend-search no respondió después de 30 segundos"
+        tail -40 "$LOG_FILE" 2>/dev/null || echo "   (no hay logs disponibles)"
+        error_exit "Backend-search no respondió después de ${BACKEND_SEARCH_WAIT_SECS}s (¿ccai u onnxruntime aún instalando? Ver log arriba o: tail -f $LOG_FILE)"
+    fi
+    if [ $((i % 45)) -eq 0 ]; then
+        echo "   ... sigue arrancando (${i}/${BACKEND_SEARCH_WAIT_SECS}s)"
     fi
     sleep 1
 done

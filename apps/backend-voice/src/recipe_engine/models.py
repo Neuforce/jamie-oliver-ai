@@ -98,11 +98,16 @@ class Recipe:
     difficulty: str
     locale: str
     steps: Dict[str, RecipeStep]
+    ingredients: List[Dict[str, Any]] = field(default_factory=list)
 
     @staticmethod
     def from_dict(data: Dict[str, Any]) -> "Recipe":
         """Load a recipe from a dictionary."""
         recipe_meta = data["recipe"]
+        raw_ingredients = data.get("ingredients") or []
+        ingredients: List[Dict[str, Any]] = [
+            x for x in raw_ingredients if isinstance(x, dict)
+        ]
         steps = {}
         
         for s in data["steps"]:
@@ -128,6 +133,7 @@ class Recipe:
             difficulty=recipe_meta["difficulty"],
             locale=recipe_meta["locale"],
             steps=steps,
+            ingredients=ingredients,
         )
 
     @staticmethod

@@ -1,5 +1,7 @@
 """Unit tests for Supertab foundation services."""
 
+import pytest
+
 from recipe_search_agent.access_service import AccessService
 from recipe_search_agent.entitlements_service import EntitlementsService
 from recipe_search_agent.identity_service import IdentityService
@@ -177,6 +179,33 @@ def test_access_service_returns_locked_state_without_entitlement():
 
     assert access["accessState"] == "locked"
     assert access["entitlement"] is None
+
+
+def test_access_service_dev_bypass_unlocks_locked(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("ENVIRONMENT", "development")
+    service = AccessService(
+        entitlements_service=FakeEntitlementsService(
+            offering={"id": "off-2", "is_free": False, "content_key": "recipe:paid:cook"}
+        )
+    )
+
+    access = service.get_recipe_access("avocado-toast", user_id="user-1")
+
+    assert access["accessState"] == "free"
+    assert access["entitlement"] is None
+
+
+def test_access_service_production_never_bypasses_locked(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("ENVIRONMENT", "production")
+    service = AccessService(
+        entitlements_service=FakeEntitlementsService(
+            offering={"id": "off-2", "is_free": False, "content_key": "recipe:paid:cook"}
+        )
+    )
+
+    access = service.get_recipe_access("avocado-toast", user_id="user-1")
+
+    assert access["accessState"] == "locked"
 
 
 def test_access_service_returns_owned_state_with_entitlement_and_session():

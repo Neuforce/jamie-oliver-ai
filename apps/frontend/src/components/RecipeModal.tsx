@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import { RecipeCard } from './RecipeCard';
 import { SupertabPurchaseButton } from './SupertabPurchaseButton';
 import { toast } from './ui/sonner';
+import { useIsMobile } from './ui/use-mobile';
+import { cn } from './ui/utils';
 import type { RecipeAccessResponse } from '../lib/api';
 import type { RecipePurchaseResolution } from '../lib/supertab';
 // @ts-ignore - Vite handles image imports
@@ -31,6 +33,7 @@ export function RecipeModal({
   isAccessLoading = false,
   onPurchaseResolved,
 }: RecipeModalProps) {
+  const isMobile = useIsMobile();
   const [savedSession, setSavedSession] = useState<any>(null);
   const [activeTab, setActiveTab] = useState('ingredients');
 
@@ -219,17 +222,22 @@ export function RecipeModal({
                       alignSelf: 'stretch',
                       display: 'flex',
                       alignItems: 'flex-end',
-                      overflow: 'hidden',
+                      overflow: isMobile ? 'visible' : 'hidden',
                     }}
                   >
                     <Button
                       onClick={onCookWithJamie}
                       disabled={isAccessLoading}
-                      className="w-full justify-between text-white disabled:opacity-100"
+                      className={cn(
+                        'w-full min-w-0 justify-between gap-2 text-white disabled:opacity-100',
+                        isMobile && 'overflow-visible',
+                      )}
                       size="lg"
                       style={{
                         height: '50px',
-                        padding: '9px 14px 9px 32px',
+                        padding: isMobile
+                          ? '9px 10px 9px 14px'
+                          : '9px 14px 9px 32px',
                         borderRadius: '24px',
                         backgroundColor: '#3D6E6C',
                         transition: 'background-color 0.2s ease',
@@ -243,19 +251,28 @@ export function RecipeModal({
                         e.currentTarget.style.backgroundColor = '#3D6E6C';
                       }}
                     >
-                      <span style={{ marginLeft: '32px' }}>
+                      <span
+                        className={cn(
+                          'min-w-0 flex-1 whitespace-nowrap text-left',
+                          isMobile
+                            ? 'text-xs leading-tight tracking-tight'
+                            : 'text-sm',
+                        )}
+                      >
                         {primaryCtaLabel}
                       </span>
                       <span
-                        className="inline-flex items-center justify-center"
+                        className="inline-flex shrink-0 items-center justify-center"
                         style={{
-                          width: '24px',
-                          height: '24px',
+                          width: isMobile ? 20 : 24,
+                          height: isMobile ? 20 : 24,
                           borderRadius: '9px',
                           background: '#29514F',
                         }}
                       >
-                        <ArrowRight className="size-4" />
+                        <ArrowRight
+                          className={isMobile ? 'size-3' : 'size-4'}
+                        />
                       </span>
                     </Button>
                   </div>

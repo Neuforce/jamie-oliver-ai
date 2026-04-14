@@ -459,7 +459,13 @@ export async function getRecipeAccess(recipeId: string, userId?: string): Promis
     throw new Error(`Failed to get recipe access: ${response.status} ${errorText}`);
   }
 
-  return response.json();
+  const data: RecipeAccessResponse = await response.json();
+  // Vite dev only: unlock cooking without Supertab when API still returns locked (e.g. staging API).
+  // Production builds have import.meta.env.DEV === false — no env var required in prod.
+  if (import.meta.env.DEV && data.accessState === 'locked') {
+    return { ...data, accessState: 'free' };
+  }
+  return data;
 }
 
 export async function getMyRecipes(userId: string): Promise<MyRecipesResponse> {
