@@ -5,16 +5,20 @@ import { RecipeCarousel } from './RecipeCarousel';
 import { MealPlanCard } from './MealPlanCard';
 import { RecipeQuickView } from './RecipeQuickView';
 import { ShoppingListCard } from './ShoppingListCard';
-import { ArrowUp, ArrowDown, Clock, Users, ChefHat, ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowUp, ArrowDown, MessageCircle, Square, MicOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { GlowEffect } from '../design-system/components/GlowEffect';
-import { AvatarWithGlow } from '../design-system/components/AvatarWithGlow';
-import { VoiceModeButton, VoiceModeIndicator, AudioWaveform, StopGenerationButton } from './VoiceModeIndicator';
+import { OnboardingEmptyState } from './OnboardingEmptyState';
+import { ProcessCard, selectFeatured } from './ProcessCard';
+import type { ProcessCardState, ProcessStep, ToolName, FeaturedPayload } from './ProcessCardTypes';
+import { TOOL_STEP_DISPLAY } from './ProcessCardTypes';
+import { JamieHeart } from './JamieHeart';
+import { VoiceModeRoller } from './VoiceModeRoller';
+import { VoiceFooter } from './VoiceFooter';
+import type { RollerMessage, StackRole } from './VoiceModeRoller';
+import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 // @ts-expect-error - Vite resolves figma:asset imports
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
-// @ts-expect-error - Vite handles image imports
-import jamieAvatarLarge from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 import {
   chatWithAgent,
   generateSessionId,
@@ -31,13 +35,13 @@ interface Message {
   id: string;
   type: 'user' | 'jamie';
   content: string;
-  originalContent?: string; // Preserve original streaming text before tool-dominant copy replacement
   recipes?: Recipe[];
   mealPlan?: MealPlanData;
   recipeDetail?: RecipeDetailData;
   shoppingList?: ShoppingListData;
   timestamp: Date;
   isStreaming?: boolean;
+  process?: ProcessCardState;
 }
 
 interface ChatViewProps {
@@ -49,7 +53,6 @@ interface ChatViewProps {
 
 const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
 const SESSION_ID_KEY = 'jamie-oliver-chat-session';
-const TOOL_INTRO_MAX_CHARS = 240;
 const IGNORED_VOICE_TRANSCRIPTS = new Set(['[Connection restored]']);
 
 /** Max width for chat content; matches TabNav for consistent layout (NEU-470). */
@@ -73,13 +76,6 @@ export const clearChatHistory = async () => {
   }
 };
 
-// Prompt suggestions for empty state
-const PROMPT_SUGGESTIONS = [
-  "I've had a long day",
-  "I just need something easy",
-  "Cook something you love",
-  "My energy is at 2%"
-];
 
 // Helper function to get or create session ID
 const getOrCreateSessionId = (): string => {
@@ -109,30 +105,16 @@ const loadMessagesFromStorage = (): Message[] => {
   return [];
 };
 
-const hasToolPayload = (message: Message) =>
-  Boolean(message.recipes?.length || message.mealPlan || message.recipeDetail || message.shoppingList);
-
-const getToolIntroForMessage = (message: Message) => {
-  if (message.mealPlan) return "Here's a meal plan I put together for you.";
-  if (message.recipeDetail) return "Here are the details for that recipe.";
-  if (message.shoppingList) return "Here's your shopping list.";
-  return "Here are some great options for you.";
-};
-
-const applyToolDominantCopy = (message: Message, content: string) => {
-  if (!hasToolPayload(message)) return content;
-  if (!content.trim()) return getToolIntroForMessage(message);
-
-  const normalized = content.trim();
-  const lineCount = normalized.split('\n').length;
-  const looksLikeList = /^[\s>*-]*\d+\.|^[\s>*-]*[-*•]/m.test(normalized);
-
-  if (normalized.length > TOOL_INTRO_MAX_CHARS || lineCount > 2 || looksLikeList) {
-    return getToolIntroForMessage(message);
-  }
-
-  return content;
-};
+/*
+ * We used to run a client-side "tool-dominant" policy here that replaced
+ * Jamie's actual prose with a generic one-liner ("Here are some great
+ * options for you.") whenever a tool was invoked. That, combined with the
+ * matching 240-char cap on the backend, silently truncated mid-sentence
+ * responses like "...Gourmet Beef Burger - A" and made Jamie look broken.
+ *
+ * The new rule is simple: whatever the model says, the user sees. The
+ * card and tool payloads sit alongside the text, not in place of it.
+ */
 
 // Helper function to save messages to localStorage
 const saveMessagesToStorage = (messages: Message[]) => {
@@ -222,7 +204,6 @@ export function ChatView({
   const [isTyping, setIsTyping] = useState(false);
   const [thinkingStatus, setThinkingStatus] = useState<string | null>(null);
   const [displayedThinkingText, setDisplayedThinkingText] = useState('');
-  const [expandedOriginalContent, setExpandedOriginalContent] = useState<Set<string>>(new Set());
   const [showScrollButton, setShowScrollButton] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
@@ -236,6 +217,15 @@ export function ChatView({
   const voiceMessageRef = useRef<string | null>(null);
   const voiceMessageIdRef = useRef<string | null>(null);
   const voiceResponseAccumulatorRef = useRef<string>('');
+
+  /*
+   * Mute toggle for the mic in voice mode. We expose this as a click-target
+   * on the Jamie avatar inside the floating voice dock so the user can
+   * silence their mic without leaving the conversation (e.g. to say
+   * something out loud in the room without Jamie hearing it). The useVoiceChat
+   * hook owns the actual MediaStream gating via `setMicMuted`.
+   */
+  const [isMicMuted, setIsMicMuted] = useState(false);
 
   const hasMessages = messages.length > 0;
 
@@ -254,6 +244,7 @@ export function ChatView({
     isActive: isVoiceActive,
     isPausedByVisibility,
     resumeFromVisibility,
+    setMicMuted,
   } = useVoiceChat({
     sessionId,  // Share session ID between voice and text chat
     onTranscript: (text, isFinal) => {
@@ -379,19 +370,11 @@ export function ChatView({
 
         setMessages(prev => prev.map(msg => {
           if (msg.id === messageId) {
-            let content = msg.content || accumulatedText;
-            if (!content) {
-              content = hasToolPayload(msg)
-                ? getToolIntroForMessage(msg)
-                : "I'm here to help! What would you like to cook today?";
-            }
-            // Preserve original content if tool dominant copy will change it
-            const finalContent = applyToolDominantCopy(msg, content);
-            const updated = { ...msg, content: finalContent, isStreaming: false };
-            if (hasToolPayload(updated) && finalContent !== content && content.trim()) {
-              updated.originalContent = content;
-            }
-            return updated;
+            const content =
+              msg.content ||
+              accumulatedText ||
+              "I'm here to help! What would you like to cook today?";
+            return { ...msg, content, isStreaming: false };
           }
           return msg;
         }));
@@ -416,6 +399,47 @@ export function ChatView({
       setThinkingStatus(null);
     },
   });
+
+  const voiceFooterDetail = isMicMuted
+    ? 'Mic muted — tap Jamie to unmute'
+    : isProcessing
+    ? 'Working on your request'
+    : isSpeaking
+      ? 'Jamie is responding'
+      : currentTranscript
+        ? `"${currentTranscript}"`
+        : 'Waiting for your voice';
+
+  /*
+   * Derive the visual state for the Jamie avatar in the voice dock. The
+   * priority order matters: muted > speaking > listening > connecting.
+   * When muted we intentionally stop rendering the speaking/listening
+   * glows even if the hook reports those states — the UI is telling the
+   * user that their mic is off, which is the information they care about.
+   */
+  const avatarState: 'muted' | 'speaking' | 'listening' | 'idle' =
+    isMicMuted
+      ? 'muted'
+      : isSpeaking
+        ? 'speaking'
+        : isListening || isProcessing
+          ? 'listening'
+          : 'idle';
+
+  const toggleMicMute = useCallback(() => {
+    setIsMicMuted(prev => {
+      const next = !prev;
+      setMicMuted(next);
+      return next;
+    });
+  }, [setMicMuted]);
+
+  useEffect(() => {
+    if (!isVoiceActive && isMicMuted) {
+      setIsMicMuted(false);
+      setMicMuted(false);
+    }
+  }, [isVoiceActive, isMicMuted, setMicMuted]);
 
   const scrollToBottom = useCallback(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -600,20 +624,70 @@ export function ChatView({
             setThinkingStatus(null);
           }
         } else if (event.type === 'tool_call') {
-          // Show what tool is being called
-          const toolName = event.content;
+          const toolName = event.content as ToolName;
           console.log('Tool call:', toolName, event.metadata?.arguments);
 
-          if (toolName === 'search_recipes') {
-            setThinkingStatus("looking through my recipes...");
-          } else if (toolName === 'suggest_recipes_for_mood') {
-            setThinkingStatus("Finding recipes for your mood...");
-          } else if (toolName === 'get_recipe_details') {
-            setThinkingStatus("Getting recipe details...");
-          } else if (toolName === 'plan_meal') {
-            setThinkingStatus("Planning your meal...");
-          } else if (toolName === 'create_shopping_list') {
-            setThinkingStatus("Creating shopping list...");
+          const knownTools: ToolName[] = [
+            'search_recipes',
+            'suggest_recipes_for_mood',
+            'get_recipe_details',
+            'plan_meal',
+            'create_shopping_list',
+          ];
+          if (knownTools.includes(toolName)) {
+            // ProcessCard owns the executing label — clear thinkingStatus immediately
+            setThinkingStatus(null);
+            const toolDisplay = TOOL_STEP_DISPLAY[toolName];
+            const stepId =
+              (event.metadata?.tool_call_id as string | undefined) ??
+              `${toolName}-${Date.now()}`;
+            setMessages(prev => prev.map(msg => {
+              if (msg.id !== streamingMessageId) return msg;
+              /*
+               * Each real `tool_call` event appends a real step to the
+               * card. We never fabricate steps — the list the user sees
+               * is the list the agent actually executed.
+               *
+               * When a new tool starts, any still-executing step flips
+               * to done (the agent has moved on) and the fresh tool
+               * becomes the active step.
+               */
+              const prevSteps = msg.process?.steps ?? [];
+              const closedSteps: ProcessStep[] = prevSteps.map(s =>
+                s.status === 'executing' ? { ...s, status: 'done' } : s,
+              );
+              const newStep: ProcessStep = {
+                id: stepId,
+                tool: toolName,
+                label: toolDisplay.executingLabel,
+                icon: toolDisplay.icon,
+                status: 'executing',
+              };
+              return {
+                ...msg,
+                process: {
+                  // Keep the primary tool as the first one so selectFeatured
+                  // stays deterministic across subsequent tool calls.
+                  tool: msg.process?.tool ?? toolName,
+                  status: 'executing',
+                  quote: msg.process?.quote,
+                  featured: msg.process?.featured,
+                  steps: [...closedSteps, newStep],
+                },
+              };
+            }));
+          } else {
+            if (toolName === 'search_recipes') {
+              setThinkingStatus("looking through my recipes...");
+            } else if (toolName === 'suggest_recipes_for_mood') {
+              setThinkingStatus("Finding recipes for your mood...");
+            } else if (toolName === 'get_recipe_details') {
+              setThinkingStatus("Getting recipe details...");
+            } else if (toolName === 'plan_meal') {
+              setThinkingStatus("Planning your meal...");
+            } else if (toolName === 'create_shopping_list') {
+              setThinkingStatus("Creating shopping list...");
+            }
           }
         } else if (event.type === 'recipes') {
           // Recipes from agent's tool call - these are the EXACT recipes Jamie mentioned
@@ -621,63 +695,78 @@ export function ChatView({
           const recipeData = event.metadata?.recipes || [];
 
           // Transform backend recipe summaries to Recipe format for display
-          // Uses summary data directly - no need to re-fetch full recipes
           for (const r of recipeData) {
             const transformed = transformRecipeFromSummary(r as BackendRecipeSummary, agentRecipes.length);
             agentRecipes.push(transformed);
           }
           console.log('Transformed', agentRecipes.length, 'recipes for display');
+
+          // Update process card featured payload
+          setMessages(prev => prev.map(msg => {
+            if (msg.id !== streamingMessageId || !msg.process) return msg;
+            const featured = selectFeatured({ tool: msg.process.tool, recipes: agentRecipes });
+            return { ...msg, process: { ...msg.process, featured } };
+          }));
         } else if (event.type === 'meal_plan') {
           // Meal plan from plan_meal tool
           console.log('Received meal plan:', event.metadata?.meal_plan);
           if (event.metadata?.meal_plan) {
-            // Update message with meal plan data immediately
-            setMessages(prev => prev.map(msg =>
-              msg.id === streamingMessageId
-                ? { ...msg, mealPlan: event.metadata!.meal_plan }
-                : msg
-            ));
+            setMessages(prev => prev.map(msg => {
+              if (msg.id !== streamingMessageId) return msg;
+              const featured = msg.process
+                ? selectFeatured({ tool: msg.process.tool, mealPlan: event.metadata!.meal_plan })
+                : undefined;
+              return {
+                ...msg,
+                mealPlan: event.metadata!.meal_plan,
+                process: msg.process ? { ...msg.process, featured } : msg.process,
+              };
+            }));
           }
         } else if (event.type === 'recipe_detail') {
           // Recipe detail from get_recipe_details tool
           console.log('Received recipe detail:', event.metadata?.recipe);
           if (event.metadata?.recipe) {
-            // Update message with recipe detail data immediately
-            setMessages(prev => prev.map(msg =>
-              msg.id === streamingMessageId
-                ? { ...msg, recipeDetail: event.metadata!.recipe }
-                : msg
-            ));
+            setMessages(prev => prev.map(msg => {
+              if (msg.id !== streamingMessageId) return msg;
+              const featured = msg.process
+                ? selectFeatured({ tool: msg.process.tool, recipeDetail: event.metadata!.recipe })
+                : undefined;
+              return {
+                ...msg,
+                recipeDetail: event.metadata!.recipe,
+                process: msg.process ? { ...msg.process, featured } : msg.process,
+              };
+            }));
           }
         } else if (event.type === 'shopping_list') {
           // Shopping list from create_shopping_list tool
           console.log('Received shopping list:', event.metadata?.shopping_list);
           if (event.metadata?.shopping_list) {
-            // Update message with shopping list data immediately
-            setMessages(prev => prev.map(msg =>
-              msg.id === streamingMessageId
-                ? { ...msg, shoppingList: event.metadata!.shopping_list }
-                : msg
-            ));
+            setMessages(prev => prev.map(msg => {
+              if (msg.id !== streamingMessageId) return msg;
+              const featured = msg.process
+                ? selectFeatured({ tool: msg.process.tool, shoppingList: event.metadata!.shopping_list })
+                : undefined;
+              return {
+                ...msg,
+                shoppingList: event.metadata!.shopping_list,
+                process: msg.process ? { ...msg.process, featured } : msg.process,
+              };
+            }));
           }
-        } else if (event.type === 'original_content') {
-          // Backend sent the full original content (when tool-dominant copy was truncated)
-          // Update the message with the full original content
-          setMessages(prev => prev.map(msg => {
-            if (msg.id !== streamingMessageId) return msg;
-            return { ...msg, originalContent: event.content };
-          }));
         } else if (event.type === 'done') {
           // Finalize the message
           setThinkingStatus(null);
           setIsTyping(false);
 
           // Only show recipes that came from the agent's tool call
-          // Don't do fallback searches - they often return irrelevant results
-          // when the agent is asking clarifying questions
           const recipes = agentRecipes;
 
-          // Update message to final state with all accumulated data
+          // Update message to final state with all accumulated data.
+          // `fullResponse` is the canonical Jamie prose — no rewriting,
+          // no truncation, no replacement with a generic intro. The
+          // ProcessCard (when present) mirrors the same text as its quote.
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId) return msg;
             const updated = {
@@ -686,25 +775,49 @@ export function ChatView({
               isStreaming: false,
               recipes: recipes.length > 0 ? recipes : msg.recipes,
             };
-            // Preserve original content if tool dominant copy will change it
-            // Only set originalContent if it wasn't already set by the backend's original_content event
-            const finalContent = applyToolDominantCopy(updated, updated.content);
-            if (!updated.originalContent && hasToolPayload(updated) && finalContent !== fullResponse && fullResponse.trim()) {
-              updated.originalContent = fullResponse;
+
+            if (updated.process) {
+              const finalizedSteps: ProcessStep[] = updated.process.steps.map(s =>
+                s.status === 'executing' ? { ...s, status: 'done' } : s,
+              );
+              updated.process = {
+                ...updated.process,
+                status: 'done',
+                quote: fullResponse,
+                steps: finalizedSteps,
+              };
             }
-            return { ...updated, content: finalContent };
+
+            return updated;
           }));
         } else if (event.type === 'error') {
           console.error('Chat error:', event.content);
-          setMessages(prev => prev.map(msg =>
-            msg.id === streamingMessageId
-              ? {
-                  ...msg,
-                  content: "Sorry, something went wrong. Please try again!",
-                  isStreaming: false
-                }
-              : msg
-          ));
+          setMessages(prev => prev.map(msg => {
+            if (msg.id !== streamingMessageId) return msg;
+            if (!msg.process) {
+              return {
+                ...msg,
+                content: "Sorry, something went wrong. Please try again!",
+                isStreaming: false,
+              };
+            }
+            // Mark the step that was in flight when things broke as errored;
+            // earlier steps that already completed stay done.
+            const finalizedSteps: ProcessStep[] = msg.process.steps.map(s =>
+              s.status === 'executing' ? { ...s, status: 'error' } : s,
+            );
+            return {
+              ...msg,
+              content: "Sorry, something went wrong. Please try again!",
+              isStreaming: false,
+              process: {
+                ...msg.process,
+                status: 'error',
+                quote: "Something went wrong. Let me try again.",
+                steps: finalizedSteps,
+              },
+            };
+          }));
           setThinkingStatus(null);
           setIsTyping(false);
         }
@@ -774,110 +887,270 @@ export function ChatView({
     handleSendMessage(prompt);
   };
 
-  return (
-    <div
-      className="bg-white relative"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        minHeight: 0,
-      }}
-    >
-      {/* Empty State with Landing-style prompts */}
-      {!hasMessages && !isTyping ? (
-        <div
-          style={{
-            flex: 1,
-            minHeight: 0,
-            overflowY: 'auto',
-          }}
-        >
-          <div className="relative">
-            <GlowEffect />
-            <div className="relative z-10 px-5 py-6">
-              {/* Jamie's Avatar */}
-              <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="flex flex-col items-center mb-6"
-              >
-                <AvatarWithGlow
-                  src={jamieAvatarLarge}
-                  alt="Jamie Oliver"
-                  size={140}
-                />
-                <motion.div
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.2, duration: 0.5 }}
-                  className="text-center mt-4"
-                >
-                  <h1
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontWeight: 800,
-                      fontSize: '28px',
-                      lineHeight: 1,
-                      textTransform: 'uppercase',
-                      color: 'var(--jamie-text-heading)',
-                    }}
-                  >
-                    COOK WITH JAMIE
-                  </h1>
-                </motion.div>
-              </motion.div>
-
-              {/* Welcome Message */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3, duration: 0.5 }}
-                className="flex justify-center mb-6"
-              >
-                <p
-                  className="text-center"
-                  style={{
-                    fontFamily: 'var(--font-display)',
-                    fontWeight: 400,
-                    fontSize: '16px',
-                    lineHeight: 1.5,
-                    color: 'var(--jamie-text-primary)',
-                    maxWidth: CHAT_CONTENT_MAX_WIDTH,
-                  }}
-                >
-                  Hi - I'm jAImie, Jamie Oliver's AI cooking companion. I'll walk or talk you through recipes step-by-step. What are you in the mood for?
-                </p>
-              </motion.div>
-
-              {/* Prompt Suggestions */}
-              <motion.div
-                initial={{ y: 20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.5 }}
-                className="flex flex-col items-center gap-3 mb-6 mx-auto"
-            style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}
-              >
-                {PROMPT_SUGGESTIONS.map((prompt, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handlePromptButtonClick(prompt)}
-                    className="w-full rounded-full border border-gray-300 px-4 text-left transition-colors hover:bg-gray-50 hover:border-gray-400"
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '16px',
-                      color: 'var(--jamie-text-primary)',
-                      height: 'var(--touch-target-min)',
-                      display: 'flex',
-                      alignItems: 'center',
-                    }}
-                  >
-                    {prompt}
-                  </button>
-                ))}
-              </motion.div>
+  const renderFeaturedPayload = useCallback((payload: FeaturedPayload, options?: {
+    voiceMode?: boolean;
+    voiceRole?: StackRole;
+    recipes?: Recipe[];
+  }) => {
+    switch (payload.kind) {
+      case 'recipe':
+        return (
+          <RecipeCarousel
+            recipes={options?.recipes?.length ? options.recipes : [payload.recipe]}
+            onRecipeClick={async (recipe) => {
+              const completeRecipe = await ensureRecipeHasPayload(recipe);
+              onRecipeClick(completeRecipe);
+            }}
+            singleSlide
+            voiceMode={options?.voiceMode}
+            voiceRole={options?.voiceRole}
+          />
+        );
+      case 'meal_plan':
+        return (
+          <MealPlanCard
+            mealPlan={payload.mealPlan}
+            onViewRecipe={async (recipeId) => {
+              const localRecipe = await loadRecipeFromLocal(recipeId);
+              if (localRecipe) {
+                const transformed = transformRecipeMatch(
+                  { recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] },
+                  localRecipe, 0
+                );
+                onRecipeClick(transformed);
+              }
+            }}
+            onCookRecipe={async (recipeId) => {
+              const localRecipe = await loadRecipeFromLocal(recipeId);
+              if (localRecipe) {
+                const transformed = transformRecipeMatch(
+                  { recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] },
+                  localRecipe, 0
+                );
+                onRecipeClick(transformed);
+              }
+            }}
+          />
+        );
+      case 'shopping_list':
+        return <ShoppingListCard shoppingList={payload.shoppingList} />;
+      case 'recipe_detail':
+        return (
+          <div
+            className="bg-white overflow-hidden"
+            style={{ borderRadius: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
+          >
+            <div style={{ padding: '16px 20px 12px' }}>
+              <h3 style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)', fontSize: '16px', fontWeight: 700, color: 'var(--jamie-text-heading, #2C5F5D)', textTransform: 'uppercase', margin: 0 }}>
+                {payload.recipe.title}
+              </h3>
             </div>
+            {payload.recipe.description && (
+              <div style={{ padding: '0 20px 16px' }}>
+                <p style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)', fontSize: '14px', color: 'var(--jamie-text-primary, #234252)', margin: 0, lineHeight: 1.55 }}>
+                  {payload.recipe.description}
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      default:
+        return null;
+    }
+  }, [onRecipeClick]);
+
+  const renderMessageContent = useCallback((message: Message, options?: {
+    voiceMode?: boolean;
+    voiceRole?: StackRole;
+  }) => {
+    const voiceMode = options?.voiceMode ?? false;
+
+    if (message.type === 'jamie') {
+      return (
+        <>
+          {message.process ? (
+            <ProcessCard
+              state={message.process}
+              renderFeatured={(payload) => renderFeaturedPayload(payload, {
+                voiceMode,
+                voiceRole: options?.voiceRole,
+                recipes: message.recipes,
+              })}
+              className={voiceMode ? 'process-card--embedded' : undefined}
+            />
+          ) : (
+            /*
+             * Non-process Jamie turn: render intro text, any attached tool
+             * payloads (recipes / meal plan / shopping list), and the
+             * collapsible "full response" disclosure as ONE unified card.
+             *
+             * Previously each of these lived as a sibling of the text
+             * bubble, which produced the "small Jamie card with an orphan
+             * recipe gallery hanging underneath" look — a mismatch with
+             * `Jamie_05.png`, where the recipe sits inside the same white
+             * surface as Jamie's quote. Wrapping them all in one card
+             * keeps the visual identity consistent with ProcessCard's
+             * featured layout, too.
+             */
+            (() => {
+              /*
+               * Design rule: the RESPONSE text is always visible. Only
+               * "thinking steps" (surfaced by ProcessCard) are collapsible.
+               * We therefore do NOT render the old "Show full response"
+               * disclosure here — `message.content` is the canonical reply
+               * and it's always on screen.
+               */
+              const hasRecipes = !!(message.recipes && message.recipes.length > 0);
+              const hasMealPlan = !!message.mealPlan;
+              const hasShopping = !!message.shoppingList;
+              const hasAnyBody =
+                !!message.content || hasRecipes || hasMealPlan || hasShopping;
+              if (!hasAnyBody) return null;
+
+              const cardClassName = voiceMode
+                ? 'jamie-voice-message'
+                : 'jamie-thread-card jamie-thread-card--jamie';
+
+              return (
+                <div className={cardClassName}>
+                  {/*
+                   * Speaker badge — mint-teal heart glyph + "JAMIE" wordmark.
+                   * Matches ProcessCard and the design mocks (`Jamie_03.png`,
+                   * `Jamie_04.png`, `Jamie_05.png`) so a conversational reply
+                   * and a tool-driven reply share one identity.
+                   */}
+                  <div className="jamie-thread-speaker">
+                    <JamieHeart className="jamie-thread-speaker__heart" />
+                    <span>Jamie</span>
+                  </div>
+
+                  {message.content && (
+                    <div className="jamie-thread-markdown prose prose-sm max-w-none">
+                      <ReactMarkdown
+                        components={{
+                          h1: ({ children }) => <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
+                          h2: ({ children }) => <h4 className="text-base font-bold mt-3 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
+                          h3: ({ children }) => <h5 className="text-base font-semibold mt-3 mb-1" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
+                          p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                          strong: ({ children }) => <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>{children}</strong>,
+                          ul: ({ children }) => <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
+                          li: ({ children }) => <li className="mb-1">{children}</li>,
+                          hr: () => <hr className="my-3 border-black/10" />,
+                        }}
+                      >
+                        {message.content}
+                      </ReactMarkdown>
+                      {message.isStreaming && (
+                        <motion.span
+                          animate={{ opacity: [1, 0, 1] }}
+                          transition={{ duration: 0.8, repeat: Infinity }}
+                          className="inline-block ml-0.5"
+                        >
+                          ▊
+                        </motion.span>
+                      )}
+                    </div>
+                  )}
+
+                  {hasRecipes && (
+                    <div className={voiceMode ? 'mt-3' : 'jamie-thread-card__payload'}>
+                      <RecipeCarousel
+                        recipes={message.recipes!}
+                        onRecipeClick={async (recipe) => {
+                          const completeRecipe = await ensureRecipeHasPayload(recipe);
+                          onRecipeClick(completeRecipe);
+                        }}
+                        singleSlide
+                        voiceMode={voiceMode}
+                        voiceRole={options?.voiceRole}
+                      />
+                    </div>
+                  )}
+
+                  {hasMealPlan && (
+                    <div className="jamie-thread-card__payload">
+                      <MealPlanCard
+                        mealPlan={message.mealPlan!}
+                        onViewRecipe={async (recipeId) => {
+                          const localRecipe = await loadRecipeFromLocal(recipeId);
+                          if (localRecipe) {
+                            const transformed = transformRecipeMatch({ recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] }, localRecipe, 0);
+                            onRecipeClick(transformed);
+                          }
+                        }}
+                        onCookRecipe={async (recipeId) => {
+                          const localRecipe = await loadRecipeFromLocal(recipeId);
+                          if (localRecipe) {
+                            const transformed = transformRecipeMatch({ recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] }, localRecipe, 0);
+                            onRecipeClick(transformed);
+                          }
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {hasShopping && (
+                    <div className="jamie-thread-card__payload">
+                      <ShoppingListCard shoppingList={message.shoppingList!} />
+                    </div>
+                  )}
+                </div>
+              );
+            })()
+          )}
+          {/*
+           * Note: we used to render a "secondary recipes carousel" here
+           * alongside ProcessCard when the tool returned more than one
+           * recipe. That carousel lived *outside* the card, which broke
+           * the design promise that everything Jamie says/shows stays
+           * within a single surface (see `Jamie_05.png`).
+           *
+           * The full list already flows through `renderFeaturedPayload`
+           * via its `recipes` option — ProcessCard's featured slot shows
+           * the entire gallery inside the card, so no sibling carousel is
+           * needed.
+           */}
+        </>
+      );
+    }
+
+    return (
+      <div className="jamie-thread-card jamie-thread-card--user">
+        <p
+          className="jamie-thread-card__user-text"
+          style={{ fontFamily: 'var(--font-display)' }}
+        >
+          {message.content}
+        </p>
+      </div>
+    );
+  }, [renderFeaturedPayload, imgJamieAvatar, onRecipeClick]);
+
+  return (
+    <div className="relative jamie-view-shell" data-voice-active={isVoiceActive || undefined}>
+      {/* Empty State */}
+      {!hasMessages && !isTyping ? (
+        <OnboardingEmptyState onStart={handlePromptButtonClick} />
+      ) : isVoiceActive ? (
+        /*
+         * Voice Mode — stacked roller of "alive" cards.
+         *
+         * We intentionally DO NOT wrap this in `.jamie-scroll-area`: the
+         * roller owns navigation via pointer drag (`touch-action: none`).
+         * A scrollable ancestor would steal the gesture on phones and give
+         * a confusing "I can scroll up but not down" feel, because the
+         * native scroll consumes vertical movement before the roller's
+         * pointer handlers can process it.
+         */
+        <div className="jamie-voice-stage">
+          <div className="jamie-shell-width jamie-voice-stage__inner">
+            <VoiceModeRoller
+              messages={messages as RollerMessage[]}
+              renderMessage={(msg, role) =>
+                renderMessageContent(msg as Message, { voiceMode: true, voiceRole: role })
+              }
+            />
           </div>
         </div>
       ) : (
@@ -885,485 +1158,24 @@ export function ChatView({
         <div
           ref={messagesContainerRef}
           onScroll={handleScroll}
-          className="px-5 py-4"
-          style={{
-            flex: 1,
-            minHeight: 0,
-            overflowY: 'auto',
-          }}
+          className="jamie-scroll-area"
         >
-          <div className="mx-auto space-y-4" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
+          <div className="jamie-shell-width jamie-thread-stack">
             {messages.map((message, index) => (
               <div key={message.id}>
                 {/* Separator */}
                 {index > 0 && (
-                  <div className="h-px w-full bg-black/5 my-4" />
+                  <div className="h-px w-full bg-[rgba(35,66,82,0.06)] my-4" />
                 )}
-
-                {message.type === 'jamie' ? (
-                  <>
-                    {message.content && (
-                      <div className="flex gap-3 items-start">
-                        <div className="relative shrink-0 size-8">
-                          <img
-                            alt="Jamie"
-                            className="block size-full rounded-full"
-                            src={imgJamieAvatar}
-                          />
-                        </div>
-                        <div
-                          className="flex-1 text-base prose prose-sm max-w-none"
-                          style={{
-                            fontFamily: 'var(--font-chat)',
-                            lineHeight: 1.5,
-                            color: 'var(--jamie-text-body)',
-                          }}
-                        >
-                          <ReactMarkdown
-                            components={{
-                              // Headings
-                              h1: ({ children }) => (
-                                <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>
-                                  {children}
-                                </h3>
-                              ),
-                              h2: ({ children }) => (
-                                <h4 className="text-base font-bold mt-3 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>
-                                  {children}
-                                </h4>
-                              ),
-                              h3: ({ children }) => (
-                                <h5 className="text-base font-semibold mt-3 mb-1" style={{ color: 'var(--jamie-text-heading)' }}>
-                                  {children}
-                                </h5>
-                              ),
-                              // Paragraphs
-                              p: ({ children }) => (
-                                <p className="mb-2 last:mb-0">{children}</p>
-                              ),
-                              // Strong/bold
-                              strong: ({ children }) => (
-                                <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>
-                                  {children}
-                                </strong>
-                              ),
-                              // Lists
-                              ul: ({ children }) => (
-                                <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>
-                              ),
-                              ol: ({ children }) => (
-                                <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>
-                              ),
-                              li: ({ children }) => (
-                                <li className="mb-1">{children}</li>
-                              ),
-                              // Horizontal rule
-                              hr: () => (
-                                <hr className="my-3 border-black/10" />
-                              ),
-                            }}
-                          >
-                            {message.content}
-                          </ReactMarkdown>
-                          {message.isStreaming && (
-                            <motion.span
-                              animate={{ opacity: [1, 0, 1] }}
-                              transition={{ duration: 0.8, repeat: Infinity }}
-                              className="inline-block ml-0.5"
-                            >
-                              ▊
-                            </motion.span>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Collapsible Original Content */}
-                    {message.originalContent &&
-                     message.originalContent !== message.content &&
-                     hasToolPayload(message) && (
-                      <div className="mt-2">
-                        <button
-                          onClick={() => {
-                            setExpandedOriginalContent(prev => {
-                              const next = new Set(prev);
-                              if (next.has(message.id)) {
-                                next.delete(message.id);
-                              } else {
-                                next.add(message.id);
-                              }
-                              return next;
-                            });
-                          }}
-                          className="flex items-center gap-1.5 text-sm italic"
-                          style={{
-                            fontFamily: 'var(--font-chat)',
-                            color: 'var(--jamie-text-muted, #717182)',
-                            background: 'none',
-                            border: 'none',
-                            cursor: 'pointer',
-                            padding: '4px 0',
-                          }}
-                        >
-                          {expandedOriginalContent.has(message.id) ? (
-                            <>
-                              <ChevronUp className="size-3" />
-                              <span>Hide full response</span>
-                            </>
-                          ) : (
-                            <>
-                              <ChevronDown className="size-3" />
-                              <span>Show full response</span>
-                            </>
-                          )}
-                        </button>
-                        {expandedOriginalContent.has(message.id) && (
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="mt-2 pt-2"
-                            style={{
-                              borderTop: '1px solid rgba(0, 0, 0, 0.05)',
-                              overflow: 'visible',
-                              maxHeight: 'none',
-                              height: 'auto',
-                            }}
-                          >
-                            <div
-                              className="text-sm prose prose-sm max-w-none"
-                              style={{
-                                fontFamily: 'var(--font-chat)',
-                                lineHeight: 1.5,
-                                color: 'var(--jamie-text-body)',
-                                overflow: 'visible',
-                                maxHeight: 'none',
-                                height: 'auto',
-                                wordWrap: 'break-word',
-                                overflowWrap: 'break-word',
-                              }}
-                            >
-                              <ReactMarkdown
-                                components={{
-                                  // Headings
-                                  h1: ({ children }) => (
-                                    <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>
-                                      {children}
-                                    </h3>
-                                  ),
-                                  h2: ({ children }) => (
-                                    <h4 className="text-base font-bold mt-3 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>
-                                      {children}
-                                    </h4>
-                                  ),
-                                  h3: ({ children }) => (
-                                    <h5 className="text-base font-semibold mt-3 mb-1" style={{ color: 'var(--jamie-text-heading)' }}>
-                                      {children}
-                                    </h5>
-                                  ),
-                                  // Paragraphs
-                                  p: ({ children }) => (
-                                    <p className="mb-2 last:mb-0">{children}</p>
-                                  ),
-                                  // Strong/bold
-                                  strong: ({ children }) => (
-                                    <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>
-                                      {children}
-                                    </strong>
-                                  ),
-                                  // Lists
-                                  ul: ({ children }) => (
-                                    <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>
-                                  ),
-                                  ol: ({ children }) => (
-                                    <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>
-                                  ),
-                                  li: ({ children }) => (
-                                    <li className="mb-1">{children}</li>
-                                  ),
-                                  // Horizontal rule
-                                  hr: () => (
-                                    <hr className="my-3 border-black/10" />
-                                  ),
-                                }}
-                              >
-                                {message.originalContent}
-                              </ReactMarkdown>
-                            </div>
-                          </motion.div>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Recipe Carousel */}
-                    {message.recipes && message.recipes.length > 0 && (
-                      <div className="mt-4">
-                        <RecipeCarousel
-                          recipes={message.recipes}
-                          onRecipeClick={async (recipe) => {
-                            // Ensure recipe has full payload before passing to RecipeModal
-                            const completeRecipe = await ensureRecipeHasPayload(recipe);
-                            onRecipeClick(completeRecipe);
-                          }}
-                          singleSlide={true}
-                        />
-                      </div>
-                    )}
-
-                    {/* Meal Plan Card */}
-                    {message.mealPlan && (
-                      <div className="mt-4">
-                        <MealPlanCard
-                          mealPlan={message.mealPlan}
-                          onViewRecipe={async (recipeId) => {
-                            // Load and show recipe
-                            const localRecipe = await loadRecipeFromLocal(recipeId);
-                            if (localRecipe) {
-                              const transformed = transformRecipeMatch(
-                                {
-                                  recipe_id: recipeId,
-                                  title: localRecipe.recipe?.title || recipeId,
-                                  similarity_score: 1,
-                                  combined_score: 1,
-                                  file_path: '',
-                                  match_explanation: '',
-                                  matching_chunks: [],
-                                },
-                                localRecipe,
-                                0
-                              );
-                              onRecipeClick(transformed);
-                            }
-                          }}
-                          onCookRecipe={async (recipeId) => {
-                            // Load and start cooking
-                            const localRecipe = await loadRecipeFromLocal(recipeId);
-                            if (localRecipe) {
-                              const transformed = transformRecipeMatch(
-                                {
-                                  recipe_id: recipeId,
-                                  title: localRecipe.recipe?.title || recipeId,
-                                  similarity_score: 1,
-                                  combined_score: 1,
-                                  file_path: '',
-                                  match_explanation: '',
-                                  matching_chunks: [],
-                                },
-                                localRecipe,
-                                0
-                              );
-                              onRecipeClick(transformed);
-                            }
-                          }}
-                        />
-                      </div>
-                    )}
-
-                    {/* Recipe Detail Card - Inline display */}
-                    {message.recipeDetail && (
-                      <div className="mt-4">
-                        <div
-                          className="bg-white overflow-hidden"
-                          style={{
-                            borderRadius: '24px',
-                            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-                          }}
-                        >
-                          {/* Header */}
-                          <div style={{ padding: '20px 24px' }}>
-                            <h3
-                              style={{
-                                fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                                fontSize: '18px',
-                                fontWeight: 700,
-                                color: 'var(--jamie-text-heading, #2C5F5D)',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.5px',
-                                margin: 0,
-                                lineHeight: 1.3,
-                              }}
-                            >
-                              {message.recipeDetail.title}
-                            </h3>
-
-                            {/* Meta info */}
-                            <div
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '16px',
-                                marginTop: '12px',
-                                fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                                fontSize: '14px',
-                                color: 'var(--jamie-text-muted, #717182)',
-                              }}
-                            >
-                              {message.recipeDetail.estimated_time && (
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                  <Clock className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-                                  {message.recipeDetail.estimated_time.replace('PT', '').replace('H', 'h ').replace('M', 'm').trim() || message.recipeDetail.estimated_time}
-                                </span>
-                              )}
-                              {message.recipeDetail.servings && (
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                  <Users className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-                                  {message.recipeDetail.servings}
-                                </span>
-                              )}
-                              {message.recipeDetail.difficulty && (
-                                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                  <ChefHat className="size-4" style={{ color: 'var(--jamie-primary, #46BEA8)' }} />
-                                  {message.recipeDetail.difficulty}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-
-                          {/* Description */}
-                          {message.recipeDetail.description && (
-                            <div style={{ padding: '0 24px 20px' }}>
-                              <p
-                                style={{
-                                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                                  fontSize: '15px',
-                                  lineHeight: 1.6,
-                                  color: 'var(--jamie-text-primary, #234252)',
-                                  margin: 0,
-                                }}
-                              >
-                                {message.recipeDetail.description}
-                              </p>
-                            </div>
-                          )}
-
-                          {/* Ingredients preview */}
-                          {message.recipeDetail.ingredients && message.recipeDetail.ingredients.length > 0 && (
-                            <div style={{ padding: '0 24px 20px' }}>
-                              <h4
-                                style={{
-                                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                                  fontSize: '11px',
-                                  fontWeight: 700,
-                                  color: 'var(--jamie-text-muted, #717182)',
-                                  letterSpacing: '0.1em',
-                                  textTransform: 'uppercase',
-                                  marginBottom: '12px',
-                                }}
-                              >
-                                {message.recipeDetail.ingredients.length} Ingredients
-                              </h4>
-                              <p
-                                style={{
-                                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                                  fontSize: '14px',
-                                  color: 'var(--jamie-text-muted, #717182)',
-                                  lineHeight: 1.5,
-                                  margin: 0,
-                                }}
-                              >
-                                {message.recipeDetail.ingredients.slice(0, 5).join(' · ')}
-                                {message.recipeDetail.ingredients.length > 5 && ` · +${message.recipeDetail.ingredients.length - 5} more`}
-                              </p>
-                            </div>
-                          )}
-
-                          {/* View Full Recipe button */}
-                          <div style={{ padding: '0 24px 24px' }}>
-                            <button
-                              onClick={async () => {
-                                const recipeId = message.recipeDetail!.recipe_id;
-                                const localRecipe = await loadRecipeFromLocal(recipeId);
-                                if (localRecipe) {
-                                  const transformed = transformRecipeMatch(
-                                    {
-                                      recipe_id: recipeId,
-                                      title: localRecipe.recipe?.title || recipeId,
-                                      similarity_score: 1,
-                                      combined_score: 1,
-                                      file_path: '',
-                                      match_explanation: '',
-                                      matching_chunks: [],
-                                    },
-                                    localRecipe,
-                                    0
-                                  );
-                                  onRecipeClick(transformed);
-                                }
-                              }}
-                              style={{
-                                width: '100%',
-                                height: '50px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                padding: '0 14px 0 24px',
-                                borderRadius: '24px',
-                                border: 'none',
-                                background: '#29514F',
-                                color: 'white',
-                                fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                                fontSize: '15px',
-                                fontWeight: 600,
-                                cursor: 'pointer',
-                                transition: 'background 0.2s ease',
-                              }}
-                              onMouseEnter={(e) => (e.currentTarget.style.background = '#1f423f')}
-                              onMouseLeave={(e) => (e.currentTarget.style.background = '#29514F')}
-                            >
-                              <span>View Full Recipe</span>
-                              <span
-                                style={{
-                                  width: '32px',
-                                  height: '32px',
-                                  borderRadius: '9px',
-                                  background: 'rgba(255,255,255,0.1)',
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                }}
-                              >
-                                <ArrowRight className="size-4" />
-                              </span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Shopping List Card */}
-                    {message.shoppingList && (
-                      <div className="mt-4">
-                        <ShoppingListCard
-                          shoppingList={message.shoppingList}
-                        />
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <div
-                    className="bg-[#f5f5f5] rounded-2xl p-4"
-                    style={{ borderRadius: '16px' }}
-                  >
-                    <p
-                      className="text-base"
-                      style={{
-                        fontFamily: 'var(--font-chat)',
-                        lineHeight: 1.5,
-                        color: 'var(--jamie-text-body)',
-                      }}
-                    >
-                      {message.content}
-                    </p>
-                  </div>
-                )}
+                {renderMessageContent(message)}
               </div>
             ))}
+
 
             {/* Typing Indicator */}
             {isTyping && thinkingStatus && (
               <>
-                <div className="h-px w-full bg-black/5 my-4" />
+                <div className="h-px w-full bg-[rgba(35,66,82,0.06)] my-4" />
                 <div className="flex gap-3 items-start">
                   <div className="relative shrink-0 size-8">
                     <img alt="" className="block size-full rounded-full" src={imgJamieAvatar} />
@@ -1398,7 +1210,7 @@ export function ChatView({
 
       {/* Scroll to Bottom Button */}
       <AnimatePresence>
-        {showScrollButton && hasMessages && (
+        {showScrollButton && hasMessages && !isVoiceActive && (
           <motion.button
             initial={{ opacity: 0, scale: 0.8, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -1430,7 +1242,7 @@ export function ChatView({
       {isPausedByVisibility && (
         <div className="flex items-center justify-between gap-3 px-5 py-2 bg-amber-500/10 border-t border-amber-500/20" style={{ flexShrink: 0 }}>
           <p className="text-sm text-amber-800 dark:text-amber-200">
-            Voice paused because you left the app. Tap the mic or Continue to talk to Jamie again.
+            Voice paused because you left the app. Tap the voice button or Continue to talk to Jamie again.
           </p>
           <button
             type="button"
@@ -1442,22 +1254,44 @@ export function ChatView({
         </div>
       )}
 
-      {/* Voice Mode Indicator - Shows when voice is active */}
+      {/* Voice Mode Footer */}
       <AnimatePresence>
         {isVoiceActive && (
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="px-5 py-3 bg-white border-t border-black/5"
+            exit={{ opacity: 0, y: 16 }}
+            className="jamie-voice-dock-shell"
             style={{ flexShrink: 0 }}
           >
-            <div className="mx-auto" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
-              <VoiceModeIndicator
-                state={voiceState}
-                transcript={currentTranscript}
-                onCancel={cancelVoice}
-                onExit={disconnectVoice}
+            <div className="jamie-shell-width">
+              {/*
+               * Shared VoiceFooter — same component CookWithJamie uses.
+               * In chat-mode voice, the ghost slot drops the user back
+               * into the text composer and the Stop button is
+               * icon-only (no trailing label) per the mocks.
+               */}
+              <VoiceFooter
+                avatarSrc={imgJamieAvatar}
+                avatarState={avatarState}
+                isMicMuted={isMicMuted}
+                onToggleMute={toggleMicMute}
+                onStop={isProcessing || isSpeaking ? cancelVoice : disconnectVoice}
+                stopLabel={
+                  isProcessing || isSpeaking
+                    ? 'Stop Jamie'
+                    : 'End voice conversation'
+                }
+                stopDetail={voiceFooterDetail}
+                stopVariant="icon"
+                ghostAction={{
+                  icon: <MessageCircle className="size-5" />,
+                  onClick: () => {
+                    disconnectVoice();
+                    window.setTimeout(() => inputRef.current?.focus(), 0);
+                  },
+                  ariaLabel: 'Return to text chat',
+                }}
               />
             </div>
           </motion.div>
@@ -1480,99 +1314,89 @@ export function ChatView({
       </AnimatePresence>
 
       {/* Chat Input - Always at bottom */}
-      <div
-        className="px-5 py-3 bg-white border-t border-black/5"
-        style={{
-          flexShrink: 0,
-        }}
-      >
-        <div className="mx-auto" style={{ maxWidth: CHAT_CONTENT_MAX_WIDTH }}>
-          <div
-            className="bg-white relative rounded-full border border-black/10"
-            style={{
-              boxShadow: '0px 2px 5px 0px rgba(0,0,0,0.06), 0px 9px 9px 0px rgba(0,0,0,0.01)',
-              minHeight: '56px',
-            }}
-          >
-            <div className="flex min-h-14 items-center gap-2 p-2 pl-3">
-              {/* Text Input - Hidden when voice mode is active and listening */}
-              {!isVoiceActive || voiceState === 'idle' ? (
-                <>
-                  <input
-                    ref={inputRef}
-                    type="text"
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Tell me what you're craving..."
-                    disabled={isTyping || isVoiceActive}
-                    className="flex-1 text-base bg-transparent outline-none disabled:opacity-50 placeholder:text-gray-400"
-                    style={{
-                      fontFamily: 'var(--font-display)',
-                      fontSize: '15px',
-                      lineHeight: '24px',
-                      color: 'var(--jamie-text-body)',
-                    }}
-                  />
+      {!isVoiceActive && (
+        <div className="jamie-composer-shell">
+          <div className="jamie-shell-width">
+            <div className="jamie-composer">
+              <div className="flex min-h-14 items-center gap-2 w-full">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Reply Jamie..."
+                  disabled={isTyping || isVoiceActive}
+                  className="flex-1 text-base bg-transparent outline-none disabled:opacity-50"
+                  style={{
+                    fontFamily: 'var(--font-display)',
+                    fontSize: '15px',
+                    lineHeight: '24px',
+                    color: 'var(--jamie-text-body)',
+                  }}
+                />
 
-                  {/* Voice Mode Button */}
-                  <VoiceModeButton
-                    isActive={isVoiceActive || isPausedByVisibility}
-                    isConnecting={voiceState === 'connecting'}
-                    onClick={isPausedByVisibility ? resumeFromVisibility : toggleVoiceMode}
-                    disabled={isTyping && !isVoiceActive && !isPausedByVisibility}
-                    className="shrink-0"
+                {/*
+                 * Composer actions order (per design):
+                 *   1. Send arrow — subtle gray, activates only when there's text.
+                 *   2. Voice button — teal CTA, always present at the far right.
+                 * Voice sits last because it's the primary, always-available CTA.
+                 */}
+                <button
+                  onClick={() => handleSendMessage()}
+                  disabled={!inputValue.trim() || isTyping}
+                  aria-label="Send message"
+                  className="shrink-0 flex items-center justify-center transition-colors disabled:opacity-50"
+                  style={{
+                    width: 36,
+                    height: 36,
+                    minWidth: 36,
+                    minHeight: 36,
+                    borderRadius: '9999px',
+                    aspectRatio: '1 / 1',
+                    padding: 0,
+                    border: 0,
+                    backgroundColor: inputValue.trim() && !isTyping ? 'var(--jamie-primary)' : '#E5E5E5',
+                  }}
+                >
+                  <ArrowUp
+                    size={18}
+                    strokeWidth={2}
+                    style={{ color: inputValue.trim() && !isTyping ? '#FFFFFF' : '#A3A3A3' }}
                   />
+                </button>
 
-                  {/* Send Button */}
-                  <button
-                    onClick={() => handleSendMessage()}
-                    disabled={!inputValue.trim() || isTyping}
-                    className="shrink-0 rounded-full flex items-center justify-center transition-colors disabled:opacity-50"
-                    style={{
-                      width: '36px',
-                      height: '36px',
-                      backgroundColor: inputValue.trim() && !isTyping ? 'var(--jamie-primary)' : '#E5E5E5',
-                    }}
-                  >
-                    <ArrowUp
-                      className="size-5"
-                      strokeWidth={2}
-                      style={{ color: inputValue.trim() && !isTyping ? '#FFFFFF' : '#A3A3A3' }}
-                    />
-                  </button>
-                </>
-              ) : (
-                /* Voice Mode Active - Show waveform */
-                <div className="flex h-10 flex-1 items-center justify-center">
-                  <AudioWaveform isActive={isListening || isSpeaking} bars={7} />
-                </div>
-              )}
+                <VoiceModeButton
+                  isActive={isVoiceActive || isPausedByVisibility}
+                  isConnecting={voiceState === 'connecting'}
+                  onClick={isPausedByVisibility ? resumeFromVisibility : toggleVoiceMode}
+                  disabled={isTyping && !isVoiceActive && !isPausedByVisibility}
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Voice mode hint */}
-          {!isVoiceActive && !hasMessages && !isPausedByVisibility && (
-            <p
-              className="text-center mt-2 text-xs"
-              style={{
-                color: 'var(--text-tertiary)',
-                fontFamily: 'var(--font-display)',
-              }}
-            >
-              Tap the mic to talk to Jamie
-            </p>
-          )}
-          {isPausedByVisibility && (
-            <p
-              className="text-center mt-2 text-xs text-amber-700 dark:text-amber-300"
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              Voice paused – tap the mic or Continue above to resume
-            </p>
-          )}
+            {!hasMessages && !isPausedByVisibility && (
+              <p
+                className="text-center mt-2 text-xs"
+                style={{
+                  color: 'var(--text-tertiary)',
+                  fontFamily: 'var(--font-display)',
+                }}
+              >
+                Tap to talk to Jamie
+              </p>
+            )}
+            {isPausedByVisibility && (
+              <p
+                className="text-center mt-2 text-xs text-amber-700 dark:text-amber-300"
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                Voice paused — tap to resume talking to Jamie
+              </p>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

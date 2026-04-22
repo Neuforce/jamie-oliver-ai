@@ -1,0 +1,184 @@
+/*
+ * AvatarWithOrganicGlow styles.
+ *
+ * Three layers drift independently behind the avatar. Each has its own
+ * gradient, direction, and duration — the lack of sync is what gives the
+ * "aurora, not pulse" feel.
+ *
+ * State changes (data-state attribute on the wrapper) adjust opacity and
+ * scale only; the animation durations stay the same across states except
+ * for speaking (slightly faster breath) and idle (slower, calmer).
+ *
+ * Colors pulled from the handoff spec:
+ *   #7BF09A — jamie halo green
+ *   #81EB67 — jamie accent green (from design-system tokens.ts)
+ *
+ * If you need to theme this, override the CSS custom properties
+ * --jamie-glow-primary and --jamie-glow-secondary on the wrapper.
+ */
+
+.jamie-glow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  --jamie-glow-primary: #7bf09a;
+  --jamie-glow-secondary: #81eb67;
+  --jamie-glow-warm: rgba(255, 255, 255, 0.55);
+  --jamie-glow-opacity: 0.5;
+  --jamie-glow-duration-a: 14s;
+  --jamie-glow-duration-b: 11s;
+  --jamie-glow-duration-c: 17s;
+  --jamie-glow-blur: 32px;
+  --jamie-glow-saturate: 1;
+}
+
+.jamie-glow__layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(var(--jamie-glow-blur)) saturate(var(--jamie-glow-saturate));
+  opacity: var(--jamie-glow-opacity);
+  transition:
+    opacity 1200ms ease-out,
+    filter 1200ms ease-out;
+  will-change: transform, opacity;
+}
+
+.jamie-glow__layer--a {
+  background: radial-gradient(
+    circle at 35% 40%,
+    var(--jamie-glow-primary) 0%,
+    rgba(123, 240, 154, 0.6) 30%,
+    rgba(123, 240, 154, 0) 65%
+  );
+  animation: jamie-glow-drift-a var(--jamie-glow-duration-a) ease-in-out infinite;
+}
+
+.jamie-glow__layer--b {
+  background: radial-gradient(
+    circle at 65% 60%,
+    var(--jamie-glow-secondary) 0%,
+    rgba(129, 235, 103, 0.5) 35%,
+    rgba(129, 235, 103, 0) 70%
+  );
+  animation: jamie-glow-drift-b var(--jamie-glow-duration-b) ease-in-out infinite;
+}
+
+.jamie-glow__layer--c {
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--jamie-glow-warm) 0%,
+    rgba(255, 255, 255, 0.1) 40%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  animation: jamie-glow-drift-c var(--jamie-glow-duration-c) ease-in-out infinite;
+}
+
+.jamie-glow__avatar {
+  position: relative;
+  z-index: 1;
+  width: var(--jamie-avatar-size, 120px);
+  height: var(--jamie-avatar-size, 120px);
+  border-radius: 50%;
+  object-fit: cover;
+  user-select: none;
+  -webkit-user-drag: none;
+  box-shadow: 0 0 0 0.5px rgba(255, 255, 255, 0.08);
+}
+
+/*
+ * State: idle — Jamie is there but not actively engaged.
+ * Dim, slow, just a hint of life.
+ */
+.jamie-glow[data-state='idle'] {
+  --jamie-glow-opacity: 0.15;
+  --jamie-glow-duration-a: 20s;
+  --jamie-glow-duration-b: 17s;
+  --jamie-glow-duration-c: 24s;
+}
+
+/*
+ * State: listening — user has the mic, Jamie is attentive.
+ * Moderate brightness, default rhythm.
+ */
+.jamie-glow[data-state='listening'] {
+  --jamie-glow-opacity: 0.55;
+}
+
+/*
+ * State: speaking — Jamie is talking. Brighter, slightly faster breath.
+ * Brightness does the work, not speed.
+ */
+.jamie-glow[data-state='speaking'] {
+  --jamie-glow-opacity: 0.8;
+  --jamie-glow-duration-a: 10s;
+  --jamie-glow-duration-b: 8s;
+  --jamie-glow-duration-c: 13s;
+}
+
+/*
+ * State: processing — thinking between turns.
+ * Paler and desaturated instead of a new rhythm, so it reads as
+ * "present but quiet" rather than "busy".
+ */
+.jamie-glow[data-state='processing'] {
+  --jamie-glow-opacity: 0.28;
+  --jamie-glow-saturate: 0.4;
+  --jamie-glow-blur: 44px;
+}
+
+@keyframes jamie-glow-drift-a {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(8%, -6%) scale(1.04);
+  }
+  66% {
+    transform: translate(-6%, 7%) scale(0.98);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes jamie-glow-drift-b {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  40% {
+    transform: translate(-7%, -5%) scale(1.05);
+  }
+  75% {
+    transform: translate(5%, 6%) scale(0.97);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+@keyframes jamie-glow-drift-c {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(3%, 4%) scale(1.03);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+
+/*
+ * Respect the user's motion preferences. The glow becomes a static soft
+ * halo instead of drifting — presence preserved, motion removed.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .jamie-glow__layer {
+    animation: none !important;
+    transform: none !important;
+  }
+}

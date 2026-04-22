@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import { Stepper } from './Stepper';
 import { Recipe } from '../data/recipes';
 import {
   ArrowLeft,
@@ -20,10 +21,10 @@ import {
   Trash2,
   MicOff,
   ArrowRight,
-  Bell
+  Bell,
+  Square,
 } from 'lucide-react';
 import { Button } from './ui/button';
-import { Progress } from './ui/progress';
 import { motion, AnimatePresence } from 'motion/react';
 import { toast } from 'sonner';
 import {
@@ -43,9 +44,21 @@ import type { VoiceTurnState } from '../hooks/voiceTurnUtils';
 import { RecipeCard } from './RecipeCard';
 import { TimerPanel, type ActiveTimer } from './TimerPanel';
 import { clearChatHistory } from './ChatView';
+import {
+  TimerCard,
+  TimerCarousel,
+  VideoClipCard,
+  JamieNarrationCard,
+  StepDoneCelebration,
+} from './cooking';
+import { VoiceFooter } from './VoiceFooter';
+import { RecipeDetailsTabs } from './RecipeDetailsTabs';
 // @ts-ignore - handled by Vite
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
+// @ts-ignore - handled by Vite
+import jamieAvatarImport from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 const jamieLogo = typeof jamieLogoImport === 'string' ? jamieLogoImport : (jamieLogoImport as any).src || jamieLogoImport;
+const jamieAvatar = typeof jamieAvatarImport === 'string' ? jamieAvatarImport : (jamieAvatarImport as any).src || jamieAvatarImport;
 
 interface CookWithJamieProps {
   recipe: Recipe | null;
@@ -59,6 +72,13 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   const [completedSteps, setCompletedSteps] = useState([] as number[]);
   const [showExitConfirmation, setShowExitConfirmation] = useState(false);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
+  /*
+   * celebrationFor holds the 1-indexed step number we're currently
+   * showing the STEP DONE celebration for, or null when idle. The
+   * actual step advance is gated behind StepDoneCelebration's
+   * onComplete — user taps or 1.5s elapses, then we advance.
+   */
+  const [celebrationFor, setCelebrationFor] = useState<number | null>(null);
 
   // Timer states
   const [timerSeconds, setTimerSeconds] = useState(0);
@@ -82,6 +102,57 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   const [isMicMuted, setIsMicMuted] = useState(false);
   const [wsRecipeState, setWsRecipeState] = useState(null as RecipeState | null);
   const [assistantTurnState, setAssistantTurnState] = useState<VoiceTurnState>('connecting');
+
+  /*
+   * Lightweight turn-taking transcript for the cook surface. Mirrors
+   * what voice mode shows (user bubble + jamie bubble stack) so the
+   * user can see what the agent heard and said while cooking. Driven
+   * by the `transcript_*` and `text_chunk` WS events forwarded via
+   * `useWebSocket`. We keep only the last few turns on screen — this
+   * is a live feed, not a searchable history.
+   */
+  type TranscriptTurn = {
+    id: string;
+    role: 'user' | 'jamie';
+    text: string;
+    final: boolean;
+  };
+  const TRANSCRIPT_MAX_TURNS = 6;
+  const [transcriptTurns, setTranscriptTurns] = useState<TranscriptTurn[]>([]);
+
+  const appendTranscriptChunk = useCallback(
+    (role: 'user' | 'jamie', chunk: string, final: boolean) => {
+      setTranscriptTurns((prev) => {
+        const last = prev[prev.length - 1];
+        // Extend the in-flight turn for this role rather than creating
+        // a new bubble on every partial / text_chunk event.
+        if (last && last.role === role && !last.final) {
+          const nextText =
+            role === 'jamie'
+              ? last.text + chunk
+              : chunk || last.text;
+          const updated: TranscriptTurn = {
+            ...last,
+            text: nextText,
+            final,
+          };
+          const rest = prev.slice(0, -1);
+          return [...rest, updated].slice(-TRANSCRIPT_MAX_TURNS);
+        }
+        if (!chunk && !final) return prev;
+        return [
+          ...prev,
+          {
+            id: `${role}-${Date.now()}`,
+            role,
+            text: chunk,
+            final,
+          },
+        ].slice(-TRANSCRIPT_MAX_TURNS);
+      });
+    },
+    [],
+  );
   const audioCaptureStartedRef = useRef(false);
   const canStreamAudioRef = useRef(false);
   const lastAutoTimerStepRef = useRef<number | null>(null);
@@ -178,6 +249,34 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     }
     return recipe.instructions;
   }, [recipe]);
+
+  /*
+   * Timers for the *current* step, normalized for the cook surface.
+   *
+   *   - If the backend step exposes a `timers[]` array (new shape), we
+   *     pass each one through — this drives the peek carousel when
+   *     there's more than one (Jamie_19).
+   *   - If only the legacy single `duration` is present, we synthesize
+   *     a single unnamed timer so the new TimerCard path always has
+   *     data to render.
+   *   - If neither is present, we return an empty list and the cook
+   *     surface hides the timer section for this step.
+   */
+  const currentStepTimers = useMemo(() => {
+    const step = recipe?.backendSteps?.[currentStep];
+    if (!step) return [] as Array<{ label?: string; seconds: number }>;
+    if (step.timers && step.timers.length > 0) {
+      return step.timers.map((t) => ({
+        label: t.label,
+        seconds: parseIsoDurationToSeconds(t.duration),
+      }));
+    }
+    if (step.duration) {
+      const seconds = parseIsoDurationToSeconds(step.duration);
+      if (seconds > 0) return [{ seconds }];
+    }
+    return [];
+  }, [recipe, currentStep, parseIsoDurationToSeconds]);
 
   const stepIdToIndex = useMemo(() => {
     if (!recipe?.backendSteps?.length) {
@@ -309,6 +408,20 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
       ) {
         setAssistantTurnState(nextState as VoiceTurnState);
       }
+    },
+    /*
+     * Transcript + agent-text wiring. Powers the in-cook chat-bubble
+     * stack so users see what the agent heard and what Jamie said
+     * back. `chunk` on onAgentText is appended to the in-flight jamie
+     * bubble; `isDone` freezes it so the next token starts a fresh
+     * turn.
+     */
+    onTranscript: (text, isFinal) => {
+      appendTranscriptChunk('user', text, isFinal);
+    },
+    onAgentText: (chunk, isDone) => {
+      if (!chunk && !isDone) return;
+      appendTranscriptChunk('jamie', chunk, isDone);
     },
   });
 
@@ -756,14 +869,24 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   if (!recipe) return null;
 
   const totalSteps = instructions.length;
-  const progress = totalSteps > 0 ? ((currentStep + 1) / totalSteps) * 100 : 0;
   const isCurrentStepCompleted = completedSteps.includes(currentStep);
 
+  /**
+   * Advance to the next step via the STEP DONE celebration transition
+   * (Jamie_15). `celebrationFor` records the step that was just
+   * completed; the actual setCurrentStep lives in the celebration's
+   * `onComplete` so the visual order is always "celebrate, then move".
+   */
   const handleNext = () => {
     if (currentStep < totalSteps - 1) {
       setHasUserInteracted(true);
-      setCurrentStep(currentStep + 1);
+      setCelebrationFor(currentStep + 1);
     }
+  };
+
+  const handleCelebrationComplete = () => {
+    setCelebrationFor(null);
+    setCurrentStep((prev) => Math.min(prev + 1, totalSteps - 1));
   };
 
   const handlePrevious = () => {
@@ -1063,501 +1186,315 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
 
   return (
     <div
-      className="fixed inset-0 z-50 bg-background"
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-      }}
+      className="fixed inset-0 z-50 bg-background flex flex-col"
     >
-      {/* Sticky Header - Back, Logo, Mic */}
-      <header
-        style={{
-          flexShrink: 0,
-          backgroundColor: 'white',
-          zIndex: 10,
-          paddingTop: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
-          paddingBottom: '12px',
-          paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
-          paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)',
-          boxSizing: 'border-box',
-        }}
-      >
-        <div className="grid grid-cols-3 items-center gap-3" style={{ width: '100%', maxWidth: '600px', boxSizing: 'border-box', margin: '0 auto' }}>
-          {/* Back Button */}
-          <div className="flex items-center">
+      {/*
+       * Cook sticky header — minimal: just a back circle on the left.
+       * The old info button was removed because the recipe reference
+       * (ingredients / steps / videos / tips) now lives inline below
+       * the step navigation via <RecipeDetailsTabs>, so there's no
+       * longer a modal drawer to open. Mic control lives in the voice
+       * footer avatar (single source of truth).
+       */}
+      <header className="jamie-app-header-shell">
+        <div className="jamie-shell-width jamie-cook-header">
+          <div className="jamie-cook-header__side">
             <button
+              type="button"
               onClick={handleExitClick}
-              className="inline-flex items-center justify-center"
-              style={{ padding: 0, background: 'transparent' }}
+              className="jamie-icon-button"
               aria-label="Back"
             >
-              <img
-                src="/assets/Back.svg"
-                alt="Back"
-                style={{ width: '24px', height: '24px', display: 'block' }}
-              />
+              <ArrowLeft size={20} />
             </button>
           </div>
-          {/* Logo - Centered (consistent 24px height across all layouts) */}
-          <div className="flex items-center justify-center">
-            <img
-              src={jamieLogo}
-              alt="Jamie Oliver"
-              className="h-6 w-auto object-contain"
-              style={{ maxWidth: '165px' }}
-            />
-          </div>
-          {/* Mic Control */}
-          <div className="flex items-center justify-end">
-              <button
-              onClick={toggleVoiceListening}
-                className="inline-flex rounded-full transition-colors"
-                style={{
-                  padding: '0 0 0 12px',
-                  height: '42px',
-                  width: '93px',
-                  borderRadius: '999px',
-                  boxShadow: '0 2px 9px rgba(0, 0, 0, 0.08)',
-                  border: '1px solid rgba(0, 0, 0, 0.08)',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  gap: 0,
-                  backgroundColor: '#F9FAFB',
-                }}
-                title={
-                  !isWebSocketConnected
-                    ? `WebSocket not connected - ${wsError || 'Click to reconnect'}`
-                    : isMicMuted
-                      ? 'Microphone muted - tap to enable'
-                      : 'Microphone active - tap to mute'
-                }
-              >
-                <div
-                  style={{
-                    width: '24px',
-                    height: '24px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  <img
-                    src={micIconSrc}
-                    alt={micIconAlt}
-                    style={{ width: '18px', height: '18px' }}
-                  />
-              </div>
-                <div
-                  style={{
-                    width: '42px',
-                    height: '42px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginLeft: 'auto',
-                    flexShrink: 0,
-                  }}
-                >
-                  <img
-                    src={micRingSrc}
-                    alt={isMicMuted ? 'Microphone muted' : 'Microphone active'}
-                    style={{ display: 'block' }}
-                  />
-                </div>
-              </button>
-            </div>
-          </div>
+        </div>
       </header>
 
-      {/* Scrollable Content */}
-      <div
-        style={{
-          flex: 1,
-          minHeight: 0,
-          overflowY: 'auto',
-        }}
-      >
-        {/* Recipe Card Section */}
-        <div style={{ paddingTop: '16px', paddingBottom: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
-          <div className="w-full flex items-center justify-center">
-            <div className="pointer-events-none select-none flex items-center justify-center" style={{ width: '100%', maxWidth: '600px', margin: '0 auto' }}>
-              <RecipeCard recipe={recipe} onClick={() => {}} variant="cooking" />
-        </div>
-      </div>
-
-        {/* Recipe Title - Outside RecipeCard, 24px below image */}
-        <div className="w-full flex items-center justify-center" style={{ marginTop: '24px', paddingLeft: 'clamp(16px, calc(100vw * 24 / 390), 24px)', paddingRight: 'clamp(16px, calc(100vw * 24 / 390), 24px)', boxSizing: 'border-box' }}>
-          <div
-            style={{
-              width: '100%',
-              maxWidth: '600px',
-              textAlign: 'left',
-              margin: '0 auto'
-            }}
-          >
-            <h3
-              style={{
-                color: '#2C5F5D',
-                fontFamily: 'Poppins, sans-serif',
-                fontSize: 'clamp(20px, calc(100vw * 26 / 390), 26px)',
-                fontWeight: 700,
-                letterSpacing: '0.087px',
-                lineHeight: '24px',
-                textTransform: 'uppercase',
-                margin: 0,
-              }}
-            >
-              {recipe.title}
-            </h3>
-          </div>
-        </div>
-      </div>
-
-      {/* Active Timers Panel (Parallel Cooking Support) */}
-      {activeTimers.length > 0 && (
-        <div className="px-6 py-4">
-          <div className="max-w-2xl mx-auto">
-            <TimerPanel
-              timers={activeTimers}
-              onTimerComplete={(timer) => {
-                toast.info('Timer Complete!', {
-                  description: `${timer.label} is done!`,
-                  duration: 5000,
-                });
-              }}
-              onTimerCancel={(timerId) => {
-                // Cancel timer via backend API
-                cancelBackendTimer(timerId);
-              }}
-              onTimerSelect={(timer) => {
-                // Navigate to the step if it has one
-                if (timer.step_id && recipe) {
-                  const stepIndex = stepIdToIndex.get(timer.step_id);
-                  if (stepIndex !== undefined && stepIndex !== currentStep) {
-                    setCurrentStep(stepIndex);
+      {/*
+       * Scrollable cook surface.
+       *
+       * Layout (matches Jamie_09, _12, _15, _19):
+       *   [Stepper: segments + recipe title + STEP N OF M]
+       *   [TimerCard | TimerCarousel]     ← only when the step has timers
+       *   [VideoClipCard]                 ← only when the step has a clip
+       *   [JamieNarrationCard]            ← instruction text, always
+       *   [Mark Complete] [Previous / Next Step]
+       *
+       * Step transitions go through `<StepDoneCelebration>` via
+       * `handleNext → celebrationFor → handleCelebrationComplete`.
+       */}
+      <div className="jamie-scroll-area jamie-cook-scroll">
+        <div className="jamie-shell-width">
+          {/* Active backend timers (parallel cooking) stay as-is: that
+              UI is about timers running *across* steps, not the current
+              step's own timer, so it lives above the step stack. */}
+          {activeTimers.length > 0 && (
+            <div style={{ paddingTop: '16px' }}>
+              <TimerPanel
+                timers={activeTimers}
+                onTimerComplete={(timer) => {
+                  toast.info('Timer Complete!', {
+                    description: `${timer.label} is done!`,
+                    duration: 5000,
+                  });
+                }}
+                onTimerCancel={(timerId) => {
+                  cancelBackendTimer(timerId);
+                }}
+                onTimerSelect={(timer) => {
+                  if (timer.step_id && recipe) {
+                    const stepIndex = stepIdToIndex.get(timer.step_id);
+                    if (stepIndex !== undefined && stepIndex !== currentStep) {
+                      setCurrentStep(stepIndex);
+                    }
                   }
-                }
-              }}
+                }}
+              />
+            </div>
+          )}
+
+          <div className="jamie-cook-step">
+            <Stepper
+              recipeTitle={recipe.title}
+              totalSteps={totalSteps}
+              currentStep={currentStep + 1}
+              currentStepName={recipe.backendSteps?.[currentStep]?.descr ?? ''}
+              timerActive={timerRunning}
             />
-          </div>
-        </div>
-      )}
 
-      {/* Timer Section - Redesigned */}
-      {shouldShowTimer && (
-        <div className="px-6 py-8 border-b border-border/50">
-          <div className="max-w-2xl mx-auto">
-          {/* Timer Display */}
-          <div className="text-center mb-6">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <Timer className={`size-5 transition-colors ${
-                timerRunning ? 'text-[#0A7E6C]' : 'text-muted-foreground'
-              }`} />
-              <span className="text-sm text-muted-foreground">Kitchen Timer</span>
-            </div>
-            <div className={`text-7xl tabular-nums transition-colors ${
-              timerRunning ? 'text-[#0A7E6C]' : 'text-foreground'
-            }`}>
-              {formatTime(timerSeconds)}
-            </div>
-          </div>
-
-          {/* Timer Controls - Clean and minimal */}
-          <div className="flex items-center justify-center gap-3">
-            <Button
-              onClick={subtractMinute}
-              variant="ghost"
-              size="sm"
-              disabled={timerSeconds === 0}
-              className="size-10 p-0"
-            >
-              <Minus className="size-4" />
-            </Button>
-
-            {!timerRunning ? (
-              <Button
-                onClick={startTimer}
-                size="lg"
-                className="gap-2 bg-[#0A7E6C] hover:bg-[#0A7E6C]/90"
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentStep}
+                className="jamie-cook-stack"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.28, ease: [0.32, 0.72, 0, 1] }}
               >
-                <Play className="size-5" />
-                {timerSeconds === 0 ? 'Start Timer' : 'Resume'}
-              </Button>
-            ) : (
-              <Button
-                onClick={pauseTimer}
-                size="lg"
-                className="gap-2"
-                variant="outline"
-              >
-                <Pause className="size-5" />
-                Pause
-              </Button>
-            )}
+                {/*
+                 * Step timers.
+                 *   1 timer  → full-width TimerCard (Jamie_09 / _12).
+                 *   2+       → peek carousel (Jamie_19). Each slide has
+                 *              its own internal countdown since the
+                 *              existing single-timer store on this
+                 *              component only covers the active one.
+                 *   0        → hide the timer row entirely.
+                 */}
+                {currentStepTimers.length === 1 && (
+                  <TimerCard
+                    variant="full"
+                    label={currentStepTimers[0].label}
+                    seconds={timerSeconds > 0 ? timerSeconds : currentStepTimers[0].seconds}
+                    running={timerRunning}
+                    onToggle={() => (timerRunning ? pauseTimer() : startTimer())}
+                  />
+                )}
 
-            <Button
-              onClick={addMinute}
-              variant="ghost"
-              size="sm"
-              className="size-10 p-0"
-            >
-              <Plus className="size-4" />
-            </Button>
+                {currentStepTimers.length >= 2 && (
+                  <TimerCarousel ariaLabel="Step timers">
+                    {currentStepTimers.map((t, i) => (
+                      <MultiStepTimer key={i} label={t.label} seconds={t.seconds} />
+                    ))}
+                  </TimerCarousel>
+                )}
 
-            <Button
-              onClick={resetTimer}
-              variant="ghost"
-              size="sm"
-              className="size-10 p-0"
-            >
-              <RotateCcw className="size-4" />
-            </Button>
-          </div>
+                {recipe.backendSteps?.[currentStep]?.clip && (
+                  <VideoClipCard
+                    thumbnailUrl={recipe.backendSteps[currentStep].clip!.thumbnailUrl}
+                    label={recipe.backendSteps[currentStep]?.descr ?? 'Watch clip'}
+                    onPlay={() => {
+                      const clip = recipe.backendSteps?.[currentStep]?.clip;
+                      if (clip?.videoUrl) {
+                        window.open(clip.videoUrl, '_blank', 'noopener,noreferrer');
+                      }
+                    }}
+                  />
+                )}
 
-          <p className="text-center text-sm text-muted-foreground mt-4">
-            Tap +/− to adjust time by minute
-          </p>
+                <JamieNarrationCard text={instructions[currentStep] ?? ''} />
 
-          {/* Backend Timer Start - for parallel cooking */}
-          {(() => {
-            const backendStep = recipe?.backendSteps?.[currentStep];
-            const isTimerStep = backendStep?.type === 'timer' ||
-                               (backendStep?.duration && parseIsoDurationToSeconds(backendStep.duration) > 0);
-            const hasActiveBackendTimer = backendStep && activeTimers.some(t => t.step_id === backendStep.id);
-
-            if (isTimerStep && !hasActiveBackendTimer) {
-              return (
-                <div className="mt-6 pt-6 border-t border-border/30">
-                  <Button
-                    onClick={() => startBackendTimer()}
-                    variant="outline"
-                    size="lg"
-                    className="w-full gap-2 border-amber-500/50 text-amber-600 hover:bg-amber-500/10"
+                {/*
+                 * Step navigation — minimal per the mocks (Jamie_09/_12/_19).
+                 * The mocks show no buttons here; advancement is voice-driven
+                 * via "done" / "next". We keep a single quiet affordance:
+                 * two small circular ghost chevrons anchored to the right,
+                 * so a tester or a user who's not speaking can still move.
+                 * Final-step becomes a filled teal "Finish" pill so the
+                 * close of the cook still reads as a committed action.
+                 */}
+                <div className="jamie-cook-nav">
+                  <button
+                    type="button"
+                    onClick={handlePrevious}
+                    disabled={currentStep === 0}
+                    className="jamie-cook-nav__chevron"
+                    aria-label="Previous step"
+                    title="Previous step"
                   >
-                    <Bell className="size-4" />
-                    Start Step Timer (runs in background)
-                  </Button>
-                  <p className="text-center text-xs text-muted-foreground mt-2">
-                    Timer will continue while you work on other steps
-                  </p>
-                </div>
-              );
-            }
-            return null;
-          })()}
-      </div>
-        </div>
-      )}
+                    <ChevronLeft size={18} />
+                  </button>
 
-      {/* Main Content */}
-      <div className="p-6">
-        {/* Current Step - Editorial redesign */}
-        <div className="max-w-3xl mx-auto mb-12">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentStep}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div
-                className="mb-8 flex flex-col items-center"
-                style={{ gap: '24px', marginTop: '24px' }}
-              >
-                <div className="w-full max-w-[420px] flex gap-2">
-            {instructions.map((_, idx) => {
-              const hasTimer = stepHasActiveTimer(idx);
-              const isCurrentStep = idx === currentStep;
-              const isCompleted = completedSteps.includes(idx);
-
-              return (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentStep(idx)}
-                  className={`relative h-1 flex-1 rounded-full transition-colors ${
-                    isCurrentStep
-                      ? 'bg-[#0A7E6C]'
-                      : isCompleted
-                        ? 'bg-[#81EB67]'
-                        : hasTimer
-                          ? 'bg-amber-500'
-                          : 'bg-muted-foreground/20'
-                  }`}
-                  aria-label={`Go to step ${idx + 1}${hasTimer ? ' (timer running)' : ''}`}
-                >
-                  {/* Pulsing indicator for steps with active timers */}
-                  {hasTimer && !isCurrentStep && (
-                    <span className="absolute inset-0 rounded-full bg-amber-500 animate-pulse" />
+                  {currentStep === totalSteps - 1 ? (
+                    <button
+                      type="button"
+                      onClick={handleFinishCooking}
+                      className="jamie-cook-nav__finish"
+                      aria-label="Finish cooking"
+                      title="Finish cooking"
+                    >
+                      <span>Finish</span>
+                      <CheckCircle2 size={16} />
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleNext}
+                      className="jamie-cook-nav__chevron jamie-cook-nav__chevron--primary"
+                      aria-label="Next step"
+                      title="Next step"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
                   )}
-                </button>
-              );
-            })}
-          </div>
-                <div className="w-full max-w-[420px]">
-                  <div
-                    className="rounded-full bg-[#0A7E6C]/10 px-4 py-3"
-                    style={{ width: '100%', textAlign: 'center' }}
-                  >
-                    <span className="text-sm font-medium text-[#0A7E6C]">
-                      Step {currentStep + 1} of {totalSteps}
-                    </span>
-                  </div>
-          </div>
-
-                {/* Step Instructions - Clean and prominent */}
-                <div className="w-full max-w-[420px]">
-                  <p className="text-xl leading-relaxed text-foreground/90">
-                    {instructions[currentStep]}
-                  </p>
                 </div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+              </motion.div>
+            </AnimatePresence>
 
-          {/* Mark Complete */}
-          <Button
-            onClick={toggleStepComplete}
-            variant="ghost"
-            size="lg"
-            className="mb-8 flex items-center justify-center gap-2"
-            style={{
-              marginTop: '24px',
-              height: '48px',
-              padding: '14px 26px',
-              gap: '9px',
-              borderRadius: '33554400px',
-              border: isCurrentStepCompleted ? '2px solid #007AFF' : '2px solid #3D6E6C',
-              backgroundColor: isCurrentStepCompleted ? 'rgba(0, 122, 255, 0.1)' : 'transparent',
-              marginLeft: 'auto',
-              marginRight: 'auto',
-            }}
-          >
-            <CheckCircle2
-              className="size-5"
-                style={{ color: isCurrentStepCompleted ? '#007AFF' : '#3D6E6C' }}
-            />
-              <span style={{ color: isCurrentStepCompleted ? '#007AFF' : '#3D6E6C' }}>
-                {isCurrentStepCompleted ? 'COMPLETED' : 'MARK COMPLETE'}
-              </span>
-          </Button>
-
-          {/* Navigation Buttons - Clean */}
-          <div className="flex items-center justify-between gap-3">
-            <Button
-              onClick={handlePrevious}
-              disabled={currentStep === 0}
-              variant="ghost"
-              size="lg"
-              className="gap-2 text-[14px]"
-              style={{
-                display: 'flex',
-                height: '48px',
-                padding: '14px 24px',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: '9px',
-                borderRadius: '33554400px',
-                opacity: 0.5,
-              }}
-            >
-              <ChevronLeft className="size-5" />
-              Previous
-            </Button>
-
-            {currentStep === totalSteps - 1 ? (
-              <Button
-                onClick={handleFinishCooking}
-                size="lg"
-                className="gap-2 bg-[#3D6E6C] hover:bg-[#2c5654] text-[14px]"
-                style={{
-                  display: 'flex',
-                  height: '48px',
-                  padding: '14px 25px 14px 24px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: '8px',
-                  borderRadius: '33554400px',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                  backgroundColor: '#3D6E6C',
-                  color: '#FFFFFF',
-                }}
+            {/*
+             * Live voice transcript. Sits below the step arrows so
+             * users can see what Jamie heard and replied without
+             * losing sight of the current step. Same turn-taking
+             * visual language as voice mode (Jamie on the left as a
+             * white card with a heart/label, user on the right as a
+             * mint pill). Lives *outside* the step's AnimatePresence
+             * so it doesn't re-mount on every step transition.
+             */}
+            {transcriptTurns.length > 0 && (
+              <ul
+                className="jamie-cook-transcript"
+                aria-label="Cooking transcript"
+                aria-live="polite"
               >
-                Finish Cooking
-                <CheckCircle2 className="size-5" />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleNext}
-                size="lg"
-                className="gap-2 bg-[#3D6E6C] hover:bg-[#2c5654] text-[14px]"
-                style={{
-                  display: 'flex',
-                  height: '48px',
-                  padding: '14px 25px 14px 24px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: '8px',
-                  borderRadius: '33554400px',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-                  backgroundColor: '#3D6E6C',
-                  color: '#FFFFFF',
-                }}
-              >
-                Next Step
-                <ChevronRight className="size-5" />
-              </Button>
+                {transcriptTurns.map((turn) => (
+                  <li
+                    key={turn.id}
+                    className="jamie-cook-transcript__turn"
+                    data-role={turn.role}
+                    data-pending={turn.final ? undefined : 'true'}
+                  >
+                    {turn.role === 'jamie' ? (
+                      <div className="jamie-cook-transcript__bubble jamie-cook-transcript__bubble--jamie">
+                        <span className="jamie-cook-transcript__label">
+                          Jamie
+                        </span>
+                        <p className="jamie-cook-transcript__text">
+                          {turn.text}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="jamie-cook-transcript__bubble jamie-cook-transcript__bubble--user">
+                        <p className="jamie-cook-transcript__text">
+                          {turn.text}
+                        </p>
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
             )}
+
+            {/*
+             * Inline recipe reference. Replaces the former info-button
+             * drawer in the header — everything the recipe carries is
+             * now one scroll away, always visible: ingredients,
+             * numbered steps (with the current step highlighted),
+             * video clips, and Jamie's tips. Tapping a step in the
+             * Steps tab jumps the cook surface to that step so the
+             * panel doubles as a recipe-level navigator. No inline
+             * title/meta here — the Stepper above already shows the
+             * recipe name so repeating it would just add noise.
+             */}
+            <section
+              className="jamie-cook-details"
+              aria-label="Recipe details"
+            >
+              <RecipeDetailsTabs
+                recipe={recipe}
+                defaultTab="ingredients"
+                currentStepIndex={currentStep}
+                onJumpToStep={(idx) => {
+                  setHasUserInteracted(true);
+                  setCurrentStep(idx);
+                }}
+              />
+            </section>
           </div>
         </div>
       </div>
 
-      {/* Completion Celebration */}
-      {currentStep === totalSteps - 1 && completedSteps.length === totalSteps && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm z-50 p-6"
-        >
+      {/*
+       * STEP DONE celebration overlay (Jamie_15). Covers the cook
+       * surface while the celebration plays. `handleCelebrationComplete`
+       * clears `celebrationFor` and advances `currentStep`, so tapping
+       * or waiting ~1.5s is what actually moves the user forward.
+       */}
+      <AnimatePresence>
+        {celebrationFor !== null && (
           <motion.div
-            initial={{ scale: 0.9, y: 20 }}
-            animate={{ scale: 1, y: 0 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="bg-white rounded-3xl p-8 max-w-sm w-full text-center shadow-2xl"
+            key="step-done"
+            className="fixed inset-0 z-40 bg-background"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
           >
-            <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#0A7E6C]/10 flex items-center justify-center">
-              <CheckCircle2 className="w-12 h-12 text-[#0A7E6C]" />
-            </div>
-            <h2 className="text-2xl font-bold text-[#2C5F5D] mb-2">
-              Brilliant! You Did It!
-            </h2>
-            <p className="text-gray-600 mb-8 leading-relaxed">
-              Your <span className="font-medium">{recipe.title}</span> is ready to serve.
-              Enjoy your delicious creation!
-            </p>
-            <div className="flex flex-col gap-3">
-              <Button
-                onClick={onClose}
-                size="lg"
-                className="w-full bg-[#3D6E6C] hover:bg-[#2c5654] rounded-full h-12"
-              >
-                Done
-              </Button>
-              <Button
-                onClick={onClose}
-                variant="ghost"
-                size="lg"
-                className="w-full text-gray-500 rounded-full h-12"
-              >
-                Cook again
-            </Button>
-          </div>
+            <StepDoneCelebration
+              stepNumber={celebrationFor}
+              nextStepName={recipe.backendSteps?.[celebrationFor]?.descr}
+              onComplete={handleCelebrationComplete}
+            />
           </motion.div>
-        </motion.div>
-      )}
+        )}
+      </AnimatePresence>
+
+      <div className="px-5 pb-5 pt-3" style={{ flexShrink: 0 }}>
+        <div className="jamie-shell-width">
+          {/*
+           * Shared VoiceFooter. Drives the same avatar-glow / mute /
+           * stop affordances ChatView uses — see `VoiceFooter.tsx`.
+           * The cook surface renders the ghost slot as "back to chat"
+           * and uses the icon+label Stop variant so the dock matches
+           * the mocks (Jamie_09 etc.).
+           */}
+          <VoiceFooter
+            avatarSrc={jamieAvatar}
+            avatarState={
+              isMicMuted
+                ? 'muted'
+                : assistantTurnState === 'speaking'
+                  ? 'speaking'
+                  : assistantTurnState === 'listening'
+                    ? 'listening'
+                    : 'idle'
+            }
+            isMicMuted={isMicMuted}
+            onToggleMute={toggleMicMute}
+            onStop={handleExitClick}
+            stopLabel="Stop"
+            stopVariant="icon-label"
+            /*
+             * No ghost action in cook mode — the "back to chat" button
+             * previously lived here, but cook has no inline chat of
+             * its own and tapping the bubble button pulled users out
+             * of the active cook session with no way back to the same
+             * step. Exiting to chat is available through the header
+             * back arrow instead.
+             */
+          />
+        </div>
       </div>
-      {/* End Scrollable Content */}
 
       {/* Exit Confirmation Dialog */}
       <AlertDialog open={showExitConfirmation} onOpenChange={setShowExitConfirmation}>
@@ -1814,5 +1751,55 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+/**
+ * MultiStepTimer — per-slide countdown used inside the TimerCarousel.
+ *
+ * CookWithJamie's main component only tracks a single timer (the
+ * legacy single-duration path). When a step ships multiple named
+ * timers (Jamie_19), each slide needs its own clock. Keeping the
+ * state here, scoped to one TimerCard, avoids having to lift N
+ * parallel timers up into the main component when today's recipes
+ * don't even use them yet.
+ */
+function MultiStepTimer({
+  label,
+  seconds: initialSeconds,
+}: {
+  label?: string;
+  seconds: number;
+}) {
+  const [seconds, setSeconds] = React.useState(initialSeconds);
+  const [running, setRunning] = React.useState(false);
+
+  React.useEffect(() => {
+    setSeconds(initialSeconds);
+    setRunning(false);
+  }, [initialSeconds]);
+
+  React.useEffect(() => {
+    if (!running) return;
+    const interval = window.setInterval(() => {
+      setSeconds((prev) => {
+        if (prev <= 1) {
+          setRunning(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(interval);
+  }, [running]);
+
+  return (
+    <TimerCard
+      variant="slide"
+      label={label}
+      seconds={seconds}
+      running={running}
+      onToggle={() => setRunning((v) => !v)}
+    />
   );
 }

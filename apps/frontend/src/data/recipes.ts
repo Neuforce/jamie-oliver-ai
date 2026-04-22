@@ -1,5 +1,28 @@
 import type { BackendRecipePayload } from './recipeLoader';
 
+/**
+ * A single named timer tied to a step. When a step has more than one,
+ * the cooking surface renders them as a peek carousel (see
+ * `TimerCarousel` + `TimerCard` variant="slide"). When absent, the
+ * legacy single `duration` field on the step is used instead — keeps
+ * older recipe payloads working without any schema migration.
+ */
+export interface BackendStepTimer {
+  /** Short uppercase label shown above the clock (e.g. "SIMMER", "REST"). */
+  label?: string;
+  /** ISO-8601 duration string, e.g. `PT10M`. Parsed by the cook surface. */
+  duration: string;
+}
+
+/**
+ * Optional per-step video clip (see Jamie_09). Shown as a small
+ * thumbnail + play button next to the timer. Absent on most steps.
+ */
+export interface BackendStepClip {
+  thumbnailUrl: string;
+  videoUrl: string;
+}
+
 export interface BackendRecipeStep {
   id: string;
   descr: string;
@@ -11,6 +34,10 @@ export interface BackendRecipeStep {
   reminderEvery?: string;
   dependsOn: string[];
   next: string[];
+  /** Optional multiple timers attached to this step. */
+  timers?: BackendStepTimer[];
+  /** Optional short video clip for this step. */
+  clip?: BackendStepClip;
 }
 
 export interface Recipe {

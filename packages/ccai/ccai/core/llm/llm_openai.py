@@ -1,6 +1,8 @@
 import json
 from typing import List, Dict, Any, AsyncGenerator, Optional
 
+import httpx
+
 from ccai.core.brain.simple_brain import logger
 from ccai.core.function_manager.models import RegisteredFunction, FunctionRegistry
 from ccai.core.llm.base import BaseLLM, LLMResponse, ChunkResponse, FunctionCallResponse
@@ -35,7 +37,12 @@ class OpenAILLM(BaseLLM):
                 "Please install the OpenAI Python package by running 'pip install openai'."
             )
 
-        self.client = openai.AsyncClient(api_key=api_key)
+        # Ignore inherited shell proxy variables so local/dev backends can reach
+        # the OpenAI API directly instead of failing via a misconfigured proxy.
+        self.client = openai.AsyncClient(
+            api_key=api_key,
+            http_client=httpx.AsyncClient(trust_env=False),
+        )
         self.model = model
         self.temperature = temperature
 

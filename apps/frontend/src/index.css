@@ -3416,3 +3416,2432 @@ html, body {
     transform: translateY(-50%);
   }
 }
+
+
+/* ============================================================================
+ * Jamie Oliver AI — Design System
+ * Source of truth: /jamie-ui-components (ui-1/styles.css + Figma PNGs)
+ * Flat layering, Poppins, calm gray-green page, teal + mint palette.
+ * ========================================================================== */
+
+:root {
+  /* --- Palette ---------------------------------------------------------- */
+  --jamie-page-bg:            #F0F4F5;
+  --jamie-surface:            #FFFFFF;
+  --jamie-surface-subtle:     #F2F5F6;
+  --jamie-surface-muted:      #ECEFEF;
+
+  --jamie-ink-heading:        #2C5F5D;
+  --jamie-ink-teal:           #3D6E6C;
+  --jamie-ink-teal-soft:      rgba(61, 110, 108, 0.72);
+  --jamie-ink-body:           #234252;
+  --jamie-ink-body-soft:      rgba(35, 66, 82, 0.64);
+  --jamie-ink-muted:          #5D5D5D;
+  --jamie-ink-placeholder:    #8E8E93;
+
+  --jamie-accent-mint:        #A3E3D8;
+  --jamie-accent-mint-soft:   rgba(163, 227, 216, 0.18);
+  --jamie-accent-mint-glow:   #7BF09A;
+
+  --jamie-border-soft:        rgba(61, 110, 108, 0.12);
+  --jamie-border-hairline:    #D8E2E2;
+  --jamie-overlay-dim:        rgba(35, 66, 82, 0.28);
+
+  /* --- Type ------------------------------------------------------------- */
+  --jamie-font-sans:          'Poppins', system-ui, sans-serif;
+
+  --jamie-text-xs:            12px;
+  --jamie-text-sm:            14px;
+  --jamie-text-base:          16px;
+  --jamie-text-md:            18px;
+  --jamie-text-lg:            20px;
+  --jamie-text-xl:            24px;
+  --jamie-text-2xl:           28px;
+  --jamie-text-display:       34px;
+
+  /* --- Radii ------------------------------------------------------------ */
+  --jamie-radius-xs:          10px;
+  --jamie-radius-sm:          16px;
+  --jamie-radius-md:          20px;
+  --jamie-radius-lg:          24px;
+  --jamie-radius-xl:          32px;
+  --jamie-radius-pill:        9999px;
+
+  /* --- Elevation -------------------------------------------------------- */
+  --jamie-shadow-hairline:    0 1px 2px rgba(0, 0, 0, 0.04);
+  --jamie-shadow-soft:        0 1px 3px rgba(0, 0, 0, 0.10);
+  --jamie-shadow-float:       0 8px 24px rgba(35, 66, 82, 0.10);
+  --jamie-shadow-lift:        0 16px 40px rgba(35, 66, 82, 0.14);
+  --jamie-shadow-feature:     0 0 64px rgba(0, 0, 0, 0.10), 0 1px 3px rgba(0, 0, 0, 0.08);
+
+  /* --- Layout ----------------------------------------------------------- */
+  --jamie-shell-max:          680px;
+  --jamie-shell-gutter:       20px;
+  --jamie-header-offset:      64px;
+  --jamie-footer-offset:      120px;
+
+  /* --- Motion ----------------------------------------------------------- */
+  --jamie-ease:               cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --jamie-duration-fast:      150ms;
+  --jamie-duration-base:      220ms;
+
+  /* Legacy aliases used by existing components (kept stable) */
+  --jamie-primary-dark:       var(--jamie-ink-teal);
+  --jamie-text-heading:       var(--jamie-ink-heading);
+  --jamie-text-primary:       var(--jamie-ink-body);
+  --jamie-text-body:          var(--jamie-ink-body);
+  --jamie-text-muted:         var(--jamie-ink-muted);
+  --jamie-text-placeholder:   var(--jamie-ink-placeholder);
+  --font-display:             var(--jamie-font-sans);
+  --font-body:                var(--jamie-font-sans);
+  --font-chat:                var(--jamie-font-sans);
+  --jamie-font-display:       var(--jamie-font-sans);
+}
+
+/* --- Page foundation ------------------------------------------------------ */
+html, body, #root {
+  height: 100%;
+}
+
+html {
+  background: var(--jamie-page-bg);
+}
+
+body {
+  background: var(--jamie-page-bg);
+  color: var(--jamie-ink-body);
+  font-family: var(--jamie-font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  background: var(--jamie-page-bg);
+}
+
+/* --- App shell ------------------------------------------------------------ */
+.jamie-app-shell {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--jamie-page-bg);
+}
+
+.jamie-app-header-shell {
+  position: relative;
+  z-index: 20;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.jamie-view-shell {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.jamie-shell-width {
+  width: min(calc(100% - (var(--jamie-shell-gutter) * 2)), var(--jamie-shell-max));
+  margin-inline: auto;
+}
+
+.jamie-scroll-area {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 12px 0 24px;
+}
+
+/*
+ * Voice-mode stage — fills the view-shell without its own scroll.
+ *
+ * The roller inside captures pointer drag (`touch-action: none`) for its
+ * up/down navigation. A scrollable ancestor would intercept that gesture,
+ * so we use a simple flex container that both horizontally (via
+ * `.jamie-shell-width` on the inner + `justify-content`) and vertically
+ * (`align-items: center`) centers the roller. Bottom padding reserves
+ * room for the floating voice dock (`--jamie-voice-dock-offset`) so the
+ * roller never ducks behind it.
+ */
+.jamie-voice-stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0 180px;
+  overflow: hidden;
+  /* Prevent iOS rubber-band scroll on the body from stealing the drag. */
+  overscroll-behavior: contain;
+  touch-action: none;
+}
+
+/*
+ * Inner wrapper owns its own sizing.
+ *
+ * We originally relied on the sibling class `.jamie-shell-width` to cap
+ * width at `--jamie-shell-max` (680px) — but `.jamie-voice-stage__inner`
+ * and `.jamie-shell-width` have the same specificity (one class each),
+ * so whichever comes LAST in the cascade wins. That made this inner
+ * silently stretch to 100% of the viewport (1024+px on desktop) and
+ * pushed the top card off-screen.
+ *
+ * Solution: encode the cap here with `max-width` instead of relying on
+ * class ordering. The roller inside is `width: 100%`, so `max-width`
+ * clamps the whole subtree to the shell width with zero ambiguity.
+ */
+.jamie-voice-stage__inner {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  width: 100%;
+  max-width: var(--jamie-shell-max);
+  padding-inline: var(--jamie-shell-gutter);
+}
+
+/* --- Primitive: Surface --------------------------------------------------- */
+.jamie-surface {
+  background: var(--jamie-surface);
+  border-radius: var(--jamie-radius-lg);
+  box-shadow: var(--jamie-shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.jamie-surface--flat {
+  box-shadow: none;
+  background: var(--jamie-surface-subtle);
+  border: 1px solid transparent;
+}
+
+.jamie-surface--feature {
+  box-shadow: var(--jamie-shadow-feature);
+  border: 1px solid rgba(255, 255, 255, 0.98);
+}
+
+.jamie-surface--pill {
+  border-radius: var(--jamie-radius-pill);
+}
+
+/* --- Primitive: IconButton ------------------------------------------------ */
+.jamie-icon-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--jamie-surface);
+  color: var(--jamie-ink-teal);
+  box-shadow: var(--jamie-shadow-soft);
+  cursor: pointer;
+  transition: transform var(--jamie-duration-fast) var(--jamie-ease),
+              box-shadow var(--jamie-duration-fast) var(--jamie-ease),
+              background-color var(--jamie-duration-fast) var(--jamie-ease);
+}
+
+.jamie-icon-button--md { width: 44px; height: 44px; }
+.jamie-icon-button--lg { width: 52px; height: 52px; }
+
+.jamie-icon-button:hover {
+  background: #FFFFFF;
+  box-shadow: 0 6px 14px rgba(35, 66, 82, 0.10);
+}
+
+.jamie-icon-button:active {
+  transform: scale(0.96);
+}
+
+.jamie-icon-button--ghost {
+  background: var(--jamie-surface-subtle);
+  box-shadow: none;
+}
+
+.jamie-icon-button--ghost:hover {
+  background: var(--jamie-surface-muted);
+  box-shadow: none;
+}
+
+.jamie-icon-button:focus-visible {
+  outline: 2px solid var(--jamie-ink-teal);
+  outline-offset: 2px;
+}
+
+/* --- Primitive: PillButton ------------------------------------------------ */
+.jamie-pill-button {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  font-family: var(--jamie-font-sans);
+  font-size: var(--jamie-text-base);
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity var(--jamie-duration-fast) var(--jamie-ease),
+              background-color var(--jamie-duration-fast) var(--jamie-ease);
+}
+
+.jamie-pill-button--primary {
+  background: var(--jamie-ink-teal);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.10);
+}
+
+.jamie-pill-button--primary:hover { opacity: 0.92; }
+.jamie-pill-button--primary:active { opacity: 0.82; }
+
+.jamie-pill-button--ghost {
+  background: var(--jamie-surface);
+  color: var(--jamie-ink-body);
+  border: 1px solid var(--jamie-border-hairline);
+}
+
+.jamie-pill-button--ghost:hover {
+  background: var(--jamie-surface-subtle);
+}
+
+.jamie-pill-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* --- Primitive: Sheet (modal & menu overlay) ------------------------------ */
+.jamie-sheet-root {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  pointer-events: none;
+}
+
+.jamie-sheet-root[data-open='true'] {
+  pointer-events: auto;
+}
+
+.jamie-sheet-scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--jamie-overlay-dim);
+  opacity: 0;
+  transition: opacity var(--jamie-duration-base) var(--jamie-ease);
+}
+
+.jamie-sheet-root[data-open='true'] .jamie-sheet-scrim {
+  opacity: 1;
+}
+
+.jamie-sheet-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--jamie-surface);
+  box-shadow: var(--jamie-shadow-lift);
+  transition: transform var(--jamie-duration-base) var(--jamie-ease),
+              opacity var(--jamie-duration-base) var(--jamie-ease);
+}
+
+.jamie-sheet-panel--left {
+  margin-right: auto;
+  width: min(420px, calc(100vw - 48px));
+  height: calc(100vh - 48px);
+  margin-block: 24px;
+  margin-left: 24px;
+  border-radius: var(--jamie-radius-xl);
+  transform: translateX(-16px);
+  opacity: 0;
+}
+
+.jamie-sheet-root[data-open='true'] .jamie-sheet-panel--left {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.jamie-sheet-panel--center {
+  margin: auto;
+  width: min(520px, calc(100vw - 32px));
+  max-height: calc(100vh - 64px);
+  border-radius: var(--jamie-radius-xl);
+  transform: scale(0.98);
+  opacity: 0;
+}
+
+.jamie-sheet-root[data-open='true'] .jamie-sheet-panel--center {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.jamie-sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 16px;
+}
+
+.jamie-sheet-title {
+  font-family: var(--jamie-font-sans);
+  font-size: var(--jamie-text-xl);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--jamie-ink-heading);
+  margin: 0;
+}
+
+.jamie-sheet-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Primitive: MenuList -------------------------------------------------- */
+.jamie-menu-group {
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  background: var(--jamie-surface-subtle);
+  border-radius: var(--jamie-radius-lg);
+}
+
+.jamie-menu-row {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: var(--jamie-radius-md);
+  background: transparent;
+  color: var(--jamie-ink-body);
+  font-family: var(--jamie-font-sans);
+  font-size: var(--jamie-text-base);
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--jamie-duration-fast) var(--jamie-ease);
+}
+
+.jamie-menu-row:hover {
+  background: #FFFFFF;
+}
+
+.jamie-menu-row:active {
+  background: var(--jamie-surface-muted);
+}
+
+.jamie-menu-row__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  color: var(--jamie-ink-teal);
+  flex-shrink: 0;
+}
+
+.jamie-menu-row__label {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jamie-menu-row__meta {
+  flex-shrink: 0;
+  min-width: 28px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #FFFFFF;
+  font-size: var(--jamie-text-xs);
+  font-weight: 600;
+  color: var(--jamie-ink-teal);
+  text-align: center;
+}
+
+/* --- Legacy-component hooks (kept while other surfaces migrate) ----------- */
+.jamie-surface-panel {
+  background: var(--jamie-surface);
+  border-radius: var(--jamie-radius-xl);
+  box-shadow: var(--jamie-shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.jamie-floating-card {
+  background: var(--jamie-surface);
+  border-radius: var(--jamie-radius-lg);
+  box-shadow: var(--jamie-shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.jamie-section-hero {
+  padding: 28px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  text-align: center;
+}
+
+.jamie-page-kicker {
+  margin: 0;
+  font-size: var(--jamie-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-teal-soft);
+}
+
+.jamie-page-title {
+  margin: 0;
+  font-size: clamp(26px, 5vw, 34px);
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--jamie-ink-heading);
+}
+
+.jamie-page-subtitle {
+  margin: 0;
+  max-width: 420px;
+  font-size: var(--jamie-text-base);
+  line-height: 1.6;
+  color: var(--jamie-ink-body);
+}
+
+.jamie-search-wrap {
+  width: min(100%, 420px);
+}
+
+/*
+ * Hero-card view/filter controls.
+ *
+ * Lives inside `.jamie-section-hero` directly under the search input so
+ * the toggles feel like part of the search surface — we used to render
+ * these on a disconnected gray bar under the card, which read as a
+ * second, lesser piece of chrome. Using ghost/outlined affordances here
+ * keeps the card minimal and lets the search input remain the primary
+ * visual anchor.
+ */
+.jamie-view-controls {
+  width: min(100%, 420px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.jamie-view-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid rgba(61, 110, 108, 0.14);
+}
+
+.jamie-view-toggle__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--jamie-ink-teal-soft, #5a8583);
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.jamie-view-toggle__btn:hover {
+  color: var(--jamie-ink-teal, #3d6e6c);
+  background: rgba(61, 110, 108, 0.06);
+}
+
+.jamie-view-toggle__btn[data-active] {
+  background: var(--jamie-ink-teal, #3d6e6c);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(35, 66, 82, 0.16);
+}
+
+.jamie-view-toggle__btn:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 2px;
+}
+
+/*
+ * Right-hand cluster that holds the (optional) active-filter chip next
+ * to the Filters button, so they behave as a single visual unit aligned
+ * to the right edge of the view-controls row.
+ */
+.jamie-filter-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+/*
+ * Dismissible chip that appears next to the Filters button whenever a
+ * non-default category is active. Matches the mint-teal active state
+ * used elsewhere and wears a small × so users can clear the filter
+ * without opening the panel.
+ */
+.jamie-active-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  max-width: 160px;
+  padding: 0 10px 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--jamie-ink-teal, #3d6e6c);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background 120ms ease, transform 120ms ease, box-shadow 120ms ease;
+  box-shadow: 0 2px 8px rgba(35, 66, 82, 0.16);
+}
+
+.jamie-active-filter-chip__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jamie-active-filter-chip:hover {
+  background: #2f5a59;
+  transform: translateY(-1px);
+}
+
+.jamie-active-filter-chip:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 2px;
+}
+
+.jamie-filter-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid rgba(61, 110, 108, 0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--jamie-ink-teal, #3d6e6c);
+  font-family: var(--jamie-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+.jamie-filter-btn:hover {
+  background: rgba(61, 110, 108, 0.06);
+  border-color: rgba(61, 110, 108, 0.28);
+}
+
+.jamie-filter-btn[data-active] {
+  background: var(--jamie-ink-teal, #3d6e6c);
+  color: #ffffff;
+  border-color: transparent;
+}
+
+.jamie-filter-btn:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 2px;
+}
+
+/*
+ * Expanded filter panel.
+ *
+ * Sits directly under the hero card as its own surface so the two read
+ * as a connected stack. The wrap provides the vertical rhythm while the
+ * inner `.jamie-filter-panel` reuses `.jamie-surface-panel` for the
+ * shared card treatment.
+ */
+.jamie-filter-panel-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+
+.jamie-filter-panel {
+  padding: 18px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.jamie-filter-panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 20px;
+}
+
+.jamie-filter-panel__label {
+  font-family: var(--jamie-font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-teal-soft, rgba(61, 110, 108, 0.72));
+}
+
+.jamie-filter-panel__clear {
+  border: 0;
+  background: transparent;
+  padding: 4px 8px;
+  margin: -4px -8px -4px 0;
+  border-radius: 6px;
+  font-family: var(--jamie-font-sans);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--jamie-ink-teal, #3d6e6c);
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+
+.jamie-filter-panel__clear:hover {
+  background: rgba(61, 110, 108, 0.08);
+}
+
+.jamie-filter-panel__clear:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 2px;
+}
+
+.jamie-filter-panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/*
+ * Shared category chip used inside the filter panel. Neutral surface
+ * by default with a soft hairline border; active state fills with the
+ * ink-teal brand color and lifts with a small shadow. Tuned to feel
+ * like a proper tappable pill rather than a flat tag.
+ */
+.jamie-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 14px;
+  border: 1px solid rgba(61, 110, 108, 0.14);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--jamie-text-body, #234252);
+  font-family: var(--jamie-font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.jamie-chip:hover {
+  border-color: rgba(61, 110, 108, 0.3);
+  color: var(--jamie-ink-teal, #3d6e6c);
+  background: rgba(61, 110, 108, 0.04);
+}
+
+.jamie-chip:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 2px;
+}
+
+.jamie-chip[data-active] {
+  background: var(--jamie-ink-teal, #3d6e6c);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(35, 66, 82, 0.18);
+}
+
+.jamie-chip[data-active]:hover {
+  background: #2f5a59;
+}
+
+.jamie-page-shell {
+  min-height: 100%;
+  padding: 16px 0 40px;
+}
+
+/*
+ * Main recipes content wrapper that sits directly under the hero card.
+ * We can't rely on Tailwind `pt-*`/`pb-*` utilities here because
+ * `index.css` is a pre-compiled static Tailwind v4 bundle (no Tailwind
+ * plugin in Vite, no tailwind config) — so arbitrary pt/pb classes like
+ * `pt-12` don't exist in the stylesheet and would silently do nothing.
+ * Keeping the spacing as an explicit CSS rule removes that footgun.
+ */
+.jamie-page-main {
+  padding-top: 40px;
+  padding-bottom: 48px;
+}
+
+/* --- Voice dock (keep existing behaviour, align tokens) ------------------ */
+.jamie-view-shell[data-voice-active='true'] .jamie-scroll-area {
+  padding-bottom: 180px;
+}
+
+.jamie-voice-dock-shell {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 12px 20px 20px;
+  background: linear-gradient(
+    180deg,
+    rgba(240, 244, 245, 0) 0%,
+    rgba(240, 244, 245, 0.9) 30%,
+    var(--jamie-page-bg) 100%
+  );
+  pointer-events: none;
+  z-index: 24;
+}
+
+.jamie-voice-dock-shell .jamie-shell-width { pointer-events: auto; }
+
+.jamie-voice-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.jamie-voice-footer-row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.jamie-voice-ghost-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  background: var(--jamie-surface);
+  color: var(--jamie-ink-teal);
+  box-shadow: var(--jamie-shadow-soft);
+  border: 0;
+}
+
+/*
+ * When the ghost slot is only acting as a layout spacer (aria-hidden),
+ * strip all chrome so the avatar + Stop stay visually anchored without
+ * a ghost circle appearing on the left. Width is preserved so the
+ * flex `space-between` keeps the avatar centered.
+ */
+.jamie-voice-ghost-button[aria-hidden='true'] {
+  background: transparent;
+  box-shadow: none;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/*
+ * Jamie avatar in the voice dock doubles as a mute-toggle button, so we
+ * zero out the native button chrome and drive the state (speaking /
+ * listening / muted / idle) through the `data-state` attribute. Each state
+ * owns a different glow + ring so the user can tell at a glance whether
+ * Jamie is talking, listening, or whether the mic is silenced.
+ */
+.jamie-voice-avatar-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: transform 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.jamie-voice-avatar-wrap:hover { transform: scale(1.03); }
+.jamie-voice-avatar-wrap:active { transform: scale(0.97); }
+.jamie-voice-avatar-wrap:focus-visible {
+  outline: 3px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 3px;
+}
+
+/*
+ * Base glow ring. Sizing/position is shared across states; colour, opacity,
+ * and animation are overridden per-state below so the transitions look
+ * continuous as Jamie hands the turn back and forth.
+ */
+.jamie-voice-avatar-glow {
+  position: absolute;
+  inset: 2px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle,
+    rgba(123, 240, 154, 0) 0%,
+    rgba(123, 240, 154, 0) 72%
+  );
+  filter: blur(8px);
+  transition: background 200ms ease;
+  pointer-events: none;
+}
+
+/* Listening — the mic is live. Green, gentle pulse. */
+.jamie-voice-avatar-wrap[data-state='listening'] .jamie-voice-avatar-glow {
+  background: radial-gradient(
+    circle,
+    rgba(123, 240, 154, 0.70) 0%,
+    rgba(123, 240, 154, 0) 72%
+  );
+  animation: jamie-voice-glow-listening 1.8s ease-in-out infinite;
+}
+
+/* Speaking — Jamie is talking. Brand teal, livelier pulse. */
+.jamie-voice-avatar-wrap[data-state='speaking'] .jamie-voice-avatar-glow {
+  background: radial-gradient(
+    circle,
+    rgba(70, 190, 168, 0.75) 0%,
+    rgba(70, 190, 168, 0) 72%
+  );
+  animation: jamie-voice-glow-speaking 1.1s ease-in-out infinite;
+}
+
+/* Muted — mic is off. Warm red ring, no motion. */
+.jamie-voice-avatar-wrap[data-state='muted'] .jamie-voice-avatar-glow {
+  background: radial-gradient(
+    circle,
+    rgba(224, 84, 84, 0.55) 0%,
+    rgba(224, 84, 84, 0) 72%
+  );
+  animation: none;
+}
+
+.jamie-voice-avatar {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 999px;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 8px 20px rgba(35, 66, 82, 0.16);
+  transition: filter 200ms ease, border-color 200ms ease;
+}
+
+.jamie-voice-avatar-wrap[data-state='muted'] .jamie-voice-avatar {
+  filter: grayscale(0.6);
+  border-color: rgba(224, 84, 84, 0.85);
+}
+
+/*
+ * Small circular badge pinned to the avatar that shows the mic-off glyph
+ * while muted. Keeps the "tap to unmute" affordance discoverable even if
+ * the user doesn't immediately read the red ring as "muted".
+ */
+.jamie-voice-avatar-mute-pip {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: #E05454;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0 2px 6px rgba(35, 66, 82, 0.22);
+  pointer-events: none;
+}
+
+@keyframes jamie-voice-glow-listening {
+  0%, 100% { transform: scale(1);   opacity: 0.75; }
+  50%      { transform: scale(1.08); opacity: 1; }
+}
+
+@keyframes jamie-voice-glow-speaking {
+  0%, 100% { transform: scale(1);   opacity: 0.85; }
+  50%      { transform: scale(1.14); opacity: 1; }
+}
+
+/*
+ * Stop button — two variants driven by `data-variant`:
+ *
+ *   icon       → 44×44 circle (used in ChatView voice mode, where the
+ *                composition reads as a balanced triptych: chat ghost
+ *                on the left, avatar in the middle, stop on the right,
+ *                all matching visual weight).
+ *   icon-label → auto-width pill with "▪ Stop" (used in the cook
+ *                surface per Jamie_09/_12/_19 — the label helps because
+ *                quitting mid-cook is a weightier action than ending a
+ *                voice prompt).
+ */
+.jamie-voice-stop-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--jamie-ink-teal);
+  color: #FFFFFF;
+  box-shadow: var(--jamie-shadow-soft);
+  cursor: pointer;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+.jamie-voice-stop-button[data-variant='icon'] {
+  width: 44px;
+  padding: 0;
+}
+.jamie-voice-stop-button[data-variant='icon-label'] {
+  width: auto;
+  padding: 0 18px 0 16px;
+  gap: 8px;
+}
+.jamie-voice-stop-button__label {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  line-height: 1;
+}
+.jamie-voice-stop-button:hover {
+  transform: scale(1.04);
+  background: #2c5654;
+  box-shadow: 0 4px 14px rgba(35, 66, 82, 0.22);
+}
+.jamie-voice-stop-button:active { transform: scale(0.96); }
+.jamie-voice-stop-button:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 3px;
+}
+
+/* --- Voice/chat message bubbles (kept stable) ----------------------------- */
+/*
+ * Jamie voice-mode message.
+ *
+ * Contents of a `.voice-roller__card[data-speaker='jamie']` — the roller card
+ * owns background/shadow/radius. This class just sets the vertical rhythm
+ * between the speaker label, body, and any embedded tool payloads.
+ */
+.jamie-voice-message { display: flex; flex-direction: column; gap: 10px; }
+
+.jamie-thread-stack { display: flex; flex-direction: column; gap: 16px; }
+
+.jamie-thread-card {
+  border-radius: var(--jamie-radius-lg);
+  box-shadow: var(--jamie-shadow-soft);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+}
+
+.jamie-thread-card--jamie {
+  background: #FFFFFF;
+  color: var(--jamie-ink-body);
+  padding: 22px 24px;
+}
+
+.jamie-thread-card--user {
+  margin-left: auto;
+  max-width: min(78%, 360px);
+  padding: 14px 20px;
+  background: var(--jamie-accent-mint-soft);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 1px 2px rgba(35, 66, 82, 0.04);
+}
+
+.jamie-thread-card__user-text {
+  margin: 0;
+  font-size: var(--jamie-text-base);
+  line-height: 1.55;
+  color: var(--jamie-ink-body);
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.jamie-thread-speaker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: var(--jamie-text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-teal);
+}
+
+/*
+ * Legacy rule — the speaker badge used to host a circular chef-portrait
+ * avatar which needed `border-radius: 50%`. It now hosts the brand heart
+ * (`.jamie-thread-speaker__heart`), whose upper lobes extend to the very
+ * edge of its 22px bounding box; the old circular mask was clipping the
+ * top corners of the heart. Drop the radius and let the dedicated heart
+ * rule below own the sizing.
+ */
+.jamie-thread-speaker img {
+  width: 22px;
+  height: 22px;
+}
+
+/*
+ * Heart glyph in the chat card speaker badge. Mirrors the badge in
+ * ProcessCard so a conversational reply and a tool-driven reply look
+ * like they come from the same Jamie. Color is the brand mint.
+ */
+.jamie-thread-speaker__heart {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  object-fit: contain;
+  display: block;
+}
+
+.jamie-thread-markdown {
+  font-size: var(--jamie-text-sm);
+  line-height: 1.7;
+  color: var(--jamie-ink-body);
+}
+
+.jamie-thread-markdown p:last-child { margin-bottom: 0; }
+
+/*
+ * Embedded tool payloads (recipe carousel, meal plan, shopping list)
+ * now live *inside* the jamie-thread-card along with the intro text,
+ * matching `Jamie_05.png` where the recipe sits on the same white
+ * surface as Jamie's quote. This class gives each payload block a
+ * consistent top margin so a card with just text and a card with
+ * text + recipe both feel deliberate.
+ */
+.jamie-thread-card__payload {
+  margin-top: 18px;
+}
+.jamie-thread-card__payload:first-child {
+  margin-top: 0;
+}
+
+/*
+ * Recipe-carousel navigation buttons.
+ *
+ * Shared between chat and voice modes so paging through recipes feels
+ * identical in both. They're absolutely positioned on the carousel's
+ * single-slide wrapper (which has the same height as the recipe card's
+ * aspect-ratio image), so `top: 50%` + `translateY(-50%)` lands them
+ * right on the middle of the photo.
+ *
+ * Visually they read as frosted glass pills hovering over the image:
+ * compact, high-contrast, with a strong drop-shadow so they stay
+ * legible against any food photography.
+ */
+.jamie-carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: #234252;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: background 160ms ease, transform 160ms ease;
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+}
+.jamie-carousel-nav:hover {
+  background: #ffffff;
+}
+.jamie-carousel-nav:active {
+  transform: translateY(-50%) scale(0.94);
+}
+.jamie-carousel-nav--prev { left: 12px; }
+.jamie-carousel-nav--next { right: 12px; }
+
+
+
+/* --- Composer / chat input ------------------------------------------------ */
+.jamie-composer-shell {
+  padding: 12px 0 18px;
+  flex-shrink: 0;
+}
+
+.jamie-composer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 6px 8px 6px 18px;
+  border-radius: 999px;
+  background: var(--jamie-surface);
+  border: 1px solid var(--jamie-border-hairline);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.06);
+}
+
+.jamie-composer input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  font-family: var(--jamie-font-sans);
+  font-size: var(--jamie-text-base);
+  color: var(--jamie-ink-body);
+}
+
+.jamie-composer input::placeholder { color: var(--jamie-ink-placeholder); }
+
+/* --- Grid helpers (kept stable) ------------------------------------------- */
+.jamie-browse-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* --- AppHeader ------------------------------------------------------------ */
+.jamie-app-header {
+  width: 100%;
+  padding: 16px 0 8px;
+  background: transparent;
+}
+
+.jamie-app-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 var(--jamie-shell-gutter);
+}
+
+.jamie-app-header__logo {
+  height: 24px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* --- MyTabCard (domain card used inside the menu sheet) ------------------- */
+.jamie-mytab-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px;
+  background: var(--jamie-surface);
+  border-radius: var(--jamie-radius-xl);
+  border: 1px solid var(--jamie-border-soft);
+  box-shadow: var(--jamie-shadow-float);
+}
+
+.jamie-mytab-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.jamie-mytab-card__identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.jamie-mytab-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--jamie-radius-sm);
+  background: var(--jamie-accent-mint-soft);
+  color: var(--jamie-ink-teal);
+  flex-shrink: 0;
+}
+
+.jamie-mytab-card__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.jamie-mytab-card__title {
+  margin: 0;
+  font-family: var(--jamie-font-sans);
+  font-size: var(--jamie-text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--jamie-ink-heading);
+}
+
+.jamie-mytab-card__test-chip {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #FFF1E6;
+  color: #C2410C;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.jamie-mytab-card__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--jamie-surface-subtle);
+  color: var(--jamie-ink-heading);
+  font-size: var(--jamie-text-xs);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.jamie-mytab-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jamie-mytab-card__headline {
+  margin: 0;
+  font-size: var(--jamie-text-base);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--jamie-ink-heading);
+}
+
+.jamie-mytab-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--jamie-text-xs);
+  color: var(--jamie-ink-body-soft);
+}
+
+.jamie-mytab-card__site-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  overflow: hidden;
+}
+
+.jamie-mytab-card__site-logo img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.jamie-mytab-card__meta-dot {
+  color: #D5CCBF;
+}
+
+.jamie-mytab-card__meta-item {
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jamie-mytab-card__description {
+  margin: 0;
+  font-size: var(--jamie-text-sm);
+  line-height: 1.6;
+  color: var(--jamie-ink-body);
+}
+
+.jamie-mytab-card__metrics {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.jamie-mytab-card__metric {
+  padding: 10px 12px;
+  border-radius: var(--jamie-radius-sm);
+  background: var(--jamie-surface-subtle);
+}
+
+.jamie-mytab-card__metric dt {
+  margin: 0;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-body-soft);
+}
+
+.jamie-mytab-card__metric dd {
+  margin: 4px 0 0;
+  font-size: var(--jamie-text-sm);
+  font-weight: 500;
+  color: var(--jamie-ink-heading);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.jamie-mytab-card__message {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: var(--jamie-radius-sm);
+  background: var(--jamie-surface-subtle);
+  color: var(--jamie-ink-body-soft);
+  font-size: var(--jamie-text-xs);
+  line-height: 1.5;
+}
+
+.jamie-mytab-card__message.is-error {
+  background: #FDECEC;
+  color: #9F3A38;
+}
+
+.jamie-mytab-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jamie-mytab-card__secondary {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  width: 100%;
+  padding: 8px 0;
+  font-family: var(--jamie-font-sans);
+  font-size: var(--jamie-text-sm);
+  font-weight: 500;
+  color: var(--jamie-ink-body-soft);
+  cursor: pointer;
+  transition: color var(--jamie-duration-fast) var(--jamie-ease);
+}
+
+.jamie-mytab-card__secondary:hover {
+  color: var(--jamie-ink-heading);
+}
+
+.jamie-mytab-card__secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.jamie-mytab-card__helper {
+  margin: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--jamie-ink-body-soft);
+}
+
+@media (max-width: 640px) {
+  :root { --jamie-shell-gutter: 16px; }
+
+  .jamie-browse-grid { grid-template-columns: 1fr; }
+
+  .jamie-voice-dock-shell { padding: 10px 16px 14px; }
+
+  .jamie-voice-avatar-wrap { width: 88px; height: 88px; }
+  .jamie-voice-avatar { width: 72px; height: 72px; }
+
+  .jamie-app-header { padding: 12px 0 4px; }
+  .jamie-app-header__logo { height: 22px; max-width: 140px; }
+}
+
+/* --------------------------------------------------------------------------
+ * Cook with Jamie — layout helpers for the cooking overlay.
+ *
+ * All visual work for the individual cards (timer, video clip, narration,
+ * step-done celebration, timer carousel) lives co-located with the
+ * primitives under `components/cooking/*.css`. These rules handle the
+ * overlay-level concerns: header sizing, scroll area padding, stack
+ * spacing, and the one stepper-only header variant used in cook mode.
+ *
+ * Kept near the other overlay rules (`.jamie-scroll-area`, voice-footer)
+ * so anyone touching the cook surface can see the full picture without
+ * bouncing between files. Tokens are reused from the root :root block,
+ * no new tokens introduced here.
+ * ------------------------------------------------------------------------ */
+
+.jamie-cook-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0 10px;
+  /*
+   * Intentionally no `width: 100%` here — this class is applied to
+   * the same element as `.jamie-shell-width`, and `width: 100%` would
+   * override the shell's capped + centered width (680px max, margin
+   * auto). Letting the shell constrain the row is what keeps the
+   * back icon + right-slot pill aligned with the content column below.
+   */
+}
+
+/*
+ * `.jamie-cook-header--ends` variant: no center slot — just left + right
+ * IconButtons flush to the edges. Used by the cook screen today (back +
+ * info) and by RecipeModal (back + "Let's cook" pill). Mirrors the
+ * Jamie_06/07/09/12/19 mocks exactly.
+ */
+.jamie-cook-header--ends { justify-content: space-between; }
+
+.jamie-cook-header__side {
+  /*
+   * Fixed footprint so the center wordmark sits optically centered even
+   * if one side is missing a control (e.g. no info button on a step).
+   */
+  width: 40px;
+  display: flex;
+  align-items: center;
+}
+.jamie-cook-header__side--end { justify-content: flex-end; }
+
+/*
+ * When the right-side slot hosts a pill (e.g. "Let's cook" in RecipeModal),
+ * let it expand beyond 40px. The slot still reserves a minimum width so
+ * back + right-pill stay at consistent vertical rhythm.
+ */
+.jamie-cook-header__side--end.jamie-cook-header__side--pill { width: auto; min-width: 40px; }
+
+.jamie-cook-header__center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.jamie-cook-header__logo {
+  height: 24px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+}
+
+/*
+ * Main step stack. Consistent vertical rhythm between Stepper, TimerCard,
+ * optional VideoClipCard, and JamieNarrationCard. We use gap on a flex
+ * column instead of per-child margins so it's trivial to show/hide
+ * individual cards without re-tuning spacing.
+ */
+.jamie-cook-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.jamie-cook-stack--tight { gap: 12px; }
+
+.jamie-cook-step {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+  padding-top: 12px;
+}
+
+/*
+ * The step caption (e.g. "Next: plate and serve") used quietly below
+ * the main stack. Intentionally muted so it doesn't compete with the
+ * narration card's ink-teal headline.
+ */
+.jamie-cook-step-caption {
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--jamie-ink-body-soft, rgba(44, 95, 93, 0.68));
+  text-align: center;
+}
+
+/*
+ * Scroll padding tuned for the voice dock that floats at the bottom.
+ * The overlay uses .jamie-scroll-area but needs extra bottom padding
+ * so the last narration line isn't trapped behind the dock.
+ */
+.jamie-cook-scroll {
+  padding-bottom: 160px;
+}
+
+/*
+ * Cook navigation row — intentionally minimal per Jamie_09/_12/_19,
+ * which show nothing here (voice-driven). We keep a single quiet
+ * affordance anchored to the right so testers / non-voice users can
+ * still move through steps without muddling the content above.
+ *
+ *   [prev chevron (ghost)]     …     [next chevron (primary teal)]
+ *
+ * Final step swaps the right chevron for a filled "Finish" pill so
+ * the close of the cook still reads as a committed action.
+ */
+.jamie-cook-nav {
+  /*
+   * Prev on the left edge of the content column, next (or "Finish")
+   * on the right edge — same max-width as the title, narration, and
+   * timer cards above it. Reads as wayfinding: back where you came
+   * from vs. forward to the next step. Keeps the minimal chevron
+   * language but lets the affordance breathe across the full shell.
+   */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding-top: 4px;
+}
+
+.jamie-cook-nav__chevron {
+  all: unset;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--jamie-ink-teal, #3d6e6c);
+  background: #ffffff;
+  border: 1px solid rgba(61, 110, 108, 0.16);
+  box-shadow: 0 2px 6px rgba(35, 66, 82, 0.08);
+  cursor: pointer;
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    opacity 180ms ease,
+    transform 180ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.jamie-cook-nav__chevron:active:not(:disabled) { transform: scale(0.96); }
+
+.jamie-cook-nav__chevron:hover:not(:disabled) {
+  background: #f7f9f9;
+  border-color: rgba(61, 110, 108, 0.28);
+}
+
+.jamie-cook-nav__chevron:focus-visible {
+  outline: 2px solid var(--jamie-ink-teal, #3d6e6c);
+  outline-offset: 2px;
+}
+
+.jamie-cook-nav__chevron:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.jamie-cook-nav__chevron--primary {
+  background: var(--jamie-ink-teal, #3d6e6c);
+  border-color: var(--jamie-ink-teal, #3d6e6c);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(61, 110, 108, 0.28);
+}
+
+.jamie-cook-nav__chevron--primary:hover:not(:disabled) {
+  background: #2c5654;
+  border-color: #2c5654;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(61, 110, 108, 0.34);
+}
+
+.jamie-cook-nav__finish {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--jamie-ink-teal, #3d6e6c);
+  color: #ffffff;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(61, 110, 108, 0.28);
+  transition: background-color 160ms ease;
+}
+
+.jamie-cook-nav__finish:hover { background: #2c5654; }
+.jamie-cook-nav__finish:focus-visible {
+  outline: 2px solid var(--jamie-ink-teal, #3d6e6c);
+  outline-offset: 2px;
+}
+
+@media (max-width: 640px) {
+  .jamie-cook-step { gap: 18px; padding-top: 12px; }
+  .jamie-cook-scroll { padding-bottom: 150px; }
+}
+
+/* --------------------------------------------------------------------------
+ * Cook-mode voice transcript
+ *
+ * Lives below the step arrows and surfaces the turn-by-turn exchange
+ * between the user and Jamie. Same visual language as voice mode
+ * (ChatView `.jamie-thread-card--*`) but scaled down — compact
+ * bubbles that don't compete with the step content. User bubble is
+ * right-aligned on mint, Jamie bubble is left-aligned on white with
+ * a small "JAMIE" kicker. Pending/in-flight turns get a subtle
+ * blinking caret via `data-pending=true`.
+ * -------------------------------------------------------------------------- */
+
+.jamie-cook-transcript {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jamie-cook-transcript__turn {
+  display: flex;
+  width: 100%;
+}
+
+.jamie-cook-transcript__turn[data-role='user'] {
+  justify-content: flex-end;
+}
+
+.jamie-cook-transcript__turn[data-role='jamie'] {
+  justify-content: flex-start;
+}
+
+.jamie-cook-transcript__bubble {
+  max-width: min(82%, 520px);
+  border-radius: 18px;
+  padding: 10px 14px;
+  box-shadow: 0 1px 2px rgba(35, 66, 82, 0.04);
+  border: 1px solid transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.jamie-cook-transcript__bubble--jamie {
+  background: #ffffff;
+  border-color: rgba(61, 110, 108, 0.12);
+  border-bottom-left-radius: 6px;
+  color: var(--jamie-ink-body, rgba(44, 95, 93, 0.9));
+}
+
+.jamie-cook-transcript__bubble--user {
+  background: var(--jamie-accent-mint-soft, #d9ece4);
+  border-bottom-right-radius: 6px;
+  color: var(--jamie-ink-body, rgba(44, 95, 93, 0.9));
+}
+
+.jamie-cook-transcript__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-teal, #3d6e6c);
+}
+
+.jamie-cook-transcript__text {
+  margin: 0;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 14px;
+  line-height: 1.5;
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.jamie-cook-transcript__turn[data-role='user'] .jamie-cook-transcript__text {
+  text-align: right;
+}
+
+/*
+ * Pending-turn caret — a small blinking dot after the in-flight text
+ * so users can tell when a transcript is still updating vs. frozen.
+ */
+.jamie-cook-transcript__turn[data-pending='true']
+  .jamie-cook-transcript__text::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-left: 6px;
+  border-radius: 50%;
+  background: var(--jamie-ink-teal, #3d6e6c);
+  vertical-align: middle;
+  animation: jamie-cook-transcript-caret 900ms ease-in-out infinite;
+}
+
+@keyframes jamie-cook-transcript-caret {
+  0%, 100% { opacity: 0.2; transform: scale(0.85); }
+  50%      { opacity: 1;   transform: scale(1); }
+}
+
+@media (max-width: 640px) {
+  .jamie-cook-transcript { margin-top: 16px; gap: 8px; }
+  .jamie-cook-transcript__bubble { max-width: 88%; padding: 9px 12px; border-radius: 16px; }
+  .jamie-cook-transcript__text { font-size: 13.5px; }
+}
+
+/* --------------------------------------------------------------------------
+ * Cook-surface recipe reference panel.
+ *
+ * Renders the shared <RecipeDetailsTabs> (Ingredients / Steps / Videos
+ * / Tips) inline below the step arrows + transcript. Replaces the old
+ * header "info" button drawer: the recipe reference is always one
+ * scroll away, and tapping a row in the Steps tab jumps the cook
+ * surface to that step. No inline title/meta — the Stepper above
+ * already surfaces the recipe name, so we go straight from the
+ * hairline divider into the tabs.
+ *
+ * Spacing intent: equal breathing room above (between the nav arrows
+ * / transcript and the divider) and below (between the divider and
+ * the tab pill), so the hairline sits visually centered inside its
+ * own whitespace rather than floating closer to one side.
+ * ------------------------------------------------------------------------ */
+.jamie-cook-details {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--jamie-border-hairline, rgba(61, 110, 108, 0.12));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .jamie-cook-details { margin-top: 16px; padding-top: 16px; gap: 12px; }
+}
+
+/* --------------------------------------------------------------------------
+ * Recipe Modal — pre-cook surface (see Jamie_06 / Jamie_07).
+ *
+ * Minimal, content-first layout:
+ *   [<]                             [ Let's cook ]
+ *   JAMIE'S CLASSIC FAMILY LASAGNE
+ *   ( Ingredients )( Videos )
+ *   • bullet list…
+ *
+ * No boxed hero, no in-body CTA column, no three-tab sprawl — the
+ * cook pill lives in the header and the content below the title is
+ * just the two lists the user actually needs before starting.
+ * ------------------------------------------------------------------------ */
+
+.jamie-recipe-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 4px 0 48px;
+}
+
+/* --- Header-right "Let's cook" / "Resume" / "Unlock" pill ----------------- */
+
+.jamie-recipe-modal__header-pill {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 999px;
+  background: var(--jamie-ink-teal, #3d6e6c);
+  color: #ffffff;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.005em;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(61, 110, 108, 0.28);
+  transition:
+    background 160ms ease,
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.jamie-recipe-modal__header-pill:hover:not(:disabled) {
+  background: #2c5654;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(61, 110, 108, 0.32);
+}
+
+.jamie-recipe-modal__header-pill:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 2px;
+}
+
+.jamie-recipe-modal__header-pill:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+/* --- Title (large uppercase ink-teal) ------------------------------------- */
+
+.jamie-recipe-modal__title {
+  font-family: var(--jamie-font-display, var(--jamie-font-sans, 'Poppins', sans-serif));
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--jamie-text-heading, #2c5f5d);
+  margin: 8px 0 0;
+  text-wrap: balance;
+}
+
+/* --- Hero image ----------------------------------------------------------- */
+
+/*
+ * Recipe hero. Sits at the top of the scrollable body, occupies the
+ * full shell width, and frames the title. 16:9 ratio keeps it
+ * generous without swallowing the whole viewport on tall phones.
+ */
+.jamie-recipe-modal__hero {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 320px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--jamie-surface-muted, #eef3f3);
+  box-shadow: 0 18px 44px rgba(35, 66, 82, 0.14);
+  margin-top: 4px;
+}
+
+.jamie-recipe-modal__hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/*
+ * Category badge overlay — top-left corner, kept low-contrast so it
+ * doesn't fight the title right below.
+ */
+.jamie-recipe-modal__hero-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--jamie-ink-teal, #3d6e6c);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(35, 66, 82, 0.12);
+}
+
+/* --- Meta row (time · servings · difficulty) ----------------------------- */
+
+.jamie-recipe-modal__meta {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 18px;
+}
+
+.jamie-recipe-modal__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--jamie-text-muted, #6b8381);
+}
+
+.jamie-recipe-modal__meta-item svg {
+  color: var(--jamie-ink-teal, #3d6e6c);
+  flex-shrink: 0;
+}
+
+/* --- Resume progress block + ghost discard link -------------------------- */
+
+.jamie-recipe-modal__resume {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 2px;
+}
+
+.jamie-recipe-modal__progress {
+  /* Inherits .stepper__segments from Stepper.css (flex + gap). */
+  width: 100%;
+}
+
+.jamie-recipe-modal__resume-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.jamie-recipe-modal__resume-caption {
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-body-soft, rgba(44, 95, 93, 0.72));
+}
+
+.jamie-recipe-modal__ghost-link {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--jamie-ink-body-soft, rgba(44, 95, 93, 0.72));
+  cursor: pointer;
+  transition: color 140ms ease;
+}
+
+.jamie-recipe-modal__ghost-link:hover {
+  color: var(--jamie-ink-teal, #3d6e6c);
+}
+
+.jamie-recipe-modal__ghost-link:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* --- Supertab locked-state pane ------------------------------------------- */
+
+.jamie-recipe-modal__supertab {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(61, 110, 108, 0.04);
+  border: 1px solid rgba(61, 110, 108, 0.12);
+  border-radius: 16px;
+}
+
+/* --- Segmented pill tab control ------------------------------------------- */
+
+.jamie-recipe-modal__tabs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+/*
+ * Segmented control: a single pill track with two segments sharing one
+ * background. Active segment gets a white fill with a soft shadow so
+ * the control reads as a continuous track — mirrors Jamie_06/07.
+ */
+.jamie-recipe-modal__segmented {
+  display: inline-flex;
+  width: 100%;
+  padding: 4px;
+  background: rgba(61, 110, 108, 0.08);
+  border-radius: 999px;
+  gap: 0;
+}
+
+.jamie-recipe-modal__segmented-option {
+  all: unset;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 999px;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--jamie-ink-body-soft, rgba(44, 95, 93, 0.72));
+  cursor: pointer;
+  text-align: center;
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.jamie-recipe-modal__segmented-option:hover {
+  color: var(--jamie-text-heading, #2c5f5d);
+}
+
+.jamie-recipe-modal__segmented-option[data-active] {
+  background: #ffffff;
+  color: var(--jamie-text-heading, #2c5f5d);
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(35, 66, 82, 0.1);
+}
+
+.jamie-recipe-modal__segmented-option:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 2px;
+}
+
+.jamie-recipe-modal__panels { width: 100%; }
+
+/* --- Ingredients bullet list (flat, no boxes) ----------------------------- */
+
+.jamie-recipe-modal__ingredients {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jamie-recipe-modal__ingredient-row {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  color: var(--jamie-text-body, #234252);
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.jamie-recipe-modal__ingredient-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--jamie-text-body, #234252);
+  flex-shrink: 0;
+  transform: translateY(-3px);
+}
+
+/* --- Videos list (uses VideoStepCard inside) ------------------------------ */
+
+.jamie-recipe-modal__videos {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.jamie-recipe-modal__video-row { width: 100%; }
+
+.jamie-recipe-modal__empty {
+  margin: 6px 0 0;
+  color: var(--jamie-ink-body-soft, rgba(44, 95, 93, 0.68));
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+/* --- Description / lede paragraph ---------------------------------------- */
+
+/*
+ * Short prose intro under the meta row. Soft color, generous
+ * leading, slightly larger than body text so it reads as a
+ * deliberate lede rather than filler copy.
+ */
+.jamie-recipe-modal__lede {
+  margin: 2px 0 0;
+  color: var(--jamie-ink-body, rgba(44, 95, 93, 0.84));
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 15px;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* --- Utensils chip cluster (inside Ingredients tab) ---------------------- */
+
+.jamie-recipe-modal__utensils {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.jamie-recipe-modal__section-heading {
+  margin: 0;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--jamie-text-muted, #6b8381);
+}
+
+.jamie-recipe-modal__utensil-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.jamie-recipe-modal__utensil-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: rgba(61, 110, 108, 0.08);
+  color: var(--jamie-ink-teal, #3d6e6c);
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* --- Steps tab — numbered instruction list ------------------------------- */
+
+.jamie-recipe-modal__steps {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  counter-reset: recipe-step;
+}
+
+/*
+ * Each step row is a two-column layout: a circled step number
+ * anchored to the top-left, and the step content (title, body
+ * copy, optional play-clip chip) stacked vertically to its right.
+ */
+.jamie-recipe-modal__step-row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  align-items: start;
+  border-radius: 14px;
+  padding: 8px;
+  margin: -8px;
+  transition:
+    background-color var(--jamie-duration-fast) var(--jamie-ease),
+    box-shadow var(--jamie-duration-fast) var(--jamie-ease);
+}
+
+/*
+ * When the cook surface renders the shared RecipeDetailsTabs, it
+ * passes the active step index through so the matching row can stand
+ * out. Mint wash + teal left accent keeps the "you are here" signal
+ * quiet but unambiguous, and echoes the Stepper's active-segment
+ * color so the whole surface feels like one coordinated unit.
+ */
+.jamie-recipe-modal__step-row[data-current='true'] {
+  background: var(--jamie-accent-mint-soft, #d9ece4);
+  box-shadow: inset 3px 0 0 var(--jamie-ink-teal, #3d6e6c);
+}
+
+.jamie-recipe-modal__step-row[data-current='true'] .jamie-recipe-modal__step-number {
+  background: var(--jamie-ink-teal, #3d6e6c);
+  color: var(--jamie-surface, #fff);
+}
+
+.jamie-recipe-modal__step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(61, 110, 108, 0.08);
+  color: var(--jamie-ink-teal, #3d6e6c);
+  font-family: var(--jamie-font-display, var(--jamie-font-sans, 'Poppins', sans-serif));
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.jamie-recipe-modal__step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  padding-top: 7px;
+}
+
+.jamie-recipe-modal__step-title {
+  margin: 0;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--jamie-text-heading, #2c5f5d);
+}
+
+.jamie-recipe-modal__step-copy {
+  margin: 0;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--jamie-ink-body, rgba(44, 95, 93, 0.84));
+  text-wrap: pretty;
+}
+
+.jamie-recipe-modal__step-play {
+  align-self: flex-start;
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid rgba(61, 110, 108, 0.18);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--jamie-ink-teal, #3d6e6c);
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.jamie-recipe-modal__step-play:hover {
+  background: #f7f9f9;
+  border-color: rgba(61, 110, 108, 0.32);
+  transform: translateY(-1px);
+}
+
+.jamie-recipe-modal__step-play:focus-visible {
+  outline: 2px solid var(--jamie-ink-teal, #3d6e6c);
+  outline-offset: 2px;
+}
+
+/* --- Tips tab — numbered tip cards --------------------------------------- */
+
+.jamie-recipe-modal__tips {
+  list-style: none;
+  margin: 0;
+  padding: 4px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.jamie-recipe-modal__tip-row {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(61, 110, 108, 0.05);
+  border: 1px solid rgba(61, 110, 108, 0.08);
+}
+
+.jamie-recipe-modal__tip-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: var(--jamie-ink-teal, #3d6e6c);
+  color: #ffffff;
+  font-family: var(--jamie-font-display, var(--jamie-font-sans, 'Poppins', sans-serif));
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.jamie-recipe-modal__tip-copy {
+  margin: 6px 0 0;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--jamie-ink-body, rgba(44, 95, 93, 0.9));
+  text-wrap: pretty;
+}
+
+@media (max-width: 640px) {
+  .jamie-recipe-modal-body { gap: 16px; padding: 2px 0 40px; }
+  .jamie-recipe-modal__title { font-size: 24px; }
+  .jamie-recipe-modal__segmented-option { height: 38px; font-size: 12px; padding: 0 6px; }
+  .jamie-recipe-modal__hero { border-radius: 20px; max-height: 240px; }
+  .jamie-recipe-modal__hero-badge { top: 12px; left: 12px; height: 24px; font-size: 10px; padding: 0 10px; }
+  .jamie-recipe-modal__meta { gap: 4px 14px; }
+  .jamie-recipe-modal__meta-item { font-size: 12px; }
+  .jamie-recipe-modal__lede { font-size: 14px; }
+  .jamie-recipe-modal__step-row { grid-template-columns: 32px 1fr; gap: 12px; }
+  .jamie-recipe-modal__step-number { width: 32px; height: 32px; font-size: 12px; }
+  .jamie-recipe-modal__step-body { padding-top: 4px; }
+  .jamie-recipe-modal__tip-row { grid-template-columns: 32px 1fr; gap: 12px; padding: 12px 14px; }
+  .jamie-recipe-modal__tip-marker { width: 32px; height: 32px; font-size: 12px; }
+}
+
+

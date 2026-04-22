@@ -1,0 +1,209 @@
+/*
+ * VoiceModeRoller styles.
+ *
+ * Three-card stacked window into conversation history. Sizing, blur,
+ * z-index, and margin-overlap are controlled here via data-role attribute
+ * on each card. Consumer's renderMessage supplies everything inside.
+ *
+ * Card roles by visual depth (stack renders back → middle → top in DOM):
+ *   back    — 300px wide, 0.5px blur, 0.75 opacity, z-index 1
+ *   middle  — 320px wide, no blur, 0.92 opacity, z-index 2
+ *   top     — 340px wide, full opacity, lifted shadow, z-index 3
+ *
+ * Transition easing (0.32, 0.72, 0, 1) is a soft overshoot-safe curve —
+ * feels like a real drag release, not a spring.
+ */
+
+.voice-roller {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Bounce container — moves the whole stack a few px at boundaries. */
+.voice-roller[data-bounce='top'] .voice-roller__stack {
+  animation: voice-roller-bounce-up 320ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+.voice-roller[data-bounce='bottom'] .voice-roller__stack {
+  animation: voice-roller-bounce-down 320ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@keyframes voice-roller-bounce-up {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes voice-roller-bounce-down {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.voice-roller__new-badge {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 999px;
+  background: #3d6e6c;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: background 150ms ease;
+}
+.voice-roller__new-badge:hover {
+  background: #2c5f5d;
+}
+
+.voice-roller__stack {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 24px 0 12px;
+  min-height: 500px;
+}
+
+/*
+ * Roller card wrapper.
+ *
+ * Owns sizing, blur, and stack rhythm ONLY. Background/border/shadow/padding
+ * are owned by the inner message component so we can give Jamie messages a
+ * white card and user messages a bare mint bubble (per design mocks).
+ */
+.voice-roller__card {
+  background: transparent;
+  border: 0;
+  border-radius: 32px;
+  padding: 0;
+  box-shadow: none;
+  transition:
+    width 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    filter 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 420ms ease,
+    margin-bottom 420ms cubic-bezier(0.32, 0.72, 0, 1),
+    box-shadow 420ms ease;
+  will-change: width, transform, filter, opacity;
+}
+
+/* Jamie speaker wraps content in a white card. */
+.voice-roller__card[data-speaker='jamie'] {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.86);
+  padding: 22px 18px 20px;
+  box-shadow: 0 18px 40px rgba(35, 66, 82, 0.09);
+}
+
+.voice-roller__card[data-role='top'][data-speaker='jamie'] {
+  box-shadow: 0 22px 44px rgba(35, 66, 82, 0.12);
+}
+
+/*
+ * Cards use container-relative widths so the top card fills the same width
+ * as chat-mode messages (owned by the `.jamie-shell-width` parent). Middle
+ * and back cards sit at roughly 92% / 84% to create the stacked peek without
+ * ever going narrower than the chat card.
+ */
+.voice-roller__card[data-role='back'] {
+  width: 84%;
+  filter: blur(1.35px);
+  margin-bottom: -10px;
+  z-index: 1;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.voice-roller__card[data-role='middle'] {
+  width: 92%;
+  filter: blur(0.5px);
+  margin-bottom: -16px;
+  z-index: 2;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.voice-roller__card[data-role='top'] {
+  width: 100%;
+  filter: blur(0);
+  margin-bottom: 0;
+  z-index: 3;
+  cursor: grab;
+}
+.voice-roller__card[data-role='top']:active {
+  cursor: grabbing;
+}
+
+/*
+ * User-speaker variant — roller doesn't enforce user/jamie styling,
+ * consumers handle that in renderMessage. But we expose the speaker via
+ * data-speaker so consumers can target it with a child selector if needed.
+ */
+
+.voice-roller__empty {
+  width: 0;
+  height: 0;
+}
+
+/*
+ * While streaming, disable the grab cursor on the top card — navigation
+ * is blocked, so the cursor shouldn't lie. Tap targets on back/middle
+ * are also blocked in the TS handler; pointer-events: none belt-and-suspenders.
+ */
+.voice-roller[data-streaming] .voice-roller__card[data-role='top'] {
+  cursor: default;
+}
+.voice-roller[data-streaming] .voice-roller__card[data-role='back'],
+.voice-roller[data-streaming] .voice-roller__card[data-role='middle'] {
+  cursor: default;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .voice-roller__stack {
+    min-height: 430px;
+    padding-top: 10px;
+  }
+
+  .voice-roller__card[data-speaker='jamie'] {
+    padding: 20px 16px 18px;
+  }
+  /*
+   * Mobile inherits the 100% / 92% / 84% rule from the base — the parent
+   * `.jamie-shell-width` already constrains max width, so no special casing.
+   */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-roller__card,
+  .voice-roller__new-badge {
+    transition: none !important;
+  }
+  .voice-roller[data-bounce] .voice-roller__stack {
+    animation: none !important;
+  }
+}

@@ -2,9 +2,7 @@
  * API client for jo-sem-search backend
  */
 
-// Get API base URL from environment variable or use default
-// @ts-expect-error - Vite provides import.meta.env but TypeScript types may not be fully loaded
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+import { API_BASE_URL } from './runtimeConfig';
 
 // =============================================================================
 // CHAT AGENT TYPES
@@ -62,7 +60,7 @@ export interface ShoppingListData {
 }
 
 export interface ChatEvent {
-  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'original_content' | 'done' | 'error';
+  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'done' | 'error';
   content: string;
   metadata?: {
     // Tool call info
