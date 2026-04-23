@@ -5385,15 +5385,13 @@ body {
   height: 28px;
   padding: 0 12px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.92);
-  color: var(--jamie-ink-teal, #3d6e6c);
+  background: var(--jamie-ink-teal, #3d6e6c);
+  color: #fff;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(35, 66, 82, 0.12);
+  box-shadow: 0 10px 20px rgba(35, 66, 82, 0.18);
 }
 
 /* --- Meta row (time · servings · difficulty) ----------------------------- */

@@ -101,7 +101,91 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
     );
   }
 
-  // Grid variant: compact with cropped image
+  // Shared compact card body — used by both `grid` and `chat` variants.
+  // Matches the `feed` card's structural language (image-top + white card
+  // body with title) so all recipe surfaces feel like one design family.
+  // Meta icons are intentionally hidden at thumbnail size; the image and
+  // title carry enough context at a glance.
+  const CompactCard = ({ maxWidth }: { maxWidth?: number }) => (
+    <div
+      className="overflow-hidden bg-white"
+      style={{
+        borderRadius: '24px',
+        boxShadow: '0 18px 36px rgba(35, 66, 82, 0.10)',
+        border: '1px solid rgba(255, 255, 255, 0.8)',
+        width: '100%',
+        ...(maxWidth ? { maxWidth: `${maxWidth}px`, margin: '0 auto' } : {}),
+      }}
+    >
+      {/* Image — 4:3 gives a clean letterbox at thumbnail size */}
+      <div
+        className="relative overflow-hidden w-full"
+        style={{ aspectRatio: '4 / 3' }}
+      >
+        <img
+          src={recipe.image}
+          alt={recipe.title}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.03]"
+        />
+
+        {/* Category / In-Progress badge — top-left, same teal pill as the feed card */}
+        <span
+          className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-white text-xs font-semibold"
+          style={hasSession
+            ? { ...badgeStyle, background: '#10B981' }
+            : badgeStyle}
+        >
+          {hasSession ? (
+            <>
+              <Clock className="size-3" />
+              In Progress
+            </>
+          ) : (
+            recipe.category.toUpperCase()
+          )}
+        </span>
+      </div>
+
+      {/* White body — fixed-height title row so all cards in a row align.
+          Line-height 1.2 × font-size 15px × 2 lines = 36px; add vertical
+          padding (12 + 16 = 28px) → total body height always 64px. */}
+      <div style={{ padding: '12px 16px 16px' }}>
+        <h3
+          style={{
+            margin: 0,
+            color: 'var(--jamie-text-heading, #2C5F5D)',
+            fontFamily: 'var(--font-display, Poppins, sans-serif)',
+            fontSize: '15px',
+            fontWeight: 700,
+            letterSpacing: '0.3px',
+            lineHeight: 1.2,
+            textTransform: 'uppercase',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden',
+            minHeight: 'calc(15px * 1.2 * 2)',
+          }}
+        >
+          {recipe.title}
+        </h3>
+
+        {hasSession && (
+          <div className="mt-1 w-full bg-gray-100 rounded-full h-1.5 overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all"
+              style={{
+                width: `${sessionProgress}%`,
+                background: 'linear-gradient(90deg, #46BEA8, #81EB67)',
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  // Grid variant: compact multi-column card
   if (variant === 'grid') {
     return (
       <motion.div
@@ -109,184 +193,20 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
         className="cursor-pointer w-full"
         onClick={onClick}
       >
-        <div
-          className="relative overflow-hidden bg-white shadow-[0_18px_36px_rgba(35,66,82,0.10)] w-full"
-          style={{
-            aspectRatio: '4 / 5',
-            borderRadius: '24px',
-            border: '1px solid rgba(255,255,255,0.8)',
-          }}
-        >
-          {/* Edge-to-edge Image Container for Grid - Matching Figma Mock */}
-          <div className="relative overflow-hidden w-full h-full">
-            <img
-              src={recipe.image}
-              alt={recipe.title}
-              className="w-full h-full object-cover transition-opacity duration-300 hover:opacity-95"
-              style={{
-                borderRadius: '24px',
-              }}
-            />
-            
-            {/* Gradient Overlay - matching Figma design */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 via-50% to-transparent" />
-            
-            {/* Badges at top — single status/category chip only for compact grid cards */}
-            <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
-              <div className="flex items-center gap-2">
-                {hasSession ? (
-                  <span
-                    className="inline-flex items-center gap-1.5 text-white text-xs font-semibold"
-                    style={badgeStyle}
-                  >
-                    <Clock className="size-3" />
-                    In Progress
-                  </span>
-                ) : (
-                  <span
-                    className="inline-flex items-center text-white text-xs font-semibold"
-                    style={badgeStyle}
-                  >
-                    {recipe.category.toUpperCase()}
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Content at bottom - matching Figma */}
-            <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-1.5 z-10">
-              <h3
-                className="text-white"
-                style={{
-                  textTransform: 'uppercase',
-                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                  fontSize: '16px',
-                  fontWeight: 700,
-                  lineHeight: '22px',
-                  letterSpacing: '0.2px',
-                  paddingLeft: '16px',
-                  paddingRight: '16px',
-                  paddingBottom: '24px',
-                }}
-              >
-                {recipe.title}
-              </h3>
-
-              {hasSession && (
-                <div className="mt-1 w-full bg-white/20 rounded-full h-1.5 overflow-hidden">
-                  <div
-                    className="bg-[#81EB67] h-full rounded-full transition-all"
-                    style={{ width: `${sessionProgress}%` }}
-                  />
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        <CompactCard />
       </motion.div>
     );
   }
 
-  // Chat variant: used in chat carousel with specific dimensions
+  // Chat variant: used in chat / voice carousel (single-slide or grid)
   if (variant === 'chat') {
     return (
       <motion.div
         whileTap={{ scale: 0.98 }}
-        className="cursor-pointer"
+        className="cursor-pointer w-full"
         onClick={onClick}
       >
-        <div className="flex items-center justify-center w-full">
-          <div
-            className="relative overflow-hidden bg-white shadow-[0_18px_36px_rgba(35,66,82,0.10)]"
-            style={{
-              borderRadius: '24px',
-              width: '100%',
-              aspectRatio: '304 / 392',
-              maxWidth: '100%',
-              margin: '0 auto',
-              border: '1px solid rgba(255,255,255,0.8)',
-            }}
-          >
-            {/* Edge-to-edge Image Container for Chat - Matching Figma Mock */}
-            <div className="relative overflow-hidden w-full h-full">
-              <img
-                src={recipe.image}
-                alt={recipe.title}
-                className="w-full h-full object-cover transition-opacity duration-300 hover:opacity-95"
-                style={{
-                  borderRadius: '24px',
-                }}
-              />
-
-              {/* Gradient Overlay - matching Figma design */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 via-50% to-transparent" />
-
-              {/* Badges at top — category/in-progress only. The steps count
-                  is hidden when zero (recipe payload not yet fully loaded)
-                  to avoid the jarring "0 STEPS" state from the list API. */}
-              <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-10">
-                <div className="flex items-center gap-2">
-                  {hasSession ? (
-                    <span
-                      className="inline-flex items-center gap-1.5 text-white text-xs font-semibold"
-                      style={badgeStyle}
-                    >
-                      <Clock className="size-3" />
-                      In Progress
-                    </span>
-                  ) : (
-                    <span
-                      className="inline-flex items-center text-white text-xs font-semibold"
-                      style={badgeStyle}
-                    >
-                      {recipe.category.toUpperCase()}
-                    </span>
-                  )}
-                  {recipe.instructions.length > 0 && (
-                    <span
-                      className="inline-flex items-center text-white text-xs font-semibold"
-                      style={badgeStyle}
-                    >
-                      {recipe.instructions.length} STEPS
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              {/* Content at bottom - matching Figma */}
-              <div className="absolute bottom-0 left-0 right-0 flex flex-col gap-1.5 z-10">
-                <h3
-                  className="text-white"
-                  style={{
-                    textTransform: 'uppercase',
-                    fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                    fontSize: '18px',
-                    fontWeight: 700,
-                    lineHeight: '24px',
-                    letterSpacing: '0.2px',
-                    paddingLeft: '20px',
-                    paddingRight: '20px',
-                    paddingBottom: '36px',
-                  }}
-                >
-                  {recipe.title}
-                </h3>
-
-                {hasSession && (
-                  <div
-                    className="w-full bg-white/20 h-1 overflow-hidden"
-                    style={{ marginBottom: '12px' }}
-                  >
-                    <div
-                      className="bg-[#81EB67] h-full transition-all"
-                      style={{ width: `${sessionProgress}%` }}
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
+        <CompactCard maxWidth={335} />
       </motion.div>
     );
   }

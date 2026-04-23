@@ -7,6 +7,8 @@ import { toast } from './ui/sonner';
 import type { RecipeAccessResponse } from '../lib/api';
 import type { RecipePurchaseResolution } from '../lib/supertab';
 import { RecipeDetailsTabs } from './RecipeDetailsTabs';
+// @ts-expect-error - Vite resolves figma:asset imports
+import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 
 interface RecipeModalProps {
   recipe: Recipe | null;
@@ -171,7 +173,7 @@ export function RecipeModal({
        * feel like one continuous space.
        */}
       <header className="jamie-app-header-shell">
-        <div className="jamie-shell-width jamie-cook-header jamie-cook-header--ends">
+        <div className="jamie-shell-width jamie-cook-header">
           <div className="jamie-cook-header__side">
             <button
               type="button"
@@ -181,6 +183,15 @@ export function RecipeModal({
             >
               <ArrowLeft size={20} />
             </button>
+          </div>
+
+          <div className="jamie-cook-header__center">
+            <img
+              src={logoImage}
+              alt="Jamie Oliver"
+              className="jamie-cook-header__logo"
+              draggable={false}
+            />
           </div>
 
           <div className="jamie-cook-header__side jamie-cook-header__side--end jamie-cook-header__side--pill">
