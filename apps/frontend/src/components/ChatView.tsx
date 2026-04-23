@@ -1131,7 +1131,15 @@ export function ChatView({
     <div className="relative jamie-view-shell" data-voice-active={isVoiceActive || undefined}>
       {/* Empty State */}
       {!hasMessages && !isTyping ? (
-        <OnboardingEmptyState onStart={handlePromptButtonClick} />
+        <OnboardingEmptyState
+          onStart={handlePromptButtonClick}
+          onVoiceStart={toggleVoiceMode}
+          voiceState={
+            voiceState === 'connecting' || voiceState === 'listening'
+              ? voiceState
+              : 'idle'
+          }
+        />
       ) : isVoiceActive ? (
         /*
          * Voice Mode — stacked roller of "alive" cards.
