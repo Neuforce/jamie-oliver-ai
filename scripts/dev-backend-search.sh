@@ -9,6 +9,11 @@ echo "🚀 Starting backend-search development server..."
 echo "📍 Directory: $(pwd)"
 echo ""
 
+# Ignore inherited proxy variables in local dev. A stale shell proxy can make
+# OpenAI requests fail even when the local app and API keys are otherwise valid.
+unset HTTP_PROXY HTTPS_PROXY ALL_PROXY
+unset http_proxy https_proxy all_proxy
+
 # Check Python version
 PYTHON_CMD="python3"
 if command -v python3.12 &> /dev/null; then
@@ -37,6 +42,7 @@ fi
 # Activate virtual environment
 if [ -d ".venv" ]; then
     source .venv/bin/activate
+    VENV_PYTHON="$(pwd)/.venv/bin/python"
     # Verificar versión en el venv
     VENV_PYTHON_VERSION=$(python --version 2>&1)
     VENV_PYTHON_MAJOR=$(python -c "import sys; print(sys.version_info.major)" 2>/dev/null || echo "0")
@@ -52,6 +58,7 @@ if [ -d ".venv" ]; then
     fi
 elif [ -d "venv" ]; then
     source venv/bin/activate
+    VENV_PYTHON="$(pwd)/venv/bin/python"
 fi
 
 # Install dependencies if needed
@@ -145,4 +152,10 @@ fi
 
 # Start the server
 echo "🌐 Starting FastAPI server on http://localhost:8000"
-python -m uvicorn recipe_search_agent.api:app --host 0.0.0.0 --port 8000 --reload
+if [ "${BACKEND_SEARCH_RELOAD:-0}" = "1" ]; then
+    echo "🔄 Reload mode enabled via BACKEND_SEARCH_RELOAD=1"
+    exec "$VENV_PYTHON" -m uvicorn recipe_search_agent.api:app --host 0.0.0.0 --port 8000 --reload
+else
+    echo "ℹ️  Running without --reload because the spawned reload worker breaks outbound OpenAI calls in local dev."
+    exec "$VENV_PYTHON" -m uvicorn recipe_search_agent.api:app --host 0.0.0.0 --port 8000
+fi

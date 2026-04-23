@@ -1,0 +1,70 @@
+/*
+ * StepDoneCelebration styles.
+ *
+ * Full-bleed, tap-anywhere-to-skip. Centered content stack:
+ *   STEP N DONE
+ *     ✓ (spring-in)
+ *   NextStepName →
+ *
+ * Uses Tailwind's bg-background on the fixed overlay wrapper so it
+ * slots in cleanly when mounted as an `AnimatePresence` sibling of
+ * the step content. The whole card is a button to keep the tap-target
+ * maximal; default button chrome stripped.
+ */
+
+.jamie-step-done {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+  min-height: 320px;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--jamie-text-heading, #2c5f5d);
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+}
+
+.jamie-step-done:focus-visible {
+  outline: 2px solid rgba(70, 190, 168, 0.55);
+  outline-offset: 4px;
+  border-radius: 24px;
+}
+
+.jamie-step-done__kicker {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-teal, #3d6e6c);
+  opacity: 0.72;
+}
+
+.jamie-step-done__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: rgba(61, 110, 108, 0.08);
+  color: var(--jamie-ink-teal, #3d6e6c);
+}
+
+.jamie-step-done__next {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--jamie-text-heading, #2c5f5d);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jamie-step-done {
+    transition: none;
+  }
+}

@@ -1,0 +1,125 @@
+/*
+ * Stepper styles.
+ *
+ * Tokens (with fallbacks for anyone integrating without the full token set):
+ *   --jamie-text-heading    #2C5F5D — teal-dark, title + counter + step name
+ *   --jamie-primary-dark    #3D6E6C — completed + active segments
+ *   --font-display          Poppins
+ *
+ * Colors picked to match what we've used across the other components
+ * this session (organic glow, onboarding, process card).
+ */
+
+.stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  font-family: var(--font-display, 'Poppins', sans-serif);
+  color: var(--jamie-text-heading, #2c5f5d);
+}
+
+/* --- Segment bar --- */
+
+.stepper__segments {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+}
+
+.stepper__segment {
+  flex: 1;
+  height: 4px;
+  min-width: 0;
+  border-radius: 999px;
+  background: #dadbdd;
+  transition:
+    background-color 280ms cubic-bezier(0.32, 0.72, 0, 1),
+    opacity 280ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.stepper__segment[data-state='complete'] {
+  background: var(--jamie-primary-dark, #3d6e6c);
+}
+
+.stepper__segment[data-state='active'] {
+  background: var(--jamie-primary-dark, #3d6e6c);
+}
+
+/* Timer pulse — lives only on the active segment. A soft opacity loop
+ * that reads as "something is happening here". We pulse opacity instead
+ * of scale or width because scale would bleed into neighbors through
+ * the gap, and width would cause layout jitter. */
+.stepper__segment[data-state='active'][data-timer='active'] {
+  animation: stepper-pulse 1.6s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes stepper-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* --- Title --- */
+
+.stepper__title {
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  margin: 0;
+  color: var(--jamie-text-heading, #2c5f5d);
+  /* Balanced wrapping so long names break at natural word boundaries
+   * instead of orphaning a short tail on the second line. */
+  text-wrap: balance;
+}
+
+@media (max-width: 640px) {
+  .stepper__title { font-size: 24px; }
+}
+
+/* --- Counter + step name --- */
+
+.stepper__labels {
+  position: relative;
+  min-height: 48px;
+  margin-top: -4px; /* pull closer to title for a tighter rhythm */
+}
+
+.stepper__labels-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stepper__counter {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-body-soft, rgba(44, 95, 93, 0.72));
+}
+
+.stepper__step-name {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--jamie-text-heading, #2c5f5d);
+}
+
+/* --- Reduced motion --- */
+
+@media (prefers-reduced-motion: reduce) {
+  .stepper__segment {
+    transition: background-color 0ms;
+  }
+  .stepper__segment[data-state='active'][data-timer='active'] {
+    animation: none;
+  }
+}

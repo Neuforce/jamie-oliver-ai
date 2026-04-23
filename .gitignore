@@ -20,3 +20,10 @@ apps/frontend/package-lock.jsonapps/backend-search/data/media/
 
 # Linear API key para scripts (scripts/linear.sh)
 scripts/.env
+
+# Local design-reference mocks (Figma exports + HTML prototypes)
+# Kept out of source control so the repo stays lean; browse locally.
+jamie-ui-components/
+
+# Scratch / throwaway dev artifacts
+git-status.txt

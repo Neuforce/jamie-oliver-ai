@@ -6,5 +6,11 @@ export { RecipeCard, type RecipeCardProps } from './RecipeCard';
 export { RecipeGrid, type RecipeGridProps } from './RecipeGrid';
 export { GlowEffect } from './GlowEffect';
 export { AvatarWithGlow, type AvatarWithGlowProps } from './AvatarWithGlow';
+export {
+  AvatarWithOrganicGlow,
+  voiceStateToGlowState,
+  type AvatarWithOrganicGlowProps,
+  type GlowState,
+} from './AvatarWithOrganicGlow';
 export { Navigation, type NavigationProps } from './Navigation';
 export { ViewToggle, type ViewToggleProps, type ViewMode } from './ViewToggle';

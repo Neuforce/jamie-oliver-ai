@@ -6,7 +6,7 @@ import { CookWithJamie } from './components/CookWithJamie';
 import { ChatView, clearChatHistory } from './components/ChatView';
 import { TabNav, TabView, type MyTabCardData } from './components/TabNav';
 import { Button } from './components/ui/button';
-import { Search, ChefHat, Grid3x3, LayoutList, Clock, SlidersHorizontal } from 'lucide-react';
+import { Search, ChefHat, Grid3x3, LayoutList, Clock, SlidersHorizontal, X as XIcon } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Toaster, toast } from './components/ui/sonner';
 import { Play, Trash2 } from 'lucide-react';
@@ -20,8 +20,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from './components/ui/alert-dialog';
-import { GlowEffect } from './design-system/components/GlowEffect';
-import { AvatarWithGlow } from './design-system/components/AvatarWithGlow';
+import { AvatarWithOrganicGlow } from './design-system/components/AvatarWithOrganicGlow';
 import { SearchInput } from './design-system/components/SearchInput';
 import { RecipeSkeletonLoader } from './components/ui/skeleton-loader';
 import { getJamieUser, getMyRecipes, getRecipeAccess, type JamieUserSummary, type OwnedRecipeSummary, type RecipeAccessResponse } from './lib/api';
@@ -563,15 +562,7 @@ export default function App() {
   const isMyRecipesView = activeView === 'my-recipes';
 
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        backgroundColor: 'white',
-      }}
-    >
+    <div className="jamie-app-shell">
       {/* Full-screen cooking overlay takes priority */}
       <AnimatePresence>
         {cookingRecipe && (
@@ -594,7 +585,7 @@ export default function App() {
       {!cookingRecipe && (
         <>
           {/* Persistent Tab Navigation */}
-          <header style={{ flexShrink: 0, zIndex: 40, backgroundColor: 'white' }}>
+          <header className="jamie-app-header-shell">
             <TabNav
               activeTab={activeView}
               onTabChange={setActiveView}
@@ -608,15 +599,7 @@ export default function App() {
           </header>
 
           {/* Tab Content - Full remaining height */}
-          <main
-            style={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: 0,
-              overflow: 'hidden',
-            }}
-          >
+          <main className="jamie-view-shell">
             <AnimatePresence mode="wait">
               {activeView === 'chat' ? (
                 <motion.div
@@ -625,12 +608,7 @@ export default function App() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.2 }}
-                  style={{
-                    flex: 1,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    minHeight: 0,
-                  }}
+                  className="jamie-view-shell"
                 >
                   <ChatView
                     key={chatKey}
@@ -647,80 +625,139 @@ export default function App() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.2 }}
-                  className="h-full overflow-y-auto"
+                  className="jamie-scroll-area"
                 >
                   {/* Recipes View */}
-                  <div className="relative overflow-hidden bg-white">
+                  <div className="jamie-page-shell">
                     {/* Hero Section with Glow Effect */}
-                    <div className="relative overflow-hidden bg-white">
-                      <GlowEffect />
-                      <div className="container mx-auto px-5 py-3 relative z-10">
-                        {/* Jamie's Avatar */}
+                    <div className="jamie-shell-width jamie-surface-panel">
+                      <div className="jamie-section-hero">
                         <motion.div
-                          initial={{ scale: 0.8, opacity: 0 }}
+                          initial={{ scale: 0.9, opacity: 0 }}
                           animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.5 }}
-                          className="flex flex-col items-center mb-6"
+                          transition={{ duration: 0.45 }}
                         >
-                          <AvatarWithGlow
+                          <AvatarWithOrganicGlow
                             src={jamieAvatar}
                             alt="Jamie Oliver"
-                            size={140}
+                            size={132}
+                            state="idle"
+                            muted
                           />
-                          <motion.div
-                            initial={{ y: 20, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            transition={{ delay: 0.2, duration: 0.5 }}
-                            className="text-center mt-4"
-                          >
-                            <h1
-                              className="text-center"
-                              style={{
-                                fontFamily: 'var(--font-display)',
-                                fontWeight: 800,
-                                fontSize: '28px',
-                                lineHeight: 1,
-                                textTransform: 'uppercase',
-                                color: 'var(--jamie-text-heading)',
-                              }}
-                            >
-                              {isMyRecipesView ? 'MY RECIPES' : 'COOK WITH JAMIE'}
-                            </h1>
-                            <p
-                              className="text-center mt-2"
-                              style={{
-                                fontFamily: 'var(--font-display)',
-                                fontWeight: 400,
-                                fontSize: '15px',
-                                lineHeight: 1.5,
-                                color: 'var(--jamie-text-primary)',
-                              }}
-                            >
-                              {isMyRecipesView
-                                ? 'Recipes you have already unlocked through My Tab.'
-                                : 'Cook amazing recipes, step by step'}
-                            </p>
-                          </motion.div>
+                        </motion.div>
+                        <motion.div
+                          initial={{ y: 12, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.12, duration: 0.45 }}
+                        >
+                          <p className="jamie-page-kicker">
+                            {isMyRecipesView ? 'Ready when you are' : 'Jamie Oliver'}
+                          </p>
+                          <h1 className="jamie-page-title">
+                            {isMyRecipesView ? 'My Recipes' : 'Cook With Jamie'}
+                          </h1>
+                          <p className="jamie-page-subtitle">
+                            {isMyRecipesView
+                              ? 'Everything you have already unlocked, styled to match the new Jamie experience.'
+                              : 'Find the recipe, nail every step, and keep the whole experience in one calm, guided flow.'}
+                          </p>
                         </motion.div>
 
-                        {/* Search Bar */}
                         <motion.div
-                          initial={{ y: 20, opacity: 0 }}
+                          initial={{ y: 12, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
-                          transition={{ delay: 0.4, duration: 0.5 }}
-                          className="max-w-md mx-auto"
+                          transition={{ delay: 0.2, duration: 0.45 }}
+                          className="jamie-search-wrap"
                         >
                           <SearchInput
                             value={normalizedSearchQuery}
                             onSearch={(value) => setSearchQuery(typeof value === 'string' ? value : '')}
-                            placeholder={isMyRecipesView ? 'Search your recipes...' : 'Search recipes by name, ingredie...'}
+                            placeholder={isMyRecipesView ? 'Search your recipes...' : 'Search recipes by name or ingredient...'}
                           />
+                        </motion.div>
+
+                        {/*
+                         * View-mode + filter controls, lifted into the hero
+                         * card so they feel like part of the search surface.
+                         *
+                         * Layout: [ list | grid ]  (active-filter chip)  [ Filters ]
+                         *
+                         * The active-filter chip only appears when a non-
+                         * default category is selected. Clicking its × clears
+                         * back to "All" without forcing the user to re-open
+                         * the filter drawer.
+                         */}
+                        <motion.div
+                          initial={{ y: 12, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: 0.26, duration: 0.45 }}
+                          className="jamie-view-controls"
+                        >
+                          <div className="jamie-view-toggle" role="tablist" aria-label="Layout">
+                            <button
+                              type="button"
+                              role="tab"
+                              aria-selected={viewMode === 'feed'}
+                              onClick={() => setViewMode('feed')}
+                              className="jamie-view-toggle__btn"
+                              data-active={viewMode === 'feed' || undefined}
+                              aria-label="List view"
+                              title="List view"
+                            >
+                              <LayoutList className="size-4" />
+                            </button>
+                            <button
+                              type="button"
+                              role="tab"
+                              aria-selected={viewMode === 'grid'}
+                              onClick={() => setViewMode('grid')}
+                              className="jamie-view-toggle__btn"
+                              data-active={viewMode === 'grid' || undefined}
+                              aria-label="Grid view"
+                              title="Grid view"
+                            >
+                              <Grid3x3 className="size-4" />
+                            </button>
+                          </div>
+
+                          <div className="jamie-filter-cluster">
+                            <AnimatePresence initial={false}>
+                              {selectedCategory !== 'All' && (
+                                <motion.button
+                                  key="active-filter-chip"
+                                  type="button"
+                                  onClick={() => setSelectedCategory('All')}
+                                  className="jamie-active-filter-chip"
+                                  aria-label={`Clear ${selectedCategory} filter`}
+                                  initial={{ opacity: 0, x: 8, scale: 0.96 }}
+                                  animate={{ opacity: 1, x: 0, scale: 1 }}
+                                  exit={{ opacity: 0, x: 8, scale: 0.96 }}
+                                  transition={{ duration: 0.18 }}
+                                >
+                                  <span className="jamie-active-filter-chip__label">{selectedCategory}</span>
+                                  <XIcon className="size-3.5" aria-hidden="true" />
+                                </motion.button>
+                              )}
+                            </AnimatePresence>
+
+                            <button
+                              type="button"
+                              onClick={() => setFiltersExpanded(!filtersExpanded)}
+                              className="jamie-filter-btn"
+                              data-active={filtersExpanded || undefined}
+                              aria-expanded={filtersExpanded}
+                              aria-label={filtersExpanded ? 'Hide filters' : 'Show filters'}
+                            >
+                              <SlidersHorizontal className="size-4" />
+                              <span>Filters</span>
+                            </button>
+                          </div>
                         </motion.div>
                       </div>
                     </div>
 
                     {/* Main Content */}
-                    <div className="container mx-auto pt-3 pb-12">
+                    <div className="jamie-shell-width jamie-page-main">
                       {/* Recipes in Progress Section */}
                       {!isMyRecipesView && recipesInProgress.length > 0 && (
                         <motion.div
@@ -948,84 +985,55 @@ export default function App() {
                         </motion.div>
                       )}
 
-                      {/* Filters & View Mode Bar */}
-                      <motion.div
-                        initial={{ y: 20, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ delay: 0.6, duration: 0.5 }}
-                        className="mb-6 px-4"
-                      >
-                        <div className="flex items-center gap-2 mb-4 mx-auto" style={{ maxWidth: '600px' }}>
-                          {/* View Mode Toggle */}
-                          <div className="flex items-center gap-1 bg-muted/50 rounded-full p-1 flex-1">
-                            <button
-                              onClick={() => setViewMode('feed')}
-                              className="rounded-full h-9 flex-1 flex items-center justify-center transition-colors"
-                              style={{
-                                backgroundColor: viewMode === 'feed' ? '#3D6E6C' : 'transparent',
-                                color: viewMode === 'feed' ? '#ffffff' : 'inherit',
-                              }}
-                            >
-                              <LayoutList className="size-4" />
-                            </button>
-                            <button
-                              onClick={() => setViewMode('grid')}
-                              className="rounded-full h-9 flex-1 flex items-center justify-center transition-colors"
-                              style={{
-                                backgroundColor: viewMode === 'grid' ? '#3D6E6C' : 'transparent',
-                                color: viewMode === 'grid' ? '#ffffff' : 'inherit',
-                              }}
-                            >
-                              <Grid3x3 className="size-4" />
-                            </button>
-                          </div>
-
-                          {/* Filter Toggle Button */}
-                          <Button
-                            onClick={() => setFiltersExpanded(!filtersExpanded)}
-                            variant="ghost"
-                            size="sm"
-                            className="rounded-full h-9 gap-1 px-4"
+                      {/*
+                       * Expanded filter panel.
+                       *
+                       * Rendered as its own surface card that visually
+                       * connects to the hero card above (same background,
+                       * same border-radius, soft shadow). Includes a header
+                       * with a "Cuisine" label and a Clear action that only
+                       * shows when a non-default filter is active.
+                       */}
+                      <AnimatePresence initial={false}>
+                        {filtersExpanded && (
+                          <motion.div
+                            key="filter-panel"
+                            initial={{ opacity: 0, y: -8, height: 0 }}
+                            animate={{ opacity: 1, y: 0, height: 'auto' }}
+                            exit={{ opacity: 0, y: -8, height: 0 }}
+                            transition={{ duration: 0.24, ease: [0.2, 0, 0, 1] }}
+                            className="jamie-filter-panel-wrap"
                           >
-                            <SlidersHorizontal className="size-4" />
-                            {selectedCategory !== 'All' && (
-                              <span className="size-2 rounded-full bg-[#46BEA8]" />
-                            )}
-                          </Button>
-                        </div>
-
-                        {/* Category Filters */}
-                        <AnimatePresence mode="wait">
-                          {filtersExpanded && (
-                            <motion.div
-                              key="category-filters"
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: 'auto' }}
-                              exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.2 }}
-                              className="flex flex-wrap gap-2 mx-auto overflow-hidden"
-                              style={{ maxWidth: '600px' }}
-                            >
-                              {displayCategories.map((category) => (
-                                <button
-                                  key={category}
-                                  onClick={() => setSelectedCategory(category)}
-                                  className="rounded-full px-4 py-2 text-sm font-medium transition-all duration-200"
-                                  style={{
-                                    fontFamily: 'var(--font-body)',
-                                    backgroundColor: selectedCategory === category ? 'var(--jamie-primary-dark)' : 'white',
-                                    color: selectedCategory === category ? 'white' : 'var(--jamie-text-body)',
-                                    border: selectedCategory === category ? 'none' : '1px solid #e5e7eb',
-                                    boxShadow: selectedCategory === category ? '0 2px 4px rgba(0,0,0,0.1)' : 'none',
-                                  }}
-                                >
-                                  {category}
-                                </button>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </motion.div>
+                            <div className="jamie-shell-width jamie-surface-panel jamie-filter-panel">
+                              <div className="jamie-filter-panel__head">
+                                <span className="jamie-filter-panel__label">Cuisine</span>
+                                {selectedCategory !== 'All' && (
+                                  <button
+                                    type="button"
+                                    onClick={() => setSelectedCategory('All')}
+                                    className="jamie-filter-panel__clear"
+                                  >
+                                    Clear
+                                  </button>
+                                )}
+                              </div>
+                              <div className="jamie-filter-panel__chips">
+                                {displayCategories.map((category) => (
+                                  <button
+                                    key={category}
+                                    type="button"
+                                    onClick={() => setSelectedCategory(category)}
+                                    className="jamie-chip"
+                                    data-active={selectedCategory === category || undefined}
+                                  >
+                                    {category}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
 
                       {/* Recipe Grid View */}
                       {viewMode === 'grid' && (

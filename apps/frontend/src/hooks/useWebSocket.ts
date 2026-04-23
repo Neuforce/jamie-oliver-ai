@@ -61,6 +61,18 @@ export interface UseWebSocketOptions {
   onControl?: (action: string, data?: any) => void;
   onSessionInfo?: (info: SessionInfo) => void;
   onAssistantState?: (state: string, data?: any) => void;
+  /**
+   * Live transcription of the user's speech. Fires on both partial
+   * (interim) and final utterances. `isFinal=false` means the text
+   * can still change; `isFinal=true` is the confirmed transcript.
+   */
+  onTranscript?: (text: string, isFinal: boolean) => void;
+  /**
+   * Streaming agent text. Each call is a chunk to append; `isDone=true`
+   * signals the final chunk for the current response turn (so the
+   * UI can freeze the bubble and advance).
+   */
+  onAgentText?: (chunk: string, isDone: boolean, responseId?: string) => void;
   // New sync events for AI-native experience
   onFocusStep?: (stepId: string, stepIndex: number) => void;
   onHighlightIngredient?: (ingredientName: string) => void;
@@ -84,6 +96,8 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
     onControl,
     onSessionInfo,
     onAssistantState,
+    onTranscript,
+    onAgentText,
     onFocusStep,
     onHighlightIngredient,
     onTimerAdjust,
@@ -442,6 +456,46 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           }
           break;
 
+        /*
+         * Live user transcription. `data` is the utterance string
+         * in both interim and final events; the event name tells us
+         * which. Forwarded to `onTranscript` so the UI can render a
+         * live user bubble during cook/voice turns.
+         */
+        case 'transcript_interim':
+          if (onTranscript) {
+            onTranscript(typeof data === 'string' ? data : '', false);
+          }
+          break;
+        case 'transcript_final':
+          if (onTranscript) {
+            onTranscript(typeof data === 'string' ? data : '', true);
+          }
+          break;
+
+        /*
+         * Streaming agent text (LLM output chunks). We fan-out to
+         * `onAgentText` with `isDone=false` for each chunk and one
+         * final `isDone=true` on `done`. Keeps the cook-mode roller
+         * in sync with the same text the TTS is reading aloud.
+         */
+        case 'text_chunk':
+          if (onAgentText) {
+            const chunk =
+              typeof data === 'string'
+                ? data
+                : typeof data?.text === 'string'
+                  ? data.text
+                  : '';
+            onAgentText(chunk, false, message?.data?.response_id);
+          }
+          break;
+        case 'done':
+          if (onAgentText) {
+            onAgentText('', true, message?.data?.response_id);
+          }
+          break;
+
         case 'timer_list':
           // Handle active timers list update (for timer panel)
           if (onTimerListUpdate && data?.timers) {
@@ -493,7 +547,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
           console.log('Unhandled WebSocket message:', message);
       }
     },
-    [onRecipeState, onRecipeMessage, onRecipeError, onTimerDone, onReminderTick, onTimerListUpdate, onAudio, onStop, onControl, disconnect, onSessionInfo, onAssistantState, onFocusStep, onHighlightIngredient, onTimerAdjust, onTimerCancel]
+    [onRecipeState, onRecipeMessage, onRecipeError, onTimerDone, onReminderTick, onTimerListUpdate, onAudio, onStop, onControl, disconnect, onSessionInfo, onAssistantState, onTranscript, onAgentText, onFocusStep, onHighlightIngredient, onTimerAdjust, onTimerCancel]
   );
 
   // Auto-connect if enabled

@@ -48,7 +48,6 @@ class ChatEvent:
     - "meal_plan": Meal plan results (metadata.meal_plan = structured plan)
     - "recipe_detail": Single recipe details (metadata.recipe = full recipe)
     - "shopping_list": Shopping list (metadata.shopping_list = list data)
-    - "original_content": Full original text when tool-dominant copy was truncated
     - "done": Processing complete
     - "error": Error occurred (content = error message)
     """
@@ -231,28 +230,26 @@ class DiscoveryChatAgent:
         tool_calls_seen: set[str] = set()
         tool_results_emitted = False
 
-        # Tool-dominant response policy
-        max_tool_intro_chars = 240
-        tool_intro_chars_sent = 0
+        # Track whether the LLM actually produced any prose. Used below to
+        # decide whether we need to synthesise a short intro for tool-only
+        # turns where the model went straight to tool calling without saying
+        # anything to the user.
         tool_used = False
-        full_text_content = ""  # Accumulate full text for originalContent
+        any_text_sent = False
 
         try:
             # Process message through brain
             async for event in brain.process(user_msg):
                 if isinstance(event, ChunkResponse):
-                    # Always accumulate full text
-                    full_text_content += event.content
-
-                    # Text chunk from LLM
-                    if tool_used:
-                        remaining = max_tool_intro_chars - tool_intro_chars_sent
-                        if remaining <= 0:
-                            continue
-                        chunk = event.content[:remaining]
-                        tool_intro_chars_sent += len(chunk)
-                        yield ChatEvent(type="text_chunk", content=chunk)
-                    else:
+                    # Stream every chunk through untouched. We used to cap
+                    # post-tool prose at 240 chars (tool-dominant policy),
+                    # but the new UI renders the full response inside the
+                    # Jamie card alongside the tool results, so the cap was
+                    # silently clipping mid-sentence ("...Gourmet Beef
+                    # Burger - A"). One source of truth: whatever the LLM
+                    # says, the user sees.
+                    if event.content:
+                        any_text_sent = True
                         yield ChatEvent(type="text_chunk", content=event.content)
                 elif isinstance(event, FunctionCallResponse):
                     tool_used = True
@@ -347,8 +344,12 @@ class DiscoveryChatAgent:
                         if not pending_tool_calls:
                             break
 
-            # If tools were used but no intro text was sent, provide a short default intro
-            if tool_used and tool_intro_chars_sent == 0 and tool_results_emitted:
+            # Fallback intro only when the model ran a tool but never said
+            # anything to the user. This keeps a short narration on screen
+            # instead of a silent recipe carousel under an empty speaker
+            # badge. When the model does produce prose we leave it alone
+            # (no truncation, no rewriting).
+            if tool_used and not any_text_sent and tool_results_emitted:
                 if "plan_meal" in tool_calls_seen:
                     intro = "Here’s a meal plan I put together for you."
                 elif "get_recipe_details" in tool_calls_seen:
@@ -358,14 +359,6 @@ class DiscoveryChatAgent:
                 else:
                     intro = "Here are some great options for you."
                 yield ChatEvent(type="text_chunk", content=intro)
-
-            # Send full original content if it differs from what was sent (tool-dominant case)
-            if tool_used and full_text_content and len(full_text_content) > tool_intro_chars_sent:
-                yield ChatEvent(
-                    type="original_content",
-                    content=full_text_content,
-                    metadata={"was_truncated": True}
-                )
 
             # Signal completion
             yield ChatEvent(type="done", content="")

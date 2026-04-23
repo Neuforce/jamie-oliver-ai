@@ -1,0 +1,97 @@
+/*
+ * JamieNarrationCard styles.
+ *
+ * Reuses the same visual vocabulary as ProcessCard (heart + JAMIE
+ * speaker label) so Jamie's voice reads consistently across chat and
+ * cook modes. The card itself is a quieter surface than TimerCard —
+ * no shadow, hairline border — because this is reference text, not
+ * an action.
+ *
+ * --jamie-narration-max: override the max-height for the body text.
+ * Default keeps ~5 short lines visible; overflow past that is faded.
+ */
+
+.jamie-narration {
+  --jamie-narration-max: 176px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 20px;
+  background: #ffffff;
+  border: 1px solid rgba(61, 110, 108, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 1px 3px rgba(35, 66, 82, 0.04);
+}
+
+.jamie-narration__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.jamie-narration__heart {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
+.jamie-narration__speaker {
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--jamie-ink-teal, #3d6e6c);
+}
+
+.jamie-narration__body {
+  position: relative;
+  max-height: var(--jamie-narration-max);
+  overflow: hidden;
+  color: var(--jamie-text-heading, #2c5f5d);
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 16px;
+  line-height: 1.55;
+  transition: mask-image 160ms ease, -webkit-mask-image 160ms ease;
+}
+
+/*
+ * When the body overflows its max-height, fade the bottom so the cut-off
+ * reads as intentional (Jamie_12). Using mask-image (not a gradient
+ * overlay) so the fade works regardless of parent background color.
+ */
+.jamie-narration__body[data-overflowing] {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.jamie-narration__p {
+  margin: 0 0 8px 0;
+}
+.jamie-narration__p:last-child {
+  margin-bottom: 0;
+}
+
+.jamie-narration__strong {
+  font-weight: 600;
+  color: var(--jamie-text-heading, #2c5f5d);
+}
+
+.jamie-narration__list {
+  margin: 0 0 6px 0;
+  padding-left: 18px;
+}

@@ -23,6 +23,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import { useAudioCapture } from './useAudioCapture';
 import { useAudioPlayback } from './useAudioPlayback';
 import type { VoiceTurnState } from './voiceTurnUtils';
+import { VOICE_WS_URL } from '../lib/runtimeConfig';
 
 export type VoiceChatState = VoiceTurnState;
 
@@ -142,9 +143,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
 
   // ── WebSocket URL ──────────────────────────────────────────────────────
   const getWebSocketUrl = useCallback(() => {
-    const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
-    const wsProtocol = baseUrl.startsWith('https') ? 'wss' : 'ws';
-    return `${baseUrl.replace(/^https?/, wsProtocol)}/ws/chat-voice`;
+    return `${VOICE_WS_URL}/ws/chat-voice`;
   }, []);
 
   // ── message handler ────────────────────────────────────────────────────
@@ -304,7 +303,20 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         ws.send(JSON.stringify({ event: 'start', sessionId, sampleRate }));
 
         try {
-          await startCapture();
+          /*
+           * Pass the already-initialised playback AudioContext to the
+           * capture hook so both graphs share a single AudioContext.
+           *
+           * When capture and playback run on separate AudioContexts at the
+           * same sample rate, the browser's AEC loses its reference signal —
+           * it can no longer pair the mic input against the speaker output —
+           * which can let Jamie's TTS voice leak into the mic stream and be
+           * transcribed as user speech (the "background noise" symptom).
+           * Sharing one context gives the OS a single coherent input/output
+           * view so AEC works correctly on all hardware.
+           */
+          const sharedCtx = await initAudioContext();
+          await startCapture(sharedCtx);
           isVoiceModeActiveRef.current = true;
           setState('listening');
         } catch (err) {

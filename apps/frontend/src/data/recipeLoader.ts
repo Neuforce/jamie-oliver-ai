@@ -1,4 +1,5 @@
 import type { Recipe, BackendRecipeStep } from './recipes';
+import { API_BASE_URL } from '../lib/runtimeConfig';
 
 // Recipe data from jamie-oliver-ai format
 export interface BackendRecipePayload {
@@ -32,6 +33,14 @@ export interface BackendRecipePayload {
     reminder?: {
       every?: string;
     };
+    /**
+     * Optional list of named timers for this step (e.g. simmer + rest).
+     * Forwarded as-is into the frontend step model so the cook overlay
+     * can render a TimerCarousel when length > 1.
+     */
+    timers?: Array<{ label?: string; duration: string }>;
+    /** Optional video clip the cook overlay can show as a preview. */
+    clip?: { thumbnailUrl: string; videoUrl: string };
   }>;
   events?: {
     tts_voice?: string;
@@ -157,6 +166,13 @@ function transformBackendSteps(steps: BackendRecipePayload['steps']): BackendRec
     reminderEvery: step.reminder?.every,
     dependsOn: step.depends_on || [],
     next: step.next || [],
+    /*
+     * Forward the optional richer fields (multi-timer list + video clip)
+     * untouched. When absent, the cook overlay falls back to the legacy
+     * single-`duration` path so today's recipes don't regress.
+     */
+    timers: step.timers,
+    clip: step.clip,
   }));
 }
 
@@ -378,9 +394,6 @@ function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Reci
 // Local fallback: public/recipes-json/ (development mode)
 
 let cachedRecipes: Recipe[] | null = null;
-
-// @ts-expect-error - Vite provides import.meta.env
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
 
 /**
  * Clear the recipe cache to force a fresh load from API

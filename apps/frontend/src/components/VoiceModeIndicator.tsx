@@ -9,7 +9,8 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Mic, MicOff, Loader2, Volume2, X, Square } from 'lucide-react';
+import { Mic, AudioLines, Loader2, Volume2, X, Square } from 'lucide-react';
+// `Mic` is still used below in the listening indicator (state='listening').
 import type { VoiceChatState } from '../hooks/useVoiceChat';
 
 interface VoiceModeIndicatorProps {
@@ -51,11 +52,11 @@ export function VoiceModeIndicator({
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
-        className={`flex min-h-[52px] items-center justify-between gap-3 w-full ${className}`}
+        className={`flex min-h-[72px] items-center justify-between gap-4 w-full rounded-[24px] border border-[rgba(61,110,108,0.12)] bg-[rgba(255,255,255,0.92)] px-5 py-3 shadow-[0_16px_32px_rgba(35,66,82,0.08)] ${className}`}
       >
         <div className="flex items-center gap-3">
           {/* State Icon */}
-          <div className="relative">
+          <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[rgba(70,190,168,0.08)]">
             {isListeningState && (
               <motion.div
                 className="relative"
@@ -105,7 +106,7 @@ export function VoiceModeIndicator({
           {/* State Label */}
           <div className="flex min-w-0 flex-col justify-center">
             <span
-              className="text-xs font-medium uppercase tracking-wide"
+              className="text-xs font-medium tracking-[0.08em]"
               style={{
                 fontFamily: 'var(--font-display, Poppins, sans-serif)',
                 color: isListeningState
@@ -124,7 +125,7 @@ export function VoiceModeIndicator({
               key={`${state}:${supportingText}`}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="min-h-[20px] max-w-[220px] truncate text-sm italic"
+              className="min-h-[20px] max-w-[320px] text-sm italic whitespace-nowrap overflow-hidden text-ellipsis"
               style={{
                 fontFamily: 'var(--font-body, Inter, sans-serif)',
                 color: 'var(--jamie-text-muted, #5d5d5d)'
@@ -143,7 +144,7 @@ export function VoiceModeIndicator({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               onClick={onCancel}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/5 hover:bg-[var(--jamie-primary,#46BEA8)] hover:text-white transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-[rgba(61,110,108,0.08)] hover:bg-[var(--jamie-primary,#46BEA8)] hover:text-white transition-colors"
               style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)' }}
             >
               <Square size={12} fill="currentColor" />
@@ -157,7 +158,7 @@ export function VoiceModeIndicator({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               onClick={onExit}
-              className="flex items-center justify-center w-7 h-7 rounded-full hover:bg-black/5 transition-colors"
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-[rgba(61,110,108,0.08)] hover:bg-[rgba(61,110,108,0.08)] transition-colors"
               title="Exit voice mode"
             >
               <X size={16} style={{ color: 'var(--jamie-text-muted, #5d5d5d)' }} />
@@ -170,9 +171,25 @@ export function VoiceModeIndicator({
 }
 
 /**
- * VoiceModeButton - Toggle button for voice mode
+ * VoiceModeButton - Enter / resume voice mode from the composer.
+ *
+ * States:
+ *  • Idle            — solid teal circle, white audio-lines icon. Inviting
+ *                      the user to start a voice conversation.
+ *  • Connecting      — spinner on the same teal surface (no color swap) so
+ *                      the button doesn't "flicker" while mic permission /
+ *                      WS setup negotiates.
+ *  • Paused by tab   — outlined variant with a breathing ring to signal
+ *                      "tap to resume". Icon stays the same — a MicOff
+ *                      icon was misleading because the mic isn't disabled,
+ *                      the session is just suspended.
+ *
+ * The component is intentionally hidden while voice mode is fully active
+ * (composer collapses) — see ChatView. So we never render a "stop" state
+ * here; stopping is owned by the floating voice dock.
  */
 interface VoiceModeButtonProps {
+  /** True when voice is paused by tab visibility — tap to resume. */
   isActive: boolean;
   isConnecting?: boolean;
   onClick: () => void;
@@ -187,46 +204,80 @@ export function VoiceModeButton({
   disabled = false,
   className = '',
 }: VoiceModeButtonProps) {
+  // Deep teal from the design system (ui-1 `TEAL_DARK`).
+  const teal = '#3d6e6c';
+
   return (
     <motion.button
       type="button"
       onClick={onClick}
       disabled={disabled || isConnecting}
-      className={`
-        relative flex items-center justify-center
-        w-10 h-10 rounded-full
-        transition-colors duration-200
-        ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-        ${className}
-      `}
+      aria-label={
+        isConnecting
+          ? 'Connecting voice'
+          : isActive
+            ? 'Resume voice conversation'
+            : 'Talk to Jamie'
+      }
+      className={`relative shrink-0 flex items-center justify-center transition-[box-shadow,transform] duration-200 ${
+        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'
+      } ${className}`}
       style={{
-        backgroundColor: isActive ? 'var(--jamie-primary, #46BEA8)' : '#E5E5E5',
-        color: isActive ? '#FFFFFF' : '#A3A3A3',
+        /*
+         * Inline sizing so the button is guaranteed to be a perfect circle
+         * even when the composer flex container tries to stretch it. Tailwind
+         * `w-10 h-10 rounded-full` occasionally lost to sibling overrides in
+         * the composer pill.
+         */
+        width: 40,
+        height: 40,
+        minWidth: 40,
+        minHeight: 40,
+        borderRadius: '9999px',
+        aspectRatio: '1 / 1',
+        backgroundColor: teal,
+        color: '#FFFFFF',
+        padding: 0,
+        border: 0,
+        boxShadow: isActive
+          ? `0 0 0 3px ${teal}2E, 0 6px 14px rgba(35,66,82,0.18)`
+          : '0 4px 10px rgba(35,66,82,0.14)',
       }}
-      whileTap={{ scale: 0.95 }}
-      whileHover={{ scale: disabled ? 1 : 1.05 }}
+      whileTap={{ scale: 0.94 }}
+      whileHover={{ scale: disabled ? 1 : 1.04 }}
     >
       {isConnecting ? (
-        <motion.div
+        <motion.span
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          className="flex"
         >
-          <Loader2 size={20} />
-        </motion.div>
+          <Loader2 size={18} strokeWidth={2.25} />
+        </motion.span>
       ) : isActive ? (
-        <MicOff size={20} />
+        <motion.span
+          className="flex"
+          animate={{ opacity: [0.75, 1, 0.75] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <AudioLines size={18} strokeWidth={2.25} />
+        </motion.span>
       ) : (
-        <Mic size={20} />
+        <AudioLines size={18} strokeWidth={2.25} />
       )}
 
-      {/* Active indicator ring */}
+      {/* Breathing ring while paused — says "I'm waiting for you". */}
       {isActive && !isConnecting && (
-        <motion.div
-          className="absolute inset-0 rounded-full border-2"
-          style={{ borderColor: 'var(--jamie-primary, #46BEA8)' }}
-          initial={{ scale: 1, opacity: 0.6 }}
-          animate={{ scale: 1.4, opacity: 0 }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeOut' }}
+        <motion.span
+          aria-hidden
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            borderRadius: '9999px',
+            border: `2px solid ${teal}`,
+          }}
+          initial={{ scale: 1, opacity: 0.55 }}
+          animate={{ scale: 1.45, opacity: 0 }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeOut' }}
         />
       )}
     </motion.button>
@@ -290,8 +341,8 @@ export function StopGenerationButton({
       onClick={onClick}
       className={`
         flex items-center gap-2 px-4 py-2
-        rounded-full border border-black/10
-        bg-white hover:bg-black/5
+        rounded-full border border-[rgba(61,110,108,0.12)]
+        bg-[rgba(255,255,255,0.92)] hover:bg-[rgba(255,255,255,1)]
         transition-colors shadow-sm
         ${className}
       `}
