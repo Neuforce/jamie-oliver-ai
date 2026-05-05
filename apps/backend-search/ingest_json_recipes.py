@@ -87,6 +87,18 @@ def _detect_category_mood(recipe_doc: dict) -> tuple[str | None, str | None]:
     return category, mood
 
 
+def _category_mood_from_recipe_doc(recipe_doc: dict) -> tuple[str | None, str | None]:
+    """Use recipe.categories[0] when present; else title heuristics."""
+    recipe = recipe_doc.get("recipe") or {}
+    cats = recipe.get("categories")
+    heur_cat, mood = _detect_category_mood(recipe_doc)
+    if isinstance(cats, list) and len(cats) > 0 and cats[0] is not None:
+        raw = str(cats[0]).strip()
+        if raw:
+            return raw.lower(), mood
+    return heur_cat, mood
+
+
 def process_one_json(
     json_path: Path, 
     cfg: LlamaAgentConfig, 
@@ -151,7 +163,7 @@ def process_one_json(
         file_hash = _sha256_file(json_path)
         
         # Detectar category y mood
-        category, mood = _detect_category_mood(recipe_doc)
+        category, mood = _category_mood_from_recipe_doc(recipe_doc)
         
         # Generar chunks semánticos
         logger.info(f"  Generating chunks for {recipe_id}...")
@@ -181,12 +193,20 @@ def process_one_json(
         
         # Compute metadata for recipes table
         has_timers = any(s.get("type") == "timer" for s in steps)
+        recipe_cats = recipe_meta.get("categories")
+        if isinstance(recipe_cats, list) and recipe_cats:
+            metadata_categories = [str(c).strip().lower() for c in recipe_cats if str(c).strip()]
+        elif category:
+            metadata_categories = [category]
+        else:
+            metadata_categories = []
+
         metadata = {
             "title": title,
             "description": recipe_meta.get("description"),
             "difficulty": recipe_meta.get("difficulty"),
             "servings": recipe_meta.get("servings"),
-            "categories": [category] if category else [],
+            "categories": metadata_categories,
             "moods": [mood] if mood else [],
             "step_count": len(steps),
             "has_timers": has_timers,
@@ -245,6 +265,15 @@ def process_one_json(
                 "file_path": str(json_path),
                 "file_hash": file_hash,
             })
+        
+        _raw_chunk_count = len(chunk_rows)
+        chunk_rows = list({row["chunk_hash"]: row for row in chunk_rows}.values())
+        if len(chunk_rows) < _raw_chunk_count:
+            logger.warning(
+                "  Deduped %d chunks with duplicate chunk_hash → %d rows for upsert",
+                _raw_chunk_count,
+                len(chunk_rows),
+            )
         
         # Upsert chunks
         logger.info(f"  Upserting {len(chunk_rows)} chunks for {recipe_id}...")

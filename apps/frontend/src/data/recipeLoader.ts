@@ -12,6 +12,8 @@ export interface BackendRecipePayload {
     source: string;
     servings: number;
     difficulty: string;
+    /** From crawl / ingest; first element drives API category when present */
+    categories?: string[];
   };
   ingredients: Array<{
     id: string;
@@ -176,9 +178,23 @@ function transformBackendSteps(steps: BackendRecipePayload['steps']): BackendRec
   }));
 }
 
-// Categorize recipes intelligently based on title, ingredients hints, and recipe type
-function extractCategory(title: string, ingredients?: BackendRecipePayload['ingredients']): string {
-  const lower = title.toLowerCase();
+/** Title Case by word for slug or API labels (e.g. pasta -> Pasta, chicken-breast -> Chicken Breast). */
+export function formatCategoryLabel(raw: string): string {
+  return raw
+    .trim()
+    .split(/[-_\s]+/)
+    .filter(Boolean)
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
+}
+
+function extractCategory(
+  title: string,
+  ingredients: BackendRecipePayload['ingredients']
+): string {
+  const lower = [title, ...ingredients.map((i) => i.name)]
+    .join(' ')
+    .toLowerCase();
   
   // Desserts & Sweets
   if (
@@ -352,7 +368,11 @@ function extractCategory(title: string, ingredients?: BackendRecipePayload['ingr
 }
 
 // Transform jamie-oliver-ai recipe to joui format
-function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Recipe {
+export function transformRecipe(
+  jamieRecipe: BackendRecipePayload,
+  index: number,
+  options?: { apiCategory?: string | null }
+): Recipe {
   const recipe = jamieRecipe.recipe;
   const backendSteps = transformBackendSteps(jamieRecipe.steps);
   const transformUtensils = (utensils?: Array<any>): string[] => {
@@ -367,13 +387,23 @@ function transformRecipe(jamieRecipe: BackendRecipePayload, index: number): Reci
       })
       .filter((v): v is string => Boolean(v));
   };
-  
+
+  const rawExplicit =
+    (options?.apiCategory != null && String(options.apiCategory).trim() !== ''
+      ? String(options.apiCategory).trim()
+      : null) ??
+    recipe.categories?.[0]?.trim() ??
+    null;
+  const category = rawExplicit
+    ? formatCategoryLabel(rawExplicit)
+    : extractCategory(recipe.title, jamieRecipe.ingredients);
+
   return {
-    id: index + 1, // Use index as numeric ID
+    id: index + 1,
     backendId: recipe.id,
     title: recipe.title,
     description: recipe.description || jamieRecipe.steps[0]?.descr || recipe.title,
-    category: extractCategory(recipe.title, jamieRecipe.ingredients),
+    category,
     difficulty: mapDifficulty(recipe.difficulty),
     time: parseDuration(recipe.estimated_total),
     servings: recipe.servings,
@@ -411,7 +441,7 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
   
   try {
     // Fetch all recipes with full JSON from API
-    const url = `${API_BASE_URL}/api/v1/recipes?include_full=true&limit=100`;
+    const url = `${API_BASE_URL}/api/v1/recipes?include_full=true&limit=500`;
     console.log(`[RecipeLoader] Fetching from API: ${url}`);
     
     const response = await fetch(url);
@@ -437,7 +467,15 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
     let skipped = 0;
     for (const apiRecipe of data.recipes) {
       if (apiRecipe.full_recipe && 'recipe' in apiRecipe.full_recipe) {
-        recipes.push(transformRecipe(apiRecipe.full_recipe as BackendRecipePayload, index));
+        const apiCat =
+          typeof apiRecipe.category === 'string' && apiRecipe.category.trim() !== ''
+            ? apiRecipe.category
+            : null;
+        recipes.push(
+          transformRecipe(apiRecipe.full_recipe as BackendRecipePayload, index, {
+            apiCategory: apiCat,
+          })
+        );
         index++;
       } else {
         console.warn(`[RecipeLoader] Skipping recipe without full_recipe:`, apiRecipe.recipe_id || apiRecipe.title);
@@ -495,7 +533,7 @@ async function loadRecipesFromLocal(): Promise<Recipe[]> {
     // Transform and add recipes
     for (const recipe of loadedRecipes) {
       if (recipe && 'recipe' in recipe) {
-        recipes.push(transformRecipe(recipe, index));
+        recipes.push(transformRecipe(recipe as BackendRecipePayload, index));
         index++;
       }
     }
