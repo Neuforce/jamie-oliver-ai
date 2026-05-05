@@ -187,7 +187,14 @@ export function formatCategoryLabel(raw: string): string {
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     .join(' ');
 }
-  const lower = title.toLowerCase();
+
+function extractCategory(
+  title: string,
+  ingredients: BackendRecipePayload['ingredients']
+): string {
+  const lower = [title, ...ingredients.map((i) => i.name)]
+    .join(' ')
+    .toLowerCase();
   
   // Desserts & Sweets
   if (
