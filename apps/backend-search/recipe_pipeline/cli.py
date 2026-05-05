@@ -37,9 +37,9 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from recipe_pipeline.crawler import JamieOliverCrawler, CrawlerError, RecipeNotFoundError
 from recipe_pipeline.transformer import SchemaOrgToJOAv0Transformer
 from recipe_pipeline.media_manager import MediaManager
-from recipe_pipeline.enhancer import RecipeEnhancer
 from recipe_pipeline.validator import RecipeValidator
 from recipe_pipeline.uploader import upload_recipe
+from recipe_pipeline.url_category import infer_category_slug_from_jamie_url
 
 # Configure logging
 logging.basicConfig(
@@ -88,7 +88,11 @@ class RecipePipeline:
         self.crawler = JamieOliverCrawler()
         self.transformer = SchemaOrgToJOAv0Transformer()
         self.media_manager = MediaManager()
-        self.enhancer = RecipeEnhancer() if enhance else None
+        self.enhancer = None
+        if enhance:
+            from recipe_pipeline.enhancer import RecipeEnhancer
+
+            self.enhancer = RecipeEnhancer()
         self.validator = RecipeValidator()
         
         # Ensure output directory exists
@@ -132,6 +136,9 @@ class RecipePipeline:
         
         # Convert to dict for enhancement
         recipe_dict = joa_recipe.to_dict()
+        url_category = infer_category_slug_from_jamie_url(url)
+        if url_category:
+            recipe_dict.setdefault("recipe", {})["categories"] = [url_category]
         
         # Stage 4: Enhance with LLM
         if self.enhance and self.enhancer:
@@ -218,7 +225,8 @@ def cmd_import(args):
     pipeline = RecipePipeline(
         enhance=args.enhance,
         download_images=not args.no_images,
-        publish=args.publish
+        publish=args.publish,
+        output_dir=args.output_dir,
     )
     
     try:
@@ -491,6 +499,12 @@ def main():
         "--no-images",
         action="store_true",
         help="Skip downloading images"
+    )
+    import_parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=None,
+        help="Directory for JSON output (default: data/recipes relative to cwd)",
     )
     import_parser.set_defaults(func=cmd_import)
     

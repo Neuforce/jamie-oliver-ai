@@ -540,7 +540,7 @@ async def list_recipes(
     complexity: Optional[str] = None,
     status: Optional[str] = Query(None, description="Filter by status: draft, published, archived"),
     include_full: bool = Query(False, description="Include full recipe JSON in response"),
-    limit: int = Query(50, ge=1, le=100),
+    limit: int = Query(50, ge=1, le=500),
     offset: int = Query(0, ge=0)
 ):
     """
@@ -554,7 +554,7 @@ async def list_recipes(
         complexity: Filtro por complejidad
         status: Filter by recipe status (draft, published, archived)
         include_full: Include full recipe_json in response (default: False for performance)
-        limit: Número de resultados (max 100)
+        limit: Número de resultados (max 500)
         offset: Offset para paginación
     """
     try:

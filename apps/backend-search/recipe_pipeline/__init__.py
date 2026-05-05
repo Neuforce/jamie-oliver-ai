@@ -44,7 +44,6 @@ from .media_manager import (
     MediaError,
     download_recipe_images,
 )
-from .enhancer import RecipeEnhancer
 from .validator import RecipeValidator, ValidationResult
 from .uploader import RecipeUploader, upload_recipe
 
@@ -80,3 +79,11 @@ __all__ = [
     "RecipeUploader",
     "upload_recipe",
 ]
+
+
+def __getattr__(name: str):
+    if name == "RecipeEnhancer":
+        from .enhancer import RecipeEnhancer
+
+        return RecipeEnhancer
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

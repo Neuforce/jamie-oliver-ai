@@ -333,7 +333,9 @@ export default function App() {
       const matchesSearch = recipe.title.toLowerCase().includes(normalizedQuery) ||
                            recipe.description.toLowerCase().includes(normalizedQuery) ||
                            recipe.category.toLowerCase().includes(normalizedQuery);
-      const matchesCategory = selectedCategory === 'All' || recipe.category === selectedCategory;
+      const matchesCategory =
+        selectedCategory === 'All' ||
+        recipe.category.toLowerCase() === selectedCategory.toLowerCase();
       return matchesSearch && matchesCategory;
     });
   }, [activeView, normalizedSearchQuery, ownedRecipeCollection, selectedCategory, loadedRecipes]);
