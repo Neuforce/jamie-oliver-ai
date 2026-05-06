@@ -7,11 +7,11 @@ export interface BackendRecipePayload {
     id: string;
     title: string;
     description: string;
-    estimated_total: string;
+    estimated_total?: string | null;
     locale: string;
     source: string;
     servings: number;
-    difficulty: string;
+    difficulty?: string | null;
     /** From crawl / ingest; first element drives API category when present */
     categories?: string[];
   };
@@ -109,7 +109,7 @@ function getImagePath(recipeId: string): string {
 
 // Parse ISO 8601 duration (PT20M, PT1H5M) to "20 mins" format
 function parseDuration(duration: string | undefined | null): string {
-  if (duration == null || typeof duration !== 'string') {
+  if (duration == null || typeof duration !== 'string' || !duration.trim()) {
     return '30 mins';
   }
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);

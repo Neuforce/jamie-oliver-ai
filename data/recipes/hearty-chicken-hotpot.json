@@ -1,0 +1,339 @@
+{
+  "recipe": {
+    "id": "hearty-chicken-hotpot",
+    "title": "Hearty chicken hotpot",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Warm up with this hearty chicken hotpot featuring braised cabbage and peas. A nostalgic, budget-friendly comfort meal!",
+    "tags": [
+      "budget-friendly",
+      "chicken",
+      "cabbage",
+      "chicken-thigh",
+      "potato",
+      "dinner",
+      "mushroom",
+      "comfort-food"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/hearty-chicken-hotpot",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fad77b84534abbeeb203415b14e688e054866f72-2129x3193.jpg/JO_JV_F45_Chicken_Hotpot_1673%20(1).jpg?rect=0,533,2129,2129&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fad77b84534abbeeb203415b14e688e054866f72-2129x3193.jpg/JO_JV_F45_Chicken_Hotpot_1673%20(1).jpg?rect=0,533,2129,2129&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fad77b84534abbeeb203415b14e688e054866f72-2129x3193.jpg/JO_JV_F45_Chicken_Hotpot_1673%20(1).jpg?rect=0,799,2129,1597&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fad77b84534abbeeb203415b14e688e054866f72-2129x3193.jpg/JO_JV_F45_Chicken_Hotpot_1673%20(1).jpg?rect=0,998,2129,1198&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "chicken-thighs",
+      "name": "chicken thighs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "skin on, bone in"
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-mushrooms",
+      "name": "frozen mushrooms",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "dried-tarragon",
+      "name": "dried tarragon",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-english-musta",
+      "name": "heaped teaspoons English mustard",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "chicken-stock-cube",
+      "name": "chicken stock cube",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "frozen-spinach",
+      "name": "frozen spinach",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-all-rounder-potatoes",
+      "name": "large all-rounder potatoes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "400g"
+    },
+    {
+      "id": "sweetheart-cabbage",
+      "name": "sweetheart cabbage",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "knife",
+    "oven",
+    "pan",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_render"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "heat_render",
+      "descr": "Pull the skin off the chicken and place it in a medium...",
+      "instructions": "Pull the skin off the chicken and place it in a medium shallow casserole pan on a medium heat to render, then remove to a small bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Pull the skin off the chicken and place it in a medium shallow casserole pan on a medium heat to render, then remove to a small bowl."
+        }
+      ]
+    },
+    {
+      "id": "chop_chicken",
+      "descr": "Carefully run the tip of a sharp knife along the thigh...",
+      "instructions": "Carefully run the tip of a sharp knife along the thigh bone, then cut around the end of each bone to remove it (don\u2019t throw the bones away \u2013 see tip). Chop the chicken into 2cm chunks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_render"
+      ],
+      "next": [
+        "heat_high"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully run the tip of a sharp knife along the thigh bone, then cut around the end of each bone to remove it (don\u2019t throw the bones away \u2013 see tip). Chop the chicken into 2cm chunks."
+        }
+      ]
+    },
+    {
+      "id": "heat_high",
+      "descr": "Turn the heat up to high, place the chicken in the pan,...",
+      "instructions": "Turn the heat up to high, place the chicken in the pan, season with sea salt and black pepper, and fry for a few minutes, or until golden all over. Remove to a plate along with any juices.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_chicken"
+      ],
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Turn the heat up to high, place the chicken in the pan, season with sea salt and black pepper, and fry for a few minutes, or until golden all over. Remove to a plate along with any juices."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "Peel and roughly chop 1 onion and place in the pan with...",
+      "instructions": "Peel and roughly chop 1 onion and place in the pan with 1 tablespoon of red wine vinegar, scraping up any nice crispy bits from the bottom of the pan. Fry for a few minutes, then add the mushrooms and cook away for 5 minutes, or until the veg has softened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_high"
+      ],
+      "next": [
+        "cube_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and roughly chop 1 onion and place in the pan with 1 tablespoon of red wine vinegar, scraping up any nice crispy bits from the bottom of the pan. Fry for a few minutes, then add the mushrooms and cook away for 5 minutes, or until the veg has softened."
+        }
+      ]
+    },
+    {
+      "id": "cube_flour",
+      "descr": "Add \u00bd a teaspoon of tarragon and 1 heaped teaspoon of...",
+      "instructions": "Add \u00bd a teaspoon of tarragon and 1 heaped teaspoon of mustard, crumble in the stock cube, then stir in the flour. Gradually add the milk, stirring until you have a smooth sauce. Add the chicken and juices back to the pan, then dot in the spinach and leave to blip away until defrosted, stirring regularly. Have a little taste and season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "slice_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Add \u00bd a teaspoon of tarragon and 1 heaped teaspoon of mustard, crumble in the stock cube, then stir in the flour. Gradually add the milk, stirring until you have a smooth sauce. Add the chicken and juices back to the pan, then dot in the spinach and leave to blip away until defrosted, stirring regularly. Have a little taste and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "slice_potatoes",
+      "descr": "Scrub and finely slice the potatoes (there\u2019s no need to...",
+      "instructions": "Scrub and finely slice the potatoes (there\u2019s no need to peel them), arrange on top of the filling and press down with a fish slice to bring some of the lovely sauce to the surface. Bake for 40 minutes, or until beautifully golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "cube_flour"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub and finely slice the potatoes (there\u2019s no need to peel them), arrange on top of the filling and press down with a fish slice to bring some of the lovely sauce to the surface. Bake for 40 minutes, or until beautifully golden."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Roughly chop the crispy chicken skin",
+      "instructions": "Roughly chop the crispy chicken skin. Place in a large frying pan on a medium heat with 1 tablespoon of oil and fry for 1 minute, then remove to a plate, leaving the oil behind.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "slice_potatoes"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly chop the crispy chicken skin. Place in a large frying pan on a medium heat with 1 tablespoon of oil and fry for 1 minute, then remove to a plate, leaving the oil behind."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Quarter the cabbage lengthways and place in the pan,...",
+      "instructions": "Quarter the cabbage lengthways and place in the pan, holding it down with tongs and turning occasionally until starting to char, then peel, finely slice and add the remaining onion. Add the remaining mustard, tip in 200ml of boiling water, then cover and cook on a low heat for 15 minutes, or until the cabbage is tender all the way through. Remove the lid, add the peas and cook for a final 2 minutes to heat through. Season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "sprinkle_crispy"
+      ],
+      "on_enter": [
+        {
+          "say": "Quarter the cabbage lengthways and place in the pan, holding it down with tongs and turning occasionally until starting to char, then peel, finely slice and add the remaining onion. Add the remaining mustard, tip in 200ml of boiling water, then cover and cook on a low heat for 15 minutes, or until the cabbage is tender all the way through. Remove the lid, add the peas and cook for a final 2 minutes to heat through. Season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_crispy",
+      "descr": "Scatter the remaining tarragon over the hotpot and...",
+      "instructions": "Scatter the remaining tarragon over the hotpot and sprinkle the crispy chicken skin over the greens. Bring it all to the table and tuck in!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter the remaining tarragon over the hotpot and sprinkle the crispy chicken skin over the greens. Bring it all to the table and tuck in!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "501 calories",
+    "carbohydrates": "49.5 g",
+    "fat": "20.8 g",
+    "fiber": "8.5 g",
+    "protein": "33 g"
+  }
+}

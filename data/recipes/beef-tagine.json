@@ -1,0 +1,342 @@
+{
+  "recipe": {
+    "id": "beef-tagine",
+    "title": "Beef tagine",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT220M",
+    "description": "A beef tagine is a strew with attitude, Jamie's beef tagine recipe is all about the spices and slow cooking, giving all the flavours time to develop",
+    "tags": [
+      "dinner-party",
+      "dish-type",
+      "family-food",
+      "lunch-amp-dinner-recipes",
+      "low-lactose",
+      "gluten-free",
+      "dairy-free",
+      "stewing",
+      "course",
+      "mains",
+      "tagine",
+      "family-one-pan-recipes",
+      "occasion",
+      "beef-stew",
+      "method",
+      "beef",
+      "healthy-meals",
+      "stew",
+      "main-ingredient",
+      "healthy-dinner-ideas"
+    ],
+    "course": "main",
+    "cuisine": "moroccan",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/beef-tagine",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8c435bcb8777fae63777cca6e01515d08f3644f8-973x1300.jpg/8c435bcb8777fae63777cca6e01515d08f3644f8-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8c435bcb8777fae63777cca6e01515d08f3644f8-973x1300.jpg/8c435bcb8777fae63777cca6e01515d08f3644f8-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8c435bcb8777fae63777cca6e01515d08f3644f8-973x1300.jpg/8c435bcb8777fae63777cca6e01515d08f3644f8-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8c435bcb8777fae63777cca6e01515d08f3644f8-973x1300.jpg/8c435bcb8777fae63777cca6e01515d08f3644f8-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "stewing-beef",
+      "name": "stewing beef",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-plum-tomatoes",
+      "name": "400g tin of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-vegetable-stock",
+      "name": "organic vegetable stock",
+      "quantity": 800.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "butternut-squash",
+      "name": "butternut squash",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "prunes",
+      "name": "prunes",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "flaked-almonds",
+      "name": "flaked almonds",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "spice-rub",
+      "name": "SPICE RUB",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "level-tablespoon-ras-el-hanout",
+      "name": "level tablespoon ras el hanout spice mix",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "see tip"
+    },
+    {
+      "id": "level-tablespoon-ground-cumin",
+      "name": "level tablespoon ground cumin",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "level-tablespoon-ground-cinnam",
+      "name": "level tablespoon ground cinnamon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "level-tablespoon-ground-ginger",
+      "name": "level tablespoon ground ginger",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "level-tablespoon-sweet-paprika",
+      "name": "level tablespoon sweet paprika",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "large bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mix_spice",
+      "descr": "Mix all the spice rub ingredients together in a small...",
+      "instructions": "Mix all the spice rub ingredients together in a small bowl with a good pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix all the spice rub ingredients together in a small bowl with a good pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Put the beef into a large bowl, massage it with the...",
+      "instructions": "Put the beef into a large bowl, massage it with the spice rub, then cover with clingfilm and place in the fridge for a couple of hours, preferably overnight.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_spice"
+      ],
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the beef into a large bowl, massage it with the spice rub, then cover with clingfilm and place in the fridge for a couple of hours, preferably overnight."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "When you\u2019re ready to cook, peel and finely chop the...",
+      "instructions": "When you\u2019re ready to cook, peel and finely chop the onion, and pick the coriander leaves, finely chopping the stalks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "heat_generous"
+      ],
+      "on_enter": [
+        {
+          "say": "When you\u2019re ready to cook, peel and finely chop the onion, and pick the coriander leaves, finely chopping the stalks."
+        }
+      ]
+    },
+    {
+      "id": "heat_generous",
+      "descr": "Heat a generous lug of oil in a tagine or casserole pan...",
+      "instructions": "Heat a generous lug of oil in a tagine or casserole pan over a medium heat, add the meat and fry for 5 minutes to seal. Add the onion and coriander stalks and fry for a further 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "heat_hours"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a generous lug of oil in a tagine or casserole pan over a medium heat, add the meat and fry for 5 minutes to seal. Add the onion and coriander stalks and fry for a further 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_hours",
+      "descr": "Drain and tip in the chickpeas, followed by the...",
+      "instructions": "Drain and tip in the chickpeas, followed by the tomatoes, breaking them up with a spoon, then pour in 400ml of stock and stir well. Bring to the boil, then cover and reduce to a low heat for 1\u00bd hours.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_generous"
+      ],
+      "next": [
+        "chop_squash"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain and tip in the chickpeas, followed by the tomatoes, breaking them up with a spoon, then pour in 400ml of stock and stir well. Bring to the boil, then cover and reduce to a low heat for 1\u00bd hours."
+        }
+      ]
+    },
+    {
+      "id": "chop_squash",
+      "descr": "Meanwhile, deseed and chop the squash into 5cm chunks,...",
+      "instructions": "Meanwhile, deseed and chop the squash into 5cm chunks, then destone and roughly tear the prunes. Toast the almonds in a dry frying pan until lightly golden, then tip into a bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_hours"
+      ],
+      "next": [
+        "stir_back"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, deseed and chop the squash into 5cm chunks, then destone and roughly tear the prunes. Toast the almonds in a dry frying pan until lightly golden, then tip into a bowl."
+        }
+      ]
+    },
+    {
+      "id": "stir_back",
+      "descr": "When the time's up, add the squash, prunes and remaining...",
+      "instructions": "When the time's up, add the squash, prunes and remaining stock. Give everything a gentle stir, then pop the lid back on and continue cooking for another 1\u00bd hours. Keep an eye on it, adding splashes of water, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_squash"
+      ],
+      "next": [
+        "simmer_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "When the time's up, add the squash, prunes and remaining stock. Give everything a gentle stir, then pop the lid back on and continue cooking for another 1\u00bd hours. Keep an eye on it, adding splashes of water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "simmer_minutes",
+      "descr": "At this stage, remove the lid and check the consistency",
+      "instructions": "At this stage, remove the lid and check the consistency. If it seems a bit too runny, simmer for 5 to 10 minutes, more with the lid off \u2013 the beef should be really tender and flaking apart now, so have a taste and season to taste.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "stir_back"
+      ],
+      "next": [
+        "season_couscous"
+      ],
+      "on_enter": [
+        {
+          "say": "At this stage, remove the lid and check the consistency. If it seems a bit too runny, simmer for 5 to 10 minutes, more with the lid off \u2013 the beef should be really tender and flaking apart now, so have a taste and season to taste."
+        }
+      ]
+    },
+    {
+      "id": "season_couscous",
+      "descr": "Scatter the coriander leaves over the tagine along with...",
+      "instructions": "Scatter the coriander leaves over the tagine along with the toasted almonds. Serve with a big bowl of lightly seasoned couscous and dive in.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "simmer_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter the coriander leaves over the tagine along with the toasted almonds. Serve with a big bowl of lightly seasoned couscous and dive in."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "548 calories",
+    "carbohydrates": "48.7 g",
+    "fat": "19.6 g",
+    "fiber": "11 g",
+    "protein": "46.4 g"
+  }
+}

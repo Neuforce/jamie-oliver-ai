@@ -1,0 +1,213 @@
+{
+  "recipe": {
+    "id": "sausage-and-fennel-pasta-with-chilli-and-parmesan",
+    "title": "Sausage and fennel pasta with chilli and parmesan",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "This delicious, speedy pasta dish is the perfect midweek meal. With sausage, fennel seeds and balsamic vinegar, you can't go wrong.  ",
+    "tags": [
+      "pasta"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/pregnant-jools-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1a16cfd05f574144a3ce4b254cc9389d9f464d19-958x1280.jpg/122022831?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1a16cfd05f574144a3ce4b254cc9389d9f464d19-958x1280.jpg/122022831?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1a16cfd05f574144a3ce4b254cc9389d9f464d19-958x1280.jpg/122022831?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1a16cfd05f574144a3ce4b254cc9389d9f464d19-958x1280.jpg/122022831?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 1.0,
+      "unit": "stick",
+      "note": null
+    },
+    {
+      "id": "2-fresh-red-chillies",
+      "name": "\u20132 fresh red chillies",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-sausages",
+      "name": "higher-welfare sausages",
+      "quantity": 6.0,
+      "unit": null,
+      "note": "approx. 400g"
+    },
+    {
+      "id": "heaped-teaspoon-fennel-seeds",
+      "name": "heaped teaspoon fennel seeds",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-penne",
+      "name": "dried penne",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chopped-tomatoes",
+      "name": "400g tin of chopped tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": null,
+      "unit": null,
+      "note": "for shaving over"
+    },
+    {
+      "id": "a-few-sprigs-of-greek-basil",
+      "name": "a few sprigs of Greek basil",
+      "quantity": null,
+      "unit": null,
+      "note": "or regular basil"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "frying pan",
+    "pan",
+    "saucepan"
+  ],
+  "steps": [
+    {
+      "id": "heat_olive",
+      "descr": "Trim the spring onions, carrot and celery",
+      "instructions": "Trim the spring onions, carrot and celery. Roughly chop all the vegetables, then blitz in the food processor with the chillies (stalks removed). Add the sausages, fennel seeds and oregano. Keep pulsing until well mixed, then spoon this mixture into a large frying pan on a high heat with a lug of olive oil, breaking it up and stirring as you go. Keep checking on it and stirring while you get on with other jobs.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_penne"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the spring onions, carrot and celery. Roughly chop all the vegetables, then blitz in the food processor with the chillies (stalks removed). Add the sausages, fennel seeds and oregano. Keep pulsing until well mixed, then spoon this mixture into a large frying pan on a high heat with a lug of olive oil, breaking it up and stirring as you go. Keep checking on it and stirring while you get on with other jobs."
+        }
+      ]
+    },
+    {
+      "id": "add_penne",
+      "descr": "Fill a large deep saucepan with boiling water",
+      "instructions": "Fill a large deep saucepan with boiling water. Season well then add the penne and cook according to packet instructions, with the lid askew.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_olive"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Fill a large deep saucepan with boiling water. Season well then add the penne and cook according to packet instructions, with the lid askew."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Crush the unpeeled cloves of garlic into the sausage...",
+      "instructions": "Crush the unpeeled cloves of garlic into the sausage mixture and stir in the balsamic vinegar and the tinned tomatoes. Add a little of the starchy cooking water from the pasta to loosen if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_penne"
+      ],
+      "next": [
+        "stir_adding"
+      ],
+      "on_enter": [
+        {
+          "say": "Crush the unpeeled cloves of garlic into the sausage mixture and stir in the balsamic vinegar and the tinned tomatoes. Add a little of the starchy cooking water from the pasta to loosen if needed."
+        }
+      ]
+    },
+    {
+      "id": "stir_adding",
+      "descr": "Drain the pasta, reserving about a wineglass worth of...",
+      "instructions": "Drain the pasta, reserving about a wineglass worth of the cooking water. Tip the pasta into the pan of sauce and give it a gentle stir, adding enough of the cooking water to bring it to a silky consistency. Taste, correct the seasoning, then tip into a large serving bowl and take straight to the table with the Parmesan for grating over. Scatter over a few basil leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the pasta, reserving about a wineglass worth of the cooking water. Tip the pasta into the pan of sauce and give it a gentle stir, adding enough of the cooking water to bring it to a silky consistency. Taste, correct the seasoning, then tip into a large serving bowl and take straight to the table with the Parmesan for grating over. Scatter over a few basil leaves."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "502 calories",
+    "carbohydrates": "68.3 g",
+    "fat": "17.2 g",
+    "fiber": "3.7 g",
+    "protein": "22.8 g"
+  }
+}

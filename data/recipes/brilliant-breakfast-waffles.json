@@ -1,0 +1,174 @@
+{
+  "recipe": {
+    "id": "brilliant-breakfast-waffles",
+    "title": "Brilliant breakfast waffles",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "This breakfast waffle recipe from Jamie Oliver shows you how to make waffles from scratch. Just add your favourite toppings for a great weekend brunch.",
+    "tags": [
+      "breakfast",
+      "brilliant-breakfast-recipes",
+      "store-cupboard-recipes",
+      "course",
+      "method",
+      "vegetarian",
+      "family-store-cupboard-recipes",
+      "prep-amp-go-recipes",
+      "quick-amp-easy-recipes",
+      "eggs",
+      "breakfast-and-brunch",
+      "quick-fixes",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/eggs/brilliant-breakfast-waffles",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/01472b8b4476dbc5c28d198a870cc6279900488a-958x1280.png/46259360?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/01472b8b4476dbc5c28d198a870cc6279900488a-958x1280.png/46259360?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/01472b8b4476dbc5c28d198a870cc6279900488a-958x1280.png/46259360?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/01472b8b4476dbc5c28d198a870cc6279900488a-958x1280.png/46259360?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "eggs"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "baking-powder",
+      "name": "baking powder",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 240.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "optional-1-orange",
+      "name": "optional: 1 orange",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-vanilla-extract",
+      "name": "optional: vanilla extract",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "ladle",
+    "large bowl",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "mix_ingredients",
+      "descr": "Mix all the dry ingredients together in a large bowl",
+      "instructions": "Mix all the dry ingredients together in a large bowl. Gradually beat in the egg, then add the milk slowly, whisking well to get as smooth a batter as possible.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_drops"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix all the dry ingredients together in a large bowl. Gradually beat in the egg, then add the milk slowly, whisking well to get as smooth a batter as possible."
+        }
+      ]
+    },
+    {
+      "id": "add_drops",
+      "descr": "If you\u2019re making sweet waffles, grate in the orange zest...",
+      "instructions": "If you\u2019re making sweet waffles, grate in the orange zest and add a few drops of vanilla extract.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ingredients"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "If you\u2019re making sweet waffles, grate in the orange zest and add a few drops of vanilla extract."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Get your waffle machine ready",
+      "instructions": "Get your waffle machine ready. Once it\u2019s hot, ladle in the batter mixture and seal, following the machine instructions until your waffles are cooked.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_drops"
+      ],
+      "next": [
+        "serve_whatever"
+      ],
+      "on_enter": [
+        {
+          "say": "Get your waffle machine ready. Once it\u2019s hot, ladle in the batter mixture and seal, following the machine instructions until your waffles are cooked."
+        }
+      ]
+    },
+    {
+      "id": "serve_whatever",
+      "descr": "Serve with whatever takes your fancy",
+      "instructions": "Serve with whatever takes your fancy! Let the kids invent their own, or see some of our favourite ideas below for inspiration.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with whatever takes your fancy! Let the kids invent their own, or see some of our favourite ideas below for inspiration."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "119 calories",
+    "carbohydrates": "21.9 g",
+    "fat": "2 g",
+    "fiber": "0.8 g",
+    "protein": "4.8 g"
+  }
+}

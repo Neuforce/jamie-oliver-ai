@@ -1,0 +1,154 @@
+{
+  "recipe": {
+    "id": "harissa-spatchcock-chicken-traybake",
+    "title": "Harissa spatchcock chicken traybake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT59M",
+    "description": "A brilliant Jamie Oliver chicken recipe. Harissa and sweet mixed peppers make this a fantastic weeknight recipe that the whole family will love. Happy days!",
+    "tags": [
+      "quick-amp-easy-series-3",
+      "student-recipes",
+      "tv-shows",
+      "cheap-amp-cheerful",
+      "occasion",
+      "keep-cooking-and-carry-on",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/harissa-chicken-traybake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/32d65f65a50e93299a445f8f31a7bac4117af2bc-958x1280.jpg/89080991?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/32d65f65a50e93299a445f8f31a7bac4117af2bc-958x1280.jpg/89080991?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/32d65f65a50e93299a445f8f31a7bac4117af2bc-958x1280.jpg/89080991?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/32d65f65a50e93299a445f8f31a7bac4117af2bc-958x1280.jpg/89080991?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "mixed-colour-peppers",
+      "name": "mixed-colour peppers",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "1-2kg-whole-chicken",
+      "name": "1.2kg whole chicken",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-rose-harissa",
+      "name": "heaped teaspoons rose harissa",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-mint",
+      "name": "fresh mint",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "knife",
+    "oven",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "roast_tray",
+      "descr": "Deseed the peppers and tear into big chunks, peel and...",
+      "instructions": "Deseed the peppers and tear into big chunks, peel and quarter the onions and break apart into petals, then place it all in a 30cm x 40cm roasting tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Deseed the peppers and tear into big chunks, peel and quarter the onions and break apart into petals, then place it all in a 30cm x 40cm roasting tray."
+        }
+      ]
+    },
+    {
+      "id": "add_tray",
+      "descr": "Use a large sharp knife to carefully cut down the back...",
+      "instructions": "Use a large sharp knife to carefully cut down the back of the chicken, so you can open it out flat, then score the legs. Add to the tray with the harissa, and a little sea salt, black pepper and red wine vinegar. Toss well, making sure you get into all the nooks and crannies of the chicken.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_tray"
+      ],
+      "next": [
+        "roast_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a large sharp knife to carefully cut down the back of the chicken, so you can open it out flat, then score the legs. Add to the tray with the harissa, and a little sea salt, black pepper and red wine vinegar. Toss well, making sure you get into all the nooks and crannies of the chicken."
+        }
+      ]
+    },
+    {
+      "id": "roast_minutes",
+      "descr": "Sit the chicken flat on top of the veg, skin side up,...",
+      "instructions": "Sit the chicken flat on top of the veg, skin side up, and roast it all for 50 minutes, or until gnarly and cooked through. Pick over the mint leaves before dishing up.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT3000S",
+      "depends_on": [
+        "add_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Sit the chicken flat on top of the veg, skin side up, and roast it all for 50 minutes, or until gnarly and cooked through. Pick over the mint leaves before dishing up."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "297 calories",
+    "carbohydrates": "13.9 g",
+    "fat": "11.4 g",
+    "fiber": "5.8 g",
+    "protein": "35 g"
+  }
+}

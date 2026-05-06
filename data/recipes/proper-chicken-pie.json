@@ -1,0 +1,494 @@
+{
+  "recipe": {
+    "id": "proper-chicken-pie",
+    "title": "Proper chicken pie",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT120M",
+    "description": "This amazing homemade chicken pie is the perfect sharing dish. Beautiful crumbly pastry, tender pieces of chicken and sweet leeks cooked in a creamy cider sauce. Great for long weekend lunches with friends and family. Enjoy!",
+    "tags": [
+      "tv",
+      "chicken",
+      "dish-type",
+      "series-7",
+      "pies-amp-pastries",
+      "winter-warmers",
+      "episode-4",
+      "jamie-recipe",
+      "jamie-and-jimmy-s-friday-night-feast"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/proper-chicken-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/49cfe3571e9ebc302a939d1960066a93a7903ad1-1026x1539.jpg/biglovechickenpie.jpg?rect=0,257,1026,1026&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/49cfe3571e9ebc302a939d1960066a93a7903ad1-1026x1539.jpg/biglovechickenpie.jpg?rect=0,257,1026,1026&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/49cfe3571e9ebc302a939d1960066a93a7903ad1-1026x1539.jpg/biglovechickenpie.jpg?rect=0,385,1026,770&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/49cfe3571e9ebc302a939d1960066a93a7903ad1-1026x1539.jpg/biglovechickenpie.jpg?rect=0,482,1026,577&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "whole-free-range-chicken",
+      "name": "whole free-range chicken",
+      "quantity": 1.5,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "piece-higher-welfare-smoked-pa",
+      "name": "piece higher-welfare smoked pancetta",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-thyme",
+      "name": "\u00bd a bunch of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "leek",
+      "name": "leek",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery-heart",
+      "name": "celery heart",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-plain-flour",
+      "name": "heaped tablespoons plain flour",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dry-cider",
+      "name": "dry cider",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-english-mustar",
+      "name": "heaped teaspoon English mustard",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-stock",
+      "name": "organic chicken stock",
+      "quantity": 1.0,
+      "unit": "litre",
+      "note": null
+    },
+    {
+      "id": "button-mushrooms",
+      "name": "button mushrooms",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cr-me-fra-che",
+      "name": "cr\u00e8me fra\u00eeche",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pastry",
+      "name": "PASTRY",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cold-butter",
+      "name": "cold butter",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cabbage",
+      "name": "CABBAGE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "hispi-or-sweetheart-cabbage",
+      "name": "hispi or sweetheart cabbage",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-english-mustar",
+      "name": "heaped teaspoon English mustard",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "white-pepper",
+      "name": "white pepper",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shop-jamie-s-serveware",
+      "name": "SHOP JAMIE'S SERVEWARE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "proper-pie-dish",
+      "name": "Proper Pie Dish",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "great-gravy-boat",
+      "name": "Great Gravy Boat",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "knife",
+    "oven",
+    "pan",
+    "sharp knife",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "season_salt",
+      "descr": "Use a large sharp knife to carefully cut down the back...",
+      "instructions": "Use a large sharp knife to carefully cut down the back bone of the chicken, cutting it in half. Season with sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a large sharp knife to carefully cut down the back bone of the chicken, cutting it in half. Season with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_chicken",
+      "descr": "Drizzle 1 tablespoon of oil into a large non-stick...",
+      "instructions": "Drizzle 1 tablespoon of oil into a large non-stick frying pan on a high heat. Add the chicken, skin-side down, and sear for 10 minutes, or until golden. Reserve the pan for the cabbage.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "season_salt"
+      ],
+      "next": [
+        "heat_renders"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle 1 tablespoon of oil into a large non-stick frying pan on a high heat. Add the chicken, skin-side down, and sear for 10 minutes, or until golden. Reserve the pan for the cabbage."
+        }
+      ]
+    },
+    {
+      "id": "heat_renders",
+      "descr": "Meanwhile, chop the pancetta into 1cm chunks, pick in...",
+      "instructions": "Meanwhile, chop the pancetta into 1cm chunks, pick in the thyme leaves and place in a large shallow casserole pan with 1 teaspoon of oil. Put it on a medium heat so the fat renders out, while you wash and trim the white part of the leek (save the green for making soup) and the celery. Peel the onion and carrot, then roughly chop all the veg into 1.5cm chunks and add to the pan. Cook for 10 minutes, or until softened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_chicken"
+      ],
+      "next": [
+        "heat_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, chop the pancetta into 1cm chunks, pick in the thyme leaves and place in a large shallow casserole pan with 1 teaspoon of oil. Put it on a medium heat so the fat renders out, while you wash and trim the white part of the leek (save the green for making soup) and the celery. Peel the onion and carrot, then roughly chop all the veg into 1.5cm chunks and add to the pan. Cook for 10 minutes, or until softened."
+        }
+      ]
+    },
+    {
+      "id": "heat_hour",
+      "descr": "Stir in 2 heaped tablespoons of flour, cook for 2...",
+      "instructions": "Stir in 2 heaped tablespoons of flour, cook for 2 minutes, then pour in the cider. Let it bubble away for 2 minutes or until almost evaporated, then stir in the mustard and stock. Add the chicken breast-side down, bring to a simmer, then cover and cook on a low heat for 1 hour, or until the chicken is cooked through and tender.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_renders"
+      ],
+      "next": [
+        "mix_fork"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in 2 heaped tablespoons of flour, cook for 2 minutes, then pour in the cider. Let it bubble away for 2 minutes or until almost evaporated, then stir in the mustard and stock. Add the chicken breast-side down, bring to a simmer, then cover and cook on a low heat for 1 hour, or until the chicken is cooked through and tender."
+        }
+      ]
+    },
+    {
+      "id": "mix_fork",
+      "descr": "Meanwhile, for the pastry, put the flour in a bowl with...",
+      "instructions": "Meanwhile, for the pastry, put the flour in a bowl with a good pinch of salt. Grate in the cold butter, then rub with your fingers until it resembles breadcrumbs. Pour in 100ml of cold water, mix with a fork, then bring together with your hands until it forms a dough, adding an extra splash of water if needed. Divide into 2 pieces \u2013 you will need \u2153 for the lid and \u2154 for the base \u2013 flatten with your hands and chill until needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_hour"
+      ],
+      "next": [
+        "slice_mushrooms"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, for the pastry, put the flour in a bowl with a good pinch of salt. Grate in the cold butter, then rub with your fingers until it resembles breadcrumbs. Pour in 100ml of cold water, mix with a fork, then bring together with your hands until it forms a dough, adding an extra splash of water if needed. Divide into 2 pieces \u2013 you will need \u2153 for the lid and \u2154 for the base \u2013 flatten with your hands and chill until needed."
+        }
+      ]
+    },
+    {
+      "id": "slice_mushrooms",
+      "descr": "Finely slice the mushrooms and set aside",
+      "instructions": "Finely slice the mushrooms and set aside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_fork"
+      ],
+      "next": [
+        "plate_shred"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely slice the mushrooms and set aside."
+        }
+      ]
+    },
+    {
+      "id": "plate_shred",
+      "descr": "Transfer the chicken to a plate and shred the meat...",
+      "instructions": "Transfer the chicken to a plate and shred the meat (discard the carcass).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_mushrooms"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer the chicken to a plate and shred the meat (discard the carcass)."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Stir the mushrooms into the pan, followed by the...",
+      "instructions": "Stir the mushrooms into the pan, followed by the shredded chicken and the cr\u00e8me fra\u00eeche, mix well and season to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "plate_shred"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the mushrooms into the pan, followed by the shredded chicken and the cr\u00e8me fra\u00eeche, mix well and season to taste."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Strain the chicken mixture through a sieve over a clean...",
+      "instructions": "Strain the chicken mixture through a sieve over a clean pan to catch the liquid, gently pressing to help it along, and reserve for your gravy. Leave to cool.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Strain the chicken mixture through a sieve over a clean pan to catch the liquid, gently pressing to help it along, and reserve for your gravy. Leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5",
+      "instructions": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "roll_larger"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5."
+        }
+      ]
+    },
+    {
+      "id": "roll_larger",
+      "descr": "Lightly grease a 30cm pie dish with oil",
+      "instructions": "Lightly grease a 30cm pie dish with oil. Roll out the larger piece of pastry between 2 sheets of greaseproof paper to just a few millimetres thick and use it to line the dish \u2013 allow an overhang. Press firmly into the edges and up the sides of the dish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Lightly grease a 30cm pie dish with oil. Roll out the larger piece of pastry between 2 sheets of greaseproof paper to just a few millimetres thick and use it to line the dish \u2013 allow an overhang. Press firmly into the edges and up the sides of the dish."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Fill with the cooled chicken mixture, then carefully...",
+      "instructions": "Fill with the cooled chicken mixture, then carefully roll out and top with the remaining piece of pastry. Beat the egg and brush a little over the edge of the lid then fold over the overhang and press down gently to seal. Egg wash the pie all over, then make a small incision in the centre to let the steam escape and bake at the bottom of the oven for 1 hour, or until the pastry is golden and the pie is piping hot.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "roll_larger"
+      ],
+      "next": [
+        "heat_cabbage"
+      ],
+      "on_enter": [
+        {
+          "say": "Fill with the cooled chicken mixture, then carefully roll out and top with the remaining piece of pastry. Beat the egg and brush a little over the edge of the lid then fold over the overhang and press down gently to seal. Egg wash the pie all over, then make a small incision in the centre to let the steam escape and bake at the bottom of the oven for 1 hour, or until the pastry is golden and the pie is piping hot."
+        }
+      ]
+    },
+    {
+      "id": "heat_cabbage",
+      "descr": "Click off and discard any tatty outer leaves from the...",
+      "instructions": "Click off and discard any tatty outer leaves from the cabbage, then cut in half. Halve the core, then finely slice. Roughly chop the rest into large chunks. Place the chicken pan on a high heat, add the cabbage stalks and fry for 2 minutes, then go in with the leaves and a splash of water and cook for 5 minutes more, or until softened and lightly charred. Stir in the mustard, then add a pinch of salt and white pepper with a splash of water, and simmer for 1 minute, tossing a few times.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "heat_gravy"
+      ],
+      "on_enter": [
+        {
+          "say": "Click off and discard any tatty outer leaves from the cabbage, then cut in half. Halve the core, then finely slice. Roughly chop the rest into large chunks. Place the chicken pan on a high heat, add the cabbage stalks and fry for 2 minutes, then go in with the leaves and a splash of water and cook for 5 minutes more, or until softened and lightly charred. Stir in the mustard, then add a pinch of salt and white pepper with a splash of water, and simmer for 1 minute, tossing a few times."
+        }
+      ]
+    },
+    {
+      "id": "heat_gravy",
+      "descr": "Reheat the gravy and enjoy with the pie and cabbage",
+      "instructions": "Reheat the gravy and enjoy with the pie and cabbage.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_cabbage"
+      ],
+      "on_enter": [
+        {
+          "say": "Reheat the gravy and enjoy with the pie and cabbage."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "529 calories",
+    "carbohydrates": "43 g",
+    "fat": "29 g",
+    "fiber": "5.9 g",
+    "protein": "25.1 g"
+  }
+}

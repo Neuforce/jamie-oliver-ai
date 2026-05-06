@@ -1,0 +1,192 @@
+{
+  "recipe": {
+    "id": "american-pancakes",
+    "title": "American pancakes",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "Make an epic pancake stack with this American pancake recipe. Thick and fluffy pancakes with syrup is such a winning combination for an epic brunch!",
+    "tags": [
+      "party-food",
+      "pancake-day",
+      "main-ingredient",
+      "breakfast",
+      "pancakes",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "one-pan-recipes",
+      "eggs",
+      "occasion",
+      "frying",
+      "course"
+    ],
+    "course": "dessert",
+    "cuisine": "american",
+    "source_url": "https://www.jamieoliver.com/recipes/eggs/pancakes-usa-stylie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/38194159ab106cf50fbdf5069b5cecf9e8384d59-973x1300.jpg/38194159ab106cf50fbdf5069b5cecf9e8384d59-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/38194159ab106cf50fbdf5069b5cecf9e8384d59-973x1300.jpg/38194159ab106cf50fbdf5069b5cecf9e8384d59-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/38194159ab106cf50fbdf5069b5cecf9e8384d59-973x1300.jpg/38194159ab106cf50fbdf5069b5cecf9e8384d59-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/38194159ab106cf50fbdf5069b5cecf9e8384d59-973x1300.jpg/38194159ab106cf50fbdf5069b5cecf9e8384d59-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "eggs"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 115.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-baking-powder",
+      "name": "heaped teaspoon baking powder",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 140.0,
+      "unit": "ml",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "pan",
+    "spatula",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "First separate the eggs, putting the whites into one...",
+      "instructions": "First separate the eggs, putting the whites into one bowl and the yolks into another.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_smooth"
+      ],
+      "on_enter": [
+        {
+          "say": "First separate the eggs, putting the whites into one bowl and the yolks into another."
+        }
+      ]
+    },
+    {
+      "id": "mix_smooth",
+      "descr": "Add the flour, baking powder and milk to the yolks and...",
+      "instructions": "Add the flour, baking powder and milk to the yolks and mix to a smooth thick batter.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "whisk_whites"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the flour, baking powder and milk to the yolks and mix to a smooth thick batter."
+        }
+      ]
+    },
+    {
+      "id": "whisk_whites",
+      "descr": "Whisk the whites with 1 pinch of sea salt until they...",
+      "instructions": "Whisk the whites with 1 pinch of sea salt until they form stiff peaks, then fold into the batter \u2013 it is now ready to use.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_smooth"
+      ],
+      "next": [
+        "heat_stick"
+      ],
+      "on_enter": [
+        {
+          "say": "Whisk the whites with 1 pinch of sea salt until they form stiff peaks, then fold into the batter \u2013 it is now ready to use."
+        }
+      ]
+    },
+    {
+      "id": "heat_stick",
+      "descr": "Heat a non-stick pan over a medium heat, pour some of...",
+      "instructions": "Heat a non-stick pan over a medium heat, pour some of the batter into the pan and cook for a couple of minutes, or until it starts to look golden and firm.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "whisk_whites"
+      ],
+      "next": [
+        "sprinkle_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a non-stick pan over a medium heat, pour some of the batter into the pan and cook for a couple of minutes, or until it starts to look golden and firm."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_your",
+      "descr": "At this point sprinkle your chosen flavouring (see...",
+      "instructions": "At this point sprinkle your chosen flavouring (see below) onto the uncooked side before loosening with a spatula and flipping the pancake over. Continue frying until both sides are golden.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_stick"
+      ],
+      "next": [
+        "drizzle_maple"
+      ],
+      "on_enter": [
+        {
+          "say": "At this point sprinkle your chosen flavouring (see below) onto the uncooked side before loosening with a spatula and flipping the pancake over. Continue frying until both sides are golden."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_maple",
+      "descr": "You can make these pancakes large or small, depending on...",
+      "instructions": "You can make these pancakes large or small, depending on what you prefer. Serve them with a drizzle of maple syrup, or even with some butter or cr\u00e8me fra\u00eeche. If you choose to sprinkle with a flavouring, try one of these... Fresh corn from the cob, crispy bacon or pancetta, blueberries, banana, stewed apple, grated chocolate \u2013 anything else you can imagine...",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "sprinkle_your"
+      ],
+      "on_enter": [
+        {
+          "say": "You can make these pancakes large or small, depending on what you prefer. Serve them with a drizzle of maple syrup, or even with some butter or cr\u00e8me fra\u00eeche. If you choose to sprinkle with a flavouring, try one of these... Fresh corn from the cob, crispy bacon or pancetta, blueberries, banana, stewed apple, grated chocolate \u2013 anything else you can imagine..."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "178 calories",
+    "carbohydrates": "24.7 g",
+    "fat": "5.7 g",
+    "fiber": "0.9 g",
+    "protein": "9.2 g"
+  }
+}

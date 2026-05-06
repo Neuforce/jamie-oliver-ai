@@ -1,0 +1,393 @@
+{
+  "recipe": {
+    "id": "beef-wellington-for-two",
+    "title": "Beef Wellington for two",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT80M",
+    "description": "Another cracking Friday Night Feast recipe from Jamie Oliver. A blushing and tender seared fillet of beef, smothered in rich mushroom duxelle, all wrapped up in a vibrant green pancake and golden puff pastry parcel \u2013 seriously impressive.",
+    "tags": [
+      "episode-2",
+      "tv",
+      "series-7",
+      "beef",
+      "jamie-recipe",
+      "jamie-and-jimmy-s-friday-night-feast"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/beef-wellington-for-two",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/de0958b73334426abccc5da37cc6f1e8cf57add2-958x1280.jpg/100107567?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/de0958b73334426abccc5da37cc6f1e8cf57add2-958x1280.jpg/100107567?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/de0958b73334426abccc5da37cc6f1e8cf57add2-958x1280.jpg/100107567?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/de0958b73334426abccc5da37cc6f1e8cf57add2-958x1280.jpg/100107567?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-porcini-or-shiitake-mush",
+      "name": "dried porcini or shiitake mushrooms",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "centre-fillet-of-beef",
+      "name": "centre fillet of beef",
+      "quantity": 230.0,
+      "unit": "g",
+      "note": "trimmed"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "optional-truffle-oil",
+      "name": "optional: truffle oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-english-mustar",
+      "name": "heaped teaspoon English mustard",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "320g-sheet-all-butter-puff-pas",
+      "name": "320g sheet all-butter puff pastry",
+      "quantity": 320.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pancakes",
+      "name": "PANCAKES",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mug-semi-skimmed-milk",
+      "name": "mug semi-skimmed milk",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mug-self-raising-flour",
+      "name": "mug self-raising flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "gravy",
+      "name": "GRAVY",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-blackcurrant-j",
+      "name": "heaped teaspoon blackcurrant jam",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "port",
+      "name": "port",
+      "quantity": 50.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-beef-stock",
+      "name": "organic beef stock",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "blender",
+    "food processor",
+    "frying pan",
+    "oven",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "chop_reserving",
+      "descr": "Soak the dried mushrooms in 250ml boiling water for 10...",
+      "instructions": "Soak the dried mushrooms in 250ml boiling water for 10 minutes, then drain and finely chop (reserving the soaking liquid for the gravy).",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "heat_lightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Soak the dried mushrooms in 250ml boiling water for 10 minutes, then drain and finely chop (reserving the soaking liquid for the gravy)."
+        }
+      ]
+    },
+    {
+      "id": "heat_lightly",
+      "descr": "Pick and finely chop 1 sprig of rosemary, season with...",
+      "instructions": "Pick and finely chop 1 sprig of rosemary, season with sea salt and black pepper, then roll the fillet through it until nicely coated. Add 1 tablespoon of oil to a non-stick pan over a high heat. Lightly crush and add the unpeeled garlic cloves, then add the beef and sear for 5 minutes, turning with tongs. Remove to a plate to cool.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_reserving"
+      ],
+      "next": [
+        "heat_peel"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop 1 sprig of rosemary, season with sea salt and black pepper, then roll the fillet through it until nicely coated. Add 1 tablespoon of oil to a non-stick pan over a high heat. Lightly crush and add the unpeeled garlic cloves, then add the beef and sear for 5 minutes, turning with tongs. Remove to a plate to cool."
+        }
+      ]
+    },
+    {
+      "id": "heat_peel",
+      "descr": "Wipe out the frying pan and return to a medium heat",
+      "instructions": "Wipe out the frying pan and return to a medium heat. Peel and roughly chop the onion, then squeeze out the softened garlic flesh and add to the pan. Strip in the rest of the rosemary, then tear in the mushrooms. Pour in the beef resting juices, then add the soaked mushrooms. Cook for 15 minutes, or until soft and starting to caramelise, stirring regularly. Tip into a food processor with a few drops of truffle oil (if using) and blitz to a spreadable consistency. Taste and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_lightly"
+      ],
+      "next": [
+        "heat_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Wipe out the frying pan and return to a medium heat. Peel and roughly chop the onion, then squeeze out the softened garlic flesh and add to the pan. Strip in the rest of the rosemary, then tear in the mushrooms. Pour in the beef resting juices, then add the soaked mushrooms. Cook for 15 minutes, or until soft and starting to caramelise, stirring regularly. Tip into a food processor with a few drops of truffle oil (if using) and blitz to a spreadable consistency. Taste and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "heat_little",
+      "descr": "For the pancakes, crack the egg into a blender, add the...",
+      "instructions": "For the pancakes, crack the egg into a blender, add the milk, flour, spinach and a pinch of salt and pepper, then blitz until smooth. Place a large 28cm non-stick frying pan on a medium heat, rub the pan with a little olive oil, then pour in a thin layer of batter, swirling it up and around the edges. Cook on one side only for 2 minutes, or until lightly golden, then flip over and cook for another 10 seconds. Tip onto a plate to cool. Cover and chill the remaining batter for breakfast.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_peel"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "For the pancakes, crack the egg into a blender, add the milk, flour, spinach and a pinch of salt and pepper, then blitz until smooth. Place a large 28cm non-stick frying pan on a medium heat, rub the pan with a little olive oil, then pour in a thin layer of batter, swirling it up and around the edges. Cook on one side only for 2 minutes, or until lightly golden, then flip over and cook for another 10 seconds. Tip onto a plate to cool. Cover and chill the remaining batter for breakfast."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7",
+      "instructions": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7. To assemble, place a large sheet of clingfilm on a clean surface and place your pancake on top. Spread with 1 heaped teaspoon of English mustard, then spread with the mushroom p\u00e2t\u00e9 in an even layer, leaving a 1cm border. Place the cooled beef fillet in the centre of the pancake, then gather up the clingfilm and twist into a parcel.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_little"
+      ],
+      "next": [
+        "beat_brush"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7. To assemble, place a large sheet of clingfilm on a clean surface and place your pancake on top. Spread with 1 heaped teaspoon of English mustard, then spread with the mushroom p\u00e2t\u00e9 in an even layer, leaving a 1cm border. Place the cooled beef fillet in the centre of the pancake, then gather up the clingfilm and twist into a parcel."
+        }
+      ]
+    },
+    {
+      "id": "beat_brush",
+      "descr": "On a flour-dusted surface, cut the pastry in half",
+      "instructions": "On a flour-dusted surface, cut the pastry in half. Remove the clingfilm and place the pancake-wrapped beef on one piece of pastry. Beat the egg and brush over the pastry base and the pancake, then drape over the remaining piece of pastry to cover and press to seal, as though you\u2019re making large \u2018ravioli\u2019. Trim the excess pastry (see tip), transfer to a large greased baking tray and eggwash all over. (If making in advance, pop in the fridge until needed, removing 1 hour before baking.)",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "top_crisp"
+      ],
+      "on_enter": [
+        {
+          "say": "On a flour-dusted surface, cut the pastry in half. Remove the clingfilm and place the pancake-wrapped beef on one piece of pastry. Beat the egg and brush over the pastry base and the pancake, then drape over the remaining piece of pastry to cover and press to seal, as though you\u2019re making large \u2018ravioli\u2019. Trim the excess pastry (see tip), transfer to a large greased baking tray and eggwash all over. (If making in advance, pop in the fridge until needed, removing 1 hour before baking.)"
+        }
+      ]
+    },
+    {
+      "id": "top_crisp",
+      "descr": "Cook the Wellington on the bottom of the oven for 25...",
+      "instructions": "Cook the Wellington on the bottom of the oven for 25 minutes, or until the pastry is golden on top and crisp underneath, for blushing, juicy beef.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "beat_brush"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the Wellington on the bottom of the oven for 25 minutes, or until the pastry is golden on top and crisp underneath, for blushing, juicy beef."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Meanwhile, make the gravy",
+      "instructions": "Meanwhile, make the gravy. Peel and roughly chop the onion, place in a large pan on a medium heat with a tablespoon of oil, and strip in the thyme leaves. Cook for 20 minutes, stirring occasionally, then stir in the jam and simmer until dark and shiny. Add the port, flame with a match, cook away, then stir in the flour, followed gradually by the stock and reserved porcini liquid. Simmer to your desired consistency, then blitz with a stick blender and strain through a sieve.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "top_crisp"
+      ],
+      "next": [
+        "steam_greens"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, make the gravy. Peel and roughly chop the onion, place in a large pan on a medium heat with a tablespoon of oil, and strip in the thyme leaves. Cook for 20 minutes, stirring occasionally, then stir in the jam and simmer until dark and shiny. Add the port, flame with a match, cook away, then stir in the flour, followed gradually by the stock and reserved porcini liquid. Simmer to your desired consistency, then blitz with a stick blender and strain through a sieve."
+        }
+      ]
+    },
+    {
+      "id": "steam_greens",
+      "descr": "Leave the Wellington to rest for 5 minutes before...",
+      "instructions": "Leave the Wellington to rest for 5 minutes before slicing and serving with the gravy. Delicious served with steamed greens.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave the Wellington to rest for 5 minutes before slicing and serving with the gravy. Delicious served with steamed greens."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "840 calories",
+    "carbohydrates": "73.0 g",
+    "fat": "36.4 g",
+    "fiber": "8 g",
+    "protein": "51.3 g"
+  }
+}

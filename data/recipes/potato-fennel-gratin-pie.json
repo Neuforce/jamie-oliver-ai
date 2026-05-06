@@ -1,0 +1,402 @@
+{
+  "recipe": {
+    "id": "potato-fennel-gratin-pie",
+    "title": "Potato & fennel gratin pie",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT110M",
+    "description": "This amazing veggie gratin can be served on its own or in pastry for a gorgeous festive pie. Either way, it's delicious, and great for getting ahead!",
+    "tags": [
+      "christmas",
+      "entertaining",
+      "pastry",
+      "vegetarian",
+      "fennel",
+      "sides",
+      "potato",
+      "pie"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/potato/potato-fennel-gratin-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f184c7a8e50638854b89fb6d27e304fd26b298ac-853x1280.jpg/163465212?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f184c7a8e50638854b89fb6d27e304fd26b298ac-853x1280.jpg/163465212?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f184c7a8e50638854b89fb6d27e304fd26b298ac-853x1280.jpg/163465212?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f184c7a8e50638854b89fb6d27e304fd26b298ac-853x1280.jpg/163465212?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "potato"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "maris-piper-potatoes",
+      "name": "Maris Piper potatoes",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bulb-of-fennel",
+      "name": "bulb of fennel",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "whole-milk",
+      "name": "whole milk",
+      "quantity": 300.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "double-cream",
+      "name": "double cream",
+      "quantity": 200.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 3.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    },
+    {
+      "id": "cheese",
+      "name": "cheese",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": "such as Parmesan, Cheddar, Lincolnshire Poacher"
+    },
+    {
+      "id": "pastry",
+      "name": "PASTRY",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "cold"
+    },
+    {
+      "id": "walnuts",
+      "name": "walnuts",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "knife",
+    "large bowl",
+    "oven",
+    "pan",
+    "pot",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "slice_them",
+      "descr": "GET AHEAD Peel the potatoes and onion and trim the...",
+      "instructions": "GET AHEAD Peel the potatoes and onion and trim the fennel bulbs, then finely slice them just under \u00bdcm thick, with patient knife skills or, ideally, on a mandolin (use the guard!).",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "GET AHEAD Peel the potatoes and onion and trim the fennel bulbs, then finely slice them just under \u00bdcm thick, with patient knife skills or, ideally, on a mandolin (use the guard!)."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_them"
+      ],
+      "next": [
+        "heat_immediately"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "heat_immediately",
+      "descr": "Pour the milk and cream into a pan",
+      "instructions": "Pour the milk and cream into a pan. Peel, finely slice and add the garlic along with the rosemary and bay leaves, then finely grate in half of the nutmeg. Season with sea salt and black pepper. Bring to a light boil on a medium heat, then immediately turn the heat off and leave to infuse for a few minutes. Fish out and discard the herbs, finely grate and whisk in the cheese, then taste and season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "slice_potato"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the milk and cream into a pan. Peel, finely slice and add the garlic along with the rosemary and bay leaves, then finely grate in half of the nutmeg. Season with sea salt and black pepper. Bring to a light boil on a medium heat, then immediately turn the heat off and leave to infuse for a few minutes. Fish out and discard the herbs, finely grate and whisk in the cheese, then taste and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "slice_potato",
+      "descr": "Line a 28cm pie dish with a large piece of scrunched-up...",
+      "instructions": "Line a 28cm pie dish with a large piece of scrunched-up greaseproof paper. Layer up the slices of potato, onion and fennel in the dish, then pour over the cream mixture. Cover the top of the gratin with a sheet of tin foil and bake for 1 hour and 30 minutes, or until tender and nicely golden, then remove from the oven and leave to cool.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "heat_immediately"
+      ],
+      "next": [
+        "cube_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Line a 28cm pie dish with a large piece of scrunched-up greaseproof paper. Layer up the slices of potato, onion and fennel in the dish, then pour over the cream mixture. Cover the top of the gratin with a sheet of tin foil and bake for 1 hour and 30 minutes, or until tender and nicely golden, then remove from the oven and leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "cube_butter",
+      "descr": "While your filling is cooking, make the pastry",
+      "instructions": "While your filling is cooking, make the pastry. Sift the flour and a good pinch of sea salt into a large bowl, cube and add the butter then, using your fingertips, gently work it into the flour until the mixture resembles breadcrumbs (or use a food processor, if you prefer). Finely grate in the walnuts.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_potato"
+      ],
+      "next": [
+        "mix_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "While your filling is cooking, make the pastry. Sift the flour and a good pinch of sea salt into a large bowl, cube and add the butter then, using your fingertips, gently work it into the flour until the mixture resembles breadcrumbs (or use a food processor, if you prefer). Finely grate in the walnuts."
+        }
+      ]
+    },
+    {
+      "id": "mix_flour",
+      "descr": "Beat 1 egg in a small bowl, then use a fork or your...",
+      "instructions": "Beat 1 egg in a small bowl, then use a fork or your hands to gently mix it into the flour mixture until it forms a ball of dough \u2013 add a splash of water if it feels too dry. Be careful not to work the pastry too much at this stage or it will become elastic and chewy. Cut the dough in half, pat into two 2cm-thick discs, wrap well in greaseproof paper and freeze until needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cube_butter"
+      ],
+      "next": [
+        "cool_filling"
+      ],
+      "on_enter": [
+        {
+          "say": "Beat 1 egg in a small bowl, then use a fork or your hands to gently mix it into the flour mixture until it forms a ball of dough \u2013 add a splash of water if it feels too dry. Be careful not to work the pastry too much at this stage or it will become elastic and chewy. Cut the dough in half, pat into two 2cm-thick discs, wrap well in greaseproof paper and freeze until needed."
+        }
+      ]
+    },
+    {
+      "id": "cool_filling",
+      "descr": "Lift the cooled filling out of the pie dish, wrap well...",
+      "instructions": "Lift the cooled filling out of the pie dish, wrap well and place in the freezer until you\u2019re ready to assemble (up to 1 month in advance).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_flour"
+      ],
+      "next": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "Lift the cooled filling out of the pie dish, wrap well and place in the freezer until you\u2019re ready to assemble (up to 1 month in advance)."
+        }
+      ]
+    },
+    {
+      "id": "step_step_8",
+      "descr": "2 DAYS BEFORE Remove the pastry and filling from the...",
+      "instructions": "2 DAYS BEFORE Remove the pastry and filling from the freezer and defrost overnight in the fridge.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cool_filling"
+      ],
+      "next": [
+        "roll_between"
+      ],
+      "on_enter": [
+        {
+          "say": "2 DAYS BEFORE Remove the pastry and filling from the freezer and defrost overnight in the fridge."
+        }
+      ]
+    },
+    {
+      "id": "roll_between",
+      "descr": "1 DAY BEFORE Unwrap the pastry, dust one disc with flour...",
+      "instructions": "1 DAY BEFORE Unwrap the pastry, dust one disc with flour and roll out between two sheets of greaseproof paper to about 2mm thick \u2013 this will be your base. Dust the second disc with flour, roll it out a little bigger between two sheets of greaseproof paper, then roll it back over the rolling pin, wrapping it around.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_8"
+      ],
+      "next": [
+        "beat_whites"
+      ],
+      "on_enter": [
+        {
+          "say": "1 DAY BEFORE Unwrap the pastry, dust one disc with flour and roll out between two sheets of greaseproof paper to about 2mm thick \u2013 this will be your base. Dust the second disc with flour, roll it out a little bigger between two sheets of greaseproof paper, then roll it back over the rolling pin, wrapping it around."
+        }
+      ]
+    },
+    {
+      "id": "beat_whites",
+      "descr": "Separate the remaining eggs, beating the egg whites in...",
+      "instructions": "Separate the remaining eggs, beating the egg whites in one bowl and the yolks in another.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_between"
+      ],
+      "next": [
+        "top_smoothing"
+      ],
+      "on_enter": [
+        {
+          "say": "Separate the remaining eggs, beating the egg whites in one bowl and the yolks in another."
+        }
+      ]
+    },
+    {
+      "id": "top_smoothing",
+      "descr": "Unwrap the filling parcel and place it in the middle of...",
+      "instructions": "Unwrap the filling parcel and place it in the middle of your pastry base. Trim the edge to 2.5cm, brush with the egg whites, then use the rolling pin to carefully lay the second piece of pastry on top, smoothing around the shape of the filling. Trim the edge to 2.5cm, crimp with your fingers to seal, and brush the yolks all over the top. Very lightly score the top of the pastry (like in the picture), making a small hole in the top. You now have your potato and fennel gratin pie, ready to cook or place in the fridge overnight.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "beat_whites"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Unwrap the filling parcel and place it in the middle of your pastry base. Trim the edge to 2.5cm, brush with the egg whites, then use the rolling pin to carefully lay the second piece of pastry on top, smoothing around the shape of the filling. Trim the edge to 2.5cm, crimp with your fingers to seal, and brush the yolks all over the top. Very lightly score the top of the pastry (like in the picture), making a small hole in the top. You now have your potato and fennel gratin pie, ready to cook or place in the fridge overnight."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "ON THE DAY When you\u2019re ready to cook, preheat the oven...",
+      "instructions": "ON THE DAY When you\u2019re ready to cook, preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "top_smoothing"
+      ],
+      "next": [
+        "bake_bottom"
+      ],
+      "on_enter": [
+        {
+          "say": "ON THE DAY When you\u2019re ready to cook, preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "bake_bottom",
+      "descr": "Bake at the bottom of the oven for 1 hour, or until the...",
+      "instructions": "Bake at the bottom of the oven for 1 hour, or until the pastry is golden and the pie is piping hot. Leave to stand for 30 minutes, then serve up.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake at the bottom of the oven for 1 hour, or until the pastry is golden and the pie is piping hot. Leave to stand for 30 minutes, then serve up."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "628 calories",
+    "carbohydrates": "57 g",
+    "fat": "40.2 g",
+    "fiber": "3.6 g",
+    "protein": "13.6 g"
+  }
+}

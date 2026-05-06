@@ -1,0 +1,242 @@
+{
+  "recipe": {
+    "id": "hit-n-run-traybaked-chicken",
+    "title": "Hit \u2018n\u2019 run traybaked chicken",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "This chicken & pepper one-pan wonder gives you the basic principles of how to make a traybake. Just let the oven do the hard work!",
+    "tags": [
+      "dish-type",
+      "family-food",
+      "lunch-amp-dinner-recipes",
+      "low-lactose",
+      "chicken-thighs",
+      "dairy-free",
+      "course",
+      "roast",
+      "mains",
+      "healthy-chicken-recipes",
+      "tomato",
+      "family-one-pan-recipes",
+      "occasion",
+      "chicken",
+      "student-recipes",
+      "method",
+      "family-batch-cooking",
+      "one-pan-recipes",
+      "healthy-meals",
+      "main-ingredient",
+      "baking",
+      "healthy-dinner-ideas"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/hit-n-run-traybaked-chicken",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/27f9c2aa48044f4fa96a19dbd43216c8c5c4a5e6-973x1300.jpg/27f9c2aa48044f4fa96a19dbd43216c8c5c4a5e6-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/27f9c2aa48044f4fa96a19dbd43216c8c5c4a5e6-973x1300.jpg/27f9c2aa48044f4fa96a19dbd43216c8c5c4a5e6-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/27f9c2aa48044f4fa96a19dbd43216c8c5c4a5e6-973x1300.jpg/27f9c2aa48044f4fa96a19dbd43216c8c5c4a5e6-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/27f9c2aa48044f4fa96a19dbd43216c8c5c4a5e6-973x1300.jpg/27f9c2aa48044f4fa96a19dbd43216c8c5c4a5e6-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-ripe-tomatoes",
+      "name": "large ripe tomatoes",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-pepper",
+      "name": "red pepper",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "yellow-pepper",
+      "name": "yellow pepper",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "free-range-chicken-thighs",
+      "name": "free-range chicken thighs",
+      "quantity": 6.0,
+      "unit": null,
+      "note": "skin off, bone out"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-thyme",
+      "name": "\u00bd a bunch of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "knife",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_peppers"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "chop_peppers",
+      "descr": "Quarter the tomatoes and place them in a large baking...",
+      "instructions": "Quarter the tomatoes and place them in a large baking dish or roasting tray (roughly 25cm x 30cm). Peel the onions and cut into large wedges, then deseed and roughly chop the peppers. Add all these to the tray along with the chicken thighs.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Quarter the tomatoes and place them in a large baking dish or roasting tray (roughly 25cm x 30cm). Peel the onions and cut into large wedges, then deseed and roughly chop the peppers. Add all these to the tray along with the chicken thighs."
+        }
+      ]
+    },
+    {
+      "id": "add_tray",
+      "descr": "Squash the unpeeled garlic cloves with the back of your...",
+      "instructions": "Squash the unpeeled garlic cloves with the back of your knife and add to the tray, then pick over the thyme leaves and sprinkle over the paprika.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_peppers"
+      ],
+      "next": [
+        "add_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Squash the unpeeled garlic cloves with the back of your knife and add to the tray, then pick over the thyme leaves and sprinkle over the paprika."
+        }
+      ]
+    },
+    {
+      "id": "add_tablespoons",
+      "descr": "Add 2 tablespoons of oil, the balsamic and a good pinch...",
+      "instructions": "Add 2 tablespoons of oil, the balsamic and a good pinch of sea salt and black pepper. Toss everything together really well to coat, then spread across the tray, making sure the chicken isn\u2019t covered by the vegetables.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_tray"
+      ],
+      "next": [
+        "roast_around"
+      ],
+      "on_enter": [
+        {
+          "say": "Add 2 tablespoons of oil, the balsamic and a good pinch of sea salt and black pepper. Toss everything together really well to coat, then spread across the tray, making sure the chicken isn\u2019t covered by the vegetables."
+        }
+      ]
+    },
+    {
+      "id": "roast_around",
+      "descr": "Roast for around 1 hour, or until the chicken is golden...",
+      "instructions": "Roast for around 1 hour, or until the chicken is golden and cooked through, turning and basting it a couple of times during cooking with the juices from the tray.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "add_tablespoons"
+      ],
+      "next": [
+        "bake_lovely"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast for around 1 hour, or until the chicken is golden and cooked through, turning and basting it a couple of times during cooking with the juices from the tray."
+        }
+      ]
+    },
+    {
+      "id": "bake_lovely",
+      "descr": "Serve the traybake with a lovely green salad on the side",
+      "instructions": "Serve the traybake with a lovely green salad on the side. You could also buddy it up with a little rice, polenta or a loaf of crusty bread to mop up the juices.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "roast_around"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve the traybake with a lovely green salad on the side. You could also buddy it up with a little rice, polenta or a loaf of crusty bread to mop up the juices."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "301 calories",
+    "carbohydrates": "17 g",
+    "fat": "15.2 g",
+    "fiber": "8.3 g",
+    "protein": "24.8 g"
+  }
+}

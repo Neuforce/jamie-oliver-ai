@@ -1,0 +1,243 @@
+{
+  "recipe": {
+    "id": "mushroom-stroganoff",
+    "title": "Mushroom stroganoff",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "An easy mushroom stroganoff recipe from Jamie Oliver that's on the table in under 30 minutes. It's a brilliant weeknight winner with perfect fluffy rice.",
+    "tags": [
+      "dinner-for-two",
+      "romantic-meals",
+      "healthy-dinner-ideas",
+      "jamie-s-meat-free-meals",
+      "vegetarian",
+      "course",
+      "healthy-vegetarian-recipes",
+      "tv-shows",
+      "rice",
+      "gluten-free",
+      "vegetables",
+      "mushroom",
+      "healthy-meals",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/mushroom/mushroom-stroganoff",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8fef6d0014fca14b0e8cf3463dfe19f712cd4b65-958x1280.jpg/94741160?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8fef6d0014fca14b0e8cf3463dfe19f712cd4b65-958x1280.jpg/94741160?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8fef6d0014fca14b0e8cf3463dfe19f712cd4b65-958x1280.jpg/94741160?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8fef6d0014fca14b0e8cf3463dfe19f712cd4b65-958x1280.jpg/94741160?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "mushroom"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "silverskin-pickled-onions",
+      "name": "silverskin pickled onions",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cornichons",
+      "name": "cornichons",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-flat-leaf-parsley",
+      "name": "fresh flat-leaf parsley",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-capers",
+      "name": "baby capers",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "whisky",
+      "name": "whisky",
+      "quantity": 50.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "half-fat-cr-me-fra-che",
+      "name": "half-fat cr\u00e8me fra\u00eeche",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "chop_parsley",
+      "descr": "Get all the prep done before you start cooking: trim the...",
+      "instructions": "Get all the prep done before you start cooking: trim the mushrooms, tearing up any larger ones and leaving any smaller ones whole, peel and finely slice the red onion and garlic, and finely slice the pickled onions and cornichons. Pick and roughly chop the parsley leaves, finely chopping the stalks.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_throw"
+      ],
+      "on_enter": [
+        {
+          "say": "Get all the prep done before you start cooking: trim the mushrooms, tearing up any larger ones and leaving any smaller ones whole, peel and finely slice the red onion and garlic, and finely slice the pickled onions and cornichons. Pick and roughly chop the parsley leaves, finely chopping the stalks."
+        }
+      ]
+    },
+    {
+      "id": "heat_throw",
+      "descr": "Place a large non-stick frying pan over a high heat,...",
+      "instructions": "Place a large non-stick frying pan over a high heat, throw in the mushrooms and red onions, shake into one layer, then dry-fry for 5 minutes (this will bring out the nutty flavour), stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "next": [
+        "add_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large non-stick frying pan over a high heat, throw in the mushrooms and red onions, shake into one layer, then dry-fry for 5 minutes (this will bring out the nutty flavour), stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "add_garlic",
+      "descr": "Drizzle in 1 tablespoon of oil, then add the garlic,...",
+      "instructions": "Drizzle in 1 tablespoon of oil, then add the garlic, pickled onions, cornichons, parsley stalks and capers.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_throw"
+      ],
+      "next": [
+        "whisk_tilt"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle in 1 tablespoon of oil, then add the garlic, pickled onions, cornichons, parsley stalks and capers."
+        }
+      ]
+    },
+    {
+      "id": "whisk_tilt",
+      "descr": "After 3 minutes, pour in the whisky, tilt the pan to...",
+      "instructions": "After 3 minutes, pour in the whisky, tilt the pan to carefully flame, or light with a long match (watch your eyebrows!), and, once the flames subside, add \u00bc of a teaspoon of paprika, the cr\u00e8me fra\u00eeche and parsley, then toss together.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT180S",
+      "depends_on": [
+        "add_garlic"
+      ],
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "After 3 minutes, pour in the whisky, tilt the pan to carefully flame, or light with a long match (watch your eyebrows!), and, once the flames subside, add \u00bc of a teaspoon of paprika, the cr\u00e8me fra\u00eeche and parsley, then toss together."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "Loosen with a splash of boiling water to a saucy...",
+      "instructions": "Loosen with a splash of boiling water to a saucy consistency, and season to taste with sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "whisk_tilt"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Loosen with a splash of boiling water to a saucy consistency, and season to taste with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Divide between plates, sprinkle over a little paprika,...",
+      "instructions": "Divide between plates, sprinkle over a little paprika, and serve with fluffy rice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide between plates, sprinkle over a little paprika, and serve with fluffy rice."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "251 calories",
+    "carbohydrates": "11.9 g",
+    "fat": "13.9 g",
+    "fiber": "4.3 g",
+    "protein": "6.7 g"
+  }
+}

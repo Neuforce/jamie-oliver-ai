@@ -1,0 +1,235 @@
+{
+  "recipe": {
+    "id": "scottish-shortbread",
+    "title": "Scottish shortbread",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "This Scottish shortbread recipe is brilliantly easy! Perfect with a cup of tea, or dip them in melted chocolate.",
+    "tags": [
+      "christmas",
+      "dinner-party",
+      "snacks",
+      "biscuits",
+      "dish-type",
+      "father-s-day",
+      "st-george-s-day",
+      "family-baking-recipes",
+      "course",
+      "shortbread",
+      "new-year-party-picks",
+      "easter-treats",
+      "occasion",
+      "burns-night-specials",
+      "method",
+      "afternoon-tea",
+      "chocolate",
+      "main-ingredient",
+      "wimbledon",
+      "uncategorised",
+      "party-food",
+      "baking",
+      "mother-s-day"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/chocolate/scottish-shortbread",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/47249a9d4dcd6b6d3316b17f27ed5bb10ac1ec34-973x1300.jpg/47249a9d4dcd6b6d3316b17f27ed5bb10ac1ec34-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/47249a9d4dcd6b6d3316b17f27ed5bb10ac1ec34-973x1300.jpg/47249a9d4dcd6b6d3316b17f27ed5bb10ac1ec34-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/47249a9d4dcd6b6d3316b17f27ed5bb10ac1ec34-973x1300.jpg/47249a9d4dcd6b6d3316b17f27ed5bb10ac1ec34-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/47249a9d4dcd6b6d3316b17f27ed5bb10ac1ec34-973x1300.jpg/47249a9d4dcd6b6d3316b17f27ed5bb10ac1ec34-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chocolate"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": "plus extra for sprinkling over"
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "chocolate",
+      "name": "CHOCOLATE",
+      "quantity": null,
+      "unit": null,
+      "note": "ORANGE & CARAWAY"
+    },
+    {
+      "id": "zest-of-1-orange",
+      "name": "zest of 1 orange",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "good-quality-dark-chocolate",
+      "name": "good-quality dark chocolate",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": "70% cocoa solids"
+    },
+    {
+      "id": "caraway-seeds",
+      "name": "caraway seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "lavender-honey",
+      "name": "LAVENDER & HONEY",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lavender-honey",
+      "name": "lavender honey",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "lavender-sugar",
+      "name": "lavender sugar",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": "use only 25g caster sugar in the main ingredients when making this version"
+    },
+    {
+      "id": "lemon-thyme-vanilla",
+      "name": "LEMON THYME & VANILLA",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-small-bunch-of-fresh-lemon-t",
+      "name": "\u00bd a small bunch of fresh lemon thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "leaves picked"
+    },
+    {
+      "id": "zest-of-1-lemon",
+      "name": "zest of 1 lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "vanilla-extract-or-paste",
+      "name": "vanilla extract or paste",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking sheet",
+    "bowl",
+    "mixing bowl",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 170\u00b0C/325\u00b0F/gas 3",
+      "instructions": "Preheat the oven to 170\u00b0C/325\u00b0F/gas 3. Mix the flour and sugar together in a mixing bowl. Rub in the butter with your thumb and forefinger, then add your chosen flavourings (if you\u2019re using chocolate or seeds you might want to push these into the dough at the end, after you\u2019ve rolled it out) and squash, pat and push it into a dough. Don\u2019t knead it, you just want to pat it down flat.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "roll_thick"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 170\u00b0C/325\u00b0F/gas 3. Mix the flour and sugar together in a mixing bowl. Rub in the butter with your thumb and forefinger, then add your chosen flavourings (if you\u2019re using chocolate or seeds you might want to push these into the dough at the end, after you\u2019ve rolled it out) and squash, pat and push it into a dough. Don\u2019t knead it, you just want to pat it down flat."
+        }
+      ]
+    },
+    {
+      "id": "roll_thick",
+      "descr": "Push or roll it out until it\u2019s 1cm thick \u2013 do this...",
+      "instructions": "Push or roll it out until it\u2019s 1cm thick \u2013 do this directly on to a baking sheet lined with greaseproof paper so you don\u2019t have to move it. Once it\u2019s in the shape you like \u2013 which could be square, round, or a few small finger-shapes \u2013 feel free to thumb or pinch the edges. If it splits or tears, just press it back together \u2013 but remember, the less you work the dough, the shorter and better these biscuits will be. If you want to score lines on the shortbread so that you can click the biscuits off into pieces later, you can.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Push or roll it out until it\u2019s 1cm thick \u2013 do this directly on to a baking sheet lined with greaseproof paper so you don\u2019t have to move it. Once it\u2019s in the shape you like \u2013 which could be square, round, or a few small finger-shapes \u2013 feel free to thumb or pinch the edges. If it splits or tears, just press it back together \u2013 but remember, the less you work the dough, the shorter and better these biscuits will be. If you want to score lines on the shortbread so that you can click the biscuits off into pieces later, you can."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Sprinkle over some caster sugar, then pop the baking...",
+      "instructions": "Sprinkle over some caster sugar, then pop the baking sheet into the oven and cook for 20 to 30 minutes. Keep an eye on it \u2013 you want a lovely light golden colour (unless you\u2019re making the lavender & honey version, which will be darker).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "roll_thick"
+      ],
+      "next": [
+        "cool_away"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle over some caster sugar, then pop the baking sheet into the oven and cook for 20 to 30 minutes. Keep an eye on it \u2013 you want a lovely light golden colour (unless you\u2019re making the lavender & honey version, which will be darker)."
+        }
+      ]
+    },
+    {
+      "id": "cool_away",
+      "descr": "Leave to cool, then put away in a tin or serve",
+      "instructions": "Leave to cool, then put away in a tin or serve. These will be delicious for two or three days and make a lovely present for someone special.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave to cool, then put away in a tin or serve. These will be delicious for two or three days and make a lovely present for someone special."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "152 calories",
+    "carbohydrates": "17.4 g",
+    "fat": "8.9 g",
+    "fiber": "0.5 g",
+    "protein": "1.6 g"
+  }
+}

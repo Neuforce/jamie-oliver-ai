@@ -1,0 +1,245 @@
+{
+  "recipe": {
+    "id": "tomato-soup",
+    "title": "Tomato soup",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "A creamy tomato soup recipe from Jamie Oliver. This recipe shows you how to make tomato soup at home, and it couldn't be easier. Great with crusty bread.",
+    "tags": [
+      "soup",
+      "tomato-soup",
+      "main-ingredient",
+      "student-recipes",
+      "dish-type",
+      "method",
+      "low-lactose",
+      "tomato",
+      "vegetables",
+      "soups",
+      "popular",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/tomato-soup",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/321e4a1a5320c8a0405e899e52eea782f95c4f71-973x1300.jpg/321e4a1a5320c8a0405e899e52eea782f95c4f71-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/321e4a1a5320c8a0405e899e52eea782f95c4f71-973x1300.jpg/321e4a1a5320c8a0405e899e52eea782f95c4f71-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/321e4a1a5320c8a0405e899e52eea782f95c4f71-973x1300.jpg/321e4a1a5320c8a0405e899e52eea782f95c4f71-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/321e4a1a5320c8a0405e899e52eea782f95c4f71-973x1300.jpg/321e4a1a5320c8a0405e899e52eea782f95c4f71-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "medium-onions",
+      "name": "medium onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-reduced-salt-chicken-o",
+      "name": "organic reduced-salt chicken or vegetable stock cubes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-ripe-tomatoes",
+      "name": "large ripe tomatoes",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-basil",
+      "name": "\u00bd a bunch of fresh basil",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    }
+  ],
+  "utensils": [
+    "blender",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "chop_onions",
+      "descr": "Peel and roughly slice the carrots, slice the celery,...",
+      "instructions": "Peel and roughly slice the carrots, slice the celery, and peel and roughly chop the onions. Peel and slice the garlic.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and roughly slice the carrots, slice the celery, and peel and roughly chop the onions. Peel and slice the garlic."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Heat 2 tablespoons of oil in a large pan over a medium...",
+      "instructions": "Heat 2 tablespoons of oil in a large pan over a medium heat, add all the prepped ingredients, then cook with lid ajar for 10 to 15 minutes, or until softened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "cube_cover"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 2 tablespoons of oil in a large pan over a medium heat, add all the prepped ingredients, then cook with lid ajar for 10 to 15 minutes, or until softened."
+        }
+      ]
+    },
+    {
+      "id": "cube_cover",
+      "descr": "Crumble the stock cubes into a jug, cover with1",
+      "instructions": "Crumble the stock cubes into a jug, cover with1.5 litres of boiling water, and stir until dissolved.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "add_stock"
+      ],
+      "on_enter": [
+        {
+          "say": "Crumble the stock cubes into a jug, cover with1.5 litres of boiling water, and stir until dissolved."
+        }
+      ]
+    },
+    {
+      "id": "add_stock",
+      "descr": "Add the stock to the veg pan with tinned and fresh whole...",
+      "instructions": "Add the stock to the veg pan with tinned and fresh whole tomatoes, including the green stalks that may still be attached to some of them (these give an amazing flavour \u2013 trust me!).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cube_cover"
+      ],
+      "next": [
+        "stir_bring"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the stock to the veg pan with tinned and fresh whole tomatoes, including the green stalks that may still be attached to some of them (these give an amazing flavour \u2013 trust me!)."
+        }
+      ]
+    },
+    {
+      "id": "stir_bring",
+      "descr": "Give it a good stir and bring to the boil, then reduce...",
+      "instructions": "Give it a good stir and bring to the boil, then reduce to a simmer for 10 minutes with the lid on. Meanwhile, pick your basil leaves.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "add_stock"
+      ],
+      "next": [
+        "heat_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Give it a good stir and bring to the boil, then reduce to a simmer for 10 minutes with the lid on. Meanwhile, pick your basil leaves."
+        }
+      ]
+    },
+    {
+      "id": "heat_taste",
+      "descr": "Remove the pan from the heat",
+      "instructions": "Remove the pan from the heat. Season to taste with sea salt and black pepper, then stir through the basil leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_bring"
+      ],
+      "next": [
+        "season_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pan from the heat. Season to taste with sea salt and black pepper, then stir through the basil leaves."
+        }
+      ]
+    },
+    {
+      "id": "season_step_7",
+      "descr": "Using a stick blender or liquidizer, pulse the soup...",
+      "instructions": "Using a stick blender or liquidizer, pulse the soup until smooth. Taste and check the seasoning, then serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Using a stick blender or liquidizer, pulse the soup until smooth. Taste and check the seasoning, then serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "122 calories",
+    "carbohydrates": "17.6 g",
+    "fat": "5.2 g",
+    "fiber": "5.2 g",
+    "protein": "3.6 g"
+  }
+}

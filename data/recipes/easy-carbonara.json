@@ -1,0 +1,191 @@
+{
+  "recipe": {
+    "id": "easy-carbonara",
+    "title": "Easy carbonara",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "This easy pasta sauce will cook in about the same time it takes to cook some dried pasta in boiling salted water \u2013 super quick and tasty.",
+    "tags": [
+      "tv",
+      "student-recipes",
+      "keep-cooking-pasta",
+      "tv-shows",
+      "occasion",
+      "keep-cooking-and-carry-on"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/easy-carbonara",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/701783bf859090eea919ec0fc2a4c58b148c9b67-958x1280.jpg/105104800?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/701783bf859090eea919ec0fc2a4c58b148c9b67-958x1280.jpg/105104800?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/701783bf859090eea919ec0fc2a4c58b148c9b67-958x1280.jpg/105104800?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/701783bf859090eea919ec0fc2a4c58b148c9b67-958x1280.jpg/105104800?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-spaghetti",
+      "name": "dried spaghetti",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "rashers-of-higher-welfare-smok",
+      "name": "rashers of higher-welfare smoked streaky bacon",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "free-range-eggs",
+      "name": "free-range eggs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": "plus extra for grating"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "boil_salted",
+      "descr": "Cook the pasta in a pan of boiling salted water...",
+      "instructions": "Cook the pasta in a pan of boiling salted water according to the packet instructions.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_half"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta in a pan of boiling salted water according to the packet instructions."
+        }
+      ]
+    },
+    {
+      "id": "heat_half",
+      "descr": "Slice the bacon and place in a non-stick frying pan on a...",
+      "instructions": "Slice the bacon and place in a non-stick frying pan on a medium heat with half a tablespoon of olive oil and a really good pinch of black pepper. Leave it to get super-golden and crispy, tossing occasionally, then turn off the heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the bacon and place in a non-stick frying pan on a medium heat with half a tablespoon of olive oil and a really good pinch of black pepper. Leave it to get super-golden and crispy, tossing occasionally, then turn off the heat."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Meanwhile, beat the eggs in a bowl, then finely grate in...",
+      "instructions": "Meanwhile, beat the eggs in a bowl, then finely grate in the Parmesan and mix well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_half"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, beat the eggs in a bowl, then finely grate in the Parmesan and mix well."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Use tongs to transfer your pasta straight into the pan...",
+      "instructions": "Use tongs to transfer your pasta straight into the pan and toss with the bacon.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "pour_parmesan"
+      ],
+      "on_enter": [
+        {
+          "say": "Use tongs to transfer your pasta straight into the pan and toss with the bacon."
+        }
+      ]
+    },
+    {
+      "id": "pour_parmesan",
+      "descr": "Pour the Parmesan eggs into the pan, and keep everything...",
+      "instructions": "Pour the Parmesan eggs into the pan, and keep everything moving, loosening with splashes of the pasta cooking water until you have a silky sauce. Make sure the pan isn\u2019t too hot otherwise the eggs will scramble.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_4"
+      ],
+      "next": [
+        "plate_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the Parmesan eggs into the pan, and keep everything moving, loosening with splashes of the pasta cooking water until you have a silky sauce. Make sure the pan isn\u2019t too hot otherwise the eggs will scramble."
+        }
+      ]
+    },
+    {
+      "id": "plate_pasta",
+      "descr": "Plate up the pasta, and finish with an extra grating of...",
+      "instructions": "Plate up the pasta, and finish with an extra grating of Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "pour_parmesan"
+      ],
+      "on_enter": [
+        {
+          "say": "Plate up the pasta, and finish with an extra grating of Parmesan."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "454 calories",
+    "carbohydrates": "55.7 g",
+    "fat": "17.4 g",
+    "fiber": "2.2 g",
+    "protein": "23 g"
+  }
+}

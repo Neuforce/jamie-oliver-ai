@@ -1,0 +1,142 @@
+{
+  "recipe": {
+    "id": "sweet-potato-chilli",
+    "title": "Sweet potato chilli",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT132M",
+    "description": "Jamie's versatile sweet potato chilli can be dished up in so many different ways.",
+    "tags": [
+      "sweet-potato",
+      "gluten-free",
+      "chilli",
+      "vegetarian"
+    ],
+    "course": "dessert",
+    "cuisine": "mexican",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/sweet-potato-chilli",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c78e33ab80ded8e3ea163252f6efa6bf5a4e01bd-958x1280.jpg/137249479?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c78e33ab80ded8e3ea163252f6efa6bf5a4e01bd-958x1280.jpg/137249479?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c78e33ab80ded8e3ea163252f6efa6bf5a4e01bd-958x1280.jpg/137249479?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c78e33ab80ded8e3ea163252f6efa6bf5a4e01bd-958x1280.jpg/137249479?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "sweet-potatoes",
+      "name": "sweet potatoes",
+      "quantity": 6.0,
+      "unit": null,
+      "note": "250g each"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cumin-seeds",
+      "name": "cumin seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "95g-jar-of-chipotle-chilli-pas",
+      "name": "95g jar of chipotle chilli paste",
+      "quantity": 95.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-or-frozen-chopped-mixed-",
+      "name": "fresh or frozen chopped mixed onion",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "carrot & celery"
+    },
+    {
+      "id": "a-bunch-of-coriander",
+      "name": "\u00bd a bunch of coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "400g-tins-of-black-beans",
+      "name": "400g tins of black beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "feta-cheese",
+      "name": "feta cheese",
+      "quantity": 60.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Put a large deep casserole pan on a medium-high heat. Peel the sweet potatoes, placing them in the pan as you go. Add 1 tablespoon of olive oil and fry for 5 minutes, turning occasionally, until starting to get golden. Push to one side, add the cumin, let it sizzle, then spoon in the jar of chipotle chilli paste and add 2 jars\u2019 worth of water. Tip in the chopped mixed veg, finely chop and add the coriander stalks, reserving the leaves, then bake for 1 hour.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "stir_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Put a large deep casserole pan on a medium-high heat. Peel the sweet potatoes, placing them in the pan as you go. Add 1 tablespoon of olive oil and fry for 5 minutes, turning occasionally, until starting to get golden. Push to one side, add the cumin, let it sizzle, then spoon in the jar of chipotle chilli paste and add 2 jars\u2019 worth of water. Tip in the chopped mixed veg, finely chop and add the coriander stalks, reserving the leaves, then bake for 1 hour."
+        }
+      ]
+    },
+    {
+      "id": "stir_well",
+      "descr": "Remove from the oven and add the beans, juice and all,...",
+      "instructions": "Remove from the oven and add the beans, juice and all, then the tomatoes, scrunching them in through clean hands, along with 1 tin\u2019s worth of water. Stir well, then roast for another hour, or until the sweet potatoes are tender. Season to perfection, then \u2013 if enjoying straight away \u2013 crumble over the feta and tear over the coriander leaves, to serve. Enjoy as is, batching up extra portions to stash in the fridge or freezer for future meals.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove from the oven and add the beans, juice and all, then the tomatoes, scrunching them in through clean hands, along with 1 tin\u2019s worth of water. Stir well, then roast for another hour, or until the sweet potatoes are tender. Season to perfection, then \u2013 if enjoying straight away \u2013 crumble over the feta and tear over the coriander leaves, to serve. Enjoy as is, batching up extra portions to stash in the fridge or freezer for future meals."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "229 calories",
+    "carbohydrates": "38.8 g",
+    "fat": "3.4 g",
+    "fiber": "12 g",
+    "protein": "8.8 g"
+  }
+}

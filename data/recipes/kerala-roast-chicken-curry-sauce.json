@@ -1,0 +1,294 @@
+{
+  "recipe": {
+    "id": "kerala-roast-chicken-curry-sauce",
+    "title": "Kerala roast chicken & curry sauce",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT63M",
+    "description": "Need a whole roast chicken recipe for the air fryer? Check out Jamie's fragrant Kerala-style roast, with cauliflower and chickpeas.",
+    "tags": [
+      "gluten-free",
+      "roast-chicken",
+      "air-fryer"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/roast/air-fryer-kerala-style-roast-chicken",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/67838ff8bb14d98fcfb3358672b415b1082256d6-973x1300.jpg/Kerala%20roast%20chicken%20and%20curry%20sauce%20crop.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/67838ff8bb14d98fcfb3358672b415b1082256d6-973x1300.jpg/Kerala%20roast%20chicken%20and%20curry%20sauce%20crop.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/67838ff8bb14d98fcfb3358672b415b1082256d6-973x1300.jpg/Kerala%20roast%20chicken%20and%20curry%20sauce%20crop.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/67838ff8bb14d98fcfb3358672b415b1082256d6-973x1300.jpg/Kerala%20roast%20chicken%20and%20curry%20sauce%20crop.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "roast"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "1-5kg-whole-free-range-chicken",
+      "name": "1.5kg whole free-range chicken",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-cauliflower",
+      "name": "small cauliflower",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "600g"
+    },
+    {
+      "id": "jamie-s-aromatic-kerala-curry-",
+      "name": "Jamie's Aromatic Kerala curry paste",
+      "quantity": 4.0,
+      "unit": "tbsp",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "700g-jar-of-chickpeas",
+      "name": "700g jar of chickpeas",
+      "quantity": 700.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "coriander",
+      "name": "coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "heaped-tsp-mustard-seeds",
+      "name": "heaped tsp mustard seeds",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ground-turmeric",
+      "name": "ground turmeric",
+      "quantity": 1.0,
+      "unit": "tsp",
+      "note": null
+    },
+    {
+      "id": "small-handful-of-curry-leaves",
+      "name": "small handful of curry leaves",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-cherry-tomatoes",
+      "name": "ripe cherry tomatoes",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-light-coconut-milk",
+      "name": "400g tin of light coconut milk",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "knife",
+    "pan",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Press down firmly on the chicken breasts to break the...",
+      "instructions": "Press down firmly on the chicken breasts to break the backbone, squashing the bird slightly, then slash each thigh a few times with a sharp knife. Cut the cauli into 6 wedges, discarding any tatty outer leaves. Rub the chicken and cauli all over with 2 tablespoons each of curry paste and olive oil, a little red wine vinegar and a pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "fry_drawer"
+      ],
+      "on_enter": [
+        {
+          "say": "Press down firmly on the chicken breasts to break the backbone, squashing the bird slightly, then slash each thigh a few times with a sharp knife. Cut the cauli into 6 wedges, discarding any tatty outer leaves. Rub the chicken and cauli all over with 2 tablespoons each of curry paste and olive oil, a little red wine vinegar and a pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "fry_drawer",
+      "descr": "Place the chicken, breast side down, in the large...",
+      "instructions": "Place the chicken, breast side down, in the large air-fryer drawer and press down. Cook for 50 minutes at 200\u00b0C, or until cooked through, turning halfway.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3000S",
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "add_chickpeas"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the chicken, breast side down, in the large air-fryer drawer and press down. Cook for 50 minutes at 200\u00b0C, or until cooked through, turning halfway."
+        }
+      ]
+    },
+    {
+      "id": "add_chickpeas",
+      "descr": "Place the cauliflower in the small drawer and cook for...",
+      "instructions": "Place the cauliflower in the small drawer and cook for 50 minutes at 200\u00b0C, draining and adding the chickpeas halfway.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3000S",
+      "depends_on": [
+        "fry_drawer"
+      ],
+      "next": [
+        "chop_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the cauliflower in the small drawer and cook for 50 minutes at 200\u00b0C, draining and adding the chickpeas halfway."
+        }
+      ]
+    },
+    {
+      "id": "chop_coriander",
+      "descr": "Meanwhile, for the sauce, peel the onion, garlic and...",
+      "instructions": "Meanwhile, for the sauce, peel the onion, garlic and ginger, deseed the chilli, then finely slice it all. Finely chop the coriander stalks, reserving the leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_chickpeas"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, for the sauce, peel the onion, garlic and ginger, deseed the chilli, then finely slice it all. Finely chop the coriander stalks, reserving the leaves."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Put a large non-stick pan on a medium heat on the hob...",
+      "instructions": "Put a large non-stick pan on a medium heat on the hob with 1 tablespoon of oil, the spices and the curry leaves. Fry for 2 minutes, then add the onion, garlic, ginger, chilli, a pinch of black pepper, the coriander stalks and the tomatoes. Stir in the remaining 2 tablespoons of curry paste and cook for 15 minutes, or until softened, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "chop_coriander"
+      ],
+      "next": [
+        "heat_reduced"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large non-stick pan on a medium heat on the hob with 1 tablespoon of oil, the spices and the curry leaves. Fry for 2 minutes, then add the onion, garlic, ginger, chilli, a pinch of black pepper, the coriander stalks and the tomatoes. Stir in the remaining 2 tablespoons of curry paste and cook for 15 minutes, or until softened, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "heat_reduced",
+      "descr": "Stir in the coconut milk, then simmer on a medium-low...",
+      "instructions": "Stir in the coconut milk, then simmer on a medium-low heat until reduced to a saucy consistency. Season to perfection with salt, pepper and lemon juice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "pour_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the coconut milk, then simmer on a medium-low heat until reduced to a saucy consistency. Season to perfection with salt, pepper and lemon juice."
+        }
+      ]
+    },
+    {
+      "id": "pour_over",
+      "descr": "Transfer the cooked chicken to a platter with the cauli...",
+      "instructions": "Transfer the cooked chicken to a platter with the cauli and chickpeas, pour over the curry sauce, and finish with the coriander leaves. Great with fluffy lemon rice, pomegranate-spiked mango chutney, raita and poppadoms.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_reduced"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer the cooked chicken to a platter with the cauli and chickpeas, pour over the curry sauce, and finish with the coriander leaves. Great with fluffy lemon rice, pomegranate-spiked mango chutney, raita and poppadoms."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "494 calories",
+    "carbohydrates": "24.2 g",
+    "fat": "24.8 g",
+    "fiber": "7.8 g",
+    "protein": "45.3 g"
+  }
+}

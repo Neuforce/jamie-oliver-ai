@@ -1,0 +1,149 @@
+{
+  "recipe": {
+    "id": "new-potato-salad-with-shallots-parsley-vinaigrette",
+    "title": "New potato salad with shallots, parsley & vinaigrette",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "Wondering what to make with new potatoes? Try out this herby, easy new potato salad recipe from Jamie Oliver. Get creative with the classic potato salad.",
+    "tags": [
+      "main-ingredient",
+      "vegan",
+      "salads",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "sides",
+      "low-lactose",
+      "salad",
+      "vegetables",
+      "potato",
+      "new-potatoes",
+      "potato-salad",
+      "popular",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/new-potato-salad-with-shallots-parsley-and-vinaigrette",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b6418058e1d48364cc2422efd07371bdca46a2d5-973x1300.jpg/b6418058e1d48364cc2422efd07371bdca46a2d5-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b6418058e1d48364cc2422efd07371bdca46a2d5-973x1300.jpg/b6418058e1d48364cc2422efd07371bdca46a2d5-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b6418058e1d48364cc2422efd07371bdca46a2d5-973x1300.jpg/b6418058e1d48364cc2422efd07371bdca46a2d5-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b6418058e1d48364cc2422efd07371bdca46a2d5-973x1300.jpg/b6418058e1d48364cc2422efd07371bdca46a2d5-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "new-potatoes",
+      "name": "new potatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "scrubbed"
+    },
+    {
+      "id": "dijon-mustard",
+      "name": "Dijon mustard",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "white-wine-vinegar",
+      "name": "white wine vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": 6.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "small-shallots",
+      "name": "small shallots",
+      "quantity": 3.0,
+      "unit": null,
+      "note": "very finely chopped"
+    },
+    {
+      "id": "a-handful-fresh-flat-leaf-pars",
+      "name": "a handful fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": "roughly chopped"
+    }
+  ],
+  "utensils": [
+    "pot",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "boil_potatoes",
+      "descr": "Gently boil the potatoes in salted water until tender",
+      "instructions": "Gently boil the potatoes in salted water until tender. Drain and leave to cool slightly.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_shallots"
+      ],
+      "on_enter": [
+        {
+          "say": "Gently boil the potatoes in salted water until tender. Drain and leave to cool slightly."
+        }
+      ]
+    },
+    {
+      "id": "chop_shallots",
+      "descr": "Whisk the mustard with the vinegar and slowly add the...",
+      "instructions": "Whisk the mustard with the vinegar and slowly add the olive oil. Add the chopped shallots and parsley and season well with sea salt and freshly ground black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_potatoes"
+      ],
+      "next": [
+        "slice_cooked"
+      ],
+      "on_enter": [
+        {
+          "say": "Whisk the mustard with the vinegar and slowly add the olive oil. Add the chopped shallots and parsley and season well with sea salt and freshly ground black pepper."
+        }
+      ]
+    },
+    {
+      "id": "slice_cooked",
+      "descr": "Slice the cooked potatoes in half and dress with the...",
+      "instructions": "Slice the cooked potatoes in half and dress with the shallot and parsley vinaigrette.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_shallots"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the cooked potatoes in half and dress with the shallot and parsley vinaigrette."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "170 calories",
+    "carbohydrates": "20.4 g",
+    "fat": "9.4 g",
+    "fiber": "1.4 g",
+    "protein": "2.3 g"
+  }
+}

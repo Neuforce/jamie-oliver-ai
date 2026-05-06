@@ -1,0 +1,358 @@
+{
+  "recipe": {
+    "id": "easy-flatbreads",
+    "title": "Easy flatbreads",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT35M",
+    "description": "A brilliant easy flatbread recipe for cooking with kids \u2013 get them to roll their sleeves up and get stuck in, and they'll learn how to make flatbreads.",
+    "tags": [
+      "money-saving-recipes",
+      "snacks",
+      "bbq-amp-grilling",
+      "picnic",
+      "dish-type",
+      "family-food",
+      "bonfire-night-recipes",
+      "lunch-amp-dinner-recipes",
+      "flatbread",
+      "healthy-vegetarian-recipes",
+      "quick-fixes",
+      "bread",
+      "course",
+      "healthy-snack-ideas",
+      "alfresco",
+      "quick-amp-easy-recipes",
+      "kids-party-food",
+      "occasion",
+      "freezer-friendly-recipes",
+      "store-cupboard-recipes",
+      "vegetarian",
+      "method",
+      "bread-amp-doughs",
+      "sides",
+      "main-ingredient",
+      "family-money-saving-recipes",
+      "party-food",
+      "healthy-family-recipes",
+      "family-store-cupboard-recipes",
+      "quick-amp-healthy-recipes",
+      "bread-dough",
+      "prep-amp-go-recipes",
+      "popular",
+      "garlic-bread",
+      "cheap-amp-cheerful"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/bread/easy-flatbreads",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/45f1baac6f68355e4e47ffdf860cc57fa5ba01ac-973x1300.jpg/45f1baac6f68355e4e47ffdf860cc57fa5ba01ac-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/45f1baac6f68355e4e47ffdf860cc57fa5ba01ac-973x1300.jpg/45f1baac6f68355e4e47ffdf860cc57fa5ba01ac-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/45f1baac6f68355e4e47ffdf860cc57fa5ba01ac-973x1300.jpg/45f1baac6f68355e4e47ffdf860cc57fa5ba01ac-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/45f1baac6f68355e4e47ffdf860cc57fa5ba01ac-973x1300.jpg/45f1baac6f68355e4e47ffdf860cc57fa5ba01ac-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "bread"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "flatbreads",
+      "name": "FLATBREADS",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "baking-powder",
+      "name": "baking powder",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "garlic-and-herb-butter",
+      "name": "GARLIC AND HERB BUTTER",
+      "quantity": null,
+      "unit": null,
+      "note": "OPTIONAL"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "fresh-soft-herbs",
+      "name": "fresh soft herbs",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "such as flat-leaf parsley, tarragon, basil, dill"
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "chopping board",
+    "griddle",
+    "knife",
+    "mixing bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mix_bowl",
+      "descr": "Add all the flatbread ingredients to a mixing bowl and...",
+      "instructions": "Add all the flatbread ingredients to a mixing bowl and mix together with a spoon, then use clean hands to pat and bring everything together.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Add all the flatbread ingredients to a mixing bowl and mix together with a spoon, then use clean hands to pat and bring everything together."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Dust a clean work surface with flour, then tip out the dough",
+      "instructions": "Dust a clean work surface with flour, then tip out the dough.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "knead_minute"
+      ],
+      "on_enter": [
+        {
+          "say": "Dust a clean work surface with flour, then tip out the dough."
+        }
+      ]
+    },
+    {
+      "id": "knead_minute",
+      "descr": "Knead for a minute or so to bring it all together (this...",
+      "instructions": "Knead for a minute or so to bring it all together (this isn\u2019t a traditional bread recipe, so you don\u2019t need to knead it for long \u2013 just enough time to bring everything together).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "plate_leave"
+      ],
+      "on_enter": [
+        {
+          "say": "Knead for a minute or so to bring it all together (this isn\u2019t a traditional bread recipe, so you don\u2019t need to knead it for long \u2013 just enough time to bring everything together)."
+        }
+      ]
+    },
+    {
+      "id": "plate_leave",
+      "descr": "Put the dough into a floured-dusted bowl and cover with...",
+      "instructions": "Put the dough into a floured-dusted bowl and cover with a plate, then leave aside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "knead_minute"
+      ],
+      "next": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the dough into a floured-dusted bowl and cover with a plate, then leave aside."
+        }
+      ]
+    },
+    {
+      "id": "step_step_5",
+      "descr": "If making the garlic butter: peel the garlic cloves and...",
+      "instructions": "If making the garlic butter: peel the garlic cloves and crush them with a garlic crusher.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "plate_leave"
+      ],
+      "next": [
+        "chop_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "If making the garlic butter: peel the garlic cloves and crush them with a garlic crusher."
+        }
+      ]
+    },
+    {
+      "id": "chop_ping",
+      "descr": "Pick the herb leaves onto a chopping board and finely...",
+      "instructions": "Pick the herb leaves onto a chopping board and finely chop them, discarding the stalks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_5"
+      ],
+      "next": [
+        "heat_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick the herb leaves onto a chopping board and finely chop them, discarding the stalks."
+        }
+      ]
+    },
+    {
+      "id": "heat_through",
+      "descr": "Melt the butter in a small pan over a medium heat, then...",
+      "instructions": "Melt the butter in a small pan over a medium heat, then stir through the garlic and chopped herbs, then set aside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "roll_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Melt the butter in a small pan over a medium heat, then stir through the garlic and chopped herbs, then set aside."
+        }
+      ]
+    },
+    {
+      "id": "roll_flour",
+      "descr": "Dust a clean work surface and rolling pin with flour,...",
+      "instructions": "Dust a clean work surface and rolling pin with flour, then divide the dough in half, then divide each half into 6 equal-sized pieces (roughly the size of a golf ball).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_through"
+      ],
+      "next": [
+        "roll_each"
+      ],
+      "on_enter": [
+        {
+          "say": "Dust a clean work surface and rolling pin with flour, then divide the dough in half, then divide each half into 6 equal-sized pieces (roughly the size of a golf ball)."
+        }
+      ]
+    },
+    {
+      "id": "roll_each",
+      "descr": "With your hands, pat and flatten the dough, then use a...",
+      "instructions": "With your hands, pat and flatten the dough, then use a rolling pin to roll each piece into 12cm rounds, roughly 2mm to 3mm thick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_flour"
+      ],
+      "next": [
+        "step_step_10"
+      ],
+      "on_enter": [
+        {
+          "say": "With your hands, pat and flatten the dough, then use a rolling pin to roll each piece into 12cm rounds, roughly 2mm to 3mm thick."
+        }
+      ]
+    },
+    {
+      "id": "step_step_10",
+      "descr": "Use a knife to cut 6 lines into the centre of each...",
+      "instructions": "Use a knife to cut 6 lines into the centre of each round, leaving about 3cm at each end.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_each"
+      ],
+      "next": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a knife to cut 6 lines into the centre of each round, leaving about 3cm at each end."
+        }
+      ]
+    },
+    {
+      "id": "heat_once",
+      "descr": "Place the griddle pan on a high heat, then once hot,...",
+      "instructions": "Place the griddle pan on a high heat, then once hot, cook each one for 1 to 2 minutes on each side, or until bar-marked and puffed up, turning with tongs.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "step_step_10"
+      ],
+      "next": [
+        "step_step_12"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the griddle pan on a high heat, then once hot, cook each one for 1 to 2 minutes on each side, or until bar-marked and puffed up, turning with tongs."
+        }
+      ]
+    },
+    {
+      "id": "step_step_12",
+      "descr": "Brush the flatbreads all over with herby garlic butter...",
+      "instructions": "Brush the flatbreads all over with herby garlic butter as they come off the griddle, then pile onto a serving board so everyone can dig in and help themselves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Brush the flatbreads all over with herby garlic butter as they come off the griddle, then pile onto a serving board so everyone can dig in and help themselves."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "152 calories",
+    "carbohydrates": "25.5 g",
+    "fat": "4.4 g",
+    "fiber": "1.2 g",
+    "protein": "4.1 g"
+  }
+}

@@ -1,0 +1,369 @@
+{
+  "recipe": {
+    "id": "salmon-en-cro-te",
+    "title": "Salmon en cro\u00fbte",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "This retro, crispy salmon en crou\u0302te is ideal for any occasion \u2013 birthdays, Christmas, or just a weekend blowout! ",
+    "tags": [
+      "christmas",
+      "christmas-dinner",
+      "pastry",
+      "dish-type",
+      "jamie-and-jimmy-s-friday-night-feast",
+      "puff-pastry",
+      "salmon",
+      "occasion",
+      "cheese",
+      "fnf-series-four",
+      "pies-amp-pastries",
+      "jamie-recipe",
+      "main-ingredient",
+      "spinach",
+      "tv",
+      "fish-pie",
+      "series-4",
+      "fish",
+      "episode-4"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/salmon/salmon-en-croute-",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fe2f142cc88fa32fe71be1e58d3d49971463cf7e-973x1300.jpg/51137627?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fe2f142cc88fa32fe71be1e58d3d49971463cf7e-973x1300.jpg/51137627?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fe2f142cc88fa32fe71be1e58d3d49971463cf7e-973x1300.jpg/51137627?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fe2f142cc88fa32fe71be1e58d3d49971463cf7e-973x1300.jpg/51137627?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "salmon"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-oregano",
+      "name": "\u00bd a bunch of fresh oregano",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "frozen-chopped-spinach",
+      "name": "frozen chopped spinach",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "all-butter-puff-pastry",
+      "name": "all-butter puff pastry",
+      "quantity": 375.0,
+      "unit": "g",
+      "note": "cold"
+    },
+    {
+      "id": "1kg-side-of-salmon",
+      "name": "1kg side of salmon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "ask your fishmonger for a fillet from the top end of the fish, skin off, pin-boned , from sustainable sources"
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sauce",
+      "name": "SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "leek",
+      "name": "leek",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sun-dried-tomatoes",
+      "name": "sun-dried tomatoes",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "white-wine",
+      "name": "white wine",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "red-leicester-cheese",
+      "name": "Red Leicester cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cayenne-pepper",
+      "name": "cayenne pepper",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking sheet",
+    "blender",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Peel and finely slice the onions and garlic, then place...",
+      "instructions": "Peel and finely slice the onions and garlic, then place in a large pan on a medium heat with 1 tablespoon of oil and half the butter. Pick in the oregano leaves and cook for 10 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "heat_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the onions and garlic, then place in a large pan on a medium heat with 1 tablespoon of oil and half the butter. Pick in the oregano leaves and cook for 10 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_taste",
+      "descr": "Add the spinach and cook for a further 15 to 20 minutes,...",
+      "instructions": "Add the spinach and cook for a further 15 to 20 minutes, or until the liquid has evaporated, still stirring regularly. Remove from the heat, taste, season to perfection with sea salt and black pepper and allow to cool.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the spinach and cook for a further 15 to 20 minutes, or until the liquid has evaporated, still stirring regularly. Remove from the heat, taste, season to perfection with sea salt and black pepper and allow to cool."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Meanwhile, make the sauce: wash, trim and finely slice...",
+      "instructions": "Meanwhile, make the sauce: wash, trim and finely slice the leek, then place in a large pan on a medium-low heat with 1 tablespoon of oil, the remaining butter and the sun-dried tomatoes. Cook for 15 minutes, or until sweet and tender, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_taste"
+      ],
+      "next": [
+        "stir_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, make the sauce: wash, trim and finely slice the leek, then place in a large pan on a medium-low heat with 1 tablespoon of oil, the remaining butter and the sun-dried tomatoes. Cook for 15 minutes, or until sweet and tender, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_flour",
+      "descr": "Pour in the wine and let it bubble and cook away, then...",
+      "instructions": "Pour in the wine and let it bubble and cook away, then stir in the flour and, splash by splash, stir in the milk. Leave it to simmer for 5 minutes, then liquidize in a blender until silky smooth.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "combine_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the wine and let it bubble and cook away, then stir in the flour and, splash by splash, stir in the milk. Leave it to simmer for 5 minutes, then liquidize in a blender until silky smooth."
+        }
+      ]
+    },
+    {
+      "id": "combine_taste",
+      "descr": "Grate in the cheese, add a pinch of cayenne and blitz...",
+      "instructions": "Grate in the cheese, add a pinch of cayenne and blitz again to combine. Taste and season to perfection, then leave to cool completely.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_flour"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Grate in the cheese, add a pinch of cayenne and blitz again to combine. Taste and season to perfection, then leave to cool completely."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 220\u00baC/425\u00baF/gas 7 and place a large...",
+      "instructions": "Preheat the oven to 220\u00baC/425\u00baF/gas 7 and place a large baking sheet inside to heat up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "combine_taste"
+      ],
+      "next": [
+        "roll_pastry"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 220\u00baC/425\u00baF/gas 7 and place a large baking sheet inside to heat up."
+        }
+      ]
+    },
+    {
+      "id": "roll_pastry",
+      "descr": "On a large sheet of flour-dusted greaseproof paper, roll...",
+      "instructions": "On a large sheet of flour-dusted greaseproof paper, roll out the pastry so it\u2019s 10cm bigger than your salmon all the way round.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "On a large sheet of flour-dusted greaseproof paper, roll out the pastry so it\u2019s 10cm bigger than your salmon all the way round."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Pour away any excess liquid from the cooled spinach...",
+      "instructions": "Pour away any excess liquid from the cooled spinach mixture, then spoon it on to the middle of the pastry and spread it across the surface, leaving a 3cm border at the edges. Place the salmon in the middle, then roll up the sides of the pastry to create the crust, going right up to the salmon and pinching it at the corners to secure it in place.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_pastry"
+      ],
+      "next": [
+        "preheat_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour away any excess liquid from the cooled spinach mixture, then spoon it on to the middle of the pastry and spread it across the surface, leaving a 3cm border at the edges. Place the salmon in the middle, then roll up the sides of the pastry to create the crust, going right up to the salmon and pinching it at the corners to secure it in place."
+        }
+      ]
+    },
+    {
+      "id": "preheat_tray",
+      "descr": "Lightly score the top of the salmon in a criss-cross...",
+      "instructions": "Lightly score the top of the salmon in a criss-cross fashion, then pour the cool cheesy sauce over the fish. Brush the exposed pastry with beaten egg, then carefully lift the greaseproof and salmon en cro\u00fbte on to the preheated tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "bake_bottom"
+      ],
+      "on_enter": [
+        {
+          "say": "Lightly score the top of the salmon in a criss-cross fashion, then pour the cool cheesy sauce over the fish. Brush the exposed pastry with beaten egg, then carefully lift the greaseproof and salmon en cro\u00fbte on to the preheated tray."
+        }
+      ]
+    },
+    {
+      "id": "bake_bottom",
+      "descr": "Bake at the bottom of the oven for 30 to 40 minutes, or...",
+      "instructions": "Bake at the bottom of the oven for 30 to 40 minutes, or until golden and cooked through. This is delicious served with a garden salad and lemon wedges on the side for squeezing over.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT2400S",
+      "depends_on": [
+        "preheat_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake at the bottom of the oven for 30 to 40 minutes, or until golden and cooked through. This is delicious served with a garden salad and lemon wedges on the side for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "657 calories",
+    "carbohydrates": "36.7 g",
+    "fat": "43.5 g",
+    "fiber": "2.9 g",
+    "protein": "37.3 g"
+  }
+}

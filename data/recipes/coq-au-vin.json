@@ -1,0 +1,277 @@
+{
+  "recipe": {
+    "id": "coq-au-vin",
+    "title": "Coq au vin",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT100M",
+    "description": "Jamie's version of the iconic French stew featuring tender chicken, pancetta, mushrooms and red wine. Weekend cooking at its best!",
+    "tags": [
+      "entertaining",
+      "chicken",
+      "french-style",
+      "casserole",
+      "low-lactose",
+      "dairy-free",
+      "mushroom",
+      "stew"
+    ],
+    "course": "main",
+    "cuisine": "french",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/coq-au-vin",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/16abec4288b15d97b2d198a186cab14390927036-853x1280.jpg/163163279?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/16abec4288b15d97b2d198a186cab14390927036-853x1280.jpg/163163279?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/16abec4288b15d97b2d198a186cab14390927036-853x1280.jpg/163163279?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/16abec4288b15d97b2d198a186cab14390927036-853x1280.jpg/163163279?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "1-5kg-free-range-whole-chicken",
+      "name": "1.5kg free-range whole chicken",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "rashers-of-thickly-sliced-high",
+      "name": "rashers of thickly sliced higher-welfare smoked pancetta or streaky bacon",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shallots",
+      "name": "shallots",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "button-mushrooms",
+      "name": "button mushrooms",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "bottle-of-good-robust-red-wine",
+      "name": "bottle of good robust red wine",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "such as Merlot, Cabernet Sauvignon"
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-flat-leaf-par",
+      "name": "\u00bd a bunch of fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5",
+      "instructions": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "season_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5."
+        }
+      ]
+    },
+    {
+      "id": "season_flour",
+      "descr": "Place the flour in a shallow bowl, with a pinch of sea...",
+      "instructions": "Place the flour in a shallow bowl, with a pinch of sea salt and black pepper. Joint the chicken into 8 pieces, then dust the pieces in the seasoned flour.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the flour in a shallow bowl, with a pinch of sea salt and black pepper. Joint the chicken into 8 pieces, then dust the pieces in the seasoned flour."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Put the chicken into a large, cold shallow casserole pan...",
+      "instructions": "Put the chicken into a large, cold shallow casserole pan and place on a medium heat with 1 tablespoon of olive oil. Fry for 10 minutes, or until golden all over, turning regularly, then remove to a plate \u2013 you may need to work in batches.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "season_flour"
+      ],
+      "next": [
+        "slice_pancetta"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the chicken into a large, cold shallow casserole pan and place on a medium heat with 1 tablespoon of olive oil. Fry for 10 minutes, or until golden all over, turning regularly, then remove to a plate \u2013 you may need to work in batches."
+        }
+      ]
+    },
+    {
+      "id": "slice_pancetta",
+      "descr": "Meanwhile, slice the pancetta, peel and slice the...",
+      "instructions": "Meanwhile, slice the pancetta, peel and slice the shallots, and trim the mushrooms.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "add_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, slice the pancetta, peel and slice the shallots, and trim the mushrooms."
+        }
+      ]
+    },
+    {
+      "id": "add_garlic",
+      "descr": "In the now empty pan, fry the pancetta for 2 minutes,...",
+      "instructions": "In the now empty pan, fry the pancetta for 2 minutes, then go in with the shallots and mushrooms. Cook for 15 minutes, or until the vegetables are soft and sweet, and the bacon is golden. With 2 minutes to go, use a garlic crusher to crush and add the garlic.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "slice_pancetta"
+      ],
+      "next": [
+        "add_thyme"
+      ],
+      "on_enter": [
+        {
+          "say": "In the now empty pan, fry the pancetta for 2 minutes, then go in with the shallots and mushrooms. Cook for 15 minutes, or until the vegetables are soft and sweet, and the bacon is golden. With 2 minutes to go, use a garlic crusher to crush and add the garlic."
+        }
+      ]
+    },
+    {
+      "id": "add_thyme",
+      "descr": "Pour in the wine, scraping up any sticky goodness from...",
+      "instructions": "Pour in the wine, scraping up any sticky goodness from the bottom of the pan, and bring to the boil. Skim any scum from the top of the liquid, then add the bay and thyme, and return the chicken to the pan skin-side up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_garlic"
+      ],
+      "next": [
+        "bake_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the wine, scraping up any sticky goodness from the bottom of the pan, and bring to the boil. Skim any scum from the top of the liquid, then add the bay and thyme, and return the chicken to the pan skin-side up."
+        }
+      ]
+    },
+    {
+      "id": "bake_hour",
+      "descr": "Cover and bake for 1 hour, or until the chicken is...",
+      "instructions": "Cover and bake for 1 hour, or until the chicken is cooked through and falls off the bone. The sauce should be a rich, dark reddish brown.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "add_thyme"
+      ],
+      "next": [
+        "chop_scatter"
+      ],
+      "on_enter": [
+        {
+          "say": "Cover and bake for 1 hour, or until the chicken is cooked through and falls off the bone. The sauce should be a rich, dark reddish brown."
+        }
+      ]
+    },
+    {
+      "id": "chop_scatter",
+      "descr": "Taste and tweak with a little sea salt and black pepper,...",
+      "instructions": "Taste and tweak with a little sea salt and black pepper, and finely chop and scatter over the parsley leaves. Delicious served with mashed potato and seasonal greens, or simply some crusty bread to mop up the rich sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "bake_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Taste and tweak with a little sea salt and black pepper, and finely chop and scatter over the parsley leaves. Delicious served with mashed potato and seasonal greens, or simply some crusty bread to mop up the rich sauce."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "582 calories",
+    "carbohydrates": "11.8 g",
+    "fat": "18.6 g",
+    "fiber": "2.8 g",
+    "protein": "61.4 g"
+  }
+}

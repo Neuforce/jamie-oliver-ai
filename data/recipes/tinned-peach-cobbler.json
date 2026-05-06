@@ -1,0 +1,235 @@
+{
+  "recipe": {
+    "id": "tinned-peach-cobbler",
+    "title": "Tinned peach cobbler",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "Turn tinned fruit into a stunning dessert with this easy peach cobbler. A budget-friendly, delicious recipe that requires no fancy equipment!",
+    "tags": [
+      "dinner-party",
+      "budget-friendly",
+      "dessert",
+      "budget-desserts",
+      "vegetarian",
+      "store-cupboard",
+      "fruit"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/desserts/tinned-peach-cobbler",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/44f599ef9852ae900bff82edbb2219b8fe426a84-2059x3088.jpg/JO_JV_F45_Tinned_Peach_Cobbler_2226.jpg?rect=0,515,2059,2059&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/44f599ef9852ae900bff82edbb2219b8fe426a84-2059x3088.jpg/JO_JV_F45_Tinned_Peach_Cobbler_2226.jpg?rect=0,515,2059,2059&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/44f599ef9852ae900bff82edbb2219b8fe426a84-2059x3088.jpg/JO_JV_F45_Tinned_Peach_Cobbler_2226.jpg?rect=0,772,2059,1544&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/44f599ef9852ae900bff82edbb2219b8fe426a84-2059x3088.jpg/JO_JV_F45_Tinned_Peach_Cobbler_2226.jpg?rect=0,965,2059,1158&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "desserts"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "410g-tins-of-peach-slices-in-j",
+      "name": "410g tins of peach slices in juice",
+      "quantity": 410.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-raspberry-ja",
+      "name": "heaped tablespoon raspberry jam",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-baking-powder",
+      "name": "heaped teaspoon baking powder",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": "cold"
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": "plus extra for sprinkling"
+    },
+    {
+      "id": "vanilla-essence",
+      "name": "vanilla essence",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "teaspoon-ground-cinnamon",
+      "name": "\u00bd teaspoon ground cinnamon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "free-range-egg",
+      "name": "free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "double-cream",
+      "name": "double cream",
+      "quantity": 300.0,
+      "unit": "ml",
+      "note": "to serve"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 160\u00baC/325\u00baF/gas 3",
+      "instructions": "Preheat the oven to 160\u00baC/325\u00baF/gas 3.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_breaking"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 160\u00baC/325\u00baF/gas 3."
+        }
+      ]
+    },
+    {
+      "id": "heat_breaking",
+      "descr": "Drain the peaches in a sieve over a medium pan, tipping...",
+      "instructions": "Drain the peaches in a sieve over a medium pan, tipping the fruit into a 25cm x 30cm roasting dish. Place the pan on a medium heat, add the jam, breaking it up with a spoon, and cook away until thickened and reduced, adding a few drops of vinegar, to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "cube_using"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the peaches in a sieve over a medium pan, tipping the fruit into a 25cm x 30cm roasting dish. Place the pan on a medium heat, add the jam, breaking it up with a spoon, and cook away until thickened and reduced, adding a few drops of vinegar, to taste."
+        }
+      ]
+    },
+    {
+      "id": "cube_using",
+      "descr": "Tip the flour, 125g of sugar and the baking powder into...",
+      "instructions": "Tip the flour, 125g of sugar and the baking powder into a bowl. Cut the butter into cubes and, using your fingertips, gently rub it into the mix until it starts to resemble breadcrumbs.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_breaking"
+      ],
+      "next": [
+        "mix_comes"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the flour, 125g of sugar and the baking powder into a bowl. Cut the butter into cubes and, using your fingertips, gently rub it into the mix until it starts to resemble breadcrumbs."
+        }
+      ]
+    },
+    {
+      "id": "mix_comes",
+      "descr": "Add the vanilla essence and the cinnamon, crack in the...",
+      "instructions": "Add the vanilla essence and the cinnamon, crack in the egg, and beat well until smooth. Mix until it all comes together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cube_using"
+      ],
+      "next": [
+        "drizzle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the vanilla essence and the cinnamon, crack in the egg, and beat well until smooth. Mix until it all comes together."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_over",
+      "descr": "Using a tablespoon, dollop 8 rustic spoonfuls of batter...",
+      "instructions": "Using a tablespoon, dollop 8 rustic spoonfuls of batter on top of the peaches \u2013 it will move around when cooking, so it doesn\u2019t have to be perfect. Drizzle over some of the peach and raspberry syrup, sprinkle the top with the remaining sugar, and bake for 40 minutes, or until beautifully golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "mix_comes"
+      ],
+      "next": [
+        "warm_fruit"
+      ],
+      "on_enter": [
+        {
+          "say": "Using a tablespoon, dollop 8 rustic spoonfuls of batter on top of the peaches \u2013 it will move around when cooking, so it doesn\u2019t have to be perfect. Drizzle over some of the peach and raspberry syrup, sprinkle the top with the remaining sugar, and bake for 40 minutes, or until beautifully golden."
+        }
+      ]
+    },
+    {
+      "id": "warm_fruit",
+      "descr": "Whip the cream to soft peaks, ripple through the...",
+      "instructions": "Whip the cream to soft peaks, ripple through the remaining syrup, then transfer to a serving bowl. Serve the cobbler warm with the fruit-rippled cream. Delicious!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "drizzle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Whip the cream to soft peaks, ripple through the remaining syrup, then transfer to a serving bowl. Serve the cobbler warm with the fruit-rippled cream. Delicious!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "484 calories",
+    "carbohydrates": "72.4 g",
+    "fat": "21.9 g",
+    "fiber": "3.5 g",
+    "protein": "4.9 g"
+  }
+}

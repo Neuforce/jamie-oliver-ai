@@ -1,0 +1,159 @@
+{
+  "recipe": {
+    "id": "roasted-parsnips",
+    "title": "Roasted parsnips",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT80M",
+    "description": "The acidity of the vinegar cuts through the sweetness of the parsnips beautifully here, and the combo of bay and honey adds a real festive feel. ",
+    "tags": [
+      "christmas",
+      "tv",
+      "vegetable-sides",
+      "vegetarian",
+      "dish-type",
+      "keep-cooking-at-christmas",
+      "gluten-free",
+      "the-trimmings",
+      "vegetables",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/roasted-parsnips",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6f5b86e47f2f0958337a93a85fa8f5aae946b3d1-958x1280.jpg/116851410?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6f5b86e47f2f0958337a93a85fa8f5aae946b3d1-958x1280.jpg/116851410?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6f5b86e47f2f0958337a93a85fa8f5aae946b3d1-958x1280.jpg/116851410?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6f5b86e47f2f0958337a93a85fa8f5aae946b3d1-958x1280.jpg/116851410?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "medium-parsnips",
+      "name": "medium parsnips",
+      "quantity": 1.5,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "white-or-red-wine-vinegar",
+      "name": "white or red wine vinegar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Scrub the parsnips, then blanch whole in a large pan of...",
+      "instructions": "Scrub the parsnips, then blanch whole in a large pan of boiling salted water for 5 minutes, then drain and steam dry.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub the parsnips, then blanch whole in a large pan of boiling salted water for 5 minutes, then drain and steam dry."
+        }
+      ]
+    },
+    {
+      "id": "roast_tray",
+      "descr": "Tip into a large roasting tray, dot over the butter and...",
+      "instructions": "Tip into a large roasting tray, dot over the butter and a pinch of sea salt and black pepper, toss to coat and arrange in a single layer, then roast for 1 hour.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "drizzle_vinegar"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip into a large roasting tray, dot over the butter and a pinch of sea salt and black pepper, toss to coat and arrange in a single layer, then roast for 1 hour."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_vinegar",
+      "descr": "Remove the tray from the oven, quickly scatter over the...",
+      "instructions": "Remove the tray from the oven, quickly scatter over the bay leaves and drizzle with the vinegar and honey, then toss together and roast for a final 10 minutes, or until beautifully golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT600S",
+      "depends_on": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the tray from the oven, quickly scatter over the bay leaves and drizzle with the vinegar and honey, then toss together and roast for a final 10 minutes, or until beautifully golden."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "205 calories",
+    "carbohydrates": "38.2 g",
+    "fat": "5.8 g",
+    "fiber": "9.2 g",
+    "protein": "2.4 g"
+  }
+}

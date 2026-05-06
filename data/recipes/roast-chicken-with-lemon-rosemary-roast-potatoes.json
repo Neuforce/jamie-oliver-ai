@@ -1,0 +1,254 @@
+{
+  "recipe": {
+    "id": "roast-chicken-with-lemon-rosemary-roast-potatoes",
+    "title": "Roast chicken with lemon & rosemary roast potatoes",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT120M",
+    "description": "Lemon roast chicken is a discovery definitely worth trying out; a tangy twist on a chicken recipe cooked with roast potatoes makes for a perfect meal.",
+    "tags": [
+      "roast",
+      "dinner-party",
+      "sunday-lunch",
+      "chicken",
+      "main-ingredient",
+      "roast-potatoes",
+      "mother-s-day",
+      "mains",
+      "dish-type",
+      "method",
+      "roasting",
+      "low-lactose",
+      "gluten-free",
+      "potato",
+      "dairy-free",
+      "occasion",
+      "roast-chicken",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/roast-chicken-with-lemon-and-rosemary-roast-potatoes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/86cf859d21d42e528b0812476f711a536e49ef4d-973x1300.jpg/86cf859d21d42e528b0812476f711a536e49ef4d-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/86cf859d21d42e528b0812476f711a536e49ef4d-973x1300.jpg/86cf859d21d42e528b0812476f711a536e49ef4d-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/86cf859d21d42e528b0812476f711a536e49ef4d-973x1300.jpg/86cf859d21d42e528b0812476f711a536e49ef4d-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/86cf859d21d42e528b0812476f711a536e49ef4d-973x1300.jpg/86cf859d21d42e528b0812476f711a536e49ef4d-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "2kg-4-lb-free-range-organic-ch",
+      "name": "2kg/4\u00bdlb free-range organic chicken",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sea-salt-and-freshly-ground-bl",
+      "name": "sea salt and freshly ground black pepper",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "kg-3-lb-potatoes",
+      "name": "kg/3\u2153 lb potatoes",
+      "quantity": 1.5,
+      "unit": null,
+      "note": "peeled"
+    },
+    {
+      "id": "large",
+      "name": "large",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "preferably unwaxed, lemon"
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "broken into cloves"
+    },
+    {
+      "id": "a-handful-of-fresh-thyme",
+      "name": "a handful of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-handful-of-fresh-rosemary-sp",
+      "name": "a handful of fresh rosemary sprigs",
+      "quantity": null,
+      "unit": null,
+      "note": "leaves picked"
+    },
+    {
+      "id": "optional-8-rashers-of-smoked-s",
+      "name": "optional: 8 rashers of smoked streaky bacon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Rub the chicken inside and out with a generous amount of...",
+      "instructions": "Rub the chicken inside and out with a generous amount of salt and freshly ground black pepper. Do this in the morning if possible, then cover the chicken and leave in the fridge until you're ready to start cooking it for lunch or dinner. By doing this, you'll make the meat really tasty when cooked.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub the chicken inside and out with a generous amount of salt and freshly ground black pepper. Do this in the morning if possible, then cover the chicken and leave in the fridge until you're ready to start cooking it for lunch or dinner. By doing this, you'll make the meat really tasty when cooked."
+        }
+      ]
+    },
+    {
+      "id": "preheat_your",
+      "descr": "Preheat your oven to 190\u00baC/375\u00baF/gas 5",
+      "instructions": "Preheat your oven to 190\u00baC/375\u00baF/gas 5. Bring a large pan of salted water to the boil. Cut the potatoes into golf-ball-sized pieces, put them into the water with the whole lemon and the garlic cloves, and cook for 12 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT720S",
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "roast_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat your oven to 190\u00baC/375\u00baF/gas 5. Bring a large pan of salted water to the boil. Cut the potatoes into golf-ball-sized pieces, put them into the water with the whole lemon and the garlic cloves, and cook for 12 minutes."
+        }
+      ]
+    },
+    {
+      "id": "roast_step_3",
+      "descr": "Drain and allow to steam dry for 1 minute (this will...",
+      "instructions": "Drain and allow to steam dry for 1 minute (this will give you crispier potatoes), then remove the lemon and garlic. Toss the potatoes in the pan while still hot so their outsides get chuffed up and fluffy \u2013 this will make them lovely and crispy when they roast.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "preheat_your"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain and allow to steam dry for 1 minute (this will give you crispier potatoes), then remove the lemon and garlic. Toss the potatoes in the pan while still hot so their outsides get chuffed up and fluffy \u2013 this will make them lovely and crispy when they roast."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "While the lemon is still hot, carefully stab it about 10...",
+      "instructions": "While the lemon is still hot, carefully stab it about 10 times. Take the chicken out of the fridge, pat it with kitchen paper and rub it all over with olive oil. Push the garlic cloves, the whole lemon and the thyme into the cavity, then put the chicken into a roasting tray and cook in the preheated oven for around 45 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "roast_step_3"
+      ],
+      "next": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "While the lemon is still hot, carefully stab it about 10 times. Take the chicken out of the fridge, pat it with kitchen paper and rub it all over with olive oil. Push the garlic cloves, the whole lemon and the thyme into the cavity, then put the chicken into a roasting tray and cook in the preheated oven for around 45 minutes."
+        }
+      ]
+    },
+    {
+      "id": "roast_tray",
+      "descr": "Remove the chicken to a plate",
+      "instructions": "Remove the chicken to a plate. Some lovely fat should have cooked out of it into the roasting tray, so toss the potatoes into this with the rosemary leaves. Shake the tray around, then make a gap in the centre of the potatoes and put the chicken back in.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the chicken to a plate. Some lovely fat should have cooked out of it into the roasting tray, so toss the potatoes into this with the rosemary leaves. Shake the tray around, then make a gap in the centre of the potatoes and put the chicken back in."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "If using the bacon, lay the rashers over the chicken...",
+      "instructions": "If using the bacon, lay the rashers over the chicken breast and cook for a further 45 minutes, or until the chicken is cooked and the potatoes are nice and golden. (You can tell the chicken is cooked when the thigh meat pulls easily away from the bone and the juices run clear.)",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "roast_tray"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "If using the bacon, lay the rashers over the chicken breast and cook for a further 45 minutes, or until the chicken is cooked and the potatoes are nice and golden. (You can tell the chicken is cooked when the thigh meat pulls easily away from the bone and the juices run clear.)"
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "I like to remove the bacon from the chicken and crumble...",
+      "instructions": "I like to remove the bacon from the chicken and crumble it up over the potatoes. Then I remove the lemon and garlic from inside the chicken, squeeze all the garlic flesh out of the skin, mush it up and smear it all over the chicken, discard the lemon and rosemary and carve the chicken at the table. Heaven!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "I like to remove the bacon from the chicken and crumble it up over the potatoes. Then I remove the lemon and garlic from inside the chicken, squeeze all the garlic flesh out of the skin, mush it up and smear it all over the chicken, discard the lemon and rosemary and carve the chicken at the table. Heaven!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "496 calories",
+    "carbohydrates": "44.1 g",
+    "fat": "16.8 g",
+    "fiber": "3.5 g",
+    "protein": "44.6 g"
+  }
+}

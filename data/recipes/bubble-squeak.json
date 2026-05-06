@@ -1,0 +1,177 @@
+{
+  "recipe": {
+    "id": "bubble-squeak",
+    "title": "Bubble & squeak",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "I\u2019ve always liked making this Bubble & squeak recipe, since I was a kid. We\u2019d have the pan going for well over an hour, slowly turning those precious leftovers into an incredible dish. Good bubble & squeak is hard to beat.",
+    "tags": [
+      "breakfast-and-brunch",
+      "vegetarian",
+      "roast-potatoes"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/bubble-squeak",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/83d6ca93751061a8caa7e0e4a673866ac0226037-958x1280.jpg/117394880?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/83d6ca93751061a8caa7e0e4a673866ac0226037-958x1280.jpg/117394880?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/83d6ca93751061a8caa7e0e4a673866ac0226037-958x1280.jpg/117394880?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/83d6ca93751061a8caa7e0e4a673866ac0226037-958x1280.jpg/117394880?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 25.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-woody-herbs",
+      "name": "fresh woody herbs",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": "such as rosemary, sage, thyme"
+    },
+    {
+      "id": "leftover-roast-potatoes",
+      "name": "leftover roast potatoes",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "leftover-cooked-veg",
+      "name": "leftover cooked veg",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": "such as carrots, swede, turnips, parsnips, Brussels sprouts, kale"
+    },
+    {
+      "id": "optional-leftover-vac-packed-c",
+      "name": "optional: leftover vac-packed chestnuts",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Put a 28cm non-stick frying pan on a medium heat with 1...",
+      "instructions": "Put a 28cm non-stick frying pan on a medium heat with 1 tablespoon of oil and the butter (or, even better, any leftover dripping you have in the fridge).",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_anything"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a 28cm non-stick frying pan on a medium heat with 1 tablespoon of oil and the butter (or, even better, any leftover dripping you have in the fridge)."
+        }
+      ]
+    },
+    {
+      "id": "chop_anything",
+      "descr": "Pick in the fresh herb leaves and let them crisp up for...",
+      "instructions": "Pick in the fresh herb leaves and let them crisp up for a minute, then add the potatoes, veg, and any leftover chestnuts you\u2019ve got. There\u2019s no need to chop anything first, as now we\u2019re going to mash it all up with a potato masher into a nice, flat, even layer.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "season_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick in the fresh herb leaves and let them crisp up for a minute, then add the potatoes, veg, and any leftover chestnuts you\u2019ve got. There\u2019s no need to chop anything first, as now we\u2019re going to mash it all up with a potato masher into a nice, flat, even layer."
+        }
+      ]
+    },
+    {
+      "id": "season_well",
+      "descr": "Season well with sea salt and black pepper, and cook for...",
+      "instructions": "Season well with sea salt and black pepper, and cook for 3 to 4 minutes, or until a lovely golden crust starts forming on the bottom.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "chop_anything"
+      ],
+      "next": [
+        "heat_while"
+      ],
+      "on_enter": [
+        {
+          "say": "Season well with sea salt and black pepper, and cook for 3 to 4 minutes, or until a lovely golden crust starts forming on the bottom."
+        }
+      ]
+    },
+    {
+      "id": "heat_while",
+      "descr": "Now we get into the rhythm of the secret to good bubble...",
+      "instructions": "Now we get into the rhythm of the secret to good bubble & squeak. Use a fish slice to fold those lovely crispy bits back into the mash, then pat and flatten everything down again. Let it crisp up again, then repeat the process, and \u2013 importantly \u2013 keep repeating it over a period of about 20 minutes, until it\u2019s golden, super- crispy and delicious. About halfway through, nick a bit, taste it, and correct the seasoning if you need to. When it\u2019s looking good, you can serve it right away, or you can leave it on the lowest heat for a while \u2013 the flavour will only improve.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "season_well"
+      ],
+      "next": [
+        "slice_leftover"
+      ],
+      "on_enter": [
+        {
+          "say": "Now we get into the rhythm of the secret to good bubble & squeak. Use a fish slice to fold those lovely crispy bits back into the mash, then pat and flatten everything down again. Let it crisp up again, then repeat the process, and \u2013 importantly \u2013 keep repeating it over a period of about 20 minutes, until it\u2019s golden, super- crispy and delicious. About halfway through, nick a bit, taste it, and correct the seasoning if you need to. When it\u2019s looking good, you can serve it right away, or you can leave it on the lowest heat for a while \u2013 the flavour will only improve."
+        }
+      ]
+    },
+    {
+      "id": "slice_leftover",
+      "descr": "You can serve this any which way you like \u2013 let\u2019s be...",
+      "instructions": "You can serve this any which way you like \u2013 let\u2019s be honest, it\u2019s going to be amazing whatever you have it with. I like mine with fried eggs, a little lemon-dressed watercress and a few bombs of Piccalilli. Slices of leftover cooked ham are always going to go down a treat, too.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_while"
+      ],
+      "on_enter": [
+        {
+          "say": "You can serve this any which way you like \u2013 let\u2019s be honest, it\u2019s going to be amazing whatever you have it with. I like mine with fried eggs, a little lemon-dressed watercress and a few bombs of Piccalilli. Slices of leftover cooked ham are always going to go down a treat, too."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "376 calories",
+    "carbohydrates": "48.5 g",
+    "fat": "18.4 g",
+    "fiber": "6.3 g",
+    "protein": "6.9 g"
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "recipe": {
+    "id": "quick-falafel",
+    "title": "Quick falafel",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "Jamie's falafel recipe is quick, easy, and full of flavour and texture \u2013 give it a go",
+    "tags": [
+      "chickpea",
+      "alfresco",
+      "vegetarian",
+      "occasion"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/quick-falafel",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/158dd72fc27de6ec6627e7dc70afcde5bf6935cf-958x1280.jpg/150601157?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/158dd72fc27de6ec6627e7dc70afcde5bf6935cf-958x1280.jpg/150601157?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/158dd72fc27de6ec6627e7dc70afcde5bf6935cf-958x1280.jpg/150601157?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/158dd72fc27de6ec6627e7dc70afcde5bf6935cf-958x1280.jpg/150601157?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "400g-tins-of-chickpeas",
+      "name": "400g tins of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-harissa",
+      "name": "heaped tablespoon harissa",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-allspice",
+      "name": "heaped teaspoon allspice",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-coriander",
+      "name": "fresh coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pitta-breads",
+      "name": "pitta breads",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-mint",
+      "name": "fresh mint",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "frying pan",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "process_step_1",
+      "descr": "Drain the chickpeas and put them into a food processor",
+      "instructions": "Drain the chickpeas and put them into a food processor.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the chickpeas and put them into a food processor."
+        }
+      ]
+    },
+    {
+      "id": "add_pinch",
+      "descr": "Finely grate in the lemon zest, then add a pinch of sea...",
+      "instructions": "Finely grate in the lemon zest, then add a pinch of sea salt and black pepper, the harissa, allspice, flour and coriander stalks (reserving the leaves for the Coriander & lemon yoghurt, or tasty cooking another day). Blitz until smooth, scraping down the sides of the processor if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "process_step_1"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate in the lemon zest, then add a pinch of sea salt and black pepper, the harissa, allspice, flour and coriander stalks (reserving the leaves for the Coriander & lemon yoghurt, or tasty cooking another day). Blitz until smooth, scraping down the sides of the processor if needed."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Scrape out the mixture and use clean, wet hands to...",
+      "instructions": "Scrape out the mixture and use clean, wet hands to quickly divide and shape it into 16 patties.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_pinch"
+      ],
+      "next": [
+        "heat_carefully"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrape out the mixture and use clean, wet hands to quickly divide and shape it into 16 patties."
+        }
+      ]
+    },
+    {
+      "id": "heat_carefully",
+      "descr": "Drizzle 2 tablespoons of olive oil into a large...",
+      "instructions": "Drizzle 2 tablespoons of olive oil into a large non-stick frying pan on a medium heat. Carefully lay in the falafels and cook for 6 minutes, or until golden and crisp, turning halfway.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT360S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "warm_pittas"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle 2 tablespoons of olive oil into a large non-stick frying pan on a medium heat. Carefully lay in the falafels and cook for 6 minutes, or until golden and crisp, turning halfway."
+        }
+      ]
+    },
+    {
+      "id": "warm_pittas",
+      "descr": "Warm the pittas in the oven or toast them directly over...",
+      "instructions": "Warm the pittas in the oven or toast them directly over the flame of a gas hob, using tongs to turn them over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_carefully"
+      ],
+      "next": [
+        "warm_pitta"
+      ],
+      "on_enter": [
+        {
+          "say": "Warm the pittas in the oven or toast them directly over the flame of a gas hob, using tongs to turn them over."
+        }
+      ]
+    },
+    {
+      "id": "warm_pitta",
+      "descr": "Load the falafels into warm pitta breads with your...",
+      "instructions": "Load the falafels into warm pitta breads with your favourite toppings (see below), then pick over the mint leaves, to serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "warm_pittas"
+      ],
+      "on_enter": [
+        {
+          "say": "Load the falafels into warm pitta breads with your favourite toppings (see below), then pick over the mint leaves, to serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "394 calories",
+    "carbohydrates": "58.7 g",
+    "fat": "10.8 g",
+    "fiber": "2.8 g",
+    "protein": "16.6 g"
+  }
+}

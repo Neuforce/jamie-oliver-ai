@@ -1,0 +1,278 @@
+{
+  "recipe": {
+    "id": "sausage-mash-pie",
+    "title": "Sausage & mash pie",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT90M",
+    "description": "Encase a mustardy sausage, apple and leek stew in mashed potatoes and bake for a totally bonkers, yet totally delicious sausage & mash pie. Yum!",
+    "tags": [
+      "student-recipes",
+      "occasion",
+      "tv",
+      "keep-cooking-family-favourites"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/sausage/sausage-and-mash-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f20c35d4c77f9ff5717bd851b4c1b2081b126de9-958x1280.jpg/109469676?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f20c35d4c77f9ff5717bd851b4c1b2081b126de9-958x1280.jpg/109469676?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f20c35d4c77f9ff5717bd851b4c1b2081b126de9-958x1280.jpg/109469676?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f20c35d4c77f9ff5717bd851b4c1b2081b126de9-958x1280.jpg/109469676?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "sausage"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 1.2,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "higher-welfare-cumberland-or-v",
+      "name": "higher-welfare Cumberland or veggie sausages",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-leeks",
+      "name": "large leeks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "eating-apples",
+      "name": "eating apples",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-thyme",
+      "name": "\u00bd a bunch of thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "10g"
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 600.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "english-mustard",
+      "name": "English mustard",
+      "quantity": 3.0,
+      "unit": "teaspoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_even"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "chop_even",
+      "descr": "Peel the potatoes, chop into even-sized chunks and cook...",
+      "instructions": "Peel the potatoes, chop into even-sized chunks and cook in a large pan of boiling salted water for 15 minutes, or until tender.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_tossing"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the potatoes, chop into even-sized chunks and cook in a large pan of boiling salted water for 15 minutes, or until tender."
+        }
+      ]
+    },
+    {
+      "id": "heat_tossing",
+      "descr": "Meanwhile, brown the sausages in a large non-stick...",
+      "instructions": "Meanwhile, brown the sausages in a large non-stick casserole pan on a medium heat, tossing regularly (if using veggie sausages, add 1 tablespoon of olive oil), while you trim the leeks, halve lengthways, wash and slice 1cm thick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_even"
+      ],
+      "next": [
+        "chop_apples"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, brown the sausages in a large non-stick casserole pan on a medium heat, tossing regularly (if using veggie sausages, add 1 tablespoon of olive oil), while you trim the leeks, halve lengthways, wash and slice 1cm thick."
+        }
+      ]
+    },
+    {
+      "id": "chop_apples",
+      "descr": "Peel, core and chop the apples into 1cm chunks",
+      "instructions": "Peel, core and chop the apples into 1cm chunks. Once golden, remove the sausages to a plate, put the leek and apple into the pan and strip in most of the thyme. Add a splash of water, season with sea salt and black pepper, then cover and cook for 20 minutes, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_tossing"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel, core and chop the apples into 1cm chunks. Once golden, remove the sausages to a plate, put the leek and apple into the pan and strip in most of the thyme. Add a splash of water, season with sea salt and black pepper, then cover and cook for 20 minutes, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Drain the potatoes, mash with half the flour, then...",
+      "instructions": "Drain the potatoes, mash with half the flour, then season to perfection. Lightly rub a 20cm x 28cm baking dish with oil. Once the mash is cool enough to handle, use your fingertips to spread two thirds of it evenly across the base and sides of the dish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_apples"
+      ],
+      "next": [
+        "stir_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the potatoes, mash with half the flour, then season to perfection. Lightly rub a 20cm x 28cm baking dish with oil. Once the mash is cool enough to handle, use your fingertips to spread two thirds of it evenly across the base and sides of the dish."
+        }
+      ]
+    },
+    {
+      "id": "stir_remaining",
+      "descr": "Stir the remaining flour into the leeks, then gradually...",
+      "instructions": "Stir the remaining flour into the leeks, then gradually stir in the milk, then the mustard. Simmer for 5 minutes, or until thick and creamy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "season_perfection"
+      ],
+      "next": [
+        "slice_sausages"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the remaining flour into the leeks, then gradually stir in the milk, then the mustard. Simmer for 5 minutes, or until thick and creamy."
+        }
+      ]
+    },
+    {
+      "id": "slice_sausages",
+      "descr": "Slice the sausages 1cm thick and stir most of them into...",
+      "instructions": "Slice the sausages 1cm thick and stir most of them into the pan, along with any juices, then evenly spoon into the mash-lined dish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_remaining"
+      ],
+      "next": [
+        "top_dish"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the sausages 1cm thick and stir most of them into the pan, along with any juices, then evenly spoon into the mash-lined dish."
+        }
+      ]
+    },
+    {
+      "id": "top_dish",
+      "descr": "Press the remaining mash on to a sheet of greaseproof...",
+      "instructions": "Press the remaining mash on to a sheet of greaseproof paper until just bigger than your dish, then flip over the top of the dish, peel off the paper, trim any excess and crimp the edges with a fork to seal.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_sausages"
+      ],
+      "next": [
+        "slice_gently"
+      ],
+      "on_enter": [
+        {
+          "say": "Press the remaining mash on to a sheet of greaseproof paper until just bigger than your dish, then flip over the top of the dish, peel off the paper, trim any excess and crimp the edges with a fork to seal."
+        }
+      ]
+    },
+    {
+      "id": "slice_gently",
+      "descr": "Poke the reserved sausage slices into the top, then...",
+      "instructions": "Poke the reserved sausage slices into the top, then gently brush with 1 tablespoon of oil. Bake at the bottom of the oven for 40 minutes, or until golden, adding the remaining thyme leaves for the last 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT2400S",
+      "depends_on": [
+        "top_dish"
+      ],
+      "on_enter": [
+        {
+          "say": "Poke the reserved sausage slices into the top, then gently brush with 1 tablespoon of oil. Bake at the bottom of the oven for 40 minutes, or until golden, adding the remaining thyme leaves for the last 5 minutes."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "644 calories",
+    "carbohydrates": "87.8 g",
+    "fat": "21.6 g",
+    "fiber": "7.8 g",
+    "protein": "29.4 g"
+  }
+}

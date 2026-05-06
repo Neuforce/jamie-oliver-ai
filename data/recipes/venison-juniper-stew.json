@@ -1,0 +1,222 @@
+{
+  "recipe": {
+    "id": "venison-juniper-stew",
+    "title": "Venison & juniper stew",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT155M",
+    "description": "Super-easy, slow-cooked and succulent, this venison stew is from Jamie Oliver's cookbook, Jamie's America. Made with juniper, rosemary & parsley.",
+    "tags": [
+      "dinner-party",
+      "game",
+      "main-ingredient",
+      "healthy-dinner-ideas",
+      "stewing",
+      "slow-cooker",
+      "beef-stew",
+      "mains",
+      "dish-type",
+      "beef",
+      "method",
+      "venison",
+      "healthy-meals",
+      "occasion",
+      "stew",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "american",
+    "source_url": "https://www.jamieoliver.com/recipes/game/venison-juniper-stew",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b24df14ec468ef606038dab0dd40258076925882-973x1300.jpg/b24df14ec468ef606038dab0dd40258076925882-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b24df14ec468ef606038dab0dd40258076925882-973x1300.jpg/b24df14ec468ef606038dab0dd40258076925882-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b24df14ec468ef606038dab0dd40258076925882-973x1300.jpg/b24df14ec468ef606038dab0dd40258076925882-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b24df14ec468ef606038dab0dd40258076925882-973x1300.jpg/b24df14ec468ef606038dab0dd40258076925882-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "game"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "stewing-venison-or-beef",
+      "name": "stewing venison or beef",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": "cut into 2cm chunks"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "peeled and roughly chopped"
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 3.0,
+      "unit": null,
+      "note": "peeled and roughly chopped"
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": "trimmed and roughly chopped"
+    },
+    {
+      "id": "juniper-berries",
+      "name": "juniper berries",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": "crushed in a pestle and mortar"
+    },
+    {
+      "id": "rosemary",
+      "name": "rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": "leaves picked and chopped"
+    },
+    {
+      "id": "a-knob-of-butter",
+      "name": "a knob of butter",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-flat-leaf-parsley",
+      "name": "fresh flat-leaf parsley",
+      "quantity": 6.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "beef-stock-cubes",
+      "name": "beef stock cubes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "preferably organic"
+    },
+    {
+      "id": "small-new-potatoes",
+      "name": "small new potatoes",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": "scrubbed clean, larger ones halved"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": "peeled and finely chopped"
+    }
+  ],
+  "utensils": [
+    "chopping board",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "heat_large",
+      "descr": "Dust a chopping board with 2 tablespoons of flour and a...",
+      "instructions": "Dust a chopping board with 2 tablespoons of flour and a good pinch of sea salt and black pepper, and toss your chunks of meat through this mixture until well coated. Heat a large pan on a high heat, add a few lugs of olive oil and fry your meat for 3 minutes to brown it. Add your chopped onions, carrots, celery, crushed juniper berries, rosemary and the knob of butter. Add a few tablespoons of water, give everything a good stir, then pop the lid on the pan and let everything steam for 4 to 5 minutes so the flavours really mingle together.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT180S",
+      "next": [
+        "chop_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Dust a chopping board with 2 tablespoons of flour and a good pinch of sea salt and black pepper, and toss your chunks of meat through this mixture until well coated. Heat a large pan on a high heat, add a few lugs of olive oil and fry your meat for 3 minutes to brown it. Add your chopped onions, carrots, celery, crushed juniper berries, rosemary and the knob of butter. Add a few tablespoons of water, give everything a good stir, then pop the lid on the pan and let everything steam for 4 to 5 minutes so the flavours really mingle together."
+        }
+      ]
+    },
+    {
+      "id": "chop_your",
+      "descr": "Take the lid off so your meat and veg start to fry, and...",
+      "instructions": "Take the lid off so your meat and veg start to fry, and stir every so often for 5 to 10 minutes. Chop your parsley stalks finely, and once the onions start to caramelize, add them to the pan with your remaining 2 tablespoons of flour and your crumbled stock cubes. Stir, and pour in enough water to cover the mixture by a couple of inches. Put the parsley leaves aside for later.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_large"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Take the lid off so your meat and veg start to fry, and stir every so often for 5 to 10 minutes. Chop your parsley stalks finely, and once the onions start to caramelize, add them to the pan with your remaining 2 tablespoons of flour and your crumbled stock cubes. Stir, and pour in enough water to cover the mixture by a couple of inches. Put the parsley leaves aside for later."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Bring to the boil, then turn the heat down to medium low...",
+      "instructions": "Bring to the boil, then turn the heat down to medium low so that the stew is just simmering. Add your potatoes and slow cook for at least 2 hours with the lid slightly askew, or until the meat falls apart easily. Keep an eye on it as it cooks, and add splashes of water if you think it looks too dry.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT7200S",
+      "depends_on": [
+        "chop_your"
+      ],
+      "next": [
+        "chop_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, then turn the heat down to medium low so that the stew is just simmering. Add your potatoes and slow cook for at least 2 hours with the lid slightly askew, or until the meat falls apart easily. Keep an eye on it as it cooks, and add splashes of water if you think it looks too dry."
+        }
+      ]
+    },
+    {
+      "id": "chop_garlic",
+      "descr": "Put your chopped garlic in the middle of a chopping board",
+      "instructions": "Put your chopped garlic in the middle of a chopping board. Add most of your parsley leaves with a teaspoon of sea salt and half a teaspoon of black pepper. Chop everything together so you get a kinda chunky paste. Add this to the stew and stir through. Chop the last of your parsley leaves and sprinkle over before serving.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Put your chopped garlic in the middle of a chopping board. Add most of your parsley leaves with a teaspoon of sea salt and half a teaspoon of black pepper. Chop everything together so you get a kinda chunky paste. Add this to the stew and stir through. Chop the last of your parsley leaves and sprinkle over before serving."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "373 calories",
+    "carbohydrates": "34.5 g",
+    "fat": "10.9 g",
+    "fiber": "3.5 g",
+    "protein": "34.1 g"
+  }
+}

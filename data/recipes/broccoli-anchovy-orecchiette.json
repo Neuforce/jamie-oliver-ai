@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "broccoli-anchovy-orecchiette",
+    "title": "Broccoli & anchovy orecchiette",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "A supercharged pasta dish that's full of flavour! Broccoli & anchovies are just best mates, and mixed with Parmesan and garlic it's a match made in heaven.",
+    "tags": [
+      "pasta",
+      "penguin-anniversary-edition",
+      "pasta-amp-risotto",
+      "course",
+      "dish-type",
+      "lunch-amp-dinner-recipes",
+      "italian",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/broccoli-anchovy-orecchiette",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b7c6d106385189c479cc4497eeb1ab2cda1af467-958x1280.jpg/89080408?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b7c6d106385189c479cc4497eeb1ab2cda1af467-958x1280.jpg/89080408?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b7c6d106385189c479cc4497eeb1ab2cda1af467-958x1280.jpg/89080408?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b7c6d106385189c479cc4497eeb1ab2cda1af467-958x1280.jpg/89080408?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-heads-of-broccoli",
+      "name": "large heads of broccoli",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-cloves-of-garlic",
+      "name": "large cloves of garlic",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "anchovy-fillets",
+      "name": "anchovy fillets",
+      "quantity": 8.0,
+      "unit": null,
+      "note": "in oil, from sustainable sources"
+    },
+    {
+      "id": "good-knobs-of-butter",
+      "name": "good knobs of butter",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "4-small-dried-red-chillies",
+      "name": "\u20134 small dried red chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "to your taste"
+    },
+    {
+      "id": "dried-orecchiette",
+      "name": "dried orecchiette",
+      "quantity": 450.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "knife",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "chop_garlic",
+      "descr": "Using a small knife, trim round the broccoli to remove...",
+      "instructions": "Using a small knife, trim round the broccoli to remove the dark green florets from the main stalks and put them to one side. Peel the stalks, trim off the dry end and throw this away. Peel and chop the garlic.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Using a small knife, trim round the broccoli to remove the dark green florets from the main stalks and put them to one side. Peel the stalks, trim off the dry end and throw this away. Peel and chop the garlic."
+        }
+      ]
+    },
+    {
+      "id": "chop_broccoli",
+      "descr": "Finely chop the broccoli stalk and put into a large pan...",
+      "instructions": "Finely chop the broccoli stalk and put into a large pan with the garlic, anchovies and half the butter. Crumble in the chilli, cover with a lid and cook slowly for 8 to 10 minutes while you cook the pasta in boiling salted water according to the packet instructions.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_garlic"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely chop the broccoli stalk and put into a large pan with the garlic, anchovies and half the butter. Crumble in the chilli, cover with a lid and cook slowly for 8 to 10 minutes while you cook the pasta in boiling salted water according to the packet instructions."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Something I like to do which is slightly different (but...",
+      "instructions": "Something I like to do which is slightly different (but better, I\u2019d like to think) is to cook the broccoli florets with the pasta for the last 4 minutes \u2013 this makes them soft enough to eat but leaves them with great colour and texture.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "chop_broccoli"
+      ],
+      "next": [
+        "heat_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Something I like to do which is slightly different (but better, I\u2019d like to think) is to cook the broccoli florets with the pasta for the last 4 minutes \u2013 this makes them soft enough to eat but leaves them with great colour and texture."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_4",
+      "descr": "Drain the pasta and broccoli, saving a little of the...",
+      "instructions": "Drain the pasta and broccoli, saving a little of the cooking water, then toss into the other pan. Remove the pan from the heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the pasta and broccoli, saving a little of the cooking water, then toss into the other pan. Remove the pan from the heat."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Season to taste with sea salt, black pepper, the rest of...",
+      "instructions": "Season to taste with sea salt, black pepper, the rest of the butter and finely grate in a large handful of Parmesan. Mix well, adding a little of the cooking water, to loosen, if needed, and make it shine.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_4"
+      ],
+      "next": [
+        "serve_immediately"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to taste with sea salt, black pepper, the rest of the butter and finely grate in a large handful of Parmesan. Mix well, adding a little of the cooking water, to loosen, if needed, and make it shine."
+        }
+      ]
+    },
+    {
+      "id": "serve_immediately",
+      "descr": "Serve immediately, sprinkling with another good handful...",
+      "instructions": "Serve immediately, sprinkling with another good handful of finely grated Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve immediately, sprinkling with another good handful of finely grated Parmesan."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "367 calories",
+    "carbohydrates": "59.4 g",
+    "fat": "9.5 g",
+    "fiber": "2.4 g",
+    "protein": "14.8 g"
+  }
+}

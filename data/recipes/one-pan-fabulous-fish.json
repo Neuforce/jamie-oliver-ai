@@ -1,0 +1,198 @@
+{
+  "recipe": {
+    "id": "one-pan-fabulous-fish",
+    "title": "One-pan fabulous fish",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "This fabulous one-pan fish recipe is the ultimate midweek meal \u2013 just 5 simple ingredients and 15 minutes to prepare, it's so good!",
+    "tags": [
+      "student-recipes",
+      "course",
+      "quick-amp-easy-series-1",
+      "rice",
+      "low-lactose",
+      "gluten-free",
+      "tomato",
+      "tv-shows",
+      "quick-amp-easy-recipes",
+      "fish",
+      "quick-fixes",
+      "occasion",
+      "keep-cooking-and-carry-on",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/one-pan-fabulous-fish",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d722ae16a5981d6a498a03361ace15c2c01e5715-956x1280.jpg/55846373?rect=0,162,956,956&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d722ae16a5981d6a498a03361ace15c2c01e5715-956x1280.jpg/55846373?rect=0,162,956,956&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d722ae16a5981d6a498a03361ace15c2c01e5715-956x1280.jpg/55846373?rect=0,282,956,717&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d722ae16a5981d6a498a03361ace15c2c01e5715-956x1280.jpg/55846373?rect=0,371,956,538&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "white-basmati-rice",
+      "name": "white basmati rice",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-green-olive-t",
+      "name": "heaped teaspoons green olive tapenade",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-mixed-colour-cherry-tomat",
+      "name": "ripe mixed-colour cherry tomatoes",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-basil",
+      "name": "\u00bd a bunch of fresh basil",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "white-fish-fillets",
+      "name": "white fish fillets",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "such as haddock, skin off, pin-boned, from sustainable sources"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_rice",
+      "descr": "In a large shallow casserole pan on a high heat, mix the...",
+      "instructions": "In a large shallow casserole pan on a high heat, mix the rice with 2 heaped teaspoons of tapenade, then pour over 600ml of water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_them"
+      ],
+      "on_enter": [
+        {
+          "say": "In a large shallow casserole pan on a high heat, mix the rice with 2 heaped teaspoons of tapenade, then pour over 600ml of water."
+        }
+      ]
+    },
+    {
+      "id": "mix_them",
+      "descr": "Put the lid on and let it come to the boil while you...",
+      "instructions": "Put the lid on and let it come to the boil while you halve the tomatoes and, in a bowl, mix them with 1 tablespoon each of olive oil and red wine vinegar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_rice"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the lid on and let it come to the boil while you halve the tomatoes and, in a bowl, mix them with 1 tablespoon each of olive oil and red wine vinegar."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Taste, season to perfection with sea salt and black...",
+      "instructions": "Taste, season to perfection with sea salt and black pepper, and tear in most of the basil leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_them"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Taste, season to perfection with sea salt and black pepper, and tear in most of the basil leaves."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Cut the fish into four equal-sized pieces and place in...",
+      "instructions": "Cut the fish into four equal-sized pieces and place in the pan, pushing them into the rice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_perfection"
+      ],
+      "next": [
+        "boil_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Cut the fish into four equal-sized pieces and place in the pan, pushing them into the rice."
+        }
+      ]
+    },
+    {
+      "id": "boil_minutes",
+      "descr": "Scatter over the dressed tomatoes",
+      "instructions": "Scatter over the dressed tomatoes. Put the lid back on and boil for 10 minutes, or until the rice is cooked through, then remove the lid and cook for a further 2 minutes until all the liquid has evaporated.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "step_step_4"
+      ],
+      "next": [
+        "drizzle_lightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter over the dressed tomatoes. Put the lid back on and boil for 10 minutes, or until the rice is cooked through, then remove the lid and cook for a further 2 minutes until all the liquid has evaporated."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_lightly",
+      "descr": "Spoon the remaining tapenade over the fish, pick over...",
+      "instructions": "Spoon the remaining tapenade over the fish, pick over the remaining basil leaves, drizzle lightly with extra virgin olive oil, and dish up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "boil_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon the remaining tapenade over the fish, pick over the remaining basil leaves, drizzle lightly with extra virgin olive oil, and dish up."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "484 calories",
+    "carbohydrates": "66.7 g",
+    "fat": "12 g",
+    "fiber": "2.7 g",
+    "protein": "31.2 g"
+  }
+}

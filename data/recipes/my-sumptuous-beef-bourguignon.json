@@ -1,0 +1,290 @@
+{
+  "recipe": {
+    "id": "my-sumptuous-beef-bourguignon",
+    "title": "My sumptuous beef bourguignon",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT300M",
+    "description": "This flavour-packed beef bourguignon is fantastic served with mash and greens.",
+    "tags": [
+      "christmas",
+      "occasion",
+      "beef",
+      "tv-shows",
+      "together"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/my-sumptious-beef-bourguignon",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/06827c3b681db70979f08ef83ec0598ac50190be-958x1280.jpg/128286817?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/06827c3b681db70979f08ef83ec0598ac50190be-958x1280.jpg/128286817?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/06827c3b681db70979f08ef83ec0598ac50190be-958x1280.jpg/128286817?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/06827c3b681db70979f08ef83ec0598ac50190be-958x1280.jpg/128286817?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "beef-cheeks",
+      "name": "beef cheeks",
+      "quantity": 1.5,
+      "unit": "kg",
+      "note": "trimmed"
+    },
+    {
+      "id": "large-carrots",
+      "name": "large carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 4.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dijon-mustard",
+      "name": "Dijon mustard",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-pinch-of-ground-cloves",
+      "name": "small pinch of ground cloves",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "burgundy-or-pinot-noir",
+      "name": "Burgundy or Pinot Noir",
+      "quantity": 750.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "rashers-of-higher-welfare-smok",
+      "name": "rashers of higher-welfare smoked streaky bacon",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shallots",
+      "name": "shallots",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "button-mushrooms",
+      "name": "button mushrooms",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-flat-leaf-parsley",
+      "name": "\u00bd a bunch of flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "colander",
+    "large bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "chop_beef",
+      "descr": "Chop the beef cheeks into 5cm chunks",
+      "instructions": "Chop the beef cheeks into 5cm chunks. Wash, trim and chop the carrots and celery into 3cm chunks. Peel the garlic and onion, then roughly chop. Place it all in a large bowl with the mustard, bay, cloves, a generous pinch of black pepper and the wine. Mix well, then cover and refrigerate overnight.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Chop the beef cheeks into 5cm chunks. Wash, trim and chop the carrots and celery into 3cm chunks. Peel the garlic and onion, then roughly chop. Place it all in a large bowl with the mustard, bay, cloves, a generous pinch of black pepper and the wine. Mix well, then cover and refrigerate overnight."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 160\u00b0C/325\u00b0F/gas 3",
+      "instructions": "Preheat the oven to 160\u00b0C/325\u00b0F/gas 3. Pour the contents of the beef bowl into a colander set over another bowl. Pick out just the beef and pat dry with kitchen paper, then toss with the flour.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_beef"
+      ],
+      "next": [
+        "heat_melt"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 160\u00b0C/325\u00b0F/gas 3. Pour the contents of the beef bowl into a colander set over another bowl. Pick out just the beef and pat dry with kitchen paper, then toss with the flour."
+        }
+      ]
+    },
+    {
+      "id": "heat_melt",
+      "descr": "Put a large casserole pan on a medium heat and melt the...",
+      "instructions": "Put a large casserole pan on a medium heat and melt the butter with 2 tablespoons of olive oil. In batches, brown the floured beef all over, turning with tongs and removing to a plate with any crispy bits once browned.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large casserole pan on a medium heat and melt the butter with 2 tablespoons of olive oil. In batches, brown the floured beef all over, turning with tongs and removing to a plate with any crispy bits once browned."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Tip the veg into the pan, and cook for 10 minutes, or...",
+      "instructions": "Tip the veg into the pan, and cook for 10 minutes, or until starting to caramelize, stirring occasionally and scraping up any sticky bits.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_melt"
+      ],
+      "next": [
+        "pour_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the veg into the pan, and cook for 10 minutes, or until starting to caramelize, stirring occasionally and scraping up any sticky bits."
+        }
+      ]
+    },
+    {
+      "id": "pour_over",
+      "descr": "Return the beef to the pan, pour over the reserved wine...",
+      "instructions": "Return the beef to the pan, pour over the reserved wine and 750ml of boiling water, then bring to a simmer. Cover with a scrunched-up sheet of damp greaseproof paper and transfer to the oven for around 4 hours, or until the beef is beautifully tender, topping up with splashes of water, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT14400S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "heat_peel"
+      ],
+      "on_enter": [
+        {
+          "say": "Return the beef to the pan, pour over the reserved wine and 750ml of boiling water, then bring to a simmer. Cover with a scrunched-up sheet of damp greaseproof paper and transfer to the oven for around 4 hours, or until the beef is beautifully tender, topping up with splashes of water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "heat_peel",
+      "descr": "When the beef is perfect, turn the oven off",
+      "instructions": "When the beef is perfect, turn the oven off. Slice the bacon, then place in a large non-stick pan on a medium-high heat. Peel, chop and add the shallots, tossing regularly, then trim and halve or quarter the mushrooms, adding to the pan as you go. Cook for 15 to 20 minutes, or until golden, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "pour_over"
+      ],
+      "next": [
+        "chop_toss"
+      ],
+      "on_enter": [
+        {
+          "say": "When the beef is perfect, turn the oven off. Slice the bacon, then place in a large non-stick pan on a medium-high heat. Peel, chop and add the shallots, tossing regularly, then trim and halve or quarter the mushrooms, adding to the pan as you go. Cook for 15 to 20 minutes, or until golden, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "chop_toss",
+      "descr": "Finely chop and toss through the parsley leaves, then...",
+      "instructions": "Finely chop and toss through the parsley leaves, then pour the contents of the pan over the bourguignon and season to perfection, tasting and tweaking.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_peel"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely chop and toss through the parsley leaves, then pour the contents of the pan over the bourguignon and season to perfection, tasting and tweaking."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "345 calories",
+    "carbohydrates": "11 g",
+    "fat": "13.2 g",
+    "fiber": "2.8 g",
+    "protein": "34.4 g"
+  }
+}

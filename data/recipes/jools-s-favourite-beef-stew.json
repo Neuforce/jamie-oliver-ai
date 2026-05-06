@@ -1,0 +1,323 @@
+{
+  "recipe": {
+    "id": "jools-s-favourite-beef-stew",
+    "title": "Jools\u2019s favourite beef stew",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT215M",
+    "description": "Everyone loves a hearty dinner, and this beef stew recipe totally hits the spot. Packed with tender beef, potatoes, loads of veg and fresh herbs, it's rib-stickingly good winter fare.",
+    "tags": [
+      "sunday-lunch",
+      "main-ingredient",
+      "slow-cooker",
+      "beef-stew",
+      "mother-s-day",
+      "mains",
+      "dish-type",
+      "beef",
+      "method",
+      "st-george-s-day",
+      "stewing",
+      "occasion",
+      "stew",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/jools-s-favourite-beef-stew",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1a64d7a02741fa100c6b63c2a5d9730846b13b00-767x1025.jpg/1a64d7a02741fa100c6b63c2a5d9730846b13b00-767x1025.jpg?rect=0,130,767,767&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1a64d7a02741fa100c6b63c2a5d9730846b13b00-767x1025.jpg/1a64d7a02741fa100c6b63c2a5d9730846b13b00-767x1025.jpg?rect=0,130,767,767&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1a64d7a02741fa100c6b63c2a5d9730846b13b00-767x1025.jpg/1a64d7a02741fa100c6b63c2a5d9730846b13b00-767x1025.jpg?rect=0,226,767,575&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1a64d7a02741fa100c6b63c2a5d9730846b13b00-767x1025.jpg/1a64d7a02741fa100c6b63c2a5d9730846b13b00-767x1025.jpg?rect=0,298,767,431&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parsnips",
+      "name": "parsnips",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-butternut-squash",
+      "name": "\u00bd a butternut squash",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-1-handful-of-jerusale",
+      "name": "optional: 1 handful of Jerusalem artichokes",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-sage",
+      "name": "a few sprigs of fresh sage",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "knob-of-unsalted-butter",
+      "name": "knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "stewing-steak-or-beef-skirt",
+      "name": "stewing steak or beef skirt",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": "cut into 5cm pieces"
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-potatoes",
+      "name": "small potatoes",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "a-bottle-of-red-wine",
+      "name": "\u00bd a bottle of red wine",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-beef-or-vegetable-stoc",
+      "name": "organic beef or vegetable stock",
+      "quantity": 285.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-rosemary",
+      "name": "a few sprigs of fresh rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 160\u00baC/300\u00baF/gas 2",
+      "instructions": "Preheat the oven to 160\u00baC/300\u00baF/gas 2.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 160\u00baC/300\u00baF/gas 2."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "Peel and roughly chop the onion, peel and quarter the...",
+      "instructions": "Peel and roughly chop the onion, peel and quarter the parsnips and peel and halve the carrots. Deseed and roughly dice the squash, and peel and halve the Jerusalem artichokes (if using). Pick the sage leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and roughly chop the onion, peel and quarter the parsnips and peel and halve the carrots. Deseed and roughly dice the squash, and peel and halve the Jerusalem artichokes (if using). Pick the sage leaves."
+        }
+      ]
+    },
+    {
+      "id": "heat_little",
+      "descr": "Heat a little oil and the butter in a casserole pan on a...",
+      "instructions": "Heat a little oil and the butter in a casserole pan on a medium heat, add the onion and sage leaves, then fry for 3 to 4 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "stir_together"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a little oil and the butter in a casserole pan on a medium heat, add the onion and sage leaves, then fry for 3 to 4 minutes."
+        }
+      ]
+    },
+    {
+      "id": "stir_together",
+      "descr": "Meanwhile, toss the meat in a little seasoned flour,...",
+      "instructions": "Meanwhile, toss the meat in a little seasoned flour, then add it to the pan with all the vegetables, the tomato pur\u00e9e, wine and stock, then gently stir together. Season generously with black pepper and just a little sea salt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_little"
+      ],
+      "next": [
+        "boil_place"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, toss the meat in a little seasoned flour, then add it to the pan with all the vegetables, the tomato pur\u00e9e, wine and stock, then gently stir together. Season generously with black pepper and just a little sea salt."
+        }
+      ]
+    },
+    {
+      "id": "boil_place",
+      "descr": "Bring to the boil, place a lid on top, then place in the...",
+      "instructions": "Bring to the boil, place a lid on top, then place in the oven until the meat is tender \u2013 sometimes this takes 3 hours, sometimes 4 \u2013 it depends on what cut of meat you\u2019re using and how fresh it is. The only way to test is to mash up a piece of meat and if it falls apart easily it\u2019s ready.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT10800S",
+      "depends_on": [
+        "stir_together"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, place a lid on top, then place in the oven until the meat is tender \u2013 sometimes this takes 3 hours, sometimes 4 \u2013 it depends on what cut of meat you\u2019re using and how fresh it is. The only way to test is to mash up a piece of meat and if it falls apart easily it\u2019s ready."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Once cooked, turn the oven down to about 110\u00b0C/225\u00b0F/gas...",
+      "instructions": "Once cooked, turn the oven down to about 110\u00b0C/225\u00b0F/gas \u00bc and just hold it there until you\u2019re ready to eat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_place"
+      ],
+      "next": [
+        "warm_bread"
+      ],
+      "on_enter": [
+        {
+          "say": "Once cooked, turn the oven down to about 110\u00b0C/225\u00b0F/gas \u00bc and just hold it there until you\u2019re ready to eat."
+        }
+      ]
+    },
+    {
+      "id": "warm_bread",
+      "descr": "The best way to serve this is by ladling big spoonfuls...",
+      "instructions": "The best way to serve this is by ladling big spoonfuls into bowls, accompanied by a glass of French red wine and some really fresh, warmed bread.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "chop_rosemary"
+      ],
+      "on_enter": [
+        {
+          "say": "The best way to serve this is by ladling big spoonfuls into bowls, accompanied by a glass of French red wine and some really fresh, warmed bread."
+        }
+      ]
+    },
+    {
+      "id": "chop_rosemary",
+      "descr": "Finely grate the lemon zest, pick and finely chop the...",
+      "instructions": "Finely grate the lemon zest, pick and finely chop the rosemary and peel and finely chop the garlic, then mix together and sprinkle over the stew before serving. Just the smallest amount will make a world of difference \u2013 as soon as it hits the hot stew it will release an amazing fragrance.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "warm_bread"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate the lemon zest, pick and finely chop the rosemary and peel and finely chop the garlic, then mix together and sprinkle over the stew before serving. Just the smallest amount will make a world of difference \u2013 as soon as it hits the hot stew it will release an amazing fragrance."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "662 calories",
+    "carbohydrates": "55.9 g",
+    "fat": "20.2 g",
+    "fiber": "11 g",
+    "protein": "52.2 g"
+  }
+}

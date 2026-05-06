@@ -1,0 +1,321 @@
+{
+  "recipe": {
+    "id": "simple-roast-chicken",
+    "title": "Simple roast chicken",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT105M",
+    "description": "Perfectly cooked chicken, crispy golden roasties and next-level gravy \u2013 this is everything you want in a roast dinner.",
+    "tags": [
+      "roast",
+      "entertaining",
+      "dinner-party",
+      "chicken",
+      "british-style",
+      "family-favourites",
+      "low-lactose",
+      "easter",
+      "dairy-free"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/simple-roast-chicken",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/94e6f3e5d549c63560c69e3034762197c6aaadfb-1019x1528.jpg/bigloveroastchicken.jpg?rect=0,255,1019,1019&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/94e6f3e5d549c63560c69e3034762197c6aaadfb-1019x1528.jpg/bigloveroastchicken.jpg?rect=0,255,1019,1019&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/94e6f3e5d549c63560c69e3034762197c6aaadfb-1019x1528.jpg/bigloveroastchicken.jpg?rect=0,382,1019,764&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/94e6f3e5d549c63560c69e3034762197c6aaadfb-1019x1528.jpg/bigloveroastchicken.jpg?rect=0,478,1019,573&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "maris-piper-potatoes",
+      "name": "Maris Piper potatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-rosemary",
+      "name": "\u00bd a bunch of fresh rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": "10g"
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "1-6kg-whole-free-range-chicken",
+      "name": "1.6kg whole free-range chicken",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-mixed-woody-herbs",
+      "name": "\u00bd a bunch of mixed woody herbs",
+      "quantity": null,
+      "unit": null,
+      "note": "such as rosemary, sage, thyme, bay leaves"
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-thyme",
+      "name": "a few sprigs of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shop-jamie-s-serveware",
+      "name": "SHOP JAMIE'S SERVEWARE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "feast-platter",
+      "name": "Feast Platter",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "great-gravy-boat",
+      "name": "Great Gravy Boat",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "perfect-plates",
+      "name": "Perfect Plates",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pinch-me-pots",
+      "name": "Pinch-Me Pots",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "colander",
+    "ladle",
+    "oven",
+    "pan",
+    "pot",
+    "saucepan",
+    "sieve",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "roast_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "roast_step_2",
+      "descr": "Peel the potatoes, halving any larger ones",
+      "instructions": "Peel the potatoes, halving any larger ones. Parboil in a large pan of boiling salted water for 12 minutes, then drain in a colander and leave to steam-dry for 2 minutes. Give the colander a few light shakes to chuff up the edges of the potatoes, giving you maximum surface area for a crispy exterior as they roast.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT720S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_unpeeled"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the potatoes, halving any larger ones. Parboil in a large pan of boiling salted water for 12 minutes, then drain in a colander and leave to steam-dry for 2 minutes. Give the colander a few light shakes to chuff up the edges of the potatoes, giving you maximum surface area for a crispy exterior as they roast."
+        }
+      ]
+    },
+    {
+      "id": "add_unpeeled",
+      "descr": "Tip the potatoes into a roasting tray with 1 tablespoon...",
+      "instructions": "Tip the potatoes into a roasting tray with 1 tablespoon of olive oil and a pinch of sea salt and black pepper. Strip in half of the rosemary leaves, squash and add the unpeeled garlic cloves, then toss together well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_step_2"
+      ],
+      "next": [
+        "mix_woody"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the potatoes into a roasting tray with 1 tablespoon of olive oil and a pinch of sea salt and black pepper. Strip in half of the rosemary leaves, squash and add the unpeeled garlic cloves, then toss together well."
+        }
+      ]
+    },
+    {
+      "id": "mix_woody",
+      "descr": "Rub the chicken all over with a pinch of salt and pepper...",
+      "instructions": "Rub the chicken all over with a pinch of salt and pepper and 1 tablespoon of oil in a large sturdy roasting tray. Stuff the chicken cavity with the whole lemon, mixed woody herbs and remaining rosemary sprigs.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_unpeeled"
+      ],
+      "next": [
+        "roast_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub the chicken all over with a pinch of salt and pepper and 1 tablespoon of oil in a large sturdy roasting tray. Stuff the chicken cavity with the whole lemon, mixed woody herbs and remaining rosemary sprigs."
+        }
+      ]
+    },
+    {
+      "id": "roast_chicken",
+      "descr": "Roast the chicken and potatoes for 1 hour 20 minutes, or...",
+      "instructions": "Roast the chicken and potatoes for 1 hour 20 minutes, or until golden and cooked through, basting the chicken and giving the potato tray a shake every now and then.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "mix_woody"
+      ],
+      "next": [
+        "rest_keep"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast the chicken and potatoes for 1 hour 20 minutes, or until golden and cooked through, basting the chicken and giving the potato tray a shake every now and then."
+        }
+      ]
+    },
+    {
+      "id": "rest_keep",
+      "descr": "When the time\u2019s up, transfer the chicken to a platter to...",
+      "instructions": "When the time\u2019s up, transfer the chicken to a platter to rest (you can keep the potatoes in the oven a little longer if you like them extra crispy).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_chicken"
+      ],
+      "next": [
+        "heat_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "When the time\u2019s up, transfer the chicken to a platter to rest (you can keep the potatoes in the oven a little longer if you like them extra crispy)."
+        }
+      ]
+    },
+    {
+      "id": "heat_flour",
+      "descr": "Boil the kettle",
+      "instructions": "Boil the kettle. Angle the chicken tray and use a spoon to skim away about three-quarters of the excess fat (keep this in a jar for tasty cooking another day). Place the tray on a medium heat on the hob and stir in the flour with a wooden spoon, scraping up all the sticky bits from the base and sides of the tray, then pour in 600ml of boiling kettle water and any resting juices from the chicken platter.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_keep"
+      ],
+      "next": [
+        "warm_ready"
+      ],
+      "on_enter": [
+        {
+          "say": "Boil the kettle. Angle the chicken tray and use a spoon to skim away about three-quarters of the excess fat (keep this in a jar for tasty cooking another day). Place the tray on a medium heat on the hob and stir in the flour with a wooden spoon, scraping up all the sticky bits from the base and sides of the tray, then pour in 600ml of boiling kettle water and any resting juices from the chicken platter."
+        }
+      ]
+    },
+    {
+      "id": "warm_ready",
+      "descr": "Stir well and simmer until you\u2019ve reached your desired...",
+      "instructions": "Stir well and simmer until you\u2019ve reached your desired consistency, then pour the gravy through a coarse sieve into a saucepan, pushing all that goodness through with the back of a ladle. Keep warm until you\u2019re ready to eat, then transfer to Jamie\u2019s Great Gravy Boat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_flour"
+      ],
+      "next": [
+        "steam_seasonal"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir well and simmer until you\u2019ve reached your desired consistency, then pour the gravy through a coarse sieve into a saucepan, pushing all that goodness through with the back of a ladle. Keep warm until you\u2019re ready to eat, then transfer to Jamie\u2019s Great Gravy Boat."
+        }
+      ]
+    },
+    {
+      "id": "steam_seasonal",
+      "descr": "Serve everything in the middle of the table on a Feast...",
+      "instructions": "Serve everything in the middle of the table on a Feast Platter or divide between Perfect Plates, with steamed seasonal greens, such as Swiss chard, spring greens, asparagus or kale, and all your usual trimmings and sauces (we've gone for English mustard in one of Jamie's Pinch-Me Pots).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "warm_ready"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve everything in the middle of the table on a Feast Platter or divide between Perfect Plates, with steamed seasonal greens, such as Swiss chard, spring greens, asparagus or kale, and all your usual trimmings and sauces (we've gone for English mustard in one of Jamie's Pinch-Me Pots)."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "433 calories",
+    "carbohydrates": "34.8 g",
+    "fat": "14.4 g",
+    "fiber": "2.6 g",
+    "protein": "43.4 g"
+  }
+}

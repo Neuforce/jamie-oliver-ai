@@ -1,0 +1,347 @@
+{
+  "recipe": {
+    "id": "super-shepherd-s-pie",
+    "title": "Super shepherd's pie",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT135M",
+    "description": "Lean minced lamb works a treat in this healthy shepherd's pie. It's an easy shepherd's pie recipe that the whole family will love. Delicious with greens.",
+    "tags": [
+      "course",
+      "healthy-dinner-ideas"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/lamb/super-shepherd-s-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a1542a7f26295620fdb519a77d1f5a3ad2310622-973x1300.jpg/51137601?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a1542a7f26295620fdb519a77d1f5a3ad2310622-973x1300.jpg/51137601?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a1542a7f26295620fdb519a77d1f5a3ad2310622-973x1300.jpg/51137601?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a1542a7f26295620fdb519a77d1f5a3ad2310622-973x1300.jpg/51137601?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "lamb"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "lean-minced-lamb",
+      "name": "lean minced lamb",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-cannellini-beans",
+      "name": "400g tin of cannellini beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "chestnut-mushrooms",
+      "name": "chestnut mushrooms",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-or-veg-stock",
+      "name": "organic chicken or veg stock",
+      "quantity": 800.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "swede",
+      "name": "swede",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "mature-cheddar-cheese",
+      "name": "mature Cheddar cheese",
+      "quantity": 15.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "worcestershire-sauce",
+      "name": "Worcestershire sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "mint-sauce",
+      "name": "mint sauce",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "oven",
+    "pan",
+    "pot",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "heat_really",
+      "descr": "Put the mince into a cold casserole pan",
+      "instructions": "Put the mince into a cold casserole pan. Place on a high heat, add a really good pinch of black pepper and cook for 15 minutes, or until dark golden, breaking it up with a wooden spoon.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "next": [
+        "chop_rosemary"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the mince into a cold casserole pan. Place on a high heat, add a really good pinch of black pepper and cook for 15 minutes, or until dark golden, breaking it up with a wooden spoon."
+        }
+      ]
+    },
+    {
+      "id": "chop_rosemary",
+      "descr": "Pick and finely chop the rosemary leaves, drain the...",
+      "instructions": "Pick and finely chop the rosemary leaves, drain the beans, then stir both into the pan. Cook and stir for 8 minutes, or until the beans start to pop and it\u2019s all getting dark and gnarly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "heat_really"
+      ],
+      "next": [
+        "chop_blitz"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the rosemary leaves, drain the beans, then stir both into the pan. Cook and stir for 8 minutes, or until the beans start to pop and it\u2019s all getting dark and gnarly."
+        }
+      ]
+    },
+    {
+      "id": "chop_blitz",
+      "descr": "Peel the onions and carrots, trim the celery, wipe the...",
+      "instructions": "Peel the onions and carrots, trim the celery, wipe the mushrooms clean, then finely chop it all (or blitz in a food processor). Stir into the pan and sweat for 10 minutes on medium-high, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_rosemary"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the onions and carrots, trim the celery, wipe the mushrooms clean, then finely chop it all (or blitz in a food processor). Stir into the pan and sweat for 10 minutes on medium-high, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Stir in the flour, followed by the stock",
+      "instructions": "Stir in the flour, followed by the stock. Bring to the boil, then simmer on a low heat with the lid on for 30 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "chop_blitz"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the flour, followed by the stock. Bring to the boil, then simmer on a low heat with the lid on for 30 minutes."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Meanwhile, preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Meanwhile, preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Wash the swede and potatoes (leaving the skins on for...",
+      "instructions": "Wash the swede and potatoes (leaving the skins on for extra nutritional benefit) and cut into 3cm chunks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash the swede and potatoes (leaving the skins on for extra nutritional benefit) and cut into 3cm chunks."
+        }
+      ]
+    },
+    {
+      "id": "add_potatoes",
+      "descr": "Cook just the swede in a large pan of boiling salted...",
+      "instructions": "Cook just the swede in a large pan of boiling salted water for 10 minutes, add the potatoes for 10 more minutes, or until cooked through, drain well, mash with the milk and grated cheese, and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "mince_want"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook just the swede in a large pan of boiling salted water for 10 minutes, add the potatoes for 10 more minutes, or until cooked through, drain well, mash with the milk and grated cheese, and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "mince_want",
+      "descr": "Check the consistency of the mince \u2013 you want it...",
+      "instructions": "Check the consistency of the mince \u2013 you want it slightly wetter than you think, as it will thicken further in the oven. Add the Worcestershire and mint sauces, taste, and season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_potatoes"
+      ],
+      "next": [
+        "mince_letting"
+      ],
+      "on_enter": [
+        {
+          "say": "Check the consistency of the mince \u2013 you want it slightly wetter than you think, as it will thicken further in the oven. Add the Worcestershire and mint sauces, taste, and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "mince_letting",
+      "descr": "Sprinkle the peas over the mince, letting them sit on...",
+      "instructions": "Sprinkle the peas over the mince, letting them sit on the surface to help prevent the mash from sinking in too much. Put spoons of mash randomly on top, using a fork to scuff it up and make valleys and mountains, increasing the surface area, and the crispy bits.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mince_want"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle the peas over the mince, letting them sit on the surface to help prevent the mash from sinking in too much. Put spoons of mash randomly on top, using a fork to scuff it up and make valleys and mountains, increasing the surface area, and the crispy bits."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "Bake for 50 minutes, or until golden and bubbling",
+      "instructions": "Bake for 50 minutes, or until golden and bubbling. Nice with seasonal greens.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT3000S",
+      "depends_on": [
+        "mince_letting"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake for 50 minutes, or until golden and bubbling. Nice with seasonal greens."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "436 calories",
+    "carbohydrates": "51.2 g",
+    "fat": "12.2 g",
+    "fiber": "11.8 g",
+    "protein": "31.2 g"
+  }
+}

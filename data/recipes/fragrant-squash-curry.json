@@ -1,0 +1,234 @@
+{
+  "recipe": {
+    "id": "fragrant-squash-curry",
+    "title": "Fragrant squash curry",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "description": "From Jamie\u2019s new book Together, this luxurious veggie curry recipe is a proper treat. Delicious with fluffy coconut rice and fennel naans. ",
+    "tags": [
+      "vegan",
+      "vegetarian",
+      "curry",
+      "vegetable-curry",
+      "tv-shows",
+      "low-lactose",
+      "gluten-free",
+      "together",
+      "butternut-squash"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/butternut-squash/fragrant-squash-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/00eeb6ed8e9b68e4e2f3bd0ee9c76f66bb4986e5-958x1280.jpg/126942613?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/00eeb6ed8e9b68e4e2f3bd0ee9c76f66bb4986e5-958x1280.jpg/126942613?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/00eeb6ed8e9b68e4e2f3bd0ee9c76f66bb4986e5-958x1280.jpg/126942613?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/00eeb6ed8e9b68e4e2f3bd0ee9c76f66bb4986e5-958x1280.jpg/126942613?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "butternut-squash"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "butternut-squash",
+      "name": "butternut squash",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "1.2kg"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "fenugreek-seeds",
+      "name": "fenugreek seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "medium-curry-powder",
+      "name": "medium curry powder",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "ripe-cherry-tomatoes",
+      "name": "ripe cherry tomatoes",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "tinned-pineapple-rings-in-juic",
+      "name": "tinned pineapple rings in juice",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400ml-tin-of-light-coconut-mil",
+      "name": "400ml tin of light coconut milk",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-2-sprigs-of-coriander",
+      "name": "optional: 2 sprigs of coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    }
+  ],
+  "utensils": [
+    "blender",
+    "frying pan",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Scrub the squash (there\u2019s no need to peel it), carefully halve it lengthways and deseed, then chop into 2cm chunks. Place in a roasting tray, toss with 1 tablespoon of olive oil and a pinch of sea salt and black pepper, then roast for 1 hour, or until soft and caramelized.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "next": [
+        "heat_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Scrub the squash (there\u2019s no need to peel it), carefully halve it lengthways and deseed, then chop into 2cm chunks. Place in a roasting tray, toss with 1 tablespoon of olive oil and a pinch of sea salt and black pepper, then roast for 1 hour, or until soft and caramelized."
+        }
+      ]
+    },
+    {
+      "id": "heat_coriander",
+      "descr": "Meanwhile, peel and roughly chop the onion, peel the...",
+      "instructions": "Meanwhile, peel and roughly chop the onion, peel the garlic and ginger, and dry fry in a non-stick frying pan on a medium-high heat with the coriander and fenugreek seeds and the curry powder, stirring until lightly charred all over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel and roughly chop the onion, peel the garlic and ginger, and dry fry in a non-stick frying pan on a medium-high heat with the coriander and fenugreek seeds and the curry powder, stirring until lightly charred all over."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Add the tomatoes and pineapple rings (reserving the...",
+      "instructions": "Add the tomatoes and pineapple rings (reserving the juice), and cook for 10 minutes to soften and char, stirring regularly. Tip it all into a blender, add the coconut milk and blitz until very smooth. Return to the pan, tip in the chickpeas, juice and all, and simmer gently until the sauce is thickened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_coriander"
+      ],
+      "next": [
+        "stir_roasted"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the tomatoes and pineapple rings (reserving the juice), and cook for 10 minutes to soften and char, stirring regularly. Tip it all into a blender, add the coconut milk and blitz until very smooth. Return to the pan, tip in the chickpeas, juice and all, and simmer gently until the sauce is thickened."
+        }
+      ]
+    },
+    {
+      "id": "stir_roasted",
+      "descr": "Stir in the roasted squash, then season the curry to...",
+      "instructions": "Stir in the roasted squash, then season the curry to perfection, tasting and tweaking, and loosening with the reserved pineapple juice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the roasted squash, then season the curry to perfection, tasting and tweaking, and loosening with the reserved pineapple juice."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 150\u00b0C/300\u00b0F/gas 2",
+      "instructions": "Preheat the oven to 150\u00b0C/300\u00b0F/gas 2. Cover and place the pan in the oven until hot through \u2013 about 1 hour. Nice with picked coriander leaves.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT3600S",
+      "depends_on": [
+        "stir_roasted"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 150\u00b0C/300\u00b0F/gas 2. Cover and place the pan in the oven until hot through \u2013 about 1 hour. Nice with picked coriander leaves."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "159 calories",
+    "carbohydrates": "22.6 g",
+    "fat": "6 g",
+    "fiber": "5.2 g",
+    "protein": "5 g"
+  }
+}

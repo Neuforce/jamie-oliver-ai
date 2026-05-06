@@ -1,0 +1,180 @@
+{
+  "recipe": {
+    "id": "beautiful-baked-camembert",
+    "title": "Beautiful baked Camembert",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "This beautiful baked Camembert recipe is a clear winner when it comes to entertaining. The best baked Camembert is simple, delicious and packed with flavour.",
+    "tags": [
+      "christmas",
+      "party-food",
+      "dinner-party",
+      "main-ingredient",
+      "starters",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "starter",
+      "sides",
+      "sides-and-sauces",
+      "bread",
+      "quick-fixes",
+      "occasion",
+      "cheese",
+      "antipasti",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "french",
+    "source_url": "https://www.jamieoliver.com/recipes/cheese/beautiful-baked-camembert",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ffcadf7f6adcc7ed139ece396bc65e9f92dcaa68-767x1025.jpg/64_1_1439914883.jpg?rect=0,130,767,767&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ffcadf7f6adcc7ed139ece396bc65e9f92dcaa68-767x1025.jpg/64_1_1439914883.jpg?rect=0,130,767,767&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ffcadf7f6adcc7ed139ece396bc65e9f92dcaa68-767x1025.jpg/64_1_1439914883.jpg?rect=0,226,767,575&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ffcadf7f6adcc7ed139ece396bc65e9f92dcaa68-767x1025.jpg/64_1_1439914883.jpg?rect=0,298,767,431&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "cheese"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "camembert",
+      "name": "Camembert",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "a-few-tips-fresh-rosemary",
+      "name": "a few tips fresh rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bite-sized-pieces-of-stale-bre",
+      "name": "bite-sized pieces of stale bread",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-rosemary",
+      "name": "a few sprigs of rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tiny-pinch-sea-salt",
+      "name": "tiny pinch sea salt",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-handful-dried-cranberrie",
+      "name": "small handful dried cranberries",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-handful-mixed-nuts",
+      "name": "small handful mixed nuts",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4. Leaving it in the box, score around the top of a 250g Camembert about \u00bdcm in and cut off the top layer of skin. Finely slice a peeled garlic clove and poke it into the top of the cheese with a few fresh rosemary tips. Drizzle with a little olive oil then bake in the hot oven for 15 to 20 minutes, or until gorgeous and oozy in the middle.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "next": [
+        "drizzle_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4. Leaving it in the box, score around the top of a 250g Camembert about \u00bdcm in and cut off the top layer of skin. Finely slice a peeled garlic clove and poke it into the top of the cheese with a few fresh rosemary tips. Drizzle with a little olive oil then bake in the hot oven for 15 to 20 minutes, or until gorgeous and oozy in the middle."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_them",
+      "descr": "Thread bite-sized pieces of stale bread onto stripped...",
+      "instructions": "Thread bite-sized pieces of stale bread onto stripped woody rosemary sprigs, drizzle them with olive oil and a tiny pinch of sea salt to help them crisp up then lay them on a tray and pop in the oven to cook with the Camembert.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_small"
+      ],
+      "on_enter": [
+        {
+          "say": "Thread bite-sized pieces of stale bread onto stripped woody rosemary sprigs, drizzle them with olive oil and a tiny pinch of sea salt to help them crisp up then lay them on a tray and pop in the oven to cook with the Camembert."
+        }
+      ]
+    },
+    {
+      "id": "chop_small",
+      "descr": "Finely chop a small handful of dried cranberries and...",
+      "instructions": "Finely chop a small handful of dried cranberries and mixed nuts and put them in a little bowl. Once your bread skewers are golden and crisp and your cheese is oozy, put everything out on a board then dunk a bit of toasted bread in the gooey cheese and dip it in the cranberry and nuts \u2013 a little mouthful of 1980s heaven.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "drizzle_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely chop a small handful of dried cranberries and mixed nuts and put them in a little bowl. Once your bread skewers are golden and crisp and your cheese is oozy, put everything out on a board then dunk a bit of toasted bread in the gooey cheese and dip it in the cranberry and nuts \u2013 a little mouthful of 1980s heaven."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "360 calories",
+    "carbohydrates": "25.7 g",
+    "fat": "20.9 g",
+    "fiber": "1 g",
+    "protein": "18.4 g"
+  }
+}

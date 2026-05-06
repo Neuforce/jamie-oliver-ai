@@ -1,0 +1,288 @@
+{
+  "recipe": {
+    "id": "caprese-chicken-burgers",
+    "title": "Caprese chicken burgers",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "Skip the takeaway with this budget-friendly chicken burger recipe. A impressive, 40-minute meal using clever hacks for maximum flavour on a budget.",
+    "tags": [
+      "dinner-for-two",
+      "chicken",
+      "burger",
+      "pesto",
+      "lunch",
+      "italian-style",
+      "chicken-thigh",
+      "dinner",
+      "budget-friendly",
+      "cheese"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/caprese-chicken-burgers",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d98834fe8a26bd69e0c74be36f512f612eb92ef1-2107x3160.jpg/JO_JV_F45_Caprese_Chicken_Burgers_2528.jpg?rect=0,527,2107,2107&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d98834fe8a26bd69e0c74be36f512f612eb92ef1-2107x3160.jpg/JO_JV_F45_Caprese_Chicken_Burgers_2528.jpg?rect=0,527,2107,2107&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d98834fe8a26bd69e0c74be36f512f612eb92ef1-2107x3160.jpg/JO_JV_F45_Caprese_Chicken_Burgers_2528.jpg?rect=0,790,2107,1580&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d98834fe8a26bd69e0c74be36f512f612eb92ef1-2107x3160.jpg/JO_JV_F45_Caprese_Chicken_Burgers_2528.jpg?rect=0,988,2107,1185&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-sweet-potatoes",
+      "name": "large sweet potatoes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "chicken-thighs",
+      "name": "chicken thighs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "skin on, bone in"
+    },
+    {
+      "id": "teaspoon-smoked-paprika",
+      "name": "\u00bd teaspoon smoked paprika",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "brioche-or-wholemeal-buns",
+      "name": "brioche or wholemeal buns",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-tomato",
+      "name": "ripe tomato",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-ball-of-mozzarella-cheese",
+      "name": "\u00bd a ball of mozzarella cheese",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "leaves-of-soft-round-lettuce",
+      "name": "leaves of soft round lettuce",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "80g"
+    },
+    {
+      "id": "pesto",
+      "name": "PESTO",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-basil",
+      "name": "\u00bd a bunch of fresh basil",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "blanched-almonds",
+      "name": "blanched almonds",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "italian-hard-cheese",
+      "name": "Italian hard cheese",
+      "quantity": 10.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "frying pan",
+    "knife",
+    "oven",
+    "pan",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00baC/400\u00baF/gas 6",
+      "instructions": "Preheat the oven to 200\u00baC/400\u00baF/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_thick"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00baC/400\u00baF/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "slice_thick",
+      "descr": "Scrub the sweet potatoes (there\u2019s no need to peel them),...",
+      "instructions": "Scrub the sweet potatoes (there\u2019s no need to peel them), then slice into 1cm-thick chips. Toss on a large baking tray with 1 tablespoon of olive oil and a pinch of sea salt and black pepper, spread out into a single layer and bake for 35 minutes or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2100S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub the sweet potatoes (there\u2019s no need to peel them), then slice into 1cm-thick chips. Toss on a large baking tray with 1 tablespoon of olive oil and a pinch of sea salt and black pepper, spread out into a single layer and bake for 35 minutes or until golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_3",
+      "descr": "Pull the skin off the chicken thighs and place it in a...",
+      "instructions": "Pull the skin off the chicken thighs and place it in a non-stick frying pan on a medium-high heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_thick"
+      ],
+      "next": [
+        "season_paprika"
+      ],
+      "on_enter": [
+        {
+          "say": "Pull the skin off the chicken thighs and place it in a non-stick frying pan on a medium-high heat."
+        }
+      ]
+    },
+    {
+      "id": "season_paprika",
+      "descr": "Carefully run the tip of a sharp knife along the chicken...",
+      "instructions": "Carefully run the tip of a sharp knife along the chicken thigh bones, then cut around the end of each bone to remove (don\u2019t throw the bones away \u2013 see tip). Lightly score the meat to open it out slightly, then season with the paprika and a small pinch of salt and pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_3"
+      ],
+      "next": [
+        "heat_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully run the tip of a sharp knife along the chicken thigh bones, then cut around the end of each bone to remove (don\u2019t throw the bones away \u2013 see tip). Lightly score the meat to open it out slightly, then season with the paprika and a small pinch of salt and pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_5",
+      "descr": "Place the chicken thighs in the pan next to the skin,...",
+      "instructions": "Place the chicken thighs in the pan next to the skin, pop a large piece of greaseproof paper on top and weigh down with a heavy pan, pressing down to flatten them. Cook for 12 minutes, or until charred and cooked through, turning halfway and removing the skin once it\u2019s brown and crispy. Halve and toast the buns in the residual heat.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT720S",
+      "depends_on": [
+        "season_paprika"
+      ],
+      "next": [
+        "add_almonds"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the chicken thighs in the pan next to the skin, pop a large piece of greaseproof paper on top and weigh down with a heavy pan, pressing down to flatten them. Cook for 12 minutes, or until charred and cooked through, turning halfway and removing the skin once it\u2019s brown and crispy. Halve and toast the buns in the residual heat."
+        }
+      ]
+    },
+    {
+      "id": "add_almonds",
+      "descr": "For the pesto, pick the basil leaves into a pestle and...",
+      "instructions": "For the pesto, pick the basil leaves into a pestle and mortar, reserving the stalks and a few nice baby leaves, and bash with a pinch of salt. Add the almonds and hard cheese, drizzle in 2 tablespoons of oil and bash to a smooth paste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_5"
+      ],
+      "next": [
+        "slice_tomato"
+      ],
+      "on_enter": [
+        {
+          "say": "For the pesto, pick the basil leaves into a pestle and mortar, reserving the stalks and a few nice baby leaves, and bash with a pinch of salt. Add the almonds and hard cheese, drizzle in 2 tablespoons of oil and bash to a smooth paste."
+        }
+      ]
+    },
+    {
+      "id": "slice_tomato",
+      "descr": "Slice the tomato into thin rounds",
+      "instructions": "Slice the tomato into thin rounds. Finely slice the basil stalks and sprinkle over the tomato with a pinch of salt and a tiny drizzle of oil. Slice up the mozzarella.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_almonds"
+      ],
+      "next": [
+        "slice_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the tomato into thin rounds. Finely slice the basil stalks and sprinkle over the tomato with a pinch of salt and a tiny drizzle of oil. Slice up the mozzarella."
+        }
+      ]
+    },
+    {
+      "id": "slice_chicken",
+      "descr": "Slice the chicken in half across the middle at an angle",
+      "instructions": "Slice the chicken in half across the middle at an angle. Spread the pesto over the bases of the buns, then layer up the tomato, lettuce and chicken. Lay the mozzarella on top, slice and add the crispy chicken skin, then sprinkle over the reserved basil leaves and pop the lids on. Serve with the sweet potato chips and tuck in!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_tomato"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the chicken in half across the middle at an angle. Spread the pesto over the bases of the buns, then layer up the tomato, lettuce and chicken. Lay the mozzarella on top, slice and add the crispy chicken skin, then sprinkle over the reserved basil leaves and pop the lids on. Serve with the sweet potato chips and tuck in!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "858 calories",
+    "carbohydrates": "69.5 g",
+    "fat": "47.9 g",
+    "fiber": "11.5 g",
+    "protein": "37.4 g"
+  }
+}

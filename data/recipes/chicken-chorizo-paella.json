@@ -1,0 +1,296 @@
+{
+  "recipe": {
+    "id": "chicken-chorizo-paella",
+    "title": "Chicken & chorizo paella",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "A brilliant chicken and chorizo paella recipe from Jamie Oliver. This is the best paella recipe. It's perfect for a weekend lunch. Just add crusty bread.",
+    "tags": [
+      "prawns",
+      "dinner-party",
+      "dish-type",
+      "low-lactose",
+      "chicken-thighs",
+      "dairy-free",
+      "course",
+      "pasta-amp-risotto",
+      "mains",
+      "rice",
+      "occasion",
+      "tapas",
+      "chicken",
+      "paella",
+      "method",
+      "pea",
+      "one-pan-recipes",
+      "chorizo",
+      "main-ingredient",
+      "popular"
+    ],
+    "course": "main",
+    "cuisine": "spanish",
+    "source_url": "https://www.jamieoliver.com/recipes/rice/chicken-chorizo-paella",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9f6564ca303e5f4e316b4f96c98cd8b1d8d828f4-973x1300.jpg/9f6564ca303e5f4e316b4f96c98cd8b1d8d828f4-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9f6564ca303e5f4e316b4f96c98cd8b1d8d828f4-973x1300.jpg/9f6564ca303e5f4e316b4f96c98cd8b1d8d828f4-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9f6564ca303e5f4e316b4f96c98cd8b1d8d828f4-973x1300.jpg/9f6564ca303e5f4e316b4f96c98cd8b1d8d828f4-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9f6564ca303e5f4e316b4f96c98cd8b1d8d828f4-973x1300.jpg/9f6564ca303e5f4e316b4f96c98cd8b1d8d828f4-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "rice"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-flat-leaf-par",
+      "name": "\u00bd a bunch of fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "quality-chorizo",
+      "name": "quality chorizo",
+      "quantity": 70.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "free-range-chicken-thighs",
+      "name": "free-range chicken thighs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "skin off, bone out"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sweet-smoked-paprika",
+      "name": "sweet smoked paprika",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "red-pepper",
+      "name": "red pepper",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "organic-chicken-stock-cube",
+      "name": "organic chicken stock cube",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "paella-rice",
+      "name": "paella rice",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "frozen-peeled-cooked-prawns",
+      "name": "frozen peeled cooked prawns",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": "from sustainable sources"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "chop_onion",
+      "descr": "Peel and finely slice the garlic, peel and roughly chop...",
+      "instructions": "Peel and finely slice the garlic, peel and roughly chop the onion and carrot. Finely chop the parsley stalks, then roughly chop the chorizo and chicken thighs.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the garlic, peel and roughly chop the onion and carrot. Finely chop the parsley stalks, then roughly chop the chorizo and chicken thighs."
+        }
+      ]
+    },
+    {
+      "id": "heat_garlic",
+      "descr": "Put a lug of oil into a large lidded shallow casserole...",
+      "instructions": "Put a lug of oil into a large lidded shallow casserole or paella pan on a medium heat, add the garlic, onion, carrot, parsley stalks, chorizo, chicken and paprika, and fry for around 5 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "chop_pepper"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a lug of oil into a large lidded shallow casserole or paella pan on a medium heat, add the garlic, onion, carrot, parsley stalks, chorizo, chicken and paprika, and fry for around 5 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "chop_pepper",
+      "descr": "Deseed and chop the pepper, then add to the pan for a...",
+      "instructions": "Deseed and chop the pepper, then add to the pan for a further 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_garlic"
+      ],
+      "next": [
+        "cube_rice"
+      ],
+      "on_enter": [
+        {
+          "say": "Deseed and chop the pepper, then add to the pan for a further 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "cube_rice",
+      "descr": "Stir through the tomato pur\u00e9e and crumble in the stock...",
+      "instructions": "Stir through the tomato pur\u00e9e and crumble in the stock cube, then add the rice and stir for a couple of minutes so it starts to suck up all that lovely flavour.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_pepper"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir through the tomato pur\u00e9e and crumble in the stock cube, then add the rice and stir for a couple of minutes so it starts to suck up all that lovely flavour."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Pour in 750ml of boiling water and add a pinch of sea...",
+      "instructions": "Pour in 750ml of boiling water and add a pinch of sea salt and black pepper. Pop the lid on and bring to the boil, then reduce to a simmer for 15 minutes, stirring regularly from the outside in and from the inside out, and adding a splash of water if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "cube_rice"
+      ],
+      "next": [
+        "stir_peas"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in 750ml of boiling water and add a pinch of sea salt and black pepper. Pop the lid on and bring to the boil, then reduce to a simmer for 15 minutes, stirring regularly from the outside in and from the inside out, and adding a splash of water if needed."
+        }
+      ]
+    },
+    {
+      "id": "stir_peas",
+      "descr": "Stir in the peas and prawns, replace the lid, and cook...",
+      "instructions": "Stir in the peas and prawns, replace the lid, and cook for a further 5 minutes, or until hot through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the peas and prawns, replace the lid, and cook for a further 5 minutes, or until hot through."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Season to perfection, then chop the parsley leaves,...",
+      "instructions": "Season to perfection, then chop the parsley leaves, scatter them over the paella, and serve with lemon wedges on the side for squeezing over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_peas"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to perfection, then chop the parsley leaves, scatter them over the paella, and serve with lemon wedges on the side for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "494 calories",
+    "carbohydrates": "75.7 g",
+    "fat": "12 g",
+    "fiber": "5.7 g",
+    "protein": "26.5 g"
+  }
+}

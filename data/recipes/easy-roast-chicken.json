@@ -1,0 +1,384 @@
+{
+  "recipe": {
+    "id": "easy-roast-chicken",
+    "title": "Easy roast chicken",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT85M",
+    "description": "There's nothing better than a delicious Sunday roast. Follow this easy roast chicken recipe for beautifully succulent results. Just add spuds!",
+    "tags": [
+      "christmas",
+      "christmas-dinner",
+      "dish-type",
+      "family-food",
+      "lunch-amp-dinner-recipes",
+      "low-lactose",
+      "gluten-free",
+      "roast-chicken",
+      "course",
+      "roast",
+      "mains",
+      "roasting",
+      "occasion",
+      "sunday-lunch",
+      "chicken",
+      "student-recipes",
+      "method",
+      "one-pan-recipes",
+      "main-ingredient",
+      "mother-s-day",
+      "non-promotable"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/perfect-roast-chicken",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2a409dd1676dc3b6324c21286a51a733d5731793-973x1300.jpg/2a409dd1676dc3b6324c21286a51a733d5731793-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2a409dd1676dc3b6324c21286a51a733d5731793-973x1300.jpg/2a409dd1676dc3b6324c21286a51a733d5731793-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2a409dd1676dc3b6324c21286a51a733d5731793-973x1300.jpg/2a409dd1676dc3b6324c21286a51a733d5731793-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2a409dd1676dc3b6324c21286a51a733d5731793-973x1300.jpg/2a409dd1676dc3b6324c21286a51a733d5731793-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "1-6kg-whole-free-range-chicken",
+      "name": "1.6kg whole free-range chicken",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "medium-onions",
+      "name": "medium onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-fresh-herbs-such-as-thym",
+      "name": "mixed fresh herbs such as thyme",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "rosemary, bay"
+    }
+  ],
+  "utensils": [
+    "knife",
+    "oven",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Remove the chicken from the fridge 30 minutes before you...",
+      "instructions": "Remove the chicken from the fridge 30 minutes before you want to cook it, to let it come up to room temperature.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the chicken from the fridge 30 minutes before you want to cook it, to let it come up to room temperature."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 240\u00b0C/475\u00b0F/gas 9",
+      "instructions": "Preheat the oven to 240\u00b0C/475\u00b0F/gas 9.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "chop_vegetables"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 240\u00b0C/475\u00b0F/gas 9."
+        }
+      ]
+    },
+    {
+      "id": "chop_vegetables",
+      "descr": "Wash and roughly chop the vegetables \u2013 there\u2019s no need...",
+      "instructions": "Wash and roughly chop the vegetables \u2013 there\u2019s no need to peel them. Break the garlic bulb into cloves, leaving them unpeeled.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "drizzle_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash and roughly chop the vegetables \u2013 there\u2019s no need to peel them. Break the garlic bulb into cloves, leaving them unpeeled."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_step_4",
+      "descr": "Pile all the veg, garlic and herbs into the middle of a...",
+      "instructions": "Pile all the veg, garlic and herbs into the middle of a large roasting tray and drizzle with oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_vegetables"
+      ],
+      "next": [
+        "drizzle_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Pile all the veg, garlic and herbs into the middle of a large roasting tray and drizzle with oil."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_chicken",
+      "descr": "Drizzle the chicken with oil and season well with sea...",
+      "instructions": "Drizzle the chicken with oil and season well with sea salt and black pepper, then rub all over the bird. Place the chicken on top of the vegetables.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_step_4"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle the chicken with oil and season well with sea salt and black pepper, then rub all over the bird. Place the chicken on top of the vegetables."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Carefully prick the lemon all over, using the tip of a...",
+      "instructions": "Carefully prick the lemon all over, using the tip of a sharp knife (if you have a microwave, you could pop the lemon in these for 40 seconds at this point as this will really bring out the flavour). Put the lemon inside the chicken\u2019s cavity, with the bunch of herbs.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT40S",
+      "depends_on": [
+        "drizzle_chicken"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully prick the lemon all over, using the tip of a sharp knife (if you have a microwave, you could pop the lemon in these for 40 seconds at this point as this will really bring out the flavour). Put the lemon inside the chicken\u2019s cavity, with the bunch of herbs."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Place the tray in the oven, then turn the heat down...",
+      "instructions": "Place the tray in the oven, then turn the heat down immediately to 200\u00b0C/400\u00b0F/gas 6 and cook for 1 hour 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "roast_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the tray in the oven, then turn the heat down immediately to 200\u00b0C/400\u00b0F/gas 6 and cook for 1 hour 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "roast_potatoes",
+      "descr": "If you\u2019re doing roast potatoes and veggies, this is the...",
+      "instructions": "If you\u2019re doing roast potatoes and veggies, this is the time to crack on with them \u2013 get them into the oven for the last 45 minutes of cooking.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "add_splash"
+      ],
+      "on_enter": [
+        {
+          "say": "If you\u2019re doing roast potatoes and veggies, this is the time to crack on with them \u2013 get them into the oven for the last 45 minutes of cooking."
+        }
+      ]
+    },
+    {
+      "id": "add_splash",
+      "descr": "Baste the chicken halfway through cooking and if the veg...",
+      "instructions": "Baste the chicken halfway through cooking and if the veg look dry, add a splash of water to the tray to stop them from burning.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_potatoes"
+      ],
+      "next": [
+        "rest_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Baste the chicken halfway through cooking and if the veg look dry, add a splash of water to the tray to stop them from burning."
+        }
+      ]
+    },
+    {
+      "id": "rest_minutes",
+      "descr": "When the chicken is cooked, take the tray out of the...",
+      "instructions": "When the chicken is cooked, take the tray out of the oven and transfer the chicken to a board to rest for 15 minutes or so. Cover it with a layer of tin foil and a tea towel and leave aside while you make your gravy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "add_splash"
+      ],
+      "next": [
+        "add_your"
+      ],
+      "on_enter": [
+        {
+          "say": "When the chicken is cooked, take the tray out of the oven and transfer the chicken to a board to rest for 15 minutes or so. Cover it with a layer of tin foil and a tea towel and leave aside while you make your gravy."
+        }
+      ]
+    },
+    {
+      "id": "add_your",
+      "descr": "To carve your chicken, remove any string and take off...",
+      "instructions": "To carve your chicken, remove any string and take off the wings (break them up and add to your gravy, along with the veg trivet, for mega flavour). Carefully cut down between the leg and the breast. Cut through the joint and pull the leg off.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_minutes"
+      ],
+      "next": [
+        "step_step_12"
+      ],
+      "on_enter": [
+        {
+          "say": "To carve your chicken, remove any string and take off the wings (break them up and add to your gravy, along with the veg trivet, for mega flavour). Carefully cut down between the leg and the breast. Cut through the joint and pull the leg off."
+        }
+      ]
+    },
+    {
+      "id": "step_step_12",
+      "descr": "Repeat on the other side, then cut each leg between the...",
+      "instructions": "Repeat on the other side, then cut each leg between the thigh and the drumstick so you end up with four portions of dark meat. Place these on a serving platter.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_your"
+      ],
+      "next": [
+        "rest_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Repeat on the other side, then cut each leg between the thigh and the drumstick so you end up with four portions of dark meat. Place these on a serving platter."
+        }
+      ]
+    },
+    {
+      "id": "rest_your",
+      "descr": "You should now have a clear space to carve the rest of...",
+      "instructions": "You should now have a clear space to carve the rest of your chicken. Angle the knife along the breastbone and carve one side off, then the other.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_12"
+      ],
+      "next": [
+        "roast_step_14"
+      ],
+      "on_enter": [
+        {
+          "say": "You should now have a clear space to carve the rest of your chicken. Angle the knife along the breastbone and carve one side off, then the other."
+        }
+      ]
+    },
+    {
+      "id": "roast_step_14",
+      "descr": "When you get down to the fussy bits, just use your...",
+      "instructions": "When you get down to the fussy bits, just use your fingers to pull all the meat off, and turn the chicken over to get all the tasty, juicy bits from underneath. You should be left with a stripped carcass, and a platter full of lovely meat that you can serve with your piping hot gravy and some delicious roast veg.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "rest_your"
+      ],
+      "on_enter": [
+        {
+          "say": "When you get down to the fussy bits, just use your fingers to pull all the meat off, and turn the chicken over to get all the tasty, juicy bits from underneath. You should be left with a stripped carcass, and a platter full of lovely meat that you can serve with your piping hot gravy and some delicious roast veg."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "374 calories",
+    "carbohydrates": "13.4 g",
+    "fat": "15.8 g",
+    "fiber": "3.4 g",
+    "protein": "45.5 g"
+  }
+}

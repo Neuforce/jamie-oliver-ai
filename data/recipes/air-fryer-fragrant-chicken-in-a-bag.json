@@ -1,0 +1,249 @@
+{
+  "recipe": {
+    "id": "air-fryer-fragrant-chicken-in-a-bag",
+    "title": "Air-fryer fragrant chicken in a bag",
+    "servings": 1,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT37M",
+    "description": "Jamie uses the air fryer to steam chicken, noodles and some fragrant herbs and vegetables all in a foil bag. Get meal prepping!",
+    "tags": [
+      "noodles",
+      "air-fryer",
+      "healthy-dinner-ideas",
+      "quick-amp-healthy-recipes",
+      "low-lactose",
+      "dairy-free",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken-breast/air-fryer-chicken-in-a-bag",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c4e44fcea362fc369c36fe42a6909051dfcecbae-973x1300.jpg/Fragrant%20chicken%20in%20a%20bag%20crop.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c4e44fcea362fc369c36fe42a6909051dfcecbae-973x1300.jpg/Fragrant%20chicken%20in%20a%20bag%20crop.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c4e44fcea362fc369c36fe42a6909051dfcecbae-973x1300.jpg/Fragrant%20chicken%20in%20a%20bag%20crop.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c4e44fcea362fc369c36fe42a6909051dfcecbae-973x1300.jpg/Fragrant%20chicken%20in%20a%20bag%20crop.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken-breast"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "nest-of-vermicelli-rice-noodle",
+      "name": "nest of vermicelli rice noodles",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "45g"
+    },
+    {
+      "id": "lime-leaves",
+      "name": "lime leaves",
+      "quantity": 12.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "lemongrass",
+      "name": "lemongrass",
+      "quantity": 1.0,
+      "unit": "stick",
+      "note": null
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "\u00bd fresh red chillies",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "coriander",
+      "name": "coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "low-salt-soy-sauce",
+      "name": "low-salt soy sauce",
+      "quantity": 4.0,
+      "unit": "tbsp",
+      "note": null
+    },
+    {
+      "id": "sesame-oil",
+      "name": "sesame oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "150g-skinless-free-range-chick",
+      "name": "150g skinless free-range chicken breast",
+      "quantity": 150.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pak-choi",
+      "name": "pak choi",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sugar-snap-peas",
+      "name": "sugar snap peas",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "baby-corn",
+      "name": "baby corn",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-roasted-peanuts",
+      "name": "unsalted roasted peanuts",
+      "quantity": 1.0,
+      "unit": "tbsp",
+      "note": null
+    },
+    {
+      "id": "a-lime",
+      "name": "\u00bd a lime",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor"
+  ],
+  "steps": [
+    {
+      "id": "boil_kettle",
+      "descr": "In a bowl, cover the noodles with boiling kettle water...",
+      "instructions": "In a bowl, cover the noodles with boiling kettle water and leave to soften for a few moments, then drain and refresh under cold running water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_ginger"
+      ],
+      "on_enter": [
+        {
+          "say": "In a bowl, cover the noodles with boiling kettle water and leave to soften for a few moments, then drain and refresh under cold running water."
+        }
+      ]
+    },
+    {
+      "id": "chop_ginger",
+      "descr": "Tear the lime leaves into a small food processor,...",
+      "instructions": "Tear the lime leaves into a small food processor, discarding any tough stalks. Peel, roughly chop and add the ginger and garlic, chop and add the lemongrass and 1 chilli, most of the coriander, stalks and all (reserving a few nice leaves), and a pinch of sea salt. Add the soy and 1 teaspoon of sesame oil and blitz into a paste. Divide the paste into four, keeping one portion for now and freezing the rest for future meals.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_kettle"
+      ],
+      "next": [
+        "slice_spring"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear the lime leaves into a small food processor, discarding any tough stalks. Peel, roughly chop and add the ginger and garlic, chop and add the lemongrass and 1 chilli, most of the coriander, stalks and all (reserving a few nice leaves), and a pinch of sea salt. Add the soy and 1 teaspoon of sesame oil and blitz into a paste. Divide the paste into four, keeping one portion for now and freezing the rest for future meals."
+        }
+      ]
+    },
+    {
+      "id": "slice_spring",
+      "descr": "Score deeply into the chicken a few times at an angle...",
+      "instructions": "Score deeply into the chicken a few times at an angle and rub with half the paste portion. Halve the pak choi, sugar snaps and baby corn, trim and finely slice the spring onions, then toss it all with the remaining half-portion of paste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_ginger"
+      ],
+      "next": [
+        "slice_scatter"
+      ],
+      "on_enter": [
+        {
+          "say": "Score deeply into the chicken a few times at an angle and rub with half the paste portion. Halve the pak choi, sugar snaps and baby corn, trim and finely slice the spring onions, then toss it all with the remaining half-portion of paste."
+        }
+      ]
+    },
+    {
+      "id": "slice_scatter",
+      "descr": "Tear off a large sheet of thick tin foil (about 60cm...",
+      "instructions": "Tear off a large sheet of thick tin foil (about 60cm long), fold it in half, then open it out like a book and rub one side with sesame oil. Top with the noodles and veg. Finely slice and scatter over the remaining chilli, then sit the chicken on top. Fold over the foil to create a parcel, twisting the edges to seal, and add 50ml of water before sealing the final side. Place in the air-fryer drawer and cook for 25 minutes at 200\u00baC, or until the chicken is cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "slice_spring"
+      ],
+      "next": [
+        "plate_carefully"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear off a large sheet of thick tin foil (about 60cm long), fold it in half, then open it out like a book and rub one side with sesame oil. Top with the noodles and veg. Finely slice and scatter over the remaining chilli, then sit the chicken on top. Fold over the foil to create a parcel, twisting the edges to seal, and add 50ml of water before sealing the final side. Place in the air-fryer drawer and cook for 25 minutes at 200\u00baC, or until the chicken is cooked through."
+        }
+      ]
+    },
+    {
+      "id": "plate_carefully",
+      "descr": "Remove the bag to a serving plate and carefully tear...",
+      "instructions": "Remove the bag to a serving plate and carefully tear open the foil. Crush over the nuts, scatter over the coriander leaves and finish with a squeeze of lime.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_scatter"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the bag to a serving plate and carefully tear open the foil. Crush over the nuts, scatter over the coriander leaves and finish with a squeeze of lime."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "655 calories",
+    "carbohydrates": "64.4 g",
+    "fat": "20 g",
+    "fiber": "4.1 g",
+    "protein": "52.9 g"
+  }
+}

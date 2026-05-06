@@ -1,0 +1,554 @@
+{
+  "recipe": {
+    "id": "ultimate-veggie-lasagne",
+    "title": "Ultimate veggie lasagne",
+    "servings": 14,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT210M",
+    "description": "This is the ultimate vegetarian lasagne recipe. Jamie Oliver\u2019s recipe, as seen on Friday Night Feast, has an incredible homemade pesto to top it off.",
+    "tags": [
+      "tv",
+      "lasagne",
+      "episode-1",
+      "lasagna",
+      "vegetarian",
+      "celebrity-recipe",
+      "pesto",
+      "fnf-series-four",
+      "series-4",
+      "jamie-and-jimmy-s-friday-night-feast",
+      "vegetables",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/ultimate-veggie-lasagne",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3f1751bc699590a25010d098a7de06066b2095cc-958x1280.jpg/83619424?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3f1751bc699590a25010d098a7de06066b2095cc-958x1280.jpg/83619424?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3f1751bc699590a25010d098a7de06066b2095cc-958x1280.jpg/83619424?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3f1751bc699590a25010d098a7de06066b2095cc-958x1280.jpg/83619424?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "lasagne",
+      "name": "LASAGNE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-porcini-mushrooms",
+      "name": "dried porcini mushrooms",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onion-squash",
+      "name": "onion squash",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "850g in total"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fennel-seeds",
+      "name": "fennel seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "dried-chilli-flakes",
+      "name": "dried chilli flakes",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "mixed-bunch-of-fresh-woody-her",
+      "name": "mixed bunch of fresh woody herbs",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "30g, such as thyme, rosemary, sage, bay"
+    },
+    {
+      "id": "barolo",
+      "name": "Barolo",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": "or other red wine"
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-beans",
+      "name": "400g tins of beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": "such as cannellini, borlotti, haricot"
+    },
+    {
+      "id": "big-aubergine",
+      "name": "big aubergine",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "600g"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cr-me-fra-che",
+      "name": "cr\u00e8me fra\u00eeche",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "vegetarian-hard-cheese",
+      "name": "vegetarian hard cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-lasagne-sheets",
+      "name": "fresh lasagne sheets",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "ripe-mixed-colour-cherry-tomat",
+      "name": "ripe mixed-colour cherry tomatoes",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "pesto",
+      "name": "PESTO",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "big-bunch-of-fresh-basil",
+      "name": "big bunch of fresh basil",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "60g"
+    },
+    {
+      "id": "mixed-bunch-of-fresh-herbs",
+      "name": "mixed bunch of fresh herbs",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "30g, such as mint, oregano, flat-leaf parsley"
+    },
+    {
+      "id": "vegetarian-hard-cheese",
+      "name": "vegetarian hard cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-clove-of-garlic",
+      "name": "\u00bd a clove of garlic",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pine-nuts",
+      "name": "pine nuts",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": "almonds, walnuts"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-lemon",
+      "name": "\u00bd a lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "ladle",
+    "oven",
+    "pan",
+    "saucepan",
+    "spatula"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "Cover the dried porcini with boiling water and leave to...",
+      "instructions": "Cover the dried porcini with boiling water and leave to rehydrate.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "drizzle_fennel"
+      ],
+      "on_enter": [
+        {
+          "say": "Cover the dried porcini with boiling water and leave to rehydrate."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_fennel",
+      "descr": "Halve the squash, then scoop out and wash the seeds",
+      "instructions": "Halve the squash, then scoop out and wash the seeds. Drain and pat dry, then, on a tray, toss with a drizzle of oil, the fennel seeds, and a pinch each of chilli flakes, sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "chop_each"
+      ],
+      "on_enter": [
+        {
+          "say": "Halve the squash, then scoop out and wash the seeds. Drain and pat dry, then, on a tray, toss with a drizzle of oil, the fennel seeds, and a pinch each of chilli flakes, sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "chop_each",
+      "descr": "Chop each squash into 8 chunky wedges, then toss on a...",
+      "instructions": "Chop each squash into 8 chunky wedges, then toss on a large tray with a little oil, salt, pepper and another good pinch of chilli flakes. Roast the squash for 1 hour, or until golden, adding the tray of seeds for the last 30 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "drizzle_fennel"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Chop each squash into 8 chunky wedges, then toss on a large tray with a little oil, salt, pepper and another good pinch of chilli flakes. Roast the squash for 1 hour, or until golden, adding the tray of seeds for the last 30 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "For the rag\u00f9, peel the onions, carrots and celery, then...",
+      "instructions": "For the rag\u00f9, peel the onions, carrots and celery, then chop it all into 1cm dice and place in a large casserole pan with 2 tablespoons of oil. Cook on a medium heat for 20 minutes, or until softened, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "chop_each"
+      ],
+      "next": [
+        "add_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "For the rag\u00f9, peel the onions, carrots and celery, then chop it all into 1cm dice and place in a large casserole pan with 2 tablespoons of oil. Cook on a medium heat for 20 minutes, or until softened, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "add_minutes",
+      "descr": "Saving a sprig each of rosemary and thyme, tie the rest...",
+      "instructions": "Saving a sprig each of rosemary and thyme, tie the rest of the woody herbs together with string. Add to the pan for a few minutes, then pour in the wine and leave to cook away.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Saving a sprig each of rosemary and thyme, tie the rest of the woody herbs together with string. Add to the pan for a few minutes, then pour in the wine and leave to cook away."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Scrunch in the tomatoes through your clean hands, then...",
+      "instructions": "Scrunch in the tomatoes through your clean hands, then pour in 2 tins\u2019 worth of water. Leave to tick away for 30 minutes, then drain and add the beans. Cook for a further 30 minutes, or until thickened and reduced, stirring and mashing occasionally, adding splashes of water to loosen, if needed. Season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "add_minutes"
+      ],
+      "next": [
+        "stir_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrunch in the tomatoes through your clean hands, then pour in 2 tins\u2019 worth of water. Leave to tick away for 30 minutes, then drain and add the beans. Cook for a further 30 minutes, or until thickened and reduced, stirring and mashing occasionally, adding splashes of water to loosen, if needed. Season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "stir_step_8",
+      "descr": "Meanwhile, prick the whole aubergine all over with a...",
+      "instructions": "Meanwhile, prick the whole aubergine all over with a fork, then place directly over a flame on the hob, turning regularly with tongs until softened and blackened all over. Place in a bowl, cover with clingfilm and leave for 5 minutes. When the time\u2019s up, remove the clingfilm, pour the juices into the pan, then halve the aubergine lengthways, scrape out all the flesh, and stir into the pan.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "chop_reserved"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, prick the whole aubergine all over with a fork, then place directly over a flame on the hob, turning regularly with tongs until softened and blackened all over. Place in a bowl, cover with clingfilm and leave for 5 minutes. When the time\u2019s up, remove the clingfilm, pour the juices into the pan, then halve the aubergine lengthways, scrape out all the flesh, and stir into the pan."
+        }
+      ]
+    },
+    {
+      "id": "chop_reserved",
+      "descr": "For the white sauce, peel and finely slice the garlic,...",
+      "instructions": "For the white sauce, peel and finely slice the garlic, and clean and finely slice the mushrooms. Pick and finely chop the reserved rosemary and thyme.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_step_8"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "For the white sauce, peel and finely slice the garlic, and clean and finely slice the mushrooms. Pick and finely chop the reserved rosemary and thyme."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Place a saucepan on a medium heat with 2 tablespoons of...",
+      "instructions": "Place a saucepan on a medium heat with 2 tablespoons of oil, add the garlic for 1 minute, then add the herbs, mushrooms and a pinch of salt and pepper. Cook until lightly golden, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_reserved"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a saucepan on a medium heat with 2 tablespoons of oil, add the garlic for 1 minute, then add the herbs, mushrooms and a pinch of salt and pepper. Cook until lightly golden, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Add the porcini and soaking liquor (discarding just the...",
+      "instructions": "Add the porcini and soaking liquor (discarding just the last gritty bit), leave to bubble and cook away, then turn the heat down to low, stir in the cr\u00e8me fra\u00eeche and cook gently for a few minutes. Remove from the heat, then finely grate and stir in half the hard cheese.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "stir_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the porcini and soaking liquor (discarding just the last gritty bit), leave to bubble and cook away, then turn the heat down to low, stir in the cr\u00e8me fra\u00eeche and cook gently for a few minutes. Remove from the heat, then finely grate and stir in half the hard cheese."
+        }
+      ]
+    },
+    {
+      "id": "stir_remaining",
+      "descr": "To assemble, remove the herbs from the rag\u00f9, finely...",
+      "instructions": "To assemble, remove the herbs from the rag\u00f9, finely grate and stir in the remaining hard cheese, then generously spoon 2 ladlefuls into the bottom of a 25cm x 30cm lasagne dish. Drizzle over 2 tablespoons of white sauce, tear over a quarter of the squash, scatter over a handful of spinach, and top with a layer of pasta.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "To assemble, remove the herbs from the rag\u00f9, finely grate and stir in the remaining hard cheese, then generously spoon 2 ladlefuls into the bottom of a 25cm x 30cm lasagne dish. Drizzle over 2 tablespoons of white sauce, tear over a quarter of the squash, scatter over a handful of spinach, and top with a layer of pasta."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "Repeat 3 further times, finishing with the remaining...",
+      "instructions": "Repeat 3 further times, finishing with the remaining creamy sauce. Loosen the edges with a spatula to push some of the sauce down the sides, then grate over the Cheddar. Halve the tomatoes, quickly toss in oil, and dot over the top, then bake for 45 minutes, or until golden and bubbling.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "stir_remaining"
+      ],
+      "next": [
+        "chop_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Repeat 3 further times, finishing with the remaining creamy sauce. Loosen the edges with a spatula to push some of the sauce down the sides, then grate over the Cheddar. Halve the tomatoes, quickly toss in oil, and dot over the top, then bake for 45 minutes, or until golden and bubbling."
+        }
+      ]
+    },
+    {
+      "id": "chop_through",
+      "descr": "Leave to stand uncovered for 30 minutes while you make...",
+      "instructions": "Leave to stand uncovered for 30 minutes while you make the pesto. Rip the top leafy half of the herbs into a food processor. Break in the hard cheese, peel, finely slice and add the garlic and tip in your chosen nuts. Add a pinch of salt and pepper and whiz until very finely chopped, then stir through 8 tablespoons of extra virgin olive oil and the lemon juice. Have a taste and tweak to your liking (this makes more than you need, so freeze any leftovers for tasty meals on other days).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "bake_minutes"
+      ],
+      "next": [
+        "season_salad"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave to stand uncovered for 30 minutes while you make the pesto. Rip the top leafy half of the herbs into a food processor. Break in the hard cheese, peel, finely slice and add the garlic and tip in your chosen nuts. Add a pinch of salt and pepper and whiz until very finely chopped, then stir through 8 tablespoons of extra virgin olive oil and the lemon juice. Have a taste and tweak to your liking (this makes more than you need, so freeze any leftovers for tasty meals on other days)."
+        }
+      ]
+    },
+    {
+      "id": "season_salad",
+      "descr": "Serve the lasagne with a dollop of the pesto and a...",
+      "instructions": "Serve the lasagne with a dollop of the pesto and a scattering of crispy seeds. Good with a fresh, seasonal salad.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve the lasagne with a dollop of the pesto and a scattering of crispy seeds. Good with a fresh, seasonal salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "507 calories",
+    "carbohydrates": "29.4 g",
+    "fat": "35.8 g",
+    "fiber": "6.0 g",
+    "protein": "15.3 g"
+  }
+}

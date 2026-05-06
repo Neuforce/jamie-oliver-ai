@@ -1,0 +1,218 @@
+{
+  "recipe": {
+    "id": "easy-salmon-en-cro-te",
+    "title": "Easy salmon en cro\u00fbte",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT55M",
+    "description": "Using frozen spinach, jarred pesto and ready-made puff pastry, this simplified version of salmon en cro\u00fbte is a showstopper you can whip up any day of the week",
+    "tags": [
+      "tv",
+      "keep-cooking-family-favourites"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/salmon/easy-salmon-en-croute",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8c584b71056cf2f7b5b7783249d8f09a7c7945fb-958x1280.jpg/109469645?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8c584b71056cf2f7b5b7783249d8f09a7c7945fb-958x1280.jpg/109469645?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8c584b71056cf2f7b5b7783249d8f09a7c7945fb-958x1280.jpg/109469645?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8c584b71056cf2f7b5b7783249d8f09a7c7945fb-958x1280.jpg/109469645?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "salmon"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "frozen-spinach",
+      "name": "frozen spinach",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "320g-sheet-of-all-butter-puff-",
+      "name": "320g sheet of all-butter puff pastry",
+      "quantity": 320.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "130g-salmon-fillets",
+      "name": "130g salmon fillets",
+      "quantity": 130.0,
+      "unit": null,
+      "note": "skin off, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-red-pesto",
+      "name": "heaped tablespoon red pesto",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7",
+      "instructions": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Peel and chop the onion and place in a large non-stick...",
+      "instructions": "Peel and chop the onion and place in a large non-stick pan on a medium heat with 1 tablespoon of olive oil. Peel, finely slice and add the garlic. Finely grate in the lemon zest, then cook for 10 minutes, or until softened, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "stir_spinach"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and chop the onion and place in a large non-stick pan on a medium heat with 1 tablespoon of olive oil. Peel, finely slice and add the garlic. Finely grate in the lemon zest, then cook for 10 minutes, or until softened, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_spinach",
+      "descr": "Stir in the spinach, cover, and cook for 5 minutes, then...",
+      "instructions": "Stir in the spinach, cover, and cook for 5 minutes, then remove the lid and cook for another 5 minutes, or until all the liquid has cooked away. Season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "beat_eggs"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the spinach, cover, and cook for 5 minutes, then remove the lid and cook for another 5 minutes, or until all the liquid has cooked away. Season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "beat_eggs",
+      "descr": "Unroll the pastry and place it, still on its paper, in a...",
+      "instructions": "Unroll the pastry and place it, still on its paper, in a baking tray. Spread over the spinach, leaving a 5cm border all the way around. Sit the salmon fillets on top, 1cm apart, then use the paper to help you fold in the pastry edges to snugly encase the salmon, leaving it exposed on the top. Beat the eggs and use some to brush the exposed pastry, then bake at the bottom of the oven for 15 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "stir_spinach"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Unroll the pastry and place it, still on its paper, in a baking tray. Spread over the spinach, leaving a 5cm border all the way around. Sit the salmon fillets on top, 1cm apart, then use the paper to help you fold in the pastry edges to snugly encase the salmon, leaving it exposed on the top. Beat the eggs and use some to brush the exposed pastry, then bake at the bottom of the oven for 15 minutes."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Meanwhile, beat the pesto into the remaining egg",
+      "instructions": "Meanwhile, beat the pesto into the remaining egg. When the time\u2019s up, pull out the tray and pour the egg mixture over the salmon and into the gaps.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "beat_eggs"
+      ],
+      "next": [
+        "serve_lemon"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, beat the pesto into the remaining egg. When the time\u2019s up, pull out the tray and pour the egg mixture over the salmon and into the gaps."
+        }
+      ]
+    },
+    {
+      "id": "serve_lemon",
+      "descr": "Return to the bottom of the oven for a final 15 minutes,...",
+      "instructions": "Return to the bottom of the oven for a final 15 minutes, or until the pastry is golden and the egg is just cooked through. Serve with lemon wedges, for squeezing over.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Return to the bottom of the oven for a final 15 minutes, or until the pastry is golden and the egg is just cooked through. Serve with lemon wedges, for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "712 calories",
+    "carbohydrates": "36 g",
+    "fat": "46.4 g",
+    "fiber": "2.7 g",
+    "protein": "37 g"
+  }
+}

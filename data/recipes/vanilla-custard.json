@@ -1,0 +1,170 @@
+{
+  "recipe": {
+    "id": "vanilla-custard",
+    "title": "Vanilla custard",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT35M",
+    "description": "An easy step-by-step recipe for proper custard from Jamie Oliver. Custard is the perfect accompaniment to loads of puds, but especially fruit crumble!",
+    "tags": [
+      "sauces",
+      "sauces-amp-condiments"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/desserts/vanilla-custard",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/30699212d35af2725575a5f7153dd1a03f5b6940-958x1280.jpg/89651486?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/30699212d35af2725575a5f7153dd1a03f5b6940-958x1280.jpg/89651486?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/30699212d35af2725575a5f7153dd1a03f5b6940-958x1280.jpg/89651486?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/30699212d35af2725575a5f7153dd1a03f5b6940-958x1280.jpg/89651486?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "desserts"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "vanilla-pod",
+      "name": "vanilla pod",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "whole-milk",
+      "name": "whole milk",
+      "quantity": 600.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg-yolks",
+      "name": "large free-range egg yolks",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "cornflour",
+      "name": "cornflour",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "ladle",
+    "mixing bowl",
+    "pan",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "heat_milk",
+      "descr": "Halve the vanilla pod and scrape out the seeds",
+      "instructions": "Halve the vanilla pod and scrape out the seeds. Add both the pod and seeds to a pan on a medium-low heat, pour in the milk and bring just to the boil.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_leave"
+      ],
+      "on_enter": [
+        {
+          "say": "Halve the vanilla pod and scrape out the seeds. Add both the pod and seeds to a pan on a medium-low heat, pour in the milk and bring just to the boil."
+        }
+      ]
+    },
+    {
+      "id": "heat_leave",
+      "descr": "Remove from the heat and leave to cool slightly, then...",
+      "instructions": "Remove from the heat and leave to cool slightly, then pick out the vanilla pod.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_milk"
+      ],
+      "next": [
+        "mix_bowl"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove from the heat and leave to cool slightly, then pick out the vanilla pod."
+        }
+      ]
+    },
+    {
+      "id": "mix_bowl",
+      "descr": "In a large mixing bowl, whisk the egg yolks with the...",
+      "instructions": "In a large mixing bowl, whisk the egg yolks with the sugar and cornflour until pale.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_leave"
+      ],
+      "next": [
+        "warm_milk"
+      ],
+      "on_enter": [
+        {
+          "say": "In a large mixing bowl, whisk the egg yolks with the sugar and cornflour until pale."
+        }
+      ]
+    },
+    {
+      "id": "warm_milk",
+      "descr": "Gradually add the warm milk, a ladle at a time, whisking...",
+      "instructions": "Gradually add the warm milk, a ladle at a time, whisking well before each addition.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Gradually add the warm milk, a ladle at a time, whisking well before each addition."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Pour the mixture back into the pan and cook gently on a...",
+      "instructions": "Pour the mixture back into the pan and cook gently on a low heat for about 20 minutes or until thickened, whisking continuously. Delicious served with all kinds of crumble.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1200S",
+      "depends_on": [
+        "warm_milk"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the mixture back into the pan and cook gently on a low heat for about 20 minutes or until thickened, whisking continuously. Delicious served with all kinds of crumble."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "214 calories",
+    "carbohydrates": "16.4 g",
+    "fat": "12.9 g",
+    "fiber": "0.3 g",
+    "protein": "8.8 g"
+  }
+}

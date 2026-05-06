@@ -1,0 +1,520 @@
+{
+  "recipe": {
+    "id": "jamie-s-meatloaf",
+    "title": "Jamie\u2019s meatloaf",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "The best meatloaf recipe from Jamie's Ministry of Food. Learn how to make meatloaf from scratch, then serve up with spaghetti and steamed seasonal greens.",
+    "tags": [
+      "father-s-day",
+      "dish-type",
+      "bonfire-night-recipes",
+      "salad",
+      "course",
+      "mains",
+      "roasting",
+      "tomato",
+      "occasion",
+      "meatloaf",
+      "sunday-lunch",
+      "mince",
+      "method",
+      "beef",
+      "minced-beef",
+      "main-ingredient",
+      "bacon",
+      "tomato-sauce",
+      "chickpea"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/jamie-s-meatloaf",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/34b5a270dcc0ac719ad7fd9e355abeb0dc49ec50-973x1300.jpg/46261832?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/34b5a270dcc0ac719ad7fd9e355abeb0dc49ec50-973x1300.jpg/46261832?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/34b5a270dcc0ac719ad7fd9e355abeb0dc49ec50-973x1300.jpg/46261832?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/34b5a270dcc0ac719ad7fd9e355abeb0dc49ec50-973x1300.jpg/46261832?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ground-cumin",
+      "name": "ground cumin",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-ground-coriand",
+      "name": "heaped teaspoon ground coriander",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "jacob-s-cream-crackers",
+      "name": "Jacob\u2019s cream crackers",
+      "quantity": 12.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-dijon-mustard",
+      "name": "heaped teaspoons Dijon mustard",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "quality-minced-beef",
+      "name": "quality minced beef",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "higher-welfare-smoked-bacon-or",
+      "name": "higher-welfare smoked bacon or\ufffd\ufffdpancetta",
+      "quantity": 12.0,
+      "unit": "slices",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tomato-sauce",
+      "name": "TOMATO SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "1-fresh-red-chilli",
+      "name": "\u00bd-1 fresh red chilli",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "worcestershire-sauce",
+      "name": "Worcestershire sauce",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "bowl",
+    "frying pan",
+    "large bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to full whack",
+      "instructions": "Preheat the oven to full whack.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to full whack."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Peel, finely chop and place the onion in a large frying...",
+      "instructions": "Peel, finely chop and place the onion in a large frying pan over a medium-high heat with 2 tablespoons of oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel, finely chop and place the onion in a large frying pan over a medium-high heat with 2 tablespoons of oil."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Season, add the cumin and coriander and fry for around 7...",
+      "instructions": "Season, add the cumin and coriander and fry for around 7 minutes, or until softened and lightly golden, stirring every 30 seconds. Remove to a\u00a0large bowl to cool.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT420S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "mash_fine"
+      ],
+      "on_enter": [
+        {
+          "say": "Season, add the cumin and coriander and fry for around 7 minutes, or until softened and lightly golden, stirring every 30 seconds. Remove to a\u00a0large bowl to cool."
+        }
+      ]
+    },
+    {
+      "id": "mash_fine",
+      "descr": "Wrap the crackers in a tea towel and smash up until...",
+      "instructions": "Wrap the crackers in a tea towel and smash up until fine, breaking up any big bits with your hands.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "mince_beef"
+      ],
+      "on_enter": [
+        {
+          "say": "Wrap the crackers in a tea towel and smash up until fine, breaking up any big bits with your hands."
+        }
+      ]
+    },
+    {
+      "id": "mince_beef",
+      "descr": "Add to the bowl of onion with the oregano, mustard and...",
+      "instructions": "Add to the bowl of onion with the oregano, mustard and minced beef. Crack in the egg and add a really good pinch of sea salt and black pepper. With clean hands, scrunch and mix it up well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mash_fine"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Add to the bowl of onion with the oregano, mustard and minced beef. Crack in the egg and add a really good pinch of sea salt and black pepper. With clean hands, scrunch and mix it up well."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Move the meat mixture to a board, then pat and mould it...",
+      "instructions": "Move the meat mixture to a board, then pat and mould it into a large, rugby-ball shape and rub over a little oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mince_beef"
+      ],
+      "next": [
+        "plate_cover"
+      ],
+      "on_enter": [
+        {
+          "say": "Move the meat mixture to a board, then pat and mould it into a large, rugby-ball shape and rub over a little oil."
+        }
+      ]
+    },
+    {
+      "id": "plate_cover",
+      "descr": "You can either cook it now or put it on a plate, cover,...",
+      "instructions": "You can either cook it now or put it on a plate, cover, and pop in the fridge until needed. If you're cooking it now, place the meatloaf in a casserole-type pan or baking dish, then pop in the hot oven.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "You can either cook it now or put it on a plate, cover, and pop in the fridge until needed. If you're cooking it now, place the meatloaf in a casserole-type pan or baking dish, then pop in the hot oven."
+        }
+      ]
+    },
+    {
+      "id": "step_step_8",
+      "descr": "Immediately reduce the temperature to 200\u00baC/400\u00baF/gas 6...",
+      "instructions": "Immediately reduce the temperature to 200\u00baC/400\u00baF/gas 6 and cook for 30 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "plate_cover"
+      ],
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Immediately reduce the temperature to 200\u00baC/400\u00baF/gas 6 and cook for 30 minutes."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "Meanwhile, for the sauce, peel and chop the onion into...",
+      "instructions": "Meanwhile, for the sauce, peel and chop the onion into 1cm dice, then peel and finely slice the garlic along with the chilli.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_8"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, for the sauce, peel and chop the onion into 1cm dice, then peel and finely slice the garlic along with the chilli."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Place in a\u00a0large frying pan on a medium-high heat with 2...",
+      "instructions": "Place in a\u00a0large frying pan on a medium-high heat with 2 tablespoons of oil, the paprika and a pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Place in a\u00a0large frying pan on a medium-high heat with 2 tablespoons of oil, the paprika and a pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Cook for around 7 minutes, or until softened and lightly...",
+      "instructions": "Cook for around 7 minutes, or until softened and lightly golden, stirring every 30 seconds or so.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT420S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "add_chickpeas"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook for around 7 minutes, or until softened and lightly golden, stirring every 30 seconds or so."
+        }
+      ]
+    },
+    {
+      "id": "add_chickpeas",
+      "descr": "Drain and add the chickpeas, along with the...",
+      "instructions": "Drain and add the chickpeas, along with the Worcestershire sauce, tomatoes and balsamic vinegar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain and add the chickpeas, along with the Worcestershire sauce, tomatoes and balsamic vinegar."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Bring to the boil, breaking up the tomatoes with the...",
+      "instructions": "Bring to the boil, breaking up the tomatoes with the back of a spoon, then reduce the heat and simmer for 10 minutes. Taste the sauce and season if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "add_chickpeas"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, breaking up the tomatoes with the back of a spoon, then reduce the heat and simmer for 10 minutes. Taste the sauce and season if needed."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "To finish, pick the rosemary leaves into a bowl",
+      "instructions": "To finish, pick the rosemary leaves into a bowl. Remove the meatloaf from the oven and pour all the fat from the pan over the rosemary, mixing well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "slice_bacon"
+      ],
+      "on_enter": [
+        {
+          "say": "To finish, pick the rosemary leaves into a bowl. Remove the meatloaf from the oven and pour all the fat from the pan over the rosemary, mixing well."
+        }
+      ]
+    },
+    {
+      "id": "slice_bacon",
+      "descr": "Spoon your sauce around the meatloaf, lay the slices of...",
+      "instructions": "Spoon your sauce around the meatloaf, lay the slices of bacon or pancetta over the top and scatter over the rosemary leaves. Put the pan back in the oven for 10 to 15 minutes, or until the bacon turns golden and the sauce is bubbling and delicious.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "mix_leaf"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon your sauce around the meatloaf, lay the slices of bacon or pancetta over the top and scatter over the rosemary leaves. Put the pan back in the oven for 10 to 15 minutes, or until the bacon turns golden and the sauce is bubbling and delicious."
+        }
+      ]
+    },
+    {
+      "id": "mix_leaf",
+      "descr": "Delicious served with a mixed-leaf salad and lemon...",
+      "instructions": "Delicious served with a mixed-leaf salad and lemon wedges for squeezing over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_bacon"
+      ],
+      "on_enter": [
+        {
+          "say": "Delicious served with a mixed-leaf salad and lemon wedges for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "837 calories",
+    "carbohydrates": "48 g",
+    "fat": "49.2 g",
+    "fiber": null,
+    "protein": "45.2 g"
+  }
+}

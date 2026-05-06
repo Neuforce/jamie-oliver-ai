@@ -1,0 +1,272 @@
+{
+  "recipe": {
+    "id": "perfect-roast-beef",
+    "title": "Perfect roast beef",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT65M",
+    "description": "This Jamie Oliver roast beef recipe is perfect for a Sunday lunch. Let the beef rest for half an hour, then slice very thinly for super-tender roast beef.",
+    "tags": [
+      "roast",
+      "christmas",
+      "christmas-dinner",
+      "main-ingredient",
+      "kosher-for-passover",
+      "dish-type",
+      "method",
+      "beef",
+      "roasting",
+      "roast-beef",
+      "low-lactose",
+      "gluten-free",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/perfect-roast-beef",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1017eb1514bb0901f0233fd086abaa14e5590f05-973x1300.jpg/1017eb1514bb0901f0233fd086abaa14e5590f05-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1017eb1514bb0901f0233fd086abaa14e5590f05-973x1300.jpg/1017eb1514bb0901f0233fd086abaa14e5590f05-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1017eb1514bb0901f0233fd086abaa14e5590f05-973x1300.jpg/1017eb1514bb0901f0233fd086abaa14e5590f05-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1017eb1514bb0901f0233fd086abaa14e5590f05-973x1300.jpg/1017eb1514bb0901f0233fd086abaa14e5590f05-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "topside-of-beef",
+      "name": "topside of beef",
+      "quantity": 1.5,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "medium-onions",
+      "name": "medium onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-fresh-herbs",
+      "name": "mixed fresh herbs",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "such as thyme, rosemary, bay, sage"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Remove the beef from the fridge 30 minutes before you...",
+      "instructions": "Remove the beef from the fridge 30 minutes before you want to cook it, to let it come up to room temperature.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the beef from the fridge 30 minutes before you want to cook it, to let it come up to room temperature."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 240\u00b0C/475\u00b0F/ gas 9",
+      "instructions": "Preheat the oven to 240\u00b0C/475\u00b0F/ gas 9.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "chop_vegetables"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 240\u00b0C/475\u00b0F/ gas 9."
+        }
+      ]
+    },
+    {
+      "id": "chop_vegetables",
+      "descr": "Wash and roughly chop the vegetables \u2013 there\u2019s no need...",
+      "instructions": "Wash and roughly chop the vegetables \u2013 there\u2019s no need to peel them. Break the garlic bulb into cloves, leaving them unpeeled.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "drizzle_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash and roughly chop the vegetables \u2013 there\u2019s no need to peel them. Break the garlic bulb into cloves, leaving them unpeeled."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_step_4",
+      "descr": "Pile all the veg, garlic and herbs into the middle of a...",
+      "instructions": "Pile all the veg, garlic and herbs into the middle of a large roasting tray and drizzle with oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_vegetables"
+      ],
+      "next": [
+        "drizzle_beef"
+      ],
+      "on_enter": [
+        {
+          "say": "Pile all the veg, garlic and herbs into the middle of a large roasting tray and drizzle with oil."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_beef",
+      "descr": "Drizzle the beef with oil and season well with sea salt...",
+      "instructions": "Drizzle the beef with oil and season well with sea salt and black pepper, then rub all over the meat. Place the beef on top of the vegetables.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_step_4"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle the beef with oil and season well with sea salt and black pepper, then rub all over the meat. Place the beef on top of the vegetables."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Place the tray in the oven, then turn the heat down...",
+      "instructions": "Place the tray in the oven, then turn the heat down immediately to 200\u00b0C/400\u00b0F/gas 6 and cook for 1 hour for medium beef. If you prefer it medium-rare, take it out 5 to 10 minutes earlier. For well done, leave it in for another 10 to 15 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "drizzle_beef"
+      ],
+      "next": [
+        "roast_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the tray in the oven, then turn the heat down immediately to 200\u00b0C/400\u00b0F/gas 6 and cook for 1 hour for medium beef. If you prefer it medium-rare, take it out 5 to 10 minutes earlier. For well done, leave it in for another 10 to 15 minutes."
+        }
+      ]
+    },
+    {
+      "id": "roast_potatoes",
+      "descr": "If you\u2019re doing roast potatoes and veggies, this is the...",
+      "instructions": "If you\u2019re doing roast potatoes and veggies, this is the time to crack on with them \u2013 get them into the oven for the last 45 minutes of cooking.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "add_splash"
+      ],
+      "on_enter": [
+        {
+          "say": "If you\u2019re doing roast potatoes and veggies, this is the time to crack on with them \u2013 get them into the oven for the last 45 minutes of cooking."
+        }
+      ]
+    },
+    {
+      "id": "add_splash",
+      "descr": "Baste the beef halfway through cooking and if the veg...",
+      "instructions": "Baste the beef halfway through cooking and if the veg look dry, add a splash of water to the tray to stop them from burning.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_potatoes"
+      ],
+      "next": [
+        "rest_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Baste the beef halfway through cooking and if the veg look dry, add a splash of water to the tray to stop them from burning."
+        }
+      ]
+    },
+    {
+      "id": "rest_minutes",
+      "descr": "When the beef is cooked to your liking, take the tray...",
+      "instructions": "When the beef is cooked to your liking, take the tray out of the oven and transfer the beef to a board to rest for 15 minutes or so. Cover it with a layer of tin foil and a tea towel and leave aside while you make your gravy, horseradish sauce and Yorkshire puddings.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "add_splash"
+      ],
+      "on_enter": [
+        {
+          "say": "When the beef is cooked to your liking, take the tray out of the oven and transfer the beef to a board to rest for 15 minutes or so. Cover it with a layer of tin foil and a tea towel and leave aside while you make your gravy, horseradish sauce and Yorkshire puddings."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "564 calories",
+    "carbohydrates": "9.8 g",
+    "fat": "35 g",
+    "fiber": "2.2 g",
+    "protein": "52.8 g"
+  }
+}

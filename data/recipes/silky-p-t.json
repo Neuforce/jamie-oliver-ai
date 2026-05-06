@@ -1,0 +1,223 @@
+{
+  "recipe": {
+    "id": "silky-p-t",
+    "title": "Silky p\u00e2t\u00e9",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "This silky smooth pa\u0302te\u0301 is super-satisfying to make. The ingredients are cheap, you get an amazing freshness and you have complete control on flavour. Perfect for Christmas.",
+    "tags": [
+      "christmas",
+      "chicken",
+      "gluten-free",
+      "liver",
+      "jamie-oliver-s-christmas-cookbook",
+      "edible-gifts"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/silky-pate",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/af861c101b6c21a198680de1117ed80172ae152b-853x1280.jpg/162515966?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/af861c101b6c21a198680de1117ed80172ae152b-853x1280.jpg/162515966?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/af861c101b6c21a198680de1117ed80172ae152b-853x1280.jpg/162515966?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/af861c101b6c21a198680de1117ed80172ae152b-853x1280.jpg/162515966?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-thyme",
+      "name": "\u00bd a bunch of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "free-range-chicken-livers",
+      "name": "free-range chicken livers",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "cleaned, trimmed"
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    },
+    {
+      "id": "brandy",
+      "name": "brandy",
+      "quantity": 150.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-sage",
+      "name": "\u00bd a bunch of fresh sage",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "food processor",
+    "ladle",
+    "pan",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "heat_slowly",
+      "descr": "To make your clarified butter, place 250g of butter in a...",
+      "instructions": "To make your clarified butter, place 250g of butter in a pan on a very low heat and let it slowly melt, then tick away until it separates. Use a ladle to remove the golden butter from the top into a separate small pan, leaving the milk solids behind.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "To make your clarified butter, place 250g of butter in a pan on a very low heat and let it slowly melt, then tick away until it separates. Use a ladle to remove the golden butter from the top into a separate small pan, leaving the milk solids behind."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Peel and finely chop the onions and garlic and place in...",
+      "instructions": "Peel and finely chop the onions and garlic and place in a large pan on a medium heat with 1 tablespoon of oil and the leftover milk solids. Strip in the thyme leaves and fry fast for 5 minutes, tossing regularly, until soft and starting to colour. Add the chicken livers and a pinch of sea salt and black pepper, then finely grate in half the nutmeg. Cook for 4 minutes, or until the livers are blushing pink in the middle \u2013 don\u2019t overcook them. Add the brandy to the pan for the last minute and let it cook off, ideally flaming it, if you feel confident enough to do so.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_slowly"
+      ],
+      "next": [
+        "dice_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the onions and garlic and place in a large pan on a medium heat with 1 tablespoon of oil and the leftover milk solids. Strip in the thyme leaves and fry fast for 5 minutes, tossing regularly, until soft and starting to colour. Add the chicken livers and a pinch of sea salt and black pepper, then finely grate in half the nutmeg. Cook for 4 minutes, or until the livers are blushing pink in the middle \u2013 don\u2019t overcook them. Add the brandy to the pan for the last minute and let it cook off, ideally flaming it, if you feel confident enough to do so."
+        }
+      ]
+    },
+    {
+      "id": "dice_remaining",
+      "descr": "Tip everything straight into a food processor or blender...",
+      "instructions": "Tip everything straight into a food processor or blender with all the juices, and blitz until smooth. You\u2019ll notice that the smell changes straight away. Taste and season to perfection, then add a little more because the seasoning seems to reduce when it gets cold, which is how you\u2019ll serve it. Dice the remaining butter, add to the processor or blender and blitz until silky smooth and the mixture starts to shine. Taste again to check the seasoning, then whiz for a final 2 minutes. You can serve the pa\u0302te\u0301 in individual terrines or in a big bowl or platter. Pop into the fridge, covered with a sheet of greaseproof paper, until set.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "heat_sage"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip everything straight into a food processor or blender with all the juices, and blitz until smooth. You\u2019ll notice that the smell changes straight away. Taste and season to perfection, then add a little more because the seasoning seems to reduce when it gets cold, which is how you\u2019ll serve it. Dice the remaining butter, add to the processor or blender and blitz until silky smooth and the mixture starts to shine. Taste again to check the seasoning, then whiz for a final 2 minutes. You can serve the pa\u0302te\u0301 in individual terrines or in a big bowl or platter. Pop into the fridge, covered with a sheet of greaseproof paper, until set."
+        }
+      ]
+    },
+    {
+      "id": "heat_sage",
+      "descr": "Put the pan of golden butter on a medium heat and add 1...",
+      "instructions": "Put the pan of golden butter on a medium heat and add 1 sage leaf \u2013 this will act as your gauge so you know when it\u2019s hot enough. When the leaf just becomes crispy, pick in the remaining sage leaves and take the pan off the heat. They\u2019ll go crispy, snappy and delicious.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "dice_remaining"
+      ],
+      "next": [
+        "pour_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the pan of golden butter on a medium heat and add 1 sage leaf \u2013 this will act as your gauge so you know when it\u2019s hot enough. When the leaf just becomes crispy, pick in the remaining sage leaves and take the pan off the heat. They\u2019ll go crispy, snappy and delicious."
+        }
+      ]
+    },
+    {
+      "id": "pour_over",
+      "descr": "Use a slotted spoon to pop the sage leaves on top of the...",
+      "instructions": "Use a slotted spoon to pop the sage leaves on top of the chilled pa\u0302te\u0301, then pour over the clarified butter. Put back into the fridge and the butter will go hard and opaque, acting as a seal. You don\u2019t have to eat the butter, but it will have amazing flavour. The p\u00e2t\u00e9 will keep happily in the fridge for up to 1 week, but I find it\u2019s best eaten within 3 days.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_sage"
+      ],
+      "next": [
+        "serve_radishes"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a slotted spoon to pop the sage leaves on top of the chilled pa\u0302te\u0301, then pour over the clarified butter. Put back into the fridge and the butter will go hard and opaque, acting as a seal. You don\u2019t have to eat the butter, but it will have amazing flavour. The p\u00e2t\u00e9 will keep happily in the fridge for up to 1 week, but I find it\u2019s best eaten within 3 days."
+        }
+      ]
+    },
+    {
+      "id": "serve_radishes",
+      "descr": "I like to serve this with toast, radishes, cornichons,...",
+      "instructions": "I like to serve this with toast, radishes, cornichons, watercress and lemon wedges, and wash it down with a glass of wine.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "pour_over"
+      ],
+      "on_enter": [
+        {
+          "say": "I like to serve this with toast, radishes, cornichons, watercress and lemon wedges, and wash it down with a glass of wine."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "372 calories",
+    "carbohydrates": "2.7 g",
+    "fat": "32.1 g",
+    "fiber": "0.8 g",
+    "protein": "13.3 g"
+  }
+}

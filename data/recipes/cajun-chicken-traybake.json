@@ -1,0 +1,186 @@
+{
+  "recipe": {
+    "id": "cajun-chicken-traybake",
+    "title": "Cajun chicken traybake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT67M",
+    "description": "Full of colour, optimism and heaps of flavour, this one-pan wonder is a great principle recipe to have up your sleeve.",
+    "tags": [
+      "chicken",
+      "1-recipes",
+      "gluten-free",
+      "one-pan-recipes",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/cajun-chicken-traybake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/bd9f06bafc339899c8920d51afcdff1fb91d188b-958x1280.jpg/138762682?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/bd9f06bafc339899c8920d51afcdff1fb91d188b-958x1280.jpg/138762682?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/bd9f06bafc339899c8920d51afcdff1fb91d188b-958x1280.jpg/138762682?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/bd9f06bafc339899c8920d51afcdff1fb91d188b-958x1280.jpg/138762682?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-colour-peppers",
+      "name": "mixed-colour peppers",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "chicken-legs",
+      "name": "chicken legs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "skin on, bone-in"
+    },
+    {
+      "id": "cajun-seasoning",
+      "name": "Cajun seasoning",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mug-of-basmati-rice",
+      "name": "mug of basmati rice",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "300g"
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "optional-extra-virgin-olive-oi",
+      "name": "optional: extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Peel and halve the onions. Tear up the peppers into big chunks, discarding the seeds and stalks. Place it all in a 35cm x 25cm roasting tray with the chicken, Cajun seasoning and whole unpeeled garlic cloves.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "drizzle_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Peel and halve the onions. Tear up the peppers into big chunks, discarding the seeds and stalks. Place it all in a 35cm x 25cm roasting tray with the chicken, Cajun seasoning and whole unpeeled garlic cloves."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_tablespoon",
+      "descr": "Drizzle with 1 tablespoon each of olive oil and red wine...",
+      "instructions": "Drizzle with 1 tablespoon each of olive oil and red wine vinegar, season with black pepper and toss well, turning the chicken skin side up. Roast for 40 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "pour_rice"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle with 1 tablespoon each of olive oil and red wine vinegar, season with black pepper and toss well, turning the chicken skin side up. Roast for 40 minutes."
+        }
+      ]
+    },
+    {
+      "id": "pour_rice",
+      "descr": "Boil the kettle",
+      "instructions": "Boil the kettle. Remove the tray from the oven and mash the soft garlic cloves into the tray juices, discarding the skins. Around the chicken, pour in 1 mug of rice and 2 mugs of boiling kettle water (600ml). Carefully cover with tin foil and return to the oven for 20 minutes, or until the rice is fluffy and the chicken pulls easily away from the bone.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "drizzle_tablespoon"
+      ],
+      "next": [
+        "drizzle_extra"
+      ],
+      "on_enter": [
+        {
+          "say": "Boil the kettle. Remove the tray from the oven and mash the soft garlic cloves into the tray juices, discarding the skins. Around the chicken, pour in 1 mug of rice and 2 mugs of boiling kettle water (600ml). Carefully cover with tin foil and return to the oven for 20 minutes, or until the rice is fluffy and the chicken pulls easily away from the bone."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_extra",
+      "descr": "Season to perfection, then serve with dollops of...",
+      "instructions": "Season to perfection, then serve with dollops of yoghurt, a pinch of black pepper, and a drizzle of extra virgin olive oil, if you like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "pour_rice"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to perfection, then serve with dollops of yoghurt, a pinch of black pepper, and a drizzle of extra virgin olive oil, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "633 calories",
+    "carbohydrates": "77.6 g",
+    "fat": "22.5 g",
+    "fiber": "5.8 g",
+    "protein": "34.6 g"
+  }
+}

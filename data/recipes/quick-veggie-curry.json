@@ -1,0 +1,194 @@
+{
+  "recipe": {
+    "id": "quick-veggie-curry",
+    "title": "Quick veggie curry",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "Sweet potato, chickpeas and greens are the best of mates and work together in beautiful harmony in this speedy veg curry.",
+    "tags": [
+      "vegetarian",
+      "curry",
+      "quick-easy",
+      "family-favourites",
+      "vegetable",
+      "healthy-vegetarian",
+      "gluten-free",
+      "healthy-dinners",
+      "dinner",
+      "quick-fixes",
+      "quick-healthy"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/curry/quick-veggie-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6a99cd58bfa606b8e23b4c0d7b3ff8e21ed2e7f7-853x1279.jpg/132460493?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6a99cd58bfa606b8e23b4c0d7b3ff8e21ed2e7f7-853x1279.jpg/132460493?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6a99cd58bfa606b8e23b4c0d7b3ff8e21ed2e7f7-853x1279.jpg/132460493?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6a99cd58bfa606b8e23b4c0d7b3ff8e21ed2e7f7-853x1279.jpg/132460493?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "curry"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-chopped-onion",
+      "name": "frozen chopped onion",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "frozen-sweet-potato-chunks",
+      "name": "frozen sweet potato chunks",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "jamie-s-tikka-masala-curry-pas",
+      "name": "Jamie's tikka masala curry paste",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-quality-plum-tomatoes",
+      "name": "400g tin quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "spring-greens",
+      "name": "spring greens",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": "or other spring veg, such as Swiss chard, cabbage, spinach"
+    },
+    {
+      "id": "natural-yoghurt-or-plant-based",
+      "name": "natural yoghurt or plant-based yoghurt",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": "to serve"
+    },
+    {
+      "id": "cooked-rice-or-naan",
+      "name": "cooked rice or naan",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    },
+    {
+      "id": "optional-mango-chutney",
+      "name": "optional: mango chutney",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    }
+  ],
+  "utensils": [
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "heat_onion",
+      "descr": "Drizzle 1 tablespoon of olive oil into a large wide...",
+      "instructions": "Drizzle 1 tablespoon of olive oil into a large wide shallow pan on a high heat. Add the onion and sweet potato and cook for 5 minutes, then stir in the curry paste and cook for 10 minutes, or until golden, scraping up any sticky bits from the base of the pan.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle 1 tablespoon of olive oil into a large wide shallow pan on a high heat. Add the onion and sweet potato and cook for 5 minutes, then stir in the curry paste and cook for 10 minutes, or until golden, scraping up any sticky bits from the base of the pan."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Add the chickpeas, juice and all, and mash a few with a fork",
+      "instructions": "Add the chickpeas, juice and all, and mash a few with a fork. Scrunch in the tomatoes and add 1 tin\u2019s worth of water. Bring to the boil, then turn the heat down and simmer for 15 minutes, or until thickened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_onion"
+      ],
+      "next": [
+        "slice_sliced"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the chickpeas, juice and all, and mash a few with a fork. Scrunch in the tomatoes and add 1 tin\u2019s worth of water. Bring to the boil, then turn the heat down and simmer for 15 minutes, or until thickened."
+        }
+      ]
+    },
+    {
+      "id": "slice_sliced",
+      "descr": "Push the curry to one side of the pan",
+      "instructions": "Push the curry to one side of the pan. Slice and add the sliced spring greens, then cover and simmer for 5 minutes, or until wilted (if cooking different greens, simply adjusting the cooking time accordingly).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "warm_plates"
+      ],
+      "on_enter": [
+        {
+          "say": "Push the curry to one side of the pan. Slice and add the sliced spring greens, then cover and simmer for 5 minutes, or until wilted (if cooking different greens, simply adjusting the cooking time accordingly)."
+        }
+      ]
+    },
+    {
+      "id": "warm_plates",
+      "descr": "Stir half the greens through the curry, then divide the...",
+      "instructions": "Stir half the greens through the curry, then divide the curry and greens between warm plates and serve with rice or warm naans, a dollop of yoghurt and mango chutney, if you like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_sliced"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir half the greens through the curry, then divide the curry and greens between warm plates and serve with rice or warm naans, a dollop of yoghurt and mango chutney, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "293 calories",
+    "carbohydrates": "41.5 g",
+    "fat": "8.7 g",
+    "fiber": "11.4 g",
+    "protein": "11.1 g"
+  }
+}

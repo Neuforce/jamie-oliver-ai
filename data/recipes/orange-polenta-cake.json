@@ -1,0 +1,287 @@
+{
+  "recipe": {
+    "id": "orange-polenta-cake",
+    "title": "Orange & polenta cake",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT95M",
+    "description": "Brushed generously with orange and cardamom syrup, this gluten-free cake made with polenta is zesty, zingy and makes a wonderful pudding or afternoon tea treat!",
+    "tags": [
+      "desserts",
+      "main-ingredient",
+      "baking",
+      "mother-s-day",
+      "vegetarian",
+      "polenta",
+      "dish-type",
+      "cake",
+      "method",
+      "gluten-free",
+      "gluten-free-cake",
+      "fruit",
+      "occasion",
+      "italian",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/orange-polenta-cake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b2b8600b9ca4531b72c08ea570e6781e43370da3-973x1300.jpg/b2b8600b9ca4531b72c08ea570e6781e43370da3-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b2b8600b9ca4531b72c08ea570e6781e43370da3-973x1300.jpg/b2b8600b9ca4531b72c08ea570e6781e43370da3-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b2b8600b9ca4531b72c08ea570e6781e43370da3-973x1300.jpg/b2b8600b9ca4531b72c08ea570e6781e43370da3-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b2b8600b9ca4531b72c08ea570e6781e43370da3-973x1300.jpg/b2b8600b9ca4531b72c08ea570e6781e43370da3-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": "at room temperature, plus extra for greasing"
+    },
+    {
+      "id": "demerara-sugar",
+      "name": "demerara sugar",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "vanilla-essence",
+      "name": "vanilla essence",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "ground-almonds",
+      "name": "ground almonds",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "coarse-polenta",
+      "name": "coarse polenta",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "oranges",
+      "name": "oranges",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "orange-blossom-water",
+      "name": "orange blossom water",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "gluten-free-baking-powder",
+      "name": "gluten-free baking powder",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "syrup",
+      "name": "SYRUP",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cardamom-pods",
+      "name": "cardamom pods",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "orange-juice",
+      "name": "orange juice",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": "from 3\u20134 oranges"
+    },
+    {
+      "id": "orange-blossom-water",
+      "name": "orange blossom water",
+      "quantity": 30.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "large bowl",
+    "oven",
+    "pan",
+    "saucepan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 160\u00b0C/320\u00b0F/gas 2\u00bd",
+      "instructions": "Preheat the oven to 160\u00b0C/320\u00b0F/gas 2\u00bd. Grease a 20cm springform tin, line the bottom and sides with greaseproof paper and grease again.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "stir_vanilla"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 160\u00b0C/320\u00b0F/gas 2\u00bd. Grease a 20cm springform tin, line the bottom and sides with greaseproof paper and grease again."
+        }
+      ]
+    },
+    {
+      "id": "stir_vanilla",
+      "descr": "Beat the butter and sugar in a large bowl until light...",
+      "instructions": "Beat the butter and sugar in a large bowl until light and creamy \u2013 don\u2019t worry if it looks gritty, as the sugar will dissolve when it\u2019s cooked. Beat in the eggs, one by one, then stir in the vanilla essence.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Beat the butter and sugar in a large bowl until light and creamy \u2013 don\u2019t worry if it looks gritty, as the sugar will dissolve when it\u2019s cooked. Beat in the eggs, one by one, then stir in the vanilla essence."
+        }
+      ]
+    },
+    {
+      "id": "mix_step_3",
+      "descr": "In a small bowl, combine the ground almonds, polenta,...",
+      "instructions": "In a small bowl, combine the ground almonds, polenta, orange zest, orange blossom water and baking powder, then stir this into the cake mix.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_vanilla"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "In a small bowl, combine the ground almonds, polenta, orange zest, orange blossom water and baking powder, then stir this into the cake mix."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Pour the mixture into the tin and bake for 40 to 50...",
+      "instructions": "Pour the mixture into the tin and bake for 40 to 50 minutes, or until the surface is light brown and the cake is coming away slightly from the sides of the tin.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3000S",
+      "depends_on": [
+        "mix_step_3"
+      ],
+      "next": [
+        "cool_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the mixture into the tin and bake for 40 to 50 minutes, or until the surface is light brown and the cake is coming away slightly from the sides of the tin."
+        }
+      ]
+    },
+    {
+      "id": "cool_minutes",
+      "descr": "Remove the tin from the oven, leave to cool for 10...",
+      "instructions": "Remove the tin from the oven, leave to cool for 10 minutes, then turn it out onto a plate. This cake will be quite fragile, so handle carefully as you remove it.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the tin from the oven, leave to cool for 10 minutes, then turn it out onto a plate. This cake will be quite fragile, so handle carefully as you remove it."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "To make the syrup, crush the cardamom pods, then put all...",
+      "instructions": "To make the syrup, crush the cardamom pods, then put all of the ingredients in a saucepan. Simmer over a medium-low heat for about 10 minutes, or until reduced and thickened slightly. Set aside to cool.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "cool_minutes"
+      ],
+      "next": [
+        "drizzle_syrup"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the syrup, crush the cardamom pods, then put all of the ingredients in a saucepan. Simmer over a medium-low heat for about 10 minutes, or until reduced and thickened slightly. Set aside to cool."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_syrup",
+      "descr": "Prick the cake all over with a skewer, then brush...",
+      "instructions": "Prick the cake all over with a skewer, then brush generously with the syrup. Delicious served with a dollop of cr\u00e8me fra\u00eeche or yoghurt and an extra drizzle of syrup.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Prick the cake all over with a skewer, then brush generously with the syrup. Delicious served with a dollop of cr\u00e8me fra\u00eeche or yoghurt and an extra drizzle of syrup."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "470 calories",
+    "carbohydrates": "45.1 g",
+    "fat": "29.5 g",
+    "fiber": "1.9 g",
+    "protein": "8.6 g"
+  }
+}

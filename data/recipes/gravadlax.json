@@ -1,0 +1,255 @@
+{
+  "recipe": {
+    "id": "gravadlax",
+    "title": "Gravadlax",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "A delicious cured salmon recipe from Jamie Oliver's Ultimate Christmas is elegant and fresh and makes the perfect seafood starter this Christmas. ",
+    "tags": [
+      "christmas",
+      "beetroot",
+      "christmas-tv-show",
+      "low-lactose",
+      "gluten-free",
+      "salmon",
+      "fish",
+      "seafood",
+      "occasion",
+      "jamie-s-ultimate-christmas",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/salmon/gravadlax",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cad7b65e6c3978c6436599eebc7a6ba69261504d-1968x2952.jpg/gravadlaxsalmon.jpg?rect=0,492,1968,1968&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cad7b65e6c3978c6436599eebc7a6ba69261504d-1968x2952.jpg/gravadlaxsalmon.jpg?rect=0,492,1968,1968&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cad7b65e6c3978c6436599eebc7a6ba69261504d-1968x2952.jpg/gravadlaxsalmon.jpg?rect=0,738,1968,1476&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cad7b65e6c3978c6436599eebc7a6ba69261504d-1968x2952.jpg/gravadlaxsalmon.jpg?rect=0,923,1968,1107&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "salmon"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "raw-beets",
+      "name": "raw beets",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "rock-salt",
+      "name": "rock salt",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "demerara-sugar",
+      "name": "demerara sugar",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vodka",
+      "name": "vodka",
+      "quantity": 50.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "big-bunch-of-fresh-dill",
+      "name": "big bunch of fresh dill",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "60g"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-or-jarred-grated-horsera",
+      "name": "fresh or jarred grated horseradish",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "700g-side-of-salmon",
+      "name": "700g side of salmon",
+      "quantity": 700.0,
+      "unit": null,
+      "note": "skin on, scaled, pin-boned, from sustainable sources"
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "knife",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "process_salt",
+      "descr": "Peel and trim the beets and place in a food processor...",
+      "instructions": "Peel and trim the beets and place in a food processor with the salt, sugar, vodka and dill.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "combine_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and trim the beets and place in a food processor with the salt, sugar, vodka and dill."
+        }
+      ]
+    },
+    {
+      "id": "combine_step_2",
+      "descr": "Finely grate in the lemon zest, add the horseradish,...",
+      "instructions": "Finely grate in the lemon zest, add the horseradish, finely grating it if fresh, then blitz until combined.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "process_salt"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate in the lemon zest, add the horseradish, finely grating it if fresh, then blitz until combined."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Rub a little mixture on to the salmon skin, then place...",
+      "instructions": "Rub a little mixture on to the salmon skin, then place the salmon on a large tray, skin side down, and pat the remaining mixture all over it so that the flesh is completely covered.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "combine_step_2"
+      ],
+      "next": [
+        "top_help"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub a little mixture on to the salmon skin, then place the salmon on a large tray, skin side down, and pat the remaining mixture all over it so that the flesh is completely covered."
+        }
+      ]
+    },
+    {
+      "id": "top_help",
+      "descr": "Cover the tray tightly with clingfilm",
+      "instructions": "Cover the tray tightly with clingfilm. Pop a weight on top to help pack everything down evenly, then put the whole thing into the fridge for 36 hours. Please use your instincts here \u2013 if you have a particularly chunky side of salmon you may want to leave it for up to 48 hours to allow for proper penetration.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT129600S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "pour_juices"
+      ],
+      "on_enter": [
+        {
+          "say": "Cover the tray tightly with clingfilm. Pop a weight on top to help pack everything down evenly, then put the whole thing into the fridge for 36 hours. Please use your instincts here \u2013 if you have a particularly chunky side of salmon you may want to leave it for up to 48 hours to allow for proper penetration."
+        }
+      ]
+    },
+    {
+      "id": "pour_juices",
+      "descr": "Once cured, unwrap the fish, then, holding the fillet in...",
+      "instructions": "Once cured, unwrap the fish, then, holding the fillet in place, pour the juices down the sink and rub away all the salty topping (it\u2019s messy, so you might want to wear gloves).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "top_help"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Once cured, unwrap the fish, then, holding the fillet in place, pour the juices down the sink and rub away all the salty topping (it\u2019s messy, so you might want to wear gloves)."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Pat the fillet dry with kitchen paper, then tightly wrap...",
+      "instructions": "Pat the fillet dry with kitchen paper, then tightly wrap in clingfilm (sometimes I like to cover the salmon with freshly picked dill before wrapping, for bonus flavour). Put back into the fridge until needed, where it will keep happily for up to 2 weeks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_juices"
+      ],
+      "next": [
+        "slice_salmon"
+      ],
+      "on_enter": [
+        {
+          "say": "Pat the fillet dry with kitchen paper, then tightly wrap in clingfilm (sometimes I like to cover the salmon with freshly picked dill before wrapping, for bonus flavour). Put back into the fridge until needed, where it will keep happily for up to 2 weeks."
+        }
+      ]
+    },
+    {
+      "id": "slice_salmon",
+      "descr": "To serve, use a long sharp knife to slice the salmon...",
+      "instructions": "To serve, use a long sharp knife to slice the salmon thinly at an angle and, as the knife touches the skin each time, kink it off, lifting away the salmon.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "slice_board"
+      ],
+      "on_enter": [
+        {
+          "say": "To serve, use a long sharp knife to slice the salmon thinly at an angle and, as the knife touches the skin each time, kink it off, lifting away the salmon."
+        }
+      ]
+    },
+    {
+      "id": "slice_board",
+      "descr": "Arrange the slices on a board or platter as you go",
+      "instructions": "Arrange the slices on a board or platter as you go. Delicious with a simple salad and good wholemeal sourdough, as part of a seafood platter, served up at a party or even as part of a festive brekkie spread.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_salmon"
+      ],
+      "on_enter": [
+        {
+          "say": "Arrange the slices on a board or platter as you go. Delicious with a simple salad and good wholemeal sourdough, as part of a seafood platter, served up at a party or even as part of a festive brekkie spread."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "128 calories",
+    "carbohydrates": "0.4 g",
+    "fat": "7.1 g",
+    "fiber": "0.1 g",
+    "protein": "15.5 g"
+  }
+}

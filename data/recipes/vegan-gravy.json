@@ -1,0 +1,294 @@
+{
+  "recipe": {
+    "id": "vegan-gravy",
+    "title": "Vegan gravy",
+    "servings": 800,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Vegan roast dinner ideas can be a bit tricky, but this vegan gravy recipe will be an absolute scene-stealer. Great with a tasty nut roast.",
+    "tags": [
+      "christmas",
+      "sunday-lunch",
+      "main-ingredient",
+      "vegan",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "gravy",
+      "sauces",
+      "non-promotable",
+      "low-lactose",
+      "sides-and-sauces",
+      "vegetables",
+      "sauces-amp-condiments",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/vegan-gravy",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2219c4165b0f40ef3ef10c1f4677ff8ac3d58b46-973x1300.jpg/2219c4165b0f40ef3ef10c1f4677ff8ac3d58b46-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2219c4165b0f40ef3ef10c1f4677ff8ac3d58b46-973x1300.jpg/2219c4165b0f40ef3ef10c1f4677ff8ac3d58b46-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2219c4165b0f40ef3ef10c1f4677ff8ac3d58b46-973x1300.jpg/2219c4165b0f40ef3ef10c1f4677ff8ac3d58b46-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2219c4165b0f40ef3ef10c1f4677ff8ac3d58b46-973x1300.jpg/2219c4165b0f40ef3ef10c1f4677ff8ac3d58b46-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-porcini-mushrooms",
+      "name": "dried porcini mushrooms",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "yeast-extract",
+      "name": "yeast extract",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": "gluten free if needed"
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "organic-vegetable-stock-cubes",
+      "name": "organic vegetable stock cubes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "gluten free if needed"
+    },
+    {
+      "id": "port",
+      "name": "port",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "quality-blackcurrant-jam",
+      "name": "quality blackcurrant jam",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": "gluten free if needed"
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "ladle",
+    "oven",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Peel the onions, wash the carrots, roughly chop with the...",
+      "instructions": "Peel the onions, wash the carrots, roughly chop with the celery and place in a large pan on a high heat with 1 tablespoon of oil. Fry for 25 minutes, or until turning golden, stirring occasionally.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "next": [
+        "cube_aside"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the onions, wash the carrots, roughly chop with the celery and place in a large pan on a high heat with 1 tablespoon of oil. Fry for 25 minutes, or until turning golden, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "cube_aside",
+      "descr": "Place the dried porcini in a large jug and cover with 1 to 1",
+      "instructions": "Place the dried porcini in a large jug and cover with 1 to 1.5 litres of boiling kettle water. Add the yeast extract and half the herbs, crumble in the stock cubes, and set aside to infuse.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "stir_tomato"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the dried porcini in a large jug and cover with 1 to 1.5 litres of boiling kettle water. Add the yeast extract and half the herbs, crumble in the stock cubes, and set aside to infuse."
+        }
+      ]
+    },
+    {
+      "id": "stir_tomato",
+      "descr": "Add the port, jam and remaining herbs to the pan and...",
+      "instructions": "Add the port, jam and remaining herbs to the pan and cook for a further 5 minutes, or until sticky and caramelised. Stir in the tomato pur\u00e9e, then the flour and red wine vinegar.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "cube_aside"
+      ],
+      "next": [
+        "pour_stock"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the port, jam and remaining herbs to the pan and cook for a further 5 minutes, or until sticky and caramelised. Stir in the tomato pur\u00e9e, then the flour and red wine vinegar."
+        }
+      ]
+    },
+    {
+      "id": "pour_stock",
+      "descr": "Pour the stock and porcini into the pan, discarding just...",
+      "instructions": "Pour the stock and porcini into the pan, discarding just the last gritty bit, bring to the boil, then reduce to a simmer for around 10 minutes, or until thickened and reduced to the consistency of your liking.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "stir_tomato"
+      ],
+      "next": [
+        "pour_back"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the stock and porcini into the pan, discarding just the last gritty bit, bring to the boil, then reduce to a simmer for around 10 minutes, or until thickened and reduced to the consistency of your liking."
+        }
+      ]
+    },
+    {
+      "id": "pour_back",
+      "descr": "Ladle the contents of the pan into a blender, discarding...",
+      "instructions": "Ladle the contents of the pan into a blender, discarding the chunky herbs, blitz until very smooth, then pour it back into the pan through a coarse sieve, using the back of a spoon to push through all that lovely flavour.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_stock"
+      ],
+      "next": [
+        "pour_containers"
+      ],
+      "on_enter": [
+        {
+          "say": "Ladle the contents of the pan into a blender, discarding the chunky herbs, blitz until very smooth, then pour it back into the pan through a coarse sieve, using the back of a spoon to push through all that lovely flavour."
+        }
+      ]
+    },
+    {
+      "id": "pour_containers",
+      "descr": "Taste and season to perfection, cool to room...",
+      "instructions": "Taste and season to perfection, cool to room temperature, then pour into containers or bags and pop into the fridge or freezer, ready to finish off on Christmas Day.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_back"
+      ],
+      "next": [
+        "heat_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Taste and season to perfection, cool to room temperature, then pour into containers or bags and pop into the fridge or freezer, ready to finish off on Christmas Day."
+        }
+      ]
+    },
+    {
+      "id": "heat_through",
+      "descr": "On the day, if frozen, take the gravy out to defrost...",
+      "instructions": "On the day, if frozen, take the gravy out to defrost when your roast goes into the oven, then simply heat through in a pan until piping hot, ready to serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "pour_containers"
+      ],
+      "on_enter": [
+        {
+          "say": "On the day, if frozen, take the gravy out to defrost when your roast goes into the oven, then simply heat through in a pan until piping hot, ready to serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "44 calories",
+    "carbohydrates": "5.4 g",
+    "fat": "1.9 g",
+    "fiber": "0.6 g",
+    "protein": "1.1 g"
+  }
+}

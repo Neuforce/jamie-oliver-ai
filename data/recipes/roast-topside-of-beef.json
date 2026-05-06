@@ -1,0 +1,335 @@
+{
+  "recipe": {
+    "id": "roast-topside-of-beef",
+    "title": "Roast topside of beef",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT120M",
+    "description": "This beautiful Sunday roast beef recipe from Jamie Oliver is the perfect centrepiece for Sunday lunch. Served with red wine gravy, you just can't beat it.",
+    "tags": [
+      "roast",
+      "christmas",
+      "sunday-lunch",
+      "christmas-dinner",
+      "dish-type",
+      "roasting",
+      "beef",
+      "gravy",
+      "roast-beef",
+      "gravy-and-sauces",
+      "low-lactose",
+      "method",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/roast-topside-of-beef",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/78357823d738ef5775aa1cfd6c8709abbf075d94-958x1280.png/68834546?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/78357823d738ef5775aa1cfd6c8709abbf075d94-958x1280.png/68834546?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/78357823d738ef5775aa1cfd6c8709abbf075d94-958x1280.png/68834546?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/78357823d738ef5775aa1cfd6c8709abbf075d94-958x1280.png/68834546?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "topside-of-beef",
+      "name": "topside of beef",
+      "quantity": 3.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-head-of-celery",
+      "name": "\u00bd a head of celery",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 3.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "gravy",
+      "name": "GRAVY",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-blackberry-o",
+      "name": "heaped tablespoon blackberry or blackcurrant jam",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine",
+      "name": "red wine",
+      "quantity": 125.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "organic-beef-stock",
+      "name": "organic beef stock",
+      "quantity": 1.0,
+      "unit": "litre",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan",
+    "pot",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Take the beef out of the fridge 1 hour before you want...",
+      "instructions": "Take the beef out of the fridge 1 hour before you want to cook it, to let it come up to room temperature. Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "next": [
+        "drizzle_beef"
+      ],
+      "on_enter": [
+        {
+          "say": "Take the beef out of the fridge 1 hour before you want to cook it, to let it come up to room temperature. Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_beef",
+      "descr": "Drizzle the beef with 1\u00bd tablespoons of oil, season with...",
+      "instructions": "Drizzle the beef with 1\u00bd tablespoons of oil, season with a pinch of sea salt and a good pinch of black pepper, then rub all over the meat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle the beef with 1\u00bd tablespoons of oil, season with a pinch of sea salt and a good pinch of black pepper, then rub all over the meat."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Place a 25cm x 35cm roasting tray on the hob over a high...",
+      "instructions": "Place a 25cm x 35cm roasting tray on the hob over a high heat, drizzle in 1 tablespoon of oil, then sear the beef for a few minutes, until browned all over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_beef"
+      ],
+      "next": [
+        "chop_celery"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a 25cm x 35cm roasting tray on the hob over a high heat, drizzle in 1 tablespoon of oil, then sear the beef for a few minutes, until browned all over."
+        }
+      ]
+    },
+    {
+      "id": "chop_celery",
+      "descr": "For the trivet, roughly chop the celery and carrots into...",
+      "instructions": "For the trivet, roughly chop the celery and carrots into big chunks, peel and chop the onion into wedges and break up the garlic bulb into cloves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "add_splash"
+      ],
+      "on_enter": [
+        {
+          "say": "For the trivet, roughly chop the celery and carrots into big chunks, peel and chop the onion into wedges and break up the garlic bulb into cloves."
+        }
+      ]
+    },
+    {
+      "id": "add_splash",
+      "descr": "Throw the trivet of vegetables into the tray with the...",
+      "instructions": "Throw the trivet of vegetables into the tray with the bay and rosemary, jiggling the tray to coat the veg in any juices, then roast for 1 hour and 15 minutes for medium and blushing, or cook to your liking. Baste the beef halfway through and if the veg looks dry, add a splash of water to the tray to stop them from burning.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "chop_celery"
+      ],
+      "next": [
+        "rest_while"
+      ],
+      "on_enter": [
+        {
+          "say": "Throw the trivet of vegetables into the tray with the bay and rosemary, jiggling the tray to coat the veg in any juices, then roast for 1 hour and 15 minutes for medium and blushing, or cook to your liking. Baste the beef halfway through and if the veg looks dry, add a splash of water to the tray to stop them from burning."
+        }
+      ]
+    },
+    {
+      "id": "rest_while",
+      "descr": "Remove the beef to a platter, cover with tin foil and...",
+      "instructions": "Remove the beef to a platter, cover with tin foil and leave to rest while you make the gravy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_splash"
+      ],
+      "next": [
+        "heat_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the beef to a platter, cover with tin foil and leave to rest while you make the gravy."
+        }
+      ]
+    },
+    {
+      "id": "heat_flour",
+      "descr": "For the gravy, place the tray on the hob over a medium heat",
+      "instructions": "For the gravy, place the tray on the hob over a medium heat. Sprinkle in the flour, then mash everything with a potato masher, scraping up all the goodness from the base of the tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_while"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "For the gravy, place the tray on the hob over a medium heat. Sprinkle in the flour, then mash everything with a potato masher, scraping up all the goodness from the base of the tray."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Stir in the jam, then pour over the wine and let it...",
+      "instructions": "Stir in the jam, then pour over the wine and let it bubble away for a minute or two, before pouring in the stock. Bring to the boil, then turn the heat down low and simmer for around 30 minutes, or until thickened and reduced, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "heat_flour"
+      ],
+      "next": [
+        "heat_ready"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the jam, then pour over the wine and let it bubble away for a minute or two, before pouring in the stock. Bring to the boil, then turn the heat down low and simmer for around 30 minutes, or until thickened and reduced, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "heat_ready",
+      "descr": "When the gravy is the consistency of your liking, pour...",
+      "instructions": "When the gravy is the consistency of your liking, pour it through a sieve into a pan, pushing all the goodness through with the back of a spoon. Keep warm over a low heat until ready to serve, skimming away any excess fat that comes to the surface, then pour into a gravy boat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "slice_usual"
+      ],
+      "on_enter": [
+        {
+          "say": "When the gravy is the consistency of your liking, pour it through a sieve into a pan, pushing all the goodness through with the back of a spoon. Keep warm over a low heat until ready to serve, skimming away any excess fat that comes to the surface, then pour into a gravy boat."
+        }
+      ]
+    },
+    {
+      "id": "slice_usual",
+      "descr": "Carve the beef into lovely thin slices, and serve with...",
+      "instructions": "Carve the beef into lovely thin slices, and serve with all the usual trimmings \u2013 delicious with Yorkshire puddings, roast potatoes, watercress and a dollop of horseradish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_ready"
+      ],
+      "on_enter": [
+        {
+          "say": "Carve the beef into lovely thin slices, and serve with all the usual trimmings \u2013 delicious with Yorkshire puddings, roast potatoes, watercress and a dollop of horseradish."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "375 calories",
+    "carbohydrates": "8.2 g",
+    "fat": "9.8 g",
+    "fiber": "1.6 g",
+    "protein": "62.1 g"
+  }
+}

@@ -1,0 +1,503 @@
+{
+  "recipe": {
+    "id": "roasted-veggie-curry",
+    "title": "Roasted veggie curry",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "Roasting the veg before immersing them in a tasty sauce really intensifies their natural flavour in this veggie curry, giving you even more bang for your buck. ",
+    "tags": [
+      "dish-type",
+      "curry",
+      "vegetarian",
+      "tv-shows",
+      "keep-cooking-and-carry-on"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/curry/roasted-veggie-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b066e93802b673d3c2ce1f5466e8bde8fcfbe92c-958x1280.jpg/106021898?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b066e93802b673d3c2ce1f5466e8bde8fcfbe92c-958x1280.jpg/106021898?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b066e93802b673d3c2ce1f5466e8bde8fcfbe92c-958x1280.jpg/106021898?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b066e93802b673d3c2ce1f5466e8bde8fcfbe92c-958x1280.jpg/106021898?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "curry"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "heaped-teaspoon-madras-curry-p",
+      "name": "heaped teaspoon Madras curry paste",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parsnip",
+      "name": "parsnip",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-butternut-squash",
+      "name": "\u00bd a butternut squash",
+      "quantity": null,
+      "unit": null,
+      "note": "600g"
+    },
+    {
+      "id": "courgette",
+      "name": "courgette",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-cauliflower",
+      "name": "frozen cauliflower",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "good-mango-chutney",
+      "name": "good mango chutney",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-quality-plum-tomat",
+      "name": "400g tin of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-light-coconut-milk",
+      "name": "400g tin of light coconut milk",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "stuffed-naan",
+      "name": "STUFFED NAAN",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-knob-of-unsalted-butter",
+      "name": "small knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "6-cloves",
+      "name": "6 cloves",
+      "quantity": 6.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "a-cinnamon-stick",
+      "name": "\u00bd a cinnamon stick",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-leek",
+      "name": "small leek",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-spinach",
+      "name": "frozen spinach",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mugs-of-self-raising-flour",
+      "name": "mugs of self-raising flour",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "600g, plus extra for dusting"
+    },
+    {
+      "id": "feta-cheese",
+      "name": "feta cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "large bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00baC/400\u00baF/gas 6",
+      "instructions": "Preheat the oven to 200\u00baC/400\u00baF/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_curry"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00baC/400\u00baF/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "mix_curry",
+      "descr": "In a large roasting tray, mix the curry paste with a...",
+      "instructions": "In a large roasting tray, mix the curry paste with a pinch of sea salt, 2 tablespoons of oil and 1 tablespoon of vinegar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_bite"
+      ],
+      "on_enter": [
+        {
+          "say": "In a large roasting tray, mix the curry paste with a pinch of sea salt, 2 tablespoons of oil and 1 tablespoon of vinegar."
+        }
+      ]
+    },
+    {
+      "id": "chop_bite",
+      "descr": "Wash the parsnip, carrots and butternut squash (we\u2019re...",
+      "instructions": "Wash the parsnip, carrots and butternut squash (we\u2019re leaving the skins on). Quarter the parsnip lengthways, remove the fluffy core and chop into bite-sized chunks (about 2cm), adding to the tray as you go.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_curry"
+      ],
+      "next": [
+        "chop_carrots"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash the parsnip, carrots and butternut squash (we\u2019re leaving the skins on). Quarter the parsnip lengthways, remove the fluffy core and chop into bite-sized chunks (about 2cm), adding to the tray as you go."
+        }
+      ]
+    },
+    {
+      "id": "chop_carrots",
+      "descr": "Repeat with the courgette, then chop up the carrots",
+      "instructions": "Repeat with the courgette, then chop up the carrots. Deseed the squash and chop to a similar size. Get it all in the tray with the cauliflower and mix until well coated.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_bite"
+      ],
+      "next": [
+        "roast_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Repeat with the courgette, then chop up the carrots. Deseed the squash and chop to a similar size. Get it all in the tray with the cauliflower and mix until well coated."
+        }
+      ]
+    },
+    {
+      "id": "roast_minutes",
+      "descr": "Roast the veg for 40 to 50 minutes, or until golden,...",
+      "instructions": "Roast the veg for 40 to 50 minutes, or until golden, gnarly and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3000S",
+      "depends_on": [
+        "chop_carrots"
+      ],
+      "next": [
+        "heat_peel"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast the veg for 40 to 50 minutes, or until golden, gnarly and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "heat_peel",
+      "descr": "Meanwhile, for the sauce, put a large shallow casserole...",
+      "instructions": "Meanwhile, for the sauce, put a large shallow casserole pan on a medium heat. Peel and finely chop the ginger and garlic, and place in the pan with 1 tablespoon of oil, stirring regularly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_minutes"
+      ],
+      "next": [
+        "heat_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, for the sauce, put a large shallow casserole pan on a medium heat. Peel and finely chop the ginger and garlic, and place in the pan with 1 tablespoon of oil, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_7",
+      "descr": "As soon as it starts to colour, stir in the mango chutney",
+      "instructions": "As soon as it starts to colour, stir in the mango chutney. Let it sizzle for a minute, then pour in the tomatoes, breaking them up with your spoon. As soon as they start to bubble, add the coconut milk. Bring it to the boil, then turn off the heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_peel"
+      ],
+      "next": [
+        "heat_cloves"
+      ],
+      "on_enter": [
+        {
+          "say": "As soon as it starts to colour, stir in the mango chutney. Let it sizzle for a minute, then pour in the tomatoes, breaking them up with your spoon. As soon as they start to bubble, add the coconut milk. Bring it to the boil, then turn off the heat."
+        }
+      ]
+    },
+    {
+      "id": "heat_cloves",
+      "descr": "To make the naans, melt the butter in a large non-stick...",
+      "instructions": "To make the naans, melt the butter in a large non-stick ovenproof frying pan on a medium heat, then add the cloves and cinnamon stick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_7"
+      ],
+      "next": [
+        "slice_followed"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the naans, melt the butter in a large non-stick ovenproof frying pan on a medium heat, then add the cloves and cinnamon stick."
+        }
+      ]
+    },
+    {
+      "id": "slice_followed",
+      "descr": "Trim the leek and quarter lengthways, wash, finely slice...",
+      "instructions": "Trim the leek and quarter lengthways, wash, finely slice and add to the pan, followed by the spinach. Stir regularly, until dark, dry and intense, then remove and leave to cool.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_cloves"
+      ],
+      "next": [
+        "mix_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the leek and quarter lengthways, wash, finely slice and add to the pan, followed by the spinach. Stir regularly, until dark, dry and intense, then remove and leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "mix_flour",
+      "descr": "Pour the flour into a large bowl with a pinch of salt,...",
+      "instructions": "Pour the flour into a large bowl with a pinch of salt, make a well in the middle and add 1 mug (300ml) of water (using the same mug you used to measure your flour, a regular cup is fine) and 1 tablespoon of oil. Use a fork to gradually mix the flour into the liquid, until it gets too hard to mix.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_followed"
+      ],
+      "next": [
+        "add_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the flour into a large bowl with a pinch of salt, make a well in the middle and add 1 mug (300ml) of water (using the same mug you used to measure your flour, a regular cup is fine) and 1 tablespoon of oil. Use a fork to gradually mix the flour into the liquid, until it gets too hard to mix."
+        }
+      ]
+    },
+    {
+      "id": "add_little",
+      "descr": "At this point, use your clean floured hands to knead the...",
+      "instructions": "At this point, use your clean floured hands to knead the dough on a flour-dusted surface for a couple of minutes, adding a little extra flour, if needed. You want it to be pliable so don\u2019t add too much flour, but it shouldn\u2019t be sticking to your work surface.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_flour"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "At this point, use your clean floured hands to knead the dough on a flour-dusted surface for a couple of minutes, adding a little extra flour, if needed. You want it to be pliable so don\u2019t add too much flour, but it shouldn\u2019t be sticking to your work surface."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Now, oil your surface, then stretch and push the dough...",
+      "instructions": "Now, oil your surface, then stretch and push the dough out into a 30cm circle. Crumble the feta over the cool spinach mixture and mix together, then place in the middle of the dough, leaving a 5cm border at the edge.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_little"
+      ],
+      "next": [
+        "fold_dough"
+      ],
+      "on_enter": [
+        {
+          "say": "Now, oil your surface, then stretch and push the dough out into a 30cm circle. Crumble the feta over the cool spinach mixture and mix together, then place in the middle of the dough, leaving a 5cm border at the edge."
+        }
+      ]
+    },
+    {
+      "id": "fold_dough",
+      "descr": "Fold in the dough over the filling, patting it together...",
+      "instructions": "Fold in the dough over the filling, patting it together as you go and sealing the filling inside, then pat out to just under 25cm. Wipe out your frying pan, then gently lift the naan into it.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "step_step_14"
+      ],
+      "on_enter": [
+        {
+          "say": "Fold in the dough over the filling, patting it together as you go and sealing the filling inside, then pat out to just under 25cm. Wipe out your frying pan, then gently lift the naan into it."
+        }
+      ]
+    },
+    {
+      "id": "step_step_14",
+      "descr": "Cook the naan at the bottom of the oven for 20 to 25...",
+      "instructions": "Cook the naan at the bottom of the oven for 20 to 25 minutes, or until golden and crisp on the outside, fluffy in the middle.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "fold_dough"
+      ],
+      "next": [
+        "add_roasted"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the naan at the bottom of the oven for 20 to 25 minutes, or until golden and crisp on the outside, fluffy in the middle."
+        }
+      ]
+    },
+    {
+      "id": "add_roasted",
+      "descr": "A few minutes before you\u2019re ready to serve, bring the...",
+      "instructions": "A few minutes before you\u2019re ready to serve, bring the sauce back to a simmer, then add all the roasted veg and the frozen peas, and simmer until the peas are cooked and the sauce is a good consistency.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_14"
+      ],
+      "next": [
+        "slice_your"
+      ],
+      "on_enter": [
+        {
+          "say": "A few minutes before you\u2019re ready to serve, bring the sauce back to a simmer, then add all the roasted veg and the frozen peas, and simmer until the peas are cooked and the sauce is a good consistency."
+        }
+      ]
+    },
+    {
+      "id": "slice_your",
+      "descr": "Slice up your naan and serve up with your curry at the table",
+      "instructions": "Slice up your naan and serve up with your curry at the table. Nice with a dollop of yoghurt and any chutney or pickles, if you like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_roasted"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice up your naan and serve up with your curry at the table. Nice with a dollop of yoghurt and any chutney or pickles, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "345 calories",
+    "carbohydrates": "47.8 g",
+    "fat": "13.6 g",
+    "fiber": "6.6 g",
+    "protein": "10.7 g"
+  }
+}

@@ -1,0 +1,204 @@
+{
+  "recipe": {
+    "id": "simple-sausage-pasta",
+    "title": "Simple sausage pasta",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "Add this easy recipe for quick sausage rag\u00f9 to your repertoire! Bumped up with chickpeas, it's a real crowd-pleaser.",
+    "tags": [
+      "sausage",
+      "pasta",
+      "family-favourites",
+      "tomato",
+      "chickpea",
+      "dinner",
+      "bonfire-night"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/simple-sausage-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b4fa8a2bf90be6f79981cf684ca259af46b141ce-853x1279.jpg/133670784?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b4fa8a2bf90be6f79981cf684ca259af46b141ce-853x1279.jpg/133670784?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b4fa8a2bf90be6f79981cf684ca259af46b141ce-853x1279.jpg/133670784?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b4fa8a2bf90be6f79981cf684ca259af46b141ce-853x1279.jpg/133670784?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "higher-welfare-pork-sausages-o",
+      "name": "higher-welfare pork sausages or veggie sausages",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "rosemary-or-2-teaspoons-fennel",
+      "name": "rosemary or 2 teaspoons fennel seeds",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-or-frozen-chopped-mixed-",
+      "name": "fresh or frozen chopped mixed onion",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": "carrot & celery"
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pasta-shells",
+      "name": "pasta shells",
+      "quantity": 450.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "optional-parmesan-cheese",
+      "name": "optional: Parmesan cheese",
+      "quantity": null,
+      "unit": null,
+      "note": "for grating"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "pan",
+    "pot",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "heat_squeeze",
+      "descr": "Place a large shallow casserole pan on a medium-high heat",
+      "instructions": "Place a large shallow casserole pan on a medium-high heat. Squeeze the sausage meat out of the skins into the pan, breaking it up with a wooden spoon and fry until lightly golden, stirring regularly. (If using veggie sausages, roughly slice and fry in 1 tablespoon of olive oil until golden and crispy.)",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_rosemary"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large shallow casserole pan on a medium-high heat. Squeeze the sausage meat out of the skins into the pan, breaking it up with a wooden spoon and fry until lightly golden, stirring regularly. (If using veggie sausages, roughly slice and fry in 1 tablespoon of olive oil until golden and crispy.)"
+        }
+      ]
+    },
+    {
+      "id": "chop_rosemary",
+      "descr": "Pick and roughly chop the rosemary leaves and peel and...",
+      "instructions": "Pick and roughly chop the rosemary leaves and peel and finely slice the garlic. Drizzle 1 tablespoon of oil into the pan then add the chopped mixed veg, rosemary and garlic. Season to perfection, then mash everything together with a masher and cook for 10 minutes, stirring occasionally, until softened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_squeeze"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and roughly chop the rosemary leaves and peel and finely slice the garlic. Drizzle 1 tablespoon of oil into the pan then add the chopped mixed veg, rosemary and garlic. Season to perfection, then mash everything together with a masher and cook for 10 minutes, stirring occasionally, until softened."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Pour in the chickpeas, juice and all, and scrunch in the...",
+      "instructions": "Pour in the chickpeas, juice and all, and scrunch in the tomatoes along with 1 tin\u2019s worth of water, mashing everything up until fine. Bring to the boil, then reduce to a medium-low heat and simmer for 30 minutes, until thick and delicious, mashing everything up with a potato masher.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "chop_rosemary"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the chickpeas, juice and all, and scrunch in the tomatoes along with 1 tin\u2019s worth of water, mashing everything up until fine. Bring to the boil, then reduce to a medium-low heat and simmer for 30 minutes, until thick and delicious, mashing everything up with a potato masher."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "When the sauce has around 12 minutes remaining, cook the...",
+      "instructions": "When the sauce has around 12 minutes remaining, cook the pasta in a pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of the starchy cooking water.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT720S",
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "add_splashes"
+      ],
+      "on_enter": [
+        {
+          "say": "When the sauce has around 12 minutes remaining, cook the pasta in a pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of the starchy cooking water."
+        }
+      ]
+    },
+    {
+      "id": "add_splashes",
+      "descr": "Toss the cooked pasta into the sauce, adding splashes of...",
+      "instructions": "Toss the cooked pasta into the sauce, adding splashes of the water to loosen if needed, then divide between bowls. Grate over a little Parmesan and drizzle with a little olive oil, if you like, and serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss the cooked pasta into the sauce, adding splashes of the water to loosen if needed, then divide between bowls. Grate over a little Parmesan and drizzle with a little olive oil, if you like, and serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "562 calories",
+    "carbohydrates": "78.4 g",
+    "fat": "18.9 g",
+    "fiber": "6.6 g",
+    "protein": "22.9 g"
+  }
+}

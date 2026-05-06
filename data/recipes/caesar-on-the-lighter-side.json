@@ -1,0 +1,200 @@
+{
+  "recipe": {
+    "id": "caesar-on-the-lighter-side",
+    "title": "Caesar on the lighter side",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "A lighter version of this classic salad dressing, this Caesar dressing uses yoghurt and olive oil to make sure you still get all the flavour!",
+    "tags": [
+      "salad-dressing",
+      "main-ingredient",
+      "light-meals",
+      "salads",
+      "lighter-new-year",
+      "mains",
+      "dish-type",
+      "method",
+      "salad",
+      "gluten-free",
+      "vegetables",
+      "quick-fixes",
+      "occasion",
+      "cheap-amp-cheerful",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/caesar-on-the-lighter-side",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/048158ccea2c2ba2092293493bc07c23e1d3d5ab-973x1300.jpg/048158ccea2c2ba2092293493bc07c23e1d3d5ab-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/048158ccea2c2ba2092293493bc07c23e1d3d5ab-973x1300.jpg/048158ccea2c2ba2092293493bc07c23e1d3d5ab-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/048158ccea2c2ba2092293493bc07c23e1d3d5ab-973x1300.jpg/048158ccea2c2ba2092293493bc07c23e1d3d5ab-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/048158ccea2c2ba2092293493bc07c23e1d3d5ab-973x1300.jpg/048158ccea2c2ba2092293493bc07c23e1d3d5ab-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "cos-or-romaine-lettuce",
+      "name": "cos or romaine lettuce",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "a-lemon",
+      "name": "\u00bd a lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "worcestershire-sauce",
+      "name": "Worcestershire sauce",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "low-fat-natural-yoghurt",
+      "name": "low-fat natural yoghurt",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "anchovy-fillets",
+      "name": "anchovy fillets",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "in olive oil"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "chop_chunks",
+      "descr": "Snap off and discard any wilting or dark green outer...",
+      "instructions": "Snap off and discard any wilting or dark green outer lettuce leaves. Trim the leaves, then cut the head into quarters lengthways. Chop into chunks and get rid of the core. Wash under cold running water and dry in a salad spinner.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Snap off and discard any wilting or dark green outer lettuce leaves. Trim the leaves, then cut the head into quarters lengthways. Chop into chunks and get rid of the core. Wash under cold running water and dry in a salad spinner."
+        }
+      ]
+    },
+    {
+      "id": "chop_garlic",
+      "descr": "To make the dressing, peel and finely chop the garlic,...",
+      "instructions": "To make the dressing, peel and finely chop the garlic, mix with the olive oil, and put in a bowl. Grate in the Parmesan and squeeze in the lemon juice. Add the Worcestershire sauce and yoghurt, and whisk together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_chunks"
+      ],
+      "next": [
+        "chop_anchovies"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the dressing, peel and finely chop the garlic, mix with the olive oil, and put in a bowl. Grate in the Parmesan and squeeze in the lemon juice. Add the Worcestershire sauce and yoghurt, and whisk together."
+        }
+      ]
+    },
+    {
+      "id": "chop_anchovies",
+      "descr": "Roughly chop and add the anchovies, season with a little...",
+      "instructions": "Roughly chop and add the anchovies, season with a little sea salt and freshly ground black pepper, and whisk again.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_garlic"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly chop and add the anchovies, season with a little sea salt and freshly ground black pepper, and whisk again."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Toss the lettuce in the dressing, then scoop the salad...",
+      "instructions": "Toss the lettuce in the dressing, then scoop the salad into a serving bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_anchovies"
+      ],
+      "next": [
+        "serve_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss the lettuce in the dressing, then scoop the salad into a serving bowl."
+        }
+      ]
+    },
+    {
+      "id": "serve_step_5",
+      "descr": "Coarsely grate over a little extra Parmesan, if you like",
+      "instructions": "Coarsely grate over a little extra Parmesan, if you like. Toss again, then serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Coarsely grate over a little extra Parmesan, if you like. Toss again, then serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "120 calories",
+    "carbohydrates": "3.7 g",
+    "fat": "9.3 g",
+    "fiber": null,
+    "protein": "5.2 g"
+  }
+}

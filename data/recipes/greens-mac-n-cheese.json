@@ -1,0 +1,292 @@
+{
+  "recipe": {
+    "id": "greens-mac-n-cheese",
+    "title": "Greens mac 'n' cheese",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "This Jamie Oliver mac 'n' cheese recipe is SO good, and it's packed with gorgeous green veggies. Topped with flaked almonds for crunch and oozy Cheddar.",
+    "tags": [
+      "great-british-produce",
+      "great-british-cheeses",
+      "pasta",
+      "student-recipes",
+      "pasta-amp-risotto",
+      "jamie-s-meat-free-meals",
+      "dish-type",
+      "vegetarian",
+      "course",
+      "tv-shows",
+      "lunch-amp-dinner-recipes",
+      "broccoli",
+      "pasta-bake",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/greens-mac-n-cheese",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f92780167bc874ce41631ed99b76f1ad9c8c2ee2-958x1280.jpg/92507790?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f92780167bc874ce41631ed99b76f1ad9c8c2ee2-958x1280.jpg/92507790?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f92780167bc874ce41631ed99b76f1ad9c8c2ee2-958x1280.jpg/92507790?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f92780167bc874ce41631ed99b76f1ad9c8c2ee2-958x1280.jpg/92507790?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-leek",
+      "name": "large leek",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "purple-sprouting-or-tenderstem",
+      "name": "purple sprouting or tenderstem broccoli",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-thyme",
+      "name": "\u00bd a bunch of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 1.0,
+      "unit": "litre",
+      "note": null
+    },
+    {
+      "id": "dried-macaroni",
+      "name": "dried macaroni",
+      "quantity": 450.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mature-cheddar-cheese",
+      "name": "mature Cheddar cheese",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "flaked-almonds",
+      "name": "flaked almonds",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "blender",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "slice_broccoli",
+      "descr": "Trim, halve and wash the leek and peel the garlic, then...",
+      "instructions": "Trim, halve and wash the leek and peel the garlic, then finely slice with the broccoli stalks, reserving the florets for later.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim, halve and wash the leek and peel the garlic, then finely slice with the broccoli stalks, reserving the florets for later."
+        }
+      ]
+    },
+    {
+      "id": "heat_butter",
+      "descr": "Place the sliced veg in a large casserole pan over a...",
+      "instructions": "Place the sliced veg in a large casserole pan over a medium heat with the butter, then strip in the thyme leaves and cook for 15 minutes, or until softened, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "slice_broccoli"
+      ],
+      "next": [
+        "stir_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the sliced veg in a large casserole pan over a medium heat with the butter, then strip in the thyme leaves and cook for 15 minutes, or until softened, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_flour",
+      "descr": "Stir in the flour, followed slowly by the milk, then...",
+      "instructions": "Stir in the flour, followed slowly by the milk, then simmer for 10 minutes, or until thickened, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_butter"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the flour, followed slowly by the milk, then simmer for 10 minutes, or until thickened, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Meanwhile, cook the pasta in a large pan of boiling...",
+      "instructions": "Meanwhile, cook the pasta in a large pan of boiling salted water for 5 minutes, then drain.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "stir_flour"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, cook the pasta in a large pan of boiling salted water for 5 minutes, then drain."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Grate the Parmesan and most of the Cheddar into the...",
+      "instructions": "Grate the Parmesan and most of the Cheddar into the sauce, and mix well. Tip into a blender, add the spinach and whiz until smooth \u2013 you may need to work in batches.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "stir_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Grate the Parmesan and most of the Cheddar into the sauce, and mix well. Tip into a blender, add the spinach and whiz until smooth \u2013 you may need to work in batches."
+        }
+      ]
+    },
+    {
+      "id": "stir_through",
+      "descr": "Season to perfection with sea salt and black pepper,...",
+      "instructions": "Season to perfection with sea salt and black pepper, then stir through the pasta and broccoli florets, loosening with a splash of milk, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to perfection with sea salt and black pepper, then stir through the pasta and broccoli florets, loosening with a splash of milk, if needed."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "Transfer to a 25cm x 35cm baking dish, grate over the...",
+      "instructions": "Transfer to a 25cm x 35cm baking dish, grate over the remaining Cheddar and scatter over the almonds. Bake for 30 minutes, or until beautifully golden and bubbling.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "stir_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer to a 25cm x 35cm baking dish, grate over the remaining Cheddar and scatter over the almonds. Bake for 30 minutes, or until beautifully golden and bubbling."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "619 calories",
+    "carbohydrates": "75.1 g",
+    "fat": "25.1 g",
+    "fiber": "6.4 g",
+    "protein": "29 g"
+  }
+}

@@ -1,0 +1,431 @@
+{
+  "recipe": {
+    "id": "incredible-roasted-shoulder-of-lamb-with-smashed-veg-greens",
+    "title": "Incredible roasted shoulder of lamb with smashed veg & greens",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT265M",
+    "description": "A brilliant lamb shoulder roast recipe from Jamie Oliver. This slow cooked lamb shoulder is just the best served with mash and seasonal greens. Happy days!",
+    "tags": [
+      "roast",
+      "course",
+      "dish-type",
+      "mains",
+      "lamb",
+      "method",
+      "roasting",
+      "popular",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/lamb/incredible-roasted-shoulder-of-lamb-with-smashed-veg-and-greens",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/27ffac1aca6a1ca9fc81bec30a35a65527447328-973x1300.jpg/27ffac1aca6a1ca9fc81bec30a35a65527447328-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/27ffac1aca6a1ca9fc81bec30a35a65527447328-973x1300.jpg/27ffac1aca6a1ca9fc81bec30a35a65527447328-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/27ffac1aca6a1ca9fc81bec30a35a65527447328-973x1300.jpg/27ffac1aca6a1ca9fc81bec30a35a65527447328-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/27ffac1aca6a1ca9fc81bec30a35a65527447328-973x1300.jpg/27ffac1aca6a1ca9fc81bec30a35a65527447328-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "lamb"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "big-bunch-of-fresh-rosemary",
+      "name": "big bunch of fresh rosemary",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shoulder-of-lamb-or-hogget",
+      "name": "shoulder of lamb or hogget",
+      "quantity": 2.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "seasonal-greens",
+      "name": "seasonal greens",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "such as white cabbage, Savoy cabbage, Brussels tops, cavolo nero"
+    },
+    {
+      "id": "smashed-veg",
+      "name": "SMASHED VEG",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 750.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-carrots",
+      "name": "large carrots",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-large-swede",
+      "name": "\u00bd a large swede",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "knobs-of-unsalted-butter",
+      "name": "knobs of unsalted butter",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sauce",
+      "name": "SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "organic-chicken-or-vegetable-s",
+      "name": "organic chicken or vegetable stock",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-baby-capers",
+      "name": "heaped tablespoons baby capers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "big-bunch-of-fresh-mint",
+      "name": "big bunch of fresh mint",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "chopping board",
+    "knife",
+    "oven",
+    "pan",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to full whack",
+      "instructions": "Preheat the oven to full whack.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to full whack."
+        }
+      ]
+    },
+    {
+      "id": "roast_tray",
+      "descr": "Lay half the rosemary into the bottom of a high-sided...",
+      "instructions": "Lay half the rosemary into the bottom of a high-sided roasting tray. Break up the garlic bulb, then scatter in half of the unpeeled cloves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "top_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Lay half the rosemary into the bottom of a high-sided roasting tray. Break up the garlic bulb, then scatter in half of the unpeeled cloves."
+        }
+      ]
+    },
+    {
+      "id": "top_step_3",
+      "descr": "Slash the fat side of the lamb all over with a sharp...",
+      "instructions": "Slash the fat side of the lamb all over with a sharp knife, then rub with oil, sea salt and black pepper. Place into the tray, then scatter the remaining rosemary and garlic on top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_tray"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Slash the fat side of the lamb all over with a sharp knife, then rub with oil, sea salt and black pepper. Place into the tray, then scatter the remaining rosemary and garlic on top."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Tightly cover the tray with tin foil and place in the oven",
+      "instructions": "Tightly cover the tray with tin foil and place in the oven. Immediately turn the temperature down to 170\u00b0C/325\u00b0F/gas 3 and cook for around 4 hours \u2013 it\u2019s done if you can pull the meat apart easily with two forks.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT14400S",
+      "depends_on": [
+        "top_step_3"
+      ],
+      "next": [
+        "chop_large"
+      ],
+      "on_enter": [
+        {
+          "say": "Tightly cover the tray with tin foil and place in the oven. Immediately turn the temperature down to 170\u00b0C/325\u00b0F/gas 3 and cook for around 4 hours \u2013 it\u2019s done if you can pull the meat apart easily with two forks."
+        }
+      ]
+    },
+    {
+      "id": "chop_large",
+      "descr": "Meanwhile, peel the potatoes and chop into large chunks",
+      "instructions": "Meanwhile, peel the potatoes and chop into large chunks. Peel the carrots and swede, then chop into small chunks. Prep the greens by separating out the leaves and finely slicing any tougher stalks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_4"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel the potatoes and chop into large chunks. Peel the carrots and swede, then chop into small chunks. Prep the greens by separating out the leaves and finely slicing any tougher stalks."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "When the lamb is nearly cooked, put your potatoes,...",
+      "instructions": "When the lamb is nearly cooked, put your potatoes, carrots and swede into a large pot of boiling salted water and boil hard for 20 minutes, or until tender.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "chop_large"
+      ],
+      "next": [
+        "warm_over"
+      ],
+      "on_enter": [
+        {
+          "say": "When the lamb is nearly cooked, put your potatoes, carrots and swede into a large pot of boiling salted water and boil hard for 20 minutes, or until tender."
+        }
+      ]
+    },
+    {
+      "id": "warm_over",
+      "descr": "Drain and allow to steam dry, then smash them up in the...",
+      "instructions": "Drain and allow to steam dry, then smash them up in the pan with a knob of butter. If you prefer a smooth texture, add some cooking water. Spoon into a bowl, cover with tin foil and keep warm over a pan of simmering water until needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "chop_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain and allow to steam dry, then smash them up in the pan with a knob of butter. If you prefer a smooth texture, add some cooking water. Spoon into a bowl, cover with tin foil and keep warm over a pan of simmering water until needed."
+        }
+      ]
+    },
+    {
+      "id": "chop_ping",
+      "descr": "Once cooked to perfection, remove the lamb from the oven...",
+      "instructions": "Once cooked to perfection, remove the lamb from the oven and place it on a chopping board. Cover with tin foil, then a tea towel, and leave to rest.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "warm_over"
+      ],
+      "next": [
+        "boil_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Once cooked to perfection, remove the lamb from the oven and place it on a chopping board. Cover with tin foil, then a tea towel, and leave to rest."
+        }
+      ]
+    },
+    {
+      "id": "boil_your",
+      "descr": "Put a large pan of salted water on to boil for your greens",
+      "instructions": "Put a large pan of salted water on to boil for your greens.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "heat_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large pan of salted water on to boil for your greens."
+        }
+      ]
+    },
+    {
+      "id": "heat_flour",
+      "descr": "Pour away most of the fat from the roasting tray,...",
+      "instructions": "Pour away most of the fat from the roasting tray, discarding any bits of rosemary stalk. Put the tray on the hob over a medium heat and mix in the flour.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_your"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour away most of the fat from the roasting tray, discarding any bits of rosemary stalk. Put the tray on the hob over a medium heat and mix in the flour."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Pour in the stock, stirring and scraping all the sticky...",
+      "instructions": "Pour in the stock, stirring and scraping all the sticky goodness from the bottom of the tray. You won\u2019t need gallons of gravy, just a couple of flavoursome spoonfuls each. Drain, finely chop and add the capers, then turn the heat down and simmer for a few minutes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_flour"
+      ],
+      "next": [
+        "chop_mint"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the stock, stirring and scraping all the sticky goodness from the bottom of the tray. You won\u2019t need gallons of gravy, just a couple of flavoursome spoonfuls each. Drain, finely chop and add the capers, then turn the heat down and simmer for a few minutes."
+        }
+      ]
+    },
+    {
+      "id": "chop_mint",
+      "descr": "Pick and finely chop the mint and add it to the sauce...",
+      "instructions": "Pick and finely chop the mint and add it to the sauce with the red wine vinegar at the last minute, then pour into a jug.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the mint and add it to the sauce with the red wine vinegar at the last minute, then pour into a jug."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Place the greens and stalks into the pan of fast-boiling...",
+      "instructions": "Place the greens and stalks into the pan of fast-boiling salted water and cook for 4 to 5 minutes, to just soften. Drain and toss with the remaining knob of butter and a pinch of salt and pepper.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_mint"
+      ],
+      "next": [
+        "step_step_14"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the greens and stalks into the pan of fast-boiling salted water and cook for 4 to 5 minutes, to just soften. Drain and toss with the remaining knob of butter and a pinch of salt and pepper."
+        }
+      ]
+    },
+    {
+      "id": "step_step_14",
+      "descr": "Place everything in the middle of the table, and shred...",
+      "instructions": "Place everything in the middle of the table, and shred the lamb in front of your guests. Absolutely delish!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Place everything in the middle of the table, and shred the lamb in front of your guests. Absolutely delish!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "649 calories",
+    "carbohydrates": "35.6 g",
+    "fat": "40.8 g",
+    "fiber": "9.2 g",
+    "protein": "36.9 g"
+  }
+}

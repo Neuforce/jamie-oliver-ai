@@ -43,4 +43,5 @@ recipe_pdf_agent_llama/validate.py
 tests/test_api_examples.py
 tests/test_chunker.py
 tests/test_chunks.py
+tests/test_foundations_services.py
 tests/test_search_agent.py

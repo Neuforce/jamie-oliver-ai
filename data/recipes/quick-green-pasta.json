@@ -1,0 +1,315 @@
+{
+  "recipe": {
+    "id": "quick-green-pasta",
+    "title": "Quick green pasta",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "This recipe is a really typical lunch or dinner for us \u2013 think of it as a principle, and flex the veg you use depending on what you\u2019ve got.",
+    "tags": [
+      "tv",
+      "pasta",
+      "1-recipes",
+      "keep-cooking-pasta",
+      "course",
+      "vegetarian",
+      "tv-shows",
+      "keep-cooking-vegetarian",
+      "cheap-amp-cheerful",
+      "keep-cooking-and-carry-on",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/quick-green-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fd204c0c1ad81da47e2e2d9833fe23baf592005c-958x1280.jpg/105564455?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fd204c0c1ad81da47e2e2d9833fe23baf592005c-958x1280.jpg/105564455?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fd204c0c1ad81da47e2e2d9833fe23baf592005c-958x1280.jpg/105564455?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fd204c0c1ad81da47e2e2d9833fe23baf592005c-958x1280.jpg/105564455?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "leek",
+      "name": "leek",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-handful-of-tenderstem-br",
+      "name": "large handful of tenderstem broccoli spears",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "frozen-spinach",
+      "name": "frozen spinach",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-handfuls-of-frozen-peas",
+      "name": "large handfuls of frozen peas",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-pasta",
+      "name": "dried pasta",
+      "quantity": 450.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": "Grana Padano or vegetarian alternative, plus extra to serve"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-fresh-herbs",
+      "name": "optional: fresh herbs",
+      "quantity": null,
+      "unit": null,
+      "note": "such as basil, parsley or mint"
+    }
+  ],
+  "utensils": [
+    "blender",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "slice_spring",
+      "descr": "Trim and slice the spring onions",
+      "instructions": "Trim and slice the spring onions. Trim the leek, halve it lengthways, wash it, then finely slice. Finely slice the broccoli stalks, reserving the tips.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim and slice the spring onions. Trim the leek, halve it lengthways, wash it, then finely slice. Finely slice the broccoli stalks, reserving the tips."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_2",
+      "descr": "Put a large, non-stick, shallow casserole pan on a...",
+      "instructions": "Put a large, non-stick, shallow casserole pan on a medium heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_spring"
+      ],
+      "next": [
+        "chop_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large, non-stick, shallow casserole pan on a medium heat."
+        }
+      ]
+    },
+    {
+      "id": "chop_garlic",
+      "descr": "Put 1 tablespoon of olive oil into the pan, with the...",
+      "instructions": "Put 1 tablespoon of olive oil into the pan, with the spring onions, leeks and broccoli stalks. Peel and finely chop the garlic and add to the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_2"
+      ],
+      "next": [
+        "add_frozen"
+      ],
+      "on_enter": [
+        {
+          "say": "Put 1 tablespoon of olive oil into the pan, with the spring onions, leeks and broccoli stalks. Peel and finely chop the garlic and add to the pan."
+        }
+      ]
+    },
+    {
+      "id": "add_frozen",
+      "descr": "Add the frozen spinach and peas, then add a pinch of sea...",
+      "instructions": "Add the frozen spinach and peas, then add a pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_garlic"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the frozen spinach and peas, then add a pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Cook for 10 to 15 minutes, or until soft but not...",
+      "instructions": "Cook for 10 to 15 minutes, or until soft but not coloured and the spinach has defrosted, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "add_frozen"
+      ],
+      "next": [
+        "add_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook for 10 to 15 minutes, or until soft but not coloured and the spinach has defrosted, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "add_broccoli",
+      "descr": "Meanwhile, cook the pasta in a large pan of boiling...",
+      "instructions": "Meanwhile, cook the pasta in a large pan of boiling salted water, according to the packet instructions, adding the broccoli florets for the last 2 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, cook the pasta in a large pan of boiling salted water, according to the packet instructions, adding the broccoli florets for the last 2 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "While everything is ticking away, finely grate the Parmesan",
+      "instructions": "While everything is ticking away, finely grate the Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_broccoli"
+      ],
+      "next": [
+        "pour_cooking"
+      ],
+      "on_enter": [
+        {
+          "say": "While everything is ticking away, finely grate the Parmesan."
+        }
+      ]
+    },
+    {
+      "id": "pour_cooking",
+      "descr": "Scoop or pour out about 200ml of cooking water from the...",
+      "instructions": "Scoop or pour out about 200ml of cooking water from the pasta into your veg pan. Now, you can either leave your sauce chunky, blitz it until smooth in a blender, or use a hand blender to go somewhere in between \u2013 it\u2019s up to you.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "add_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Scoop or pour out about 200ml of cooking water from the pasta into your veg pan. Now, you can either leave your sauce chunky, blitz it until smooth in a blender, or use a hand blender to go somewhere in between \u2013 it\u2019s up to you."
+        }
+      ]
+    },
+    {
+      "id": "add_tablespoon",
+      "descr": "Drain the pasta and broccoli, and tip it into the sauce",
+      "instructions": "Drain the pasta and broccoli, and tip it into the sauce. Add 1 tablespoon of extra virgin olive oil and the grated Parmesan, and toss it all together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_cooking"
+      ],
+      "next": [
+        "step_step_10"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the pasta and broccoli, and tip it into the sauce. Add 1 tablespoon of extra virgin olive oil and the grated Parmesan, and toss it all together."
+        }
+      ]
+    },
+    {
+      "id": "step_step_10",
+      "descr": "I like to finish this with a sprinkling of fresh herbs \u2013...",
+      "instructions": "I like to finish this with a sprinkling of fresh herbs \u2013 parsley, basil, thyme, whatever you\u2019ve got. A little extra grating of Parmesan is always nice, and a big salad on the side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "I like to finish this with a sprinkling of fresh herbs \u2013 parsley, basil, thyme, whatever you\u2019ve got. A little extra grating of Parmesan is always nice, and a big salad on the side."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "360 calories",
+    "carbohydrates": "59.7 g",
+    "fat": "8.7 g",
+    "fiber": "4.7 g",
+    "protein": "14.4 g"
+  }
+}

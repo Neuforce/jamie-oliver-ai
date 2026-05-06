@@ -1,0 +1,597 @@
+{
+  "recipe": {
+    "id": "easy-homemade-curry-pastes",
+    "title": "Easy homemade curry pastes",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "Jamie Oliver's easy curry paste recipes are packed with flavour. Try a korma, jalfrezi, rogan josh, tikka masala or vindaloo \u2013 you won't be disappointed!",
+    "tags": [
+      "uncategorised",
+      "main-ingredient",
+      "vegan",
+      "vegetarian",
+      "curry",
+      "dish-type",
+      "method",
+      "low-lactose",
+      "gluten-free",
+      "curry-paste",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/easy-homemade-curry-pastes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/46ddcb7e70e82f4918746f1b217150f051ee5f81-973x1300.jpg/46ddcb7e70e82f4918746f1b217150f051ee5f81-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/46ddcb7e70e82f4918746f1b217150f051ee5f81-973x1300.jpg/46ddcb7e70e82f4918746f1b217150f051ee5f81-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/46ddcb7e70e82f4918746f1b217150f051ee5f81-973x1300.jpg/46ddcb7e70e82f4918746f1b217150f051ee5f81-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/46ddcb7e70e82f4918746f1b217150f051ee5f81-973x1300.jpg/46ddcb7e70e82f4918746f1b217150f051ee5f81-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "korma-paste",
+      "name": "KORMA PASTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "teaspoon-cayenne-pepper",
+      "name": "\u00bd teaspoon cayenne pepper",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garam-masala",
+      "name": "garam masala",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "groundnut-oil",
+      "name": "groundnut oil",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "fresh-green-chillies",
+      "name": "fresh green chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "desiccated-coconut",
+      "name": "desiccated coconut",
+      "quantity": 3.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "ground-almonds",
+      "name": "ground almonds",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "a-small-bunch-of-fresh-coriand",
+      "name": "a small bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "spices-for-toasting",
+      "name": "SPICES FOR TOASTING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cumin-seeds",
+      "name": "cumin seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "jalfrezi-paste",
+      "name": "JALFREZI PASTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "turmeric",
+      "name": "turmeric",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "groundnut-oil",
+      "name": "groundnut oil",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "fresh-green-chilli",
+      "name": "fresh green chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "spices-for-toasting",
+      "name": "SPICES FOR TOASTING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cumin-seeds",
+      "name": "cumin seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "brown-mustard-seeds",
+      "name": "brown mustard seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "fenugreek-seeds",
+      "name": "fenugreek seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "rogan-josh-paste",
+      "name": "ROGAN JOSH PASTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "roasted-peppers",
+      "name": "roasted peppers",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": "from a jar"
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "garam-masala",
+      "name": "garam masala",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "turmeric",
+      "name": "turmeric",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "groundnut-oil",
+      "name": "groundnut oil",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "spices-for-toasting",
+      "name": "SPICES FOR TOASTING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cumin-seeds",
+      "name": "cumin seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "black-peppercorns",
+      "name": "black peppercorns",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "tikka-masala-paste",
+      "name": "TIKKA MASALA PASTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cayenne-pepper",
+      "name": "cayenne pepper",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "garam-masala",
+      "name": "garam masala",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "groundnut-oil",
+      "name": "groundnut oil",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "desiccated-coconut",
+      "name": "desiccated coconut",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "ground-almonds",
+      "name": "ground almonds",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "spices-for-toasting",
+      "name": "SPICES FOR TOASTING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cumin-seeds",
+      "name": "cumin seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "vindaloo-paste",
+      "name": "VINDALOO PASTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-red-chillies",
+      "name": "dried red chillies",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "turmeric",
+      "name": "turmeric",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "groundnut-oil",
+      "name": "groundnut oil",
+      "quantity": 3.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "spices-for-toasting",
+      "name": "SPICES FOR TOASTING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "black-peppercorns",
+      "name": "black peppercorns",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "4-cloves",
+      "name": "4 cloves",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "fennel-seeds",
+      "name": "fennel seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "fenugreek-seeds",
+      "name": "fenugreek seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_spices",
+      "descr": "To make any of the above curry pastes, first peel the...",
+      "instructions": "To make any of the above curry pastes, first peel the garlic and ginger. Put a frying pan on a medium to high heat and add the spices for toasting to the dry pan. Lightly toast them for a few minutes until golden brown and smelling delicious, then remove the pan from the heat.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_toasted"
+      ],
+      "on_enter": [
+        {
+          "say": "To make any of the above curry pastes, first peel the garlic and ginger. Put a frying pan on a medium to high heat and add the spices for toasting to the dry pan. Lightly toast them for a few minutes until golden brown and smelling delicious, then remove the pan from the heat."
+        }
+      ]
+    },
+    {
+      "id": "add_toasted",
+      "descr": "Add the toasted spices to a pestle and mortar and grind...",
+      "instructions": "Add the toasted spices to a pestle and mortar and grind until fine, or put them into a food processor and whiz to a powder. Either way, when you\u2019ve ground them whiz the toasted spices in a food processor with the rest of the ingredients and \u00bd a teaspoon of sea salt until you have a smooth paste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_spices"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the toasted spices to a pestle and mortar and grind until fine, or put them into a food processor and whiz to a powder. Either way, when you\u2019ve ground them whiz the toasted spices in a food processor with the rest of the ingredients and \u00bd a teaspoon of sea salt until you have a smooth paste."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": null,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "protein": null
+  }
+}

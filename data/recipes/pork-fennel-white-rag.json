@@ -1,0 +1,343 @@
+{
+  "recipe": {
+    "id": "pork-fennel-white-rag",
+    "title": "Pork & fennel white rag\u00f9",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Elevate your pasta night with a creamy pork and fennel rag\u00f9. A rich, aromatic sauce paired with handmade pappardelle for a proper Italian-style feast.",
+    "tags": [
+      "beans",
+      "pasta",
+      "butternut-squash",
+      "pork",
+      "italian-style",
+      "pumpkin",
+      "dinner",
+      "budget-friendly",
+      "fennel",
+      "cheese"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/pork-and-fennel-white-ragu",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/76dcb1afef444ae44b566d2b20e8f184d6f21406-2128x3192.jpg/JO_JV_F45_Pork_Fennel_Ragu_1794.jpg?rect=0,532,2128,2128&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/76dcb1afef444ae44b566d2b20e8f184d6f21406-2128x3192.jpg/JO_JV_F45_Pork_Fennel_Ragu_1794.jpg?rect=0,532,2128,2128&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/76dcb1afef444ae44b566d2b20e8f184d6f21406-2128x3192.jpg/JO_JV_F45_Pork_Fennel_Ragu_1794.jpg?rect=0,798,2128,1596&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/76dcb1afef444ae44b566d2b20e8f184d6f21406-2128x3192.jpg/JO_JV_F45_Pork_Fennel_Ragu_1794.jpg?rect=0,998,2128,1197&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "small-pumpkin-or-squash",
+      "name": "small pumpkin or squash",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "700g"
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fennel-seeds",
+      "name": "fennel seeds",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "dried-red-chilli-flakes",
+      "name": "dried red chilli flakes",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "of-a-whole-nutmeg",
+      "name": "\u00bc of a whole nutmeg",
+      "quantity": null,
+      "unit": null,
+      "note": "for grating"
+    },
+    {
+      "id": "minced-pork",
+      "name": "minced pork",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-borlotti-beans",
+      "name": "400g tin of borlotti beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "whole-milk",
+      "name": "whole milk",
+      "quantity": 300.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "italian-hard-cheese",
+      "name": "Italian hard cheese",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "pasta",
+      "name": "PASTA",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": "plus 50g for dusting"
+    },
+    {
+      "id": "free-range-egg",
+      "name": "free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "knife",
+    "pan",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "mash_flesh",
+      "descr": "Carefully cut the ends off the pumpkin, then halve and...",
+      "instructions": "Carefully cut the ends off the pumpkin, then halve and use a spoon to scoop out the seeds (see tip). Microwave on full power (800W) for 10 to 12 minutes, or until soft, then mash the flesh, discarding the skin.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT720S",
+      "next": [
+        "chop_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully cut the ends off the pumpkin, then halve and use a spoon to scoop out the seeds (see tip). Microwave on full power (800W) for 10 to 12 minutes, or until soft, then mash the flesh, discarding the skin."
+        }
+      ]
+    },
+    {
+      "id": "chop_step_2",
+      "descr": "Meanwhile, peel the onion, trim the celery and scrub the...",
+      "instructions": "Meanwhile, peel the onion, trim the celery and scrub the carrot, then finely chop.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mash_flesh"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel the onion, trim the celery and scrub the carrot, then finely chop."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Strip the rosemary leaves, peel the garlic and finely...",
+      "instructions": "Strip the rosemary leaves, peel the garlic and finely chop both. Place a large casserole pan on a medium-high heat with 2 tablespoons of olive oil, then add the rosemary, garlic, fennel seeds, chilli flakes and a generous pinch of black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_step_2"
+      ],
+      "next": [
+        "heat_medium"
+      ],
+      "on_enter": [
+        {
+          "say": "Strip the rosemary leaves, peel the garlic and finely chop both. Place a large casserole pan on a medium-high heat with 2 tablespoons of olive oil, then add the rosemary, garlic, fennel seeds, chilli flakes and a generous pinch of black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_medium",
+      "descr": "Add the chopped veg to the pan, grate in the nutmeg and...",
+      "instructions": "Add the chopped veg to the pan, grate in the nutmeg and season with sea salt, then reduce the heat to medium and cook for 10 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "mix_together"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the chopped veg to the pan, grate in the nutmeg and season with sea salt, then reduce the heat to medium and cook for 10 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "mix_together",
+      "descr": "Meanwhile, make the pasta",
+      "instructions": "Meanwhile, make the pasta. Put 400g of flour in a bowl, make a well in the middle and crack in the egg. Add 200ml of water, then using a fork, whip up with the eggs until smooth. Gradually bring the flour in from the outside and mix together as much as possible. When it becomes too hard to mix, get your clean floured hands in there and bring it together into a ball of dough. Knead on a clean, flour-dusted surface for 1 minute, or until smooth and elastic, then leave to relax.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "heat_medium"
+      ],
+      "next": [
+        "heat_high"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, make the pasta. Put 400g of flour in a bowl, make a well in the middle and crack in the egg. Add 200ml of water, then using a fork, whip up with the eggs until smooth. Gradually bring the flour in from the outside and mix together as much as possible. When it becomes too hard to mix, get your clean floured hands in there and bring it together into a ball of dough. Knead on a clean, flour-dusted surface for 1 minute, or until smooth and elastic, then leave to relax."
+        }
+      ]
+    },
+    {
+      "id": "heat_high",
+      "descr": "Add the pork mince to the pan, breaking it up with a...",
+      "instructions": "Add the pork mince to the pan, breaking it up with a spoon, turn the heat up to high and fry for 2 minutes. Add the pumpkin, stirring to break it up, then go in with the beans (juice and all).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "mix_together"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the pork mince to the pan, breaking it up with a spoon, turn the heat up to high and fry for 2 minutes. Add the pumpkin, stirring to break it up, then go in with the beans (juice and all)."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Pour in the milk, bring to the boil, then reduce the...",
+      "instructions": "Pour in the milk, bring to the boil, then reduce the heat to low and simmer for 45 minutes, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "heat_high"
+      ],
+      "next": [
+        "slice_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the milk, bring to the boil, then reduce the heat to low and simmer for 45 minutes, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "slice_them",
+      "descr": "On a clean, heavily flour-dusted surface, cut the pasta...",
+      "instructions": "On a clean, heavily flour-dusted surface, cut the pasta dough in half, then use a rolling pin to roll both pieces out to about 2mm thick. Roll up the sheets into long sausages, then use a sharp knife to slice them \u00bdcm-thick. Toss it with your hands to separate the strands, shaking off any excess flour.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "drizzle_like"
+      ],
+      "on_enter": [
+        {
+          "say": "On a clean, heavily flour-dusted surface, cut the pasta dough in half, then use a rolling pin to roll both pieces out to about 2mm thick. Roll up the sheets into long sausages, then use a sharp knife to slice them \u00bdcm-thick. Toss it with your hands to separate the strands, shaking off any excess flour."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_like",
+      "descr": "Cook the pasta in a large pan of boiling salted water...",
+      "instructions": "Cook the pasta in a large pan of boiling salted water for 2 to 3 minutes. Using tongs, carefully transfer the pasta to the rag\u00f9, tossing to coat. Grate over most of the cheese, transfer to a nice platter, and finish with plenty of black pepper, the remaining cheese, and a drizzle of oil, if you like.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT180S",
+      "depends_on": [
+        "slice_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta in a large pan of boiling salted water for 2 to 3 minutes. Using tongs, carefully transfer the pasta to the rag\u00f9, tossing to coat. Grate over most of the cheese, transfer to a nice platter, and finish with plenty of black pepper, the remaining cheese, and a drizzle of oil, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "731 calories",
+    "carbohydrates": "108.9 g",
+    "fat": "20.6 g",
+    "fiber": "11.4 g",
+    "protein": "34.4 g"
+  }
+}

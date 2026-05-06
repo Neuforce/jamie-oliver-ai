@@ -1,0 +1,386 @@
+{
+  "recipe": {
+    "id": "homemade-salt-beef",
+    "title": "Homemade salt beef",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT180M",
+    "description": "Succulent and full of flavour, Jamie's homemade salt beef recipe is delicious with bagels, mustard and pickles.",
+    "tags": [
+      "gluten-free",
+      "beef"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/homemade-salt-beef",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7447112d511773b077874d235ec9a883e81516e3-958x1280.jpg/134037717?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7447112d511773b077874d235ec9a883e81516e3-958x1280.jpg/134037717?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7447112d511773b077874d235ec9a883e81516e3-958x1280.jpg/134037717?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7447112d511773b077874d235ec9a883e81516e3-958x1280.jpg/134037717?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "beef-brisket",
+      "name": "beef brisket",
+      "quantity": 1.6,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pink-or-black-peppercorns",
+      "name": "pink or black peppercorns",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "your-favourite-bagels",
+      "name": "your favourite bagels",
+      "quantity": null,
+      "unit": null,
+      "note": "or make your own, to serve"
+    },
+    {
+      "id": "brine",
+      "name": "BRINE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "table-salt",
+      "name": "table salt",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "brown-sugar",
+      "name": "brown sugar",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "optional-30g-preserving-salt",
+      "name": "optional: 30g preserving salt",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "20g"
+    },
+    {
+      "id": "mustard-seeds",
+      "name": "mustard seeds",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "red-peppercorns",
+      "name": "red peppercorns",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "tablespoon-allspice",
+      "name": "\u00bd tablespoon allspice",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "2-cloves",
+      "name": "2 cloves",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "mustard",
+      "name": "MUSTARD",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-english-musta",
+      "name": "heaped teaspoons English mustard powder",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "vinegar",
+      "name": "vinegar",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "pickles",
+      "name": "PICKLES",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-gherkins",
+      "name": "large gherkins",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-dill",
+      "name": "fresh dill",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "20g"
+    },
+    {
+      "id": "mixed-colour-chillies",
+      "name": "mixed-colour chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "knife",
+    "pan",
+    "saucepan",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "heat_litres",
+      "descr": "At least 2 days \u2013 but ideally up to a week \u2013 before you...",
+      "instructions": "At least 2 days \u2013 but ideally up to a week \u2013 before you would like to serve the salt beef, make a start on the brine. Place all the brine ingredients in a large pan on a medium heat. Pour in 2 litres of cold water and bring to boil, then reduce to a simmer for 5 minutes until the salt has dissolved. Set aside and allow to cool completely.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "pour_cooled"
+      ],
+      "on_enter": [
+        {
+          "say": "At least 2 days \u2013 but ideally up to a week \u2013 before you would like to serve the salt beef, make a start on the brine. Place all the brine ingredients in a large pan on a medium heat. Pour in 2 litres of cold water and bring to boil, then reduce to a simmer for 5 minutes until the salt has dissolved. Set aside and allow to cool completely."
+        }
+      ]
+    },
+    {
+      "id": "pour_cooled",
+      "descr": "Meanwhile, remove the sinew and thick layer of fat from...",
+      "instructions": "Meanwhile, remove the sinew and thick layer of fat from the meat, leaving a little behind for bonus flavour. Pierce the meat with a small sharp knife or skewer all over on both sides and place in a non-metallic sealable container. Pour the cooled brine over the brisket, then seal and store in the fridge for 5 to 7 days, turning the brisket over each day.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_litres"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, remove the sinew and thick layer of fat from the meat, leaving a little behind for bonus flavour. Pierce the meat with a small sharp knife or skewer all over on both sides and place in a non-metallic sealable container. Pour the cooled brine over the brisket, then seal and store in the fridge for 5 to 7 days, turning the brisket over each day."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "When the brining time is up, remove the brisket from the...",
+      "instructions": "When the brining time is up, remove the brisket from the container and soak in cold water for 10 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "pour_cooled"
+      ],
+      "next": [
+        "rinse_brisket"
+      ],
+      "on_enter": [
+        {
+          "say": "When the brining time is up, remove the brisket from the container and soak in cold water for 10 minutes."
+        }
+      ]
+    },
+    {
+      "id": "rinse_brisket",
+      "descr": "Rinse the brisket well, then place in a large saucepan...",
+      "instructions": "Rinse the brisket well, then place in a large saucepan and cover with fresh cold water, until the beef is submerged.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "add_peppercorns"
+      ],
+      "on_enter": [
+        {
+          "say": "Rinse the brisket well, then place in a large saucepan and cover with fresh cold water, until the beef is submerged."
+        }
+      ]
+    },
+    {
+      "id": "add_peppercorns",
+      "descr": "Peel and quarter the onions, then add to the pan with...",
+      "instructions": "Peel and quarter the onions, then add to the pan with the bay and peppercorns.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rinse_brisket"
+      ],
+      "next": [
+        "heat_hours"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and quarter the onions, then add to the pan with the bay and peppercorns."
+        }
+      ]
+    },
+    {
+      "id": "heat_hours",
+      "descr": "Bring to the boil, then reduce to a low heat and simmer...",
+      "instructions": "Bring to the boil, then reduce to a low heat and simmer for 2\u00bd hours to 3 hours, or until the brisket is tender.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT10800S",
+      "depends_on": [
+        "add_peppercorns"
+      ],
+      "next": [
+        "mix_mustard"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, then reduce to a low heat and simmer for 2\u00bd hours to 3 hours, or until the brisket is tender."
+        }
+      ]
+    },
+    {
+      "id": "mix_mustard",
+      "descr": "Meanwhile, mix all the mustard ingredients together in a...",
+      "instructions": "Meanwhile, mix all the mustard ingredients together in a small bowl and season with a good pinch of sea salt and black pepper. Loosen with a drop more vinegar, if it looks a little thick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_hours"
+      ],
+      "next": [
+        "slice_gherkins"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, mix all the mustard ingredients together in a small bowl and season with a good pinch of sea salt and black pepper. Loosen with a drop more vinegar, if it looks a little thick."
+        }
+      ]
+    },
+    {
+      "id": "slice_gherkins",
+      "descr": "Slice up the gherkins and place them in a small bowl",
+      "instructions": "Slice up the gherkins and place them in a small bowl. Dress them with a couple of tablespoons of their pickling liquor and pick over the dill fronds. Finely slice the chillies \u2013 deseed if you prefer \u2013 then add to the bowl and mix together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_mustard"
+      ],
+      "next": [
+        "slice_what"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice up the gherkins and place them in a small bowl. Dress them with a couple of tablespoons of their pickling liquor and pick over the dill fronds. Finely slice the chillies \u2013 deseed if you prefer \u2013 then add to the bowl and mix together."
+        }
+      ]
+    },
+    {
+      "id": "slice_what",
+      "descr": "Carefully remove the brisket to a board and thinly slice...",
+      "instructions": "Carefully remove the brisket to a board and thinly slice off what you need. (You can keep the rest of the meat in the liquor to stop it drying out.)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_gherkins"
+      ],
+      "next": [
+        "slice_tender"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully remove the brisket to a board and thinly slice off what you need. (You can keep the rest of the meat in the liquor to stop it drying out.)"
+        }
+      ]
+    },
+    {
+      "id": "slice_tender",
+      "descr": "To serve, split your bagels and spread a dollop of...",
+      "instructions": "To serve, split your bagels and spread a dollop of mustard on the base. Load up the pickles and pile on slices of the tender salt beef. Top with the bagel lid and tuck in!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_what"
+      ],
+      "on_enter": [
+        {
+          "say": "To serve, split your bagels and spread a dollop of mustard on the base. Load up the pickles and pile on slices of the tender salt beef. Top with the bagel lid and tuck in!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "367 calories",
+    "carbohydrates": "4.2 g",
+    "fat": "25.8 g",
+    "fiber": "1 g",
+    "protein": "30 g"
+  }
+}

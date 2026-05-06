@@ -1,0 +1,366 @@
+{
+  "recipe": {
+    "id": "vegetarian-chilli",
+    "title": "Vegetarian chilli",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "This vegetarian chilli recipe from Jamie Oliver is packed with flavour. Vegetarian chilli is the perfect winter comfort food. Serve with rice, guacamole & lime!",
+    "tags": [
+      "vegan",
+      "dish-type",
+      "healthy-vegetarian-recipes",
+      "low-lactose",
+      "gluten-free",
+      "vegetables",
+      "course",
+      "episode-1",
+      "sweet-potato",
+      "mains",
+      "tv-shows",
+      "keep-cooking-vegetarian",
+      "occasion",
+      "keep-cooking-and-carry-on",
+      "healthy-lunch-ideas",
+      "student-recipes",
+      "vegetarian",
+      "method",
+      "healthy-meals",
+      "main-ingredient",
+      "tv",
+      "healthy-lunchbox",
+      "chilli",
+      "cheap-amp-cheerful",
+      "healthy-dinner-ideas"
+    ],
+    "course": "dessert",
+    "cuisine": "mexican",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/veggie-chilli",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/64b8e194df77df77423ae552d8bb2e19f49c52fa-958x1280.jpg/107276751?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/64b8e194df77df77423ae552d8bb2e19f49c52fa-958x1280.jpg/107276751?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/64b8e194df77df77423ae552d8bb2e19f49c52fa-958x1280.jpg/107276751?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/64b8e194df77df77423ae552d8bb2e19f49c52fa-958x1280.jpg/107276751?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "sweet-potatoes",
+      "name": "sweet potatoes",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "level-teaspoon-cayenne-pepper",
+      "name": "level teaspoon cayenne pepper",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "plus extra for sprinkling"
+    },
+    {
+      "id": "heaped-teaspoon-ground-cumin",
+      "name": "heaped teaspoon ground cumin",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "plus extra for sprinkling"
+    },
+    {
+      "id": "level-teaspoon-ground-cinnamon",
+      "name": "level teaspoon ground cinnamon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "plus extra for sprinkling"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-colour-peppers",
+      "name": "mixed-colour peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "fresh-coriander",
+      "name": "fresh coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "fresh-mixed-colour-chillies",
+      "name": "fresh mixed-colour chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-beans",
+      "name": "400g tins of beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": "such as kidney, chickpea, pinto, cannellini"
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lime-or-lemon-juice",
+      "name": "lime or lemon juice",
+      "quantity": null,
+      "unit": null,
+      "note": "or vinegar, to taste"
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_sweet"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "chop_sweet",
+      "descr": "Peel and chop the sweet potatoes into bite-sized chunks,...",
+      "instructions": "Peel and chop the sweet potatoes into bite-sized chunks, then place onto a baking tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "drizzle_toss"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and chop the sweet potatoes into bite-sized chunks, then place onto a baking tray."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_toss",
+      "descr": "Sprinkle with a pinch each of cayenne, cumin, cinnamon,...",
+      "instructions": "Sprinkle with a pinch each of cayenne, cumin, cinnamon, sea salt and black pepper, drizzle with oil then toss to coat. Roast for 45 minutes to 1 hour, or until golden and tender.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "chop_sweet"
+      ],
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle with a pinch each of cayenne, cumin, cinnamon, sea salt and black pepper, drizzle with oil then toss to coat. Roast for 45 minutes to 1 hour, or until golden and tender."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "Peel and roughly chop the onion",
+      "instructions": "Peel and roughly chop the onion. Halve, deseed and roughly chop the peppers, then peel and finely slice the garlic.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_toss"
+      ],
+      "next": [
+        "chop_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and roughly chop the onion. Halve, deseed and roughly chop the peppers, then peel and finely slice the garlic."
+        }
+      ]
+    },
+    {
+      "id": "chop_ping",
+      "descr": "Pick the coriander leaves, finely chopping the stalks",
+      "instructions": "Pick the coriander leaves, finely chopping the stalks. Deseed and finely chop the chillies.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "heat_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick the coriander leaves, finely chopping the stalks. Deseed and finely chop the chillies."
+        }
+      ]
+    },
+    {
+      "id": "heat_onion",
+      "descr": "Meanwhile, put 2 tablespoons of oil in a large pan over...",
+      "instructions": "Meanwhile, put 2 tablespoons of oil in a large pan over a medium-high heat, then add the onion, peppers and garlic, and cook for 5 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, put 2 tablespoons of oil in a large pan over a medium-high heat, then add the onion, peppers and garlic, and cook for 5 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Add the coriander stalks, chillies and spices, and cook...",
+      "instructions": "Add the coriander stalks, chillies and spices, and cook for a further 5 to 10 minutes, or until softened and starting to caramelise, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_onion"
+      ],
+      "next": [
+        "stir_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the coriander stalks, chillies and spices, and cook for a further 5 to 10 minutes, or until softened and starting to caramelise, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "stir_well",
+      "descr": "Add the beans, juice and all",
+      "instructions": "Add the beans, juice and all. Tip in the tomatoes, breaking them up with the back of a spoon, then stir well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "heat_medium"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the beans, juice and all. Tip in the tomatoes, breaking them up with the back of a spoon, then stir well."
+        }
+      ]
+    },
+    {
+      "id": "heat_medium",
+      "descr": "Bring to the boil, then reduce the heat to medium-low...",
+      "instructions": "Bring to the boil, then reduce the heat to medium-low and leave to tick away for 25 to 30 minutes, or until thickened and reduced \u2013 keep an eye on it, and add a splash of water to loosen, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "stir_well"
+      ],
+      "next": [
+        "stir_roasted"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, then reduce the heat to medium-low and leave to tick away for 25 to 30 minutes, or until thickened and reduced \u2013 keep an eye on it, and add a splash of water to loosen, if needed."
+        }
+      ]
+    },
+    {
+      "id": "stir_roasted",
+      "descr": "Stir the roasted sweet potato through the chilli with...",
+      "instructions": "Stir the roasted sweet potato through the chilli with most of the coriander leaves, then taste and adjust the seasoning, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_medium"
+      ],
+      "next": [
+        "serve_yoghurt"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the roasted sweet potato through the chilli with most of the coriander leaves, then taste and adjust the seasoning, if needed."
+        }
+      ]
+    },
+    {
+      "id": "serve_yoghurt",
+      "descr": "Finish with a squeeze of lime or lemon juice or a swig...",
+      "instructions": "Finish with a squeeze of lime or lemon juice or a swig of vinegar, to taste, then scatter over the remaining coriander. Delicious served with yoghurt or soured cream, guacamole and rice, or tortilla chips.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_roasted"
+      ],
+      "on_enter": [
+        {
+          "say": "Finish with a squeeze of lime or lemon juice or a swig of vinegar, to taste, then scatter over the remaining coriander. Delicious served with yoghurt or soured cream, guacamole and rice, or tortilla chips."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "369 calories",
+    "carbohydrates": "58.3 g",
+    "fat": "10.1 g",
+    "fiber": "12.9 g",
+    "protein": "21.5 g"
+  }
+}

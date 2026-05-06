@@ -1,0 +1,261 @@
+{
+  "recipe": {
+    "id": "crumbliest-scones",
+    "title": "Crumbliest scones",
+    "servings": 16,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT35M",
+    "description": "This is the best fruit scone recipe if you want to learn how to make scones from scratch. From Jamie Oliver's book, Jamie's Great Britain. Just add jam!",
+    "tags": [
+      "desserts",
+      "father-s-day",
+      "dish-type",
+      "fruit-cakes",
+      "st-george-s-day",
+      "quick-fixes",
+      "family-baking-recipes",
+      "course",
+      "cake",
+      "easter-treats",
+      "occasion",
+      "beautiful-baking-recipes",
+      "freezer-friendly-recipes",
+      "vegetarian",
+      "method",
+      "scones",
+      "afternoon-tea",
+      "main-ingredient",
+      "wimbledon",
+      "party-food",
+      "baking",
+      "mother-s-day",
+      "prep-amp-go-recipes",
+      "fruit",
+      "cheap-amp-cheerful"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/crumbliest-scones",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7a753c9a7265b82cf2a7a10a55de2bbe24592060-973x1300.jpg/7a753c9a7265b82cf2a7a10a55de2bbe24592060-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7a753c9a7265b82cf2a7a10a55de2bbe24592060-973x1300.jpg/7a753c9a7265b82cf2a7a10a55de2bbe24592060-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7a753c9a7265b82cf2a7a10a55de2bbe24592060-973x1300.jpg/7a753c9a7265b82cf2a7a10a55de2bbe24592060-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7a753c9a7265b82cf2a7a10a55de2bbe24592060-973x1300.jpg/7a753c9a7265b82cf2a7a10a55de2bbe24592060-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-fruit",
+      "name": "dried fruit",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": "such as sour cherries, raisins, sultanas, chopped sour apricots, blueberries, or a mixture"
+    },
+    {
+      "id": "orange-juice",
+      "name": "orange juice",
+      "quantity": null,
+      "unit": null,
+      "note": "for soaking"
+    },
+    {
+      "id": "cold-unsalted-butter",
+      "name": "cold unsalted butter",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "plus a little extra for dusting"
+    },
+    {
+      "id": "level-teaspoons-baking-powder",
+      "name": "level teaspoons baking powder",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-golden-caster",
+      "name": "heaped teaspoons golden caster sugar",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-eggs",
+      "name": "large eggs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": "plus a little extra for brushing"
+    },
+    {
+      "id": "optional-jersey-clotted-cream",
+      "name": "optional: Jersey clotted cream",
+      "quantity": null,
+      "unit": null,
+      "note": "good-quality jam or lemon curd, to serve"
+    }
+  ],
+  "utensils": [
+    "baking sheet",
+    "bowl",
+    "mixing bowl",
+    "oven",
+    "spatula"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "First and foremost, brilliant scones are about having...",
+      "instructions": "First and foremost, brilliant scones are about having the confidence to do as little as possible, so do what I say and they\u2019ll be really great; and the second and third time you make them you'll get the dough into a solid mass even quicker, even better.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "First and foremost, brilliant scones are about having the confidence to do as little as possible, so do what I say and they\u2019ll be really great; and the second and third time you make them you'll get the dough into a solid mass even quicker, even better."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Put the dried fruit into a bowl and pour over just...",
+      "instructions": "Put the dried fruit into a bowl and pour over just enough orange juice to cover. Ideally, leave it for a couple of hours. Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "mix_bowl"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the dried fruit into a bowl and pour over just enough orange juice to cover. Ideally, leave it for a couple of hours. Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "mix_bowl",
+      "descr": "Put your butter, flour, baking powder, sugar and a good...",
+      "instructions": "Put your butter, flour, baking powder, sugar and a good pinch of sea salt into a mixing bowl and use your thumbs and forefingers to break up the butter and rub it into the flour so you get little cornflake-sized pieces. Make a well in the middle of the dough, add the eggs and milk, and stir it up with a spatula.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Put your butter, flour, baking powder, sugar and a good pinch of sea salt into a mixing bowl and use your thumbs and forefingers to break up the butter and rub it into the flour so you get little cornflake-sized pieces. Make a well in the middle of the dough, add the eggs and milk, and stir it up with a spatula."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Drain your soaked fruit and add that to the mixture",
+      "instructions": "Drain your soaked fruit and add that to the mixture. Add a tiny splash of milk if needed, until you have a soft, dry dough. Move it around as little as possible to get it looking like a scruffy mass \u2013 at this point, you\u2019re done. Sprinkle over some flour, cover the bowl with clingfilm and pop it into the fridge for 15 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "roll_dough"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain your soaked fruit and add that to the mixture. Add a tiny splash of milk if needed, until you have a soft, dry dough. Move it around as little as possible to get it looking like a scruffy mass \u2013 at this point, you\u2019re done. Sprinkle over some flour, cover the bowl with clingfilm and pop it into the fridge for 15 minutes."
+        }
+      ]
+    },
+    {
+      "id": "roll_dough",
+      "descr": "Roll the dough out on a lightly floured surface until...",
+      "instructions": "Roll the dough out on a lightly floured surface until it\u2019s about 2 to 3cm thick. With a 6cm round cutter or the rim of a glass, cut out circles from the dough and place them upside down on a baking sheet \u2013 they will rise better that way (so they say). Re-roll any offcuts to use up the dough.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "bake_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Roll the dough out on a lightly floured surface until it\u2019s about 2 to 3cm thick. With a 6cm round cutter or the rim of a glass, cut out circles from the dough and place them upside down on a baking sheet \u2013 they will rise better that way (so they say). Re-roll any offcuts to use up the dough."
+        }
+      ]
+    },
+    {
+      "id": "bake_oven",
+      "descr": "Brush the top of each scone with the extra milk or some...",
+      "instructions": "Brush the top of each scone with the extra milk or some melted butter and bake in the oven for 12 to 15 minutes, or until risen and golden. At that point, take them out of the oven and leave them to cool down a little.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "roll_dough"
+      ],
+      "next": [
+        "serve_clotted"
+      ],
+      "on_enter": [
+        {
+          "say": "Brush the top of each scone with the extra milk or some melted butter and bake in the oven for 12 to 15 minutes, or until risen and golden. At that point, take them out of the oven and leave them to cool down a little."
+        }
+      ]
+    },
+    {
+      "id": "serve_clotted",
+      "descr": "Serve with clotted cream and a little jam or lemon curd",
+      "instructions": "Serve with clotted cream and a little jam or lemon curd.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "bake_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with clotted cream and a little jam or lemon curd."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "219 calories",
+    "carbohydrates": "32.1 g",
+    "fat": "9.1 g",
+    "fiber": "1.3 g",
+    "protein": "4.2 g"
+  }
+}

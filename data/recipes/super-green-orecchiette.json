@@ -1,0 +1,225 @@
+{
+  "recipe": {
+    "id": "super-green-orecchiette",
+    "title": "Super-green orecchiette",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT24M",
+    "description": "This delicious super-green orecchiette is incredibly tasty, nutritious and easy to make - it includes 3 of your 7-a-day!",
+    "tags": [
+      "pasta",
+      "vegetarian",
+      "family-favourites",
+      "broccoli",
+      "dinner",
+      "halloween",
+      "spinach",
+      "cheese"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/super-green-orecchiette",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ee7644e66db2265ed62fe0829f098743d30c4dee-969x1279.jpg/163881230?rect=0,156,969,969&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ee7644e66db2265ed62fe0829f098743d30c4dee-969x1279.jpg/163881230?rect=0,156,969,969&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ee7644e66db2265ed62fe0829f098743d30c4dee-969x1279.jpg/163881230?rect=0,277,969,727&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ee7644e66db2265ed62fe0829f098743d30c4dee-969x1279.jpg/163881230?rect=0,368,969,545&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "rosemary-focaccia",
+      "name": "rosemary focaccia",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "head-of-broccoli",
+      "name": "head of broccoli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-red-chilli-flakes",
+      "name": "dried red chilli flakes",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-orecchiette",
+      "name": "dried orecchiette",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cottage-cheese",
+      "name": "cottage cheese",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "pan",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "heat_golden",
+      "descr": "Boil the kettle",
+      "instructions": "Boil the kettle. In a blender, blitz the focaccia with a spritz of olive oil and a pinch of sea salt into fine crumbs, then toast in a large deep pan over a high heat until golden, stirring regularly. Tip into a bowl, then return the pan to the heat and half-fill with boiling salted water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_stalk"
+      ],
+      "on_enter": [
+        {
+          "say": "Boil the kettle. In a blender, blitz the focaccia with a spritz of olive oil and a pinch of sea salt into fine crumbs, then toast in a large deep pan over a high heat until golden, stirring regularly. Tip into a bowl, then return the pan to the heat and half-fill with boiling salted water."
+        }
+      ]
+    },
+    {
+      "id": "chop_stalk",
+      "descr": "Peel the garlic cloves and add to the water",
+      "instructions": "Peel the garlic cloves and add to the water. Cut small bite-size broccoli florets off the stalk and set aside, then trim and roughly chop the stalk and add to the water. Boil for 5 minutes, adding the spinach for the final minute.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_golden"
+      ],
+      "next": [
+        "add_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the garlic cloves and add to the water. Cut small bite-size broccoli florets off the stalk and set aside, then trim and roughly chop the stalk and add to the water. Boil for 5 minutes, adding the spinach for the final minute."
+        }
+      ]
+    },
+    {
+      "id": "add_pinch",
+      "descr": "Use tongs or a slotted spoon to put the broccoli stalks,...",
+      "instructions": "Use tongs or a slotted spoon to put the broccoli stalks, spinach and garlic in the blender, gently shaking off excess water. Finely grate in the Parmesan, squeeze in the lemon juice, add a pinch of chilli flakes and 2 tablespoons of oil, blitz until smooth and season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_stalk"
+      ],
+      "next": [
+        "add_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Use tongs or a slotted spoon to put the broccoli stalks, spinach and garlic in the blender, gently shaking off excess water. Finely grate in the Parmesan, squeeze in the lemon juice, add a pinch of chilli flakes and 2 tablespoons of oil, blitz until smooth and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "add_broccoli",
+      "descr": "Cook the pasta in the pan of boiling salted water...",
+      "instructions": "Cook the pasta in the pan of boiling salted water according to the packet instructions, topping up the water, if needed, and adding the broccoli florets and peas for the last 2 minutes, or until just tender. Drain it all, reserving a mugful of starchy cooking water, then toss with the green sauce, loosening with a little reserved water, if needed, and divide between serving bowls.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "add_pinch"
+      ],
+      "next": [
+        "drizzle_extra"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta in the pan of boiling salted water according to the packet instructions, topping up the water, if needed, and adding the broccoli florets and peas for the last 2 minutes, or until just tender. Drain it all, reserving a mugful of starchy cooking water, then toss with the green sauce, loosening with a little reserved water, if needed, and divide between serving bowls."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_extra",
+      "descr": "Spoon over the cottage cheese, and sprinkle over a pinch...",
+      "instructions": "Spoon over the cottage cheese, and sprinkle over a pinch of chilli flakes and the crispy crumbs. Finish with a drizzle of extra virgin olive oil, if you like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon over the cottage cheese, and sprinkle over a pinch of chilli flakes and the crispy crumbs. Finish with a drizzle of extra virgin olive oil, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "547 calories",
+    "carbohydrates": "76.3 g",
+    "fat": "16 g",
+    "fiber": "11.4 g",
+    "protein": "28.4 g"
+  }
+}

@@ -1,0 +1,329 @@
+{
+  "recipe": {
+    "id": "ridiculously-good-oxtail-stew",
+    "title": "Ridiculously good oxtail stew",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT360M",
+    "description": "This epic oxtail stew recipe from Jamie Oliver shows you how to cook oxtails from scratch. It's a super-delicious cut of meat that just needs a bit of TLC.",
+    "tags": [
+      "dinner-party",
+      "slow-cooker",
+      "father-s-day",
+      "dish-type",
+      "bonfire-night-recipes",
+      "st-george-s-day",
+      "low-lactose",
+      "stewing",
+      "course",
+      "mains",
+      "tomato",
+      "occasion",
+      "sunday-lunch",
+      "method",
+      "beef",
+      "carrots",
+      "one-pan-recipes",
+      "leeks",
+      "stew",
+      "main-ingredient",
+      "winter-warmers"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/insanely-good-oxtail-stew",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b8e44f3d433eec98c7796a889ef06362a79f797e-973x1300.jpg/b8e44f3d433eec98c7796a889ef06362a79f797e-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b8e44f3d433eec98c7796a889ef06362a79f797e-973x1300.jpg/b8e44f3d433eec98c7796a889ef06362a79f797e-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b8e44f3d433eec98c7796a889ef06362a79f797e-973x1300.jpg/b8e44f3d433eec98c7796a889ef06362a79f797e-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b8e44f3d433eec98c7796a889ef06362a79f797e-973x1300.jpg/b8e44f3d433eec98c7796a889ef06362a79f797e-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "oxtail",
+      "name": "oxtail",
+      "quantity": 2.5,
+      "unit": "kg",
+      "note": "ask your butcher to do this, chopped into 4cm chunks"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "medium-leeks",
+      "name": "medium leeks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "medium-carrots",
+      "name": "medium carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-thyme",
+      "name": "a few sprigs of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-rosemary",
+      "name": "a few sprigs of fresh rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "4-cloves",
+      "name": "4 cloves",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-plain-flour",
+      "name": "heaped tablespoons plain flour",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "porter-or-red-wine",
+      "name": "porter or red wine",
+      "quantity": 275.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "optional-1-litre-organic-beef-",
+      "name": "optional: 1 litre organic beef stock",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "worcestershire-sauce",
+      "name": "Worcestershire sauce",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 220\u00baC/425\u00baF/gas 7",
+      "instructions": "Preheat the oven to 220\u00baC/425\u00baF/gas 7. Place a large roasting tray in the oven to preheat.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_oxtail"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 220\u00baC/425\u00baF/gas 7. Place a large roasting tray in the oven to preheat."
+        }
+      ]
+    },
+    {
+      "id": "add_oxtail",
+      "descr": "Carefully remove the hot tray from the oven, then add...",
+      "instructions": "Carefully remove the hot tray from the oven, then add the oxtail. Season and drizzle over a lug of olive oil, then toss to coat and place in the hot oven for around 20 minutes, or until golden and caramelized.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully remove the hot tray from the oven, then add the oxtail. Season and drizzle over a lug of olive oil, then toss to coat and place in the hot oven for around 20 minutes, or until golden and caramelized."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Meanwhile, trim and halve the leeks and celery...",
+      "instructions": "Meanwhile, trim and halve the leeks and celery lengthways, then chop into rough 2cm chunks. Peel and chop the carrots into 2cm pieces, then place into a large ovenproof casserole pan over a medium-low heat with 1 tablespoon of olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_oxtail"
+      ],
+      "next": [
+        "chop_thyme"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, trim and halve the leeks and celery lengthways, then chop into rough 2cm chunks. Peel and chop the carrots into 2cm pieces, then place into a large ovenproof casserole pan over a medium-low heat with 1 tablespoon of olive oil."
+        }
+      ]
+    },
+    {
+      "id": "chop_thyme",
+      "descr": "Pick, roughly chop and add the thyme and rosemary...",
+      "instructions": "Pick, roughly chop and add the thyme and rosemary leaves, then add the bay and cook for around 20 minutes, or until soft and sweet, stirring frequently.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick, roughly chop and add the thyme and rosemary leaves, then add the bay and cook for around 20 minutes, or until soft and sweet, stirring frequently."
+        }
+      ]
+    },
+    {
+      "id": "step_step_5",
+      "descr": "Meanwhile, remove the oxtail from the oven and set aside",
+      "instructions": "Meanwhile, remove the oxtail from the oven and set aside. Reduce the oven temperature to 170\u00baC/325\u00baF/gas 3.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_thyme"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, remove the oxtail from the oven and set aside. Reduce the oven temperature to 170\u00baC/325\u00baF/gas 3."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Add the cloves and flour to the veg, stirring well to...",
+      "instructions": "Add the cloves and flour to the veg, stirring well to combine, then pour in the tomatoes and porter (or wine, if using). Add the oxtail and any roasting juices, cover with the beef stock or 1 litre of cold water and stir well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_5"
+      ],
+      "next": [
+        "heat_high"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the cloves and flour to the veg, stirring well to combine, then pour in the tomatoes and porter (or wine, if using). Add the oxtail and any roasting juices, cover with the beef stock or 1 litre of cold water and stir well."
+        }
+      ]
+    },
+    {
+      "id": "heat_high",
+      "descr": "Turn the heat up to high and bring to the boil, then pop...",
+      "instructions": "Turn the heat up to high and bring to the boil, then pop the lid on and place in the hot oven for around 5 hours, or until the meat falls away from the bone, stirring every hour or so and adding a splash of water to loosen, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT18000S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "cool_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Turn the heat up to high and bring to the boil, then pop the lid on and place in the hot oven for around 5 hours, or until the meat falls away from the bone, stirring every hour or so and adding a splash of water to loosen, if needed."
+        }
+      ]
+    },
+    {
+      "id": "cool_minutes",
+      "descr": "Remove the pan from the oven and leave to cool for about...",
+      "instructions": "Remove the pan from the oven and leave to cool for about 10 minutes. Using rubber gloves, strip the meat from the bones and return to the pan, discarding the bones.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_high"
+      ],
+      "next": [
+        "add_good"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pan from the oven and leave to cool for about 10 minutes. Using rubber gloves, strip the meat from the bones and return to the pan, discarding the bones."
+        }
+      ]
+    },
+    {
+      "id": "add_good",
+      "descr": "Add a good splash of Worcestershire sauce, season to...",
+      "instructions": "Add a good splash of Worcestershire sauce, season to taste and enjoy with creamy mash and seasonal steamed greens.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "cool_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Add a good splash of Worcestershire sauce, season to taste and enjoy with creamy mash and seasonal steamed greens."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "523 calories",
+    "carbohydrates": "12 g",
+    "fat": "38 g",
+    "fiber": "2.6 g",
+    "protein": "28.4 g"
+  }
+}

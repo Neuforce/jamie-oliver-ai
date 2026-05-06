@@ -1,0 +1,217 @@
+{
+  "recipe": {
+    "id": "easy-potato-dauphinoise",
+    "title": "Easy potato dauphinoise",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "Potato dauphinoise doesn't need to be a labour of love \u2013 this easy version is on the table in just 30 minutes.",
+    "tags": [
+      "roast",
+      "christmas",
+      "thanksgiving",
+      "christmas-dinner",
+      "vegetable-sides",
+      "roast-potatoes",
+      "dish-type",
+      "easy-christmas",
+      "sides",
+      "sides-and-sauces",
+      "spuds-and-sides",
+      "potato",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/potato/easy-potato-dauphinoise",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/48c9a079d8ae95ad210448b042fbfbab760a5911-958x1280.jpg/48c9a079d8ae95ad210448b042fbfbab760a5911-958x1280.jpg?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/48c9a079d8ae95ad210448b042fbfbab760a5911-958x1280.jpg/48c9a079d8ae95ad210448b042fbfbab760a5911-958x1280.jpg?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/48c9a079d8ae95ad210448b042fbfbab760a5911-958x1280.jpg/48c9a079d8ae95ad210448b042fbfbab760a5911-958x1280.jpg?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/48c9a079d8ae95ad210448b042fbfbab760a5911-958x1280.jpg/48c9a079d8ae95ad210448b042fbfbab760a5911-958x1280.jpg?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "potato"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "maris-piper-potatoes",
+      "name": "Maris Piper potatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "300ml-tub-of-single-cream",
+      "name": "300ml tub of single cream",
+      "quantity": 300.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "anchovies-in-oil",
+      "name": "anchovies in oil",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "optional, from sustainable sources"
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-rosemary",
+      "name": "\u00bd a bunch of fresh rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": "10g, thyme or sage"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "knife",
+    "oven",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "slice_potatoes",
+      "descr": "Peel and halve the onion",
+      "instructions": "Peel and halve the onion. Wash and finely slice the potatoes, then very finely slice with the onion using patient knife skills, on a mandolin (use the guard!) or in a food processor.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "pour_single"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and halve the onion. Wash and finely slice the potatoes, then very finely slice with the onion using patient knife skills, on a mandolin (use the guard!) or in a food processor."
+        }
+      ]
+    },
+    {
+      "id": "pour_single",
+      "descr": "Tip the potatoes and onion into a large sturdy roasting...",
+      "instructions": "Tip the potatoes and onion into a large sturdy roasting tray and season with a pinch of sea salt and black pepper. Grate over a few scrapings of nutmeg and crush in the unpeeled garlic cloves and pour in the single cream.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_potatoes"
+      ],
+      "next": [
+        "heat_boiling"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the potatoes and onion into a large sturdy roasting tray and season with a pinch of sea salt and black pepper. Grate over a few scrapings of nutmeg and crush in the unpeeled garlic cloves and pour in the single cream."
+        }
+      ]
+    },
+    {
+      "id": "heat_boiling",
+      "descr": "Tear in the anchovies (if using) and finely grate over...",
+      "instructions": "Tear in the anchovies (if using) and finely grate over most of the Parmesan. Add the bay leaves, pick in the herbs and add 2 tablespoons of olive oil. Use your clean hands to mix and toss everything together, then put the tray over a medium heat. Pour in 300ml of boiling kettle water, cover tightly with tin foil and leave on the heat for 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "pour_single"
+      ],
+      "next": [
+        "drizzle_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear in the anchovies (if using) and finely grate over most of the Parmesan. Add the bay leaves, pick in the herbs and add 2 tablespoons of olive oil. Use your clean hands to mix and toss everything together, then put the tray over a medium heat. Pour in 300ml of boiling kettle water, cover tightly with tin foil and leave on the heat for 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_remaining",
+      "descr": "Remove the tin foil",
+      "instructions": "Remove the tin foil. Finely grate over the remaining Parmesan. Drizzle the remaining thyme sprigs with oil, scatter on top and put into the oven on the top shelf to cook for 30 minutes, or until golden brown and bubbling.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "heat_boiling"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the tin foil. Finely grate over the remaining Parmesan. Drizzle the remaining thyme sprigs with oil, scatter on top and put into the oven on the top shelf to cook for 30 minutes, or until golden brown and bubbling."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "330 calories",
+    "carbohydrates": "32.7 g",
+    "fat": "18.4 g",
+    "fiber": "2.9 g",
+    "protein": "10.4 g"
+  }
+}

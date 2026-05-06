@@ -1,0 +1,200 @@
+{
+  "recipe": {
+    "id": "chicken-mushroom-hotpot",
+    "title": "Chicken & mushroom hotpot",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "This one-pan shortcut hotpot is packed full of veg \u2013 it contains 5 portions of your 7-a-day!",
+    "tags": [
+      "one-pan",
+      "chicken",
+      "healthy",
+      "healthy-dinners",
+      "healthy-chicken",
+      "chicken-thigh",
+      "dinner",
+      "mushroom",
+      "pie",
+      "bonfire-night"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-and-mushroom-hotpot",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e0dc7b7234b70eac201578218c9b2e32806df7c1-1012x1279.jpg/163194089?rect=0,134,1012,1012&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e0dc7b7234b70eac201578218c9b2e32806df7c1-1012x1279.jpg/163194089?rect=0,134,1012,1012&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e0dc7b7234b70eac201578218c9b2e32806df7c1-1012x1279.jpg/163194089?rect=0,261,1012,759&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e0dc7b7234b70eac201578218c9b2e32806df7c1-1012x1279.jpg/163194089?rect=0,356,1012,569&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-free-range-chicken-thigh",
+      "name": "large free-range chicken thighs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "skin on, bone in"
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "large-carrots",
+      "name": "large carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "a-bunch-of-thyme",
+      "name": "\u00bd a bunch of thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "10g"
+    },
+    {
+      "id": "chestnut-mushrooms",
+      "name": "chestnut mushrooms",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "295g-tin-of-condensed-mushroom",
+      "name": "295g tin of condensed mushroom soup",
+      "quantity": 295.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 600.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "frozen-sweetcorn",
+      "name": "frozen sweetcorn",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "570g-jar-of-cannellini-beans",
+      "name": "570g jar of cannellini beans",
+      "quantity": 570.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-bags-of-potato-gnocchi",
+      "name": "400g bags of potato gnocchi",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_pull",
+      "descr": "Put a large shallow non-stick casserole pan on a...",
+      "instructions": "Put a large shallow non-stick casserole pan on a medium-high heat. Pull the skin off the chicken thighs and place it in the pan to render.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_chunks"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large shallow non-stick casserole pan on a medium-high heat. Pull the skin off the chicken thighs and place it in the pan to render."
+        }
+      ]
+    },
+    {
+      "id": "chop_chunks",
+      "descr": "Season the thighs with a small pinch of sea salt and...",
+      "instructions": "Season the thighs with a small pinch of sea salt and black pepper, and place in the pan, turning with tongs until golden all over, while you peel the onions and carrots and chop into 3cm chunks, adding as you go. Remove and discard the crispy chicken skin, then strip in the thyme, tear in the mushrooms, and cook for 20 minutes, or until the veg is caramelized, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_pull"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the thighs with a small pinch of sea salt and black pepper, and place in the pan, turning with tongs until golden all over, while you peel the onions and carrots and chop into 3cm chunks, adding as you go. Remove and discard the crispy chicken skin, then strip in the thyme, tear in the mushrooms, and cook for 20 minutes, or until the veg is caramelized, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Now, stir in the soup and milk",
+      "instructions": "Now, stir in the soup and milk. Cover with a lid ajar, and simmer gently on a medium heat for 10 minutes. Preheat the oven to 220\u00b0C/425\u00b0F/gas 7.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_chunks"
+      ],
+      "next": [
+        "stir_sweetcorn"
+      ],
+      "on_enter": [
+        {
+          "say": "Now, stir in the soup and milk. Cover with a lid ajar, and simmer gently on a medium heat for 10 minutes. Preheat the oven to 220\u00b0C/425\u00b0F/gas 7."
+        }
+      ]
+    },
+    {
+      "id": "stir_sweetcorn",
+      "descr": "Stir the sweetcorn and beans, juice and all, into the...",
+      "instructions": "Stir the sweetcorn and beans, juice and all, into the pan, then gently drop the gnocchi on top. Spritz with a little olive oil, then transfer uncovered to the oven for 30 minutes, or until the chicken pulls easily away from the bone, the gnocchi are golden and the stew is bubbling nicely.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the sweetcorn and beans, juice and all, into the pan, then gently drop the gnocchi on top. Spritz with a little olive oil, then transfer uncovered to the oven for 30 minutes, or until the chicken pulls easily away from the bone, the gnocchi are golden and the stew is bubbling nicely."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "600 calories",
+    "carbohydrates": "83.7 g",
+    "fat": "16.3 g",
+    "fiber": "12.3 g",
+    "protein": "30.7 g"
+  }
+}

@@ -1,0 +1,284 @@
+{
+  "recipe": {
+    "id": "quiche",
+    "title": "Quiche",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "description": "From Jamie\u2019s new book Together, this principle quiche recipe guarantees delicious flavour, every time. A great get-ahead picnic recipe. ",
+    "tags": [
+      "pastry",
+      "cheese",
+      "picnic",
+      "vegetarian",
+      "occasion",
+      "quiche",
+      "tv-shows",
+      "shortcrust-pastry",
+      "vegetables",
+      "mushroom",
+      "together",
+      "butternut-squash",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/quiche",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/02336ee311e882c5a694107e229de37deab27e0c-958x1280.jpg/126770057?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/02336ee311e882c5a694107e229de37deab27e0c-958x1280.jpg/126770057?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/02336ee311e882c5a694107e229de37deab27e0c-958x1280.jpg/126770057?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/02336ee311e882c5a694107e229de37deab27e0c-958x1280.jpg/126770057?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "cold-unsalted-butter",
+      "name": "cold unsalted butter",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "butternut-squash-or-mixed-mush",
+      "name": "butternut squash or mixed mushrooms",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "single-cream",
+      "name": "single cream",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "crumbly-goat-s-cheese",
+      "name": "crumbly goat\u2019s cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "thyme",
+      "name": "thyme",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "blender",
+    "food processor",
+    "frying pan",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mix_ture",
+      "descr": "Put the flour, butter and a pinch of sea salt into a...",
+      "instructions": "Put the flour, butter and a pinch of sea salt into a food processor and pulse for 15 seconds, until the mixture resembles breadcrumbs. Add 4 tablespoons of water and pulse for a few more seconds until it comes together.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT15S",
+      "next": [
+        "rest_fridge"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the flour, butter and a pinch of sea salt into a food processor and pulse for 15 seconds, until the mixture resembles breadcrumbs. Add 4 tablespoons of water and pulse for a few more seconds until it comes together."
+        }
+      ]
+    },
+    {
+      "id": "rest_fridge",
+      "descr": "Scoop on to a flour-dusted work surface and push and pat...",
+      "instructions": "Scoop on to a flour-dusted work surface and push and pat into a round \u2013 don\u2019t be tempted to knead it. Wrap and rest in the fridge for 30 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Scoop on to a flour-dusted work surface and push and pat into a round \u2013 don\u2019t be tempted to knead it. Wrap and rest in the fridge for 30 minutes."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Lightly oil a non-stick loose-bottomed tart tin (25cm diameter, 4cm deep). Roll out the pastry on a flour-dusted surface, turning it every so often, until it\u2019s just under \u00bdcm thick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_fridge"
+      ],
+      "next": [
+        "bake_blind"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Lightly oil a non-stick loose-bottomed tart tin (25cm diameter, 4cm deep). Roll out the pastry on a flour-dusted surface, turning it every so often, until it\u2019s just under \u00bdcm thick."
+        }
+      ]
+    },
+    {
+      "id": "bake_blind",
+      "descr": "Gently roll it up around the rolling pin, then unroll it...",
+      "instructions": "Gently roll it up around the rolling pin, then unroll it over the oiled tin and ease it into the sides, letting the excess pastry overhang. Prick the base all over with a fork, place on a baking tray, then bake blind for 30 minutes, or until lightly golden. Cool, then trim off the excess pastry.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "dice_chunks"
+      ],
+      "on_enter": [
+        {
+          "say": "Gently roll it up around the rolling pin, then unroll it over the oiled tin and ease it into the sides, letting the excess pastry overhang. Prick the base all over with a fork, place on a baking tray, then bake blind for 30 minutes, or until lightly golden. Cool, then trim off the excess pastry."
+        }
+      ]
+    },
+    {
+      "id": "dice_chunks",
+      "descr": "Prep your chosen veg \u2013 peel, carefully halve and deseed...",
+      "instructions": "Prep your chosen veg \u2013 peel, carefully halve and deseed the squash, then dice into 2cm chunks, or clean and slice the mushrooms.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "bake_blind"
+      ],
+      "next": [
+        "heat_peel"
+      ],
+      "on_enter": [
+        {
+          "say": "Prep your chosen veg \u2013 peel, carefully halve and deseed the squash, then dice into 2cm chunks, or clean and slice the mushrooms."
+        }
+      ]
+    },
+    {
+      "id": "heat_peel",
+      "descr": "Put a large non-stick frying pan on a medium heat",
+      "instructions": "Put a large non-stick frying pan on a medium heat. Peel and finely slice the onion and garlic, then place in the pan with 1 tablespoon of olive oil. Add your chosen veg and cook for 30 minutes, or until soft and starting to caramelize, stirring occasionally and adding splashes of water to prevent it sticking, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "dice_chunks"
+      ],
+      "next": [
+        "add_cream"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large non-stick frying pan on a medium heat. Peel and finely slice the onion and garlic, then place in the pan with 1 tablespoon of olive oil. Add your chosen veg and cook for 30 minutes, or until soft and starting to caramelize, stirring occasionally and adding splashes of water to prevent it sticking, if needed."
+        }
+      ]
+    },
+    {
+      "id": "add_cream",
+      "descr": "Season to perfection, then leave to cool",
+      "instructions": "Season to perfection, then leave to cool. Tip into a blender, crack in the eggs, add the cream and grate in the Cheddar, then blitz until smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_peel"
+      ],
+      "next": [
+        "pour_filling"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to perfection, then leave to cool. Tip into a blender, crack in the eggs, add the cream and grate in the Cheddar, then blitz until smooth."
+        }
+      ]
+    },
+    {
+      "id": "pour_filling",
+      "descr": "Pour the filling into the pastry case, then crumble over...",
+      "instructions": "Pour the filling into the pastry case, then crumble over the goat\u2019s cheese. Rub the thyme sprigs with a little oil, then pick the tips and leaves over the tart. Bake for 40 minutes exactly, then remove and leave to cool, ready to wrap and go.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT2400S",
+      "depends_on": [
+        "add_cream"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the filling into the pastry case, then crumble over the goat\u2019s cheese. Rub the thyme sprigs with a little oil, then pick the tips and leaves over the tart. Bake for 40 minutes exactly, then remove and leave to cool, ready to wrap and go."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "285 calories",
+    "carbohydrates": "23.5 g",
+    "fat": "17.7 g",
+    "fiber": "2 g",
+    "protein": "9.8 g"
+  }
+}

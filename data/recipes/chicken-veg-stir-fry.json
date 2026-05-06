@@ -1,0 +1,337 @@
+{
+  "recipe": {
+    "id": "chicken-veg-stir-fry",
+    "title": "Chicken & veg stir-fry",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "This colourful chicken stir-fry is a delicious and great-value alternative to your Friday night takeaway. ",
+    "tags": [
+      "noodles",
+      "chicken",
+      "tv",
+      "series-6",
+      "stir-fry",
+      "jamie-and-jimmy-s-friday-night-feast-back-catalogue",
+      "method",
+      "low-lactose",
+      "jamie-and-jimmy-s-friday-night-feast",
+      "vegetables",
+      "episode-10",
+      "chicken-breast",
+      "jamie-recipe",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-veg-stir-fry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c81466a067d23984e16c88fbe3aebd3a77a3ec8e-958x1280.jpg/87657609?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c81466a067d23984e16c88fbe3aebd3a77a3ec8e-958x1280.jpg/87657609?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c81466a067d23984e16c88fbe3aebd3a77a3ec8e-958x1280.jpg/87657609?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c81466a067d23984e16c88fbe3aebd3a77a3ec8e-958x1280.jpg/87657609?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-red-onion",
+      "name": "\u00bd a red onion",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-pepper",
+      "name": "red pepper",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "purple-sprouting-or-tenderstem",
+      "name": "purple sprouting or tenderstem broccoli",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "free-range-chicken-breast",
+      "name": "free-range chicken breast",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "chinese-five-spice",
+      "name": "Chinese five-spice",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "sesame-oil",
+      "name": "sesame oil",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "vegetable-oil",
+      "name": "vegetable oil",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "baby-corn",
+      "name": "baby corn",
+      "quantity": 130.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mangetout-or-sugar-snap-peas",
+      "name": "mangetout or sugar snap peas",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "wholewheat-noodle-nests",
+      "name": "wholewheat noodle nests",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "130g"
+    },
+    {
+      "id": "reduced-salt-soy-sauce",
+      "name": "reduced-salt soy sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "black-bean-sauce",
+      "name": "black bean sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "sesame-seeds",
+      "name": "sesame seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "optional-a-few-sprigs-of-fresh",
+      "name": "optional: a few sprigs of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "pan",
+    "wok"
+  ],
+  "steps": [
+    {
+      "id": "chop_garlic",
+      "descr": "Peel and finely chop the garlic and ginger, deseed and...",
+      "instructions": "Peel and finely chop the garlic and ginger, deseed and finely chop the chilli.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_peel"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the garlic and ginger, deseed and finely chop the chilli."
+        }
+      ]
+    },
+    {
+      "id": "slice_peel",
+      "descr": "Peel the carrots, halve lengthways, then finely slice",
+      "instructions": "Peel the carrots, halve lengthways, then finely slice. Peel the onion, deseed the pepper, then finely slice. Trim the broccoli (halving any thick stalks lengthways), wipe the mushrooms clean, trim the stalks and halve any larger ones.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_garlic"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the carrots, halve lengthways, then finely slice. Peel the onion, deseed the pepper, then finely slice. Trim the broccoli (halving any thick stalks lengthways), wipe the mushrooms clean, trim the stalks and halve any larger ones."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Cut the chicken into 1cm strips and toss in a bowl with...",
+      "instructions": "Cut the chicken into 1cm strips and toss in a bowl with the Chinese five-spice and sesame oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_peel"
+      ],
+      "next": [
+        "heat_vegetable"
+      ],
+      "on_enter": [
+        {
+          "say": "Cut the chicken into 1cm strips and toss in a bowl with the Chinese five-spice and sesame oil."
+        }
+      ]
+    },
+    {
+      "id": "heat_vegetable",
+      "descr": "Place a wok or large non-stick frying pan on a...",
+      "instructions": "Place a wok or large non-stick frying pan on a medium-high heat with the vegetable oil. Add the garlic, ginger and chilli, toss for 30 seconds, then add the chicken and stir-fry for 1 to 2 minutes more, or until golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "stir_further"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a wok or large non-stick frying pan on a medium-high heat with the vegetable oil. Add the garlic, ginger and chilli, toss for 30 seconds, then add the chicken and stir-fry for 1 to 2 minutes more, or until golden."
+        }
+      ]
+    },
+    {
+      "id": "stir_further",
+      "descr": "Add all the veg and stir-fry for a further 3 to 4...",
+      "instructions": "Add all the veg and stir-fry for a further 3 to 4 minutes, until the chicken is cooked through and the veg is tender but with a bit of bite.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "heat_vegetable"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Add all the veg and stir-fry for a further 3 to 4 minutes, until the chicken is cooked through and the veg is tender but with a bit of bite."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Meanwhile, cook the noodles in a large pan of boiling...",
+      "instructions": "Meanwhile, cook the noodles in a large pan of boiling salted water according to the packet instructions.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_further"
+      ],
+      "next": [
+        "add_black"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, cook the noodles in a large pan of boiling salted water according to the packet instructions."
+        }
+      ]
+    },
+    {
+      "id": "add_black",
+      "descr": "Use tongs to drag the noodles straight into the wok,...",
+      "instructions": "Use tongs to drag the noodles straight into the wok, then add the soy and black bean sauce and toss to coat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "plate_scatter"
+      ],
+      "on_enter": [
+        {
+          "say": "Use tongs to drag the noodles straight into the wok, then add the soy and black bean sauce and toss to coat."
+        }
+      ]
+    },
+    {
+      "id": "plate_scatter",
+      "descr": "Divide between your plates, scatter over the sesame...",
+      "instructions": "Divide between your plates, scatter over the sesame seeds and coriander, and dig in.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_black"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide between your plates, scatter over the sesame seeds and coriander, and dig in."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "506 calories",
+    "carbohydrates": "70.3 g",
+    "fat": "11.6 g",
+    "fiber": "10.6 g",
+    "protein": "30.7 g"
+  }
+}

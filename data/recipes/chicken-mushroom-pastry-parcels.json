@@ -1,0 +1,252 @@
+{
+  "recipe": {
+    "id": "chicken-mushroom-pastry-parcels",
+    "title": "Chicken & mushroom pastry parcels",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT49M",
+    "description": "Jamie reimagines a firm favourite for the air fryer. Chicken breasts are stuffed with a mushroom filling, wrapped in pastry and served with an elegant white wine and mustard sauce.",
+    "tags": [
+      "air-fryer",
+      "mains",
+      "carrots",
+      "lunch-amp-dinner-recipes",
+      "chicken-breast",
+      "mushroom",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken-breast/air-fryer-chicken-mushroom-pastry-parcels",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1b27518722cf9e7ad4429771d191ecc58c2d038c-973x1300.jpg/Chicken%20and%20mushroom%20pastry%20parcels%20crop.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1b27518722cf9e7ad4429771d191ecc58c2d038c-973x1300.jpg/Chicken%20and%20mushroom%20pastry%20parcels%20crop.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1b27518722cf9e7ad4429771d191ecc58c2d038c-973x1300.jpg/Chicken%20and%20mushroom%20pastry%20parcels%20crop.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1b27518722cf9e7ad4429771d191ecc58c2d038c-973x1300.jpg/Chicken%20and%20mushroom%20pastry%20parcels%20crop.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken-breast"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "flat-leaf-parsley",
+      "name": "flat-leaf parsley",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "small-knob-of-soft-unsalted-bu",
+      "name": "small knob of soft unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-lemon",
+      "name": "\u00bd a lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "150g-free-range-skinless-chick",
+      "name": "150g free-range skinless chicken breasts",
+      "quantity": 150.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "x-320g-sheet-of-ready-rolled-p",
+      "name": "\u00bd x 320g sheet of ready-rolled puff pastry",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "free-range-egg",
+      "name": "free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "wholegrain-mustard",
+      "name": "wholegrain mustard",
+      "quantity": 2.0,
+      "unit": "tsp",
+      "note": null
+    },
+    {
+      "id": "white-wine",
+      "name": "white wine",
+      "quantity": 75.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "single-cream",
+      "name": "single cream",
+      "quantity": 75.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "optional-extra-virgin-olive-oi",
+      "name": "optional: extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "chopping board",
+    "frying pan",
+    "knife",
+    "pan",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "fry_drawer",
+      "descr": "Tear up any larger mushrooms, then place them all in the...",
+      "instructions": "Tear up any larger mushrooms, then place them all in the air-fryer drawer and toss with 1 tablespoon of olive oil and the unpeeled garlic clove. Cook for 15 minutes at 200\u00baC or until golden.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "next": [
+        "chop_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear up any larger mushrooms, then place them all in the air-fryer drawer and toss with 1 tablespoon of olive oil and the unpeeled garlic clove. Cook for 15 minutes at 200\u00baC or until golden."
+        }
+      ]
+    },
+    {
+      "id": "chop_ping",
+      "descr": "Tip the golden mushrooms on to a chopping board, squeeze...",
+      "instructions": "Tip the golden mushrooms on to a chopping board, squeeze out the soft garlic flesh, discarding the skin, then finely chop it all together. Finely chop the parsley, stalks and all, then add to the mixture with the butter and a squeeze of lemon juice. Season to perfection and leave to cool completely.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fry_drawer"
+      ],
+      "next": [
+        "slice_thickest"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the golden mushrooms on to a chopping board, squeeze out the soft garlic flesh, discarding the skin, then finely chop it all together. Finely chop the parsley, stalks and all, then add to the mixture with the butter and a squeeze of lemon juice. Season to perfection and leave to cool completely."
+        }
+      ]
+    },
+    {
+      "id": "slice_thickest",
+      "descr": "Use the tip of a sharp knife to carefully slice into the...",
+      "instructions": "Use the tip of a sharp knife to carefully slice into the thickest part of the chicken breasts horizontally, then open each one out like a book. Divide and stuff in the cooled mushroom mixture, then shape the breasts back into their original form, sealing the mixture inside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "beat_brush"
+      ],
+      "on_enter": [
+        {
+          "say": "Use the tip of a sharp knife to carefully slice into the thickest part of the chicken breasts horizontally, then open each one out like a book. Divide and stuff in the cooled mushroom mixture, then shape the breasts back into their original form, sealing the mixture inside."
+        }
+      ]
+    },
+    {
+      "id": "beat_brush",
+      "descr": "Halve the pastry lengthways",
+      "instructions": "Halve the pastry lengthways. Stretching each piece slightly, wrap around the chicken. Beat the egg and brush it all over, then place the parcels in the drawer. Cook for 20 minutes at 200\u00baC, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "slice_thickest"
+      ],
+      "next": [
+        "heat_mustard"
+      ],
+      "on_enter": [
+        {
+          "say": "Halve the pastry lengthways. Stretching each piece slightly, wrap around the chicken. Beat the egg and brush it all over, then place the parcels in the drawer. Cook for 20 minutes at 200\u00baC, or until golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "heat_mustard",
+      "descr": "For the sauce, place a non-stick frying pan on a...",
+      "instructions": "For the sauce, place a non-stick frying pan on a medium-high heat and add the mustard and white wine. Allow it to bubble and reduce by half, then pour in the cream and simmer until the sauce coats the back of a spoon. Season to perfection and divide between your plates.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "beat_brush"
+      ],
+      "next": [
+        "slice_each"
+      ],
+      "on_enter": [
+        {
+          "say": "For the sauce, place a non-stick frying pan on a medium-high heat and add the mustard and white wine. Allow it to bubble and reduce by half, then pour in the cream and simmer until the sauce coats the back of a spoon. Season to perfection and divide between your plates."
+        }
+      ]
+    },
+    {
+      "id": "slice_each",
+      "descr": "Slice each chicken parcel and sit it on the sauce,...",
+      "instructions": "Slice each chicken parcel and sit it on the sauce, drizzling over any juices from the bottom of the drawer and finishing with a drizzle of extra virgin olive oil, if you like. Delicious with roasted carrots and watercress.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_mustard"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice each chicken parcel and sit it on the sauce, drizzling over any juices from the bottom of the drawer and finishing with a drizzle of extra virgin olive oil, if you like. Delicious with roasted carrots and watercress."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "725 calories",
+    "carbohydrates": "34.4 g",
+    "fat": "42.4 g",
+    "fiber": "1.9 g",
+    "protein": "45.7 g"
+  }
+}

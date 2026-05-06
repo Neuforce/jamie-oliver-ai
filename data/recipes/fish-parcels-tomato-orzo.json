@@ -1,0 +1,177 @@
+{
+  "recipe": {
+    "id": "fish-parcels-tomato-orzo",
+    "title": "Fish parcels & tomato orzo",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT24M",
+    "description": "Whip up this quick and beautiful meal - delicate fish parcels wrapped in thin courgette ribbons, served with sweet and tangy tomato orzo. ",
+    "tags": [
+      "dinner-for-two",
+      "pasta",
+      "healthy",
+      "healthy-dinners",
+      "tomato",
+      "white-fish"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/fish-parcels-tomato-orzo",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c1cd5367f000a8c4b6a4bf16c45e5c8c2d89a4fb-966x1280.jpg/163881223?rect=0,157,966,966&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c1cd5367f000a8c4b6a4bf16c45e5c8c2d89a4fb-966x1280.jpg/163881223?rect=0,157,966,966&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c1cd5367f000a8c4b6a4bf16c45e5c8c2d89a4fb-966x1280.jpg/163881223?rect=0,278,966,725&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c1cd5367f000a8c4b6a4bf16c45e5c8c2d89a4fb-966x1280.jpg/163881223?rect=0,369,966,543&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-orzo",
+      "name": "dried orzo",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-plum-tomatoes",
+      "name": "400g tin of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-basil",
+      "name": "\u00bd a bunch of basil",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "roasted-red-peppers",
+      "name": "roasted red peppers",
+      "quantity": 160.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "small-courgette",
+      "name": "small courgette",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "160g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "130g-chunky-white-fish-fillets",
+      "name": "130g chunky white fish fillets",
+      "quantity": 130.0,
+      "unit": null,
+      "note": "skin on, scaled, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 15.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "pan",
+    "peeler"
+  ],
+  "steps": [
+    {
+      "id": "heat_orzo",
+      "descr": "Boil the kettle",
+      "instructions": "Boil the kettle. Put a medium pan on a high heat with the orzo. Just cover with boiling salted water and cook for 5 minutes, while you put the tomatoes into a blender. Peel and add the garlic. Halve, deseed and add the chilli, then tear in the basil stalks, reserving the leaves. Blitz until smooth, then season to perfection. Stir the sauce into the pan, finely chop and add the peppers and most of the basil leaves, reserving a few baby ones, then bring to the boil and cook on a medium heat for 5 more minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Boil the kettle. Put a medium pan on a high heat with the orzo. Just cover with boiling salted water and cook for 5 minutes, while you put the tomatoes into a blender. Peel and add the garlic. Halve, deseed and add the chilli, then tear in the basil stalks, reserving the leaves. Blitz until smooth, then season to perfection. Stir the sauce into the pan, finely chop and add the peppers and most of the basil leaves, reserving a few baby ones, then bring to the boil and cook on a medium heat for 5 more minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Meanwhile, use a speed-peeler to peel the courgette into...",
+      "instructions": "Meanwhile, use a speed-peeler to peel the courgette into long ribbons. Line up the ribbons, slightly overlapping, in two sets, then sit the fish fillets on top. Season, spritz with olive oil, finely grate over the lemon zest, and wrap them up. Nestle the parcels into the orzo, cover, reduce to a medium-low heat and cook for 10 minutes, or until the fish is beautifully cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_orzo"
+      ],
+      "next": [
+        "serve_basil"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, use a speed-peeler to peel the courgette into long ribbons. Line up the ribbons, slightly overlapping, in two sets, then sit the fish fillets on top. Season, spritz with olive oil, finely grate over the lemon zest, and wrap them up. Nestle the parcels into the orzo, cover, reduce to a medium-low heat and cook for 10 minutes, or until the fish is beautifully cooked through."
+        }
+      ]
+    },
+    {
+      "id": "serve_basil",
+      "descr": "Squeeze half the lemon juice over the fish parcels, then...",
+      "instructions": "Squeeze half the lemon juice over the fish parcels, then finely grate over the Parmesan, scatter over the reserved basil, and serve with lemon wedges.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Squeeze half the lemon juice over the fish parcels, then finely grate over the Parmesan, scatter over the reserved basil, and serve with lemon wedges."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "430 calories",
+    "carbohydrates": "61.9 g",
+    "fat": "4.8 g",
+    "fiber": "4.3 g",
+    "protein": "37.3 g"
+  }
+}

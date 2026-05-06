@@ -1,0 +1,234 @@
+{
+  "recipe": {
+    "id": "leek-potato-soup",
+    "title": "Leek & potato soup",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT35M",
+    "description": "Everybody needs a good vegetable soup recipe in their repertoire, and this trusty leek & potato soup recipe is a good one. From Jamie's Ministry of Food.",
+    "tags": [
+      "soup",
+      "main-ingredient",
+      "gorgeous-winter-soups",
+      "dish-type",
+      "method",
+      "healthy-lunchbox",
+      "low-lactose",
+      "vegetables",
+      "potato",
+      "vegetable-soup",
+      "soups",
+      "occasion",
+      "leeks",
+      "course"
+    ],
+    "course": "starter",
+    "cuisine": "french",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/leek-and-potato-soup",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aa41643f5189c74b7412e1ab04c5d0b615576c5a-958x1280.jpg/153568498?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aa41643f5189c74b7412e1ab04c5d0b615576c5a-958x1280.jpg/153568498?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aa41643f5189c74b7412e1ab04c5d0b615576c5a-958x1280.jpg/153568498?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aa41643f5189c74b7412e1ab04c5d0b615576c5a-958x1280.jpg/153568498?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "medium-onions",
+      "name": "medium onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "leeks",
+      "name": "leeks",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-or-vegetable-s",
+      "name": "organic chicken or vegetable stock cubes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "chop_onions",
+      "descr": "Trim, peel and roughly slice the celery",
+      "instructions": "Trim, peel and roughly slice the celery. Peel and roughly chop the onions. Peel and finely slice the garlic.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim, peel and roughly slice the celery. Peel and roughly chop the onions. Peel and finely slice the garlic."
+        }
+      ]
+    },
+    {
+      "id": "slice_step_2",
+      "descr": "Cut the ends off the leeks, quarter them lengthways,...",
+      "instructions": "Cut the ends off the leeks, quarter them lengthways, wash them under running water and cut them into 1cm slices.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Cut the ends off the leeks, quarter them lengthways, wash them under running water and cut them into 1cm slices."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Heat 2 tablespoons of oil in a large pan on a high heat,...",
+      "instructions": "Heat 2 tablespoons of oil in a large pan on a high heat, add all the chopped and sliced ingredients and cook with the lid ajar for 10 minutes, or until softened, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "slice_step_2"
+      ],
+      "next": [
+        "cube_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 2 tablespoons of oil in a large pan on a high heat, add all the chopped and sliced ingredients and cook with the lid ajar for 10 minutes, or until softened, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "cube_step_4",
+      "descr": "Meanwhile, peel the potatoes and cut them into 1cm cubes",
+      "instructions": "Meanwhile, peel the potatoes and cut them into 1cm cubes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "cube_litres"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel the potatoes and cut them into 1cm cubes."
+        }
+      ]
+    },
+    {
+      "id": "cube_litres",
+      "descr": "Put the stock cubes into a jug or pan, pour in 1",
+      "instructions": "Put the stock cubes into a jug or pan, pour in 1.8 litres of boiling water and stir to dissolve, then pour into the veg pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cube_step_4"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the stock cubes into a jug or pan, pour in 1.8 litres of boiling water and stir to dissolve, then pour into the veg pan."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Add the potatoes",
+      "instructions": "Add the potatoes. Bring to the boil, then reduce the heat to low and simmer for 10 minutes with the lid on, then remove from the heat.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "cube_litres"
+      ],
+      "next": [
+        "season_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the potatoes. Bring to the boil, then reduce the heat to low and simmer for 10 minutes with the lid on, then remove from the heat."
+        }
+      ]
+    },
+    {
+      "id": "season_taste",
+      "descr": "Season to taste with sea salt and black pepper, then...",
+      "instructions": "Season to taste with sea salt and black pepper, then either serve like this or pulse until smooth using a stick blender or liquidizer.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to taste with sea salt and black pepper, then either serve like this or pulse until smooth using a stick blender or liquidizer."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "132 calories",
+    "carbohydrates": "19 g",
+    "fat": "5.1 g",
+    "fiber": "2.4 g",
+    "protein": "3.6 g"
+  }
+}

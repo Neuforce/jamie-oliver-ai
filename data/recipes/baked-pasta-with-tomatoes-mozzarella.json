@@ -1,0 +1,260 @@
+{
+  "recipe": {
+    "id": "baked-pasta-with-tomatoes-mozzarella",
+    "title": "Baked pasta with tomatoes & mozzarella",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT95M",
+    "description": "This cheesy pasta bake recipe is the perfect dish for large gatherings: your guests can get stuck into a seriously tasty baked pasta filled with tomatoes and mozzarella.",
+    "tags": [
+      "pasta",
+      "main-ingredient",
+      "baking",
+      "course",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "tomato",
+      "pasta-bake",
+      "occasion",
+      "mozzarella"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/baked-pasta-with-tomatoes-and-mozzarella-pasta-al-forno-con-pomodori-e-mozzarella",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9121086e63e4190a112f7aa16af25825177a44aa-767x1025.jpg/9121086e63e4190a112f7aa16af25825177a44aa-767x1025.jpg?rect=0,130,767,767&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9121086e63e4190a112f7aa16af25825177a44aa-767x1025.jpg/9121086e63e4190a112f7aa16af25825177a44aa-767x1025.jpg?rect=0,130,767,767&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9121086e63e4190a112f7aa16af25825177a44aa-767x1025.jpg/9121086e63e4190a112f7aa16af25825177a44aa-767x1025.jpg?rect=0,226,767,575&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9121086e63e4190a112f7aa16af25825177a44aa-767x1025.jpg/9121086e63e4190a112f7aa16af25825177a44aa-767x1025.jpg?rect=0,298,767,431&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "white-onion",
+      "name": "white onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "peeled and finely chopped"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": "peeled and finely sliced"
+    },
+    {
+      "id": "or-2-dried-red-chillies",
+      "name": "or 2 dried red chillies",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "crumbled"
+    },
+    {
+      "id": "ripe-tomatoes-or-3-x-400g-tins",
+      "name": "ripe tomatoes or 3 x 400g tins of quality plum tomatoes",
+      "quantity": 1.5,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "a-large-handful-of-fresh-basil",
+      "name": "a large handful of fresh basil leaves",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-1-tablespoon-red-wine",
+      "name": "optional: 1 tablespoon red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-orecchiette",
+      "name": "dried orecchiette",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "big-handfuls-of-freshly-grated",
+      "name": "big handfuls of freshly grated Parmesan cheese",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "140g-balls-of-mozzarella",
+      "name": "140g balls of mozzarella",
+      "quantity": 140.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "food processor",
+    "knife",
+    "oven",
+    "pan",
+    "pot",
+    "sieve",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00baF/gas 6 and put a large...",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00baF/gas 6 and put a large pot of salted water on to boil. Heat a couple of lugs of extra virgin olive oil in an appropriately sized pan. Add your onion, garlic and chilli and slowly fry for about 10 minutes on a medium to low heat until softened but without any colour.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "heat_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00baF/gas 6 and put a large pot of salted water on to boil. Heat a couple of lugs of extra virgin olive oil in an appropriately sized pan. Add your onion, garlic and chilli and slowly fry for about 10 minutes on a medium to low heat until softened but without any colour."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_2",
+      "descr": "If you\u2019re using fresh tomatoes, remove the core with the...",
+      "instructions": "If you\u2019re using fresh tomatoes, remove the core with the tip of a small knife, plunge them into the boiling water for about 40 seconds until their skin starts to come away, then remove with a slotted spoon or sieve and remove the pan from the heat.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT40S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_your"
+      ],
+      "on_enter": [
+        {
+          "say": "If you\u2019re using fresh tomatoes, remove the core with the tip of a small knife, plunge them into the boiling water for about 40 seconds until their skin starts to come away, then remove with a slotted spoon or sieve and remove the pan from the heat."
+        }
+      ]
+    },
+    {
+      "id": "chop_your",
+      "descr": "Put the tomatoes into a bowl and run cold water over...",
+      "instructions": "Put the tomatoes into a bowl and run cold water over them, then slide the skins off, squeeze out the seeds, and roughly chop. Add your fresh or canned tomatoes to the onion and garlic, with a small glass of water. Bring to the boil and simmer for around 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_step_2"
+      ],
+      "next": [
+        "season_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the tomatoes into a bowl and run cold water over them, then slide the skins off, squeeze out the seeds, and roughly chop. Add your fresh or canned tomatoes to the onion and garlic, with a small glass of water. Bring to the boil and simmer for around 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "season_salt",
+      "descr": "Now put them through a food processor or blender to make...",
+      "instructions": "Now put them through a food processor or blender to make a loose sauce. Tear your basil leaves into the sauce and correct the seasoning with salt, pepper and a little swig of red wine vinegar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_your"
+      ],
+      "next": [
+        "add_orecchiette"
+      ],
+      "on_enter": [
+        {
+          "say": "Now put them through a food processor or blender to make a loose sauce. Tear your basil leaves into the sauce and correct the seasoning with salt, pepper and a little swig of red wine vinegar."
+        }
+      ]
+    },
+    {
+      "id": "add_orecchiette",
+      "descr": "When the sauce tastes perfect, bring the water back to...",
+      "instructions": "When the sauce tastes perfect, bring the water back to the boil. Add the orecchiette to the water and cook according to the packet instructions, then drain and toss with half of the tomato sauce and a handful of Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_salt"
+      ],
+      "next": [
+        "slice_mozzarella"
+      ],
+      "on_enter": [
+        {
+          "say": "When the sauce tastes perfect, bring the water back to the boil. Add the orecchiette to the water and cook according to the packet instructions, then drain and toss with half of the tomato sauce and a handful of Parmesan."
+        }
+      ]
+    },
+    {
+      "id": "slice_mozzarella",
+      "descr": "Get yourself an appropriately sized baking pan or...",
+      "instructions": "Get yourself an appropriately sized baking pan or earthenware dish and rub it with a little olive oil. Layer a little pasta in the pan, followed by some tomato sauce, a handful of grated Parmesan and 1 sliced-up mozzarella ball, then repeat these layers until you\u2019ve used all the ingredients, ending with a good layer of cheese on top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_orecchiette"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Get yourself an appropriately sized baking pan or earthenware dish and rub it with a little olive oil. Layer a little pasta in the pan, followed by some tomato sauce, a handful of grated Parmesan and 1 sliced-up mozzarella ball, then repeat these layers until you\u2019ve used all the ingredients, ending with a good layer of cheese on top."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Pop it into the preheated oven for 15 minutes or until...",
+      "instructions": "Pop it into the preheated oven for 15 minutes or until golden, crisp and bubbling. Italians seem happy to eat this dish at room temperature or quite cold, but I prefer to eat mine hot.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "slice_mozzarella"
+      ],
+      "on_enter": [
+        {
+          "say": "Pop it into the preheated oven for 15 minutes or until golden, crisp and bubbling. Italians seem happy to eat this dish at room temperature or quite cold, but I prefer to eat mine hot."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "865 calories",
+    "carbohydrates": "89.9 g",
+    "fat": "38.2 g",
+    "fiber": "7.4 g",
+    "protein": "46.1 g"
+  }
+}

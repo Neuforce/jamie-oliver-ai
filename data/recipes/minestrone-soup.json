@@ -1,0 +1,260 @@
+{
+  "recipe": {
+    "id": "minestrone-soup",
+    "title": "Minestrone soup",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "This hearty and nutritious minestrone soup is brilliant at embracing what you\u2019ve got in your fridge. We make it every month and all the kids love it! ",
+    "tags": [
+      "soup",
+      "minestrone",
+      "student-recipes",
+      "1-recipes",
+      "dish-type",
+      "vegetarian",
+      "healthy-vegetarian-recipes",
+      "tv-shows",
+      "winter-warmers",
+      "healthy-soup-recipes",
+      "occasion",
+      "keep-cooking-and-carry-on",
+      "course"
+    ],
+    "course": "starter",
+    "source_url": "https://www.jamieoliver.com/recipes/soup/wholesome-minestrone-soup",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/df58f4d029ca9a19bb692bfd8d91e5f19acc6eb7-958x1280.jpg/141385985?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/df58f4d029ca9a19bb692bfd8d91e5f19acc6eb7-958x1280.jpg/141385985?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/df58f4d029ca9a19bb692bfd8d91e5f19acc6eb7-958x1280.jpg/141385985?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/df58f4d029ca9a19bb692bfd8d91e5f19acc6eb7-958x1280.jpg/141385985?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "soup"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "small-onions",
+      "name": "small onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "large-handfuls-of-seasonal-gre",
+      "name": "large handfuls of seasonal greens",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "such as savoy cabbage, curly kale, chard"
+    },
+    {
+      "id": "vegetable-stock-cube",
+      "name": "vegetable stock cube",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-plum-tomatoes",
+      "name": "400g tin of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-beans",
+      "name": "400g tins of beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": "such as cannellini, butter, or mixed"
+    },
+    {
+      "id": "dried-pasta",
+      "name": "dried pasta",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": null,
+      "unit": null,
+      "note": "Grana Padano or vegetarian alternative, to serve"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "crusty-bread",
+      "name": "crusty bread",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    }
+  ],
+  "utensils": [
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Peel and finely chop the garlic and onion",
+      "instructions": "Peel and finely chop the garlic and onion. Put a large shallow casserole pan on a medium-high heat with 1 tablespoon of olive oil.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the garlic and onion. Put a large shallow casserole pan on a medium-high heat with 1 tablespoon of olive oil."
+        }
+      ]
+    },
+    {
+      "id": "add_garlic",
+      "descr": "Add the garlic and the bay leaves, followed by the onions",
+      "instructions": "Add the garlic and the bay leaves, followed by the onions.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "chop_carrots"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the garlic and the bay leaves, followed by the onions."
+        }
+      ]
+    },
+    {
+      "id": "chop_carrots",
+      "descr": "Trim and chop the carrots and celery into rough 1cm...",
+      "instructions": "Trim and chop the carrots and celery into rough 1cm dice, adding to the pan as you go. Remove and finely chop any tough stalks from your greens and add to the pan. Cook for 10 to 15 minutes, stirring regularly, or until softened and caramelised.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "add_garlic"
+      ],
+      "next": [
+        "cube_tinned"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim and chop the carrots and celery into rough 1cm dice, adding to the pan as you go. Remove and finely chop any tough stalks from your greens and add to the pan. Cook for 10 to 15 minutes, stirring regularly, or until softened and caramelised."
+        }
+      ]
+    },
+    {
+      "id": "cube_tinned",
+      "descr": "Crumble in the stock cube, pour in the tinned tomatoes,...",
+      "instructions": "Crumble in the stock cube, pour in the tinned tomatoes, breaking them up with your spoon, then add 1 tin\u2019s worth of water. Pour in the beans, juice and all, then add a pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_carrots"
+      ],
+      "next": [
+        "add_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Crumble in the stock cube, pour in the tinned tomatoes, breaking them up with your spoon, then add 1 tin\u2019s worth of water. Pour in the beans, juice and all, then add a pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "add_pasta",
+      "descr": "Shred your greens and sprinkle into the pan, top up with...",
+      "instructions": "Shred your greens and sprinkle into the pan, top up with 600ml of boiling kettle water, then add the pasta. Cover and leave to simmer for 10 to 15 minutes, or until the pasta is just cooked and the soup has thickened to your liking.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "cube_tinned"
+      ],
+      "next": [
+        "drizzle_extra"
+      ],
+      "on_enter": [
+        {
+          "say": "Shred your greens and sprinkle into the pan, top up with 600ml of boiling kettle water, then add the pasta. Cover and leave to simmer for 10 to 15 minutes, or until the pasta is just cooked and the soup has thickened to your liking."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_extra",
+      "descr": "Season the soup to perfection, then serve it with a...",
+      "instructions": "Season the soup to perfection, then serve it with a grating of Parmesan cheese and a drizzle of extra virgin olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the soup to perfection, then serve it with a grating of Parmesan cheese and a drizzle of extra virgin olive oil."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "148 calories",
+    "carbohydrates": "26.4 g",
+    "fat": "2.4 g",
+    "fiber": "5.3 g",
+    "protein": "6.9 g"
+  }
+}

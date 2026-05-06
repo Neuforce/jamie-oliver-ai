@@ -1,0 +1,278 @@
+{
+  "recipe": {
+    "id": "crispy-sticky-chicken-thighs-with-squashed-new-potatoes-tomatoes",
+    "title": "Crispy & sticky chicken thighs with squashed new potatoes & tomatoes",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT85M",
+    "description": "A brilliant one-pan recipe from Jamie Oliver. This recipe brings together chicken, potatoes, squash and cherry tomatoes in a delicious gluten-free recipe.",
+    "tags": [
+      "dinner-party",
+      "chicken",
+      "kosher-for-passover",
+      "new-potatoes",
+      "course",
+      "20-years",
+      "tv-shows",
+      "lunch-amp-dinner-recipes",
+      "tomato",
+      "potato",
+      "chicken-thighs",
+      "occasion",
+      "roast-chicken",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/crispy-sticky-chicken-thighs-with-squashed-new-potatoes-tomatoes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8525642a525e65da85da3b139eab9eeb155c9f14-958x1280.jpg/90246166?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8525642a525e65da85da3b139eab9eeb155c9f14-958x1280.jpg/90246166?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8525642a525e65da85da3b139eab9eeb155c9f14-958x1280.jpg/90246166?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8525642a525e65da85da3b139eab9eeb155c9f14-958x1280.jpg/90246166?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "new-potatoes",
+      "name": "new potatoes",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "free-range-chicken-thighs",
+      "name": "free-range chicken thighs",
+      "quantity": 12.0,
+      "unit": null,
+      "note": "skin on, bone out"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-mixed-colour-cherry-tomat",
+      "name": "ripe mixed-colour cherry tomatoes",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-oregano",
+      "name": "fresh oregano",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "colander",
+    "frying pan",
+    "knife",
+    "oven",
+    "pan",
+    "pot",
+    "saucepan",
+    "sharp knife",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "boil_water",
+      "descr": "Scrub the potatoes and put into a large saucepan of...",
+      "instructions": "Scrub the potatoes and put into a large saucepan of salted boiling water and boil until cooked.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub the potatoes and put into a large saucepan of salted boiling water and boil until cooked."
+        }
+      ]
+    },
+    {
+      "id": "preheat_your",
+      "descr": "While the potatoes are cooking, preheat your oven to...",
+      "instructions": "While the potatoes are cooking, preheat your oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "sprinkle_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "While the potatoes are cooking, preheat your oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_salt",
+      "descr": "Cut each chicken thigh into three strips and place in a bowl",
+      "instructions": "Cut each chicken thigh into three strips and place in a bowl. Rub the meat all over with olive oil and sprinkle with sea salt and black pepper, then toss.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_your"
+      ],
+      "next": [
+        "heat_large"
+      ],
+      "on_enter": [
+        {
+          "say": "Cut each chicken thigh into three strips and place in a bowl. Rub the meat all over with olive oil and sprinkle with sea salt and black pepper, then toss."
+        }
+      ]
+    },
+    {
+      "id": "heat_large",
+      "descr": "Heat a large frying pan, big enough to hold all the...",
+      "instructions": "Heat a large frying pan, big enough to hold all the chicken pieces snugly in one layer, and put the chicken into the pan, skin side down. If you don\u2019t have a pan that\u2019s big enough, feel free to cook the chicken in two batches. Toss and fry over a low heat for 10 minutes, or until almost cooked, then remove with a slotted spoon to a large roasting tray or dish.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "sprinkle_salt"
+      ],
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a large frying pan, big enough to hold all the chicken pieces snugly in one layer, and put the chicken into the pan, skin side down. If you don\u2019t have a pan that\u2019s big enough, feel free to cook the chicken in two batches. Toss and fry over a low heat for 10 minutes, or until almost cooked, then remove with a slotted spoon to a large roasting tray or dish."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "Prick the tomatoes with a sharp knife",
+      "instructions": "Prick the tomatoes with a sharp knife. Place them in a bowl, cover with boiling water and leave for a minute or so. Drain and, when cool enough to handle, pinch off their skins. You don\u2019t have to, but by doing this they will become lovely and sweet when cooked, and their intense flavours will infuse the potatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_large"
+      ],
+      "next": [
+        "drain_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Prick the tomatoes with a sharp knife. Place them in a bowl, cover with boiling water and leave for a minute or so. Drain and, when cool enough to handle, pinch off their skins. You don\u2019t have to, but by doing this they will become lovely and sweet when cooked, and their intense flavours will infuse the potatoes."
+        }
+      ]
+    },
+    {
+      "id": "drain_them",
+      "descr": "By now the potatoes will be cooked",
+      "instructions": "By now the potatoes will be cooked. Drain them in a colander, then lightly crush them by pushing down on them with your thumb.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "add_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "By now the potatoes will be cooked. Drain them in a colander, then lightly crush them by pushing down on them with your thumb."
+        }
+      ]
+    },
+    {
+      "id": "add_tablespoons",
+      "descr": "Pick and bash up most of the oregano leaves with a pinch...",
+      "instructions": "Pick and bash up most of the oregano leaves with a pinch of salt in a pestle and mortar, or a Flavour Shaker if you have one. Add 4 tablespoons of extra virgin olive oil, a good splash of red wine vinegar and some pepper and give everything another bash. Add to the chicken with the potatoes, the tomatoes and the rest of the oregano leaves. Toss everything together carefully.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drain_them"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and bash up most of the oregano leaves with a pinch of salt in a pestle and mortar, or a Flavour Shaker if you have one. Add 4 tablespoons of extra virgin olive oil, a good splash of red wine vinegar and some pepper and give everything another bash. Add to the chicken with the potatoes, the tomatoes and the rest of the oregano leaves. Toss everything together carefully."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Spread out in a single layer in the roasting tray, and...",
+      "instructions": "Spread out in a single layer in the roasting tray, and bake for 40 minutes in the preheated oven until golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "add_tablespoons"
+      ],
+      "next": [
+        "serve_rocket"
+      ],
+      "on_enter": [
+        {
+          "say": "Spread out in a single layer in the roasting tray, and bake for 40 minutes in the preheated oven until golden."
+        }
+      ]
+    },
+    {
+      "id": "serve_rocket",
+      "descr": "Lovely served with a rocket salad dressed with some...",
+      "instructions": "Lovely served with a rocket salad dressed with some lemon juice and extra virgin olive oil, and a nice glass of white wine.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Lovely served with a rocket salad dressed with some lemon juice and extra virgin olive oil, and a nice glass of white wine."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "829 calories",
+    "carbohydrates": "34 g",
+    "fat": "53.2 g",
+    "fiber": "2.6 g",
+    "protein": "55.4 g"
+  }
+}

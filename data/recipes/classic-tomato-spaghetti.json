@@ -1,0 +1,367 @@
+{
+  "recipe": {
+    "id": "classic-tomato-spaghetti",
+    "title": "Classic tomato spaghetti",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "The classic tomato spaghetti is a simple dish that makes the perfect midweek meal for the whole family and that can easily be added to once mastered.",
+    "tags": [
+      "dinner-party",
+      "money-saving-recipes",
+      "father-s-day",
+      "dish-type",
+      "family-food",
+      "sauces",
+      "lunch-amp-dinner-recipes",
+      "gluten-free",
+      "quick-fixes",
+      "course",
+      "pasta-amp-risotto",
+      "mains",
+      "tomato",
+      "occasion",
+      "spaghetti",
+      "jamie-s-food-revolution",
+      "pasta",
+      "method",
+      "vegetarian",
+      "pasta-sauce",
+      "main-ingredient",
+      "tomato-sauce",
+      "cheap-amp-cheerful"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/classic-tomato-spaghetti",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/031614fb57ae5751de9940abf6ba26e31789277f-973x1300.jpg/031614fb57ae5751de9940abf6ba26e31789277f-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/031614fb57ae5751de9940abf6ba26e31789277f-973x1300.jpg/031614fb57ae5751de9940abf6ba26e31789277f-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/031614fb57ae5751de9940abf6ba26e31789277f-973x1300.jpg/031614fb57ae5751de9940abf6ba26e31789277f-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/031614fb57ae5751de9940abf6ba26e31789277f-973x1300.jpg/031614fb57ae5751de9940abf6ba26e31789277f-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "fresh-basil",
+      "name": "fresh basil",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "medium-onion",
+      "name": "medium onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "ripe-tomatoes-or-2-x-400g-tins",
+      "name": "ripe tomatoes or 2 x 400g tins of quality chopped tomatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-or-balsamic-vinegar",
+      "name": "red wine or balsamic vinegar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "dried-wholewheat-spaghetti",
+      "name": "dried wholewheat spaghetti",
+      "quantity": 480.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 15.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "chopping board",
+    "colander",
+    "ladle",
+    "pan",
+    "pot",
+    "saucepan"
+  ],
+  "steps": [
+    {
+      "id": "chop_ping",
+      "descr": "Pick the basil leaves onto a chopping board (reserving a...",
+      "instructions": "Pick the basil leaves onto a chopping board (reserving a few baby leaves to garnish), then roughly chop the remaining leaves and finely chop the stalks.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick the basil leaves onto a chopping board (reserving a few baby leaves to garnish), then roughly chop the remaining leaves and finely chop the stalks."
+        }
+      ]
+    },
+    {
+      "id": "chop_them",
+      "descr": "Peel and finely slice the onion and garlic",
+      "instructions": "Peel and finely slice the onion and garlic. If using fresh, cut the tomatoes in half, then roughly chop them or carefully open the tins of tomatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the onion and garlic. If using fresh, cut the tomatoes in half, then roughly chop them or carefully open the tins of tomatoes."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Put a saucepan on a medium heat and add 1 tablespoon of...",
+      "instructions": "Put a saucepan on a medium heat and add 1 tablespoon of olive oil and the onion, then cook for around 7 minutes, or until soft and lightly golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT420S",
+      "depends_on": [
+        "chop_them"
+      ],
+      "next": [
+        "stir_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a saucepan on a medium heat and add 1 tablespoon of olive oil and the onion, then cook for around 7 minutes, or until soft and lightly golden."
+        }
+      ]
+    },
+    {
+      "id": "stir_garlic",
+      "descr": "Stir in the garlic and basil stalks for a few minutes,...",
+      "instructions": "Stir in the garlic and basil stalks for a few minutes, then add the fresh or tinned tomatoes and the vinegar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the garlic and basil stalks for a few minutes, then add the fresh or tinned tomatoes and the vinegar."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Season with a tiny pinch of salt and pepper, then...",
+      "instructions": "Season with a tiny pinch of salt and pepper, then continue cooking for around 15 minutes, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "stir_garlic"
+      ],
+      "next": [
+        "chop_basil"
+      ],
+      "on_enter": [
+        {
+          "say": "Season with a tiny pinch of salt and pepper, then continue cooking for around 15 minutes, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "chop_basil",
+      "descr": "Stir in the chopped basil leaves, then reduce to low and...",
+      "instructions": "Stir in the chopped basil leaves, then reduce to low and leave to tick away. Meanwhile\u2026",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "add_tiny"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the chopped basil leaves, then reduce to low and leave to tick away. Meanwhile\u2026"
+        }
+      ]
+    },
+    {
+      "id": "add_tiny",
+      "descr": "Carefully fill a large pot three-quarters of the way up...",
+      "instructions": "Carefully fill a large pot three-quarters of the way up with boiling water, add a tiny pinch of salt and bring back to the boil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_basil"
+      ],
+      "next": [
+        "add_spaghetti"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully fill a large pot three-quarters of the way up with boiling water, add a tiny pinch of salt and bring back to the boil."
+        }
+      ]
+    },
+    {
+      "id": "add_spaghetti",
+      "descr": "Add the spaghetti and cook according to packet...",
+      "instructions": "Add the spaghetti and cook according to packet instructions \u2013 you want to cook your pasta until it is al dente. This translates as \u2018to the tooth\u2019 and means that it should be soft enough to eat, but still have a bit of a bite and firmness to it. Use the timings on the packet instructions as a guide, but try some just before the time is up to make sure it\u2019s perfectly cooked.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_tiny"
+      ],
+      "next": [
+        "serve_cooking"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the spaghetti and cook according to packet instructions \u2013 you want to cook your pasta until it is al dente. This translates as \u2018to the tooth\u2019 and means that it should be soft enough to eat, but still have a bit of a bite and firmness to it. Use the timings on the packet instructions as a guide, but try some just before the time is up to make sure it\u2019s perfectly cooked."
+        }
+      ]
+    },
+    {
+      "id": "serve_cooking",
+      "descr": "Once the pasta is done, ladle out and reserve a cup of...",
+      "instructions": "Once the pasta is done, ladle out and reserve a cup of the cooking water and keep it to one side, then drain in a colander over the sink and tip the spaghetti back into the pot.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_spaghetti"
+      ],
+      "next": [
+        "stir_spaghetti"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the pasta is done, ladle out and reserve a cup of the cooking water and keep it to one side, then drain in a colander over the sink and tip the spaghetti back into the pot."
+        }
+      ]
+    },
+    {
+      "id": "stir_spaghetti",
+      "descr": "Stir the spaghetti into the sauce, adding a splash of...",
+      "instructions": "Stir the spaghetti into the sauce, adding a splash of the pasta water to loosen, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "serve_cooking"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the spaghetti into the sauce, adding a splash of the pasta water to loosen, if needed."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Serve with the reserved basil leaves sprinkled over the...",
+      "instructions": "Serve with the reserved basil leaves sprinkled over the top and use a microplane to finely grate the Parmesan cheese, then sprinkle over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_spaghetti"
+      ],
+      "next": [
+        "step_step_12"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with the reserved basil leaves sprinkled over the top and use a microplane to finely grate the Parmesan cheese, then sprinkle over."
+        }
+      ]
+    },
+    {
+      "id": "step_step_12",
+      "descr": "PRINT THIS RECIPE (UK)",
+      "instructions": "PRINT THIS RECIPE (UK)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "sprinkle_over"
+      ],
+      "next": [
+        "step_step_13"
+      ],
+      "on_enter": [
+        {
+          "say": "PRINT THIS RECIPE (UK)"
+        }
+      ]
+    },
+    {
+      "id": "step_step_13",
+      "descr": "PRINT THIS RECIPE (USA)",
+      "instructions": "PRINT THIS RECIPE (USA)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_12"
+      ],
+      "on_enter": [
+        {
+          "say": "PRINT THIS RECIPE (USA)"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "316 calories",
+    "carbohydrates": "62.7 g",
+    "fat": "3.3 g",
+    "fiber": "11.1 g",
+    "protein": "13.1 g"
+  }
+}

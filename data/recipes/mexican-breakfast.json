@@ -1,0 +1,337 @@
+{
+  "recipe": {
+    "id": "mexican-breakfast",
+    "title": "Mexican breakfast",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "Jamie Oliver's huevos rancheros recipe is like an epic combo of spicy tomato stew with runny eggs. Pile up into tortillas for an epic Mexican breakfast.",
+    "tags": [
+      "father-s-day",
+      "dish-type",
+      "gluten-free",
+      "vegetables",
+      "eggs",
+      "quick-fixes",
+      "course",
+      "breakfast",
+      "egg",
+      "mains",
+      "tomato",
+      "occasion",
+      "cheese",
+      "vegetarian",
+      "method",
+      "one-pan-recipes",
+      "frying",
+      "main-ingredient",
+      "healthy-breakfast-ideas",
+      "chilli",
+      "popular",
+      "cheap-amp-cheerful"
+    ],
+    "course": "main",
+    "cuisine": "mexican",
+    "source_url": "https://www.jamieoliver.com/recipes/eggs/mexican-breakfast",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e003eef1318602cc32aec226c6e45502aff3b1e5-1344x2016.jpg/huevosranch.jpg?rect=0,336,1344,1344&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e003eef1318602cc32aec226c6e45502aff3b1e5-1344x2016.jpg/huevosranch.jpg?rect=0,336,1344,1344&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e003eef1318602cc32aec226c6e45502aff3b1e5-1344x2016.jpg/huevosranch.jpg?rect=0,504,1344,1008&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e003eef1318602cc32aec226c6e45502aff3b1e5-1344x2016.jpg/huevosranch.jpg?rect=0,630,1344,756&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "eggs"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "red-peppers",
+      "name": "red peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-or-orange-chillies",
+      "name": "fresh red or orange chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-dried-chilli",
+      "name": "large dried chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-ripe-tomatoes",
+      "name": "large ripe tomatoes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-eggs",
+      "name": "large eggs",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tortillas",
+      "name": "tortillas",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "grater",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "slice_onions",
+      "descr": "Peel and finely slice the onions and garlic",
+      "instructions": "Peel and finely slice the onions and garlic. Deseed and finely slice the peppers and chillies.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_several"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the onions and garlic. Deseed and finely slice the peppers and chillies."
+        }
+      ]
+    },
+    {
+      "id": "heat_several",
+      "descr": "Get a large frying pan (make sure you\u2019ve got a lid to go...",
+      "instructions": "Get a large frying pan (make sure you\u2019ve got a lid to go with it) on a high heat and add several good lugs of olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_onions"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Get a large frying pan (make sure you\u2019ve got a lid to go with it) on a high heat and add several good lugs of olive oil."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Add the onion, garlic, peppers, fresh and dried...",
+      "instructions": "Add the onion, garlic, peppers, fresh and dried chillies, bay leaves and a good pinch of sea salt and black pepper, and cook for 15 minutes, or until to softened and caramelised, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_several"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the onion, garlic, peppers, fresh and dried chillies, bay leaves and a good pinch of sea salt and black pepper, and cook for 15 minutes, or until to softened and caramelised, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Pour in the tomatoes, using a spoon or potato masher to...",
+      "instructions": "Pour in the tomatoes, using a spoon or potato masher to break them up. Bring to the boil, then turn down to a medium heat and cook for a further 5 minutes to reduce the sauce.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "season_needed"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the tomatoes, using a spoon or potato masher to break them up. Bring to the boil, then turn down to a medium heat and cook for a further 5 minutes to reduce the sauce."
+        }
+      ]
+    },
+    {
+      "id": "season_needed",
+      "descr": "When you\u2019ve got a nice thick tomato stew consistency,...",
+      "instructions": "When you\u2019ve got a nice thick tomato stew consistency, have a taste and adjust the seasoning, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_cook"
+      ],
+      "next": [
+        "slice_fresh"
+      ],
+      "on_enter": [
+        {
+          "say": "When you\u2019ve got a nice thick tomato stew consistency, have a taste and adjust the seasoning, if needed."
+        }
+      ]
+    },
+    {
+      "id": "slice_fresh",
+      "descr": "Slice the fresh tomatoes and lay them over the top of...",
+      "instructions": "Slice the fresh tomatoes and lay them over the top of the mixture.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_needed"
+      ],
+      "next": [
+        "poach_thick"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the fresh tomatoes and lay them over the top of the mixture."
+        }
+      ]
+    },
+    {
+      "id": "poach_thick",
+      "descr": "Use a spoon to make small wells in the tomato stew, then...",
+      "instructions": "Use a spoon to make small wells in the tomato stew, then crack in the eggs so they poach in the thick, delicious juices \u2013 try to crack them in as quickly as you can so they all get to cook for roughly the same amount of time.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_fresh"
+      ],
+      "next": [
+        "season_height"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a spoon to make small wells in the tomato stew, then crack in the eggs so they poach in the thick, delicious juices \u2013 try to crack them in as quickly as you can so they all get to cook for roughly the same amount of time."
+        }
+      ]
+    },
+    {
+      "id": "season_height",
+      "descr": "Season from a height, put the lid on and let the eggs...",
+      "instructions": "Season from a height, put the lid on and let the eggs cook for around 3 to 4 minutes, or until cooked to your liking.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "poach_thick"
+      ],
+      "next": [
+        "heat_eggs"
+      ],
+      "on_enter": [
+        {
+          "say": "Season from a height, put the lid on and let the eggs cook for around 3 to 4 minutes, or until cooked to your liking."
+        }
+      ]
+    },
+    {
+      "id": "heat_eggs",
+      "descr": "Warm the tortillas while this is happening",
+      "instructions": "Warm the tortillas while this is happening. You can pop them into the oven at 180\u00b0C/350\u00b0F/gas 4 for a few minutes, microwave them for a few seconds or even lay them over the lid of the pan so they heat up as the eggs cook.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_height"
+      ],
+      "next": [
+        "heat_take"
+      ],
+      "on_enter": [
+        {
+          "say": "Warm the tortillas while this is happening. You can pop them into the oven at 180\u00b0C/350\u00b0F/gas 4 for a few minutes, microwave them for a few seconds or even lay them over the lid of the pan so they heat up as the eggs cook."
+        }
+      ]
+    },
+    {
+      "id": "heat_take",
+      "descr": "Take the lid off and check your eggs by giving them a...",
+      "instructions": "Take the lid off and check your eggs by giving them a poke with your finger. When they\u2019re done to your liking, turn the heat off and take the pan to the table with the warmed tortillas, the Cheddar and a grater so everyone can get involved and make their own. Personally, I like to grate a bit of cheese right on to a warm tortilla, spoon an egg and some of the wonderful tomato stew on top, wrap it up, and eat it right away. What a beautiful way to wake up!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_eggs"
+      ],
+      "on_enter": [
+        {
+          "say": "Take the lid off and check your eggs by giving them a poke with your finger. When they\u2019re done to your liking, turn the heat off and take the pan to the table with the warmed tortillas, the Cheddar and a grater so everyone can get involved and make their own. Personally, I like to grate a bit of cheese right on to a warm tortilla, spoon an egg and some of the wonderful tomato stew on top, wrap it up, and eat it right away. What a beautiful way to wake up!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "218 calories",
+    "carbohydrates": "19.5 g",
+    "fat": "11.1 g",
+    "fiber": "1 g",
+    "protein": "10.1 g"
+  }
+}

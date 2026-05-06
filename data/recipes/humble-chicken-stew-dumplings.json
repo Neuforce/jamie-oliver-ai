@@ -1,0 +1,317 @@
+{
+  "recipe": {
+    "id": "humble-chicken-stew-dumplings",
+    "title": "Humble chicken stew & dumplings",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT100M",
+    "description": "A simple delicious chicken stew done one of my favourite ways \u2013 with leftover chicken and fluffy dumplings. Enjoy!",
+    "tags": [
+      "chicken-main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/humble-chicken-stew-dumplings",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8931764848c203abaa0d791382b173e759975269-973x1300.jpg/8931764848c203abaa0d791382b173e759975269-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8931764848c203abaa0d791382b173e759975269-973x1300.jpg/8931764848c203abaa0d791382b173e759975269-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8931764848c203abaa0d791382b173e759975269-973x1300.jpg/8931764848c203abaa0d791382b173e759975269-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8931764848c203abaa0d791382b173e759975269-973x1300.jpg/8931764848c203abaa0d791382b173e759975269-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "leftover-free-range-chicken-ca",
+      "name": "leftover free-range chicken carcass",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "plus up to 300g leftover cooked chicken"
+    },
+    {
+      "id": "rashers-of-higher-welfare-smok",
+      "name": "rashers of higher-welfare smoked streaky bacon",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-carrots",
+      "name": "large carrots",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "potatoes-or-250g-celeriac",
+      "name": "potatoes or 250g celeriac",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-thyme",
+      "name": "a few sprigs of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "button-mushrooms",
+      "name": "button mushrooms",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-of-plain-flo",
+      "name": "heaped tablespoon of plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cold-unsalted-butter",
+      "name": "cold unsalted butter",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "mixing bowl",
+    "oven",
+    "pan",
+    "pot",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Strip all the meat you can find off the chicken carcass,...",
+      "instructions": "Strip all the meat you can find off the chicken carcass, and put aside.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "boil_least"
+      ],
+      "on_enter": [
+        {
+          "say": "Strip all the meat you can find off the chicken carcass, and put aside."
+        }
+      ]
+    },
+    {
+      "id": "boil_least",
+      "descr": "Place the carcass and any bones in a large pan and use a...",
+      "instructions": "Place the carcass and any bones in a large pan and use a rolling pin to smash them all up. Cover with 1 litre of water, bring to the boil, then simmer for at least 30 minutes, skimming away any scum from the surface.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "heat_while"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the carcass and any bones in a large pan and use a rolling pin to smash them all up. Cover with 1 litre of water, bring to the boil, then simmer for at least 30 minutes, skimming away any scum from the surface."
+        }
+      ]
+    },
+    {
+      "id": "heat_while",
+      "descr": "Meanwhile, finely slice the bacon and place in a large...",
+      "instructions": "Meanwhile, finely slice the bacon and place in a large casserole pan on a medium heat with a lug of oil, while you peel and chop the onions, carrots, and potatoes or celeriac into 2cm dice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_least"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, finely slice the bacon and place in a large casserole pan on a medium heat with a lug of oil, while you peel and chop the onions, carrots, and potatoes or celeriac into 2cm dice."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Add to the pan along with the thyme sprigs and bay leaves",
+      "instructions": "Add to the pan along with the thyme sprigs and bay leaves. Cook for 10 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_while"
+      ],
+      "next": [
+        "stir_mushrooms"
+      ],
+      "on_enter": [
+        {
+          "say": "Add to the pan along with the thyme sprigs and bay leaves. Cook for 10 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_mushrooms",
+      "descr": "Halve and stir in the mushrooms, along with the leftover...",
+      "instructions": "Halve and stir in the mushrooms, along with the leftover chicken and plain flour.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "pour_stock"
+      ],
+      "on_enter": [
+        {
+          "say": "Halve and stir in the mushrooms, along with the leftover chicken and plain flour."
+        }
+      ]
+    },
+    {
+      "id": "pour_stock",
+      "descr": "Pour the stock through a sieve straight into the pan...",
+      "instructions": "Pour the stock through a sieve straight into the pan (topping up with a little water, if needed) and let it simmer for 20 minutes, or until thick and delicious, while you start your dumplings.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "stir_mushrooms"
+      ],
+      "next": [
+        "mix_bowl"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the stock through a sieve straight into the pan (topping up with a little water, if needed) and let it simmer for 20 minutes, or until thick and delicious, while you start your dumplings."
+        }
+      ]
+    },
+    {
+      "id": "mix_bowl",
+      "descr": "Place the self-raising flour and a pinch of sea salt in...",
+      "instructions": "Place the self-raising flour and a pinch of sea salt in a mixing bowl. Coarsely grate in the butter and rub together until it resembles breadcrumbs.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_stock"
+      ],
+      "next": [
+        "add_cold"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the self-raising flour and a pinch of sea salt in a mixing bowl. Coarsely grate in the butter and rub together until it resembles breadcrumbs."
+        }
+      ]
+    },
+    {
+      "id": "add_cold",
+      "descr": "Add 100ml of cold water and bring into a ball of dough",
+      "instructions": "Add 100ml of cold water and bring into a ball of dough. Divide into 12 pieces and roll into balls.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Add 100ml of cold water and bring into a ball of dough. Divide into 12 pieces and roll into balls."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "When the time\u2019s up, loosen the stew with a good splash...",
+      "instructions": "When the time\u2019s up, loosen the stew with a good splash of water if needed, season to perfection, then transfer it to an ovenproof pan and place the balls on top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_cold"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "When the time\u2019s up, loosen the stew with a good splash of water if needed, season to perfection, then transfer it to an ovenproof pan and place the balls on top."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "Pop the lid on and bake at 190\u00b0C/375\u00b0F/gas 5 for 30...",
+      "instructions": "Pop the lid on and bake at 190\u00b0C/375\u00b0F/gas 5 for 30 minutes, or until hot through and the dumplings are fluffy and cooked. Serve with some seasonal greens.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Pop the lid on and bake at 190\u00b0C/375\u00b0F/gas 5 for 30 minutes, or until hot through and the dumplings are fluffy and cooked. Serve with some seasonal greens."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "768 calories",
+    "carbohydrates": "79.8 g",
+    "fat": "37.6 g",
+    "fiber": "6.8 g",
+    "protein": "32.4 g"
+  }
+}

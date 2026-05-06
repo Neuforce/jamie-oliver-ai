@@ -1,0 +1,283 @@
+{
+  "recipe": {
+    "id": "potato-pepper-broccoli-frittata",
+    "title": "Potato, pepper & broccoli frittata",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "Brilliantly simple, this veg-packed frittata makes a great midweek meal for the whole family.",
+    "tags": [
+      "family-money-saving-recipes",
+      "money-saving-recipes",
+      "main-ingredient",
+      "healthy-family-recipes",
+      "course",
+      "vegetarian",
+      "mains",
+      "healthy-vegetarian-recipes",
+      "family-food",
+      "gluten-free",
+      "quick-amp-healthy-recipes",
+      "vegetables",
+      "one-pan-recipes",
+      "family-one-pan-recipes",
+      "healthy-meals",
+      "cheap-amp-cheerful",
+      "healthy-dinner-ideas"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/potato-pepper-and-broccoli-frittata",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ad2fab74e3de07bf52625ef15aef87db8b88556-958x1280.jpg/134593077?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ad2fab74e3de07bf52625ef15aef87db8b88556-958x1280.jpg/134593077?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ad2fab74e3de07bf52625ef15aef87db8b88556-958x1280.jpg/134593077?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ad2fab74e3de07bf52625ef15aef87db8b88556-958x1280.jpg/134593077?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "maris-piper-potatoes",
+      "name": "Maris Piper potatoes",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "head-of-broccoli",
+      "name": "head of broccoli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "375g"
+    },
+    {
+      "id": "red-pepper",
+      "name": "red pepper",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "80g-bag-of-watercress",
+      "name": "80g bag of watercress",
+      "quantity": 80.0,
+      "unit": null,
+      "note": "spinach & rocket"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00baC/400\u00baF/gas 6",
+      "instructions": "Preheat the oven to 200\u00baC/400\u00baF/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00baC/400\u00baF/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_2",
+      "descr": "Drizzle 1 tablespoon of olive oil into a 28cm ovenproof...",
+      "instructions": "Drizzle 1 tablespoon of olive oil into a 28cm ovenproof non-stick frying pan on a medium-high heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_adding"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle 1 tablespoon of olive oil into a 28cm ovenproof non-stick frying pan on a medium-high heat."
+        }
+      ]
+    },
+    {
+      "id": "chop_adding",
+      "descr": "Scrub 600g of potatoes and chop into 1cm dice, adding to...",
+      "instructions": "Scrub 600g of potatoes and chop into 1cm dice, adding to the pan as you go.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_2"
+      ],
+      "next": [
+        "chop_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub 600g of potatoes and chop into 1cm dice, adding to the pan as you go."
+        }
+      ]
+    },
+    {
+      "id": "chop_remaining",
+      "descr": "Trim, finely slice and add 1 bunch of spring onions",
+      "instructions": "Trim, finely slice and add 1 bunch of spring onions. Trim the tough end off 1 head of broccoli (375g), finely chop the remaining stalk and add to the pan. Deseed, finely slice and add 1 red pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_adding"
+      ],
+      "next": [
+        "slice_head"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim, finely slice and add 1 bunch of spring onions. Trim the tough end off 1 head of broccoli (375g), finely chop the remaining stalk and add to the pan. Deseed, finely slice and add 1 red pepper."
+        }
+      ]
+    },
+    {
+      "id": "slice_head",
+      "descr": "Season with a pinch of sea salt and black pepper, add 1...",
+      "instructions": "Season with a pinch of sea salt and black pepper, add 1 teaspoon of smoked paprika, then cook for 15 minutes, or until golden, stirring occasionally. Slice the head of broccoli apart into bite-sized florets, adding to the pan for the last 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "chop_remaining"
+      ],
+      "next": [
+        "mix_together"
+      ],
+      "on_enter": [
+        {
+          "say": "Season with a pinch of sea salt and black pepper, add 1 teaspoon of smoked paprika, then cook for 15 minutes, or until golden, stirring occasionally. Slice the head of broccoli apart into bite-sized florets, adding to the pan for the last 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "mix_together",
+      "descr": "Crack 8 large eggs into a bowl and beat together, grate...",
+      "instructions": "Crack 8 large eggs into a bowl and beat together, grate in 30g of Cheddar cheese and season with salt and pepper. Mix together well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_head"
+      ],
+      "next": [
+        "chop_half"
+      ],
+      "on_enter": [
+        {
+          "say": "Crack 8 large eggs into a bowl and beat together, grate in 30g of Cheddar cheese and season with salt and pepper. Mix together well."
+        }
+      ]
+    },
+    {
+      "id": "chop_half",
+      "descr": "Roughly chop half the watercress, spinach & rocket (40g)...",
+      "instructions": "Roughly chop half the watercress, spinach & rocket (40g) and stir into the pan, then pour over the egg mixture, swirling to coat the base of the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_together"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly chop half the watercress, spinach & rocket (40g) and stir into the pan, then pour over the egg mixture, swirling to coat the base of the pan."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "Grate over the remaining 10g of Cheddar and cook for 2...",
+      "instructions": "Grate over the remaining 10g of Cheddar and cook for 2 minutes, then bake for 10 minutes, or until golden and set.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "chop_half"
+      ],
+      "next": [
+        "serve_alongside"
+      ],
+      "on_enter": [
+        {
+          "say": "Grate over the remaining 10g of Cheddar and cook for 2 minutes, then bake for 10 minutes, or until golden and set."
+        }
+      ]
+    },
+    {
+      "id": "serve_alongside",
+      "descr": "Slide the frittata out onto a serving board and cut into...",
+      "instructions": "Slide the frittata out onto a serving board and cut into wedges. Dress the remaining watercress, spinach & rocket (40g) in 1 tablespoon of extra virgin olive oil and serve alongside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Slide the frittata out onto a serving board and cut into wedges. Dress the remaining watercress, spinach & rocket (40g) in 1 tablespoon of extra virgin olive oil and serve alongside."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "373 calories",
+    "carbohydrates": "30.1 g",
+    "fat": "19.1 g",
+    "fiber": "5.3 g",
+    "protein": "23 g"
+  }
+}

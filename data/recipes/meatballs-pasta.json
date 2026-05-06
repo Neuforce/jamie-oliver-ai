@@ -1,0 +1,422 @@
+{
+  "recipe": {
+    "id": "meatballs-pasta",
+    "title": "Meatballs & pasta",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "This wicked meatball recipe is a real family favourite: pork and beef meatballs in a rich tomato sauce with super spaghetti \u2013 the perfect partnership!",
+    "tags": [
+      "pasta",
+      "main-ingredient",
+      "student-recipes",
+      "pasta-amp-risotto",
+      "dish-type",
+      "method",
+      "meatballs",
+      "meatball",
+      "popular",
+      "occasion",
+      "meat-balls",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/meatballs-and-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/186f8b31a4b8dd284dacb48a02d74e90718b47cc-973x1300.jpg/186f8b31a4b8dd284dacb48a02d74e90718b47cc-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/186f8b31a4b8dd284dacb48a02d74e90718b47cc-973x1300.jpg/186f8b31a4b8dd284dacb48a02d74e90718b47cc-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/186f8b31a4b8dd284dacb48a02d74e90718b47cc-973x1300.jpg/186f8b31a4b8dd284dacb48a02d74e90718b47cc-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/186f8b31a4b8dd284dacb48a02d74e90718b47cc-973x1300.jpg/186f8b31a4b8dd284dacb48a02d74e90718b47cc-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "jacob-s-cream-crackers",
+      "name": "Jacob\u2019s cream crackers",
+      "quantity": 12.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-dijon-mustard",
+      "name": "heaped teaspoons Dijon mustard",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "quality-minced-beef",
+      "name": "quality minced beef",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "pork, or a mixture of the two"
+    },
+    {
+      "id": "heaped-tablespoon-dried-oregan",
+      "name": "heaped tablespoon dried oregano",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-basil",
+      "name": "fresh basil",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "medium-onion",
+      "name": "medium onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "a-fresh-or-dried-red-chilli",
+      "name": "\u00bd a fresh or dried red chilli",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "dried-spaghetti-or-penne",
+      "name": "dried spaghetti or penne",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "large bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mash_fine",
+      "descr": "Wrap the crackers in a tea towel and smash up until...",
+      "instructions": "Wrap the crackers in a tea towel and smash up until fine, breaking up any big bits with your hands, then tip into a large bowl.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_rosemary"
+      ],
+      "on_enter": [
+        {
+          "say": "Wrap the crackers in a tea towel and smash up until fine, breaking up any big bits with your hands, then tip into a large bowl."
+        }
+      ]
+    },
+    {
+      "id": "chop_rosemary",
+      "descr": "Pick and finely chop the rosemary, then add to the bowl...",
+      "instructions": "Pick and finely chop the rosemary, then add to the bowl with the mustard, minced meat and oregano.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mash_fine"
+      ],
+      "next": [
+        "add_good"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the rosemary, then add to the bowl with the mustard, minced meat and oregano."
+        }
+      ]
+    },
+    {
+      "id": "add_good",
+      "descr": "Crack the egg into the bowl, then add a good pinch of...",
+      "instructions": "Crack the egg into the bowl, then add a good pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_rosemary"
+      ],
+      "next": [
+        "mix_everything"
+      ],
+      "on_enter": [
+        {
+          "say": "Crack the egg into the bowl, then add a good pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "mix_everything",
+      "descr": "With clean hands, scrunch and mix everything up well",
+      "instructions": "With clean hands, scrunch and mix everything up well. Divide into 4 large and balls, then with wet hands divide each ball into 6 and roll into little meatballs \u2013 you should end up with 24.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_good"
+      ],
+      "next": [
+        "drizzle_jiggle"
+      ],
+      "on_enter": [
+        {
+          "say": "With clean hands, scrunch and mix everything up well. Divide into 4 large and balls, then with wet hands divide each ball into 6 and roll into little meatballs \u2013 you should end up with 24."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_jiggle",
+      "descr": "Place the meatballs onto a plate, drizzle with oil and...",
+      "instructions": "Place the meatballs onto a plate, drizzle with oil and jiggle about to coat, then cover and place in the fridge until needed \u2013 this will help to firm them up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_everything"
+      ],
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the meatballs onto a plate, drizzle with oil and jiggle about to coat, then cover and place in the fridge until needed \u2013 this will help to firm them up."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "Pick the basil leaves, keeping any smaller ones to one...",
+      "instructions": "Pick the basil leaves, keeping any smaller ones to one side for later. Peel and finely chop the onion and the garlic, and trim and finely slice or crumble the chilli.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_jiggle"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick the basil leaves, keeping any smaller ones to one side for later. Peel and finely chop the onion and the garlic, and trim and finely slice or crumble the chilli."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Heat 2 tablespoons of oil in a large frying pan over a...",
+      "instructions": "Heat 2 tablespoons of oil in a large frying pan over a medium heat, add the onion and cook for 7 minutes, or until softened and lightly golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT420S",
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "add_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 2 tablespoons of oil in a large frying pan over a medium heat, add the onion and cook for 7 minutes, or until softened and lightly golden."
+        }
+      ]
+    },
+    {
+      "id": "add_garlic",
+      "descr": "Add the garlic and chilli, and as soon as they start to...",
+      "instructions": "Add the garlic and chilli, and as soon as they start to get some colour add the large basil leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the garlic and chilli, and as soon as they start to get some colour add the large basil leaves."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Tip in the the tomatoes, breaking them up with the back...",
+      "instructions": "Tip in the the tomatoes, breaking them up with the back of a spoon, then add the balsamic vinegar, and season to taste. Bring to the boil, then reduce to a simmer until needed, stirring regularly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_garlic"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip in the the tomatoes, breaking them up with the back of a spoon, then add the balsamic vinegar, and season to taste. Bring to the boil, then reduce to a simmer until needed, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Meanwhile, heat 1 tablespoon of oil in another large...",
+      "instructions": "Meanwhile, heat 1 tablespoon of oil in another large frying pan over a medium heat, add the meatballs and cook for 8 to 10 minutes, or until cooked through, turning regularly To check if they\u2019re cooked, cut one opening \u2013 there should be no sign of pink.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "add_meatballs"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, heat 1 tablespoon of oil in another large frying pan over a medium heat, add the meatballs and cook for 8 to 10 minutes, or until cooked through, turning regularly To check if they\u2019re cooked, cut one opening \u2013 there should be no sign of pink."
+        }
+      ]
+    },
+    {
+      "id": "add_meatballs",
+      "descr": "Once cooked, add the meatballs to the sauce and simmer...",
+      "instructions": "Once cooked, add the meatballs to the sauce and simmer while you cook the pasta.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Once cooked, add the meatballs to the sauce and simmer while you cook the pasta."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Cook the pasta in boiling salted water according to the...",
+      "instructions": "Cook the pasta in boiling salted water according to the packet instructions, then drain, reserving a mugful of cooking water. Return the pasta to the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_meatballs"
+      ],
+      "next": [
+        "add_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta in boiling salted water according to the packet instructions, then drain, reserving a mugful of cooking water. Return the pasta to the pan."
+        }
+      ]
+    },
+    {
+      "id": "add_little",
+      "descr": "Spoon half the tomato sauce over the pasta and toss...",
+      "instructions": "Spoon half the tomato sauce over the pasta and toss together, adding a little splash of reserved cooking water to loosen, if needed",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "add_fine"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon half the tomato sauce over the pasta and toss together, adding a little splash of reserved cooking water to loosen, if needed"
+        }
+      ]
+    },
+    {
+      "id": "add_fine",
+      "descr": "Transfer to a large platter or divide between bowls,...",
+      "instructions": "Transfer to a large platter or divide between bowls, serving the remaining sauce and meatballs on top. Add a fine grating of Parmesan and scatter over the reserved basil, then tuck in.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer to a large platter or divide between bowls, serving the remaining sauce and meatballs on top. Add a fine grating of Parmesan and scatter over the reserved basil, then tuck in."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "756 calories",
+    "carbohydrates": "104.5 g",
+    "fat": "14.9 g",
+    "fiber": "5.6 g",
+    "protein": "58.1 g"
+  }
+}

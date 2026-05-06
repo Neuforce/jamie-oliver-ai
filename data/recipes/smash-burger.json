@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "smash-burger",
+    "title": "Smash burger",
+    "servings": 1,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT12M",
+    "description": "Need to rustle up a burger in under 15 minutes? Try Jamie's super-quick smash-&-go method, which maximises flavour by getting loads of gnarly caramelisation. ",
+    "tags": [
+      "quick-fixes",
+      "beef-mince",
+      "burger",
+      "15-minute-recipes",
+      "quick-easy",
+      "low-lactose",
+      "dairy-free",
+      "meals-for-one"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/smash-burger",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/da3f8dc45ad222418c61ae6ae7de9029f76c1ea4-983x1279.jpg/159471726?rect=0,149,983,983&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/da3f8dc45ad222418c61ae6ae7de9029f76c1ea4-983x1279.jpg/159471726?rect=0,149,983,983&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/da3f8dc45ad222418c61ae6ae7de9029f76c1ea4-983x1279.jpg/159471726?rect=0,272,983,737&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/da3f8dc45ad222418c61ae6ae7de9029f76c1ea4-983x1279.jpg/159471726?rect=0,364,983,553&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "of-a-small-onion",
+      "name": "\u00bc of a small onion",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-beef-mince",
+      "name": "higher-welfare beef mince",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cajun-seasoning",
+      "name": "Cajun seasoning",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "burger-bun",
+      "name": "burger bun",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tomato-ketchup",
+      "name": "tomato ketchup",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "gherkins",
+      "name": "gherkins",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "american-mustard",
+      "name": "American mustard",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    },
+    {
+      "id": "tomato",
+      "name": "tomato",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-salad-leaves",
+      "name": "mixed salad leaves",
+      "quantity": 1.0,
+      "unit": "handful",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "slice_rounds",
+      "descr": "Peel the onion, very finely slice into rounds, then...",
+      "instructions": "Peel the onion, very finely slice into rounds, then break into rings and cook in a large non-stick frying pan with 1 tablespoon of olive oil for a few minutes, stirring regularly, then push to one side of the pan.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_really"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the onion, very finely slice into rounds, then break into rings and cook in a large non-stick frying pan with 1 tablespoon of olive oil for a few minutes, stirring regularly, then push to one side of the pan."
+        }
+      ]
+    },
+    {
+      "id": "slice_really",
+      "descr": "Squash the minced meat into a rough patty about \u00bdcm...",
+      "instructions": "Squash the minced meat into a rough patty about \u00bdcm thick and a bit bigger than your bun and place in the pan. Season with black pepper and the Cajun seasoning, then move the onion rings on top and use a fish slice to really smash the onions into the meat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_rounds"
+      ],
+      "next": [
+        "toast_halved"
+      ],
+      "on_enter": [
+        {
+          "say": "Squash the minced meat into a rough patty about \u00bdcm thick and a bit bigger than your bun and place in the pan. Season with black pepper and the Cajun seasoning, then move the onion rings on top and use a fish slice to really smash the onions into the meat."
+        }
+      ]
+    },
+    {
+      "id": "toast_halved",
+      "descr": "Cook for 2 minutes on each side, or until gnarly and...",
+      "instructions": "Cook for 2 minutes on each side, or until gnarly and cooked through, toasting the halved bun alongside for a minute.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "slice_really"
+      ],
+      "next": [
+        "slice_layer"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook for 2 minutes on each side, or until gnarly and cooked through, toasting the halved bun alongside for a minute."
+        }
+      ]
+    },
+    {
+      "id": "slice_layer",
+      "descr": "Spread the bun base with ketchup, sit the burger on top,...",
+      "instructions": "Spread the bun base with ketchup, sit the burger on top, slice and layer over 1 gherkin, squeeze over mustard to your liking, and pop the lid on.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "toast_halved"
+      ],
+      "next": [
+        "slice_tomato"
+      ],
+      "on_enter": [
+        {
+          "say": "Spread the bun base with ketchup, sit the burger on top, slice and layer over 1 gherkin, squeeze over mustard to your liking, and pop the lid on."
+        }
+      ]
+    },
+    {
+      "id": "slice_tomato",
+      "descr": "Slice the tomato and remaining gherkin to serve on the...",
+      "instructions": "Slice the tomato and remaining gherkin to serve on the side with the salad leaves, or stuff it all into your bun, the choice is yours.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_layer"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the tomato and remaining gherkin to serve on the side with the salad leaves, or stuff it all into your bun, the choice is yours."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "579 calories",
+    "carbohydrates": "37.3 g",
+    "fat": "33.3 g",
+    "fiber": "4.2 g",
+    "protein": "32.6 g"
+  }
+}

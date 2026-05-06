@@ -1,0 +1,179 @@
+{
+  "recipe": {
+    "id": "easy-prawn-curry",
+    "title": "Easy prawn curry",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "This flavour-packed prawn curry is incredibly speedy and delicious, boasting 4 of your 7-a-day. Wow!",
+    "tags": [
+      "curry",
+      "indian-style",
+      "low-lactose",
+      "gluten-free",
+      "prawn",
+      "dairy-free",
+      "quick-healthy"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/curry/easy-prawn-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2643fa72641cd9d87e30192f2326b95999c7d0f6-967x1279.jpg/163194087?rect=0,157,967,967&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2643fa72641cd9d87e30192f2326b95999c7d0f6-967x1279.jpg/163194087?rect=0,157,967,967&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2643fa72641cd9d87e30192f2326b95999c7d0f6-967x1279.jpg/163194087?rect=0,278,967,725&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2643fa72641cd9d87e30192f2326b95999c7d0f6-967x1279.jpg/163194087?rect=0,368,967,544&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "curry"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "160g"
+    },
+    {
+      "id": "ripe-cherry-tomatoes",
+      "name": "ripe cherry tomatoes",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "50g-sachet-of-creamed-coconut",
+      "name": "50g sachet of creamed coconut",
+      "quantity": 50.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "coriander",
+      "name": "coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "your-favourite-curry-paste",
+      "name": "your favourite curry paste",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-mango",
+      "name": "frozen mango",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "raw-peeled-king-prawns",
+      "name": "raw peeled king prawns",
+      "quantity": 165.0,
+      "unit": "g",
+      "note": "from sustainable sources"
+    },
+    {
+      "id": "250g-packet-of-cooked-wholegra",
+      "name": "250g packet of cooked wholegrain basmati rice",
+      "quantity": 250.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bombay-mix",
+      "name": "Bombay mix",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_peel",
+      "descr": "Put a large non-stick frying pan on a high heat",
+      "instructions": "Put a large non-stick frying pan on a high heat. Peel and very finely slice the onion and place in the pan to dry fry with the tomatoes, tossing regularly for 4 minutes, while you put the creamed coconut in a blender with half the chickpeas and all their juice, half the coriander leaves and all the stalks, and a splash of water. Tip in half the onions and tomatoes from the pan and blitz until smooth to make a sauce.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large non-stick frying pan on a high heat. Peel and very finely slice the onion and place in the pan to dry fry with the tomatoes, tossing regularly for 4 minutes, while you put the creamed coconut in a blender with half the chickpeas and all their juice, half the coriander leaves and all the stalks, and a splash of water. Tip in half the onions and tomatoes from the pan and blitz until smooth to make a sauce."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Stir the curry paste and \u00bd a tablespoon of olive oil...",
+      "instructions": "Stir the curry paste and \u00bd a tablespoon of olive oil into the pan, followed a minute later by the frozen mango and remaining chickpeas, then the sauce. Toss over a medium heat for 2 minutes, then add the prawns and let it bubble away until the prawns are just cooked, loosening with splashes of water, if needed. Season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_peel"
+      ],
+      "next": [
+        "chop_most"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the curry paste and \u00bd a tablespoon of olive oil into the pan, followed a minute later by the frozen mango and remaining chickpeas, then the sauce. Toss over a medium heat for 2 minutes, then add the prawns and let it bubble away until the prawns are just cooked, loosening with splashes of water, if needed. Season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "chop_most",
+      "descr": "Cook the rice according to the packet instructions, then...",
+      "instructions": "Cook the rice according to the packet instructions, then divide between plates. Chop and stir most of the remaining coriander leaves into the curry, spoon it on top of the rice, then scatter over the last few coriander leaves. Crush and crumble over the Bombay mix for added crunch, to finish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the rice according to the packet instructions, then divide between plates. Chop and stir most of the remaining coriander leaves into the curry, spoon it on top of the rice, then scatter over the last few coriander leaves. Crush and crumble over the Bombay mix for added crunch, to finish."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "600 calories",
+    "carbohydrates": "79.5 g",
+    "fat": "17.8 g",
+    "fiber": "14.4 g",
+    "protein": "30.9 g"
+  }
+}

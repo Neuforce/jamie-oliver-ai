@@ -1,0 +1,207 @@
+{
+  "recipe": {
+    "id": "sausage-casserole",
+    "title": "Sausage casserole",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "This one-pot wonder full of humble ingredients is a simple, stunning dish that will make a big impression. One for the whole family.",
+    "tags": [
+      "tv",
+      "casserole",
+      "low-lactose",
+      "family-batch-cooking",
+      "sausages",
+      "keep-cooking-family-favourites",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/sausage/sausage-casserole",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/bfefa651b0ae504340042b7d743ea966eb95e13e-958x1280.jpg/109469718?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/bfefa651b0ae504340042b7d743ea966eb95e13e-958x1280.jpg/109469718?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/bfefa651b0ae504340042b7d743ea966eb95e13e-958x1280.jpg/109469718?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/bfefa651b0ae504340042b7d743ea966eb95e13e-958x1280.jpg/109469718?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "sausage"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "higher-welfare-cumberland-or-v",
+      "name": "higher-welfare Cumberland or veggie sausages",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-wholegrain-mu",
+      "name": "heaped teaspoons wholegrain mustard",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-carrots",
+      "name": "large carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "leeks",
+      "name": "leeks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "hp-sauce",
+      "name": "HP sauce",
+      "quantity": 3.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-mixed-beans",
+      "name": "400g tins of mixed beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-quality-plum-tomat",
+      "name": "400g tin of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "grill",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Place the sausages in a large non-stick casserole pan on...",
+      "instructions": "Place the sausages in a large non-stick casserole pan on a medium-high heat with 1 tablespoon of olive oil and brown for 10 minutes, turning regularly, then remove to a plate, leaving the pan on the heat.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "chop_even"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the sausages in a large non-stick casserole pan on a medium-high heat with 1 tablespoon of olive oil and brown for 10 minutes, turning regularly, then remove to a plate, leaving the pan on the heat."
+        }
+      ]
+    },
+    {
+      "id": "chop_even",
+      "descr": "Meanwhile, peel the potatoes, chop into even-sized...",
+      "instructions": "Meanwhile, peel the potatoes, chop into even-sized chunks and cook in a large pan of boiling salted water for 15 minutes, or until tender, then drain and leave to steam dry. Mash well with half the mustard, then season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "chop_carrots"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel the potatoes, chop into even-sized chunks and cook in a large pan of boiling salted water for 15 minutes, or until tender, then drain and leave to steam dry. Mash well with half the mustard, then season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "chop_carrots",
+      "descr": "Trim, wash and chop the carrots and leeks into 2cm chunks",
+      "instructions": "Trim, wash and chop the carrots and leeks into 2cm chunks. Stir into the fat in the pan and cook for 15 minutes, or until softened, stirring regularly, and adding a splash of water, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "chop_even"
+      ],
+      "next": [
+        "stir_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim, wash and chop the carrots and leeks into 2cm chunks. Stir into the fat in the pan and cook for 15 minutes, or until softened, stirring regularly, and adding a splash of water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "stir_sauce",
+      "descr": "Stir the HP sauce and remaining mustard into the veg,...",
+      "instructions": "Stir the HP sauce and remaining mustard into the veg, then pour in the beans, juice and all. Add the tomatoes, breaking them up with the spoon, then stir in 1 tin\u2019s worth of water. Bring to the boil and cook for another 10 minutes, then season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_carrots"
+      ],
+      "next": [
+        "preheat_high"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the HP sauce and remaining mustard into the veg, then pour in the beans, juice and all. Add the tomatoes, breaking them up with the spoon, then stir in 1 tin\u2019s worth of water. Bring to the boil and cook for another 10 minutes, then season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "preheat_high",
+      "descr": "Preheat the grill to high",
+      "instructions": "Preheat the grill to high. Score the sausages at \u00bdcm intervals and sit them cut side up in the stew. As soon as the mash is cool enough to handle, divide it into four compact balls, push them into the stew and brush with 2 tablespoons of oil. Grill on the top shelf of the oven for 15 minutes, or until golden and bubbling.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "stir_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the grill to high. Score the sausages at \u00bdcm intervals and sit them cut side up in the stew. As soon as the mash is cool enough to handle, divide it into four compact balls, push them into the stew and brush with 2 tablespoons of oil. Grill on the top shelf of the oven for 15 minutes, or until golden and bubbling."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "673 calories",
+    "carbohydrates": "68.8 g",
+    "fat": "29.7 g",
+    "fiber": "15.3 g",
+    "protein": "30.8 g"
+  }
+}

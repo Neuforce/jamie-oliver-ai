@@ -1,0 +1,219 @@
+{
+  "recipe": {
+    "id": "sweet-leek-carbonara",
+    "title": "Sweet leek carbonara",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "A gorgeous veggie pasta recipe from Jamie Oliver's new book Veg. A vegetarian carbonara recipe with slow-cooked leeks and tasty Parmesan cheese. Happy days!",
+    "tags": [
+      "pasta",
+      "healthy-dinner-ideas",
+      "pasta-amp-risotto",
+      "jamie-s-meat-free-meals",
+      "dish-type",
+      "vegetarian",
+      "course",
+      "healthy-vegetarian-recipes",
+      "tv-shows",
+      "healthy-meals",
+      "leeks",
+      "cheap-amp-cheerful",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/sweet-leek-carbonara",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f518c9219ca698a400ae60971df24944918b6ac2-958x1280.jpg/92507809?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f518c9219ca698a400ae60971df24944918b6ac2-958x1280.jpg/92507809?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f518c9219ca698a400ae60971df24944918b6ac2-958x1280.jpg/92507809?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f518c9219ca698a400ae60971df24944918b6ac2-958x1280.jpg/92507809?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-leeks",
+      "name": "large leeks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "knob-of-unsalted-butter",
+      "name": "knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-spaghetti",
+      "name": "dried spaghetti",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-or-vegetarian-hard-ch",
+      "name": "Parmesan or vegetarian hard cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_butter",
+      "descr": "Trim, wash and finely slice the leeks",
+      "instructions": "Trim, wash and finely slice the leeks. Peel and finely slice the garlic and pick the thyme leaves, then place in a large casserole pan on a medium heat with the butter and 1 tablespoon of oil.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim, wash and finely slice the leeks. Peel and finely slice the garlic and pick the thyme leaves, then place in a large casserole pan on a medium heat with the butter and 1 tablespoon of oil."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Once sizzling, stir in the leeks and 400ml of water,...",
+      "instructions": "Once sizzling, stir in the leeks and 400ml of water, then cover and simmer gently over a low heat for 40 minutes, or until sweet and soft, stirring occasionally. Season with sea salt and black pepper.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "heat_butter"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Once sizzling, stir in the leeks and 400ml of water, then cover and simmer gently over a low heat for 40 minutes, or until sweet and soft, stirring occasionally. Season with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "When the leeks are almost done, cook the pasta in a...",
+      "instructions": "When the leeks are almost done, cook the pasta in a large pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of starchy cooking water.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "heat_wait"
+      ],
+      "on_enter": [
+        {
+          "say": "When the leeks are almost done, cook the pasta in a large pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of starchy cooking water."
+        }
+      ]
+    },
+    {
+      "id": "heat_wait",
+      "descr": "Toss the drained pasta into the leek pan, then remove...",
+      "instructions": "Toss the drained pasta into the leek pan, then remove from the heat and wait 2 minutes for the pan to cool slightly while you finely grate the cheese and beat it with the egg (if the pan\u2019s too hot, it\u2019ll scramble; get it right and it\u2019ll be smooth, silky and deliciously elegant).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "heat_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss the drained pasta into the leek pan, then remove from the heat and wait 2 minutes for the pan to cool slightly while you finely grate the cheese and beat it with the egg (if the pan\u2019s too hot, it\u2019ll scramble; get it right and it\u2019ll be smooth, silky and deliciously elegant)."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_5",
+      "descr": "Loosen the egg mixture with a splash of reserved cooking...",
+      "instructions": "Loosen the egg mixture with a splash of reserved cooking water, then pour over the pasta, tossing vigorously (the egg will cook in the residual heat).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_wait"
+      ],
+      "next": [
+        "season_absolute"
+      ],
+      "on_enter": [
+        {
+          "say": "Loosen the egg mixture with a splash of reserved cooking water, then pour over the pasta, tossing vigorously (the egg will cook in the residual heat)."
+        }
+      ]
+    },
+    {
+      "id": "season_absolute",
+      "descr": "Season to absolute perfection, going a little OTT on the...",
+      "instructions": "Season to absolute perfection, going a little OTT on the pepper. Adjust the consistency with extra cooking water, if needed, and finish with a little stroke of cheese. Fantastic served with a glass of cold Italian white wine.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to absolute perfection, going a little OTT on the pepper. Adjust the consistency with extra cooking water, if needed, and finish with a little stroke of cheese. Fantastic served with a glass of cold Italian white wine."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "418 calories",
+    "carbohydrates": "58.9 g",
+    "fat": "14.4 g",
+    "fiber": "2.3 g",
+    "protein": "17 g"
+  }
+}

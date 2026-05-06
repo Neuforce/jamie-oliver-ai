@@ -1,0 +1,318 @@
+{
+  "recipe": {
+    "id": "best-roast-leg-of-lamb",
+    "title": "Best roast leg of lamb",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT95M",
+    "description": "This is without a doubt one of the best ways to cook a leg of lamb. Cooking on a high heat gives you super-crispy potatoes but the lamb is still juicy.",
+    "tags": [
+      "roast",
+      "leg-of-lamb",
+      "dinner-party",
+      "sunday-lunch",
+      "main-ingredient",
+      "easter-treats",
+      "lamb",
+      "mains",
+      "dish-type",
+      "method",
+      "roasting",
+      "low-lactose",
+      "dairy-free",
+      "occasion",
+      "roast-lamb",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/lamb/best-roast-leg-of-lamb",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cb100e764aaf0d3bb361a31d659541b59ae57097-958x1280.jpg/68834659?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cb100e764aaf0d3bb361a31d659541b59ae57097-958x1280.jpg/68834659?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cb100e764aaf0d3bb361a31d659541b59ae57097-958x1280.jpg/68834659?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cb100e764aaf0d3bb361a31d659541b59ae57097-958x1280.jpg/68834659?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "lamb"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "leg-of-lamb-or-hogget",
+      "name": "leg of lamb or hogget",
+      "quantity": 2.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-rosemary",
+      "name": "\u00bd a bunch of fresh rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 1.5,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mint-sauce",
+      "name": "MINT SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-mint",
+      "name": "fresh mint",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "wine-vinegar",
+      "name": "wine vinegar",
+      "quantity": 3.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "colander",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Remove the lamb from the fridge 1 hour before you want...",
+      "instructions": "Remove the lamb from the fridge 1 hour before you want to cook it, to let it come up to room temperature.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the lamb from the fridge 1 hour before you want to cook it, to let it come up to room temperature."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00baC/400\u00baF/gas 6 and place a...",
+      "instructions": "Preheat the oven to 200\u00baC/400\u00baF/gas 6 and place a roasting dish for the potatoes on the bottom.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "chop_half"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00baC/400\u00baF/gas 6 and place a roasting dish for the potatoes on the bottom."
+        }
+      ]
+    },
+    {
+      "id": "chop_half",
+      "descr": "Break the garlic bulb up into cloves, then peel 3,...",
+      "instructions": "Break the garlic bulb up into cloves, then peel 3, leaving the rest whole. Pick and roughly chop half the rosemary leaves. Peel and halve the potatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_rosemary"
+      ],
+      "on_enter": [
+        {
+          "say": "Break the garlic bulb up into cloves, then peel 3, leaving the rest whole. Pick and roughly chop half the rosemary leaves. Peel and halve the potatoes."
+        }
+      ]
+    },
+    {
+      "id": "chop_rosemary",
+      "descr": "Crush the peeled garlic into a bowl, add the chopped...",
+      "instructions": "Crush the peeled garlic into a bowl, add the chopped rosemary, finely grate in the lemon zest and drizzle in a good lug of oil, then mix together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_half"
+      ],
+      "next": [
+        "drizzle_marinade"
+      ],
+      "on_enter": [
+        {
+          "say": "Crush the peeled garlic into a bowl, add the chopped rosemary, finely grate in the lemon zest and drizzle in a good lug of oil, then mix together."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_marinade",
+      "descr": "Season the lamb with sea salt and black pepper, then...",
+      "instructions": "Season the lamb with sea salt and black pepper, then drizzle with the marinade and rub all over the meat. Place on the hot bars of the oven above the tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_rosemary"
+      ],
+      "next": [
+        "boil_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the lamb with sea salt and black pepper, then drizzle with the marinade and rub all over the meat. Place on the hot bars of the oven above the tray."
+        }
+      ]
+    },
+    {
+      "id": "boil_potatoes",
+      "descr": "Parboil the potatoes in a pan of boiling salted water...",
+      "instructions": "Parboil the potatoes in a pan of boiling salted water for 10 minutes, then drain and allow to steam dry. Gently toss the potatoes in the colander to scuff up the edges, then tip back into the pan.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "drizzle_marinade"
+      ],
+      "next": [
+        "add_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Parboil the potatoes in a pan of boiling salted water for 10 minutes, then drain and allow to steam dry. Gently toss the potatoes in the colander to scuff up the edges, then tip back into the pan."
+        }
+      ]
+    },
+    {
+      "id": "add_remaining",
+      "descr": "Add the remaining rosemary sprigs and whole garlic...",
+      "instructions": "Add the remaining rosemary sprigs and whole garlic cloves to the potatoes, season with salt and pepper, then drizzle over a good lug of oil. Tip the potatoes into the hot tray and place back under the lamb to catch all the lovely juices.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_potatoes"
+      ],
+      "next": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the remaining rosemary sprigs and whole garlic cloves to the potatoes, season with salt and pepper, then drizzle over a good lug of oil. Tip the potatoes into the hot tray and place back under the lamb to catch all the lovely juices."
+        }
+      ]
+    },
+    {
+      "id": "step_step_8",
+      "descr": "Cook the lamb for 1 hour 15 minutes if you want it pink,...",
+      "instructions": "Cook the lamb for 1 hour 15 minutes if you want it pink, or 1 hour 30 minutes if you like it more well done.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "add_remaining"
+      ],
+      "next": [
+        "chop_mint"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the lamb for 1 hour 15 minutes if you want it pink, or 1 hour 30 minutes if you like it more well done."
+        }
+      ]
+    },
+    {
+      "id": "chop_mint",
+      "descr": "Meanwhile, make the mint sauce",
+      "instructions": "Meanwhile, make the mint sauce. Pick and finely chop the mint leaves, then place in a small bowl. Mix in the sugar, a good pinch of salt, 1 tablespoon of hot water and the vinegar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_8"
+      ],
+      "next": [
+        "roast_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, make the mint sauce. Pick and finely chop the mint leaves, then place in a small bowl. Mix in the sugar, a good pinch of salt, 1 tablespoon of hot water and the vinegar."
+        }
+      ]
+    },
+    {
+      "id": "roast_potatoes",
+      "descr": "When the lamb is cooked to your liking, remove from the...",
+      "instructions": "When the lamb is cooked to your liking, remove from the oven and leave to rest for 15 minutes or so. Carve and serve with the roast potatoes, mint sauce and some seasonal greens.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "chop_mint"
+      ],
+      "on_enter": [
+        {
+          "say": "When the lamb is cooked to your liking, remove from the oven and leave to rest for 15 minutes or so. Carve and serve with the roast potatoes, mint sauce and some seasonal greens."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "307 calories",
+    "carbohydrates": "24.9 g",
+    "fat": "13.1 g",
+    "fiber": "1.9 g",
+    "protein": "23.7 g"
+  }
+}

@@ -1,0 +1,251 @@
+{
+  "recipe": {
+    "id": "roast-potatoes-parsnips-carrots",
+    "title": "Roast potatoes, parsnips & carrots",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT90M",
+    "description": "Perfectly roasted carrots and parsnips can totally make a Sunday dinner or special occasion. Keep it simple with this classic recipe from jamieoliver.com.",
+    "tags": [
+      "christmas",
+      "vegan",
+      "dish-type",
+      "low-lactose",
+      "gluten-free",
+      "vegetables",
+      "potato",
+      "sides-and-sauces",
+      "course",
+      "roast",
+      "occasion",
+      "vegetable-sides",
+      "vegetarian",
+      "method",
+      "carrots",
+      "sides",
+      "frying",
+      "main-ingredient",
+      "roast-potatoes"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/roast-potatoes-parsnips-and-carrots",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/14da22db6ab5baa8d482e856c830ce16baacaf30-973x1300.jpg/14da22db6ab5baa8d482e856c830ce16baacaf30-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/14da22db6ab5baa8d482e856c830ce16baacaf30-973x1300.jpg/14da22db6ab5baa8d482e856c830ce16baacaf30-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/14da22db6ab5baa8d482e856c830ce16baacaf30-973x1300.jpg/14da22db6ab5baa8d482e856c830ce16baacaf30-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/14da22db6ab5baa8d482e856c830ce16baacaf30-973x1300.jpg/14da22db6ab5baa8d482e856c830ce16baacaf30-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 1.2,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "parsnips",
+      "name": "parsnips",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 3.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "colander",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "If you\u2019re cooking your veg separately, rather than with...",
+      "instructions": "If you\u2019re cooking your veg separately, rather than with my perfect roast chicken, preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "If you\u2019re cooking your veg separately, rather than with my perfect roast chicken, preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Peel the vegetables, halving any larger ones lengthways",
+      "instructions": "Peel the vegetables, halving any larger ones lengthways. Break the garlic bulb into cloves, leaving them unpeeled, and bash them slightly with the palm of your hand. Pick the rosemary leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_bring"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the vegetables, halving any larger ones lengthways. Break the garlic bulb into cloves, leaving them unpeeled, and bash them slightly with the palm of your hand. Pick the rosemary leaves."
+        }
+      ]
+    },
+    {
+      "id": "heat_bring",
+      "descr": "Put the potatoes and carrots into a large pan \u2013 you may...",
+      "instructions": "Put the potatoes and carrots into a large pan \u2013 you may need to use two \u2013 of boiling salted water on a high heat and bring back to the boil. Allow to boil for 5 minutes, then add the parsnips and cook for another 4 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "steam_take"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the potatoes and carrots into a large pan \u2013 you may need to use two \u2013 of boiling salted water on a high heat and bring back to the boil. Allow to boil for 5 minutes, then add the parsnips and cook for another 4 minutes."
+        }
+      ]
+    },
+    {
+      "id": "steam_take",
+      "descr": "Drain in a colander and allow to steam dry",
+      "instructions": "Drain in a colander and allow to steam dry. Take out the carrots and parsnips and put to one side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_bring"
+      ],
+      "next": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain in a colander and allow to steam dry. Take out the carrots and parsnips and put to one side."
+        }
+      ]
+    },
+    {
+      "id": "step_step_5",
+      "descr": "Fluff up the potatoes in the colander by shaking it...",
+      "instructions": "Fluff up the potatoes in the colander by shaking it around a little \u2013 it\u2019s important to \u2018chuff them up\u2019 like this if you want them to have all those lovely crispy bits when they\u2019re cooked.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "steam_take"
+      ],
+      "next": [
+        "heat_either"
+      ],
+      "on_enter": [
+        {
+          "say": "Fluff up the potatoes in the colander by shaking it around a little \u2013 it\u2019s important to \u2018chuff them up\u2019 like this if you want them to have all those lovely crispy bits when they\u2019re cooked."
+        }
+      ]
+    },
+    {
+      "id": "heat_either",
+      "descr": "Put a large roasting tray over a medium heat and either...",
+      "instructions": "Put a large roasting tray over a medium heat and either add a few generous lugs of olive oil or carefully spoon a little of the fat from the meat you\u2019re cooking, and add the garlic and rosemary.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_5"
+      ],
+      "next": [
+        "roast_they"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large roasting tray over a medium heat and either add a few generous lugs of olive oil or carefully spoon a little of the fat from the meat you\u2019re cooking, and add the garlic and rosemary."
+        }
+      ]
+    },
+    {
+      "id": "roast_they",
+      "descr": "Tip the vegetables into the tray, season with a good...",
+      "instructions": "Tip the vegetables into the tray, season with a good pinch of sea salt and black pepper and turn the veg over to coat them in the flavours. Spread them out evenly into one layer \u2013 this is important, as you want them to roast, not steam as they will if you have them all on top of each other.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_either"
+      ],
+      "next": [
+        "roast_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the vegetables into the tray, season with a good pinch of sea salt and black pepper and turn the veg over to coat them in the flavours. Spread them out evenly into one layer \u2013 this is important, as you want them to roast, not steam as they will if you have them all on top of each other."
+        }
+      ]
+    },
+    {
+      "id": "roast_hour",
+      "descr": "Roast for 1 hour, or until golden and crisp, then serve...",
+      "instructions": "Roast for 1 hour, or until golden and crisp, then serve immediately with your roast and some delicious gravy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT3600S",
+      "depends_on": [
+        "roast_they"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast for 1 hour, or until golden and crisp, then serve immediately with your roast and some delicious gravy."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "377 calories",
+    "carbohydrates": "62 g",
+    "fat": "12.4 g",
+    "fiber": "12.2 g",
+    "protein": "8 g"
+  }
+}

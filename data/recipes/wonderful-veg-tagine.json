@@ -1,0 +1,284 @@
+{
+  "recipe": {
+    "id": "wonderful-veg-tagine",
+    "title": "Wonderful veg tagine",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "A gorgeous vegetarian tagine recipe from Jamie Oliver. It's packed with gorgeous veggies and spices, perfect for a crowd. It's an easy weekend recipe.",
+    "tags": [
+      "dinner-party",
+      "vegan",
+      "jamie-s-meat-free-meals",
+      "vegetarian",
+      "tv-shows",
+      "lunch-amp-dinner-recipes",
+      "low-lactose",
+      "tagine",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "moroccan",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/wonderful-veg-tagine",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3a81627429339246d6e817b1a3f1589f4b9c9764-958x1280.jpg/94741163?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3a81627429339246d6e817b1a3f1589f4b9c9764-958x1280.jpg/94741163?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3a81627429339246d6e817b1a3f1589f4b9c9764-958x1280.jpg/94741163?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3a81627429339246d6e817b1a3f1589f4b9c9764-958x1280.jpg/94741163?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "saffron",
+      "name": "saffron",
+      "quantity": 1.0,
+      "unit": "pinch",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ground-cumin",
+      "name": "ground cumin",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "teaspoon-ground-cinnamon",
+      "name": "\u00bd teaspoon ground cinnamon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ras-el-hanout",
+      "name": "ras el hanout",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "sun-dried-tomato-paste",
+      "name": "sun-dried tomato paste",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "mixed-veg",
+      "name": "mixed veg",
+      "quantity": 2.5,
+      "unit": "kg",
+      "note": "such as aubergines, courgettes, carrots, cherry tomatoes, red onion, butternut squash, mixed-colour peppers"
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-apricots",
+      "name": "dried apricots",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "preserved-lemon",
+      "name": "preserved lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "couscous",
+      "name": "couscous",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-mixed-fresh-herbs",
+      "name": "\u00bd a bunch of mixed fresh herbs",
+      "quantity": null,
+      "unit": null,
+      "note": "15g, such as dill, mint, flat-leaf parsley"
+    },
+    {
+      "id": "flaked-almonds",
+      "name": "flaked almonds",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "boil_water",
+      "descr": "Put the saffron into a jug, cover with 500ml of boiling...",
+      "instructions": "Put the saffron into a jug, cover with 500ml of boiling water and leave to infuse.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the saffron into a jug, cover with 500ml of boiling water and leave to infuse."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Meanwhile, peel and finely slice the garlic and ginger,...",
+      "instructions": "Meanwhile, peel and finely slice the garlic and ginger, then place in a large casserole pan over a medium heat with 2 tablespoons of oil, the cumin, cinnamon and ras el hanout.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "chop_large"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel and finely slice the garlic and ginger, then place in a large casserole pan over a medium heat with 2 tablespoons of oil, the cumin, cinnamon and ras el hanout."
+        }
+      ]
+    },
+    {
+      "id": "chop_large",
+      "descr": "Add the tomato paste, fry for a few minutes, stirring...",
+      "instructions": "Add the tomato paste, fry for a few minutes, stirring regularly, then pour over the saffron water. Trim and prep the veg, as necessary, then chop into large chunks, adding them to the pan as you go.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "chop_apricots"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the tomato paste, fry for a few minutes, stirring regularly, then pour over the saffron water. Trim and prep the veg, as necessary, then chop into large chunks, adding them to the pan as you go."
+        }
+      ]
+    },
+    {
+      "id": "chop_apricots",
+      "descr": "Tip in the chickpeas (juices and all), roughly chop and...",
+      "instructions": "Tip in the chickpeas (juices and all), roughly chop and add the apricots and preserved lemon, discarding any pips, then season with sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_large"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip in the chickpeas (juices and all), roughly chop and add the apricots and preserved lemon, discarding any pips, then season with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Bring to the boil, cover, reduce the heat to low, and...",
+      "instructions": "Bring to the boil, cover, reduce the heat to low, and simmer for 45 minutes, or until tender, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "chop_apricots"
+      ],
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, cover, reduce the heat to low, and simmer for 45 minutes, or until tender, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "When the veg are almost tender, just cover the couscous...",
+      "instructions": "When the veg are almost tender, just cover the couscous with boiling water, season with salt and pepper and pop a plate on top. Leave for 10 minutes, then fluff and fork up.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "sprinkle_almonds"
+      ],
+      "on_enter": [
+        {
+          "say": "When the veg are almost tender, just cover the couscous with boiling water, season with salt and pepper and pop a plate on top. Leave for 10 minutes, then fluff and fork up."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_almonds",
+      "descr": "Pick the herb leaves and toast the almonds",
+      "instructions": "Pick the herb leaves and toast the almonds. Serve the tagine and couscous sprinkled with the almonds and herbs. Delicious served with harissa rippled yoghurt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick the herb leaves and toast the almonds. Serve the tagine and couscous sprinkled with the almonds and herbs. Delicious served with harissa rippled yoghurt."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "438 calories",
+    "carbohydrates": "77.6 g",
+    "fat": "9.6 g",
+    "fiber": "15.8 g",
+    "protein": "16.3 g"
+  }
+}

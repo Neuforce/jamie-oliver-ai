@@ -1,0 +1,199 @@
+{
+  "recipe": {
+    "id": "spiced-chicken-rice-traybake",
+    "title": "Spiced chicken & rice traybake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT75M",
+    "description": "Gently spiced crispy chicken pieces, colourful veg and fluffy rice are all cooked together in one tray for a midweek family feast.",
+    "tags": [
+      "one-pan",
+      "rice",
+      "gluten-free",
+      "chicken-thigh",
+      "healthy-dinners",
+      "healthy-chicken"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/spiced-chicken-rice-traybake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/badb70f41b2ab1b491e460d040c9349a93dbc089-853x1280.jpg/120672532?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/badb70f41b2ab1b491e460d040c9349a93dbc089-853x1280.jpg/120672532?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/badb70f41b2ab1b491e460d040c9349a93dbc089-853x1280.jpg/120672532?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/badb70f41b2ab1b491e460d040c9349a93dbc089-853x1280.jpg/120672532?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-colour-peppers",
+      "name": "mixed-colour peppers",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "free-range-chicken-thighs",
+      "name": "free-range chicken thighs",
+      "quantity": 8.0,
+      "unit": null,
+      "note": "skin on, bone in"
+    },
+    {
+      "id": "cajun-style-seasoning",
+      "name": "Cajun-style seasoning",
+      "quantity": 3.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "long-grain-rice",
+      "name": "long-grain rice",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "corn-cobbettes",
+      "name": "corn cobbettes",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "peri-peri-sauce",
+      "name": "peri-peri sauce",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "natural-yogurt",
+      "name": "natural yogurt",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_peppers"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "chop_peppers",
+      "descr": "Peel and quarter the onions, breaking them into petals",
+      "instructions": "Peel and quarter the onions, breaking them into petals. Deseed and roughly chop the peppers into chunks, then place it all on a large roasting tray (35 x 40cm).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and quarter the onions, breaking them into petals. Deseed and roughly chop the peppers into chunks, then place it all on a large roasting tray (35 x 40cm)."
+        }
+      ]
+    },
+    {
+      "id": "add_chicken",
+      "descr": "Add the chicken thighs, drizzle with 1 tablespoon of...",
+      "instructions": "Add the chicken thighs, drizzle with 1 tablespoon of olive oil and rub everything with the Cajun-style seasoning. Roast for 40 minutes, or until the veg is soft and the chicken is golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "chop_peppers"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the chicken thighs, drizzle with 1 tablespoon of olive oil and rub everything with the Cajun-style seasoning. Roast for 40 minutes, or until the veg is soft and the chicken is golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Remove the tray from the oven, pour the rice around the...",
+      "instructions": "Remove the tray from the oven, pour the rice around the chicken along with 2 mugs of boiling kettle water (600ml), and poke in the corn cobettes. Season with sea salt and black pepper, add a few shakes of peri-peri sauce, and stir everything together. Cook at the bottom of the oven for 20 minutes, or until the rice and chicken are cooked and golden, then turn the heat up to 200\u00b0C/400\u00b0F/gas 6 and cook for 5 minutes to get a crispy top.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "add_chicken"
+      ],
+      "next": [
+        "serve_dollops"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the tray from the oven, pour the rice around the chicken along with 2 mugs of boiling kettle water (600ml), and poke in the corn cobettes. Season with sea salt and black pepper, add a few shakes of peri-peri sauce, and stir everything together. Cook at the bottom of the oven for 20 minutes, or until the rice and chicken are cooked and golden, then turn the heat up to 200\u00b0C/400\u00b0F/gas 6 and cook for 5 minutes to get a crispy top."
+        }
+      ]
+    },
+    {
+      "id": "serve_dollops",
+      "descr": "Serve with dollops of yoghurt and a few extra shakes of...",
+      "instructions": "Serve with dollops of yoghurt and a few extra shakes of peri-peri sauce, if you like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with dollops of yoghurt and a few extra shakes of peri-peri sauce, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "517 calories",
+    "carbohydrates": "47.2 g",
+    "fat": "21 g",
+    "fiber": "3.9 g",
+    "protein": "37.1 g"
+  }
+}

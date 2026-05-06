@@ -1,0 +1,138 @@
+{
+  "recipe": {
+    "id": "easy-eton-mess",
+    "title": "Easy Eton mess",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "Jamie's easy Eton Mess recipe - the classic British dessert made even more simple with shop-bought meringue and lighter with yoghurt.",
+    "tags": [
+      "fruit",
+      "gluten-free",
+      "vegetarian",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/easy-eton-mess",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6ad0bba1ba96e5b83a182cb716e7104abed38cc3-958x1280.jpg/133802786?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6ad0bba1ba96e5b83a182cb716e7104abed38cc3-958x1280.jpg/133802786?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6ad0bba1ba96e5b83a182cb716e7104abed38cc3-958x1280.jpg/133802786?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6ad0bba1ba96e5b83a182cb716e7104abed38cc3-958x1280.jpg/133802786?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "fresh-strawberries",
+      "name": "fresh strawberries",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-raspberries",
+      "name": "fresh raspberries",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "tablespoon-runny-honey",
+      "name": "\u00bd tablespoon runny honey",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "double-cream",
+      "name": "double cream",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "low-fat-greek-style-yoghurt",
+      "name": "low-fat Greek-style yoghurt",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "shop-bought-meringues",
+      "name": "shop-bought meringues",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "large bowl"
+  ],
+  "steps": [
+    {
+      "id": "drizzle_over",
+      "descr": "Halve or quarter any large strawberries and place in a...",
+      "instructions": "Halve or quarter any large strawberries and place in a large bowl with the raspberries. Use a fork to crush half of the berries and drizzle over the honey.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "fold_yoghurt"
+      ],
+      "on_enter": [
+        {
+          "say": "Halve or quarter any large strawberries and place in a large bowl with the raspberries. Use a fork to crush half of the berries and drizzle over the honey."
+        }
+      ]
+    },
+    {
+      "id": "fold_yoghurt",
+      "descr": "Whip the cream until soft peaks form, then fold in the...",
+      "instructions": "Whip the cream until soft peaks form, then fold in the yoghurt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_over"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Whip the cream until soft peaks form, then fold in the yoghurt."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Crumble the meringues over the fruit, then fold in the...",
+      "instructions": "Crumble the meringues over the fruit, then fold in the cream and yoghurt mixture. Divide up into 6 individual bowls and serve straightaway, topped with extra berries, if you like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "fold_yoghurt"
+      ],
+      "on_enter": [
+        {
+          "say": "Crumble the meringues over the fruit, then fold in the cream and yoghurt mixture. Divide up into 6 individual bowls and serve straightaway, topped with extra berries, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "191 calories",
+    "carbohydrates": "22.2 g",
+    "fat": "10.4 g",
+    "fiber": "1.9 g",
+    "protein": "2.6 g"
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "recipe": {
+    "id": "comforting-sausage-bake",
+    "title": "Comforting sausage bake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT55M",
+    "description": "The clue\u2019s in the title with this one \u2013 comforting and super-delicious. Let the recipe flex to what you\u2019ve got, check out the easy swaps for inspiration. ",
+    "tags": [
+      "beans",
+      "focaccia",
+      "dish-type",
+      "lunch-amp-dinner-recipes",
+      "low-lactose",
+      "quick-fixes",
+      "course",
+      "tv-shows",
+      "tomato",
+      "family-one-pan-recipes",
+      "quick-amp-easy-recipes",
+      "pork",
+      "occasion",
+      "keep-cooking-and-carry-on",
+      "student-recipes",
+      "one-pan-recipes",
+      "main-ingredient",
+      "quick-amp-easy-series-2",
+      "sausages",
+      "winter-warmers"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/comforting-sausage-bake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c7af399d7e25d85291692eb4d1c6d32a45acb298-943x1415.jpg/epicroastersausages.jpg?rect=0,295,943,943&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c7af399d7e25d85291692eb4d1c6d32a45acb298-943x1415.jpg/epicroastersausages.jpg?rect=0,295,943,943&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c7af399d7e25d85291692eb4d1c6d32a45acb298-943x1415.jpg/epicroastersausages.jpg?rect=0,413,943,707&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c7af399d7e25d85291692eb4d1c6d32a45acb298-943x1415.jpg/epicroastersausages.jpg?rect=0,501,943,530&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "ripe-mixed-colour-cherry-tomat",
+      "name": "ripe mixed-colour cherry tomatoes",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "rosemary-focaccia",
+      "name": "rosemary focaccia",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "660g-jar-of-white-beans",
+      "name": "660g jar of white beans",
+      "quantity": 660.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-chipolatas",
+      "name": "higher-welfare chipolatas",
+      "quantity": 12.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shop-jamie-s-serveware",
+      "name": "SHOP JAMIE'S SERVEWARE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "epic-roaster",
+      "name": "Epic Roaster",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "slice_garlic",
+      "descr": "Halve the cherry tomatoes, peel and finely slice the...",
+      "instructions": "Halve the cherry tomatoes, peel and finely slice the garlic, and tear the bread into bite-sized chunks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_together"
+      ],
+      "on_enter": [
+        {
+          "say": "Halve the cherry tomatoes, peel and finely slice the garlic, and tear the bread into bite-sized chunks."
+        }
+      ]
+    },
+    {
+      "id": "mix_together",
+      "descr": "Place it all in a 30cm x 35cm roasting tray, pour in the...",
+      "instructions": "Place it all in a 30cm x 35cm roasting tray, pour in the beans and their juice, drizzle with 1 tablespoon each of olive oil and red wine vinegar, add a splash of water, and mix it all together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_garlic"
+      ],
+      "next": [
+        "bake_lightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Place it all in a 30cm x 35cm roasting tray, pour in the beans and their juice, drizzle with 1 tablespoon each of olive oil and red wine vinegar, add a splash of water, and mix it all together."
+        }
+      ]
+    },
+    {
+      "id": "bake_lightly",
+      "descr": "Quickly pinch and twist each chipolata in the middle to...",
+      "instructions": "Quickly pinch and twist each chipolata in the middle to make it into two mini ones, then randomly dot them around your bake, lightly pressing them into the beans and tomatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_together"
+      ],
+      "next": [
+        "roast_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Quickly pinch and twist each chipolata in the middle to make it into two mini ones, then randomly dot them around your bake, lightly pressing them into the beans and tomatoes."
+        }
+      ]
+    },
+    {
+      "id": "roast_minutes",
+      "descr": "Roast for 45 minutes, or until everything is golden,...",
+      "instructions": "Roast for 45 minutes, or until everything is golden, bubbling and delicious.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT2700S",
+      "depends_on": [
+        "bake_lightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast for 45 minutes, or until everything is golden, bubbling and delicious."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "571 calories",
+    "carbohydrates": "43.8 g",
+    "fat": "29 g",
+    "fiber": "9.4 g",
+    "protein": "32.8 g"
+  }
+}

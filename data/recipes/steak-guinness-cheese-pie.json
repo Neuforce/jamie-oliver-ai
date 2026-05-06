@@ -1,0 +1,336 @@
+{
+  "recipe": {
+    "id": "steak-guinness-cheese-pie",
+    "title": "Steak, Guinness & cheese pie",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT230M",
+    "description": "A delicious steak and cheese pie with a good helping of Guinness for an extra boost of flavour, this steak recipe is a clear winner with a puff pastry lid.",
+    "tags": [
+      "sunday-lunch",
+      "steak",
+      "main-ingredient",
+      "pastry",
+      "baking",
+      "puff-pastry",
+      "course",
+      "mains",
+      "beef",
+      "steak-pie",
+      "dish-type",
+      "method",
+      "father-s-day",
+      "pies-amp-pastries",
+      "occasion",
+      "pie",
+      "cheese"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/steak-guinness-cheese-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5bea588daf90ada8f943e0efbb88d886c80594e3-973x1300.jpg/5bea588daf90ada8f943e0efbb88d886c80594e3-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5bea588daf90ada8f943e0efbb88d886c80594e3-973x1300.jpg/5bea588daf90ada8f943e0efbb88d886c80594e3-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5bea588daf90ada8f943e0efbb88d886c80594e3-973x1300.jpg/5bea588daf90ada8f943e0efbb88d886c80594e3-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5bea588daf90ada8f943e0efbb88d886c80594e3-973x1300.jpg/5bea588daf90ada8f943e0efbb88d886c80594e3-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "field-mushrooms",
+      "name": "field mushrooms",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-rosemary",
+      "name": "a few sprigs of rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "quality-brisket-or-stewing-bee",
+      "name": "quality brisket or stewing beef",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "cut into 2cm cubes"
+    },
+    {
+      "id": "guinness",
+      "name": "Guinness",
+      "quantity": 440.0,
+      "unit": "ml",
+      "note": "no lager, please!"
+    },
+    {
+      "id": "heaped-tablespoons-plain-flour",
+      "name": "heaped tablespoons plain flour",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 140.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "puff-pastry",
+      "name": "puff pastry",
+      "quantity": 170.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-egg",
+      "name": "large egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 190\u00baC/375\u00baF/gas 5",
+      "instructions": "Preheat the oven to 190\u00baC/375\u00baF/gas 5.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_onions"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 190\u00baC/375\u00baF/gas 5."
+        }
+      ]
+    },
+    {
+      "id": "chop_onions",
+      "descr": "Peel and chop the onions, garlic, carrots and celery,...",
+      "instructions": "Peel and chop the onions, garlic, carrots and celery, slice the mushrooms, and pick and finely chop the rosemary.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and chop the onions, garlic, carrots and celery, slice the mushrooms, and pick and finely chop the rosemary."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Heat 1 tablespoon of olive oil in a large ovenproof pan...",
+      "instructions": "Heat 1 tablespoon of olive oil in a large ovenproof pan over a low heat, add the onions and fry gently for about 10 minutes, or until softened, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "heat_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 1 tablespoon of olive oil in a large ovenproof pan over a low heat, add the onions and fry gently for about 10 minutes, or until softened, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "heat_garlic",
+      "descr": "Turn the heat up, add the garlic, carrots, celery and...",
+      "instructions": "Turn the heat up, add the garlic, carrots, celery and mushrooms, then mix everything together before stirring in the beef, rosemary, and a pinch of sea salt and 1 level teaspoon of black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "stir_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Turn the heat up, add the garlic, carrots, celery and mushrooms, then mix everything together before stirring in the beef, rosemary, and a pinch of sea salt and 1 level teaspoon of black pepper."
+        }
+      ]
+    },
+    {
+      "id": "stir_flour",
+      "descr": "Fry fast for 3 or 4 minutes, then pour in the Guinness,...",
+      "instructions": "Fry fast for 3 or 4 minutes, then pour in the Guinness, stir in the flour and add just enough water to cover.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "heat_garlic"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Fry fast for 3 or 4 minutes, then pour in the Guinness, stir in the flour and add just enough water to cover."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Bring to a simmer, cover the pan with a lid and place in...",
+      "instructions": "Bring to a simmer, cover the pan with a lid and place in the oven for 2\u00bd hours, or until the meat is very tender and the stew is rich, dark and thick, stirring halfway. A perfect pie filling needs to be robust, so if it\u2019s still quite liquidy, place the pan on the hob and reduce until the sauce thickens.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_flour"
+      ],
+      "next": [
+        "stir_half"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to a simmer, cover the pan with a lid and place in the oven for 2\u00bd hours, or until the meat is very tender and the stew is rich, dark and thick, stirring halfway. A perfect pie filling needs to be robust, so if it\u2019s still quite liquidy, place the pan on the hob and reduce until the sauce thickens."
+        }
+      ]
+    },
+    {
+      "id": "stir_half",
+      "descr": "Coarsely grate the cheese, stir half through the pie...",
+      "instructions": "Coarsely grate the cheese, stir half through the pie filling, then transfer to a pie dish and leave to cool slightly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "roll_pastry"
+      ],
+      "on_enter": [
+        {
+          "say": "Coarsely grate the cheese, stir half through the pie filling, then transfer to a pie dish and leave to cool slightly."
+        }
+      ]
+    },
+    {
+      "id": "roll_pastry",
+      "descr": "Meanwhile, dust a clean work surface with flour and roll...",
+      "instructions": "Meanwhile, dust a clean work surface with flour and roll the pastry out to the thickness of a pound coin.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_half"
+      ],
+      "next": [
+        "fold_tucking"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, dust a clean work surface with flour and roll the pastry out to the thickness of a pound coin."
+        }
+      ]
+    },
+    {
+      "id": "fold_tucking",
+      "descr": "Sprinkle the remaining cheese over the pie filling",
+      "instructions": "Sprinkle the remaining cheese over the pie filling. Place the pastry over the top of the pie dish pinching or folding and tucking in the edges to seal, then lightly score the surface with a criss-cross pattern.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_pastry"
+      ],
+      "next": [
+        "beat_brush"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle the remaining cheese over the pie filling. Place the pastry over the top of the pie dish pinching or folding and tucking in the edges to seal, then lightly score the surface with a criss-cross pattern."
+        }
+      ]
+    },
+    {
+      "id": "beat_brush",
+      "descr": "Beat the egg, then brush over the top of the pie and...",
+      "instructions": "Beat the egg, then brush over the top of the pie and bake directly on the bottom of the oven for 45 minutes, or until the pastry is cooked, puffed and beautifully golden. Delicious served simply with peas.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT2700S",
+      "depends_on": [
+        "fold_tucking"
+      ],
+      "on_enter": [
+        {
+          "say": "Beat the egg, then brush over the top of the pie and bake directly on the bottom of the oven for 45 minutes, or until the pastry is cooked, puffed and beautifully golden. Delicious served simply with peas."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "715 calories",
+    "carbohydrates": "28.8 g",
+    "fat": "45.8 g",
+    "fiber": "4.4 g",
+    "protein": "43.3 g"
+  }
+}

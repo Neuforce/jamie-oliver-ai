@@ -1,0 +1,218 @@
+{
+  "recipe": {
+    "id": "seared-tuna-kimchi-bowl",
+    "title": "Seared tuna kimchi bowl",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT13M",
+    "description": "Get Jamie's healthy rice bowl with tuna steak on the table in under 15 minutes. And it contains 3 portions of your 7-a-day!",
+    "tags": [
+      "tuna",
+      "healthy",
+      "yoghurt",
+      "broad-beans",
+      "carrot",
+      "healthy-dinners",
+      "cucumber",
+      "quick-healthy"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/tuna/seared-tuna-kimchi-bowl",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5c220420a947339a4eff8356648dfe5ae2e7880c-959x1279.jpg/163881243?rect=0,161,959,959&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5c220420a947339a4eff8356648dfe5ae2e7880c-959x1279.jpg/163881243?rect=0,161,959,959&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5c220420a947339a4eff8356648dfe5ae2e7880c-959x1279.jpg/163881243?rect=0,281,959,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5c220420a947339a4eff8356648dfe5ae2e7880c-959x1279.jpg/163881243?rect=0,371,959,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "tuna"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "heaped-tablespoons-natural-yog",
+      "name": "heaped tablespoons natural yoghurt",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-kimchi",
+      "name": "heaped tablespoons kimchi",
+      "quantity": 3.0,
+      "unit": null,
+      "note": "70g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "250g-packet-of-cooked-wholegra",
+      "name": "250g packet of cooked wholegrain rice",
+      "quantity": 250.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "160g"
+    },
+    {
+      "id": "frozen-broad-beans-or-peas",
+      "name": "frozen broad beans or peas",
+      "quantity": 160.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "150g-super-fresh-tuna-steaks",
+      "name": "150g super-fresh tuna steaks",
+      "quantity": 150.0,
+      "unit": null,
+      "note": "ideally 1\u00bdcm thick, from sustainable sources"
+    },
+    {
+      "id": "sesame-seeds",
+      "name": "sesame seeds",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "a-cucumber",
+      "name": "\u00bd a cucumber",
+      "quantity": null,
+      "unit": null,
+      "note": "160g"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "low-salt-soy-sauce",
+      "name": "low-salt soy sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "process_blitz",
+      "descr": "In a small food processor, blitz the yoghurt with the...",
+      "instructions": "In a small food processor, blitz the yoghurt with the kimchi until smooth.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_spritz"
+      ],
+      "on_enter": [
+        {
+          "say": "In a small food processor, blitz the yoghurt with the kimchi until smooth."
+        }
+      ]
+    },
+    {
+      "id": "heat_spritz",
+      "descr": "Put a large non-stick frying pan on a medium-high heat,...",
+      "instructions": "Put a large non-stick frying pan on a medium-high heat, spritz with olive oil, then tip in the rice. Wash, coarsely grate and stir in the carrot, along with the broad beans and a splash of water. Heat through for 2 minutes, then season to perfection. Divide between serving bowls or, I like to use a small oil-spritzed bowl to compact half the rice at a time, turning out into two little mounds.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "process_blitz"
+      ],
+      "next": [
+        "sear_minute"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large non-stick frying pan on a medium-high heat, spritz with olive oil, then tip in the rice. Wash, coarsely grate and stir in the carrot, along with the broad beans and a splash of water. Heat through for 2 minutes, then season to perfection. Divide between serving bowls or, I like to use a small oil-spritzed bowl to compact half the rice at a time, turning out into two little mounds."
+        }
+      ]
+    },
+    {
+      "id": "sear_minute",
+      "descr": "Wipe out the pan, spritz the tuna steaks with oil,...",
+      "instructions": "Wipe out the pan, spritz the tuna steaks with oil, season with a small pinch of sea salt and black pepper, sear in the hot pan for 1 minute on each side, so they\u2019re still blushing in the middle \u2013 trust me \u2013 then remove.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "heat_spritz"
+      ],
+      "next": [
+        "chop_toss"
+      ],
+      "on_enter": [
+        {
+          "say": "Wipe out the pan, spritz the tuna steaks with oil, season with a small pinch of sea salt and black pepper, sear in the hot pan for 1 minute on each side, so they\u2019re still blushing in the middle \u2013 trust me \u2013 then remove."
+        }
+      ]
+    },
+    {
+      "id": "chop_toss",
+      "descr": "Wipe out the pan and toast the sesame seeds until...",
+      "instructions": "Wipe out the pan and toast the sesame seeds until golden, tossing regularly, while you squash along the length of the cucumber with the heel of your hand, then roughly chop it. Toss with the lemon zest and juice, and the soy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "sear_minute"
+      ],
+      "next": [
+        "slice_tuna"
+      ],
+      "on_enter": [
+        {
+          "say": "Wipe out the pan and toast the sesame seeds until golden, tossing regularly, while you squash along the length of the cucumber with the heel of your hand, then roughly chop it. Toss with the lemon zest and juice, and the soy."
+        }
+      ]
+    },
+    {
+      "id": "slice_tuna",
+      "descr": "Add the kimchi yoghurt to the bowls with the dressed...",
+      "instructions": "Add the kimchi yoghurt to the bowls with the dressed cucumber, slice and add the tuna, scatter over the hot toasted sesame seeds, toss and tuck in.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_toss"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the kimchi yoghurt to the bowls with the dressed cucumber, slice and add the tuna, scatter over the hot toasted sesame seeds, toss and tuck in."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "533 calories",
+    "carbohydrates": "48.8 g",
+    "fat": "15.4 g",
+    "fiber": "12.7 g",
+    "protein": "48.8 g"
+  }
+}

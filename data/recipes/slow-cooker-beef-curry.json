@@ -1,0 +1,192 @@
+{
+  "recipe": {
+    "id": "slow-cooker-beef-curry",
+    "title": "Slow-cooker beef curry",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT200M",
+    "description": "As slow cooker recipes go, this is definitely up there! Beautifully tender beef, fragrant spiced broth and lots of lovely veg \u2013 yes please.",
+    "tags": [
+      "slow-cook",
+      "curry",
+      "beef",
+      "low-lactose",
+      "gluten-free",
+      "dairy-free",
+      "budget-friendly",
+      "halloween",
+      "bonfire-night"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/slow-cooker-beef-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/456b3f54ac80f917b35d3f1d69458a4e66131e16-958x1280.jpg/161134305?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/456b3f54ac80f917b35d3f1d69458a4e66131e16-958x1280.jpg/161134305?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/456b3f54ac80f917b35d3f1d69458a4e66131e16-958x1280.jpg/161134305?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/456b3f54ac80f917b35d3f1d69458a4e66131e16-958x1280.jpg/161134305?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "mixed-colour-peppers",
+      "name": "mixed-colour peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cherry-tomatoes",
+      "name": "cherry tomatoes",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "higher-welfare-diced-braising-",
+      "name": "higher-welfare diced braising steak",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "x-180g-jar-of-your-favourite-c",
+      "name": "\u00bd x 180g jar of your favourite curry paste",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "x-400g-tin-of-light-coconut-mi",
+      "name": "\u00bd x 400g tin of light coconut milk",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "chop_onion",
+      "descr": "Peel and finely chop the onion, garlic and ginger",
+      "instructions": "Peel and finely chop the onion, garlic and ginger. Finely chop the coriander stalks, putting the leaves aside in a bowl of cold water for garnish. Deseed and roughly chop the peppers, then halve the cherry tomatoes. Toss the beef with a pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the onion, garlic and ginger. Finely chop the coriander stalks, putting the leaves aside in a bowl of cold water for garnish. Deseed and roughly chop the peppers, then halve the cherry tomatoes. Toss the beef with a pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Place a large non-stick frying pan on a medium heat with...",
+      "instructions": "Place a large non-stick frying pan on a medium heat with 1 tablespoon of olive oil and fry the beef for 5 minutes, then go in with the chopped veg, coriander stalks and 1 tablespoon of oil. Stir in the curry paste and cook for 2 minutes, or until the beef is beautifully golden. Add a splash of water to the pan to deglaze it, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "stir_coconut"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large non-stick frying pan on a medium heat with 1 tablespoon of olive oil and fry the beef for 5 minutes, then go in with the chopped veg, coriander stalks and 1 tablespoon of oil. Stir in the curry paste and cook for 2 minutes, or until the beef is beautifully golden. Add a splash of water to the pan to deglaze it, if needed."
+        }
+      ]
+    },
+    {
+      "id": "stir_coconut",
+      "descr": "Transfer the contents of the pan to the slow cooker*,...",
+      "instructions": "Transfer the contents of the pan to the slow cooker*, add enough water to cover the beef (around 200ml) and cook the highest setting for 3 hours, or the lowest setting for 8 hours, until the beef is tender, then stir in the coconut milk.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT10800S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "serve_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer the contents of the pan to the slow cooker*, add enough water to cover the beef (around 200ml) and cook the highest setting for 3 hours, or the lowest setting for 8 hours, until the beef is tender, then stir in the coconut milk."
+        }
+      ]
+    },
+    {
+      "id": "serve_coriander",
+      "descr": "Scatter over the reserved coriander leaves and serve...",
+      "instructions": "Scatter over the reserved coriander leaves and serve with fluffy rice, poppadoms and your favourite chutney and pickles.\n\n*Tested in a 6.5-litre slow cooker. All slow cookers are different, so results may vary.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_coconut"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter over the reserved coriander leaves and serve with fluffy rice, poppadoms and your favourite chutney and pickles.\n\n*Tested in a 6.5-litre slow cooker. All slow cookers are different, so results may vary."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "332 calories",
+    "carbohydrates": "12.6 g",
+    "fat": "18.6 g",
+    "fiber": "4.6 g",
+    "protein": "28.6 g"
+  }
+}

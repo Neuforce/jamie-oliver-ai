@@ -1,0 +1,266 @@
+{
+  "recipe": {
+    "id": "chicken-wings-with-buffalo-sauce",
+    "title": "Chicken wings with Buffalo sauce",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "Jamie's one-pan recipe for the quickest Buffalo-style chicken wings is super-simple and great for feeding a crowd.",
+    "tags": [
+      "chicken",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/buffalo-style-chicken-wings",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6e85366fe88fc0116adc495afc43e0288a23fb25-958x1280.jpg/135008116?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6e85366fe88fc0116adc495afc43e0288a23fb25-958x1280.jpg/135008116?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6e85366fe88fc0116adc495afc43e0288a23fb25-958x1280.jpg/135008116?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6e85366fe88fc0116adc495afc43e0288a23fb25-958x1280.jpg/135008116?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "free-range-chicken-wings",
+      "name": "free-range chicken wings",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "spice-rub",
+      "name": "SPICE RUB",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-sweet-smoked-p",
+      "name": "heaped teaspoon sweet smoked paprika",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-cayenne-pepper",
+      "name": "heaped teaspoon cayenne pepper",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-garlic-powder",
+      "name": "heaped teaspoon garlic powder",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-baking-powder",
+      "name": "heaped teaspoon baking powder",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-blue-cheese-dip",
+      "name": "OPTIONAL: BLUE CHEESE DIP",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "strong-blue-cheese",
+      "name": "strong blue cheese",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": "such as Stilton"
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "buffalo-sauce",
+      "name": "BUFFALO SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": "15g"
+    },
+    {
+      "id": "hot-sauce",
+      "name": "hot sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "worcestershire-sauce",
+      "name": "Worcestershire sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "cider-vinegar",
+      "name": "cider vinegar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "oven",
+    "pan",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "top_bone",
+      "descr": "To prepare the wings, carefully cut through the larger...",
+      "instructions": "To prepare the wings, carefully cut through the larger joint of each wing to create two pieces. Now, there will be one piece with 1 bone running through like a small drumstick. Carefully cut the skin around the top of the bone then scrape and push the skin and meat down, gathering at the bottom \u2013 this will leave you with the top half of the bone exposed and the meat at the end in a lollipop shape.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "To prepare the wings, carefully cut through the larger joint of each wing to create two pieces. Now, there will be one piece with 1 bone running through like a small drumstick. Carefully cut the skin around the top of the bone then scrape and push the skin and meat down, gathering at the bottom \u2013 this will leave you with the top half of the bone exposed and the meat at the end in a lollipop shape."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Keep the wing tip end whole and repeat with the...",
+      "instructions": "Keep the wing tip end whole and repeat with the remaining wings. Preheat the oven to 220\u00b0C/425\u00b0F/gas 7.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "top_bone"
+      ],
+      "next": [
+        "roast_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Keep the wing tip end whole and repeat with the remaining wings. Preheat the oven to 220\u00b0C/425\u00b0F/gas 7."
+        }
+      ]
+    },
+    {
+      "id": "roast_oven",
+      "descr": "In a large non-stick ovenproof frying pan, toss the...",
+      "instructions": "In a large non-stick ovenproof frying pan, toss the wings in the paprika, cayenne, garlic and baking powder, then roast in the oven for 20 to 25 minutes, or until golden, crisp and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "slice_spring"
+      ],
+      "on_enter": [
+        {
+          "say": "In a large non-stick ovenproof frying pan, toss the wings in the paprika, cayenne, garlic and baking powder, then roast in the oven for 20 to 25 minutes, or until golden, crisp and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "slice_spring",
+      "descr": "Meanwhile, if making the blue cheese dip, blitz the blue...",
+      "instructions": "Meanwhile, if making the blue cheese dip, blitz the blue cheese with the yoghurt until smooth. Trim and finely slice the spring onions.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_oven"
+      ],
+      "next": [
+        "warm_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, if making the blue cheese dip, blitz the blue cheese with the yoghurt until smooth. Trim and finely slice the spring onions."
+        }
+      ]
+    },
+    {
+      "id": "warm_oven",
+      "descr": "Remove the wings from the oven and turn it off",
+      "instructions": "Remove the wings from the oven and turn it off. Move the wings to the side of the pan and add the butter. Once melted, whisk in the remaining buffalo sauce ingredients and toss gently to coat. Return the wings to the warm oven for 5 minutes so that the glaze sticks to the wings but doesn\u2019t burn.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "slice_spring"
+      ],
+      "next": [
+        "slice_spring"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the wings from the oven and turn it off. Move the wings to the side of the pan and add the butter. Once melted, whisk in the remaining buffalo sauce ingredients and toss gently to coat. Return the wings to the warm oven for 5 minutes so that the glaze sticks to the wings but doesn\u2019t burn."
+        }
+      ]
+    },
+    {
+      "id": "slice_spring",
+      "descr": "Serve with the blue cheese dip and sliced spring onions...",
+      "instructions": "Serve with the blue cheese dip and sliced spring onions sprinkled over the top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "warm_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with the blue cheese dip and sliced spring onions sprinkled over the top."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "428 calories",
+    "carbohydrates": "13.7 g",
+    "fat": "27.6 g",
+    "fiber": "0.4 g",
+    "protein": "31.5 g"
+  }
+}

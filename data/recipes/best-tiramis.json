@@ -1,0 +1,248 @@
+{
+  "recipe": {
+    "id": "best-tiramis",
+    "title": "Best tiramis\u00f9",
+    "servings": 14,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "This is the best tiramisu recipe you'll lfind outside of Italy. From Jamie's book, Jamie Does, it talks you through how to make the perfect tiramisu. Yum!",
+    "tags": [
+      "tiramisu",
+      "dinner-party",
+      "party-food",
+      "desserts",
+      "dessert",
+      "main-ingredient",
+      "dish-type",
+      "method",
+      "desert",
+      "deserts",
+      "chocolate",
+      "puddings-amp-desserts",
+      "occasion",
+      "course"
+    ],
+    "course": "dessert",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/chocolate/best-tiramisu",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1b01b3c838493a0519432f7f911265f05f7a31c8-973x1300.jpg/1b01b3c838493a0519432f7f911265f05f7a31c8-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1b01b3c838493a0519432f7f911265f05f7a31c8-973x1300.jpg/1b01b3c838493a0519432f7f911265f05f7a31c8-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1b01b3c838493a0519432f7f911265f05f7a31c8-973x1300.jpg/1b01b3c838493a0519432f7f911265f05f7a31c8-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1b01b3c838493a0519432f7f911265f05f7a31c8-973x1300.jpg/1b01b3c838493a0519432f7f911265f05f7a31c8-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chocolate"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "quality-dark-chocolate",
+      "name": "quality dark chocolate",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "70%"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": "diced"
+    },
+    {
+      "id": "sea-salt",
+      "name": "sea salt",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sponge-fingers",
+      "name": "sponge fingers",
+      "quantity": 175.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "good-hot-sweetened-coffee",
+      "name": "good hot sweetened coffee",
+      "quantity": 400.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "vin-santo-or-other-sweet-desse",
+      "name": "vin santo or other sweet dessert wine",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-eggs",
+      "name": "large eggs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "preferably free-range or organic"
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mascarpone",
+      "name": "mascarpone",
+      "quantity": 750.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "oranges",
+      "name": "oranges",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-fresh-coffee-beans",
+      "name": "a few fresh coffee beans",
+      "quantity": null,
+      "unit": null,
+      "note": "bashed up finely"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "knife",
+    "pan",
+    "peeler",
+    "sharp knife",
+    "spatula",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "dice_butter",
+      "descr": "Put a glass bowl over a pan of gently simmering water,...",
+      "instructions": "Put a glass bowl over a pan of gently simmering water, making sure the water doesn\u2019t touch the base of the bowl. Put 200g of the chocolate into the bowl, keeping the remaining 50g in one piece. Add the diced butter and a pinch of salt, and leave for 5 minutes or so until melted and combined. Help it along by giving it a stir every now and then.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "stir_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a glass bowl over a pan of gently simmering water, making sure the water doesn\u2019t touch the base of the bowl. Put 200g of the chocolate into the bowl, keeping the remaining 50g in one piece. Add the diced butter and a pinch of salt, and leave for 5 minutes or so until melted and combined. Help it along by giving it a stir every now and then."
+        }
+      ]
+    },
+    {
+      "id": "stir_through",
+      "descr": "Meanwhile, line a large, deep bowl or round earthenware...",
+      "instructions": "Meanwhile, line a large, deep bowl or round earthenware dish (about 30cm in diameter and 12cm deep) with the sponge fingers, then carefully pour over the hot sweetened coffee. Add a couple of swigs of vin santo to your melted chocolate, stir it through, then drizzle all over the sponge fingers. Use a spatula to carefully smooth it out to the edges so you\u2019ve got a nice even layer. Put it to one side to cool.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "dice_butter"
+      ],
+      "next": [
+        "mix_mascarpone"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, line a large, deep bowl or round earthenware dish (about 30cm in diameter and 12cm deep) with the sponge fingers, then carefully pour over the hot sweetened coffee. Add a couple of swigs of vin santo to your melted chocolate, stir it through, then drizzle all over the sponge fingers. Use a spatula to carefully smooth it out to the edges so you\u2019ve got a nice even layer. Put it to one side to cool."
+        }
+      ]
+    },
+    {
+      "id": "mix_mascarpone",
+      "descr": "Separate your eggs, putting the whites into one bowl and...",
+      "instructions": "Separate your eggs, putting the whites into one bowl and the yolks into another. Add the sugar to the yolks with another swig of vin santo (if you\u2019re feeling naughty!), and whisk with an electric whisk on the highest setting for about 5 minutes, or by hand, until all the sugar has dissolved and the yolks are pale and fluffy. Mix in the mascarpone and the zest of 1 orange.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "stir_through"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Separate your eggs, putting the whites into one bowl and the yolks into another. Add the sugar to the yolks with another swig of vin santo (if you\u2019re feeling naughty!), and whisk with an electric whisk on the highest setting for about 5 minutes, or by hand, until all the sugar has dissolved and the yolks are pale and fluffy. Mix in the mascarpone and the zest of 1 orange."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Clean and dry your whisk, and whisk the whites with a...",
+      "instructions": "Clean and dry your whisk, and whisk the whites with a pinch of salt until they form stiff peaks \u2013 they should be a similar consistency to the yolk and mascarpone mixture, and should hold their shape when you lift the beaters from the bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_mascarpone"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Clean and dry your whisk, and whisk the whites with a pinch of salt until they form stiff peaks \u2013 they should be a similar consistency to the yolk and mascarpone mixture, and should hold their shape when you lift the beaters from the bowl."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Using a large metal spoon, add a spoonful of your whites...",
+      "instructions": "Using a large metal spoon, add a spoonful of your whites to the yolk mixture and gently fold them in, then fold through the rest of the whites. Spoon and smooth this creamy mixture on top of your chocolate layer.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "top_using"
+      ],
+      "on_enter": [
+        {
+          "say": "Using a large metal spoon, add a spoonful of your whites to the yolk mixture and gently fold them in, then fold through the rest of the whites. Spoon and smooth this creamy mixture on top of your chocolate layer."
+        }
+      ]
+    },
+    {
+      "id": "top_using",
+      "descr": "Scatter the finely bashed-up coffee beans over the top",
+      "instructions": "Scatter the finely bashed-up coffee beans over the top. Using a sharp knife or a speed peeler, carefully shave over your remaining chocolate. Finely grate over the zest from half your remaining orange. Pop the tiramis\u00f9 into the fridge for 2 hours to set.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT7200S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter the finely bashed-up coffee beans over the top. Using a sharp knife or a speed peeler, carefully shave over your remaining chocolate. Finely grate over the zest from half your remaining orange. Pop the tiramis\u00f9 into the fridge for 2 hours to set."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "428 calories",
+    "carbohydrates": "25.3 g",
+    "fat": "32.8 g",
+    "fiber": "2 g",
+    "protein": "7.4 g"
+  }
+}

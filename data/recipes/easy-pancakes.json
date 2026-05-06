@@ -1,0 +1,199 @@
+{
+  "recipe": {
+    "id": "easy-pancakes",
+    "title": "Easy pancakes",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "Jamie Oliver's easy pancake recipe is delicious with fresh fruit, lemon and sugar; or try a savoury pancake with ham and cheese.",
+    "tags": [
+      "pancake-day",
+      "main-ingredient",
+      "breakfast",
+      "pancakes",
+      "father-s-day",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "mother-s-day",
+      "family-batch-cooking",
+      "family-one-pan-recipes",
+      "eggs",
+      "breakfast-and-brunch",
+      "quick-fixes",
+      "occasion",
+      "frying",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "french",
+    "source_url": "https://www.jamieoliver.com/recipes/eggs/easy-pancakes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0d6dd365203ac1de26cfbe7f2813f92af4d00001-973x1300.jpg/46312390?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0d6dd365203ac1de26cfbe7f2813f92af4d00001-973x1300.jpg/46312390?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0d6dd365203ac1de26cfbe7f2813f92af4d00001-973x1300.jpg/46312390?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0d6dd365203ac1de26cfbe7f2813f92af4d00001-973x1300.jpg/46312390?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "eggs"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "frying pan",
+    "ladle",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "add_flour",
+      "descr": "Crack the eggs into a blender, then add the flour, milk...",
+      "instructions": "Crack the eggs into a blender, then add the flour, milk and 1 pinch of sea salt, and blitz until smooth.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "pour_bowl"
+      ],
+      "on_enter": [
+        {
+          "say": "Crack the eggs into a blender, then add the flour, milk and 1 pinch of sea salt, and blitz until smooth."
+        }
+      ]
+    },
+    {
+      "id": "pour_bowl",
+      "descr": "Pour into a bowl and leave to stand for 15 minutes",
+      "instructions": "Pour into a bowl and leave to stand for 15 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "add_flour"
+      ],
+      "next": [
+        "heat_tilt"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour into a bowl and leave to stand for 15 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_tilt",
+      "descr": "Melt the butter (or a drizzle of oil if you want to be a...",
+      "instructions": "Melt the butter (or a drizzle of oil if you want to be a bit healthier) in a large non-stick frying pan on a medium heat, then tilt the pan so the butter coats the surface.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_bowl"
+      ],
+      "next": [
+        "pour_ladle"
+      ],
+      "on_enter": [
+        {
+          "say": "Melt the butter (or a drizzle of oil if you want to be a bit healthier) in a large non-stick frying pan on a medium heat, then tilt the pan so the butter coats the surface."
+        }
+      ]
+    },
+    {
+      "id": "pour_ladle",
+      "descr": "Pour in 1 ladle of batter and tilt again, so that the...",
+      "instructions": "Pour in 1 ladle of batter and tilt again, so that the batter spreads all over the base, then cook for 1 to 2 minutes, or until it starts to come away from the sides.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_tilt"
+      ],
+      "next": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in 1 ladle of batter and tilt again, so that the batter spreads all over the base, then cook for 1 to 2 minutes, or until it starts to come away from the sides."
+        }
+      ]
+    },
+    {
+      "id": "step_step_5",
+      "descr": "Once golden underneath, flip the pancake over and cook...",
+      "instructions": "Once golden underneath, flip the pancake over and cook for 1 further minute, or until cooked through.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_ladle"
+      ],
+      "next": [
+        "serve_straightaway"
+      ],
+      "on_enter": [
+        {
+          "say": "Once golden underneath, flip the pancake over and cook for 1 further minute, or until cooked through."
+        }
+      ]
+    },
+    {
+      "id": "serve_straightaway",
+      "descr": "Serve straightaway with your favourite topping",
+      "instructions": "Serve straightaway with your favourite topping.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve straightaway with your favourite topping."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "108 calories",
+    "carbohydrates": "13.7 g",
+    "fat": "4.1 g",
+    "fiber": "0.4 g",
+    "protein": "5.2 g"
+  }
+}

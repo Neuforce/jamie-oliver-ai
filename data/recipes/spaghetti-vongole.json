@@ -1,0 +1,239 @@
+{
+  "recipe": {
+    "id": "spaghetti-vongole",
+    "title": "Spaghetti vongole",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "This delicious Venetian white wine clam pasta has become an Italian classic. This spaghetti vongole recipe is a real treat.",
+    "tags": [
+      "pasta",
+      "main-ingredient",
+      "pasta-amp-risotto",
+      "mains",
+      "dish-type",
+      "method",
+      "low-lactose",
+      "fish",
+      "dairy-free",
+      "popular",
+      "occasion",
+      "frying",
+      "spaghetti",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/spaghetti-vongole",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cb0eb5ea7d3b6d4a7793f482355991c7bcd0ed20-973x1300.jpg/cb0eb5ea7d3b6d4a7793f482355991c7bcd0ed20-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cb0eb5ea7d3b6d4a7793f482355991c7bcd0ed20-973x1300.jpg/cb0eb5ea7d3b6d4a7793f482355991c7bcd0ed20-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cb0eb5ea7d3b6d4a7793f482355991c7bcd0ed20-973x1300.jpg/cb0eb5ea7d3b6d4a7793f482355991c7bcd0ed20-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cb0eb5ea7d3b6d4a7793f482355991c7bcd0ed20-973x1300.jpg/cb0eb5ea7d3b6d4a7793f482355991c7bcd0ed20-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "small-clams",
+      "name": "small clams",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "scrubbed clean, from sustainable sources"
+    },
+    {
+      "id": "a-bunch-of-fresh-flat-leaf-par",
+      "name": "\u00bd a bunch of fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cherry-tomatoes",
+      "name": "cherry tomatoes",
+      "quantity": 10.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "white-wine",
+      "name": "white wine",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "dried-spaghetti",
+      "name": "dried spaghetti",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "2-dried-red-chillies",
+      "name": "\u20132 dried red chillies",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "boil_while",
+      "descr": "Put a pan of water on to boil",
+      "instructions": "Put a pan of water on to boil. While that\u2019s happening, sort through your cleaned clams and if there are any that aren\u2019t tightly closed, give them a sharp tap. If they don\u2019t close, throw them away.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_finely"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a pan of water on to boil. While that\u2019s happening, sort through your cleaned clams and if there are any that aren\u2019t tightly closed, give them a sharp tap. If they don\u2019t close, throw them away."
+        }
+      ]
+    },
+    {
+      "id": "heat_finely",
+      "descr": "Put a large pan with a lid on a high heat and let it heat up",
+      "instructions": "Put a large pan with a lid on a high heat and let it heat up. Finely slice the parsley stalks, then put them to one side and roughly chop the leaves. Peel and chop the garlic, quarter the tomatoes and get your wine ready.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_while"
+      ],
+      "next": [
+        "add_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large pan with a lid on a high heat and let it heat up. Finely slice the parsley stalks, then put them to one side and roughly chop the leaves. Peel and chop the garlic, quarter the tomatoes and get your wine ready."
+        }
+      ]
+    },
+    {
+      "id": "add_pasta",
+      "descr": "Add the pasta to the boiling water with a good pinch of...",
+      "instructions": "Add the pasta to the boiling water with a good pinch of salt and cook according to packet instructions until al dente. About 5 minutes before your pasta is ready, get ready to start cooking \u2013 you'll have to be quick about this, so no mucking about!",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_finely"
+      ],
+      "next": [
+        "chop_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the pasta to the boiling water with a good pinch of salt and cook according to packet instructions until al dente. About 5 minutes before your pasta is ready, get ready to start cooking \u2013 you'll have to be quick about this, so no mucking about!"
+        }
+      ]
+    },
+    {
+      "id": "chop_tomatoes",
+      "descr": "Put 4 generous lugs of extra virgin olive oil into the...",
+      "instructions": "Put 4 generous lugs of extra virgin olive oil into the hot pan and add the garlic, parsley stalks and a good pinch of salt and pepper. Crumble in the dried chilli and add the chopped tomatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_pasta"
+      ],
+      "next": [
+        "heat_clams"
+      ],
+      "on_enter": [
+        {
+          "say": "Put 4 generous lugs of extra virgin olive oil into the hot pan and add the garlic, parsley stalks and a good pinch of salt and pepper. Crumble in the dried chilli and add the chopped tomatoes."
+        }
+      ]
+    },
+    {
+      "id": "heat_clams",
+      "descr": "Stir everything around constantly and just as the garlic...",
+      "instructions": "Stir everything around constantly and just as the garlic starts to colour, tip in the clams and pour in the wine. It will splutter and steam, so give everything a good shake and put the lid on the pan. After about 3 or 4 minutes the clams will start to open, so keep shuffling the pan around until all of them have opened. Take the pan off the heat. Get rid of any clams that haven't opened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "chop_tomatoes"
+      ],
+      "next": [
+        "add_clams"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir everything around constantly and just as the garlic starts to colour, tip in the clams and pour in the wine. It will splutter and steam, so give everything a good shake and put the lid on the pan. After about 3 or 4 minutes the clams will start to open, so keep shuffling the pan around until all of them have opened. Take the pan off the heat. Get rid of any clams that haven't opened."
+        }
+      ]
+    },
+    {
+      "id": "add_clams",
+      "descr": "By now your pasta should be just about perfect",
+      "instructions": "By now your pasta should be just about perfect. Drain and add to the pan of clams along with the parsley leaves and an extra drizzle of extra virgin olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_clams"
+      ],
+      "next": [
+        "stir_toss"
+      ],
+      "on_enter": [
+        {
+          "say": "By now your pasta should be just about perfect. Drain and add to the pan of clams along with the parsley leaves and an extra drizzle of extra virgin olive oil."
+        }
+      ]
+    },
+    {
+      "id": "stir_toss",
+      "descr": "Stir or toss for a further minute or two to let the...",
+      "instructions": "Stir or toss for a further minute or two to let the beautiful seashore juices from the clams be absorbed into the pasta. Serve right away. No sane Italian would eat this dish without some fresh hunks of bread to mop up the juices. Beautiful!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_clams"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir or toss for a further minute or two to let the beautiful seashore juices from the clams be absorbed into the pasta. Serve right away. No sane Italian would eat this dish without some fresh hunks of bread to mop up the juices. Beautiful!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "760 calories",
+    "carbohydrates": "84.2 g",
+    "fat": "24.4 g",
+    "fiber": "3.6 g",
+    "protein": "44.2 g"
+  }
+}

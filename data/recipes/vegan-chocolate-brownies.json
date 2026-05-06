@@ -1,0 +1,220 @@
+{
+  "recipe": {
+    "id": "vegan-chocolate-brownies",
+    "title": "Vegan chocolate brownies",
+    "servings": 16,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "Easy vegan brownies \u2013 they're chocolaty, gooey, and can be enjoyed by all. Just follow Jamie's simple vegan brownie recipe for a seriously good treat! ",
+    "tags": [
+      "christmas",
+      "desserts",
+      "vegan",
+      "snacks",
+      "dish-type",
+      "low-lactose",
+      "baking-and-desserts",
+      "dairy-free",
+      "family-baking-recipes",
+      "course",
+      "dessert",
+      "cake",
+      "easter-treats",
+      "occasion",
+      "vegetarian",
+      "method",
+      "chocolate",
+      "puddings-amp-desserts",
+      "main-ingredient",
+      "chocolate-brownies",
+      "brownies",
+      "baking",
+      "mother-s-day"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chocolate/vegan-chocolate-brownies",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8f4ffb72d0502e2bc766f5cbc304ce58c8ebcd5e-973x1300.jpg/8f4ffb72d0502e2bc766f5cbc304ce58c8ebcd5e-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8f4ffb72d0502e2bc766f5cbc304ce58c8ebcd5e-973x1300.jpg/8f4ffb72d0502e2bc766f5cbc304ce58c8ebcd5e-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8f4ffb72d0502e2bc766f5cbc304ce58c8ebcd5e-973x1300.jpg/8f4ffb72d0502e2bc766f5cbc304ce58c8ebcd5e-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8f4ffb72d0502e2bc766f5cbc304ce58c8ebcd5e-973x1300.jpg/8f4ffb72d0502e2bc766f5cbc304ce58c8ebcd5e-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chocolate"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "sunflower-oil",
+      "name": "sunflower oil",
+      "quantity": 5.0,
+      "unit": "tablespoons",
+      "note": "plus extra for greasing"
+    },
+    {
+      "id": "dairy-free-dark-chocolate",
+      "name": "dairy-free dark chocolate",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 170.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-cocoa-powde",
+      "name": "heaped tablespoons cocoa powder",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 180.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sea-salt",
+      "name": "sea salt",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "vanilla-pod",
+      "name": "vanilla pod",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsweetened-organic-soya-milk",
+      "name": "unsweetened organic soya milk",
+      "quantity": 230.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "pecan-nuts",
+      "name": "pecan nuts",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "large bowl",
+    "oven",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4. Grease a square baking tin (roughly 20cm) with a little oil, then line with greaseproof paper.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_proof"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4. Grease a square baking tin (roughly 20cm) with a little oil, then line with greaseproof paper."
+        }
+      ]
+    },
+    {
+      "id": "heat_proof",
+      "descr": "Place a heatproof bowl over a pan of simmering water,...",
+      "instructions": "Place a heatproof bowl over a pan of simmering water, making sure the base doesn\u2019t touch the water. Break 150g of chocolate into the bowl and allow it to melt, then set aside to cool slightly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "stir_sugar"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a heatproof bowl over a pan of simmering water, making sure the base doesn\u2019t touch the water. Break 150g of chocolate into the bowl and allow it to melt, then set aside to cool slightly."
+        }
+      ]
+    },
+    {
+      "id": "stir_sugar",
+      "descr": "Meanwhile, sieve the flour and cocoa powder into a large...",
+      "instructions": "Meanwhile, sieve the flour and cocoa powder into a large bowl, then stir in the sugar and a pinch of salt. Halve the vanilla pod lengthways, scrape out the seeds, then add them to the bowl. Stir in the oil, soya milk and melted chocolate until combined.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_proof"
+      ],
+      "next": [
+        "chop_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, sieve the flour and cocoa powder into a large bowl, then stir in the sugar and a pinch of salt. Halve the vanilla pod lengthways, scrape out the seeds, then add them to the bowl. Stir in the oil, soya milk and melted chocolate until combined."
+        }
+      ]
+    },
+    {
+      "id": "chop_remaining",
+      "descr": "Roughly chop and stir in the remaining chocolate and...",
+      "instructions": "Roughly chop and stir in the remaining chocolate and most of the pecans, reserving a few for the top. Pour the mixture into the prepared tin, spreading it out evenly. Sprinkle over the remaining pecans, then place into the hot oven for 20 to 25 minutes, or until cooked on the outside, but still gooey in the middle.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "stir_sugar"
+      ],
+      "next": [
+        "warm_scoop"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly chop and stir in the remaining chocolate and most of the pecans, reserving a few for the top. Pour the mixture into the prepared tin, spreading it out evenly. Sprinkle over the remaining pecans, then place into the hot oven for 20 to 25 minutes, or until cooked on the outside, but still gooey in the middle."
+        }
+      ]
+    },
+    {
+      "id": "warm_scoop",
+      "descr": "Leave to cool for around 5 minutes, turn out onto a wire...",
+      "instructions": "Leave to cool for around 5 minutes, turn out onto a wire cooling rack, then serve warm with a scoop of vanilla ice cream, if you\u2019re feeling extra indulgent.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave to cool for around 5 minutes, turn out onto a wire cooling rack, then serve warm with a scoop of vanilla ice cream, if you\u2019re feeling extra indulgent."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "280 calories",
+    "carbohydrates": "26.9 g",
+    "fat": "17.9 g",
+    "fiber": "2.3 g",
+    "protein": "3.5 g"
+  }
+}

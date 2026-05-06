@@ -1,0 +1,257 @@
+{
+  "recipe": {
+    "id": "chicken-pot-pie",
+    "title": "Chicken pot pie",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "A chicken pot pie with puff pastry. This easy chicken pot pie recipe from Jamie's Quick And Easy Food is ready in under half an hour, and so delicious.",
+    "tags": [
+      "chicken",
+      "pastry",
+      "puff-pastry",
+      "quick-amp-easy-series-1",
+      "lunch-amp-dinner-recipes",
+      "tv-shows",
+      "quick-amp-easy-recipes",
+      "chicken-thighs",
+      "cheap-amp-cheerful",
+      "pie",
+      "keep-cooking-and-carry-on",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/healthy-chicken/chicken-pot-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f4fe4091159db76ae82216cfba4ad4f263d36603-956x1280.jpg/55846353?rect=0,162,956,956&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f4fe4091159db76ae82216cfba4ad4f263d36603-956x1280.jpg/55846353?rect=0,162,956,956&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f4fe4091159db76ae82216cfba4ad4f263d36603-956x1280.jpg/55846353?rect=0,282,956,717&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f4fe4091159db76ae82216cfba4ad4f263d36603-956x1280.jpg/55846353?rect=0,371,956,538&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "healthy-chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "chicken-thighs",
+      "name": "chicken thighs",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": "skin off, bone out"
+    },
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "block-of-all-butter-puff-pastr",
+      "name": "block of all-butter puff pastry",
+      "quantity": 375.0,
+      "unit": "g",
+      "note": "cold"
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "oven",
+    "pan",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7",
+      "instructions": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_smaller"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7."
+        }
+      ]
+    },
+    {
+      "id": "heat_smaller",
+      "descr": "Place a 30cm non-stick ovenproof frying pan on a high...",
+      "instructions": "Place a 30cm non-stick ovenproof frying pan on a high heat, with a smaller non-stick pan on a medium heat alongside. Pour 1 tablespoon of olive oil into the larger pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_onions"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a 30cm non-stick ovenproof frying pan on a high heat, with a smaller non-stick pan on a medium heat alongside. Pour 1 tablespoon of olive oil into the larger pan."
+        }
+      ]
+    },
+    {
+      "id": "chop_onions",
+      "descr": "Peel and roughly chop the onions, adding them to the...",
+      "instructions": "Peel and roughly chop the onions, adding them to the larger pan as you go.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_smaller"
+      ],
+      "next": [
+        "chop_thirds"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and roughly chop the onions, adding them to the larger pan as you go."
+        }
+      ]
+    },
+    {
+      "id": "chop_thirds",
+      "descr": "Roughly chop two-thirds of the thighs, finely chop the...",
+      "instructions": "Roughly chop two-thirds of the thighs, finely chop the rest, and add to the onion pan. Cook for 6 minutes, or until golden, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT360S",
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "toast_nutty"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly chop two-thirds of the thighs, finely chop the rest, and add to the onion pan. Cook for 6 minutes, or until golden, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "toast_nutty",
+      "descr": "Meanwhile, place the mushrooms in the dry pan, tearing...",
+      "instructions": "Meanwhile, place the mushrooms in the dry pan, tearing up any larger ones. Let them toast and get nutty for 4 minutes, then tip into the chicken pan and strip in half the thyme leaves.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "chop_thirds"
+      ],
+      "next": [
+        "heat_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, place the mushrooms in the dry pan, tearing up any larger ones. Let them toast and get nutty for 4 minutes, then tip into the chicken pan and strip in half the thyme leaves."
+        }
+      ]
+    },
+    {
+      "id": "heat_pinch",
+      "descr": "Remove the pan from the heat, add a pinch of sea salt...",
+      "instructions": "Remove the pan from the heat, add a pinch of sea salt and black pepper, then stir in 1 tablespoon of red wine vinegar and 150ml of water.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "toast_nutty"
+      ],
+      "next": [
+        "roll_pastry"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pan from the heat, add a pinch of sea salt and black pepper, then stir in 1 tablespoon of red wine vinegar and 150ml of water."
+        }
+      ]
+    },
+    {
+      "id": "roll_pastry",
+      "descr": "Working quickly, roll out the pastry so it\u2019s 2cm bigger...",
+      "instructions": "Working quickly, roll out the pastry so it\u2019s 2cm bigger than the pan, then place it over the filling, using a wooden spoon to push it into the edges.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_pinch"
+      ],
+      "next": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "Working quickly, roll out the pastry so it\u2019s 2cm bigger than the pan, then place it over the filling, using a wooden spoon to push it into the edges."
+        }
+      ]
+    },
+    {
+      "id": "step_step_8",
+      "descr": "Very lightly criss-cross the pastry, then brush with 1...",
+      "instructions": "Very lightly criss-cross the pastry, then brush with 1 teaspoon of olive oil. Poke the remaining thyme sprigs into the middle of the pie.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_pastry"
+      ],
+      "next": [
+        "bake_bottom"
+      ],
+      "on_enter": [
+        {
+          "say": "Very lightly criss-cross the pastry, then brush with 1 teaspoon of olive oil. Poke the remaining thyme sprigs into the middle of the pie."
+        }
+      ]
+    },
+    {
+      "id": "bake_bottom",
+      "descr": "Bake at the bottom of the oven for 15 minutes, or until...",
+      "instructions": "Bake at the bottom of the oven for 15 minutes, or until golden and puffed up. Easy!",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake at the bottom of the oven for 15 minutes, or until golden and puffed up. Easy!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "683 calories",
+    "carbohydrates": "42 g",
+    "fat": "40.7 g",
+    "fiber": "4.3 g",
+    "protein": "36.7 g"
+  }
+}

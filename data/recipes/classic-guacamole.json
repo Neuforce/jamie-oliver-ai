@@ -1,0 +1,239 @@
+{
+  "recipe": {
+    "id": "classic-guacamole",
+    "title": "Classic guacamole",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "Ever wondered how to make guacamole? This is Jamie Oliver\u2019s best guacamole recipe. Perfect for dunking, spreading and dipping, guacamole is definitely the King of the Dips.",
+    "tags": [
+      "vegan",
+      "dish-type",
+      "sauces",
+      "healthy-vegetarian-recipes",
+      "low-lactose",
+      "gluten-free",
+      "vegetables",
+      "quick-fixes",
+      "course",
+      "mexican",
+      "healthy-snack-ideas",
+      "occasion",
+      "avocado",
+      "vegetarian",
+      "method",
+      "sides",
+      "one-pan-recipes",
+      "main-ingredient",
+      "party-food",
+      "quick-amp-healthy-recipes",
+      "sauces-amp-condiments",
+      "guacamole",
+      "popular"
+    ],
+    "course": "main",
+    "cuisine": "mexican",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/classic-guacamole",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/416e0ccebacf452702f8e970f81f902633f86ef1-1663x2218.jpg/classicguacamolerecipe.jpg?rect=0,278,1663,1663&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/416e0ccebacf452702f8e970f81f902633f86ef1-1663x2218.jpg/classicguacamolerecipe.jpg?rect=0,278,1663,1663&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/416e0ccebacf452702f8e970f81f902633f86ef1-1663x2218.jpg/classicguacamolerecipe.jpg?rect=0,486,1663,1247&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/416e0ccebacf452702f8e970f81f902633f86ef1-1663x2218.jpg/classicguacamolerecipe.jpg?rect=0,642,1663,935&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "a-small-red-onion",
+      "name": "\u00bd a small red onion",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 1.5,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-avocados",
+      "name": "ripe avocados",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-coriander",
+      "name": "fresh coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "ripe-cherry-tomatoes",
+      "name": "ripe cherry tomatoes",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "limes",
+      "name": "limes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shop-jamie-s-serveware",
+      "name": "Shop Jamie's serveware",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "little-bowls",
+      "name": "Little Bowls",
+      "quantity": null,
+      "unit": null,
+      "note": "Set of 4"
+    },
+    {
+      "id": "all-rounder-board",
+      "name": "All-Rounder Board",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "chop_large",
+      "descr": "Peel the onion and deseed 1 chilli, then roughly chop it...",
+      "instructions": "Peel the onion and deseed 1 chilli, then roughly chop it all on a large board.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the onion and deseed 1 chilli, then roughly chop it all on a large board."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Destone the avocados and scoop the flesh onto the board",
+      "instructions": "Destone the avocados and scoop the flesh onto the board.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_large"
+      ],
+      "next": [
+        "chop_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Destone the avocados and scoop the flesh onto the board."
+        }
+      ]
+    },
+    {
+      "id": "chop_ping",
+      "descr": "Start chopping it all together until fine and well combined",
+      "instructions": "Start chopping it all together until fine and well combined.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "chop_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Start chopping it all together until fine and well combined."
+        }
+      ]
+    },
+    {
+      "id": "chop_tomatoes",
+      "descr": "Pick over most of the coriander leaves, roughly chop and...",
+      "instructions": "Pick over most of the coriander leaves, roughly chop and add the tomatoes, then continue chopping it all together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "add_juice"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick over most of the coriander leaves, roughly chop and add the tomatoes, then continue chopping it all together."
+        }
+      ]
+    },
+    {
+      "id": "add_juice",
+      "descr": "Add the juice from 1 lime and 1 tablespoon of oil, then...",
+      "instructions": "Add the juice from 1 lime and 1 tablespoon of oil, then season to taste with sea salt, black pepper and more lime juice, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_tomatoes"
+      ],
+      "next": [
+        "chop_scatter"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the juice from 1 lime and 1 tablespoon of oil, then season to taste with sea salt, black pepper and more lime juice, if needed."
+        }
+      ]
+    },
+    {
+      "id": "chop_scatter",
+      "descr": "Deseed, finely chop and scatter over the remaining...",
+      "instructions": "Deseed, finely chop and scatter over the remaining chilli if you like more of a kick. Pick over the reserved coriander leaves, then serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_juice"
+      ],
+      "on_enter": [
+        {
+          "say": "Deseed, finely chop and scatter over the remaining chilli if you like more of a kick. Pick over the reserved coriander leaves, then serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "91 calories",
+    "carbohydrates": "1.8 g",
+    "fat": "8.9 g",
+    "fiber": "1.5 g",
+    "protein": "1 g"
+  }
+}

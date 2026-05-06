@@ -1,0 +1,227 @@
+{
+  "recipe": {
+    "id": "herb-stuffed-salmon-red-pepper-salsa",
+    "title": "Herb-stuffed salmon & red pepper salsa",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT28M",
+    "description": "Jamie's air-fryer salmon is stuffed with a mixture of soft herbs and served with steamed and scorched greens, tinned potatoes and a quick salsa. And it's all done in the air fryer!",
+    "tags": [
+      "asparagus",
+      "air-fryer",
+      "low-lactose",
+      "green-beans",
+      "salmon",
+      "broccoli",
+      "dairy-free",
+      "quick-fixes",
+      "salsa",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/salmon/air-fryer-crispy-herb-stuffed-salmon",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f52af5b2b4575f4acece5f5ed5ff68e0ca5618fb-973x1300.jpg/Herb-stuffed%20salmon%20and%20red%20pepper%20salsa%20crop.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f52af5b2b4575f4acece5f5ed5ff68e0ca5618fb-973x1300.jpg/Herb-stuffed%20salmon%20and%20red%20pepper%20salsa%20crop.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f52af5b2b4575f4acece5f5ed5ff68e0ca5618fb-973x1300.jpg/Herb-stuffed%20salmon%20and%20red%20pepper%20salsa%20crop.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f52af5b2b4575f4acece5f5ed5ff68e0ca5618fb-973x1300.jpg/Herb-stuffed%20salmon%20and%20red%20pepper%20salsa%20crop.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "salmon"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "567g-tin-of-peeled-new-potatoe",
+      "name": "567g tin of peeled new potatoes",
+      "quantity": 567.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "asparagus",
+      "name": "asparagus",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "green-beans",
+      "name": "green beans",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "tenderstem-broccoli",
+      "name": "tenderstem broccoli",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "130g-salmon-fillets",
+      "name": "130g salmon fillets",
+      "quantity": 130.0,
+      "unit": null,
+      "note": "skin on, scaled, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "a-bunch-of-mixed-soft-herbs",
+      "name": "\u00bd a bunch of mixed soft herbs",
+      "quantity": null,
+      "unit": null,
+      "note": "15g, such as dill, basil, flat-leaf parsley, mint"
+    },
+    {
+      "id": "large-jarred-roasted-peppers",
+      "name": "large jarred roasted peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-capers-in-brine",
+      "name": "baby capers in brine",
+      "quantity": 2.0,
+      "unit": "tsp",
+      "note": null
+    },
+    {
+      "id": "a-small-clove-of-garlic",
+      "name": "\u00bd a small clove of garlic",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tsp-dijon-mustard",
+      "name": "\u00bd tsp Dijon mustard",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "knife",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "slice_half",
+      "descr": "Drain the tinned potatoes, halving any larger ones",
+      "instructions": "Drain the tinned potatoes, halving any larger ones. Slice half the lemon into thin rounds, then place it all in the small air-fryer drawer, tucking the lemon slices underneath. Spritz with olive oil, season, and cook for 20 minutes at 200\u00b0C, or until golden and crisp, shaking halfway.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "next": [
+        "add_green"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the tinned potatoes, halving any larger ones. Slice half the lemon into thin rounds, then place it all in the small air-fryer drawer, tucking the lemon slices underneath. Spritz with olive oil, season, and cook for 20 minutes at 200\u00b0C, or until golden and crisp, shaking halfway."
+        }
+      ]
+    },
+    {
+      "id": "add_green",
+      "descr": "Snap the woody ends off the asparagus, place the spears...",
+      "instructions": "Snap the woody ends off the asparagus, place the spears in the large drawer, then trim and add the green beans. Trim the broccoli, halving any thicker stalks lengthways, and scatter into the drawer, then add a splash of water (or white wine, if you have some open!) and cook for 4 minutes at 200\u00b0C.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "slice_half"
+      ],
+      "next": [
+        "slice_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Snap the woody ends off the asparagus, place the spears in the large drawer, then trim and add the green beans. Trim the broccoli, halving any thicker stalks lengthways, and scatter into the drawer, then add a splash of water (or white wine, if you have some open!) and cook for 4 minutes at 200\u00b0C."
+        }
+      ]
+    },
+    {
+      "id": "slice_down",
+      "descr": "While your veg get a head start, pinch the salmon...",
+      "instructions": "While your veg get a head start, pinch the salmon fillets and \u2013 with a sharp knife \u2013 carefully slice down into the skin lengthways, about 1cm deep. Season with sea salt and black pepper, then pick and stuff in half the herb leaves, as well as a few gratings of lemon zest. Place on top of the green veg, skin side up, spritz everything with oil, then cook for 8 minutes at 200\u00b0C, or until the salmon and veg are cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "add_green"
+      ],
+      "next": [
+        "chop_mixing"
+      ],
+      "on_enter": [
+        {
+          "say": "While your veg get a head start, pinch the salmon fillets and \u2013 with a sharp knife \u2013 carefully slice down into the skin lengthways, about 1cm deep. Season with sea salt and black pepper, then pick and stuff in half the herb leaves, as well as a few gratings of lemon zest. Place on top of the green veg, skin side up, spritz everything with oil, then cook for 8 minutes at 200\u00b0C, or until the salmon and veg are cooked through."
+        }
+      ]
+    },
+    {
+      "id": "chop_mixing",
+      "descr": "To make the salsa, place the peppers and capers on a board",
+      "instructions": "To make the salsa, place the peppers and capers on a board. Peel and finely grate over the garlic, then very finely chop it all, mixing as you go. Dress with the mustard and a squeeze of lemon juice, and season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_down"
+      ],
+      "next": [
+        "add_green"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the salsa, place the peppers and capers on a board. Peel and finely grate over the garlic, then very finely chop it all, mixing as you go. Dress with the mustard and a squeeze of lemon juice, and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "add_green",
+      "descr": "Divide the lemony potatoes between plates, then add the...",
+      "instructions": "Divide the lemony potatoes between plates, then add the green veg and salmon, drizzling over any juices from the large drawer. Pick over the remaining herb leaves, and finish with the salsa.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_mixing"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide the lemony potatoes between plates, then add the green veg and salmon, drizzling over any juices from the large drawer. Pick over the remaining herb leaves, and finish with the salsa."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "453 calories",
+    "carbohydrates": "36 g",
+    "fat": "17 g",
+    "fiber": "7.8 g",
+    "protein": "38.2 g"
+  }
+}

@@ -1,0 +1,309 @@
+{
+  "recipe": {
+    "id": "chocolate-orange-arctic-roll",
+    "title": "Chocolate orange Arctic roll",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT75M",
+    "description": "Channel the essence of Christmas into this delicious retro classic. Reliable and really good fun, it\u2019s a perfect festive get-ahead dessert recipe.",
+    "tags": [
+      "entertaining",
+      "christmas",
+      "dessert",
+      "baking",
+      "vegetarian",
+      "cake",
+      "chocolate",
+      "ice-cream"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/desserts/chocolate-orange-arctic-roll",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2cf2c7b5d12fc9737cb91cfef074a1677926bfcd-853x1279.jpg/163465198?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2cf2c7b5d12fc9737cb91cfef074a1677926bfcd-853x1279.jpg/163465198?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2cf2c7b5d12fc9737cb91cfef074a1677926bfcd-853x1279.jpg/163465198?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2cf2c7b5d12fc9737cb91cfef074a1677926bfcd-853x1279.jpg/163465198?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "desserts"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "clementine-ice-cream",
+      "name": "CLEMENTINE ICE CREAM",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "clementines",
+      "name": "clementines",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "double-cream",
+      "name": "double cream",
+      "quantity": 600.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "397g-tin-of-condensed-milk",
+      "name": "397g tin of condensed milk",
+      "quantity": 397.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sponge",
+      "name": "SPONGE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": null,
+      "unit": null,
+      "note": "for greasing"
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "quality-cocoa-powder",
+      "name": "quality cocoa powder",
+      "quantity": 25.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "filling-topping",
+      "name": "FILLING & TOPPING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cranberry-sauce",
+      "name": "cranberry sauce",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "x-157g-chocolate-orange",
+      "name": "\u00bd x 157g chocolate orange",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "milk-or-white-chocolate",
+      "name": "milk or white chocolate",
+      "quantity": null,
+      "unit": null,
+      "note": "to decorate"
+    },
+    {
+      "id": "cocoa-powder",
+      "name": "cocoa powder",
+      "quantity": null,
+      "unit": null,
+      "note": "for dusting"
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "bowl",
+    "knife",
+    "large bowl",
+    "mixer",
+    "oven",
+    "pan",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "heat_bring",
+      "descr": "GET AHEAD To make the ice cream, squeeze the clementine...",
+      "instructions": "GET AHEAD To make the ice cream, squeeze the clementine juice into a small pan on a medium-high heat, bring to the boil and simmer for about 5 minutes, or until syrupy and reduced by \u2153, then remove from the heat and leave to cool.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "GET AHEAD To make the ice cream, squeeze the clementine juice into a small pan on a medium-high heat, bring to the boil and simmer for about 5 minutes, or until syrupy and reduced by \u2153, then remove from the heat and leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "In a large bowl, whisk the cream until soft peaks form,...",
+      "instructions": "In a large bowl, whisk the cream until soft peaks form, then fold in the condensed milk until evenly combined. Finely grate the clementine zest and fold into the ice cream mixture with the cooled syrup. Pour the mixture into a freezer-proof container or loaf tin, making sure it gets into all the corners, cover and freeze for at least 4 hours, or until set.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT14400S",
+      "depends_on": [
+        "heat_bring"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "In a large bowl, whisk the cream until soft peaks form, then fold in the condensed milk until evenly combined. Finely grate the clementine zest and fold into the ice cream mixture with the cooled syrup. Pour the mixture into a freezer-proof container or loaf tin, making sure it gets into all the corners, cover and freeze for at least 4 hours, or until set."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "mix_eggs"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "mix_eggs",
+      "descr": "For the sponge, grease a baking tray (25cm x 38cm) with...",
+      "instructions": "For the sponge, grease a baking tray (25cm x 38cm) with butter, line the bottom and sides with greaseproof paper, then lightly grease the paper. By hand or with an electric mixer, beat the eggs and golden caster sugar until pale, thick and creamy. Sift in half the flour and cocoa, very gently fold them in using a large metal spoon, then repeat with the rest. Pour the mixture into your prepared tin and spread out evenly. Bake for 10 minutes, or until springy to the touch.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "fold_excess"
+      ],
+      "on_enter": [
+        {
+          "say": "For the sponge, grease a baking tray (25cm x 38cm) with butter, line the bottom and sides with greaseproof paper, then lightly grease the paper. By hand or with an electric mixer, beat the eggs and golden caster sugar until pale, thick and creamy. Sift in half the flour and cocoa, very gently fold them in using a large metal spoon, then repeat with the rest. Pour the mixture into your prepared tin and spread out evenly. Bake for 10 minutes, or until springy to the touch."
+        }
+      ]
+    },
+    {
+      "id": "fold_excess",
+      "descr": "Place a large sheet of greaseproof paper on top of a...",
+      "instructions": "Place a large sheet of greaseproof paper on top of a clean damp tea towel and evenly sprinkle over a thin layer of golden caster sugar from a height. While it\u2019s still hot and flexible, turn the sponge out on to the paper. Peel off and discard the baked piece of greaseproof. With one of the shortest sides in front of you, fold up the excess paper, then roll up the sponge with the paper inside (as it cools this will set the shape but prevent the sponge from cracking). Leave to cool.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_eggs"
+      ],
+      "next": [
+        "mash_cranberry"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large sheet of greaseproof paper on top of a clean damp tea towel and evenly sprinkle over a thin layer of golden caster sugar from a height. While it\u2019s still hot and flexible, turn the sponge out on to the paper. Peel off and discard the baked piece of greaseproof. With one of the shortest sides in front of you, fold up the excess paper, then roll up the sponge with the paper inside (as it cools this will set the shape but prevent the sponge from cracking). Leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "mash_cranberry",
+      "descr": "Use a fork to mash up the cranberry sauce",
+      "instructions": "Use a fork to mash up the cranberry sauce. To assemble, unroll the sponge so it\u2019s flat, removing the paper, then spread over the cranberry sauce and snap over the chocolate orange. Turn the ice cream out onto a large piece of greaseproof paper and leave to soften enough to shape it, then use the paper to squash it into a thick, even sausage shape. Transfer the ice cream to the sponge, leaving a 5cm gap at one of the shorter ends. Carefully re-roll \u2013 if the filling starts to slip out, just push it back in. Wrap well in greaseproof and a tea towel, then freeze overnight, or until needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fold_excess"
+      ],
+      "next": [
+        "serve_carefully"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a fork to mash up the cranberry sauce. To assemble, unroll the sponge so it\u2019s flat, removing the paper, then spread over the cranberry sauce and snap over the chocolate orange. Turn the ice cream out onto a large piece of greaseproof paper and leave to soften enough to shape it, then use the paper to squash it into a thick, even sausage shape. Transfer the ice cream to the sponge, leaving a 5cm gap at one of the shorter ends. Carefully re-roll \u2013 if the filling starts to slip out, just push it back in. Wrap well in greaseproof and a tea towel, then freeze overnight, or until needed."
+        }
+      ]
+    },
+    {
+      "id": "serve_carefully",
+      "descr": "ON THE DAY Get your Arctic roll out of the freezer and...",
+      "instructions": "ON THE DAY Get your Arctic roll out of the freezer and into the fridge 30 minutes before you\u2019re ready to serve. Carefully trim the ends to give you nice edges.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "mash_cranberry"
+      ],
+      "next": [
+        "slice_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "ON THE DAY Get your Arctic roll out of the freezer and into the fridge 30 minutes before you\u2019re ready to serve. Carefully trim the ends to give you nice edges."
+        }
+      ]
+    },
+    {
+      "id": "slice_step_8",
+      "descr": "Lay the chocolate on a work surface, flat side up",
+      "instructions": "Lay the chocolate on a work surface, flat side up. Carefully drag a chef\u2019s knife towards you, from top to bottom, to make curls. Scatter the curls over the roll, finish with a dusting of cocoa powder, and get ready to slice it up!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "serve_carefully"
+      ],
+      "on_enter": [
+        {
+          "say": "Lay the chocolate on a work surface, flat side up. Carefully drag a chef\u2019s knife towards you, from top to bottom, to make curls. Scatter the curls over the roll, finish with a dusting of cocoa powder, and get ready to slice it up!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "525 calories",
+    "carbohydrates": "59.3 g",
+    "fat": "29.3 g",
+    "fiber": "1.3 g",
+    "protein": "8.3 g"
+  }
+}

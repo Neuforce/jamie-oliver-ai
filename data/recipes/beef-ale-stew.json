@@ -1,0 +1,265 @@
+{
+  "recipe": {
+    "id": "beef-ale-stew",
+    "title": "Beef & ale stew",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT140M",
+    "description": "This basic stew will work every time and should be thought of as a principal recipe that you can chop and change, using different meats, herbs and liquids. ",
+    "tags": [
+      "keep-cooking-and-carry-on",
+      "main-ingredient",
+      "slow-cooker",
+      "beef-stew",
+      "dish-type",
+      "method",
+      "beef",
+      "tv-shows",
+      "stewing",
+      "occasion",
+      "stew",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/beef-and-ale-stew",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a0a2e936e63e1f8247e4613dfaffe489ef6759ba-958x1280.jpg/105233696?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a0a2e936e63e1f8247e4613dfaffe489ef6759ba-958x1280.jpg/105233696?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a0a2e936e63e1f8247e4613dfaffe489ef6759ba-958x1280.jpg/105233696?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a0a2e936e63e1f8247e4613dfaffe489ef6759ba-958x1280.jpg/105233696?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 3.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-rosemary-or-3",
+      "name": "\u00bd a bunch of fresh rosemary or 3 bay leaves",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ale",
+      "name": "ale",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": "Guinness or stout"
+    },
+    {
+      "id": "400g-tin-of-plum-tomatoes",
+      "name": "400g tin of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "quality-diced-stewing-beef",
+      "name": "quality diced stewing beef",
+      "quantity": 750.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_step_1",
+      "descr": "If using the oven to cook the stew, preheat it to...",
+      "instructions": "If using the oven to cook the stew, preheat it to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "If using the oven to cook the stew, preheat it to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Put a large shallow ovenproof casserole pan on a medium...",
+      "instructions": "Put a large shallow ovenproof casserole pan on a medium heat with 2 tablespoons of oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_step_1"
+      ],
+      "next": [
+        "chop_same"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large shallow ovenproof casserole pan on a medium heat with 2 tablespoons of oil."
+        }
+      ]
+    },
+    {
+      "id": "chop_same",
+      "descr": "Trim the celery, wash the carrots, peel the onions, then...",
+      "instructions": "Trim the celery, wash the carrots, peel the onions, then roughly chop it all about the same size as your beef chunks, adding the veg to the pan as you go.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the celery, wash the carrots, peel the onions, then roughly chop it all about the same size as your beef chunks, adding the veg to the pan as you go."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Season the veg with sea salt and black pepper, and fry...",
+      "instructions": "Season the veg with sea salt and black pepper, and fry for 10 minutes, or until softened and starting to caramelise, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_same"
+      ],
+      "next": [
+        "stir_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the veg with sea salt and black pepper, and fry for 10 minutes, or until softened and starting to caramelise, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "stir_flour",
+      "descr": "Strip in the rosemary leaves, stir in the flour for 2...",
+      "instructions": "Strip in the rosemary leaves, stir in the flour for 2 minutes, then pour in the booze and let it cook away.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "pour_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Strip in the rosemary leaves, stir in the flour for 2 minutes, then pour in the booze and let it cook away."
+        }
+      ]
+    },
+    {
+      "id": "pour_tomatoes",
+      "descr": "Pour in the tomatoes, breaking them up with the back of...",
+      "instructions": "Pour in the tomatoes, breaking them up with the back of the spoon. Fill the tin with water, swirl around, and pour into the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_flour"
+      ],
+      "next": [
+        "stir_meat"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the tomatoes, breaking them up with the back of the spoon. Fill the tin with water, swirl around, and pour into the pan."
+        }
+      ]
+    },
+    {
+      "id": "stir_meat",
+      "descr": "Bring just to the boil, then stir in the meat, season,...",
+      "instructions": "Bring just to the boil, then stir in the meat, season, and cover. Either simmer slowly on the hob or place in the oven for 2 hours, or until the meat falls apart easily.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT7200S",
+      "depends_on": [
+        "pour_tomatoes"
+      ],
+      "next": [
+        "season_needed"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring just to the boil, then stir in the meat, season, and cover. Either simmer slowly on the hob or place in the oven for 2 hours, or until the meat falls apart easily."
+        }
+      ]
+    },
+    {
+      "id": "season_needed",
+      "descr": "Taste the stew and tweak the seasoning, if needed, then...",
+      "instructions": "Taste the stew and tweak the seasoning, if needed, then serve with rice or mashed potato, and some lovely veggies, or check out the topping ideas below.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_meat"
+      ],
+      "on_enter": [
+        {
+          "say": "Taste the stew and tweak the seasoning, if needed, then serve with rice or mashed potato, and some lovely veggies, or check out the topping ideas below."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "334 calories",
+    "carbohydrates": "20.2 g",
+    "fat": "13 g",
+    "fiber": "3.6 g",
+    "protein": "30.8 g"
+  }
+}

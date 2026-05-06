@@ -1,0 +1,391 @@
+{
+  "recipe": {
+    "id": "spicy-beef-burger",
+    "title": "Spicy beef burger",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT35M",
+    "description": "This epic spicy beef burger recipe from Jamie Oliver is really the best of the best. It also includes the best burger sauce recipe with a secret ingredient!",
+    "tags": [
+      "barbeque",
+      "bbq-amp-grilling",
+      "burger",
+      "dish-type",
+      "father-s-day",
+      "course",
+      "bbq",
+      "australia-day",
+      "air-fryer",
+      "alfresco",
+      "mains",
+      "barbecue",
+      "occasion",
+      "steak",
+      "method",
+      "beef",
+      "main-ingredient",
+      "bacon",
+      "bbq-food"
+    ],
+    "course": "main",
+    "cuisine": "american",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/insanity-burger",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/290658897ca4cf0be8e94acd26f589b29e0c83c3-973x1300.jpg/290658897ca4cf0be8e94acd26f589b29e0c83c3-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/290658897ca4cf0be8e94acd26f589b29e0c83c3-973x1300.jpg/290658897ca4cf0be8e94acd26f589b29e0c83c3-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/290658897ca4cf0be8e94acd26f589b29e0c83c3-973x1300.jpg/290658897ca4cf0be8e94acd26f589b29e0c83c3-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/290658897ca4cf0be8e94acd26f589b29e0c83c3-973x1300.jpg/290658897ca4cf0be8e94acd26f589b29e0c83c3-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "higher-welfare-minced-chuck-st",
+      "name": "higher-welfare minced chuck steak",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-red-onion",
+      "name": "large red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "splash-of-white-wine-vinegar",
+      "name": "splash of white wine vinegar",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-gherkins",
+      "name": "large gherkins",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sesame-topped-brioche-burger-b",
+      "name": "sesame-topped brioche burger buns",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "8-rashers-of-higher-welfare-sm",
+      "name": "\u20138 rashers of higher-welfare smoked streaky bacon",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "american-mustard",
+      "name": "American mustard",
+      "quantity": 4.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "tabasco-chipotle-sauce",
+      "name": "Tabasco Chipotle sauce",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "thin-slices-of-red-leicester-c",
+      "name": "thin slices of Red Leicester cheese",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tomato-ketchup",
+      "name": "tomato ketchup",
+      "quantity": 4.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "burger-sauce",
+      "name": "BURGER SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "of-an-iceberg-lettuce",
+      "name": "\u00bc of an iceberg lettuce",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-free-range-",
+      "name": "heaped tablespoons free-range mayo",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-tomato-ketch",
+      "name": "heaped tablespoon tomato ketchup",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tabasco-chipotle-sauce",
+      "name": "Tabasco Chipotle sauce",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "worcestershire-sauce",
+      "name": "Worcestershire sauce",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "optional-1-teaspoon-brandy-or-",
+      "name": "optional: 1 teaspoon brandy or bourbon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mince_chuck",
+      "descr": "For the best burger, go to your butcher and ask them to...",
+      "instructions": "For the best burger, go to your butcher and ask them to mince 800g of chuck steak for you \u2013 this cut has a really good balance of fat and flavoursome meat.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chill_fridge"
+      ],
+      "on_enter": [
+        {
+          "say": "For the best burger, go to your butcher and ask them to mince 800g of chuck steak for you \u2013 this cut has a really good balance of fat and flavoursome meat."
+        }
+      ]
+    },
+    {
+      "id": "chill_fridge",
+      "descr": "Divide it into 4 and, with wet hands, roll each piece...",
+      "instructions": "Divide it into 4 and, with wet hands, roll each piece into a ball, then press into flat patties roughly 12cm wide and about 2cm wider than your buns. Place on an oiled plate and chill in the fridge.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mince_chuck"
+      ],
+      "next": [
+        "chop_lettuce"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide it into 4 and, with wet hands, roll each piece into a ball, then press into flat patties roughly 12cm wide and about 2cm wider than your buns. Place on an oiled plate and chill in the fridge."
+        }
+      ]
+    },
+    {
+      "id": "chop_lettuce",
+      "descr": "Next, finely slice the red onion, then dress in a bowl...",
+      "instructions": "Next, finely slice the red onion, then dress in a bowl with the vinegar and a pinch of sea salt. Slice the gherkins and halve the buns. Finely chop the lettuce and mix with the rest of the burger sauce ingredients in a bowl, then season to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chill_fridge"
+      ],
+      "next": [
+        "heat_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Next, finely slice the red onion, then dress in a bowl with the vinegar and a pinch of sea salt. Slice the gherkins and halve the buns. Finely chop the lettuce and mix with the rest of the burger sauce ingredients in a bowl, then season to taste."
+        }
+      ]
+    },
+    {
+      "id": "heat_your",
+      "descr": "I like to only cook 2 burgers at a time to achieve...",
+      "instructions": "I like to only cook 2 burgers at a time to achieve perfection, so get two pans on the go \u2013 a large non-stick pan on a high heat for your burgers and another on a medium heat for the bacon.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_lettuce"
+      ],
+      "next": [
+        "slice_half"
+      ],
+      "on_enter": [
+        {
+          "say": "I like to only cook 2 burgers at a time to achieve perfection, so get two pans on the go \u2013 a large non-stick pan on a high heat for your burgers and another on a medium heat for the bacon."
+        }
+      ]
+    },
+    {
+      "id": "slice_half",
+      "descr": "Pat the burgers with oil and season them with salt and...",
+      "instructions": "Pat the burgers with oil and season them with salt and pepper. Put 2 burgers into the first pan, pressing down on them with a fish slice, then put half the bacon into the other pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_your"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Pat the burgers with oil and season them with salt and pepper. Put 2 burgers into the first pan, pressing down on them with a fish slice, then put half the bacon into the other pan."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "After 1 minute, flip the burgers and brush each cooked...",
+      "instructions": "After 1 minute, flip the burgers and brush each cooked side with \u00bd a teaspoon of mustard and a dash of Tabasco. After another minute, flip onto the mustard side and brush again with another \u00bd teaspoon of mustard and a second dash of Tabasco on the other side.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "slice_half"
+      ],
+      "next": [
+        "heat_proof"
+      ],
+      "on_enter": [
+        {
+          "say": "After 1 minute, flip the burgers and brush each cooked side with \u00bd a teaspoon of mustard and a dash of Tabasco. After another minute, flip onto the mustard side and brush again with another \u00bd teaspoon of mustard and a second dash of Tabasco on the other side."
+        }
+      ]
+    },
+    {
+      "id": "heat_proof",
+      "descr": "Cook for one more minute, by which point you can place...",
+      "instructions": "Cook for one more minute, by which point you can place some crispy bacon on top of each burger with a slice of cheese. Add a tiny splash of water to the pan and place a heatproof bowl over the burgers to melt the cheese \u2013 30 seconds should do it.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT30S",
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "toast_split"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook for one more minute, by which point you can place some crispy bacon on top of each burger with a slice of cheese. Add a tiny splash of water to the pan and place a heatproof bowl over the burgers to melt the cheese \u2013 30 seconds should do it."
+        }
+      ]
+    },
+    {
+      "id": "toast_split",
+      "descr": "At the same time, toast 2 split buns in the bacon fat in...",
+      "instructions": "At the same time, toast 2 split buns in the bacon fat in the other pan until lightly golden.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_proof"
+      ],
+      "next": [
+        "step_step_9"
+      ],
+      "on_enter": [
+        {
+          "say": "At the same time, toast 2 split buns in the bacon fat in the other pan until lightly golden."
+        }
+      ]
+    },
+    {
+      "id": "step_step_9",
+      "descr": "Repeat with the remaining two burgers",
+      "instructions": "Repeat with the remaining two burgers.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "toast_split"
+      ],
+      "next": [
+        "add_quarter"
+      ],
+      "on_enter": [
+        {
+          "say": "Repeat with the remaining two burgers."
+        }
+      ]
+    },
+    {
+      "id": "add_quarter",
+      "descr": "To build each burger, add a quarter of the burger sauce...",
+      "instructions": "To build each burger, add a quarter of the burger sauce to the bun base, then top with a cheesy bacon burger, a quarter of the onions and gherkins. Rub the bun top with a teaspoon of ketchup, then gently press together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_9"
+      ],
+      "next": [
+        "rest_juices"
+      ],
+      "on_enter": [
+        {
+          "say": "To build each burger, add a quarter of the burger sauce to the bun base, then top with a cheesy bacon burger, a quarter of the onions and gherkins. Rub the bun top with a teaspoon of ketchup, then gently press together."
+        }
+      ]
+    },
+    {
+      "id": "rest_juices",
+      "descr": "As the burger rests, juices will soak into the bun, so...",
+      "instructions": "As the burger rests, juices will soak into the bun, so serve right away, which is great, or for an extra filthy experience, wrap each one in greaseproof paper, then give it a minute to go gorgeous and sloppy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_quarter"
+      ],
+      "on_enter": [
+        {
+          "say": "As the burger rests, juices will soak into the bun, so serve right away, which is great, or for an extra filthy experience, wrap each one in greaseproof paper, then give it a minute to go gorgeous and sloppy."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "694 calories",
+    "carbohydrates": "37.3 g",
+    "fat": "38.1 g",
+    "fiber": null,
+    "protein": "50.1 g"
+  }
+}

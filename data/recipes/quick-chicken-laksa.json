@@ -1,0 +1,375 @@
+{
+  "recipe": {
+    "id": "quick-chicken-laksa",
+    "title": "Quick chicken laksa",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "Jamie Oliver\u2019s chicken laksa recipe is a punchy, flavour-packed, coconutty corker of a dish. This spicy soup recipe can be on the table in just 15 minutes.",
+    "tags": [
+      "asparagus",
+      "soup",
+      "noodles",
+      "chicken",
+      "main-ingredient",
+      "mains",
+      "dish-type",
+      "method",
+      "low-lactose",
+      "chilli",
+      "chicken-thighs",
+      "soups",
+      "quick-fixes",
+      "occasion",
+      "butternut-squash",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "thai",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/quick-chicken-laksa",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1fd254f00a77494b8f5dd98846bb16844f73e91f-973x1300.jpg/1fd254f00a77494b8f5dd98846bb16844f73e91f-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1fd254f00a77494b8f5dd98846bb16844f73e91f-973x1300.jpg/1fd254f00a77494b8f5dd98846bb16844f73e91f-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1fd254f00a77494b8f5dd98846bb16844f73e91f-973x1300.jpg/1fd254f00a77494b8f5dd98846bb16844f73e91f-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1fd254f00a77494b8f5dd98846bb16844f73e91f-973x1300.jpg/1fd254f00a77494b8f5dd98846bb16844f73e91f-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "chicken",
+      "name": "CHICKEN",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-chicken-thighs",
+      "name": "higher-welfare chicken thighs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "skin off, bone out"
+    },
+    {
+      "id": "heaped-teaspoon-chinese-five-s",
+      "name": "heaped teaspoon Chinese five-spice powder",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "sesame-seeds",
+      "name": "sesame seeds",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "laksa",
+      "name": "LAKSA",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-or-vegetable-s",
+      "name": "organic chicken or vegetable stock cube",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "butternut-squash",
+      "name": "butternut squash",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ground-turmeric",
+      "name": "ground turmeric",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-spring-onions",
+      "name": "\u00bd a bunch of spring onions",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-peanut-butter",
+      "name": "heaped teaspoon peanut butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-lime-leaves",
+      "name": "dried lime leaves",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sesame-oil",
+      "name": "sesame oil",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "low-salt-soy-sauce",
+      "name": "low-salt soy sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "fish-sauce",
+      "name": "fish sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "medium-rice-noodles",
+      "name": "medium rice noodles",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "asparagus",
+      "name": "asparagus",
+      "quantity": 2.0,
+      "unit": "bunches",
+      "note": "600g"
+    },
+    {
+      "id": "400g-tin-of-light-coconut-milk",
+      "name": "400g tin of light coconut milk",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "limes",
+      "name": "limes",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "grater",
+    "griddle",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_large",
+      "descr": "Ingredients out \u2022 Kettle boiled \u2022 Griddle pan, high heat...",
+      "instructions": "Ingredients out \u2022 Kettle boiled \u2022 Griddle pan, high heat \u2022 Large lidded pan, high heat \u2022 Food processor (coarse grater & bowl blade) On a large sheet of greaseproof paper, toss the chicken with sea salt, black pepper and the five-spice.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "fold_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Ingredients out \u2022 Kettle boiled \u2022 Griddle pan, high heat \u2022 Large lidded pan, high heat \u2022 Food processor (coarse grater & bowl blade) On a large sheet of greaseproof paper, toss the chicken with sea salt, black pepper and the five-spice."
+        }
+      ]
+    },
+    {
+      "id": "fold_over",
+      "descr": "Fold over the paper, then bash and flatten the chicken to 1",
+      "instructions": "Fold over the paper, then bash and flatten the chicken to 1.5cm thick with a rolling pin. Place on the hot griddle pan, turning after 3 or 4 minutes, until nicely charred and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "heat_large"
+      ],
+      "next": [
+        "cube_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Fold over the paper, then bash and flatten the chicken to 1.5cm thick with a rolling pin. Place on the hot griddle pan, turning after 3 or 4 minutes, until nicely charred and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "cube_step_3",
+      "descr": "Pour about 800ml of boiling water into the large pan and...",
+      "instructions": "Pour about 800ml of boiling water into the large pan and crumble in the stock cube.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fold_over"
+      ],
+      "next": [
+        "chop_neck"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour about 800ml of boiling water into the large pan and crumble in the stock cube."
+        }
+      ]
+    },
+    {
+      "id": "chop_neck",
+      "descr": "Trim the stalk off the squash, roughly chop the neck end...",
+      "instructions": "Trim the stalk off the squash, roughly chop the neck end (don't peel, and keep the seed end for another day), then grate and tip into the boiling stock.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cube_step_3"
+      ],
+      "next": [
+        "add_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the stalk off the squash, roughly chop the neck end (don't peel, and keep the seed end for another day), then grate and tip into the boiling stock."
+        }
+      ]
+    },
+    {
+      "id": "add_garlic",
+      "descr": "Peel the garlic and ginger",
+      "instructions": "Peel the garlic and ginger. Swap to the bowl blade in the processor and add the garlic, ginger, chilli, turmeric, trimmed spring onions, peanut butter, lime leaves, coriander stalks (reserving the leaves), sesame oil, soy and fish sauces. Blitz to a paste, then tip into the stock and add the noodles.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_neck"
+      ],
+      "next": [
+        "heat_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the garlic and ginger. Swap to the bowl blade in the processor and add the garlic, ginger, chilli, turmeric, trimmed spring onions, peanut butter, lime leaves, coriander stalks (reserving the leaves), sesame oil, soy and fish sauces. Blitz to a paste, then tip into the stock and add the noodles."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_6",
+      "descr": "Trim the asparagus and cut in half",
+      "instructions": "Trim the asparagus and cut in half. Add to the pan, pour in the coconut milk, and as soon as it boils, taste, correct the seasoning with soy sauce and lime juice, then turn the heat off.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_garlic"
+      ],
+      "next": [
+        "drizzle_honey"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the asparagus and cut in half. Add to the pan, pour in the coconut milk, and as soon as it boils, taste, correct the seasoning with soy sauce and lime juice, then turn the heat off."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_honey",
+      "descr": "Drizzle the honey over the charred chicken, squeeze over...",
+      "instructions": "Drizzle the honey over the charred chicken, squeeze over the juice of 1 lime, scatter with the sesame seeds and toss to coat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_6"
+      ],
+      "next": [
+        "slice_fresh"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle the honey over the charred chicken, squeeze over the juice of 1 lime, scatter with the sesame seeds and toss to coat."
+        }
+      ]
+    },
+    {
+      "id": "slice_fresh",
+      "descr": "Serve with the laksa and lime wedges, sprinkling...",
+      "instructions": "Serve with the laksa and lime wedges, sprinkling everything with the coriander leaves and slices of fresh chilli.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "drizzle_honey"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with the laksa and lime wedges, sprinkling everything with the coriander leaves and slices of fresh chilli."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "656 calories",
+    "carbohydrates": "70.9 g",
+    "fat": "23.5 g",
+    "fiber": "5.7 g",
+    "protein": "32.1 g"
+  }
+}

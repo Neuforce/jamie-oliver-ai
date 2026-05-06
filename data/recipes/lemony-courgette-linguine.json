@@ -1,0 +1,219 @@
+{
+  "recipe": {
+    "id": "lemony-courgette-linguine",
+    "title": "Lemony courgette linguine",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "This courgette lemon pasta recipe is a speedy weeknight staple. Ready in just 15 minutes, and using only five ingredients, it's a total crowd-pleaser!",
+    "tags": [
+      "courgette",
+      "pasta",
+      "student-recipes",
+      "course",
+      "vegetarian",
+      "occasion",
+      "quick-amp-easy-series-1",
+      "tv-shows",
+      "pasta-sauce",
+      "mint",
+      "lemon",
+      "cheese",
+      "cheap-amp-cheerful",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/lemony-courgette-linguine",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6b1028ce9b138b250367329b8d73c555fab8b357-956x1280.jpg/55846365?rect=0,162,956,956&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6b1028ce9b138b250367329b8d73c555fab8b357-956x1280.jpg/55846365?rect=0,162,956,956&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6b1028ce9b138b250367329b8d73c555fab8b357-956x1280.jpg/55846365?rect=0,282,956,717&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6b1028ce9b138b250367329b8d73c555fab8b357-956x1280.jpg/55846365?rect=0,371,956,538&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-linguine",
+      "name": "dried linguine",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mixed-colour-courgettes",
+      "name": "mixed-colour courgettes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-mint",
+      "name": "\u00bd a bunch of fresh mint",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "knife",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "boil_salted",
+      "descr": "Cook the pasta in a pan of boiling salted water...",
+      "instructions": "Cook the pasta in a pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of cooking water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_courgettes"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta in a pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of cooking water."
+        }
+      ]
+    },
+    {
+      "id": "slice_courgettes",
+      "descr": "Meanwhile, slice the courgettes lengthways, then again...",
+      "instructions": "Meanwhile, slice the courgettes lengthways, then again into long matchsticks with good knife skills or using the julienne cutter on a mandolin (use the guard!).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, slice the courgettes lengthways, then again into long matchsticks with good knife skills or using the julienne cutter on a mandolin (use the guard!)."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Place a large non-stick frying pan on a medium-high heat...",
+      "instructions": "Place a large non-stick frying pan on a medium-high heat with 1 tablespoon of olive oil, then add the courgettes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_courgettes"
+      ],
+      "next": [
+        "slice_mint"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large non-stick frying pan on a medium-high heat with 1 tablespoon of olive oil, then add the courgettes."
+        }
+      ]
+    },
+    {
+      "id": "slice_mint",
+      "descr": "Cook for 4 minutes, tossing regularly, while you finely...",
+      "instructions": "Cook for 4 minutes, tossing regularly, while you finely slice the mint leaves, then stir them into the pan.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "serve_cooking"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook for 4 minutes, tossing regularly, while you finely slice the mint leaves, then stir them into the pan."
+        }
+      ]
+    },
+    {
+      "id": "serve_cooking",
+      "descr": "Toss the drained pasta into the courgette pan with a...",
+      "instructions": "Toss the drained pasta into the courgette pan with a splash of reserved cooking water.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_mint"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss the drained pasta into the courgette pan with a splash of reserved cooking water."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Finely grate in most of the Parmesan and a little lemon...",
+      "instructions": "Finely grate in most of the Parmesan and a little lemon zest, squeeze in all the juice, toss well, then taste and season to perfection with sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "serve_cooking"
+      ],
+      "next": [
+        "drizzle_teaspoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate in most of the Parmesan and a little lemon zest, squeeze in all the juice, toss well, then taste and season to perfection with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_teaspoon",
+      "descr": "Dish up, finely grate over the remaining Parmesan and...",
+      "instructions": "Dish up, finely grate over the remaining Parmesan and drizzle with 1 teaspoon of extra virgin olive oil before tucking in.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Dish up, finely grate over the remaining Parmesan and drizzle with 1 teaspoon of extra virgin olive oil before tucking in."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "430 calories",
+    "carbohydrates": "60 g",
+    "fat": "14.5 g",
+    "fiber": "2.2 g",
+    "protein": "18.4 g"
+  }
+}

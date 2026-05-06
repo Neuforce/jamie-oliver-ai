@@ -1,0 +1,323 @@
+{
+  "recipe": {
+    "id": "beautiful-lamb-shanks",
+    "title": "Beautiful lamb shanks",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT210M",
+    "description": "Jamie Oliver's beautiful lamb shanks recipe makes for a killer dinner; red chillies are rehydrated in apple juice with raisins creating a sticky sweetness.",
+    "tags": [
+      "dinner-party",
+      "lamb-stew",
+      "main-ingredient",
+      "slow-cooker",
+      "easter-treats",
+      "lamb-shank",
+      "lamb",
+      "dish-type",
+      "mains",
+      "father-s-day",
+      "lamb-shanks",
+      "chilli",
+      "occasion",
+      "stew",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/lamb/beautiful-lamb-shanks",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c0c7525f1f7e10b9cc9c0d2e1fe67b682173e6e7-958x1280.png/46257968?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c0c7525f1f7e10b9cc9c0d2e1fe67b682173e6e7-958x1280.png/46257968?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c0c7525f1f7e10b9cc9c0d2e1fe67b682173e6e7-958x1280.png/46257968?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c0c7525f1f7e10b9cc9c0d2e1fe67b682173e6e7-958x1280.png/46257968?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "lamb"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "smoked-ancho-chillies",
+      "name": "smoked ancho chillies",
+      "quantity": 2.5,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-handful-of-raisins",
+      "name": "large handful of raisins",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsweetened-apple-juice",
+      "name": "unsweetened apple juice",
+      "quantity": 285.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "lamb-shanks",
+      "name": "lamb shanks",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 8.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 2.5,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-smoked-paprika",
+      "name": "heaped teaspoon smoked paprika",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 3.5,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-plum-tomatoes",
+      "name": "400g tin of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-750ml-organic-chicken",
+      "name": "optional: 750ml organic chicken stock",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_your",
+      "descr": "Preheat your oven to full whack",
+      "instructions": "Preheat your oven to full whack. Put the dried chillies, raisins and apple juice in a bowl, then set aside.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat your oven to full whack. Put the dried chillies, raisins and apple juice in a bowl, then set aside."
+        }
+      ]
+    },
+    {
+      "id": "roast_tray",
+      "descr": "Put the lamb shanks in a roasting tray, then rub all...",
+      "instructions": "Put the lamb shanks in a roasting tray, then rub all over with oil, sea salt and black pepper. Bang them in the oven for 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "preheat_your"
+      ],
+      "next": [
+        "chop_onions"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the lamb shanks in a roasting tray, then rub all over with oil, sea salt and black pepper. Bang them in the oven for 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "chop_onions",
+      "descr": "As they\u2019re browning, peel and finely chop the onions,...",
+      "instructions": "As they\u2019re browning, peel and finely chop the onions, peel and finely slice the garlic, then halve and deseed the chillies.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_tray"
+      ],
+      "next": [
+        "heat_olive"
+      ],
+      "on_enter": [
+        {
+          "say": "As they\u2019re browning, peel and finely chop the onions, peel and finely slice the garlic, then halve and deseed the chillies."
+        }
+      ]
+    },
+    {
+      "id": "heat_olive",
+      "descr": "Get a casserole pan that will fit the shanks quite...",
+      "instructions": "Get a casserole pan that will fit the shanks quite snugly \u2014 about 24cm in diameter and 10cm deep. Put it on a medium heat and add a lug of olive oil, the onions, garlic, fresh chilli, smoked paprika, bay leaves and rosemary. Leave to sweat for about 10 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "stir_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Get a casserole pan that will fit the shanks quite snugly \u2014 about 24cm in diameter and 10cm deep. Put it on a medium heat and add a lug of olive oil, the onions, garlic, fresh chilli, smoked paprika, bay leaves and rosemary. Leave to sweat for about 10 minutes."
+        }
+      ]
+    },
+    {
+      "id": "stir_your",
+      "descr": "Once the onions have softened, put the rehydrated...",
+      "instructions": "Once the onions have softened, put the rehydrated chillies and raisins into a food processor or liquidiser, along with any leftover apple juice, then blitz (feel free to sneak in a swig of red wine or bourbon here!) until you\u2019ve got a paste. Stir this into your onions.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_olive"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the onions have softened, put the rehydrated chillies and raisins into a food processor or liquidiser, along with any leftover apple juice, then blitz (feel free to sneak in a swig of red wine or bourbon here!) until you\u2019ve got a paste. Stir this into your onions."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Take your shanks out of the oven and turn the...",
+      "instructions": "Take your shanks out of the oven and turn the temperature down to 140\u00b0C/275\u00b0F/gas 1.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_your"
+      ],
+      "next": [
+        "add_shanks"
+      ],
+      "on_enter": [
+        {
+          "say": "Take your shanks out of the oven and turn the temperature down to 140\u00b0C/275\u00b0F/gas 1."
+        }
+      ]
+    },
+    {
+      "id": "add_shanks",
+      "descr": "Add the shanks to the casserole pan along with your...",
+      "instructions": "Add the shanks to the casserole pan along with your tinned tomatoes and stock (if using) or equal amounts of water.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "stir_everything"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the shanks to the casserole pan along with your tinned tomatoes and stock (if using) or equal amounts of water."
+        }
+      ]
+    },
+    {
+      "id": "stir_everything",
+      "descr": "Stir everything together, cover and put in the oven to...",
+      "instructions": "Stir everything together, cover and put in the oven to stew for 2 hours 30 minutes to 3 hours, or until the meat is falling off the bone and the sauce is thick, topping up with water or stock as you go.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "add_shanks"
+      ],
+      "next": [
+        "steam_greens"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir everything together, cover and put in the oven to stew for 2 hours 30 minutes to 3 hours, or until the meat is falling off the bone and the sauce is thick, topping up with water or stock as you go."
+        }
+      ]
+    },
+    {
+      "id": "steam_greens",
+      "descr": "Take it out of the oven, have a taste and season with...",
+      "instructions": "Take it out of the oven, have a taste and season with salt and pepper and a dash of vinegar. Serve with steamed greens, mash, flatbreads, or whatever you fancy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_everything"
+      ],
+      "on_enter": [
+        {
+          "say": "Take it out of the oven, have a taste and season with salt and pepper and a dash of vinegar. Serve with steamed greens, mash, flatbreads, or whatever you fancy."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "702 calories",
+    "carbohydrates": "39.4 g",
+    "fat": "36.8 g",
+    "fiber": null,
+    "protein": "54.3 g"
+  }
+}

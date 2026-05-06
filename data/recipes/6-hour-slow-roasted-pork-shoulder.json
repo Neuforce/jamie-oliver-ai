@@ -1,0 +1,331 @@
+{
+  "recipe": {
+    "id": "6-hour-slow-roasted-pork-shoulder",
+    "title": "6-hour slow-roasted pork shoulder",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT375M",
+    "description": "A brilliant pork shoulder roast recipe from Jamie Oliver. This slow roast pork shoulder cooks for 6 hours, for juicy meat and perfect pork crackling. Epic!",
+    "tags": [
+      "roast",
+      "roast-pork",
+      "sunday-lunch",
+      "main-ingredient",
+      "pork-shoulder",
+      "father-s-day",
+      "dish-type",
+      "method",
+      "roasting",
+      "low-lactose",
+      "gluten-free",
+      "pork",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/6-hour-slow-roasted-pork-shoulder",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/afd18aa4d51f22b9f3f5011859476eae98de3367-973x1300.jpg/afd18aa4d51f22b9f3f5011859476eae98de3367-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/afd18aa4d51f22b9f3f5011859476eae98de3367-973x1300.jpg/afd18aa4d51f22b9f3f5011859476eae98de3367-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/afd18aa4d51f22b9f3f5011859476eae98de3367-973x1300.jpg/afd18aa4d51f22b9f3f5011859476eae98de3367-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/afd18aa4d51f22b9f3f5011859476eae98de3367-973x1300.jpg/afd18aa4d51f22b9f3f5011859476eae98de3367-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "higher-welfare-pork-shoulder",
+      "name": "higher-welfare pork shoulder",
+      "quantity": 2.0,
+      "unit": "kg",
+      "note": "bone-in, skin on"
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 7.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-vegetable-stock",
+      "name": "organic vegetable stock",
+      "quantity": 600.0,
+      "unit": "ml",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "knife",
+    "oven",
+    "sharp knife",
+    "sieve",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Remove the pork from the fridge for 1 hour before you...",
+      "instructions": "Remove the pork from the fridge for 1 hour before you want to cook it, to let it come up to room temperature.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pork from the fridge for 1 hour before you want to cook it, to let it come up to room temperature."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7",
+      "instructions": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 220\u00b0C/425\u00b0F/gas 7."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Place the pork on a clean work surface, skin-side up",
+      "instructions": "Place the pork on a clean work surface, skin-side up. Get yourself a small sharp knife and make scores about 1cm apart through the skin into the fat, but not so deep that you cut into the meat. If the joint is tied, try not to cut through the string.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "season_underside"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the pork on a clean work surface, skin-side up. Get yourself a small sharp knife and make scores about 1cm apart through the skin into the fat, but not so deep that you cut into the meat. If the joint is tied, try not to cut through the string."
+        }
+      ]
+    },
+    {
+      "id": "season_underside",
+      "descr": "Rub sea salt right into all the scores you\u2019ve just made,...",
+      "instructions": "Rub sea salt right into all the scores you\u2019ve just made, pulling the skin apart a little if you need to. Brush any excess salt off the surface then turn it over. Season the underside of the meat with a few pinches of salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub sea salt right into all the scores you\u2019ve just made, pulling the skin apart a little if you need to. Brush any excess salt off the surface then turn it over. Season the underside of the meat with a few pinches of salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Place the pork, skin-side up, in a roasting tray and...",
+      "instructions": "Place the pork, skin-side up, in a roasting tray and roast for 30 minutes, or until the skin has started to puff up and you can see it turning into crackling. At this point, turn the heat down to 170\u00b0C/325\u00b0F/gas 3, cover the pork snugly with a double layer of tin foil, pop back in the oven and roast for a further 4\u00bd hours.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "season_underside"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the pork, skin-side up, in a roasting tray and roast for 30 minutes, or until the skin has started to puff up and you can see it turning into crackling. At this point, turn the heat down to 170\u00b0C/325\u00b0F/gas 3, cover the pork snugly with a double layer of tin foil, pop back in the oven and roast for a further 4\u00bd hours."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Meanwhile, halve the onions, carrots and celery, and...",
+      "instructions": "Meanwhile, halve the onions, carrots and celery, and break the garlic up into cloves (there's no need to peel them).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, halve the onions, carrots and celery, and break the garlic up into cloves (there's no need to peel them)."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "Remove the pork from the oven, take off the foil, and...",
+      "instructions": "Remove the pork from the oven, take off the foil, and baste the meat with the fat in the bottom of the tray. Carefully transfer to a board, then skim all but 2 tablespoons of excess fat from the tray into a jar, and pop in the fridge for tasty cooking another day.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "stir_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pork from the oven, take off the foil, and baste the meat with the fat in the bottom of the tray. Carefully transfer to a board, then skim all but 2 tablespoons of excess fat from the tray into a jar, and pop in the fridge for tasty cooking another day."
+        }
+      ]
+    },
+    {
+      "id": "stir_them",
+      "descr": "Add all the veg, garlic and bay leaves to the tray and...",
+      "instructions": "Add all the veg, garlic and bay leaves to the tray and stir them into the fat. Place the pork back on top of everything and place back in the oven without the foil to roast for 1 further hour, or until meltingly soft and tender.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "add_stock"
+      ],
+      "on_enter": [
+        {
+          "say": "Add all the veg, garlic and bay leaves to the tray and stir them into the fat. Place the pork back on top of everything and place back in the oven without the foil to roast for 1 further hour, or until meltingly soft and tender."
+        }
+      ]
+    },
+    {
+      "id": "add_stock",
+      "descr": "Carefully move the meat to a serving dish, cover again...",
+      "instructions": "Carefully move the meat to a serving dish, cover again with tin foil and leave to rest while you make the gravy. Spoon away any fat in the tray, then add the stock (or replace with water, if you prefer) and place the tray on the hob.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_them"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully move the meat to a serving dish, cover again with tin foil and leave to rest while you make the gravy. Spoon away any fat in the tray, then add the stock (or replace with water, if you prefer) and place the tray on the hob."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Bring to the boil and simmer for a few minutes, stirring...",
+      "instructions": "Bring to the boil and simmer for a few minutes, stirring constantly with a wooden spoon to scrape up all those lovely sticky tasty bits from the bottom of the tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_stock"
+      ],
+      "next": [
+        "pour_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil and simmer for a few minutes, stirring constantly with a wooden spoon to scrape up all those lovely sticky tasty bits from the bottom of the tray."
+        }
+      ]
+    },
+    {
+      "id": "pour_through",
+      "descr": "When you\u2019ve got a nice, dark gravy, pour it through a...",
+      "instructions": "When you\u2019ve got a nice, dark gravy, pour it through a sieve into jug using your spoon to really push all the goodness of the veg through the sieve. Season to taste, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "serve_pork"
+      ],
+      "on_enter": [
+        {
+          "say": "When you\u2019ve got a nice, dark gravy, pour it through a sieve into jug using your spoon to really push all the goodness of the veg through the sieve. Season to taste, if needed."
+        }
+      ]
+    },
+    {
+      "id": "serve_pork",
+      "descr": "Serve the pork and crackling with the jug of gravy and...",
+      "instructions": "Serve the pork and crackling with the jug of gravy and all the trimmings \u2013 a dollop of apple sauce will finish this off perfectly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "pour_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve the pork and crackling with the jug of gravy and all the trimmings \u2013 a dollop of apple sauce will finish this off perfectly."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "749 calories",
+    "carbohydrates": "11 g",
+    "fat": "49.1 g",
+    "fiber": "2.7 g",
+    "protein": "66.3 g"
+  }
+}

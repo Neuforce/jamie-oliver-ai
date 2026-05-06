@@ -1,0 +1,227 @@
+{
+  "recipe": {
+    "id": "chocolate-brownie",
+    "title": "Chocolate brownie",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "This easy chocolate brownie recipe is an indulgent and delicious treat. A warm chocolate brownie served with ice cream, caramel popcorn and crushed hazelnuts. ",
+    "tags": [
+      "desserts",
+      "valentine-s-day",
+      "baking",
+      "course",
+      "method",
+      "dish-type",
+      "chocolate",
+      "ice-cream",
+      "puddings-amp-desserts",
+      "occasion",
+      "beautiful-baking-recipes",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chocolate/chocolate-brownie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/354a4795fda6d18ca69896f5ef8c4cf5d8489ca3-958x1280.jpg/80132203?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/354a4795fda6d18ca69896f5ef8c4cf5d8489ca3-958x1280.jpg/80132203?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/354a4795fda6d18ca69896f5ef8c4cf5d8489ca3-958x1280.jpg/80132203?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/354a4795fda6d18ca69896f5ef8c4cf5d8489ca3-958x1280.jpg/80132203?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chocolate"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "quality-dark-chocolate",
+      "name": "quality dark chocolate",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "70%"
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-self-raisin",
+      "name": "heaped tablespoons self-raising flour",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-quality-coc",
+      "name": "heaped tablespoons quality cocoa powder",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "large bowl",
+    "oven",
+    "pan",
+    "sieve",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "fold_line"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "fold_line",
+      "descr": "Tear off a large piece of greaseproof paper, scrunch it...",
+      "instructions": "Tear off a large piece of greaseproof paper, scrunch it up under cold water, then unfold and use it to line a 20cm square baking tin.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_proof"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear off a large piece of greaseproof paper, scrunch it up under cold water, then unfold and use it to line a 20cm square baking tin."
+        }
+      ]
+    },
+    {
+      "id": "heat_proof",
+      "descr": "Snap the chocolate into a heatproof bowl, dice the...",
+      "instructions": "Snap the chocolate into a heatproof bowl, dice the butter and add with a pinch of sea salt. Melt over a pan of gently simmering water, stirring regularly, then remove from the heat and leave to cool slightly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fold_line"
+      ],
+      "next": [
+        "whisk_light"
+      ],
+      "on_enter": [
+        {
+          "say": "Snap the chocolate into a heatproof bowl, dice the butter and add with a pinch of sea salt. Melt over a pan of gently simmering water, stirring regularly, then remove from the heat and leave to cool slightly."
+        }
+      ]
+    },
+    {
+      "id": "whisk_light",
+      "descr": "Crack the eggs into a large bowl, then add the sugar and...",
+      "instructions": "Crack the eggs into a large bowl, then add the sugar and whisk until light, pale and fluffy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_proof"
+      ],
+      "next": [
+        "combine_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Crack the eggs into a large bowl, then add the sugar and whisk until light, pale and fluffy."
+        }
+      ]
+    },
+    {
+      "id": "combine_through",
+      "descr": "Sieve in the flour, followed by the cocoa",
+      "instructions": "Sieve in the flour, followed by the cocoa. Whisk to combine, then fold through the melted chocolate.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "whisk_light"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Sieve in the flour, followed by the cocoa. Whisk to combine, then fold through the melted chocolate."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Spoon the mixture into the lined tin and spread it out...",
+      "instructions": "Spoon the mixture into the lined tin and spread it out evenly. Bake for 25 to 30 minutes, or until crisp on the outside but slightly wobbly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "combine_through"
+      ],
+      "next": [
+        "warm_delicious"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon the mixture into the lined tin and spread it out evenly. Bake for 25 to 30 minutes, or until crisp on the outside but slightly wobbly."
+        }
+      ]
+    },
+    {
+      "id": "warm_delicious",
+      "descr": "Leave to cool in the tin for 15 minutes before slicing...",
+      "instructions": "Leave to cool in the tin for 15 minutes before slicing and serving warm \u2013 delicious with vanilla ice cream, crushed hazelnuts and caramel popcorn.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave to cool in the tin for 15 minutes before slicing and serving warm \u2013 delicious with vanilla ice cream, crushed hazelnuts and caramel popcorn."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "438 calories",
+    "carbohydrates": "47.1 g",
+    "fat": "28 g",
+    "fiber": "0.4 g",
+    "protein": "2.3 g"
+  }
+}

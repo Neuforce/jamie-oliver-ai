@@ -1,0 +1,237 @@
+{
+  "recipe": {
+    "id": "veggie-stuffing",
+    "title": "Veggie stuffing",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT120M",
+    "description": "Jamie Oliver's epic veggie stuffing with caramelised squash, red onions, sage, cranberries & pistachios",
+    "tags": [
+      "christmas",
+      "christmas-dinner",
+      "vegetarian",
+      "sides",
+      "the-trimmings",
+      "spuds-and-sides",
+      "occasion",
+      "course"
+    ],
+    "course": "side",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/veggie-stuffing",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/766abb1a1151b5e7b3dbcbbdbb60e758e8b171b6-1135x1703.jpg/veggiestuffing.jpg?rect=0,460,1135,1135&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/766abb1a1151b5e7b3dbcbbdbb60e758e8b171b6-1135x1703.jpg/veggiestuffing.jpg?rect=0,460,1135,1135&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/766abb1a1151b5e7b3dbcbbdbb60e758e8b171b6-1135x1703.jpg/veggiestuffing.jpg?rect=0,602,1135,851&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/766abb1a1151b5e7b3dbcbbdbb60e758e8b171b6-1135x1703.jpg/veggiestuffing.jpg?rect=0,708,1135,638&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "small-butternut-squash",
+      "name": "small butternut squash",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "1kg"
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ground-cinnamon",
+      "name": "ground cinnamon",
+      "quantity": 1.0,
+      "unit": "pinch",
+      "note": null
+    },
+    {
+      "id": "ground-coriander",
+      "name": "ground coriander",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    },
+    {
+      "id": "fresh-sage",
+      "name": "fresh sage",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "dried-cranberries",
+      "name": "dried cranberries",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "shelled-pistachios",
+      "name": "shelled pistachios",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "stale-bread",
+      "name": "stale bread",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 300.0,
+      "unit": "ml",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "bowl",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_cinnamon"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "add_cinnamon",
+      "descr": "Wash the squash, then carefully quarter it lengthways...",
+      "instructions": "Wash the squash, then carefully quarter it lengthways and remove the seeds, placing the squash in a roasting tray, skin side down. Peel, quarter and scatter over the onions, drizzle with 1 tablespoon of oil, add the cinnamon, ground coriander and a pinch of sea salt and black pepper, finely grate over half the nutmeg, then toss together. Roast for 40 minutes, then remove from the oven.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_sage"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash the squash, then carefully quarter it lengthways and remove the seeds, placing the squash in a roasting tray, skin side down. Peel, quarter and scatter over the onions, drizzle with 1 tablespoon of oil, add the cinnamon, ground coriander and a pinch of sea salt and black pepper, finely grate over half the nutmeg, then toss together. Roast for 40 minutes, then remove from the oven."
+        }
+      ]
+    },
+    {
+      "id": "chop_sage",
+      "descr": "Pick and roughly chop the sage leaves with the...",
+      "instructions": "Pick and roughly chop the sage leaves with the cranberries and pistachios, toss with a light drizzle of oil, then scatter over the squash and onions. Roast for another 5 minutes, then remove and leave to cool.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "add_cinnamon"
+      ],
+      "next": [
+        "mix_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and roughly chop the sage leaves with the cranberries and pistachios, toss with a light drizzle of oil, then scatter over the squash and onions. Roast for another 5 minutes, then remove and leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "mix_step_4",
+      "descr": "Tear the bread into a bowl, pour over the milk and leave...",
+      "instructions": "Tear the bread into a bowl, pour over the milk and leave to soak for a few minutes. Squeeze out any excess milk, then pinch and tear the bread into the tray of cooled veg. Using your hands, really squash and squidge everything together with another pinch of sea salt and black pepper until well mixed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_sage"
+      ],
+      "next": [
+        "drizzle_more"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear the bread into a bowl, pour over the milk and leave to soak for a few minutes. Squeeze out any excess milk, then pinch and tear the bread into the tray of cooled veg. Using your hands, really squash and squidge everything together with another pinch of sea salt and black pepper until well mixed."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_more",
+      "descr": "Line a 1",
+      "instructions": "Line a 1.5-litre pudding bowl or bundt tin with a scrunched-up sheet of wet, oiled greaseproof paper (or you can use a baking dish to give you a greater surface area for a crispy top, if you prefer). Pack in the stuffing and drizzle with 1 more tablespoon of oil, then cover with greaseproof paper, tying it in place with string. Bake for 1 hour to 1 hour 10 minutes, or until golden and gnarly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "mix_step_4"
+      ],
+      "next": [
+        "serve_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Line a 1.5-litre pudding bowl or bundt tin with a scrunched-up sheet of wet, oiled greaseproof paper (or you can use a baking dish to give you a greater surface area for a crispy top, if you prefer). Pack in the stuffing and drizzle with 1 more tablespoon of oil, then cover with greaseproof paper, tying it in place with string. Bake for 1 hour to 1 hour 10 minutes, or until golden and gnarly."
+        }
+      ]
+    },
+    {
+      "id": "serve_step_6",
+      "descr": "Use the greaseproof paper to help you lift it out of the...",
+      "instructions": "Use the greaseproof paper to help you lift it out of the bowl, then confidently flip it on to a plate and serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "drizzle_more"
+      ],
+      "on_enter": [
+        {
+          "say": "Use the greaseproof paper to help you lift it out of the bowl, then confidently flip it on to a plate and serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "295 calories",
+    "carbohydrates": "27.8 g",
+    "fat": "14.5 g",
+    "fiber": "1.8 g",
+    "protein": "14.8 g"
+  }
+}

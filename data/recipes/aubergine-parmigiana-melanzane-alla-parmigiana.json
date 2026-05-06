@@ -1,0 +1,330 @@
+{
+  "recipe": {
+    "id": "aubergine-parmigiana-melanzane-alla-parmigiana",
+    "title": "Aubergine Parmigiana (Melanzane alla Parmigiana)",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT90M",
+    "description": "This aubergine parmigiana recipe is a brilliant vegetarian alternative to a lasagne. Get stuck into layers of slow-cooked tomato and aubergine \u2013 yum!!",
+    "tags": [
+      "aubergine",
+      "main-ingredient",
+      "vegetable-sides",
+      "baking",
+      "vegetarian",
+      "mains",
+      "dish-type",
+      "method",
+      "tomato",
+      "vegetables",
+      "popular",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/aubergine-parmigiana-melanzane-alla-parmigiana",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6f7352be771ef7f7e4be071b31c65f671c1f698d-973x1300.jpg/6f7352be771ef7f7e4be071b31c65f671c1f698d-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6f7352be771ef7f7e4be071b31c65f671c1f698d-973x1300.jpg/6f7352be771ef7f7e4be071b31c65f671c1f698d-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6f7352be771ef7f7e4be071b31c65f671c1f698d-973x1300.jpg/6f7352be771ef7f7e4be071b31c65f671c1f698d-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6f7352be771ef7f7e4be071b31c65f671c1f698d-973x1300.jpg/6f7352be771ef7f7e4be071b31c65f671c1f698d-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-firm-aubergines",
+      "name": "large firm aubergines",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bulb-of-spring-garlic-or-1-c",
+      "name": "\u00bd a bulb of spring garlic or 1 clove of garlic",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-dried-oregano",
+      "name": "heaped teaspoon dried oregano",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes or 1kg fresh ripe tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "wine-vinegar",
+      "name": "wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-basil",
+      "name": "fresh basil",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "large-handfuls-of-parmesan-che",
+      "name": "large handfuls of Parmesan cheese",
+      "quantity": 3.0,
+      "unit": null,
+      "note": "freshly grated"
+    },
+    {
+      "id": "dried-breadcrumbs",
+      "name": "dried breadcrumbs",
+      "quantity": 2.0,
+      "unit": "handfuls",
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-oregano",
+      "name": "a few sprigs of fresh oregano",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-1-x-150g-ball-of-buff",
+      "name": "optional: 1 x 150g ball of buffalo mozzarella",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "bowl",
+    "griddle",
+    "grill",
+    "pan",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "preheat_griddle",
+      "descr": "Preheat a griddle pan or barbecue",
+      "instructions": "Preheat a griddle pan or barbecue.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat a griddle pan or barbecue."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "Trim and slice the aubergines 1cm thick",
+      "instructions": "Trim and slice the aubergines 1cm thick. Peel and finely chop the onion, and peel and finely slice the garlic.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_griddle"
+      ],
+      "next": [
+        "heat_lugs"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim and slice the aubergines 1cm thick. Peel and finely chop the onion, and peel and finely slice the garlic."
+        }
+      ]
+    },
+    {
+      "id": "heat_lugs",
+      "descr": "Place a large pan on a medium heat with 2 or 3 lugs of...",
+      "instructions": "Place a large pan on a medium heat with 2 or 3 lugs of olive oil, add the onion, garlic and dried oregano, then cook for 10 minutes, or until the onion is soft and the garlic has a tiny bit of colour.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large pan on a medium heat with 2 or 3 lugs of olive oil, add the onion, garlic and dried oregano, then cook for 10 minutes, or until the onion is soft and the garlic has a tiny bit of colour."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "If you\u2019re using tinned tomatoes, break them up, and if...",
+      "instructions": "If you\u2019re using tinned tomatoes, break them up, and if you\u2019re using fresh tomatoes (which will obviously taste sweeter and more delicious, if they\u2019re in season), very quickly prick each one and put them into a big pan of boiling water for 40 seconds. Remove from the pan with a slotted spoon and put them into a bowl of cold water for 30 seconds, then remove the skins, carefully squeeze out the pips and cut up the flesh.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT40S",
+      "depends_on": [
+        "heat_lugs"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "If you\u2019re using tinned tomatoes, break them up, and if you\u2019re using fresh tomatoes (which will obviously taste sweeter and more delicious, if they\u2019re in season), very quickly prick each one and put them into a big pan of boiling water for 40 seconds. Remove from the pan with a slotted spoon and put them into a bowl of cold water for 30 seconds, then remove the skins, carefully squeeze out the pips and cut up the flesh."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Add the tomato flesh or tinned tomatoes to the onion...",
+      "instructions": "Add the tomato flesh or tinned tomatoes to the onion pan, give the mixture a good stir, then put a lid on and simmer slowly for 15 minutes, or until thickened and reduced.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "grill_aubergines"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the tomato flesh or tinned tomatoes to the onion pan, give the mixture a good stir, then put a lid on and simmer slowly for 15 minutes, or until thickened and reduced."
+        }
+      ]
+    },
+    {
+      "id": "grill_aubergines",
+      "descr": "Grill the aubergines on both sides until lightly charred...",
+      "instructions": "Grill the aubergines on both sides until lightly charred \u2013 you'll need to work in batches.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "season_tomato"
+      ],
+      "on_enter": [
+        {
+          "say": "Grill the aubergines on both sides until lightly charred \u2013 you'll need to work in batches."
+        }
+      ]
+    },
+    {
+      "id": "season_tomato",
+      "descr": "Season the tomato sauce carefully with sea salt, black...",
+      "instructions": "Season the tomato sauce carefully with sea salt, black pepper and a tiny swig of wine vinegar, then pick in the basil. You can leave the sauce chunky or you can pur\u00e9e it.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "grill_aubergines"
+      ],
+      "next": [
+        "add_fine"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the tomato sauce carefully with sea salt, black pepper and a tiny swig of wine vinegar, then pick in the basil. You can leave the sauce chunky or you can pur\u00e9e it."
+        }
+      ]
+    },
+    {
+      "id": "add_fine",
+      "descr": "Spoon a layer of tomato sauce into a 15cm x 25cm baking...",
+      "instructions": "Spoon a layer of tomato sauce into a 15cm x 25cm baking dish, then add a fine scattering of Parmesan, followed by a single layer of aubergines. Repeat these layers until you\u2019ve used all the ingredients up, finishing with a little sauce and another good sprinkling of Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_tomato"
+      ],
+      "next": [
+        "chop_oregano"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon a layer of tomato sauce into a 15cm x 25cm baking dish, then add a fine scattering of Parmesan, followed by a single layer of aubergines. Repeat these layers until you\u2019ve used all the ingredients up, finishing with a little sauce and another good sprinkling of Parmesan."
+        }
+      ]
+    },
+    {
+      "id": "chop_oregano",
+      "descr": "Pick and finely chop the oregano, then toss with the...",
+      "instructions": "Pick and finely chop the oregano, then toss with the breadcrumbs and a little olive oil, then sprinkle on top of the Parmesan. Tear over the mozzarella (if using).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_fine"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the oregano, then toss with the breadcrumbs and a little olive oil, then sprinkle on top of the Parmesan. Tear over the mozzarella (if using)."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "Bake at 190\u00b0C/375\u00b0F/gas 5 for 30 minutes, or until...",
+      "instructions": "Bake at 190\u00b0C/375\u00b0F/gas 5 for 30 minutes, or until golden, crisp and bubbly \u2013 it\u2019s best eaten straight away, but it can also be served cold.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "chop_oregano"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake at 190\u00b0C/375\u00b0F/gas 5 for 30 minutes, or until golden, crisp and bubbly \u2013 it\u2019s best eaten straight away, but it can also be served cold."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "237 calories",
+    "carbohydrates": "15.1 g",
+    "fat": "14.1 g",
+    "fiber": "4 g",
+    "protein": "13.7 g"
+  }
+}
