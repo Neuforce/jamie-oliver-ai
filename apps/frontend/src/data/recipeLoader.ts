@@ -440,6 +440,9 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
   const recipes: Recipe[] = [];
   
   try {
+    if (!API_BASE_URL?.trim()) {
+      throw new Error('VITE_API_BASE_URL is missing; cannot load recipes from API in this environment.');
+    }
     // Fetch all recipes with full JSON from API
     const url = `${API_BASE_URL}/api/v1/recipes?include_full=true&limit=500`;
     console.log(`[RecipeLoader] Fetching from API: ${url}`);
@@ -554,11 +557,21 @@ export async function loadRecipes(): Promise<Recipe[]> {
 
   let recipes: Recipe[] = [];
 
-  // Try API first, fallback to local files
+  // Try API first. Local JSON fallback only in dev or when explicitly allowed — otherwise prod
+  // would silently show ~56 bundled recipes when the API URL is misconfigured.
+  const allowLocalFallback =
+    import.meta.env.DEV || import.meta.env.VITE_ALLOW_LOCAL_RECIPES === 'true';
+
   try {
     recipes = await loadRecipesFromAPI();
-  } catch {
-    recipes = await loadRecipesFromLocal();
+  } catch (e) {
+    if (allowLocalFallback) {
+      console.warn('[RecipeLoader] API failed, using local recipes-json (dev / VITE_ALLOW_LOCAL_RECIPES):', e);
+      recipes = await loadRecipesFromLocal();
+    } else {
+      console.error('[RecipeLoader] API load failed and local fallback disabled in production:', e);
+      recipes = [];
+    }
   }
   
   // Sort by title for consistency and cache
