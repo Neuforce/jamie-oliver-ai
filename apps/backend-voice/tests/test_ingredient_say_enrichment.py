@@ -53,6 +53,21 @@ def test_eggplant_not_replaced():
     assert enrich_say_with_ingredients(say, ingredients) == say
 
 
+def test_neu612_no_double_quantity_when_model_already_scaled_eggs():
+    """Doubled portion: model says 4 eggs; JSON still has 2 — do not insert base amount."""
+    ingredients = [{"name": "eggs", "unit": None, "quantity": 2}]
+    say = "Add 4 eggs to the bowl."
+    assert enrich_say_with_ingredients(say, ingredients) == say
+
+
+def test_neu612_still_enriches_bare_ingredient_after_scaling_request():
+    ingredients = [{"name": "eggs", "unit": None, "quantity": 2}]
+    say = "Crack the eggs into a bowl."
+    out = enrich_say_with_ingredients(say, ingredients)
+    assert "2 eggs" in out
+    assert "2 2" not in out
+
+
 def test_recipe_from_dict_loads_ingredients():
     from src.recipe_engine import Recipe
 

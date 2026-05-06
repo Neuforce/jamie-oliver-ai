@@ -186,6 +186,34 @@ def _bad_eggplant(match: re.Match[str], text: str) -> bool:
     return rest.lower().startswith("plant")
 
 
+# Text before an ingredient stem already includes a quantity (e.g. model scaled servings).
+_TRAILING_QTY = re.compile(r"(?:\d+(?:\.\d+)?|\d+\s*/\s*\d+)\s*$", re.IGNORECASE)
+# "300 g", "2 tbsp", "4 large" before the ingredient word.
+_TRAILING_QTY_WORD = re.compile(
+    r"\d+(?:\.\d+)?\s+[a-zA-Z]{1,24}\s*$",
+    re.IGNORECASE,
+)
+
+
+def _quantity_precedes_stem(text: str, stem_start: int) -> bool:
+    """
+    True when prose already states an amount (or amount + word) right before this stem.
+
+    Avoids turning e.g. \"Add 4 eggs\" into \"Add 4 2 eggs\" when structured data still
+    has the original portion (NEU-612).
+    """
+    if stem_start <= 0:
+        return False
+    pre = text[:stem_start].rstrip()
+    if not pre:
+        return False
+    if _TRAILING_QTY.search(pre):
+        return True
+    if _TRAILING_QTY_WORD.search(pre):
+        return True
+    return False
+
+
 def enrich_say_with_ingredients(say: str, ingredients: Sequence[Dict[str, Any]] | None) -> str:
     """
     Insert quantities into `say` where ingredient names appear without amounts.
@@ -221,6 +249,8 @@ def enrich_say_with_ingredients(say: str, ingredients: Sequence[Dict[str, Any]] 
 
             def _repl(m: re.Match[str], phrase: str = phrase) -> str:
                 if _bad_eggplant(m, result):
+                    return m.group(0)
+                if _quantity_precedes_stem(result, m.start()):
                     return m.group(0)
                 false_suffix = _STEM_FALSE_PREFIX.get(m.group(0).lower())
                 if false_suffix:

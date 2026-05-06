@@ -8,7 +8,6 @@ making it feel like cooking with a real chef.
 
 import re
 from typing import Dict, Any, Optional, List
-from fractions import Fraction
 
 from ccai.core.function_manager import FunctionManager
 from ccai.core.function_manager.decorators import register_function
@@ -16,6 +15,7 @@ from ccai.core.logger import configure_logger
 from ccai.core import context_variables
 
 from src.recipe_engine import parse_iso_duration
+from src.recipe_engine.session_recipe_scaling import scale_recipe_payload_in_place
 from src.services.session_service import session_service
 from src.observability.tracing import trace_tool_call
 
@@ -94,86 +94,6 @@ COMMON_SUBSTITUTIONS = {
         {"substitute": "coconut flour", "ratio": "1/4 cup per 1 cup flour", "notes": "Very absorbent, add more liquid"},
     ],
 }
-
-
-# =============================================================================
-# SCALING FACTORS FOR NON-LINEAR INGREDIENTS
-# Some ingredients don't scale linearly (seasonings, leaveners, etc.)
-# =============================================================================
-
-NON_LINEAR_SCALING = {
-    "salt": 0.75,  # Scale at 75% rate
-    "pepper": 0.75,
-    "spices": 0.8,
-    "baking powder": 0.85,
-    "baking soda": 0.85,
-    "yeast": 0.9,
-    "vanilla": 0.8,
-    "garlic": 0.85,
-    "herbs": 0.8,
-}
-
-
-def _parse_quantity(quantity_str: str) -> float:
-    """Parse a quantity string into a float, handling fractions."""
-    if not quantity_str:
-        return 0.0
-    
-    quantity_str = quantity_str.strip()
-    
-    # Handle mixed fractions like "1 1/2"
-    parts = quantity_str.split()
-    total = 0.0
-    
-    for part in parts:
-        try:
-            if '/' in part:
-                total += float(Fraction(part))
-            else:
-                total += float(part)
-        except (ValueError, ZeroDivisionError):
-            continue
-    
-    return total
-
-
-def _format_quantity(value: float) -> str:
-    """Format a quantity nicely, using fractions where appropriate."""
-    if value == 0:
-        return "0"
-    
-    # Common cooking fractions
-    fractions = {
-        0.125: "1/8",
-        0.25: "1/4",
-        0.333: "1/3",
-        0.375: "3/8",
-        0.5: "1/2",
-        0.625: "5/8",
-        0.666: "2/3",
-        0.75: "3/4",
-        0.875: "7/8",
-    }
-    
-    whole = int(value)
-    frac = value - whole
-    
-    # Find closest fraction
-    closest_frac = ""
-    min_diff = 0.1
-    for f_val, f_str in fractions.items():
-        if abs(frac - f_val) < min_diff:
-            min_diff = abs(frac - f_val)
-            closest_frac = f_str
-    
-    if whole > 0 and closest_frac:
-        return f"{whole} {closest_frac}"
-    elif closest_frac:
-        return closest_frac
-    elif whole > 0:
-        return str(whole)
-    else:
-        return f"{value:.1f}".rstrip('0').rstrip('.')
 
 
 # =============================================================================
@@ -296,7 +216,9 @@ async def scale_recipe(target_servings: int) -> str:
         target_servings: The desired number of servings
     
     Returns:
-        Scaled ingredient list with adjusted quantities
+        Scaled ingredient list with adjusted quantities. The session recipe payload
+        is updated in memory so TTS enrichment and later tools use the new amounts
+        (NEU-612 session-as-source-of-truth).
     """
     session_id = _get_session_id()
     if not session_id:
@@ -305,75 +227,17 @@ async def scale_recipe(target_servings: int) -> str:
     payload = _get_recipe_payload(session_id)
     if not payload:
         return "[ERROR] No recipe loaded. Please select a recipe first."
-    
-    recipe_data = payload.get("recipe", {})
-    original_servings = recipe_data.get("servings", 4)
-    
-    # Parse original servings if it's a string
-    if isinstance(original_servings, str):
-        # Handle "4-6" format
-        if '-' in original_servings:
-            original_servings = int(original_servings.split('-')[0])
-        else:
-            try:
-                original_servings = int(original_servings)
-            except ValueError:
-                original_servings = 4
-    
-    if target_servings <= 0:
-        return "[ERROR] Please specify a positive number of servings."
-    
-    scale_factor = target_servings / original_servings
-    
-    ingredients = payload.get("ingredients", [])
-    if not ingredients:
-        return "[INFO] No ingredients found to scale."
-    
-    lines = [
-        f"Scaling recipe from {original_servings} to {target_servings} servings",
-        f"(Scale factor: {scale_factor:.2f}x)",
-        "",
-        "Scaled ingredients:"
-    ]
-    
-    for ing in ingredients:
-        if isinstance(ing, dict):
-            name = ing.get("name", "")
-            quantity = ing.get("quantity", "")
-            unit = ing.get("unit", "")
-            
-            if quantity:
-                original_qty = _parse_quantity(str(quantity))
-                
-                # Apply non-linear scaling for certain ingredients
-                actual_scale = scale_factor
-                name_lower = name.lower()
-                for key, factor in NON_LINEAR_SCALING.items():
-                    if key in name_lower:
-                        # Blend toward 1 based on factor
-                        actual_scale = 1 + (scale_factor - 1) * factor
-                        break
-                
-                scaled_qty = original_qty * actual_scale
-                formatted_qty = _format_quantity(scaled_qty)
-                
-                if unit:
-                    lines.append(f"  - {formatted_qty} {unit} {name}")
-                else:
-                    lines.append(f"  - {formatted_qty} {name}")
-            else:
-                lines.append(f"  - {name} (adjust to taste)")
-        elif isinstance(ing, str):
-            lines.append(f"  - {ing}")
-    
-    lines.append("")
-    lines.append("Note: Cooking times generally stay the same, but keep an eye on things!")
-    if scale_factor > 1.5:
-        lines.append("Tip: You may need to cook in batches or use larger cookware.")
-    elif scale_factor < 0.75:
-        lines.append("Tip: Reduce cooking time slightly and watch for doneness.")
-    
-    return "\n".join(lines)
+
+    result, mutated = scale_recipe_payload_in_place(payload, target_servings)
+    if mutated:
+        session_service.set_session_recipe_payload(session_id, payload)
+        recipe_id = (payload.get("recipe") or {}).get("id")
+        logger.info(
+            "scale_recipe: updated session payload servings=%s recipe_id=%s",
+            target_servings,
+            recipe_id,
+        )
+    return result
 
 
 @register_function(recipe_intelligence_function_manager)
