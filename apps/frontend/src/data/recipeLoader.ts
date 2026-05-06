@@ -108,7 +108,10 @@ function getImagePath(recipeId: string): string {
 }
 
 // Parse ISO 8601 duration (PT20M, PT1H5M) to "20 mins" format
-function parseDuration(duration: string): string {
+function parseDuration(duration: string | undefined | null): string {
+  if (duration == null || typeof duration !== 'string') {
+    return '30 mins';
+  }
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
   if (!match) return '30 mins';
   
@@ -125,7 +128,10 @@ function parseDuration(duration: string): string {
 }
 
 // Map difficulty from jamie-oliver-ai to joui format
-function mapDifficulty(difficulty: string): 'Easy' | 'Medium' | 'Hard' {
+function mapDifficulty(difficulty: string | undefined | null): 'Easy' | 'Medium' | 'Hard' {
+  if (difficulty == null || typeof difficulty !== 'string') {
+    return 'Medium';
+  }
   const lower = difficulty.toLowerCase();
   if (lower.includes('not too tricky') || lower.includes('easy')) {
     return 'Easy';
@@ -136,7 +142,10 @@ function mapDifficulty(difficulty: string): 'Easy' | 'Medium' | 'Hard' {
 }
 
 // Transform ingredients array to string array
-function transformIngredients(ingredients: BackendRecipePayload['ingredients']): string[] {
+function transformIngredients(ingredients: BackendRecipePayload['ingredients'] | undefined): string[] {
+  if (!ingredients || !Array.isArray(ingredients)) {
+    return [];
+  }
   return ingredients.map(ing => {
     const parts: string[] = [];
     if (ing.quantity !== null) {
@@ -151,13 +160,19 @@ function transformIngredients(ingredients: BackendRecipePayload['ingredients']):
 }
 
 // Transform steps to instructions array
-function transformInstructions(steps: BackendRecipePayload['steps']): string[] {
-  return steps.map(step => step.instructions);
+function transformInstructions(steps: BackendRecipePayload['steps'] | undefined): string[] {
+  if (!steps || !Array.isArray(steps)) {
+    return [];
+  }
+  return steps.map((step) => step.instructions);
 }
 
 // Capture backend step metadata so the UI can stay in sync with the engine
-function transformBackendSteps(steps: BackendRecipePayload['steps']): BackendRecipeStep[] {
-  return steps.map(step => ({
+function transformBackendSteps(steps: BackendRecipePayload['steps'] | undefined): BackendRecipeStep[] {
+  if (!steps || !Array.isArray(steps)) {
+    return [];
+  }
+  return steps.map((step) => ({
     id: step.id,
     descr: step.descr,
     instructions: step.instructions,
@@ -189,12 +204,17 @@ export function formatCategoryLabel(raw: string): string {
 }
 
 function extractCategory(
-  title: string,
-  ingredients: BackendRecipePayload['ingredients']
+  title: string | undefined | null,
+  ingredients?: BackendRecipePayload['ingredients'],
 ): string {
-  const lower = [title, ...ingredients.map((i) => i.name)]
-    .join(' ')
-    .toLowerCase();
+  if (title == null || typeof title !== 'string') {
+    return 'Main Course';
+  }
+  const ingPart =
+    ingredients && Array.isArray(ingredients)
+      ? ingredients.map((i) => i.name).join(' ')
+      : '';
+  const lower = [title, ingPart].join(' ').toLowerCase();
   
   // Desserts & Sweets
   if (
@@ -374,7 +394,8 @@ export function transformRecipe(
   options?: { apiCategory?: string | null }
 ): Recipe {
   const recipe = jamieRecipe.recipe;
-  const backendSteps = transformBackendSteps(jamieRecipe.steps);
+  const steps = jamieRecipe.steps ?? [];
+  const backendSteps = transformBackendSteps(steps);
   const transformUtensils = (utensils?: Array<any>): string[] => {
     if (!utensils || !Array.isArray(utensils)) return [];
     return utensils
@@ -401,15 +422,15 @@ export function transformRecipe(
   return {
     id: index + 1,
     backendId: recipe.id,
-    title: recipe.title,
-    description: recipe.description || jamieRecipe.steps[0]?.descr || recipe.title,
+    title: recipe.title ?? 'Recipe',
+    description: recipe.description || steps[0]?.descr || recipe.title || 'Recipe',
     category,
     difficulty: mapDifficulty(recipe.difficulty),
     time: parseDuration(recipe.estimated_total),
     servings: recipe.servings,
-    image: getImagePath(recipe.id),
+    image: getImagePath(recipe.id ?? 'recipe'),
     ingredients: transformIngredients(jamieRecipe.ingredients),
-    instructions: transformInstructions(jamieRecipe.steps),
+    instructions: transformInstructions(steps),
     tips: jamieRecipe.notes?.text 
       ? jamieRecipe.notes.text.split('\n').filter(line => line.trim().length > 0)
       : [],
