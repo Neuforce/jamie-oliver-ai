@@ -1,0 +1,128 @@
+{
+  "recipe": {
+    "id": "chopped-rainbow-salad",
+    "title": "Chopped rainbow salad",
+    "servings": 1,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT11M",
+    "description": "Try Jamie's colourful vegan and gluten-free chopped salad that is packed with 10 portions of your daily veg and fruit.",
+    "tags": [
+      "mango",
+      "vegan",
+      "vegetarian",
+      "vegetable",
+      "lime",
+      "low-lactose",
+      "gluten-free",
+      "pepper",
+      "tomato",
+      "mint",
+      "chickpea",
+      "dairy-free",
+      "fruit",
+      "cucumber",
+      "avocado"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/salad/chopped-rainbow-salad",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9c7ce6e190e43519d66869ed540a8a4fcf09078-1027x1279.jpg/163194086?rect=0,127,1027,1027&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9c7ce6e190e43519d66869ed540a8a4fcf09078-1027x1279.jpg/163194086?rect=0,127,1027,1027&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9c7ce6e190e43519d66869ed540a8a4fcf09078-1027x1279.jpg/163194086?rect=0,255,1027,770&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9c7ce6e190e43519d66869ed540a8a4fcf09078-1027x1279.jpg/163194086?rect=0,351,1027,578&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "salad"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "each",
+      "name": "each:",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "pomegranate-seeds",
+      "name": "pomegranate seeds",
+      "quantity": null,
+      "unit": null,
+      "note": "yellow pepper, ripe tomatoes, red onion, cucumber, tinned chickpeas, radishes, ripe avocado, little gem lettuce"
+    },
+    {
+      "id": "dried-mango",
+      "name": "dried mango",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-mint",
+      "name": "\u00bd a bunch of mint",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "lime",
+      "name": "lime",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "chop_fruit",
+      "descr": "Leaving the chickpeas and pomegranate seeds whole, trim,...",
+      "instructions": "Leaving the chickpeas and pomegranate seeds whole, trim, peel or deseed and finely chop all the veg and fruit, along with the dried mango and the mint leaves, then dress with the lime juice and 1 tablespoon of extra virgin olive oil.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "steam_jacket"
+      ],
+      "on_enter": [
+        {
+          "say": "Leaving the chickpeas and pomegranate seeds whole, trim, peel or deseed and finely chop all the veg and fruit, along with the dried mango and the mint leaves, then dress with the lime juice and 1 tablespoon of extra virgin olive oil."
+        }
+      ]
+    },
+    {
+      "id": "steam_jacket",
+      "descr": "Season to perfection with sea salt and black pepper, and...",
+      "instructions": "Season to perfection with sea salt and black pepper, and serve. Delicious just as it is, or paired with couscous or a steaming jacket potato.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_fruit"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to perfection with sea salt and black pepper, and serve. Delicious just as it is, or paired with couscous or a steaming jacket potato."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "539 calories",
+    "carbohydrates": "66.6 g",
+    "fat": "26.2 g",
+    "fiber": "11.8 g",
+    "protein": "12.2 g"
+  }
+}

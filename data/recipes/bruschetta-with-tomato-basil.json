@@ -1,0 +1,183 @@
+{
+  "recipe": {
+    "id": "bruschetta-with-tomato-basil",
+    "title": "Bruschetta with tomato & basil",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "Gorgeous tomato bruschetta with fresh basil and quality olive oil. There are so many delicious bruschetta toppings to choose from, but this is hard to beat.",
+    "tags": [
+      "main-ingredient",
+      "starters",
+      "vegan",
+      "romantic-meals",
+      "bruschetta",
+      "bbq-amp-grilling",
+      "popular",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "low-lactose",
+      "tomato",
+      "dairy-free",
+      "bread",
+      "occasion",
+      "antipasti",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/bread/bruschetta-with-tomato-and-basil",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/72a5d7c0f651a064d721d2be85532bb6c4953f2d-1047x1571.jpg/tomatobruschetta.jpg?rect=0,263,1047,1047&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/72a5d7c0f651a064d721d2be85532bb6c4953f2d-1047x1571.jpg/tomatobruschetta.jpg?rect=0,263,1047,1047&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/72a5d7c0f651a064d721d2be85532bb6c4953f2d-1047x1571.jpg/tomatobruschetta.jpg?rect=0,394,1047,785&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/72a5d7c0f651a064d721d2be85532bb6c4953f2d-1047x1571.jpg/tomatobruschetta.jpg?rect=0,492,1047,589&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "bread"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "small-loaf-of-sourdough-bread",
+      "name": "small loaf of sourdough bread",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "nice-mixed-colour-ripe-tomatoe",
+      "name": "nice mixed-colour ripe tomatoes",
+      "quantity": 2.0,
+      "unit": "handfuls",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-basil",
+      "name": "\u00bd a bunch of fresh basil",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "quality-herb-or-white-wine-vin",
+      "name": "quality herb or white wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "griddle",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "slice_bread",
+      "descr": "Slice the bread 1cm-thick, then toast on a barbecue or...",
+      "instructions": "Slice the bread 1cm-thick, then toast on a barbecue or griddle pan.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_lightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the bread 1cm-thick, then toast on a barbecue or griddle pan."
+        }
+      ]
+    },
+    {
+      "id": "slice_lightly",
+      "descr": "Rub each slice lightly with a cut clove of garlic, then...",
+      "instructions": "Rub each slice lightly with a cut clove of garlic, then drizzle with some good extra virgin olive oil and sprinkle lightly with a little sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_bread"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub each slice lightly with a cut clove of garlic, then drizzle with some good extra virgin olive oil and sprinkle lightly with a little sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Remove the cores from the tomatoes, carefully squeeze...",
+      "instructions": "Remove the cores from the tomatoes, carefully squeeze out the seeds, then place in a bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_lightly"
+      ],
+      "next": [
+        "season_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the cores from the tomatoes, carefully squeeze out the seeds, then place in a bowl."
+        }
+      ]
+    },
+    {
+      "id": "season_salt",
+      "descr": "Tear in the basil leaves, season with salt and pepper,...",
+      "instructions": "Tear in the basil leaves, season with salt and pepper, then toss with a good lug of oil and a good swig of vinegar, to balance the flavours.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "chop_scrunch"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear in the basil leaves, season with salt and pepper, then toss with a good lug of oil and a good swig of vinegar, to balance the flavours."
+        }
+      ]
+    },
+    {
+      "id": "chop_scrunch",
+      "descr": "Serve the tomatoes either chunky or finely chopped, or...",
+      "instructions": "Serve the tomatoes either chunky or finely chopped, or you can scrunch them between your fingers before putting them on your bruschetta \u2013 really tasty.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "season_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve the tomatoes either chunky or finely chopped, or you can scrunch them between your fingers before putting them on your bruschetta \u2013 really tasty."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "139 calories",
+    "carbohydrates": "20.3 g",
+    "fat": "5.1 g",
+    "fiber": "0.8 g",
+    "protein": "3.2 g"
+  }
+}

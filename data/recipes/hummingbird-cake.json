@@ -1,0 +1,366 @@
+{
+  "recipe": {
+    "id": "hummingbird-cake",
+    "title": "Hummingbird cake",
+    "servings": 14,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Jamie's hummingbird cake recipe is simply delicious; packed with banana, pineapple and topped with zesty cream cheese and a crunchy pecan brittle.",
+    "tags": [
+      "uncategorised",
+      "party-food",
+      "desserts",
+      "main-ingredient",
+      "easter-bakes",
+      "baking",
+      "banana",
+      "easter-treats",
+      "dish-type",
+      "method",
+      "mother-s-day",
+      "cake",
+      "banana-cake",
+      "sponge-cake",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/hummingbird-cake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cf71d08923988ae8d329728d4f208bae6dc0e112-973x1300.jpg/cf71d08923988ae8d329728d4f208bae6dc0e112-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cf71d08923988ae8d329728d4f208bae6dc0e112-973x1300.jpg/cf71d08923988ae8d329728d4f208bae6dc0e112-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cf71d08923988ae8d329728d4f208bae6dc0e112-973x1300.jpg/cf71d08923988ae8d329728d4f208bae6dc0e112-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cf71d08923988ae8d329728d4f208bae6dc0e112-973x1300.jpg/cf71d08923988ae8d329728d4f208bae6dc0e112-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": "plus extra for greasing"
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "level-teaspoon-ground-cinnamon",
+      "name": "level teaspoon ground cinnamon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "medium-very-ripe-bananas",
+      "name": "medium very ripe bananas",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "425g-tin-of-pineapple-chunks",
+      "name": "425g tin of pineapple chunks",
+      "quantity": 425.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "vanilla-extract",
+      "name": "vanilla extract",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "pecans",
+      "name": "pecans",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "icing",
+      "name": "ICING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "icing-sugar",
+      "name": "icing sugar",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": "at room temperature"
+    },
+    {
+      "id": "cream-cheese",
+      "name": "cream cheese",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "limes",
+      "name": "limes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "brittle",
+      "name": "BRITTLE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "pecans",
+      "name": "pecans",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "knife",
+    "mixer",
+    "mixing bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Grease and line two 23cm round cake tins",
+      "instructions": "Grease and line two 23cm round cake tins.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_bowl"
+      ],
+      "on_enter": [
+        {
+          "say": "Grease and line two 23cm round cake tins."
+        }
+      ]
+    },
+    {
+      "id": "mix_bowl",
+      "descr": "Sift the flour and cinnamon into a mixing bowl, then add...",
+      "instructions": "Sift the flour and cinnamon into a mixing bowl, then add the sugar and a large pinch of sea salt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "chop_pineapple"
+      ],
+      "on_enter": [
+        {
+          "say": "Sift the flour and cinnamon into a mixing bowl, then add the sugar and a large pinch of sea salt."
+        }
+      ]
+    },
+    {
+      "id": "chop_pineapple",
+      "descr": "Peel the bananas and mash them up with a fork in another...",
+      "instructions": "Peel the bananas and mash them up with a fork in another bowl. Drain and finely chop the pineapple and add to the bananas with the oil, eggs and vanilla extract. Mix until combined, then fold into the dry mixture until smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "chop_pecans"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the bananas and mash them up with a fork in another bowl. Drain and finely chop the pineapple and add to the bananas with the oil, eggs and vanilla extract. Mix until combined, then fold into the dry mixture until smooth."
+        }
+      ]
+    },
+    {
+      "id": "chop_pecans",
+      "descr": "Finely chop the pecans and gently fold in, then divide...",
+      "instructions": "Finely chop the pecans and gently fold in, then divide the batter evenly between your prepared tins. Bake for 35 to 40 minutes, or until risen, golden and the sponges spring back when touched lightly in the centre.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "chop_pineapple"
+      ],
+      "next": [
+        "cool_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely chop the pecans and gently fold in, then divide the batter evenly between your prepared tins. Bake for 35 to 40 minutes, or until risen, golden and the sponges spring back when touched lightly in the centre."
+        }
+      ]
+    },
+    {
+      "id": "cool_minutes",
+      "descr": "Run a knife around the edge of the tins, then leave to...",
+      "instructions": "Run a knife around the edge of the tins, then leave to cool for 10 minutes before transferring to wire racks to cool completely.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_pecans"
+      ],
+      "next": [
+        "mix_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Run a knife around the edge of the tins, then leave to cool for 10 minutes before transferring to wire racks to cool completely."
+        }
+      ]
+    },
+    {
+      "id": "mix_butter",
+      "descr": "Meanwhile, to make the icing, sift the icing sugar into...",
+      "instructions": "Meanwhile, to make the icing, sift the icing sugar into a free-standing electric mixer, add the butter and beat until pale and creamy. Add the cream cheese, finely grate in the zest of 1 lime and add a squeeze of juice, then beat until just smooth \u2013 it\u2019s really important not to over-mix it. Keep in the fridge until needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cool_minutes"
+      ],
+      "next": [
+        "heat_shake"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, to make the icing, sift the icing sugar into a free-standing electric mixer, add the butter and beat until pale and creamy. Add the cream cheese, finely grate in the zest of 1 lime and add a squeeze of juice, then beat until just smooth \u2013 it\u2019s really important not to over-mix it. Keep in the fridge until needed."
+        }
+      ]
+    },
+    {
+      "id": "heat_shake",
+      "descr": "To make a brittle topping, place the caster sugar and a...",
+      "instructions": "To make a brittle topping, place the caster sugar and a splash of water in a non-stick frying pan on a medium heat. Shake flat and don\u2019t stir it, just swirl the pan occasionally until dissolved and lightly golden. Add the pecans and a pinch of salt, spoon around to coat, and when nicely golden, pour onto a sheet of oiled greaseproof paper to set (check out the how-to video below). Once cool, smash up to a dust (you\u2019ll need about half to top the cake \u2013 save the rest for sprinkling over ice cream.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_butter"
+      ],
+      "next": [
+        "rest_icing"
+      ],
+      "on_enter": [
+        {
+          "say": "To make a brittle topping, place the caster sugar and a splash of water in a non-stick frying pan on a medium heat. Shake flat and don\u2019t stir it, just swirl the pan occasionally until dissolved and lightly golden. Add the pecans and a pinch of salt, spoon around to coat, and when nicely golden, pour onto a sheet of oiled greaseproof paper to set (check out the how-to video below). Once cool, smash up to a dust (you\u2019ll need about half to top the cake \u2013 save the rest for sprinkling over ice cream."
+        }
+      ]
+    },
+    {
+      "id": "rest_icing",
+      "descr": "To assemble the cake, place one sponge on a cake stand...",
+      "instructions": "To assemble the cake, place one sponge on a cake stand and spread with half the icing. Top with the other sponge, spread over the rest of the icing, then grate over the zest of the remaining lime.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_shake"
+      ],
+      "next": [
+        "serve_bluebell"
+      ],
+      "on_enter": [
+        {
+          "say": "To assemble the cake, place one sponge on a cake stand and spread with half the icing. Top with the other sponge, spread over the rest of the icing, then grate over the zest of the remaining lime."
+        }
+      ]
+    },
+    {
+      "id": "serve_bluebell",
+      "descr": "Scatter over the brittle dust and decorate with a few...",
+      "instructions": "Scatter over the brittle dust and decorate with a few edible flowers, such as violas, borage or herb flowers, if you feel that way inclined. With a cup of tea on the side, this will make everyone who eats it extremely happy. Serve in a bluebell wood on a fallen tree, as you do.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "rest_icing"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter over the brittle dust and decorate with a few edible flowers, such as violas, borage or herb flowers, if you feel that way inclined. With a cup of tea on the side, this will make everyone who eats it extremely happy. Serve in a bluebell wood on a fallen tree, as you do."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "684 calories",
+    "carbohydrates": "89.7 g",
+    "fat": "36.4 g",
+    "fiber": "1.5 g",
+    "protein": "5.1 g"
+  }
+}

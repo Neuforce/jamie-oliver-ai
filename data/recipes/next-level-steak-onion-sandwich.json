@@ -1,0 +1,295 @@
+{
+  "recipe": {
+    "id": "next-level-steak-onion-sandwich",
+    "title": "Next-level steak & onion sandwich",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "This steak sandwich recipe from Jamie Oliver\u2019s book Jamie\u2019s Comfort Food is out of this world \u2013 sweet, slow-cooked onions, peppery watercress and perfect steak",
+    "tags": [
+      "sandwich",
+      "steak",
+      "main-ingredient",
+      "father-s-day",
+      "mains",
+      "dish-type",
+      "beef",
+      "method",
+      "sandwiches-amp-wraps",
+      "st-george-s-day",
+      "bread",
+      "occasion",
+      "frying",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/next-level-steak-onion-sandwich",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f963ec35bb5475abff2a119bd040ac087ae49099-973x1300.jpg/f963ec35bb5475abff2a119bd040ac087ae49099-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f963ec35bb5475abff2a119bd040ac087ae49099-973x1300.jpg/f963ec35bb5475abff2a119bd040ac087ae49099-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f963ec35bb5475abff2a119bd040ac087ae49099-973x1300.jpg/f963ec35bb5475abff2a119bd040ac087ae49099-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f963ec35bb5475abff2a119bd040ac087ae49099-973x1300.jpg/f963ec35bb5475abff2a119bd040ac087ae49099-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "flank-skirt-steak-or-bavette",
+      "name": "flank skirt steak or bavette",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-onions",
+      "name": "large onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dark-brown-sugar",
+      "name": "dark brown sugar",
+      "quantity": 70.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": 125.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "ciabatta-loaf",
+      "name": "ciabatta loaf",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-english-mustard",
+      "name": "optional: English mustard",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "watercress",
+      "name": "watercress",
+      "quantity": 1.0,
+      "unit": "handful",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Remove the steak from the fridge and let it come to room...",
+      "instructions": "Remove the steak from the fridge and let it come to room temperature, then cover it with greaseproof paper and bash it with the base of a pan to tenderise and make it all roughly the same thickness.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_thick"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the steak from the fridge and let it come to room temperature, then cover it with greaseproof paper and bash it with the base of a pan to tenderise and make it all roughly the same thickness."
+        }
+      ]
+    },
+    {
+      "id": "slice_thick",
+      "descr": "Meanwhile, peel the onions, also removing the first...",
+      "instructions": "Meanwhile, peel the onions, also removing the first layer of flesh (reserve this for a soup or stew), then slice into 2cm-thick rounds.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel the onions, also removing the first layer of flesh (reserve this for a soup or stew), then slice into 2cm-thick rounds."
+        }
+      ]
+    },
+    {
+      "id": "heat_once",
+      "descr": "Put the butter, a lug of oil and the sugar into a large...",
+      "instructions": "Put the butter, a lug of oil and the sugar into a large non-stick frying pan on a medium heat. Once the butter has melted, place the onions into the pan in a single layer and cook for 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "slice_thick"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the butter, a lug of oil and the sugar into a large non-stick frying pan on a medium heat. Once the butter has melted, place the onions into the pan in a single layer and cook for 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Pour in the vinegar, pop the lid on, reduce the heat to...",
+      "instructions": "Pour in the vinegar, pop the lid on, reduce the heat to low and cook for around 35 minutes, or until beautifully golden and caramelised on the bottom only, adding splashes of water to loosen, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2100S",
+      "depends_on": [
+        "heat_once"
+      ],
+      "next": [
+        "warm_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the vinegar, pop the lid on, reduce the heat to low and cook for around 35 minutes, or until beautifully golden and caramelised on the bottom only, adding splashes of water to loosen, if needed."
+        }
+      ]
+    },
+    {
+      "id": "warm_through",
+      "descr": "Meanwhile, pop the ciabatta into the oven, turn onto...",
+      "instructions": "Meanwhile, pop the ciabatta into the oven, turn onto 110\u00b0C/225\u00b0F/gas \u00bc and leave to warm through.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_cook"
+      ],
+      "next": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, pop the ciabatta into the oven, turn onto 110\u00b0C/225\u00b0F/gas \u00bc and leave to warm through."
+        }
+      ]
+    },
+    {
+      "id": "heat_once",
+      "descr": "Season the steak all over with sea salt and black pepper",
+      "instructions": "Season the steak all over with sea salt and black pepper. Place a large non-stick heavy-bottomed pan on a high heat. Once screaming hot, drizzle the steak with olive oil, then put it into the pan and cook for 3 minutes on each side for medium, or to your liking.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT180S",
+      "depends_on": [
+        "warm_through"
+      ],
+      "next": [
+        "slice_thick"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the steak all over with sea salt and black pepper. Place a large non-stick heavy-bottomed pan on a high heat. Once screaming hot, drizzle the steak with olive oil, then put it into the pan and cook for 3 minutes on each side for medium, or to your liking."
+        }
+      ]
+    },
+    {
+      "id": "slice_thick",
+      "descr": "Remove to a plate, rest for 1 minute, then slice 1cm...",
+      "instructions": "Remove to a plate, rest for 1 minute, then slice 1cm thick and toss through its own resting juices with a drizzle of extra virgin olive oil.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "heat_once"
+      ],
+      "next": [
+        "warm_ciabatta"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove to a plate, rest for 1 minute, then slice 1cm thick and toss through its own resting juices with a drizzle of extra virgin olive oil."
+        }
+      ]
+    },
+    {
+      "id": "warm_ciabatta",
+      "descr": "Cut the warm ciabatta in half and rub the inside of each...",
+      "instructions": "Cut the warm ciabatta in half and rub the inside of each piece in the steak resting juices. Spread on some mustard, if you like, then layer over the caramelised onions, the steak and pinches of watercress.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_thick"
+      ],
+      "next": [
+        "top_press"
+      ],
+      "on_enter": [
+        {
+          "say": "Cut the warm ciabatta in half and rub the inside of each piece in the steak resting juices. Spread on some mustard, if you like, then layer over the caramelised onions, the steak and pinches of watercress."
+        }
+      ]
+    },
+    {
+      "id": "top_press",
+      "descr": "Pop the other piece of bread on top, press down lightly,...",
+      "instructions": "Pop the other piece of bread on top, press down lightly, carve up into decent chunks and get involved.\ufffc\ufffc\ufffc",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "warm_ciabatta"
+      ],
+      "on_enter": [
+        {
+          "say": "Pop the other piece of bread on top, press down lightly, carve up into decent chunks and get involved.\ufffc\ufffc\ufffc"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "553 calories",
+    "carbohydrates": "60 g",
+    "fat": "22.3 g",
+    "fiber": "3.6 g",
+    "protein": "31 g"
+  }
+}

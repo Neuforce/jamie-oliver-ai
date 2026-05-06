@@ -1,0 +1,333 @@
+{
+  "recipe": {
+    "id": "spaghetti-bolognese",
+    "title": "Spaghetti Bolognese",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT75M",
+    "description": "This simple spaghetti Bolognese recipe is a classic. Cooked in the oven with rosemary, bacon and red wine, it's seriously packed with flavour.",
+    "tags": [
+      "bacon",
+      "pasta",
+      "main-ingredient",
+      "student-recipes",
+      "pasta-amp-risotto",
+      "spaghetti-bolognese",
+      "mince",
+      "tomato-sauce",
+      "beef",
+      "dish-type",
+      "method",
+      "minced-beef",
+      "spaghetti",
+      "tomato",
+      "pasta-sauce",
+      "occasion",
+      "bolognese",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/spaghetti-bolognese",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/032a80868da0dfaced7105a7de547eedd91eb4fc-958x1280.jpg/80307052?rect=0,298,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/032a80868da0dfaced7105a7de547eedd91eb4fc-958x1280.jpg/80307052?rect=0,298,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/032a80868da0dfaced7105a7de547eedd91eb4fc-958x1280.jpg/80307052?rect=0,418,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/032a80868da0dfaced7105a7de547eedd91eb4fc-958x1280.jpg/80307052?rect=0,508,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "rashers-of-dry-cured-higher-we",
+      "name": "rashers of dry-cured higher-welfare smoked streaky bacon",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "Olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "minced-beef",
+      "name": "minced beef",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "red-wine",
+      "name": "red wine",
+      "quantity": 200.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "280g-jar-of-sun-dried-tomatoes",
+      "name": "280g jar of sun-dried tomatoes",
+      "quantity": 280.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-spaghetti",
+      "name": "dried spaghetti",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "Extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "chop_garlic",
+      "descr": "Peel and finely chop the garlic and onions, pick and...",
+      "instructions": "Peel and finely chop the garlic and onions, pick and finely chop the rosemary, then finely slice the bacon.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_splash"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the garlic and onions, pick and finely chop the rosemary, then finely slice the bacon."
+        }
+      ]
+    },
+    {
+      "id": "heat_splash",
+      "descr": "Heat a splash of oil in a casserole pan on a medium...",
+      "instructions": "Heat a splash of oil in a casserole pan on a medium heat, add the bacon, rosemary, garlic and onion and cook for 5 minutes, or until softened, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_garlic"
+      ],
+      "next": [
+        "mince_beef"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a splash of oil in a casserole pan on a medium heat, add the bacon, rosemary, garlic and onion and cook for 5 minutes, or until softened, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "mince_beef",
+      "descr": "Add the minced beef, breaking it apart with the back of...",
+      "instructions": "Add the minced beef, breaking it apart with the back of a spoon, then cook for 2 to 3 minutes, or until starting to brown, then pour in the wine. Leave to bubble and cook away.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT180S",
+      "depends_on": [
+        "heat_splash"
+      ],
+      "next": [
+        "stir_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the minced beef, breaking it apart with the back of a spoon, then cook for 2 to 3 minutes, or until starting to brown, then pour in the wine. Leave to bubble and cook away."
+        }
+      ]
+    },
+    {
+      "id": "stir_well",
+      "descr": "Meanwhile, drain and tip the sun-dried tomatoes into a...",
+      "instructions": "Meanwhile, drain and tip the sun-dried tomatoes into a food processor, blitz to a paste, then add to the pan with the tomatoes. Stir well, break the plum tomatoes apart a little.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mince_beef"
+      ],
+      "next": [
+        "stir_after"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, drain and tip the sun-dried tomatoes into a food processor, blitz to a paste, then add to the pan with the tomatoes. Stir well, break the plum tomatoes apart a little."
+        }
+      ]
+    },
+    {
+      "id": "stir_after",
+      "descr": "Cover with a lid then place in the oven for 1 hour,...",
+      "instructions": "Cover with a lid then place in the oven for 1 hour, removing the lid and giving it a stir after 30 minutes \u2013 if it looks a little dry at this stage, add a splash of water to help it along.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "stir_well"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Cover with a lid then place in the oven for 1 hour, removing the lid and giving it a stir after 30 minutes \u2013 if it looks a little dry at this stage, add a splash of water to help it along."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "About 10 minutes before the time is up, cook the...",
+      "instructions": "About 10 minutes before the time is up, cook the spaghetti in boiling salted water according to the packet instructions.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "stir_after"
+      ],
+      "next": [
+        "drizzle_extra"
+      ],
+      "on_enter": [
+        {
+          "say": "About 10 minutes before the time is up, cook the spaghetti in boiling salted water according to the packet instructions."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_extra",
+      "descr": "Once the spaghetti is cooked, drain, reserving a mugful...",
+      "instructions": "Once the spaghetti is cooked, drain, reserving a mugful of cooking water, then return to the pan with a few spoons of Bolognese, a good grating of Parmesan and a drizzle of extra virgin olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "coat_spaghetti"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the spaghetti is cooked, drain, reserving a mugful of cooking water, then return to the pan with a few spoons of Bolognese, a good grating of Parmesan and a drizzle of extra virgin olive oil."
+        }
+      ]
+    },
+    {
+      "id": "coat_spaghetti",
+      "descr": "Toss to coat the spaghetti, loosening with a splash of...",
+      "instructions": "Toss to coat the spaghetti, loosening with a splash of cooking water, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_extra"
+      ],
+      "next": [
+        "add_good"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss to coat the spaghetti, loosening with a splash of cooking water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "add_good",
+      "descr": "Divide the spaghetti between plates or bowls, add a good...",
+      "instructions": "Divide the spaghetti between plates or bowls, add a good spoonful of Bolognese to each, then serve with a fine grating of Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "coat_spaghetti"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide the spaghetti between plates or bowls, add a good spoonful of Bolognese to each, then serve with a fine grating of Parmesan."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "618 calories",
+    "carbohydrates": "78.5 g",
+    "fat": "15.6 g",
+    "fiber": "3.2 g",
+    "protein": "37.6 g"
+  }
+}

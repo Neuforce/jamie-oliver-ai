@@ -1,0 +1,384 @@
+{
+  "recipe": {
+    "id": "fantastic-fish-pie",
+    "title": "Fantastic fish pie",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Fish pie is a family favourite, and this Jamie Oliver fish pie recipe is no exception. Packed with haddock or cod, baby spinach, and of course, boiled eggs.",
+    "tags": [
+      "penguin-anniversary-edition",
+      "kosher-for-passover",
+      "fish-pie",
+      "fish",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/fantastic-fish-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/20aeaf336a4d8e6c30db32bec0d62d2d2f0fb49b-958x1280.jpg/89156535?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/20aeaf336a4d8e6c30db32bec0d62d2d2f0fb49b-958x1280.jpg/89156535?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/20aeaf336a4d8e6c30db32bec0d62d2d2f0fb49b-958x1280.jpg/89156535?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/20aeaf336a4d8e6c30db32bec0d62d2d2f0fb49b-958x1280.jpg/89156535?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-potatoes",
+      "name": "large potatoes",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-handfuls-of-baby-spinach",
+      "name": "large handfuls of baby spinach",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "double-cream",
+      "name": "double cream",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "mature-cheddar-or-parmesan-che",
+      "name": "mature Cheddar or Parmesan cheese",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-english-mustar",
+      "name": "heaped teaspoon English mustard",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-handful-of-fresh-flat-le",
+      "name": "large handful of fresh flat-leaf parsley",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "haddock-or-cod-fillet",
+      "name": "haddock or cod fillet",
+      "quantity": 450.0,
+      "unit": "g",
+      "note": "skin off, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "optional-1-whole-nutmeg",
+      "name": "optional: 1 whole nutmeg",
+      "quantity": null,
+      "unit": null,
+      "note": "for grating"
+    }
+  ],
+  "utensils": [
+    "colander",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 230\u00b0C/450\u00b0F/gas 8",
+      "instructions": "Preheat the oven to 230\u00b0C/450\u00b0F/gas 8.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "dice_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 230\u00b0C/450\u00b0F/gas 8."
+        }
+      ]
+    },
+    {
+      "id": "dice_potatoes",
+      "descr": "Peel and dice the potatoes into 2",
+      "instructions": "Peel and dice the potatoes into 2.5cm chunks, then put into boiling salted water and bring back to the boil for 2 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_eggs"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and dice the potatoes into 2.5cm chunks, then put into boiling salted water and bring back to the boil for 2 minutes."
+        }
+      ]
+    },
+    {
+      "id": "add_eggs",
+      "descr": "Carefully add the eggs to the pan and cook for a further...",
+      "instructions": "Carefully add the eggs to the pan and cook for a further 8 minutes, or until hard-boiled, by which time the potatoes should also be cooked.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "dice_potatoes"
+      ],
+      "next": [
+        "steam_spinach"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully add the eggs to the pan and cook for a further 8 minutes, or until hard-boiled, by which time the potatoes should also be cooked."
+        }
+      ]
+    },
+    {
+      "id": "steam_spinach",
+      "descr": "At the same time, steam the spinach in a colander above...",
+      "instructions": "At the same time, steam the spinach in a colander above the pan. This will only take a minute. When the spinach is done, remove from the colander and gently squeeze out any excess moisture.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_eggs"
+      ],
+      "next": [
+        "cool_under"
+      ],
+      "on_enter": [
+        {
+          "say": "At the same time, steam the spinach in a colander above the pan. This will only take a minute. When the spinach is done, remove from the colander and gently squeeze out any excess moisture."
+        }
+      ]
+    },
+    {
+      "id": "cool_under",
+      "descr": "Drain the potatoes in the colander",
+      "instructions": "Drain the potatoes in the colander. Remove the eggs, cool under cold water, then peel and quarter them. Place to one side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "steam_spinach"
+      ],
+      "next": [
+        "chop_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the potatoes in the colander. Remove the eggs, cool under cold water, then peel and quarter them. Place to one side."
+        }
+      ]
+    },
+    {
+      "id": "chop_onion",
+      "descr": "Peel and finely chop the onion, then peel, halve and...",
+      "instructions": "Peel and finely chop the onion, then peel, halve and finely chop the carrot.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cool_under"
+      ],
+      "next": [
+        "add_double"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the onion, then peel, halve and finely chop the carrot."
+        }
+      ]
+    },
+    {
+      "id": "add_double",
+      "descr": "In a separate pan, slowly fry the onion and carrot in a...",
+      "instructions": "In a separate pan, slowly fry the onion and carrot in a little oil for about 5 minutes, then add the double cream and bring just to the boil.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_onion"
+      ],
+      "next": [
+        "heat_finely"
+      ],
+      "on_enter": [
+        {
+          "say": "In a separate pan, slowly fry the onion and carrot in a little oil for about 5 minutes, then add the double cream and bring just to the boil."
+        }
+      ]
+    },
+    {
+      "id": "heat_finely",
+      "descr": "Remove from the heat and finely grate in 2 good handfuls...",
+      "instructions": "Remove from the heat and finely grate in 2 good handfuls of cheese, then squeeze in the lemon juice and stir through the mustard.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_double"
+      ],
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove from the heat and finely grate in 2 good handfuls of cheese, then squeeze in the lemon juice and stir through the mustard."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Pick and finely chop the parsley and stir into the cream...",
+      "instructions": "Pick and finely chop the parsley and stir into the cream mixture.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_finely"
+      ],
+      "next": [
+        "slice_fish"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the parsley and stir into the cream mixture."
+        }
+      ]
+    },
+    {
+      "id": "slice_fish",
+      "descr": "Slice the fish into strips then place in an earthenware...",
+      "instructions": "Slice the fish into strips then place in an earthenware dish with the spinach and eggs and mix together, pouring over the creamy vegetable sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "next": [
+        "add_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the fish into strips then place in an earthenware dish with the spinach and eggs and mix together, pouring over the creamy vegetable sauce."
+        }
+      ]
+    },
+    {
+      "id": "add_salt",
+      "descr": "The cooked potatoes should be drained and mashed \u2013 add a...",
+      "instructions": "The cooked potatoes should be drained and mashed \u2013 add a bit of oil, sea salt, black pepper and a touch of nutmeg (if using). Spread on top of the fish. Don\u2019t bother piping it to make it look pretty \u2013 it\u2019s a homely hearty thing.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_fish"
+      ],
+      "next": [
+        "step_step_12"
+      ],
+      "on_enter": [
+        {
+          "say": "The cooked potatoes should be drained and mashed \u2013 add a bit of oil, sea salt, black pepper and a touch of nutmeg (if using). Spread on top of the fish. Don\u2019t bother piping it to make it look pretty \u2013 it\u2019s a homely hearty thing."
+        }
+      ]
+    },
+    {
+      "id": "step_step_12",
+      "descr": "Place in the oven for 25 to 30 minutes, or until the...",
+      "instructions": "Place in the oven for 25 to 30 minutes, or until the potatoes are golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "add_salt"
+      ],
+      "next": [
+        "bake_beans"
+      ],
+      "on_enter": [
+        {
+          "say": "Place in the oven for 25 to 30 minutes, or until the potatoes are golden."
+        }
+      ]
+    },
+    {
+      "id": "bake_beans",
+      "descr": "Serve with some nice peas or greens, not forgetting your...",
+      "instructions": "Serve with some nice peas or greens, not forgetting your baked beans and tomato ketchup. Tacky but tasty, and that\u2019s what I like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_12"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with some nice peas or greens, not forgetting your baked beans and tomato ketchup. Tacky but tasty, and that\u2019s what I like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "539 calories",
+    "carbohydrates": "45.7 g",
+    "fat": "30.4 g",
+    "fiber": "5.4 g",
+    "protein": "23.3 g"
+  }
+}

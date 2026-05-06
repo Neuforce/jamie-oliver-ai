@@ -1,0 +1,248 @@
+{
+  "recipe": {
+    "id": "veggie-casserole",
+    "title": "Veggie casserole",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT123M",
+    "description": "Jamie's flavour-packed chickpea & squash casserole is perfect for batch cooking. ",
+    "tags": [
+      "freezer-friendly-recipes",
+      "vegan",
+      "vegetarian",
+      "gluten-free",
+      "one-pan-recipes",
+      "chickpea",
+      "butternut-squash",
+      "batch-cooking",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/chickpea-squash-casserole",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7a13e89f0db249d68a5feb9ebf4179259483c6fe-958x1280.jpg/138602410?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7a13e89f0db249d68a5feb9ebf4179259483c6fe-958x1280.jpg/138602410?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7a13e89f0db249d68a5feb9ebf4179259483c6fe-958x1280.jpg/138602410?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7a13e89f0db249d68a5feb9ebf4179259483c6fe-958x1280.jpg/138602410?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "butternut-squash",
+      "name": "butternut squash",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "1.2kg"
+    },
+    {
+      "id": "chestnut-mushrooms",
+      "name": "chestnut mushrooms",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-colour-peppers",
+      "name": "mixed-colour peppers",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "black-olive-tapenade",
+      "name": "black olive tapenade",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "700g-jars-or-4-x-400g-tins-of-",
+      "name": "700g jars or 4 x 400g tins of chickpeas",
+      "quantity": 700.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Wash and trim the squash (there\u2019s no need to peel it),...",
+      "instructions": "Wash and trim the squash (there\u2019s no need to peel it), carefully halve lengthways and deseed. Place skin side down directly on the bars of the oven.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_break"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash and trim the squash (there\u2019s no need to peel it), carefully halve lengthways and deseed. Place skin side down directly on the bars of the oven."
+        }
+      ]
+    },
+    {
+      "id": "heat_break",
+      "descr": "Put a large deep casserole pan on a high heat",
+      "instructions": "Put a large deep casserole pan on a high heat. Break in the mushrooms and toast in the dry pan for 10 minutes to bring out their nuttiness, tossing regularly, while you peel the onions, deseed the peppers and very roughly chop both. Add to the pan and cook for another 10 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "slice_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large deep casserole pan on a high heat. Break in the mushrooms and toast in the dry pan for 10 minutes to bring out their nuttiness, tossing regularly, while you peel the onions, deseed the peppers and very roughly chop both. Add to the pan and cook for another 10 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "slice_garlic",
+      "descr": "Peel and finely slice the garlic and add to the pan with...",
+      "instructions": "Peel and finely slice the garlic and add to the pan with 2 tablespoons each of olive oil, red wine vinegar and the tapenade. Allow the liquid to evaporate, then go in with the chickpeas, juice and all, the tomatoes, scrunching them in through clean hands, and 2 tins\u2019 worth of water.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_break"
+      ],
+      "next": [
+        "bake_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the garlic and add to the pan with 2 tablespoons each of olive oil, red wine vinegar and the tapenade. Allow the liquid to evaporate, then go in with the chickpeas, juice and all, the tomatoes, scrunching them in through clean hands, and 2 tins\u2019 worth of water."
+        }
+      ]
+    },
+    {
+      "id": "bake_hour",
+      "descr": "Bring to the boil, sit the squash halves on top, skin...",
+      "instructions": "Bring to the boil, sit the squash halves on top, skin side down, and bake for 1 hour 30 minutes, or until thick, delicious, and the squash is soft.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "slice_garlic"
+      ],
+      "next": [
+        "mix_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, sit the squash halves on top, skin side down, and bake for 1 hour 30 minutes, or until thick, delicious, and the squash is soft."
+        }
+      ]
+    },
+    {
+      "id": "mix_through",
+      "descr": "Use a serving spoon to roughly break up the squash and...",
+      "instructions": "Use a serving spoon to roughly break up the squash and mix it through the stew, then season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "bake_hour"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a serving spoon to roughly break up the squash and mix it through the stew, then season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "Enjoy as is, batching up extra portions to stash in the...",
+      "instructions": "Enjoy as is, batching up extra portions to stash in the fridge or freezer for future meals.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "mix_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Enjoy as is, batching up extra portions to stash in the fridge or freezer for future meals."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "181 calories",
+    "carbohydrates": "28.6 g",
+    "fat": "4.4 g",
+    "fiber": "8 g",
+    "protein": "8.2 g"
+  }
+}

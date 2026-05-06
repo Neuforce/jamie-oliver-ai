@@ -1,0 +1,315 @@
+{
+  "recipe": {
+    "id": "satisfying-veggie-bake",
+    "title": "Satisfying veggie bake",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT150M",
+    "description": "Jamie cooks a celebratory veg-packed bake layered with filo pastry, greek yoghurt and stew in this dinner party hero.",
+    "tags": [
+      "dinner-party",
+      "healthy-family-recipes",
+      "sweet-potato",
+      "course",
+      "vegetarian",
+      "healthy-vegetarian-recipes",
+      "vegetables",
+      "mushroom",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/satisfying-veggie-bake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dfc4551c5a3612654694f3f57263c9e4123d49a2-1075x1613.jpg/satisfyingveggiebake.jpg?rect=0,270,1075,1075&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dfc4551c5a3612654694f3f57263c9e4123d49a2-1075x1613.jpg/satisfyingveggiebake.jpg?rect=0,270,1075,1075&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dfc4551c5a3612654694f3f57263c9e4123d49a2-1075x1613.jpg/satisfyingveggiebake.jpg?rect=0,404,1075,806&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dfc4551c5a3612654694f3f57263c9e4123d49a2-1075x1613.jpg/satisfyingveggiebake.jpg?rect=0,505,1075,605&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "level-teaspoons-ground-coriand",
+      "name": "level teaspoons ground coriander",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-tapenade",
+      "name": "olive tapenade",
+      "quantity": 3.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "mixed-colour-peppers",
+      "name": "mixed-colour peppers",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sweet-potatoes",
+      "name": "sweet potatoes",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-portobello-mushrooms",
+      "name": "large portobello mushrooms",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "courgettes",
+      "name": "courgettes",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "greek-style-yoghurt",
+      "name": "Greek-style yoghurt",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "feta-cheese",
+      "name": "feta cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "oregano",
+      "name": "oregano",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "20g"
+    },
+    {
+      "id": "filo-pastry",
+      "name": "filo pastry",
+      "quantity": 1.0,
+      "unit": "packet",
+      "note": "270g"
+    },
+    {
+      "id": "mug-of-basmati-rice",
+      "name": "mug of basmati rice",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "300g"
+    },
+    {
+      "id": "400g-tin-of-butter-beans",
+      "name": "400g tin of butter beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shop-jamie-s-serveware",
+      "name": "SHOP JAMIE'S SERVEWARE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "epic-roaster",
+      "name": "Epic Roaster",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Peel and finely slice the onions and garlic, and place...",
+      "instructions": "Peel and finely slice the onions and garlic, and place in a large casserole pan on a medium heat with 1 tablespoon of olive oil, the ground coriander and tapenade, stirring regularly.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_intensify"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the onions and garlic, and place in a large casserole pan on a medium heat with 1 tablespoon of olive oil, the ground coriander and tapenade, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_intensify",
+      "descr": "Alongside, we\u2019re going to lightly char our veg in a...",
+      "instructions": "Alongside, we\u2019re going to lightly char our veg in a large dry non-stick pan on a high heat to intensify the flavour, so deseed the peppers, scrub the sweet potatoes, then chop into 3cm chunks with the mushrooms and courgettes. One veg at a time, lightly char all over, moving them into the casserole pan as they\u2019re done.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "mix_breaking"
+      ],
+      "on_enter": [
+        {
+          "say": "Alongside, we\u2019re going to lightly char our veg in a large dry non-stick pan on a high heat to intensify the flavour, so deseed the peppers, scrub the sweet potatoes, then chop into 3cm chunks with the mushrooms and courgettes. One veg at a time, lightly char all over, moving them into the casserole pan as they\u2019re done."
+        }
+      ]
+    },
+    {
+      "id": "mix_breaking",
+      "descr": "Add the tomatoes to the mix, breaking them up with a...",
+      "instructions": "Add the tomatoes to the mix, breaking them up with a spoon, along with two tins' worth of water. Simmer gently for 30 minutes, or until the sweet potatoes are soft. Season to perfection, tasting and tweaking. Meanwhile, beat the eggs into the yoghurt, roughly crumble and mix in the feta.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "heat_intensify"
+      ],
+      "next": [
+        "bake_half"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the tomatoes to the mix, breaking them up with a spoon, along with two tins' worth of water. Simmer gently for 30 minutes, or until the sweet potatoes are soft. Season to perfection, tasting and tweaking. Meanwhile, beat the eggs into the yoghurt, roughly crumble and mix in the feta."
+        }
+      ]
+    },
+    {
+      "id": "bake_half",
+      "descr": "Assemble the bake",
+      "instructions": "Assemble the bake. Use half the oregano as a brush to coat the inside of a large roasting tray or baking dish with oil. Layer in all but one of the filo sheets, leaving an overhang and brushing with oil as you go.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_breaking"
+      ],
+      "next": [
+        "fold_overhang"
+      ],
+      "on_enter": [
+        {
+          "say": "Assemble the bake. Use half the oregano as a brush to coat the inside of a large roasting tray or baking dish with oil. Layer in all but one of the filo sheets, leaving an overhang and brushing with oil as you go."
+        }
+      ]
+    },
+    {
+      "id": "fold_overhang",
+      "descr": "Evenly sprinkle in the rice, drain and scatter over the...",
+      "instructions": "Evenly sprinkle in the rice, drain and scatter over the beans, then pour in your veggie stew. Scrunch over the remaining sheet of filo and fold in the overhang, then brush the top with oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "bake_half"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Evenly sprinkle in the rice, drain and scatter over the beans, then pour in your veggie stew. Scrunch over the remaining sheet of filo and fold in the overhang, then brush the top with oil."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Cook the bake on the bottom of the oven for 1 hour.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "fold_overhang"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Cook the bake on the bottom of the oven for 1 hour."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Remove from the oven and use the back of a spoon to...",
+      "instructions": "Remove from the oven and use the back of a spoon to crack the top of the pastry, then spoon over the creamy topping. Pick the remaining oregano, rub in a little oil and sprinkle over, then return to the middle of the oven for another 40 minutes, or until golden. Great with a simple salad.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT2400S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove from the oven and use the back of a spoon to crack the top of the pastry, then spoon over the creamy topping. Pick the remaining oregano, rub in a little oil and sprinkle over, then return to the middle of the oven for another 40 minutes, or until golden. Great with a simple salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "580 calories",
+    "carbohydrates": "96.2 g",
+    "fat": "13.7 g",
+    "fiber": "11.2 g",
+    "protein": "24 g"
+  }
+}

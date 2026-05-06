@@ -1,0 +1,380 @@
+{
+  "recipe": {
+    "id": "fish-chips-mushy-peas",
+    "title": "Fish, chips & mushy peas",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT55M",
+    "description": "Try making homemade fish & chips: it\u2019s such great comfort food and our fish and chips recipe means you can make the real deal at home! One of the all-time best fish dishes.",
+    "tags": [
+      "main-ingredient",
+      "course",
+      "fish-and-chips",
+      "mains",
+      "dish-type",
+      "method",
+      "peas",
+      "st-george-s-day",
+      "holidays-from-home",
+      "fish",
+      "popular",
+      "occasion",
+      "frying",
+      "chips"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/fish-chips-and-mushy-peas",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dc69154b4fd1917b4fa33d9da8970e9c52352d11-767x1025.jpg/dc69154b4fd1917b4fa33d9da8970e9c52352d11-767x1025.jpg?rect=0,130,767,767&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dc69154b4fd1917b4fa33d9da8970e9c52352d11-767x1025.jpg/dc69154b4fd1917b4fa33d9da8970e9c52352d11-767x1025.jpg?rect=0,130,767,767&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dc69154b4fd1917b4fa33d9da8970e9c52352d11-767x1025.jpg/dc69154b4fd1917b4fa33d9da8970e9c52352d11-767x1025.jpg?rect=0,226,767,575&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dc69154b4fd1917b4fa33d9da8970e9c52352d11-767x1025.jpg/dc69154b4fd1917b4fa33d9da8970e9c52352d11-767x1025.jpg?rect=0,298,767,431&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 900.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sunflower-oil-for-deep-frying",
+      "name": "sunflower oil for deep-frying",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "white-fish-fillets",
+      "name": "white fish fillets",
+      "quantity": 225.0,
+      "unit": "g",
+      "note": "skin off, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 225.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "beer",
+      "name": "beer",
+      "quantity": 285.0,
+      "unit": "ml",
+      "note": "cold"
+    },
+    {
+      "id": "heaped-teaspoons-baking-powder",
+      "name": "heaped teaspoons baking powder",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mushy-peas",
+      "name": "MUSHY PEAS",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-mint",
+      "name": "a few sprigs of fresh mint",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "knob-of-unsalted-butter",
+      "name": "knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "podded-peas",
+      "name": "podded peas",
+      "quantity": 4.0,
+      "unit": "handfuls",
+      "note": null
+    },
+    {
+      "id": "a-lemon",
+      "name": "\u00bd a lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "food processor",
+    "oven",
+    "pan",
+    "pot",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "slice_potatoes",
+      "descr": "Peel and slice the potatoes into chips",
+      "instructions": "Peel and slice the potatoes into chips.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_peas"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and slice the potatoes into chips."
+        }
+      ]
+    },
+    {
+      "id": "heat_peas",
+      "descr": "To make the mushy peas, pick and finely chop the mint leaves",
+      "instructions": "To make the mushy peas, pick and finely chop the mint leaves. Place the butter in a pan over a medium-low heat, add the peas and mint, pop the lid on and simmer gently for 10 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "slice_potatoes"
+      ],
+      "next": [
+        "warm_needed"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the mushy peas, pick and finely chop the mint leaves. Place the butter in a pan over a medium-low heat, add the peas and mint, pop the lid on and simmer gently for 10 minutes."
+        }
+      ]
+    },
+    {
+      "id": "warm_needed",
+      "descr": "Add a squeeze of lemon juice and season to taste with...",
+      "instructions": "Add a squeeze of lemon juice and season to taste with sea salt and black pepper \u2013 you can either mush the peas up in a food processor, or mash them by hand until stodgy, thick and perfect for dipping your fish into. Keep them warm until needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_peas"
+      ],
+      "next": [
+        "heat_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Add a squeeze of lemon juice and season to taste with sea salt and black pepper \u2013 you can either mush the peas up in a food processor, or mash them by hand until stodgy, thick and perfect for dipping your fish into. Keep them warm until needed."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_5",
+      "descr": "Pour the sunflower oil into a deep fat fryer or a large...",
+      "instructions": "Pour the sunflower oil into a deep fat fryer or a large sturdy pan and heat it to 190\u00b0C/375\u00b0F.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "warm_needed"
+      ],
+      "next": [
+        "mix_teaspoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the sunflower oil into a deep fat fryer or a large sturdy pan and heat it to 190\u00b0C/375\u00b0F."
+        }
+      ]
+    },
+    {
+      "id": "mix_teaspoon",
+      "descr": "Mix \u00bd a teaspoon of salt and 1 teaspoon of pepper...",
+      "instructions": "Mix \u00bd a teaspoon of salt and 1 teaspoon of pepper together, then use it to season the fish fillets on both sides \u2013 this will help to remove any excess water, making the fish really meaty.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_5"
+      ],
+      "next": [
+        "whisk_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix \u00bd a teaspoon of salt and 1 teaspoon of pepper together, then use it to season the fish fillets on both sides \u2013 this will help to remove any excess water, making the fish really meaty."
+        }
+      ]
+    },
+    {
+      "id": "whisk_flour",
+      "descr": "Whisk the flour, beer and baking powder together until...",
+      "instructions": "Whisk the flour, beer and baking powder together until nice and shiny \u2013 the texture should be like semi-whipped double cream (i.e. it should stick to whatever you're coating).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_teaspoon"
+      ],
+      "next": [
+        "fry_many"
+      ],
+      "on_enter": [
+        {
+          "say": "Whisk the flour, beer and baking powder together until nice and shiny \u2013 the texture should be like semi-whipped double cream (i.e. it should stick to whatever you're coating)."
+        }
+      ]
+    },
+    {
+      "id": "fry_many",
+      "descr": "Dust each fish fillet in a little of the extra flour,...",
+      "instructions": "Dust each fish fillet in a little of the extra flour, then dip into the batter and allow any excess to drip off. Holding one end, gently lower the fish into the oil one by one, working carefully so you don't get splashed \u2013 it will depend on the size of your fryer or pan how many fish you can cook at once.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "whisk_flour"
+      ],
+      "next": [
+        "drain_step_9"
+      ],
+      "on_enter": [
+        {
+          "say": "Dust each fish fillet in a little of the extra flour, then dip into the batter and allow any excess to drip off. Holding one end, gently lower the fish into the oil one by one, working carefully so you don't get splashed \u2013 it will depend on the size of your fryer or pan how many fish you can cook at once."
+        }
+      ]
+    },
+    {
+      "id": "drain_step_9",
+      "descr": "Cook for 4 minutes, or until the fish is cooked through...",
+      "instructions": "Cook for 4 minutes, or until the fish is cooked through and the batter is golden and crisp, then remove to kitchen paper to drain.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "fry_many"
+      ],
+      "next": [
+        "boil_chips"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook for 4 minutes, or until the fish is cooked through and the batter is golden and crisp, then remove to kitchen paper to drain."
+        }
+      ]
+    },
+    {
+      "id": "boil_chips",
+      "descr": "Meanwhile, parboil the chips in boiling salted water for...",
+      "instructions": "Meanwhile, parboil the chips in boiling salted water for 4 to 5 minutes, or until softened but still retaining their shape, then drain and steam dry.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "drain_step_9"
+      ],
+      "next": [
+        "fry_that"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, parboil the chips in boiling salted water for 4 to 5 minutes, or until softened but still retaining their shape, then drain and steam dry."
+        }
+      ]
+    },
+    {
+      "id": "fry_that",
+      "descr": "When the chips are nice and dry, fry in the oil that the...",
+      "instructions": "When the chips are nice and dry, fry in the oil that the fish were cooked in at 180\u00b0C/350\u00b0F until golden and crisp.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_chips"
+      ],
+      "next": [
+        "fry_transfer"
+      ],
+      "on_enter": [
+        {
+          "say": "When the chips are nice and dry, fry in the oil that the fish were cooked in at 180\u00b0C/350\u00b0F until golden and crisp."
+        }
+      ]
+    },
+    {
+      "id": "fry_transfer",
+      "descr": "While the chips are frying, transfer the fish from the...",
+      "instructions": "While the chips are frying, transfer the fish from the kitchen paper to a baking tray. Place in the oven for a few minutes to finish cooking \u2013 this way they will stay crisp while you finish off the chips.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fry_that"
+      ],
+      "next": [
+        "season_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "While the chips are frying, transfer the fish from the kitchen paper to a baking tray. Place in the oven for a few minutes to finish cooking \u2013 this way they will stay crisp while you finish off the chips."
+        }
+      ]
+    },
+    {
+      "id": "season_salt",
+      "descr": "When the chips are done, drain them on kitchen paper,...",
+      "instructions": "When the chips are done, drain them on kitchen paper, season with salt, and serve with the fish and mushy peas. Other things to have on the table are some crunchy sweet pickled gherkins, some pickled onions (if your other half isn't around!) \u2013 and pickled chillies are good, too. Then you want to douse it all with some cheap malt vinegar and nothing other than Heinz tomato ketchup.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "fry_transfer"
+      ],
+      "on_enter": [
+        {
+          "say": "When the chips are done, drain them on kitchen paper, season with salt, and serve with the fish and mushy peas. Other things to have on the table are some crunchy sweet pickled gherkins, some pickled onions (if your other half isn't around!) \u2013 and pickled chillies are good, too. Then you want to douse it all with some cheap malt vinegar and nothing other than Heinz tomato ketchup."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "779 calories",
+    "carbohydrates": "89.6 g",
+    "fat": "32 g",
+    "fiber": "6.1 g",
+    "protein": "34.8 g"
+  }
+}

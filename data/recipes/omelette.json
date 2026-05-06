@@ -1,0 +1,246 @@
+{
+  "recipe": {
+    "id": "omelette",
+    "title": "Omelette",
+    "servings": 1,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "A good omelette recipe is an essential for any beginner cook. Some good omelette ideas are tomato & basil, mushroom, or ham & cheese. From jamieoliver.com.",
+    "tags": [
+      "omelette",
+      "quick-fixes",
+      "main-ingredient",
+      "egg",
+      "breakfast",
+      "popular",
+      "student-recipes",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "gluten-free",
+      "one-pan-recipes",
+      "eggs",
+      "meals-for-one",
+      "occasion",
+      "frying",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/eggs/omelette",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7023664ee2a408337ca134fe12dcc8d3089f774e-1017x1526.jpg/omelette.jpg?rect=0,255,1017,1017&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7023664ee2a408337ca134fe12dcc8d3089f774e-1017x1526.jpg/omelette.jpg?rect=0,255,1017,1017&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7023664ee2a408337ca134fe12dcc8d3089f774e-1017x1526.jpg/omelette.jpg?rect=0,382,1017,763&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7023664ee2a408337ca134fe12dcc8d3089f774e-1017x1526.jpg/omelette.jpg?rect=0,477,1017,572&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "eggs"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "basic-omelette",
+      "name": "BASIC OMELETTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-knob-of-unsalted-butter",
+      "name": "small knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-a-small-handful-of-gr",
+      "name": "optional: a small handful of grated Cheddar cheese",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-tomato-basil-omelette",
+      "name": "OPTIONAL: TOMATO & BASIL OMELETTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "or-3-sprigs-of-fresh-basil",
+      "name": "or 3 sprigs of fresh basil",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cherry-tomatoes",
+      "name": "cherry tomatoes",
+      "quantity": 1.0,
+      "unit": "handful",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-mushroom-omelette",
+      "name": "OPTIONAL: MUSHROOM OMELETTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "or-3-field-type-mushrooms",
+      "name": "or 3 field-type mushrooms",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "mixing bowl",
+    "pan",
+    "spatula"
+  ],
+  "steps": [
+    {
+      "id": "mix_bowl",
+      "descr": "For a basic omelette, crack the eggs into a mixing bowl...",
+      "instructions": "For a basic omelette, crack the eggs into a mixing bowl with a pinch of sea salt and black pepper. Beat well with a fork.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_small"
+      ],
+      "on_enter": [
+        {
+          "say": "For a basic omelette, crack the eggs into a mixing bowl with a pinch of sea salt and black pepper. Beat well with a fork."
+        }
+      ]
+    },
+    {
+      "id": "heat_small",
+      "descr": "Heat a small knob of butter in a small frying pan on a...",
+      "instructions": "Heat a small knob of butter in a small frying pan on a low heat, and once melted and bubbling, add the eggs and move the pan around to spread them out evenly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a small knob of butter in a small frying pan on a low heat, and once melted and bubbling, add the eggs and move the pan around to spread them out evenly."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "When the omelette begins to cook and firm up, but still...",
+      "instructions": "When the omelette begins to cook and firm up, but still has a little raw egg on top, sprinkle over the cheese (if using). I sometimes grate mine directly on to the omelette.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_small"
+      ],
+      "next": [
+        "heat_slide"
+      ],
+      "on_enter": [
+        {
+          "say": "When the omelette begins to cook and firm up, but still has a little raw egg on top, sprinkle over the cheese (if using). I sometimes grate mine directly on to the omelette."
+        }
+      ]
+    },
+    {
+      "id": "heat_slide",
+      "descr": "Using a spatula, ease around the edges of the omelette,...",
+      "instructions": "Using a spatula, ease around the edges of the omelette, then fold it over in half. When it starts to turn golden brown underneath, remove the pan from the heat and slide the omelette on to a plate.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "sprinkle_over"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Using a spatula, ease around the edges of the omelette, then fold it over in half. When it starts to turn golden brown underneath, remove the pan from the heat and slide the omelette on to a plate."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "For a tomato and basil omelette, pick and roughly tear...",
+      "instructions": "For a tomato and basil omelette, pick and roughly tear the basil leaves. Chop the tomatoes in half, then add to a hot frying pan with a small knob of butter, a drizzle of oil and a pinch of salt and pepper. Fry and toss around for 1 minute, then turn the heat down to medium and sprinkle over the basil leaves. Add the eggs and move the pan around to spread them out evenly. Continue as for the basic omelette.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "heat_slide"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "For a tomato and basil omelette, pick and roughly tear the basil leaves. Chop the tomatoes in half, then add to a hot frying pan with a small knob of butter, a drizzle of oil and a pinch of salt and pepper. Fry and toss around for 1 minute, then turn the heat down to medium and sprinkle over the basil leaves. Add the eggs and move the pan around to spread them out evenly. Continue as for the basic omelette."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "For a mushroom omelette, quarter or roughly chop the...",
+      "instructions": "For a mushroom omelette, quarter or roughly chop the mushrooms and add to a hot frying pan with a small knob of butter, a drizzle of oil and a pinch of salt and pepper. Fry and toss around until golden, then turn the heat down to medium. Add the eggs and move the pan around to spread them out evenly. When the omelette begins to cook and firm up, but still has a little raw egg on top, sprinkle over the Cheddar. Continue as for the basic omelette.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "For a mushroom omelette, quarter or roughly chop the mushrooms and add to a hot frying pan with a small knob of butter, a drizzle of oil and a pinch of salt and pepper. Fry and toss around until golden, then turn the heat down to medium. Add the eggs and move the pan around to spread them out evenly. When the omelette begins to cook and firm up, but still has a little raw egg on top, sprinkle over the Cheddar. Continue as for the basic omelette."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "321 calories",
+    "carbohydrates": "0.1 g",
+    "fat": "27.6 g",
+    "fiber": "0 g",
+    "protein": "19.4 g"
+  }
+}

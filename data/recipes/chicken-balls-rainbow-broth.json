@@ -1,0 +1,169 @@
+{
+  "recipe": {
+    "id": "chicken-balls-rainbow-broth",
+    "title": "Chicken balls & rainbow broth",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT18M",
+    "description": "Whip up these quick and delicious chicken balls in a hearty veggie-packed broth. Tasty, colourful and perfect for a cosy weeknight dinner!",
+    "tags": [
+      "chicken",
+      "family-favourites",
+      "vegetable",
+      "healthy-dinners",
+      "healthy-chicken",
+      "meatball"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-balls-rainbow-broth",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f6b2a99f029d8470648d6dddfc46b0e6ea54e19e-969x1279.jpg/163881241?rect=0,156,969,969&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f6b2a99f029d8470648d6dddfc46b0e6ea54e19e-969x1279.jpg/163881241?rect=0,156,969,969&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f6b2a99f029d8470648d6dddfc46b0e6ea54e19e-969x1279.jpg/163881241?rect=0,277,969,727&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f6b2a99f029d8470648d6dddfc46b0e6ea54e19e-969x1279.jpg/163881241?rect=0,368,969,545&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "150g-skinless-free-range-chick",
+      "name": "150g skinless free-range chicken breasts",
+      "quantity": 150.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "250g-packet-of-cooked-wholegra",
+      "name": "250g packet of cooked wholegrain rice",
+      "quantity": 250.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "white-miso",
+      "name": "white miso",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "pickled-ginger",
+      "name": "pickled ginger",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "coriander",
+      "name": "coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "limes",
+      "name": "limes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-stock",
+      "name": "organic chicken stock",
+      "quantity": 1.5,
+      "unit": "litres",
+      "note": null
+    },
+    {
+      "id": "320g-packets-of-mixed-stir-fry",
+      "name": "320g packets of mixed stir-fry veg",
+      "quantity": 320.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mix_ture",
+      "descr": "Boil the kettle",
+      "instructions": "Boil the kettle. Deseed the chillies, peel the garlic and place both in a food processor with the chicken, rice, half the miso and the pickled ginger, reserving the juice. Add most of the coriander, stalks and all, reserving a few nice leaves. Finely grate in the lime zest, and pulse until combined. Divide the mixture into 16 equal-sized pieces and, with wet hands, shape into balls.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_stock"
+      ],
+      "on_enter": [
+        {
+          "say": "Boil the kettle. Deseed the chillies, peel the garlic and place both in a food processor with the chicken, rice, half the miso and the pickled ginger, reserving the juice. Add most of the coriander, stalks and all, reserving a few nice leaves. Finely grate in the lime zest, and pulse until combined. Divide the mixture into 16 equal-sized pieces and, with wet hands, shape into balls."
+        }
+      ]
+    },
+    {
+      "id": "heat_stock",
+      "descr": "Place a large deep pan on a medium-high heat",
+      "instructions": "Place a large deep pan on a medium-high heat. Pour in the stock, add the remaining miso and bring to the boil. Gently drop in the balls, cover and poach for 3 minutes, then add all the stir-fry veg and cook for another 3 minutes, or until the balls are cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT180S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large deep pan on a medium-high heat. Pour in the stock, add the remaining miso and bring to the boil. Gently drop in the balls, cover and poach for 3 minutes, then add all the stir-fry veg and cook for another 3 minutes, or until the balls are cooked through."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Taste the broth and season to perfection with lime...",
+      "instructions": "Taste the broth and season to perfection with lime juice, a little pickled ginger juice, if you like, and sea salt and black pepper. Divide between serving bowls with the reserved coriander leaves, and serve with lime wedges.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_stock"
+      ],
+      "on_enter": [
+        {
+          "say": "Taste the broth and season to perfection with lime juice, a little pickled ginger juice, if you like, and sea salt and black pepper. Divide between serving bowls with the reserved coriander leaves, and serve with lime wedges."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "279 calories",
+    "carbohydrates": "26.1 g",
+    "fat": "5.9 g",
+    "fiber": "4.7 g",
+    "protein": "22.9 g"
+  }
+}

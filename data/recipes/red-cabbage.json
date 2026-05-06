@@ -1,0 +1,240 @@
+{
+  "recipe": {
+    "id": "red-cabbage",
+    "title": "Red cabbage",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT35M",
+    "description": "Celebrating the humble red cabbage, this is a delicious, braised red cabbage recipe from Jamie Oliver\u2019s Christmas Cookbook \u2013 enjoy it hot or cold.",
+    "tags": [
+      "christmas",
+      "bacon",
+      "cabbage",
+      "getahead",
+      "low-lactose",
+      "gluten-free",
+      "occasion"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/red-cabbage",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dff8b1671e7c5281a8922635c2e3edbedd1fc32e-973x1300.jpg/51137623?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dff8b1671e7c5281a8922635c2e3edbedd1fc32e-973x1300.jpg/51137623?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dff8b1671e7c5281a8922635c2e3edbedd1fc32e-973x1300.jpg/51137623?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/dff8b1671e7c5281a8922635c2e3edbedd1fc32e-973x1300.jpg/51137623?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "red-cabbage",
+      "name": "red cabbage",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "1kg"
+    },
+    {
+      "id": "rashers-of-higher-welfare-smok",
+      "name": "rashers of higher-welfare smoked streaky bacon",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "eating-apples",
+      "name": "eating apples",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-fennel-seeds",
+      "name": "heaped teaspoon fennel seeds",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-prunes",
+      "name": "dried prunes",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "clementine",
+      "name": "clementine",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 6.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "slice_aside",
+      "descr": "Click away any tatty outer leaves from your cabbage,...",
+      "instructions": "Click away any tatty outer leaves from your cabbage, trim off the base, cut the cabbage into wedges, then finely slice it and put aside.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Click away any tatty outer leaves from your cabbage, trim off the base, cut the cabbage into wedges, then finely slice it and put aside."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Finely slice the bacon and place in a large casserole...",
+      "instructions": "Finely slice the bacon and place in a large casserole pan on a medium heat with 1 tablespoon of oil. Leave it to crisp up while you peel, core and dice the apples.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_aside"
+      ],
+      "next": [
+        "stir_minute"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely slice the bacon and place in a large casserole pan on a medium heat with 1 tablespoon of oil. Leave it to crisp up while you peel, core and dice the apples."
+        }
+      ]
+    },
+    {
+      "id": "stir_minute",
+      "descr": "When the bacon is crispy, strip the rosemary leaves into...",
+      "instructions": "When the bacon is crispy, strip the rosemary leaves into the pan, stir for 1 minute, then use a slotted spoon to remove the bacon and rosemary to a plate, leaving the smoky bacon fat behind.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "dice_apples"
+      ],
+      "on_enter": [
+        {
+          "say": "When the bacon is crispy, strip the rosemary leaves into the pan, stir for 1 minute, then use a slotted spoon to remove the bacon and rosemary to a plate, leaving the smoky bacon fat behind."
+        }
+      ]
+    },
+    {
+      "id": "dice_apples",
+      "descr": "Add the fennel seeds and diced apples to the pan, then...",
+      "instructions": "Add the fennel seeds and diced apples to the pan, then tear in the prunes, removing any stones. Stir and fry for 2 minutes, then finely grate in the clementine zest and squeeze in the juice.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "stir_minute"
+      ],
+      "next": [
+        "add_vinegar"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the fennel seeds and diced apples to the pan, then tear in the prunes, removing any stones. Stir and fry for 2 minutes, then finely grate in the clementine zest and squeeze in the juice."
+        }
+      ]
+    },
+    {
+      "id": "add_vinegar",
+      "descr": "Add the vinegar, cabbage and a pinch of sea salt and...",
+      "instructions": "Add the vinegar, cabbage and a pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "dice_apples"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the vinegar, cabbage and a pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Cook with a lid ajar on a low heat for 20 to 25 minutes,...",
+      "instructions": "Cook with a lid ajar on a low heat for 20 to 25 minutes, or until cooked through and a pleasure to eat, stirring well every 5 minutes to help intensify and mix up the flavours.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "add_vinegar"
+      ],
+      "next": [
+        "sprinkle_crispy"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook with a lid ajar on a low heat for 20 to 25 minutes, or until cooked through and a pleasure to eat, stirring well every 5 minutes to help intensify and mix up the flavours."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_crispy",
+      "descr": "Serve sprinkled with the crispy bacon and rosemary leaves",
+      "instructions": "Serve sprinkled with the crispy bacon and rosemary leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve sprinkled with the crispy bacon and rosemary leaves."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "96 calories",
+    "carbohydrates": "16.2 g",
+    "fat": "2.6 g",
+    "fiber": "3 g",
+    "protein": "2.4 g"
+  }
+}

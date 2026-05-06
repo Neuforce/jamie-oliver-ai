@@ -1,0 +1,311 @@
+{
+  "recipe": {
+    "id": "fish-pie",
+    "title": "Fish pie",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "Our creamy fish pie recipe is incredibly simple to make and you can use any fish you want; simply top with creamy homemade mash for the best fish pie recipe",
+    "tags": [
+      "main-ingredient",
+      "baking",
+      "fish-pie",
+      "dish-type",
+      "method",
+      "gluten-free",
+      "fish",
+      "occasion",
+      "pie",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/best-fish-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3cd8973de59b73f6835d20228feefa8a310ccce0-973x1300.jpg/3cd8973de59b73f6835d20228feefa8a310ccce0-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3cd8973de59b73f6835d20228feefa8a310ccce0-973x1300.jpg/3cd8973de59b73f6835d20228feefa8a310ccce0-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3cd8973de59b73f6835d20228feefa8a310ccce0-973x1300.jpg/3cd8973de59b73f6835d20228feefa8a310ccce0-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3cd8973de59b73f6835d20228feefa8a310ccce0-973x1300.jpg/3cd8973de59b73f6835d20228feefa8a310ccce0-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-fresh-red-chilli",
+      "name": "\u00bd a fresh red chilli",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-flat-leaf-parsley",
+      "name": "fresh flat-leaf parsley",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "salmon-fillets",
+      "name": "salmon fillets",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": "skin off, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "undyed-smoked-haddock-fillets",
+      "name": "undyed smoked haddock fillets",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": "skin off, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "raw-peeled-king-prawns",
+      "name": "raw peeled king prawns",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": "from sustainable sources"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-1-good-handful-of-bab",
+      "name": "optional: 1 good handful of baby spinach",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-2-ripe-tomatoes",
+      "name": "optional: 2 ripe tomatoes",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "grater",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Peel the potatoes and cut into 2cm chunks, then cook in...",
+      "instructions": "Peel the potatoes and cut into 2cm chunks, then cook in boiling salted water for 12 minutes, or until tender.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT720S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the potatoes and cut into 2cm chunks, then cook in boiling salted water for 12 minutes, or until tender."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Peel the carrot",
+      "instructions": "Peel the carrot. Stand a box grater in a deep baking tray or dish, then coarsely grate the carrot, along with the celery and Cheddar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the carrot. Stand a box grater in a deep baking tray or dish, then coarsely grate the carrot, along with the celery and Cheddar."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Switch to the fine side of the grater, and grate in the...",
+      "instructions": "Switch to the fine side of the grater, and grate in the lemon zest and chilli. Pick and finely chop the parsley (stalks and all), and add to the tray or dish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "slice_salmon"
+      ],
+      "on_enter": [
+        {
+          "say": "Switch to the fine side of the grater, and grate in the lemon zest and chilli. Pick and finely chop the parsley (stalks and all), and add to the tray or dish."
+        }
+      ]
+    },
+    {
+      "id": "slice_salmon",
+      "descr": "Slice the salmon and smoked haddock into bite-size...",
+      "instructions": "Slice the salmon and smoked haddock into bite-size chunks and add to the tray with the prawns.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "next": [
+        "chop_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the salmon and smoked haddock into bite-size chunks and add to the tray with the prawns."
+        }
+      ]
+    },
+    {
+      "id": "chop_them",
+      "descr": "Squeeze over the lemon juice (no pips please",
+      "instructions": "Squeeze over the lemon juice (no pips please!), drizzle lightly with olive oil and add a good pinch of sea salt and black pepper. If you want to add any spinach or tomatoes, roughly chop and add them now. Mix everything together really well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_salmon"
+      ],
+      "next": [
+        "add_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "Squeeze over the lemon juice (no pips please!), drizzle lightly with olive oil and add a good pinch of sea salt and black pepper. If you want to add any spinach or tomatoes, roughly chop and add them now. Mix everything together really well."
+        }
+      ]
+    },
+    {
+      "id": "add_pinch",
+      "descr": "Drain the potatoes, and return them to the pan",
+      "instructions": "Drain the potatoes, and return them to the pan. Drizzle with a couple of good lugs of olive oil and add a pinch of salt and pepper, then mash until nice and smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_them"
+      ],
+      "next": [
+        "top_fish"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the potatoes, and return them to the pan. Drizzle with a couple of good lugs of olive oil and add a pinch of salt and pepper, then mash until nice and smooth."
+        }
+      ]
+    },
+    {
+      "id": "top_fish",
+      "descr": "Dot and spread the mash evenly over the top of the fish...",
+      "instructions": "Dot and spread the mash evenly over the top of the fish and grated veg.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_pinch"
+      ],
+      "next": [
+        "bake_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Dot and spread the mash evenly over the top of the fish and grated veg."
+        }
+      ]
+    },
+    {
+      "id": "bake_oven",
+      "descr": "Bake in the oven for 40 minutes, or until cooked...",
+      "instructions": "Bake in the oven for 40 minutes, or until cooked through, crispy and golden on top, then serve piping hot with tomato ketchup, baked beans, steamed veg or a lovely green salad.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT2400S",
+      "depends_on": [
+        "top_fish"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake in the oven for 40 minutes, or until cooked through, crispy and golden on top, then serve piping hot with tomato ketchup, baked beans, steamed veg or a lovely green salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "683 calories",
+    "carbohydrates": "45.7 g",
+    "fat": "33.2 g",
+    "fiber": "4.7 g",
+    "protein": "53.1 g"
+  }
+}

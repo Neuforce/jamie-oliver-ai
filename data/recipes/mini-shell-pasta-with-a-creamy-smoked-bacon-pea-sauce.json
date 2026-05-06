@@ -1,0 +1,187 @@
+{
+  "recipe": {
+    "id": "mini-shell-pasta-with-a-creamy-smoked-bacon-pea-sauce",
+    "title": "Mini shell pasta with a creamy smoked bacon & pea sauce",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "Looking for a creamy pasta recipe? Look no further than Jamie's mini shell pasta with a creamy smoked bacon & pea sauce recipe; it's quick and super yummy!",
+    "tags": [
+      "bacon",
+      "pasta",
+      "main-ingredient",
+      "pasta-amp-risotto",
+      "dish-type",
+      "method",
+      "pea",
+      "peas",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/mini-shell-pasta-with-a-creamy-smoked-bacon-and-pea-sauce",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aca76e4f6908b2f83e2614908c5b557da183af75-973x1300.jpg/aca76e4f6908b2f83e2614908c5b557da183af75-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aca76e4f6908b2f83e2614908c5b557da183af75-973x1300.jpg/aca76e4f6908b2f83e2614908c5b557da183af75-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aca76e4f6908b2f83e2614908c5b557da183af75-973x1300.jpg/aca76e4f6908b2f83e2614908c5b557da183af75-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aca76e4f6908b2f83e2614908c5b557da183af75-973x1300.jpg/aca76e4f6908b2f83e2614908c5b557da183af75-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "higher-welfare-smoked-streaky-",
+      "name": "higher-welfare smoked streaky bacon or pancetta",
+      "quantity": 6.0,
+      "unit": "slices",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-mint",
+      "name": "\u00bd a bunch of fresh mint",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "optional-1-organic-chicken-sto",
+      "name": "optional: 1 organic chicken stock cube",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-mini-shell-pasta",
+      "name": "dried mini shell pasta",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-dessertspoons-half-fat-",
+      "name": "heaped dessertspoons half-fat cr\u00e8me fra\u00eeche",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "colander",
+    "frying pan",
+    "large bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_good",
+      "descr": "Finely slice the bacon",
+      "instructions": "Finely slice the bacon. Pick the mint leaves and discard the stalks. Finely grate the Parmesan. Bring a large pan of salted water to the boil and drop in the stock cube (if using). Stir until it\u2019s dissolved, then add the mini shells and cook according to the packet instructions. Get a large frying pan over a medium heat and add a good lug of olive oil. Add the bacon to the pan, sprinkle a little pepper over and fry until golden and crisp.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely slice the bacon. Pick the mint leaves and discard the stalks. Finely grate the Parmesan. Bring a large pan of salted water to the boil and drop in the stock cube (if using). Stir until it\u2019s dissolved, then add the mini shells and cook according to the packet instructions. Get a large frying pan over a medium heat and add a good lug of olive oil. Add the bacon to the pan, sprinkle a little pepper over and fry until golden and crisp."
+        }
+      ]
+    },
+    {
+      "id": "chop_your",
+      "descr": "Meanwhile, finely chop your mint leaves",
+      "instructions": "Meanwhile, finely chop your mint leaves. As soon as the bacon is golden, add your frozen peas and give the pan a good shake. After a minute or so, add the cr\u00e8me fra\u00eeche and chopped mint to the bacon and peas. Drain the pasta in a colander over a large bowl, reserving some of the cooking water.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_good"
+      ],
+      "next": [
+        "heat_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, finely chop your mint leaves. As soon as the bacon is golden, add your frozen peas and give the pan a good shake. After a minute or so, add the cr\u00e8me fra\u00eeche and chopped mint to the bacon and peas. Drain the pasta in a colander over a large bowl, reserving some of the cooking water."
+        }
+      ]
+    },
+    {
+      "id": "heat_sauce",
+      "descr": "Add the pasta to the frying pan",
+      "instructions": "Add the pasta to the frying pan. Halve your lemon and squeeze the juice over the pasta. When it\u2019s all bubbling away nicely, remove from the heat. The sauce should be creamy and delicious but if it\u2019s too thick for you, add a splash of the reserved cooking water to thin it out a bit. Add the grated Parmesan and give the pan a shake to mix it in.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_your"
+      ],
+      "next": [
+        "plate_bowls"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the pasta to the frying pan. Halve your lemon and squeeze the juice over the pasta. When it\u2019s all bubbling away nicely, remove from the heat. The sauce should be creamy and delicious but if it\u2019s too thick for you, add a splash of the reserved cooking water to thin it out a bit. Add the grated Parmesan and give the pan a shake to mix it in."
+        }
+      ]
+    },
+    {
+      "id": "plate_bowls",
+      "descr": "Divide your pasta between plates or bowls, or put it on...",
+      "instructions": "Divide your pasta between plates or bowls, or put it on the table in a large serving dish and let everyone help themselves. Lovely with a simply dressed green salad.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide your pasta between plates or bowls, or put it on the table in a large serving dish and let everyone help themselves. Lovely with a simply dressed green salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "674 calories",
+    "carbohydrates": "85.9 g",
+    "fat": "20.3 g",
+    "fiber": null,
+    "protein": "33.5 g"
+  }
+}

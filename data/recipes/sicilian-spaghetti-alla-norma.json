@@ -1,0 +1,350 @@
+{
+  "recipe": {
+    "id": "sicilian-spaghetti-alla-norma",
+    "title": "Sicilian spaghetti alla Norma",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "Packed with flavour this Italian pasta dish, spaghetti alla Norma, is well worth a try. Topped with pecorino, it's comfort food at its best. Get stuck in!",
+    "tags": [
+      "aubergine",
+      "pasta",
+      "main-ingredient",
+      "pasta-amp-risotto",
+      "lighter-new-year",
+      "dish-type",
+      "vegetarian",
+      "mains",
+      "tomato-sauce",
+      "pasta-sauce",
+      "occasion",
+      "italian",
+      "spaghetti",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/sicilian-spaghetti-alla-norma",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a471b1b8dc32ee0fe87a4c2bab54c169bdf34635-973x1300.jpg/46337923?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a471b1b8dc32ee0fe87a4c2bab54c169bdf34635-973x1300.jpg/46337923?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a471b1b8dc32ee0fe87a4c2bab54c169bdf34635-973x1300.jpg/46337923?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a471b1b8dc32ee0fe87a4c2bab54c169bdf34635-973x1300.jpg/46337923?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "aubergines",
+      "name": "aubergines",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-basil",
+      "name": "\u00bd a bunch of fresh basil",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "dried-chilli-flakes",
+      "name": "dried chilli flakes",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-capers",
+      "name": "baby capers",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-quality-plum-tomat",
+      "name": "400g tin of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-wholewheat-spaghetti",
+      "name": "dried wholewheat spaghetti",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "pecorino-cheese",
+      "name": "pecorino cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "colander",
+    "frying pan",
+    "large bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "chop_aubergines",
+      "descr": "Chop the aubergines into rough 2cm chunks",
+      "instructions": "Chop the aubergines into rough 2cm chunks. Place into a colander in the sink, sprinkle with sea salt to draw out the moisture, then set aside for around 20 minutes.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "next": [
+        "slice_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Chop the aubergines into rough 2cm chunks. Place into a colander in the sink, sprinkle with sea salt to draw out the moisture, then set aside for around 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "slice_garlic",
+      "descr": "Peel and finely slice the garlic, then pick the basil...",
+      "instructions": "Peel and finely slice the garlic, then pick the basil leaves and finely slice the stalks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_aubergines"
+      ],
+      "next": [
+        "chill_flakes"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the garlic, then pick the basil leaves and finely slice the stalks."
+        }
+      ]
+    },
+    {
+      "id": "chill_flakes",
+      "descr": "Rinse the aubergine and pat dry with kitchen paper, then...",
+      "instructions": "Rinse the aubergine and pat dry with kitchen paper, then place into a large bowl with the oregano, chilli flakes, a splash of olive oil and a pinch of sea salt and black pepper. Toss together well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_garlic"
+      ],
+      "next": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Rinse the aubergine and pat dry with kitchen paper, then place into a large bowl with the oregano, chilli flakes, a splash of olive oil and a pinch of sea salt and black pepper. Toss together well."
+        }
+      ]
+    },
+    {
+      "id": "heat_once",
+      "descr": "Drizzle a splash of olive oil into a large frying pan...",
+      "instructions": "Drizzle a splash of olive oil into a large frying pan over a medium heat. Once hot, add the aubergines in a single layer, and fry for 5 to 8 minutes, or until softened and golden, stirring occasionally \u2013 you may need to do this in batches.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "chill_flakes"
+      ],
+      "next": [
+        "add_another"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle a splash of olive oil into a large frying pan over a medium heat. Once hot, add the aubergines in a single layer, and fry for 5 to 8 minutes, or until softened and golden, stirring occasionally \u2013 you may need to do this in batches."
+        }
+      ]
+    },
+    {
+      "id": "add_another",
+      "descr": "Add another splash of olive oil, followed by the garlic,...",
+      "instructions": "Add another splash of olive oil, followed by the garlic, capers and basil stalks, then cook for a further 2 minutes, or until golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_once"
+      ],
+      "next": [
+        "heat_gently"
+      ],
+      "on_enter": [
+        {
+          "say": "Add another splash of olive oil, followed by the garlic, capers and basil stalks, then cook for a further 2 minutes, or until golden."
+        }
+      ]
+    },
+    {
+      "id": "heat_gently",
+      "descr": "Stir in the vinegar and the tomatoes, breaking them up...",
+      "instructions": "Stir in the vinegar and the tomatoes, breaking them up with the back of a spoon. Reduce the heat to low, and simmer gently for 15 to 20 minutes, or until thick and glossy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "add_another"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the vinegar and the tomatoes, breaking them up with the back of a spoon. Reduce the heat to low, and simmer gently for 15 to 20 minutes, or until thick and glossy."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Cook the spaghetti in a pan of boiling salted water for...",
+      "instructions": "Cook the spaghetti in a pan of boiling salted water for 8 minutes or until al dente, which means that it should be soft enough to eat, but still have a bit of bite and firmness to it.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "heat_gently"
+      ],
+      "next": [
+        "add_good"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the spaghetti in a pan of boiling salted water for 8 minutes or until al dente, which means that it should be soft enough to eat, but still have a bit of bite and firmness to it."
+        }
+      ]
+    },
+    {
+      "id": "add_good",
+      "descr": "Drain the spaghetti, reserving a cupful of the cooking...",
+      "instructions": "Drain the spaghetti, reserving a cupful of the cooking water, then add a good splash of the reserved water to the aubergine sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "add_extra"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the spaghetti, reserving a cupful of the cooking water, then add a good splash of the reserved water to the aubergine sauce."
+        }
+      ]
+    },
+    {
+      "id": "add_extra",
+      "descr": "Finely grate in half the cheese and tear in most of the...",
+      "instructions": "Finely grate in half the cheese and tear in most of the reserved basil leaves. Add a lug of extra virgin olive oil, then season to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_good"
+      ],
+      "next": [
+        "add_spaghetti"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate in half the cheese and tear in most of the reserved basil leaves. Add a lug of extra virgin olive oil, then season to taste."
+        }
+      ]
+    },
+    {
+      "id": "add_spaghetti",
+      "descr": "Add the spaghetti to the sauce and toss well, adding an...",
+      "instructions": "Add the spaghetti to the sauce and toss well, adding an extra splash of the reserved cooking water to loosen, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_extra"
+      ],
+      "next": [
+        "top_step_11"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the spaghetti to the sauce and toss well, adding an extra splash of the reserved cooking water to loosen, if needed."
+        }
+      ]
+    },
+    {
+      "id": "top_step_11",
+      "descr": "Divide between bowls, grate over the remaining cheese...",
+      "instructions": "Divide between bowls, grate over the remaining cheese and finish with the remaining basil scattered on top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_spaghetti"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide between bowls, grate over the remaining cheese and finish with the remaining basil scattered on top."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "409 calories",
+    "carbohydrates": "60.6 g",
+    "fat": "13 g",
+    "fiber": "10.1 g",
+    "protein": "16.3 g"
+  }
+}

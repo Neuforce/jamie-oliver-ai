@@ -1,0 +1,425 @@
+{
+  "recipe": {
+    "id": "chicken-katsu-curry",
+    "title": "Chicken katsu curry",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT90M",
+    "description": "This truly epic chicken katsu curry recipe from Jamie Oliver's Friday Night Feast is an absolute weekend treat. Served with a gorgeous coconut rice recipe.",
+    "tags": [
+      "episode-6",
+      "dish-type",
+      "lunch-amp-dinner-recipes",
+      "course",
+      "jamie-and-jimmy-s-friday-night-feast",
+      "chicken-curry",
+      "mains",
+      "rice",
+      "chicken",
+      "method",
+      "curry",
+      "chicken-breast",
+      "frying",
+      "curry-sauce",
+      "jamie-recipe",
+      "main-ingredient",
+      "series-6",
+      "tv",
+      "jamie-and-jimmy-s-friday-night-feast-back-catalogue"
+    ],
+    "course": "main",
+    "cuisine": "japanese",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-katsu-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ea8905ee70b30fd93a1feb2d6bf061750ccf5e3-958x1280.png/70063671?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ea8905ee70b30fd93a1feb2d6bf061750ccf5e3-958x1280.png/70063671?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ea8905ee70b30fd93a1feb2d6bf061750ccf5e3-958x1280.png/70063671?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ea8905ee70b30fd93a1feb2d6bf061750ccf5e3-958x1280.png/70063671?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "150g-skinless-boneless-free-ra",
+      "name": "150g skinless boneless free-range chicken breasts",
+      "quantity": 150.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "buttermilk",
+      "name": "buttermilk",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoons-medium-curry-",
+      "name": "heaped teaspoons medium curry powder",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "panko-breadcrumbs",
+      "name": "panko breadcrumbs",
+      "quantity": 120.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mug-of-basmati-rice",
+      "name": "mug of basmati rice",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "300g"
+    },
+    {
+      "id": "creamed-coconut",
+      "name": "creamed coconut",
+      "quantity": 25.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vegetable-oil",
+      "name": "vegetable oil",
+      "quantity": 2.0,
+      "unit": "litres",
+      "note": "for frying"
+    },
+    {
+      "id": "katsu-curry-sauce",
+      "name": "KATSU CURRY SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "medium-carrot",
+      "name": "medium carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-coriander",
+      "name": "fresh coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "each-garam-masala",
+      "name": "each garam masala",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": "medium curry powder, ground turmeric"
+    },
+    {
+      "id": "heaped-tablespoons-plain-flour",
+      "name": "heaped tablespoons plain flour",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-mango-chutney",
+      "name": "heaped teaspoon mango chutney",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pickle",
+      "name": "PICKLE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "add_curry",
+      "descr": "Press down firmly with the palm of your hand to slightly...",
+      "instructions": "Press down firmly with the palm of your hand to slightly flatten each chicken breast. Place them in a bowl, pour over the buttermilk, add the curry powder and a pinch of sea salt, crush in the garlic, then toss to coat. Cover and marinate in the fridge for at least 2 hours, but preferably overnight.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT7200S",
+      "next": [
+        "sprinkle_breadcrumbs"
+      ],
+      "on_enter": [
+        {
+          "say": "Press down firmly with the palm of your hand to slightly flatten each chicken breast. Place them in a bowl, pour over the buttermilk, add the curry powder and a pinch of sea salt, crush in the garlic, then toss to coat. Cover and marinate in the fridge for at least 2 hours, but preferably overnight."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_breadcrumbs",
+      "descr": "When the time\u2019s up, sprinkle the breadcrumbs on to a tray",
+      "instructions": "When the time\u2019s up, sprinkle the breadcrumbs on to a tray. Remove the chicken from the buttermilk, shake off the excess, then turn in the breadcrumbs, pressing down to make them stick and flatten them a little more. Keep in the fridge until you\u2019re ready to cook.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_curry"
+      ],
+      "next": [
+        "chop_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "When the time\u2019s up, sprinkle the breadcrumbs on to a tray. Remove the chicken from the buttermilk, shake off the excess, then turn in the breadcrumbs, pressing down to make them stick and flatten them a little more. Keep in the fridge until you\u2019re ready to cook."
+        }
+      ]
+    },
+    {
+      "id": "chop_coriander",
+      "descr": "For the sauce, peel the onion, garlic, ginger and...",
+      "instructions": "For the sauce, peel the onion, garlic, ginger and carrot, then finely chop with the coriander stalks (reserving the leaves).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "sprinkle_breadcrumbs"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "For the sauce, peel the onion, garlic, ginger and carrot, then finely chop with the coriander stalks (reserving the leaves)."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Fry in a large pan on a medium low heat with 1...",
+      "instructions": "Fry in a large pan on a medium low heat with 1 tablespoon of olive oil and the spices for 15 minutes, or until starting to caramelize, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "chop_coriander"
+      ],
+      "next": [
+        "stir_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Fry in a large pan on a medium low heat with 1 tablespoon of olive oil and the spices for 15 minutes, or until starting to caramelize, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_flour",
+      "descr": "Stir in the flour, then the mango chutney",
+      "instructions": "Stir in the flour, then the mango chutney. Pour in 800ml of boiling water and leave to blip away for 15 minutes, or until reduced to a nice sauce consistency, stirring occasionally. Taste, season and add more mango chutney, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "heat_leave"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the flour, then the mango chutney. Pour in 800ml of boiling water and leave to blip away for 15 minutes, or until reduced to a nice sauce consistency, stirring occasionally. Taste, season and add more mango chutney, if needed."
+        }
+      ]
+    },
+    {
+      "id": "heat_leave",
+      "descr": "Meanwhile, place 1 mug of rice in a medium pan with 2...",
+      "instructions": "Meanwhile, place 1 mug of rice in a medium pan with 2 mugs of boiling water and a good pinch of salt. Break in the creamed coconut and mix together. Bring to the boil, stir, then put the lid on and simmer for 10 minutes, or until the water has evaporated. Turn the heat off and leave with the lid on.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "stir_flour"
+      ],
+      "next": [
+        "slice_chilli"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, place 1 mug of rice in a medium pan with 2 mugs of boiling water and a good pinch of salt. Break in the creamed coconut and mix together. Bring to the boil, stir, then put the lid on and simmer for 10 minutes, or until the water has evaporated. Turn the heat off and leave with the lid on."
+        }
+      ]
+    },
+    {
+      "id": "slice_chilli",
+      "descr": "Make a quick pickle by peeling and very finely slicing...",
+      "instructions": "Make a quick pickle by peeling and very finely slicing the red onion. Place in a bowl, finely grate in the lemon zest, squeeze in the juice and add a good pinch of salt. Deseed and finely slice the chilli and add to the bowl, then mix up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_leave"
+      ],
+      "next": [
+        "heat_thermometer"
+      ],
+      "on_enter": [
+        {
+          "say": "Make a quick pickle by peeling and very finely slicing the red onion. Place in a bowl, finely grate in the lemon zest, squeeze in the juice and add a good pinch of salt. Deseed and finely slice the chilli and add to the bowl, then mix up."
+        }
+      ]
+    },
+    {
+      "id": "heat_thermometer",
+      "descr": "Just under half fill a large sturdy pan with vegetable...",
+      "instructions": "Just under half fill a large sturdy pan with vegetable oil \u2013 the oil should be 8cm deep, but never fill your pan more than half full \u2013 and place on a medium-high heat. Use a thermometer to tell when it\u2019s ready (170\u00b0C), or add a piece of potato and wait until it turns golden \u2013 that\u2019s the sign that it\u2019s ready to go.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_chilli"
+      ],
+      "next": [
+        "fry_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Just under half fill a large sturdy pan with vegetable oil \u2013 the oil should be 8cm deep, but never fill your pan more than half full \u2013 and place on a medium-high heat. Use a thermometer to tell when it\u2019s ready (170\u00b0C), or add a piece of potato and wait until it turns golden \u2013 that\u2019s the sign that it\u2019s ready to go."
+        }
+      ]
+    },
+    {
+      "id": "fry_minutes",
+      "descr": "Carefully lower the chicken into the oil, fry for 8...",
+      "instructions": "Carefully lower the chicken into the oil, fry for 8 minutes, or until golden and cooked through, then drain on kitchen paper.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "heat_thermometer"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully lower the chicken into the oil, fry for 8 minutes, or until golden and cooked through, then drain on kitchen paper."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Alternatively, drizzle 2 tablespoons of olive oil into a...",
+      "instructions": "Alternatively, drizzle 2 tablespoons of olive oil into a large, cold non-stick frying pan on a medium heat. Cook the chicken for 10 minutes, or until golden and cooked through, turning after 6 minutes and drizzling with an extra 2 tablespoons of oil as you turn.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "fry_minutes"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Alternatively, drizzle 2 tablespoons of olive oil into a large, cold non-stick frying pan on a medium heat. Cook the chicken for 10 minutes, or until golden and cooked through, turning after 6 minutes and drizzling with an extra 2 tablespoons of oil as you turn."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "To serve, put a quarter of the rice into a small bowl,...",
+      "instructions": "To serve, put a quarter of the rice into a small bowl, press to compact and turn out on to a plate, then repeat with the other portions. Place the chicken next to the rice, cover with the sauce, then sprinkle over the pickle and the coriander leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "To serve, put a quarter of the rice into a small bowl, press to compact and turn out on to a plate, then repeat with the other portions. Place the chicken next to the rice, cover with the sauce, then sprinkle over the pickle and the coriander leaves."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "885 calories",
+    "carbohydrates": "111.5 g",
+    "fat": "30.9 g",
+    "fiber": "3.6 g",
+    "protein": "49.2 g"
+  }
+}

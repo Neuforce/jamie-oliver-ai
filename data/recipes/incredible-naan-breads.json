@@ -1,0 +1,248 @@
+{
+  "recipe": {
+    "id": "incredible-naan-breads",
+    "title": "Incredible naan breads",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "An easy naan bread recipe that will show you how to make naan bread at home. Amazing as part of a homemade curry feast, or simply topped with a runny egg.",
+    "tags": [
+      "indian",
+      "main-ingredient",
+      "popular",
+      "baking",
+      "vegetarian",
+      "dish-type",
+      "bread-amp-doughs",
+      "method",
+      "sides",
+      "bread",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/bread/incredible-naan-breads",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3207b237265683107b58f0e6cb9b68e2c1df1bbe-973x1300.jpg/3207b237265683107b58f0e6cb9b68e2c1df1bbe-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3207b237265683107b58f0e6cb9b68e2c1df1bbe-973x1300.jpg/3207b237265683107b58f0e6cb9b68e2c1df1bbe-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3207b237265683107b58f0e6cb9b68e2c1df1bbe-973x1300.jpg/3207b237265683107b58f0e6cb9b68e2c1df1bbe-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3207b237265683107b58f0e6cb9b68e2c1df1bbe-973x1300.jpg/3207b237265683107b58f0e6cb9b68e2c1df1bbe-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "bread"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "x-7g-sachet-of-dried-yeast",
+      "name": "\u00bd x 7g sachet of dried yeast",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "ghee-or-unsalted-butter",
+      "name": "ghee or unsalted butter",
+      "quantity": 45.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "strong-white-bread-flour",
+      "name": "strong white bread flour",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "heaped-tablespoons-low-fat-nat",
+      "name": "heaped tablespoons low-fat natural yoghurt",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "nigella-seeds",
+      "name": "nigella seeds",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "large bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "warm_water",
+      "descr": "Combine the yeast, honey and 125ml of lukewarm water in...",
+      "instructions": "Combine the yeast, honey and 125ml of lukewarm water in a bowl, then set aside for 5 minutes, or until starting to bubble.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "heat_meanwhile"
+      ],
+      "on_enter": [
+        {
+          "say": "Combine the yeast, honey and 125ml of lukewarm water in a bowl, then set aside for 5 minutes, or until starting to bubble."
+        }
+      ]
+    },
+    {
+      "id": "heat_meanwhile",
+      "descr": "Melt the ghee in a small pan over a low heat",
+      "instructions": "Melt the ghee in a small pan over a low heat. Meanwhile, combine the flour and \u00bd tablespoon of sea salt in a large bowl and make a well in the middle.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "warm_water"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Melt the ghee in a small pan over a low heat. Meanwhile, combine the flour and \u00bd tablespoon of sea salt in a large bowl and make a well in the middle."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Pour 1 tablespoon of the melted ghee into the well,...",
+      "instructions": "Pour 1 tablespoon of the melted ghee into the well, followed by the yoghurt and yeast mixture, then beat the wet ingredients together with a fork. Gradually start incorporating the flour from the sides until it starts to form a rough dough, then bring it together with your hands \u2013 it should be soft and sticky, so add a splash more water, if you think it needs it.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_meanwhile"
+      ],
+      "next": [
+        "knead_dough"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour 1 tablespoon of the melted ghee into the well, followed by the yoghurt and yeast mixture, then beat the wet ingredients together with a fork. Gradually start incorporating the flour from the sides until it starts to form a rough dough, then bring it together with your hands \u2013 it should be soft and sticky, so add a splash more water, if you think it needs it."
+        }
+      ]
+    },
+    {
+      "id": "knead_dough",
+      "descr": "Knead the dough on a flour-dusted surface for around 5...",
+      "instructions": "Knead the dough on a flour-dusted surface for around 5 minutes, or until smooth, then place into a lightly floured bowl.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "warm_place"
+      ],
+      "on_enter": [
+        {
+          "say": "Knead the dough on a flour-dusted surface for around 5 minutes, or until smooth, then place into a lightly floured bowl."
+        }
+      ]
+    },
+    {
+      "id": "warm_place",
+      "descr": "Cover with a clean tea towel and leave in a warm place...",
+      "instructions": "Cover with a clean tea towel and leave in a warm place for 1 hour 30 minutes, or until doubled in size.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "knead_dough"
+      ],
+      "next": [
+        "roll_each"
+      ],
+      "on_enter": [
+        {
+          "say": "Cover with a clean tea towel and leave in a warm place for 1 hour 30 minutes, or until doubled in size."
+        }
+      ]
+    },
+    {
+      "id": "roll_each",
+      "descr": "Once risen, knock back the dough with your fist, then...",
+      "instructions": "Once risen, knock back the dough with your fist, then divide into 6 balls. Roll each portion into an oval shape, roughly 1\u00bdcm thick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "warm_place"
+      ],
+      "next": [
+        "heat_large"
+      ],
+      "on_enter": [
+        {
+          "say": "Once risen, knock back the dough with your fist, then divide into 6 balls. Roll each portion into an oval shape, roughly 1\u00bdcm thick."
+        }
+      ]
+    },
+    {
+      "id": "heat_large",
+      "descr": "Heat a large non-stick frying pan over a high heat, add...",
+      "instructions": "Heat a large non-stick frying pan over a high heat, add a naan bread and cook for 5 to 6 minutes, or until cooked through, turning halfway.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT360S",
+      "depends_on": [
+        "roll_each"
+      ],
+      "next": [
+        "warm_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a large non-stick frying pan over a high heat, add a naan bread and cook for 5 to 6 minutes, or until cooked through, turning halfway."
+        }
+      ]
+    },
+    {
+      "id": "warm_oven",
+      "descr": "Brush with a little of the remaining ghee, sprinkle over...",
+      "instructions": "Brush with a little of the remaining ghee, sprinkle over a few nigella seeds and a small pinch of salt. Keep warm in the oven while you make the remaining breads. Delicious served with your favourite curry",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_large"
+      ],
+      "on_enter": [
+        {
+          "say": "Brush with a little of the remaining ghee, sprinkle over a few nigella seeds and a small pinch of salt. Keep warm in the oven while you make the remaining breads. Delicious served with your favourite curry"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "213 calories",
+    "carbohydrates": "34 g",
+    "fat": "7.1 g",
+    "fiber": "1.3 g",
+    "protein": "6.2 g"
+  }
+}

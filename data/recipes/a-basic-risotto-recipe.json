@@ -1,0 +1,252 @@
+{
+  "recipe": {
+    "id": "a-basic-risotto-recipe",
+    "title": "A basic risotto recipe",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "Easy, oozy and cheesy, this is a simple but delicious risotto recipe to be used as the base for all your favourite flavour combinations!",
+    "tags": [
+      "perfect-white-rice",
+      "main-ingredient",
+      "student-recipes",
+      "rissotto",
+      "pasta-amp-risotto",
+      "vegetarian",
+      "mains",
+      "risotto",
+      "dish-type",
+      "method",
+      "rice",
+      "gluten-free",
+      "rissoto",
+      "popular",
+      "occasion",
+      "frying",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/rice/a-basic-risotto-recipe",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6908a1fb25785aba429db2589833a9917adfaf40-1076x1435.jpg/basicrisotto.jpg?rect=0,180,1076,1076&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6908a1fb25785aba429db2589833a9917adfaf40-1076x1435.jpg/basicrisotto.jpg?rect=0,180,1076,1076&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6908a1fb25785aba429db2589833a9917adfaf40-1076x1435.jpg/basicrisotto.jpg?rect=0,315,1076,807&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6908a1fb25785aba429db2589833a9917adfaf40-1076x1435.jpg/basicrisotto.jpg?rect=0,416,1076,605&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "rice"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "organic-stock",
+      "name": "organic stock",
+      "quantity": 1.1,
+      "unit": "litres",
+      "note": "such as chicken, fish, vegetable"
+    },
+    {
+      "id": "large-onion",
+      "name": "large onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "a-head-of-celery",
+      "name": "\u00bd a head of celery",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 90.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "risotto-rice",
+      "name": "risotto rice",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "wine-glasses-of-dry-white-verm",
+      "name": "wine glasses of dry white vermouth or dry white wine",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "dry Martini or Noilly Prat"
+    }
+  ],
+  "utensils": [
+    "ladle",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_stock",
+      "descr": "Heat the stock",
+      "instructions": "Heat the stock. Peel and finely chop the onion and garlic, trim and finely chop the celery. Finely grate the Parmesan.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_small"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat the stock. Peel and finely chop the onion and garlic, trim and finely chop the celery. Finely grate the Parmesan."
+        }
+      ]
+    },
+    {
+      "id": "heat_small",
+      "descr": "In a separate pan, heat the oil and 1 small knob of...",
+      "instructions": "In a separate pan, heat the oil and 1 small knob of butter over a low heat, add the onions, garlic and celery, and fry gently for about 15 minutes, or until softened but not coloured.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_stock"
+      ],
+      "next": [
+        "heat_rice"
+      ],
+      "on_enter": [
+        {
+          "say": "In a separate pan, heat the oil and 1 small knob of butter over a low heat, add the onions, garlic and celery, and fry gently for about 15 minutes, or until softened but not coloured."
+        }
+      ]
+    },
+    {
+      "id": "heat_rice",
+      "descr": "Add the rice and turn up the heat \u2013 the rice will now...",
+      "instructions": "Add the rice and turn up the heat \u2013 the rice will now begin to lightly fry, so keep stirring it. After 1 minute it will look slightly translucent. Add the vermouth or wine and keep stirring \u2014 it will smell fantastic. Any harsh alcohol flavours will evaporate and leave the rice with a tasty essence.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "heat_small"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the rice and turn up the heat \u2013 the rice will now begin to lightly fry, so keep stirring it. After 1 minute it will look slightly translucent. Add the vermouth or wine and keep stirring \u2014 it will smell fantastic. Any harsh alcohol flavours will evaporate and leave the rice with a tasty essence."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Once the vermouth or wine has cooked into the rice, add...",
+      "instructions": "Once the vermouth or wine has cooked into the rice, add your first ladle of hot stock and a good pinch of sea salt. Turn the heat down to a simmer so the rice doesn\u2019t cook too quickly on the outside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_rice"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the vermouth or wine has cooked into the rice, add your first ladle of hot stock and a good pinch of sea salt. Turn the heat down to a simmer so the rice doesn\u2019t cook too quickly on the outside."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Keep adding ladlefuls of stock, stirring and almost...",
+      "instructions": "Keep adding ladlefuls of stock, stirring and almost massaging the creamy starch out of the rice, allowing each ladleful to be absorbed before adding the next. This will take around 15 minutes. Taste the rice \u2014 is it cooked? Carry on adding stock until the rice is soft but with a slight bite. Don\u2019t forget to check the seasoning carefully. If you run out of stock before the rice is cooked, add some boiling water.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "heat_knob"
+      ],
+      "on_enter": [
+        {
+          "say": "Keep adding ladlefuls of stock, stirring and almost massaging the creamy starch out of the rice, allowing each ladleful to be absorbed before adding the next. This will take around 15 minutes. Taste the rice \u2014 is it cooked? Carry on adding stock until the rice is soft but with a slight bite. Don\u2019t forget to check the seasoning carefully. If you run out of stock before the rice is cooked, add some boiling water."
+        }
+      ]
+    },
+    {
+      "id": "heat_knob",
+      "descr": "Remove the pan from the heat, add 1 knob of butter and...",
+      "instructions": "Remove the pan from the heat, add 1 knob of butter and the Parmesan, then stir well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pan from the heat, add 1 knob of butter and the Parmesan, then stir well."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "Place a lid on the pan and allow to sit for 2 minutes \u2013...",
+      "instructions": "Place a lid on the pan and allow to sit for 2 minutes \u2013 this is the most important part of making the perfect risotto, as this is when it becomes outrageously creamy and oozy like it should be. Eat it as soon as possible, while the risotto retains its beautiful texture.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_knob"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a lid on the pan and allow to sit for 2 minutes \u2013 this is the most important part of making the perfect risotto, as this is when it becomes outrageously creamy and oozy like it should be. Eat it as soon as possible, while the risotto retains its beautiful texture."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "446 calories",
+    "carbohydrates": "55.8 g",
+    "fat": "14 g",
+    "fiber": "1.6 g",
+    "protein": "15.1 g"
+  }
+}

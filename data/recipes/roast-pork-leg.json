@@ -1,0 +1,341 @@
+{
+  "recipe": {
+    "id": "roast-pork-leg",
+    "title": "Roast pork leg",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT280M",
+    "description": "A pork leg roast recipe from Jamie Oliver that shows you exactly how to cook a pork leg. This is perfect served with roast potatoes & seasonal veggies.",
+    "tags": [
+      "roast",
+      "roast-pork",
+      "dinner-party",
+      "sunday-lunch",
+      "main-ingredient",
+      "father-s-day",
+      "mains",
+      "dish-type",
+      "method",
+      "roasting",
+      "halloween-recipes",
+      "one-pan-recipes",
+      "pork",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/roast-pork-leg",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d81a89f83bcf4042f7ab6112a236de7ae870ec1f-973x1300.jpg/d81a89f83bcf4042f7ab6112a236de7ae870ec1f-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d81a89f83bcf4042f7ab6112a236de7ae870ec1f-973x1300.jpg/d81a89f83bcf4042f7ab6112a236de7ae870ec1f-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d81a89f83bcf4042f7ab6112a236de7ae870ec1f-973x1300.jpg/d81a89f83bcf4042f7ab6112a236de7ae870ec1f-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d81a89f83bcf4042f7ab6112a236de7ae870ec1f-973x1300.jpg/d81a89f83bcf4042f7ab6112a236de7ae870ec1f-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "3kg-higher-welfare-pork-leg",
+      "name": "3kg higher-welfare pork leg",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "white-peppercorns",
+      "name": "white peppercorns",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-sage",
+      "name": "\u00bd a bunch of fresh sage",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-rosemary",
+      "name": "\u00bd a bunch of fresh rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-bunch-of-fresh-flat-leaf",
+      "name": "large bunch of fresh flat-leaf parsley",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mustard",
+      "name": "mustard",
+      "quantity": 1.5,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "knife",
+    "oven",
+    "pan",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to full whack",
+      "instructions": "Preheat the oven to full whack.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to full whack."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Score the pork leg with a sharp knife in a zig-zag pattern",
+      "instructions": "Score the pork leg with a sharp knife in a zig-zag pattern.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_leaves"
+      ],
+      "on_enter": [
+        {
+          "say": "Score the pork leg with a sharp knife in a zig-zag pattern."
+        }
+      ]
+    },
+    {
+      "id": "add_leaves",
+      "descr": "Bash the coriander seeds, peppercorns and 2 teaspoons of...",
+      "instructions": "Bash the coriander seeds, peppercorns and 2 teaspoons of sea salt until fine in a pestle and mortar. Add the bay leaves and bash again, then muddle in a lug of oil to form a loose paste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Bash the coriander seeds, peppercorns and 2 teaspoons of sea salt until fine in a pestle and mortar. Add the bay leaves and bash again, then muddle in a lug of oil to form a loose paste."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Rub the paste all over the pork, making sure you get it...",
+      "instructions": "Rub the paste all over the pork, making sure you get it into all the nooks and crannies.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_leaves"
+      ],
+      "next": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub the paste all over the pork, making sure you get it into all the nooks and crannies."
+        }
+      ]
+    },
+    {
+      "id": "roast_tray",
+      "descr": "Peel and halve the onions, scatter into a large roasting...",
+      "instructions": "Peel and halve the onions, scatter into a large roasting tray and place the scored pork on top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_4"
+      ],
+      "next": [
+        "roast_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and halve the onions, scatter into a large roasting tray and place the scored pork on top."
+        }
+      ]
+    },
+    {
+      "id": "roast_minutes",
+      "descr": "Roast for 35 to 40 minutes, or until you have a lovely...",
+      "instructions": "Roast for 35 to 40 minutes, or until you have a lovely crisp crackling, then turn the oven down to 170\u00b0C/325\u00baF/gas 3. Slow-cook the leg for 3.5 hours, or until the meat is easily pulled apart.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "roast_tray"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast for 35 to 40 minutes, or until you have a lovely crisp crackling, then turn the oven down to 170\u00b0C/325\u00baF/gas 3. Slow-cook the leg for 3.5 hours, or until the meat is easily pulled apart."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "When the time's up, pick and dress the sage and rosemary...",
+      "instructions": "When the time's up, pick and dress the sage and rosemary leaves with oil and scatter them over the pork. Pop it back into the oven and cook until the herbs are crispy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_minutes"
+      ],
+      "next": [
+        "rest_while"
+      ],
+      "on_enter": [
+        {
+          "say": "When the time's up, pick and dress the sage and rosemary leaves with oil and scatter them over the pork. Pop it back into the oven and cook until the herbs are crispy."
+        }
+      ]
+    },
+    {
+      "id": "rest_while",
+      "descr": "Remove the leg to board, cover with tin foil and allow...",
+      "instructions": "Remove the leg to board, cover with tin foil and allow to rest while you make the gravy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "heat_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the leg to board, cover with tin foil and allow to rest while you make the gravy."
+        }
+      ]
+    },
+    {
+      "id": "heat_flour",
+      "descr": "Place the roasting tray on the hob over a medium heat,...",
+      "instructions": "Place the roasting tray on the hob over a medium heat, add the flour and stir it into the juices so you get a sticky paste. Slowly add a little water until you have a lovely rich sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_while"
+      ],
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the roasting tray on the hob over a medium heat, add the flour and stir it into the juices so you get a sticky paste. Slowly add a little water until you have a lovely rich sauce."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Pour the contents of the tray into a jug or bowl and...",
+      "instructions": "Pour the contents of the tray into a jug or bowl and blitz to a sauce with a stick blender. Return to the pan, pick, finely chop and add the parsley, along with the mustard and stir well. Season to perfection",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_flour"
+      ],
+      "next": [
+        "roast_pork"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the contents of the tray into a jug or bowl and blitz to a sauce with a stick blender. Return to the pan, pick, finely chop and add the parsley, along with the mustard and stir well. Season to perfection"
+        }
+      ]
+    },
+    {
+      "id": "roast_pork",
+      "descr": "Serve the roast pork with the sauce",
+      "instructions": "Serve the roast pork with the sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve the roast pork with the sauce."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "486 calories",
+    "carbohydrates": "15 g",
+    "fat": "26.8 g",
+    "fiber": "2.2 g",
+    "protein": "48 g"
+  }
+}

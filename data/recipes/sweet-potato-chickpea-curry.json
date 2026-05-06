@@ -1,0 +1,264 @@
+{
+  "recipe": {
+    "id": "sweet-potato-chickpea-curry",
+    "title": "Sweet potato & chickpea curry",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT35M",
+    "description": "Packed with flavour and lots of lovely veg, this delicious curry couldn\u2019t be easier to rustle up.",
+    "tags": [
+      "1-recipes",
+      "vegetarian",
+      "curry",
+      "vegetable-curry",
+      "rice",
+      "gluten-free"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/spinach-sweet-potato-chickpea-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b24b4c31001ca60af1af775dcab73b95115c80f3-958x1280.jpg/138762686?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b24b4c31001ca60af1af775dcab73b95115c80f3-958x1280.jpg/138762686?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b24b4c31001ca60af1af775dcab73b95115c80f3-958x1280.jpg/138762686?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b24b4c31001ca60af1af775dcab73b95115c80f3-958x1280.jpg/138762686?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "frozen-leaf-spinach",
+      "name": "frozen leaf spinach",
+      "quantity": 160.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-mug-of-basmati-rice",
+      "name": "\u00bd a mug of basmati rice",
+      "quantity": null,
+      "unit": null,
+      "note": "150g"
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-curry-powder",
+      "name": "heaped teaspoon curry powder",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "vegetable-oil",
+      "name": "vegetable oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "green-chilli",
+      "name": "green chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-sweet-potato",
+      "name": "small sweet potato",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "200g"
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "grater",
+    "knife",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "plate_start",
+      "descr": "Take the spinach out of the freezer and place on a plate...",
+      "instructions": "Take the spinach out of the freezer and place on a plate to start defrosting.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Take the spinach out of the freezer and place on a plate to start defrosting."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Place the rice in a 2-litre microwave-proof dish or bowl...",
+      "instructions": "Place the rice in a 2-litre microwave-proof dish or bowl with 1 mug of water (300ml) and a pinch of sea salt and cover the bowl with a lid or a side plate. Cook in the microwave on a medium heat (400-500W) for 8 to 10 minutes (depending on the strength of your microwave), then remove and leave to steam with the lid on.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "plate_start"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the rice in a 2-litre microwave-proof dish or bowl with 1 mug of water (300ml) and a pinch of sea salt and cover the bowl with a lid or a side plate. Cook in the microwave on a medium heat (400-500W) for 8 to 10 minutes (depending on the strength of your microwave), then remove and leave to steam with the lid on."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Meanwhile, peel the onion, ginger and garlic",
+      "instructions": "Meanwhile, peel the onion, ginger and garlic. Place a box grater in a microwave-proof dish and grate the onion and ginger on the coarse side, followed by the garlic on the fine side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "stir_everything"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel the onion, ginger and garlic. Place a box grater in a microwave-proof dish and grate the onion and ginger on the coarse side, followed by the garlic on the fine side."
+        }
+      ]
+    },
+    {
+      "id": "stir_everything",
+      "descr": "Add the tomato pur\u00e9e to the dish, along with the curry...",
+      "instructions": "Add the tomato pur\u00e9e to the dish, along with the curry powder, a pinch of sea salt and 1 tablespoon of vegetable oil, and stir everything together. Prick the green chilli and sweet potato with a sharp knife, then add both to the dish and cover with a plate or lid. Set the microwave to high (800W) and cook for 10 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "heat_another"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the tomato pur\u00e9e to the dish, along with the curry powder, a pinch of sea salt and 1 tablespoon of vegetable oil, and stir everything together. Prick the green chilli and sweet potato with a sharp knife, then add both to the dish and cover with a plate or lid. Set the microwave to high (800W) and cook for 10 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_another",
+      "descr": "Carefully lift the dish out of the microwave and uncover",
+      "instructions": "Carefully lift the dish out of the microwave and uncover. Using tongs, remove the sweet potato, place on your board and slice into 3cm chunks, then stir back into the bowl. Add the chickpeas (juice and all), along with the frozen spinach, stir together, then cover and cook in the microwave on a high heat (800W) for another 10 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "stir_everything"
+      ],
+      "next": [
+        "stir_everything"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully lift the dish out of the microwave and uncover. Using tongs, remove the sweet potato, place on your board and slice into 3cm chunks, then stir back into the bowl. Add the chickpeas (juice and all), along with the frozen spinach, stir together, then cover and cook in the microwave on a high heat (800W) for another 10 minutes."
+        }
+      ]
+    },
+    {
+      "id": "stir_everything",
+      "descr": "Carefully lift the dish out of the microwave, uncover...",
+      "instructions": "Carefully lift the dish out of the microwave, uncover and stir everything together, breaking up the spinach with your spoon. Carefully taste (it will be hot), season to perfection with salt and black pepper, then stir in the yoghurt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_another"
+      ],
+      "next": [
+        "heat_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully lift the dish out of the microwave, uncover and stir everything together, breaking up the spinach with your spoon. Carefully taste (it will be hot), season to perfection with salt and black pepper, then stir in the yoghurt."
+        }
+      ]
+    },
+    {
+      "id": "heat_your",
+      "descr": "Remove the chilli to your board, finely slice and stir...",
+      "instructions": "Remove the chilli to your board, finely slice and stir back into the curry for added heat, to your taste, then fork up the rice, to serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_everything"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the chilli to your board, finely slice and stir back into the curry for added heat, to your taste, then fork up the rice, to serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "441 calories",
+    "carbohydrates": "68.1 g",
+    "fat": "11.6 g",
+    "fiber": "16 g",
+    "protein": "18.3 g"
+  }
+}

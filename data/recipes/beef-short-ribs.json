@@ -1,0 +1,235 @@
+{
+  "recipe": {
+    "id": "beef-short-ribs",
+    "title": "Beef short ribs",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT266M",
+    "description": "These incredibly tasty beef short ribs are well worth the wait.",
+    "tags": [
+      "christmas",
+      "jamies-easy-christmas",
+      "beef",
+      "tv-shows",
+      "low-lactose",
+      "occasion"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/beef-short-ribs",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1de422c1a7bc63bcde9ffd19b650c57ab28467b4-958x1280.jpg/139729014?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1de422c1a7bc63bcde9ffd19b650c57ab28467b4-958x1280.jpg/139729014?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1de422c1a7bc63bcde9ffd19b650c57ab28467b4-958x1280.jpg/139729014?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1de422c1a7bc63bcde9ffd19b650c57ab28467b4-958x1280.jpg/139729014?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "beef-short-ribs",
+      "name": "beef short ribs",
+      "quantity": 6.0,
+      "unit": null,
+      "note": "approx 1.6kg, bone in"
+    },
+    {
+      "id": "heads-of-celery",
+      "name": "heads of celery",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 6.0,
+      "unit": null,
+      "note": "600g total"
+    },
+    {
+      "id": "shelled-unsalted-walnut-halves",
+      "name": "shelled unsalted walnut halves",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "x-345g-jar-of-onion-marmalade",
+      "name": "\u00bd x 345g jar of onion marmalade",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "smooth-ale",
+      "name": "smooth ale",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "baking-potatoes",
+      "name": "baking potatoes",
+      "quantity": 6.0,
+      "unit": null,
+      "note": "1.5kg total"
+    },
+    {
+      "id": "creamed-horseradish",
+      "name": "creamed horseradish",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan",
+    "peeler",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 160\u00b0C/325\u00b0F/gas 3",
+      "instructions": "Preheat the oven to 160\u00b0C/325\u00b0F/gas 3.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_ribs"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 160\u00b0C/325\u00b0F/gas 3."
+        }
+      ]
+    },
+    {
+      "id": "heat_ribs",
+      "descr": "Put a large shallow casserole pan on a medium-high heat...",
+      "instructions": "Put a large shallow casserole pan on a medium-high heat and brown the ribs all over, turning with tongs, for about 15 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_bottom"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large shallow casserole pan on a medium-high heat and brown the ribs all over, turning with tongs, for about 15 minutes."
+        }
+      ]
+    },
+    {
+      "id": "chop_bottom",
+      "descr": "Meanwhile, trim the celery and use a speed-peeler to...",
+      "instructions": "Meanwhile, trim the celery and use a speed-peeler to remove the stringy outsides. Chop off the bottom 12cm of each and cut lengthways into quarters, then finely slice the remaining stalks, reserving any nice leaves. Peel the carrots, leaving them whole.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_ribs"
+      ],
+      "next": [
+        "season_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, trim the celery and use a speed-peeler to remove the stringy outsides. Chop off the bottom 12cm of each and cut lengthways into quarters, then finely slice the remaining stalks, reserving any nice leaves. Peel the carrots, leaving them whole."
+        }
+      ]
+    },
+    {
+      "id": "season_salt",
+      "descr": "Once the ribs are browned, remove them to a bowl for a...",
+      "instructions": "Once the ribs are browned, remove them to a bowl for a moment. Put all the celery and the carrots into the pan with the walnuts and onion marmalade and toss to coat. Season with sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_bottom"
+      ],
+      "next": [
+        "pour_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the ribs are browned, remove them to a bowl for a moment. Put all the celery and the carrots into the pan with the walnuts and onion marmalade and toss to coat. Season with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "pour_water",
+      "descr": "Pour in 600ml of water and the ale, then nestle the ribs...",
+      "instructions": "Pour in 600ml of water and the ale, then nestle the ribs back into the pan, making sure they\u2019re submerged. Cover with a sheet of damp greaseproof paper and roast for 4 hours, or until the meat pulls easily away from the bone, basting halfway.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT14400S",
+      "depends_on": [
+        "season_salt"
+      ],
+      "next": [
+        "bake_alongside"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in 600ml of water and the ale, then nestle the ribs back into the pan, making sure they\u2019re submerged. Cover with a sheet of damp greaseproof paper and roast for 4 hours, or until the meat pulls easily away from the bone, basting halfway."
+        }
+      ]
+    },
+    {
+      "id": "bake_alongside",
+      "descr": "Scrub the potatoes, prick all over with a fork and bake...",
+      "instructions": "Scrub the potatoes, prick all over with a fork and bake alongside the ribs for the last 1 hour 30 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "pour_water"
+      ],
+      "next": [
+        "sprinkle_reserved"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub the potatoes, prick all over with a fork and bake alongside the ribs for the last 1 hour 30 minutes."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_reserved",
+      "descr": "Skim any fat off the ribs, remove the bones and any...",
+      "instructions": "Skim any fat off the ribs, remove the bones and any wobbly bits and serve with dollops of horseradish, sprinkled with any reserved celery leaves, and the jacket spuds on the side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "bake_alongside"
+      ],
+      "on_enter": [
+        {
+          "say": "Skim any fat off the ribs, remove the bones and any wobbly bits and serve with dollops of horseradish, sprinkled with any reserved celery leaves, and the jacket spuds on the side."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "726 calories",
+    "carbohydrates": "76.4 g",
+    "fat": "32.2 g",
+    "fiber": "7.6 g",
+    "protein": "32.2 g"
+  }
+}

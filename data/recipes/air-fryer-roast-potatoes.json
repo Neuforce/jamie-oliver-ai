@@ -1,0 +1,140 @@
+{
+  "recipe": {
+    "id": "air-fryer-roast-potatoes",
+    "title": "Air-fryer roast potatoes",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT68M",
+    "description": "The BEST air fryer roast potatoes! Expect incredible crispiness, a fluffy centre, and amazing flavour every single time.",
+    "tags": [
+      "roast",
+      "air-fryer",
+      "roast-potatoes",
+      "british-style",
+      "family-favourites",
+      "sides",
+      "gluten-free",
+      "potato",
+      "dinner"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/potato/air-fryer-roast-potatoes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5ac338274987fb655adcf2f0b2a520b969f55650-1014x1280.jpg/161970660?rect=0,133,1014,1014&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5ac338274987fb655adcf2f0b2a520b969f55650-1014x1280.jpg/161970660?rect=0,133,1014,1014&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5ac338274987fb655adcf2f0b2a520b969f55650-1014x1280.jpg/161970660?rect=0,260,1014,761&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/5ac338274987fb655adcf2f0b2a520b969f55650-1014x1280.jpg/161970660?rect=0,355,1014,570&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "potato"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "medium-maris",
+      "name": "medium Maris",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "piper-potatoes",
+      "name": "Piper potatoes",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "soft-unsalted-butter",
+      "name": "soft unsalted butter",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sage",
+      "name": "sage",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "colander",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "boil_boiling",
+      "descr": "Peel the potatoes, keeping them whole and ideally all...",
+      "instructions": "Peel the potatoes, keeping them whole and ideally all about the same size (8cm). Parboil in a pan of boiling salted water for 15 minutes, then drain in a colander and leave to steam dry for 2 minutes. Give the colander a few light shakes to chuff up the edges of the spuds, then tip them back into the pan.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "next": [
+        "preheat_fryer"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the potatoes, keeping them whole and ideally all about the same size (8cm). Parboil in a pan of boiling salted water for 15 minutes, then drain in a colander and leave to steam dry for 2 minutes. Give the colander a few light shakes to chuff up the edges of the spuds, then tip them back into the pan."
+        }
+      ]
+    },
+    {
+      "id": "preheat_fryer",
+      "descr": "Preheat the air fryer to 180\u00baC for 2 minutes",
+      "instructions": "Preheat the air fryer to 180\u00baC for 2 minutes. Toss the potatoes with the unpeeled garlic cloves, butter, 1 tablespoon of olive oil and a pinch of sea salt and black pepper, then evenly space them in the drawer and cook for 30 minutes, or until crisp and golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "boil_boiling"
+      ],
+      "next": [
+        "slice_masher"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the air fryer to 180\u00baC for 2 minutes. Toss the potatoes with the unpeeled garlic cloves, butter, 1 tablespoon of olive oil and a pinch of sea salt and black pepper, then evenly space them in the drawer and cook for 30 minutes, or until crisp and golden."
+        }
+      ]
+    },
+    {
+      "id": "slice_masher",
+      "descr": "Now for the game-changer",
+      "instructions": "Now for the game-changer. Pull out the drawer and gently half-squash each potato with a fish slice or masher so they kind of push into each other. Pick the sage leaves, toss with a little oil, sprinkle over the potatoes and cook for a further 15 minutes, or until super golden and delicious. Squeeze the soft garlic cloves out of their skins and sprinkle with all the lovely crispy bits from the bottom of the drawer, before serving.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "preheat_fryer"
+      ],
+      "on_enter": [
+        {
+          "say": "Now for the game-changer. Pull out the drawer and gently half-squash each potato with a fish slice or masher so they kind of push into each other. Pick the sage leaves, toss with a little oil, sprinkle over the potatoes and cook for a further 15 minutes, or until super golden and delicious. Squeeze the soft garlic cloves out of their skins and sprinkle with all the lovely crispy bits from the bottom of the drawer, before serving."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "297 calories",
+    "carbohydrates": "44.3 g",
+    "fat": "12 g",
+    "fiber": "0.6 g",
+    "protein": "5.5 g"
+  }
+}

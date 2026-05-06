@@ -1,0 +1,346 @@
+{
+  "recipe": {
+    "id": "whole-roasted-cauliflower",
+    "title": "Whole roasted cauliflower",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT100M",
+    "description": "Jamie's whole roasted cauliflower recipe is a great vegan Christmas dinner idea. Spiced with thyme and paprika, this roast cauliflower will go down a treat!",
+    "tags": [
+      "christmas",
+      "dinner-party",
+      "christmas-dinner",
+      "vegan",
+      "dish-type",
+      "healthy-vegetarian-recipes",
+      "low-lactose",
+      "gluten-free",
+      "vegetables",
+      "course",
+      "roast",
+      "mains",
+      "roasting",
+      "occasion",
+      "vegetable-sides",
+      "vegetarian",
+      "method",
+      "healthy-meals",
+      "main-ingredient",
+      "cauliflower",
+      "the-big-meal",
+      "healthy-dinner-ideas"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/whole-roasted-cauliflower",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e77230ebb9d0778c084dbd1ea9501cbd338d6e10-973x1300.jpg/e77230ebb9d0778c084dbd1ea9501cbd338d6e10-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e77230ebb9d0778c084dbd1ea9501cbd338d6e10-973x1300.jpg/e77230ebb9d0778c084dbd1ea9501cbd338d6e10-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e77230ebb9d0778c084dbd1ea9501cbd338d6e10-973x1300.jpg/e77230ebb9d0778c084dbd1ea9501cbd338d6e10-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e77230ebb9d0778c084dbd1ea9501cbd338d6e10-973x1300.jpg/e77230ebb9d0778c084dbd1ea9501cbd338d6e10-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-thyme",
+      "name": "\u00bd a bunch of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-cauliflower",
+      "name": "large cauliflower",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "1kg, with outer leaves"
+    },
+    {
+      "id": "dry-sherry",
+      "name": "dry sherry",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-quality-plum-tomat",
+      "name": "400g tin of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "flaked-almonds",
+      "name": "flaked almonds",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-flat-leaf-par",
+      "name": "\u00bd a bunch of fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_pestle"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "add_pestle",
+      "descr": "Peel the garlic, then add to a pestle and mortar with...",
+      "instructions": "Peel the garlic, then add to a pestle and mortar with the paprika and half the thyme leaves. Bash well to a rough paste, then muddle in 2 tablespoons of olive oil and season.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the garlic, then add to a pestle and mortar with the paprika and half the thyme leaves. Bash well to a rough paste, then muddle in 2 tablespoons of olive oil and season."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Zest the lemon into a separate bowl and set aside",
+      "instructions": "Zest the lemon into a separate bowl and set aside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_pestle"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Zest the lemon into a separate bowl and set aside."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Trim the outer cauliflower leaves",
+      "instructions": "Trim the outer cauliflower leaves. Trim away and discard the stalk so the cauliflower can sit flat, then cut a cross into the base.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "drizzle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the outer cauliflower leaves. Trim away and discard the stalk so the cauliflower can sit flat, then cut a cross into the base."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_over",
+      "descr": "Rub the paprika paste all over the cauliflower, then...",
+      "instructions": "Rub the paprika paste all over the cauliflower, then place in a medium casserole pan. Drizzle over the sherry and squeeze the lemon juice on top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_4"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub the paprika paste all over the cauliflower, then place in a medium casserole pan. Drizzle over the sherry and squeeze the lemon juice on top."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Cover and pop in the hot oven for around 1 hour 20...",
+      "instructions": "Cover and pop in the hot oven for around 1 hour 20 minutes, or until tender, removing the lid for the final 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "drizzle_over"
+      ],
+      "next": [
+        "pour_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Cover and pop in the hot oven for around 1 hour 20 minutes, or until tender, removing the lid for the final 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "pour_tomatoes",
+      "descr": "Remove the pan from the oven, then pour in the tomatoes,...",
+      "instructions": "Remove the pan from the oven, then pour in the tomatoes, tearing or slicing them up into chunks. Sprinkle over the lemon zest and pick over the remaining thyme leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pan from the oven, then pour in the tomatoes, tearing or slicing them up into chunks. Sprinkle over the lemon zest and pick over the remaining thyme leaves."
+        }
+      ]
+    },
+    {
+      "id": "step_step_8",
+      "descr": "Return the pan to the oven for a further 10 minutes, or...",
+      "instructions": "Return the pan to the oven for a further 10 minutes, or until the cauliflower is golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "pour_tomatoes"
+      ],
+      "next": [
+        "heat_golden"
+      ],
+      "on_enter": [
+        {
+          "say": "Return the pan to the oven for a further 10 minutes, or until the cauliflower is golden."
+        }
+      ]
+    },
+    {
+      "id": "heat_golden",
+      "descr": "Meanwhile, toast the almonds in a dry frying pan over a...",
+      "instructions": "Meanwhile, toast the almonds in a dry frying pan over a medium-low heat until golden, then leave to cool.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_8"
+      ],
+      "next": [
+        "chop_scatter"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, toast the almonds in a dry frying pan over a medium-low heat until golden, then leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "chop_scatter",
+      "descr": "Once ready, take the pan out of the oven",
+      "instructions": "Once ready, take the pan out of the oven. Scrunch over the toasted almonds, then pick, roughly chop and scatter the parsley leaves on top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_golden"
+      ],
+      "next": [
+        "drizzle_extra"
+      ],
+      "on_enter": [
+        {
+          "say": "Once ready, take the pan out of the oven. Scrunch over the toasted almonds, then pick, roughly chop and scatter the parsley leaves on top."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_extra",
+      "descr": "Drizzle with extra virgin olive oil, then carve up and...",
+      "instructions": "Drizzle with extra virgin olive oil, then carve up and serve with pilaf rice and steamed greens, or as part of a bigger spread.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_scatter"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle with extra virgin olive oil, then carve up and serve with pilaf rice and steamed greens, or as part of a bigger spread."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "205 calories",
+    "carbohydrates": "8 g",
+    "fat": "14.7 g",
+    "fiber": "1.5 g",
+    "protein": "6.6 g"
+  }
+}

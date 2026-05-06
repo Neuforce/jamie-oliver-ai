@@ -1,0 +1,236 @@
+{
+  "recipe": {
+    "id": "patatas-bravas",
+    "title": "Patatas bravas",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT35M",
+    "description": "Whether you're in Madrid or Manchester, you'll have to look really hard to find a tapas bar that doesn't serve some version of these potatoes.",
+    "tags": [
+      "potato",
+      "holidays-from-home"
+    ],
+    "course": "main",
+    "cuisine": "spanish",
+    "source_url": "https://www.jamieoliver.com/recipes/potato/patatas-bravas",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a3311ecba5ce6ba3de7e7434891fb6de1ae9c873-958x1280.jpg/107440060?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a3311ecba5ce6ba3de7e7434891fb6de1ae9c873-958x1280.jpg/107440060?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a3311ecba5ce6ba3de7e7434891fb6de1ae9c873-958x1280.jpg/107440060?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a3311ecba5ce6ba3de7e7434891fb6de1ae9c873-958x1280.jpg/107440060?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "potato"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "medium-potatoes",
+      "name": "medium potatoes",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "approximately 800g, peeled and halved"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": "peeled and finely sliced"
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": "leaves picked"
+    },
+    {
+      "id": "sweet-paprika",
+      "name": "sweet paprika",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "fennel-seeds",
+      "name": "fennel seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "bravas-sauce",
+      "name": "BRAVAS SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "peeled and finely chopped"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": "peeled and sliced"
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 3.0,
+      "unit": null,
+      "note": "deseeded and roughly chopped"
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "peeled and finely chopped"
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-thyme",
+      "name": "a few sprigs of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "leaves picked"
+    },
+    {
+      "id": "400g-tin-of-chopped-tomatoes",
+      "name": "400g tin of chopped tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sherry-vinegar",
+      "name": "sherry vinegar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "colander",
+    "frying pan",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "heat_minutes",
+      "descr": "Parboil the potatoes over a medium heat for 10 to 15...",
+      "instructions": "Parboil the potatoes over a medium heat for 10 to 15 minutes, or until they are starting to get tender but still hold their shape. Drain in a colander and leave to steam dry until cool.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "next": [
+        "heat_start"
+      ],
+      "on_enter": [
+        {
+          "say": "Parboil the potatoes over a medium heat for 10 to 15 minutes, or until they are starting to get tender but still hold their shape. Drain in a colander and leave to steam dry until cool."
+        }
+      ]
+    },
+    {
+      "id": "heat_start",
+      "descr": "Meanwhile, put a pan on a lowheat and start your bravas...",
+      "instructions": "Meanwhile, put a pan on a lowheat and start your bravas sauce. Add a lug of olive oil and, once hot, add the chopped onion and sliced garlic. Cook for 5 minutes, or until the onion is soft but not coloured. Add the chillies, carrot and thyme leaves and cook for another 5 minutes. Add the tinned tomatoes, sherry vinegar and a good pinch of sea salt and black pepper. Bring to the boil, then turn the heat down and simmer for 15 minutes, or until the carrots are soft and the sauce is lovely and thick.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "heat_olive"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, put a pan on a lowheat and start your bravas sauce. Add a lug of olive oil and, once hot, add the chopped onion and sliced garlic. Cook for 5 minutes, or until the onion is soft but not coloured. Add the chillies, carrot and thyme leaves and cook for another 5 minutes. Add the tinned tomatoes, sherry vinegar and a good pinch of sea salt and black pepper. Bring to the boil, then turn the heat down and simmer for 15 minutes, or until the carrots are soft and the sauce is lovely and thick."
+        }
+      ]
+    },
+    {
+      "id": "heat_olive",
+      "descr": "While your sauce simmers, put a large frying pan on a...",
+      "instructions": "While your sauce simmers, put a large frying pan on a medium heat and add 0.5cm of olive oil. Cut your potatoes into large bite-sized chunks. Once the oil is hot, carefully add your potatoes to the pan. Cook them for around 8 minutes, turning occasionally, until golden all over. You\u2019ll need to do this in batches so you don\u2019t overcrowd the pan. Add your garlic and rosemary leaves to the pan for the last minute of cooking.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "heat_start"
+      ],
+      "next": [
+        "coat_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "While your sauce simmers, put a large frying pan on a medium heat and add 0.5cm of olive oil. Cut your potatoes into large bite-sized chunks. Once the oil is hot, carefully add your potatoes to the pan. Cook them for around 8 minutes, turning occasionally, until golden all over. You\u2019ll need to do this in batches so you don\u2019t overcrowd the pan. Add your garlic and rosemary leaves to the pan for the last minute of cooking."
+        }
+      ]
+    },
+    {
+      "id": "coat_step_4",
+      "descr": "Transfer the potatoes, garlic and rosemary to a plate...",
+      "instructions": "Transfer the potatoes, garlic and rosemary to a plate lined with kitchen paper to drain, then scatter over the paprika, fennel seeds and a good pinch of salt and toss together until well coated.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_olive"
+      ],
+      "next": [
+        "pour_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer the potatoes, garlic and rosemary to a plate lined with kitchen paper to drain, then scatter over the paprika, fennel seeds and a good pinch of salt and toss together until well coated."
+        }
+      ]
+    },
+    {
+      "id": "pour_sauce",
+      "descr": "Carefully tip your cooked sauce into a blender, or use a...",
+      "instructions": "Carefully tip your cooked sauce into a blender, or use a hand blender, and whiz until lovely and smooth. Have a taste, and adjust the seasoning if necessary. Serve in a jug next to your potatoes or, if youwant to be more traditional, pour the sauce over your potatoes before serving and toss together like I've done here. If you have any leftover sauce, use it with pasta or on a homemade pizza.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "coat_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully tip your cooked sauce into a blender, or use a hand blender, and whiz until lovely and smooth. Have a taste, and adjust the seasoning if necessary. Serve in a jug next to your potatoes or, if youwant to be more traditional, pour the sauce over your potatoes before serving and toss together like I've done here. If you have any leftover sauce, use it with pasta or on a homemade pizza."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "407 calories",
+    "carbohydrates": "46.2 g",
+    "fat": "23.2 g",
+    "fiber": "6.5 g",
+    "protein": "6.3 g"
+  }
+}

@@ -1,0 +1,220 @@
+{
+  "recipe": {
+    "id": "air-fryer-cheddar-cheese-chive-scones",
+    "title": "Air-fryer Cheddar cheese & chive scones",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT28M",
+    "description": "Easy, herby, cheese scones in the air fryer! Served with a tangy lemon cream cheese (or whatever you like!).",
+    "tags": [
+      "course",
+      "vegetarian",
+      "scones",
+      "quick-amp-easy-recipes",
+      "cheese",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/baking/air-fryer-cheddar-cheese-chive-scones",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/04f4a756073e092b82318bdb7a77e25208abf351-973x1300.jpg/Cheddar%20cheese%20and%20chive%20scones%20crop.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/04f4a756073e092b82318bdb7a77e25208abf351-973x1300.jpg/Cheddar%20cheese%20and%20chive%20scones%20crop.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/04f4a756073e092b82318bdb7a77e25208abf351-973x1300.jpg/Cheddar%20cheese%20and%20chive%20scones%20crop.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/04f4a756073e092b82318bdb7a77e25208abf351-973x1300.jpg/Cheddar%20cheese%20and%20chive%20scones%20crop.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "baking"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "baking-powder",
+      "name": "baking powder",
+      "quantity": 1.0,
+      "unit": "tsp",
+      "note": null
+    },
+    {
+      "id": "english-mustard-powder",
+      "name": "English mustard powder",
+      "quantity": 1.0,
+      "unit": "tsp",
+      "note": null
+    },
+    {
+      "id": "cayenne-pepper",
+      "name": "cayenne pepper",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cold-unsalted-butter",
+      "name": "cold unsalted butter",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mature-cheddar-cheese",
+      "name": "mature Cheddar cheese",
+      "quantity": 120.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "chives",
+      "name": "chives",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "20g"
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 70.0,
+      "unit": "ml",
+      "note": "plus extra for brushing"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "light-cream-cheese",
+      "name": "light cream cheese",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-lemon",
+      "name": "\u00bd a lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-extra-virgin-olive-oi",
+      "name": "optional: extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl"
+  ],
+  "steps": [
+    {
+      "id": "cube_butter",
+      "descr": "Sift the flour into a bowl with the baking and mustard...",
+      "instructions": "Sift the flour into a bowl with the baking and mustard powders, then add a generous pinch each of cayenne pepper and sea salt. Cube up the butter, then use your thumbs and fingertips to rub it into the flour mixture until you have little cornflake-sized pieces.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_chives"
+      ],
+      "on_enter": [
+        {
+          "say": "Sift the flour into a bowl with the baking and mustard powders, then add a generous pinch each of cayenne pepper and sea salt. Cube up the butter, then use your thumbs and fingertips to rub it into the flour mixture until you have little cornflake-sized pieces."
+        }
+      ]
+    },
+    {
+      "id": "chop_chives",
+      "descr": "Coarsely grate in 100g of the Cheddar, finely chop and...",
+      "instructions": "Coarsely grate in 100g of the Cheddar, finely chop and add the chives, then mix everything together. Make a well in the middle, pour in the milk, and bring together into a soft, dry dough, adding a tiny extra splash of milk, if needed \u2013 use your hands, if necessary, but don\u2019t be tempted to over-mix.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cube_butter"
+      ],
+      "next": [
+        "sprinkle_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Coarsely grate in 100g of the Cheddar, finely chop and add the chives, then mix everything together. Make a well in the middle, pour in the milk, and bring together into a soft, dry dough, adding a tiny extra splash of milk, if needed \u2013 use your hands, if necessary, but don\u2019t be tempted to over-mix."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_little",
+      "descr": "Turn out on to a flour-dusted surface and quickly work...",
+      "instructions": "Turn out on to a flour-dusted surface and quickly work the dough into a 3cm-thick round, then cut into 6 triangular wedges. Lightly brush the tops with milk, grate over the remaining cheese, and sprinkle with a little cayenne.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_chives"
+      ],
+      "next": [
+        "preheat_fryer"
+      ],
+      "on_enter": [
+        {
+          "say": "Turn out on to a flour-dusted surface and quickly work the dough into a 3cm-thick round, then cut into 6 triangular wedges. Lightly brush the tops with milk, grate over the remaining cheese, and sprinkle with a little cayenne."
+        }
+      ]
+    },
+    {
+      "id": "preheat_fryer",
+      "descr": "Rub the air-fryer shelf with a little olive oil, then...",
+      "instructions": "Rub the air-fryer shelf with a little olive oil, then preheat the air fryer to 180\u00b0C for 2 minutes. Evenly space in the scones and cook for 12 minutes, or until golden \u2013 you may need to work in batches.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "sprinkle_little"
+      ],
+      "next": [
+        "warm_scones"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub the air-fryer shelf with a little olive oil, then preheat the air fryer to 180\u00b0C for 2 minutes. Evenly space in the scones and cook for 12 minutes, or until golden \u2013 you may need to work in batches."
+        }
+      ]
+    },
+    {
+      "id": "warm_scones",
+      "descr": "Mix the cream cheese with a good few gratings of lemon...",
+      "instructions": "Mix the cream cheese with a good few gratings of lemon zest, season with black pepper, and add a drizzle of extra virgin olive oil, if you like. Serve with the warm scones. Great with a watercress, chicory, apple and walnut salad.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "preheat_fryer"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix the cream cheese with a good few gratings of lemon zest, season with black pepper, and add a drizzle of extra virgin olive oil, if you like. Serve with the warm scones. Great with a watercress, chicory, apple and walnut salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "368 calories",
+    "carbohydrates": "28.3 g",
+    "fat": "24 g",
+    "fiber": "1.3 g",
+    "protein": "11.4 g"
+  }
+}

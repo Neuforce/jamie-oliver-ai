@@ -1,0 +1,167 @@
+{
+  "recipe": {
+    "id": "really-good-roast-veg",
+    "title": "Really good roast veg",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT95M",
+    "description": "This is Jamie's favourite way to cook Christmas veg. We're talking runny honey and clementine carrots, and parsnips spiked with bay \u2013 so festive! ",
+    "tags": [
+      "christmas",
+      "christmas-dinner",
+      "dish-type",
+      "easy-christmas",
+      "low-lactose",
+      "gluten-free",
+      "sides-and-sauces",
+      "vegetables",
+      "dairy-free",
+      "course",
+      "thanksgiving",
+      "spuds-and-sides",
+      "occasion",
+      "christmas-tv-show",
+      "vegetable-sides",
+      "vegetarian",
+      "christmas-shortcuts",
+      "carrots",
+      "sides",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/really-good-roast-veg",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a85d380d49a0ca9764a70a73fa258739c1646f65-958x1280.jpg/a85d380d49a0ca9764a70a73fa258739c1646f65-958x1280.jpg?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a85d380d49a0ca9764a70a73fa258739c1646f65-958x1280.jpg/a85d380d49a0ca9764a70a73fa258739c1646f65-958x1280.jpg?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a85d380d49a0ca9764a70a73fa258739c1646f65-958x1280.jpg/a85d380d49a0ca9764a70a73fa258739c1646f65-958x1280.jpg?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a85d380d49a0ca9764a70a73fa258739c1646f65-958x1280.jpg/a85d380d49a0ca9764a70a73fa258739c1646f65-958x1280.jpg?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "clementines",
+      "name": "clementines",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-thyme",
+      "name": "\u00bd a bunch of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "parsnips",
+      "name": "parsnips",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bay-leaves",
+      "name": "bay leaves",
+      "quantity": 1.0,
+      "unit": "handful",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Scrub the carrots and line them up in a large roasting tray. Drizzle with the honey, 1 tablespoon of olive oil, and sprinkle over a pinch of sea salt. Squeeze over the juice of the clementines and scatter over the thyme sprigs.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "drizzle_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Scrub the carrots and line them up in a large roasting tray. Drizzle with the honey, 1 tablespoon of olive oil, and sprinkle over a pinch of sea salt. Squeeze over the juice of the clementines and scatter over the thyme sprigs."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_tablespoon",
+      "descr": "Scrub and trim the parsnips",
+      "instructions": "Scrub and trim the parsnips. Line them up in the tray next to the carrots and drizzle with 1 tablespoon of red wine vinegar and 1 tablespoon of olive oil. Sprinkle with a pinch of sea salt and tuck in the bay leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "roast_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub and trim the parsnips. Line them up in the tray next to the carrots and drizzle with 1 tablespoon of red wine vinegar and 1 tablespoon of olive oil. Sprinkle with a pinch of sea salt and tuck in the bay leaves."
+        }
+      ]
+    },
+    {
+      "id": "roast_hour",
+      "descr": "Gently toss the veg in their own sections, and roast for...",
+      "instructions": "Gently toss the veg in their own sections, and roast for 1 hour and 20 minutes, or until golden and gorgeous.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1200S",
+      "depends_on": [
+        "drizzle_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Gently toss the veg in their own sections, and roast for 1 hour and 20 minutes, or until golden and gorgeous."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "139 calories",
+    "carbohydrates": "24.6 g",
+    "fat": "4 g",
+    "fiber": "7.4 g",
+    "protein": "2.8 g"
+  }
+}

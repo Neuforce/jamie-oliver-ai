@@ -1,0 +1,211 @@
+{
+  "recipe": {
+    "id": "tin-raid-fishcakes",
+    "title": "Tin-raid fishcakes",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "Jamie celebrates store-cupboard heroes tinned tuna, sweetcorn and potatoes in this quick and tasty fishcake recipe \u2013 perfect for a light lunch.",
+    "tags": [
+      "30-minute-recipes",
+      "tuna",
+      "healthy",
+      "store-cupboard",
+      "quick-easy",
+      "fish",
+      "dinner",
+      "quick-healthy"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/tin-raid-fishcakes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a4b55d399886225e64b22cad1c4e650f8774d05f-983x1279.jpg/159471780?rect=0,149,983,983&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a4b55d399886225e64b22cad1c4e650f8774d05f-983x1279.jpg/159471780?rect=0,149,983,983&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a4b55d399886225e64b22cad1c4e650f8774d05f-983x1279.jpg/159471780?rect=0,272,983,737&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a4b55d399886225e64b22cad1c4e650f8774d05f-983x1279.jpg/159471780?rect=0,364,983,553&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "bread",
+      "name": "bread",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "567g-tin-of-peeled-new-potatoe",
+      "name": "567g tin of peeled new potatoes",
+      "quantity": 567.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-english-mustar",
+      "name": "heaped teaspoon English mustard",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-tuna-in-spring-wat",
+      "name": "400g tin of tuna in spring water",
+      "quantity": 400.0,
+      "unit": null,
+      "note": "from sustainable sources"
+    },
+    {
+      "id": "200g-tin-of-sweetcorn",
+      "name": "200g tin of sweetcorn",
+      "quantity": 200.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": null,
+      "unit": null,
+      "note": "for dusting"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "large bowl",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Hold the bread under cold running water until completely...",
+      "instructions": "Hold the bread under cold running water until completely sodden, then squeeze as hard as you can to remove excess water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Hold the bread under cold running water until completely sodden, then squeeze as hard as you can to remove excess water."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Tear the bread into a large bowl, drain and add the...",
+      "instructions": "Tear the bread into a large bowl, drain and add the potatoes, scrunching as you go, then coarsely grate in the cheese, finely grate in the lemon zest, add the egg and mustard, season with sea salt and black pepper, and mix well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "mix_divide"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear the bread into a large bowl, drain and add the potatoes, scrunching as you go, then coarsely grate in the cheese, finely grate in the lemon zest, add the egg and mustard, season with sea salt and black pepper, and mix well."
+        }
+      ]
+    },
+    {
+      "id": "mix_divide",
+      "descr": "Drain the tuna and sweetcorn and fold through the mix,...",
+      "instructions": "Drain the tuna and sweetcorn and fold through the mix, then divide into 8 equal-sized balls, dust liberally with flour, and shape into patties (you can make some smaller ones for younger kids, if you like).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the tuna and sweetcorn and fold through the mix, then divide into 8 equal-sized balls, dust liberally with flour, and shape into patties (you can make some smaller ones for younger kids, if you like)."
+        }
+      ]
+    },
+    {
+      "id": "heat_once",
+      "descr": "Put a large non-stick frying pan on a medium heat and,...",
+      "instructions": "Put a large non-stick frying pan on a medium heat and, once hot, add a thin layer of olive oil. In batches, fry the fishcakes for 7 minutes, or until golden and crispy, turning halfway, then drain on kitchen paper.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT420S",
+      "depends_on": [
+        "mix_divide"
+      ],
+      "next": [
+        "season_salad"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large non-stick frying pan on a medium heat and, once hot, add a thin layer of olive oil. In batches, fry the fishcakes for 7 minutes, or until golden and crispy, turning halfway, then drain on kitchen paper."
+        }
+      ]
+    },
+    {
+      "id": "season_salad",
+      "descr": "Serve with a big seasonal salad and lemon wedges, for...",
+      "instructions": "Serve with a big seasonal salad and lemon wedges, for squeezing over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with a big seasonal salad and lemon wedges, for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "383 calories",
+    "carbohydrates": "40.1 g",
+    "fat": "12.9 g",
+    "fiber": "2.1 g",
+    "protein": "26.9 g"
+  }
+}

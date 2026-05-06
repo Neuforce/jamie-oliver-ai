@@ -1,0 +1,307 @@
+{
+  "recipe": {
+    "id": "a-basic-recipe-for-fresh-egg-pasta",
+    "title": "A basic recipe for fresh egg pasta",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "A homemade pasta dough recipe from Jamie Oliver that shows you how to make fresh pasta from scratch. It couldn't be easier! Serve with fresh pesto, or just Parmesan.",
+    "tags": [
+      "pasta",
+      "egg",
+      "main-ingredient",
+      "pasta-amp-risotto",
+      "vegetarian",
+      "mains",
+      "dish-type",
+      "method",
+      "low-lactose",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/a-basic-recipe-for-fresh-egg-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e56f23d39420355941fc4f6dbccdcb195df30167-973x1300.jpg/e56f23d39420355941fc4f6dbccdcb195df30167-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e56f23d39420355941fc4f6dbccdcb195df30167-973x1300.jpg/e56f23d39420355941fc4f6dbccdcb195df30167-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e56f23d39420355941fc4f6dbccdcb195df30167-973x1300.jpg/e56f23d39420355941fc4f6dbccdcb195df30167-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e56f23d39420355941fc4f6dbccdcb195df30167-973x1300.jpg/e56f23d39420355941fc4f6dbccdcb195df30167-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "tipo-00-flour",
+      "name": "Tipo 00 flour",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl"
+  ],
+  "steps": [
+    {
+      "id": "beat_eggs",
+      "descr": "Place the flour on a board or in a bowl",
+      "instructions": "Place the flour on a board or in a bowl. Make a well in the centre and crack the eggs into it. Beat the eggs with a fork until smooth.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_eggs"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the flour on a board or in a bowl. Make a well in the centre and crack the eggs into it. Beat the eggs with a fork until smooth."
+        }
+      ]
+    },
+    {
+      "id": "mix_eggs",
+      "descr": "Using the tips of your fingers, mix the eggs with the...",
+      "instructions": "Using the tips of your fingers, mix the eggs with the flour, incorporating a little at a time, until everything is combined.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "beat_eggs"
+      ],
+      "next": [
+        "knead_pieces"
+      ],
+      "on_enter": [
+        {
+          "say": "Using the tips of your fingers, mix the eggs with the flour, incorporating a little at a time, until everything is combined."
+        }
+      ]
+    },
+    {
+      "id": "knead_pieces",
+      "descr": "Knead the pieces of dough together \u2013 with a bit of work...",
+      "instructions": "Knead the pieces of dough together \u2013 with a bit of work and some love and attention they\u2019ll all bind together to give you one big, smooth lump of dough!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_eggs"
+      ],
+      "next": [
+        "top_when"
+      ],
+      "on_enter": [
+        {
+          "say": "Knead the pieces of dough together \u2013 with a bit of work and some love and attention they\u2019ll all bind together to give you one big, smooth lump of dough!"
+        }
+      ]
+    },
+    {
+      "id": "top_when",
+      "descr": "Once you\u2019ve made your dough you need to knead and work...",
+      "instructions": "Once you\u2019ve made your dough you need to knead and work it with your hands to develop the gluten in the flour, otherwise your pasta will be flabby and soft when you cook it, instead of springy and al dente. There\u2019s no secret to kneading. You just have to bash the dough about a bit with your hands, squashing it into the table, reshaping it, pulling it, stretching it, squashing it again. It\u2019s quite hard work, and after a few minutes it\u2019s easy to see why the average Italian grandmother has arms like Frank Bruno! You\u2019ll know when to stop \u2013 it\u2019s when your pasta starts to feel smooth and silky instead of rough and floury.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "knead_pieces"
+      ],
+      "next": [
+        "rest_least"
+      ],
+      "on_enter": [
+        {
+          "say": "Once you\u2019ve made your dough you need to knead and work it with your hands to develop the gluten in the flour, otherwise your pasta will be flabby and soft when you cook it, instead of springy and al dente. There\u2019s no secret to kneading. You just have to bash the dough about a bit with your hands, squashing it into the table, reshaping it, pulling it, stretching it, squashing it again. It\u2019s quite hard work, and after a few minutes it\u2019s easy to see why the average Italian grandmother has arms like Frank Bruno! You\u2019ll know when to stop \u2013 it\u2019s when your pasta starts to feel smooth and silky instead of rough and floury."
+        }
+      ]
+    },
+    {
+      "id": "rest_least",
+      "descr": "Wrap the dough in clingfilm and put it in the fridge to...",
+      "instructions": "Wrap the dough in clingfilm and put it in the fridge to rest for at least 30 minutes \u2013 make sure the clingfilm covers it well or it will dry out and go crusty round the edges (this will give you crusty lumps through your pasta when you roll it out, and nobody likes crusty lumps!).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "top_when"
+      ],
+      "next": [
+        "roll_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Wrap the dough in clingfilm and put it in the fridge to rest for at least 30 minutes \u2013 make sure the clingfilm covers it well or it will dry out and go crusty round the edges (this will give you crusty lumps through your pasta when you roll it out, and nobody likes crusty lumps!)."
+        }
+      ]
+    },
+    {
+      "id": "roll_your",
+      "descr": "How to roll your pasta: first of all, if you haven't got...",
+      "instructions": "How to roll your pasta: first of all, if you haven't got a pasta machine it's not the end of the world! All the mammas I met while travelling round Italy rolled pasta with their trusty rolling pins and they wouldn't even consider having a pasta machine in the house! When it comes to rolling, the main problem you'll have is getting the pasta thin enough to work with. It's quite difficult to get a big lump of dough rolled out in one piece, and you need a very long rolling pin to do the job properly. The way around this is to roll lots of small pieces of pasta rather than a few big ones. You'll be rolling your pasta into a more circular shape than the long rectangular shapes you'll get from a machine, but use your head and you'll be all right!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_least"
+      ],
+      "next": [
+        "roll_your"
+      ],
+      "on_enter": [
+        {
+          "say": "How to roll your pasta: first of all, if you haven't got a pasta machine it's not the end of the world! All the mammas I met while travelling round Italy rolled pasta with their trusty rolling pins and they wouldn't even consider having a pasta machine in the house! When it comes to rolling, the main problem you'll have is getting the pasta thin enough to work with. It's quite difficult to get a big lump of dough rolled out in one piece, and you need a very long rolling pin to do the job properly. The way around this is to roll lots of small pieces of pasta rather than a few big ones. You'll be rolling your pasta into a more circular shape than the long rectangular shapes you'll get from a machine, but use your head and you'll be all right!"
+        }
+      ]
+    },
+    {
+      "id": "roll_your",
+      "descr": "If using a machine to roll your pasta, make sure it's...",
+      "instructions": "If using a machine to roll your pasta, make sure it's clamped firmly to a clean work surface before you start (use the longest available work surface you have). If your surface is cluttered with bits of paper, the kettle, the bread bin, the kids' homework and stuff like that, shift all this out of the way for the time being. It won't take a minute, and starting with a clear space to work in will make things much easier, I promise.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_your"
+      ],
+      "next": [
+        "roll_lump"
+      ],
+      "on_enter": [
+        {
+          "say": "If using a machine to roll your pasta, make sure it's clamped firmly to a clean work surface before you start (use the longest available work surface you have). If your surface is cluttered with bits of paper, the kettle, the bread bin, the kids' homework and stuff like that, shift all this out of the way for the time being. It won't take a minute, and starting with a clear space to work in will make things much easier, I promise."
+        }
+      ]
+    },
+    {
+      "id": "roll_lump",
+      "descr": "Dust your work surface with some Tipo 00 flour, take a...",
+      "instructions": "Dust your work surface with some Tipo 00 flour, take a lump of pasta dough the size of a large orange and press it out flat with your fingertips. Set the pasta machine at its widest setting - and roll the lump of pasta dough through it. Lightly dust the pasta with flour if it sticks at all.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_your"
+      ],
+      "next": [
+        "fold_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Dust your work surface with some Tipo 00 flour, take a lump of pasta dough the size of a large orange and press it out flat with your fingertips. Set the pasta machine at its widest setting - and roll the lump of pasta dough through it. Lightly dust the pasta with flour if it sticks at all."
+        }
+      ]
+    },
+    {
+      "id": "fold_pasta",
+      "descr": "Click the machine down a setting and roll the pasta...",
+      "instructions": "Click the machine down a setting and roll the pasta dough through again. Fold the pasta in half, click the pasta machine back up to the widest setting and roll the dough through again. Repeat this process five or six times. It might seem like you're getting nowhere, but in fact you're working the dough, and once you've folded it and fed it through the rollers a few times, you'll feel the difference. It'll be smooth as silk and this means you're making wicked pasta!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_lump"
+      ],
+      "next": [
+        "roll_dough"
+      ],
+      "on_enter": [
+        {
+          "say": "Click the machine down a setting and roll the pasta dough through again. Fold the pasta in half, click the pasta machine back up to the widest setting and roll the dough through again. Repeat this process five or six times. It might seem like you're getting nowhere, but in fact you're working the dough, and once you've folded it and fed it through the rollers a few times, you'll feel the difference. It'll be smooth as silk and this means you're making wicked pasta!"
+        }
+      ]
+    },
+    {
+      "id": "roll_dough",
+      "descr": "Now it's time to roll the dough out properly, working it...",
+      "instructions": "Now it's time to roll the dough out properly, working it through all the settings on the machine, from the widest down to around the narrowest. Lightly dust both sides of the pasta with a little flour every time you run it through.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fold_pasta"
+      ],
+      "next": [
+        "fold_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Now it's time to roll the dough out properly, working it through all the settings on the machine, from the widest down to around the narrowest. Lightly dust both sides of the pasta with a little flour every time you run it through."
+        }
+      ]
+    },
+    {
+      "id": "fold_pasta",
+      "descr": "When you've got down to the narrowest setting, to give...",
+      "instructions": "When you've got down to the narrowest setting, to give yourself a tidy sheet of pasta, fold the pasta in half lengthways, then in half again, then in half again once more until you've got a square-ish piece of dough. Turn it 90 degrees and feed it through the machine at the widest setting. As you roll it down through the settings for the last time, you should end up with a lovely rectangular silky sheet of dough with straight sides - just like a real pro! If your dough is a little cracked at the edges, fold it in half just once, click the machine back two settings and feed it through again. That should sort things out.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_dough"
+      ],
+      "next": [
+        "top_making"
+      ],
+      "on_enter": [
+        {
+          "say": "When you've got down to the narrowest setting, to give yourself a tidy sheet of pasta, fold the pasta in half lengthways, then in half again, then in half again once more until you've got a square-ish piece of dough. Turn it 90 degrees and feed it through the machine at the widest setting. As you roll it down through the settings for the last time, you should end up with a lovely rectangular silky sheet of dough with straight sides - just like a real pro! If your dough is a little cracked at the edges, fold it in half just once, click the machine back two settings and feed it through again. That should sort things out."
+        }
+      ]
+    },
+    {
+      "id": "top_making",
+      "descr": "Whether you're rolling by hand or by machine you'll need...",
+      "instructions": "Whether you're rolling by hand or by machine you'll need to know when to stop. If you're making pasta like tagliatelle, lasagne or stracchi you'll need to roll the pasta down to between the thickness of a beer mat and a playing card; if you're making a stuffed pasta like ravioli or tortellini, you'll need to roll it down slightly thinner or to the point where you can clearly see your hand or lines of newsprint through it.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fold_pasta"
+      ],
+      "next": [
+        "top_drying"
+      ],
+      "on_enter": [
+        {
+          "say": "Whether you're rolling by hand or by machine you'll need to know when to stop. If you're making pasta like tagliatelle, lasagne or stracchi you'll need to roll the pasta down to between the thickness of a beer mat and a playing card; if you're making a stuffed pasta like ravioli or tortellini, you'll need to roll it down slightly thinner or to the point where you can clearly see your hand or lines of newsprint through it."
+        }
+      ]
+    },
+    {
+      "id": "top_drying",
+      "descr": "Once you've rolled your pasta the way you want it, you...",
+      "instructions": "Once you've rolled your pasta the way you want it, you need to shape or cut it straight away. Pasta dries much quicker than you think, so whatever recipe you're doing, don't leave it more than a minute or two before cutting or shaping it. You can lay over a damp clean tea towel which will stop it from drying.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "top_making"
+      ],
+      "on_enter": [
+        {
+          "say": "Once you've rolled your pasta the way you want it, you need to shape or cut it straight away. Pasta dries much quicker than you think, so whatever recipe you're doing, don't leave it more than a minute or two before cutting or shaping it. You can lay over a damp clean tea towel which will stop it from drying."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "415 calories",
+    "carbohydrates": "67.6 g",
+    "fat": "7 g",
+    "fiber": "2.6 g",
+    "protein": "21.1 g"
+  }
+}

@@ -1,0 +1,481 @@
+{
+  "recipe": {
+    "id": "lamb-red-wine-stew",
+    "title": "Lamb & red wine stew",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT150M",
+    "description": "This slow-cooked lamb stew recipe is so simple to prepare and gives consistently good results. If you don\u2019t want a straight-up casserole, or are looking for ways to use up leftovers,  I\u2019ve given you two topping variations",
+    "tags": [
+      "easter-treats",
+      "occasion"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/lamb/lamb-and-red-wine-stew",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8a50749f488df86a85a510bca10780c39608ff79-958x1280.jpg/105859580?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8a50749f488df86a85a510bca10780c39608ff79-958x1280.jpg/105859580?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8a50749f488df86a85a510bca10780c39608ff79-958x1280.jpg/105859580?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8a50749f488df86a85a510bca10780c39608ff79-958x1280.jpg/105859580?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "lamb"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bay-leaf",
+      "name": "bay leaf",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 3.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "stewing-lamb",
+      "name": "stewing lamb",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine",
+      "name": "red wine",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chopped-tomatoes",
+      "name": "400g tin of chopped tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dumplings",
+      "name": "DUMPLINGS",
+      "quantity": null,
+      "unit": null,
+      "note": "OPTIONAL"
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cold-unsalted-butter",
+      "name": "cold unsalted butter",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "shepherd-s-pie-topping",
+      "name": "SHEPHERD'S PIE TOPPING",
+      "quantity": null,
+      "unit": null,
+      "note": "OPTIONAL"
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "splash-of-milk",
+      "name": "splash of milk",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-knob-of-unsalted-butter",
+      "name": "large knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 1.0,
+      "unit": "sprig",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "bowl",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_sticks"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "chop_sticks",
+      "descr": "Trim the ends off the celery and roughly chop the sticks",
+      "instructions": "Trim the ends off the celery and roughly chop the sticks. Peel and roughly chop the onions. Peel the carrots, slice them lengthways and roughly chop.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_vegetables"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the ends off the celery and roughly chop the sticks. Peel and roughly chop the onions. Peel the carrots, slice them lengthways and roughly chop."
+        }
+      ]
+    },
+    {
+      "id": "heat_vegetables",
+      "descr": "Put a casserole pan on a medium heat",
+      "instructions": "Put a casserole pan on a medium heat. Put all the vegetables, bay and rosemary into the pan with 2 tablespoons of olive oil and fry for 10 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_sticks"
+      ],
+      "next": [
+        "dice_lamb"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a casserole pan on a medium heat. Put all the vegetables, bay and rosemary into the pan with 2 tablespoons of olive oil and fry for 10 minutes."
+        }
+      ]
+    },
+    {
+      "id": "dice_lamb",
+      "descr": "Dice the lamb into roughly 2cm cubes (if it isn\u2019t...",
+      "instructions": "Dice the lamb into roughly 2cm cubes (if it isn\u2019t already), then add to the pan with the flour.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_vegetables"
+      ],
+      "next": [
+        "stir_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "Dice the lamb into roughly 2cm cubes (if it isn\u2019t already), then add to the pan with the flour."
+        }
+      ]
+    },
+    {
+      "id": "stir_pinch",
+      "descr": "Pour in the wine and tomatoes",
+      "instructions": "Pour in the wine and tomatoes. Give it a good stir, then season with a pinch of sea salt and a few grinds of black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "dice_lamb"
+      ],
+      "next": [
+        "heat_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the wine and tomatoes. Give it a good stir, then season with a pinch of sea salt and a few grinds of black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_your",
+      "descr": "Bring to the boil, put the lid on and cook in the oven...",
+      "instructions": "Bring to the boil, put the lid on and cook in the oven for 2 hours 30 minutes, or until the meat is tender and delicious, removing the lid for the final 30 minutes and adding a splash of water if it looks too dry. (You could also simmer over a medium-low heat on your hob if you prefer.)",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "stir_pinch"
+      ],
+      "next": [
+        "season_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, put the lid on and cook in the oven for 2 hours 30 minutes, or until the meat is tender and delicious, removing the lid for the final 30 minutes and adding a splash of water if it looks too dry. (You could also simmer over a medium-low heat on your hob if you prefer.)"
+        }
+      ]
+    },
+    {
+      "id": "season_taste",
+      "descr": "Remove the bay leaf and rosemary stalks, season to...",
+      "instructions": "Remove the bay leaf and rosemary stalks, season to taste, then serve. Or finish it off with one of these toppings\u2026",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_your"
+      ],
+      "next": [
+        "preheat_turn"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the bay leaf and rosemary stalks, season to taste, then serve. Or finish it off with one of these toppings\u2026"
+        }
+      ]
+    },
+    {
+      "id": "preheat_turn",
+      "descr": "TO MAKE THE DUMPLINGS Preheat or turn the oven up to...",
+      "instructions": "TO MAKE THE DUMPLINGS Preheat or turn the oven up to 190\u00b0C/375\u00b0F/gas 5.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_taste"
+      ],
+      "next": [
+        "add_splash"
+      ],
+      "on_enter": [
+        {
+          "say": "TO MAKE THE DUMPLINGS Preheat or turn the oven up to 190\u00b0C/375\u00b0F/gas 5."
+        }
+      ]
+    },
+    {
+      "id": "add_splash",
+      "descr": "Put the flour and a pinch of sea salt and black pepper...",
+      "instructions": "Put the flour and a pinch of sea salt and black pepper into a bowl, then grate in the cold butter. Using your fingers, gently rub in the butter until it begins to resemble breadcrumbs. Then add a splash of cold water to help bind it into a dough.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_turn"
+      ],
+      "next": [
+        "stir_step_10"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the flour and a pinch of sea salt and black pepper into a bowl, then grate in the cold butter. Using your fingers, gently rub in the butter until it begins to resemble breadcrumbs. Then add a splash of cold water to help bind it into a dough."
+        }
+      ]
+    },
+    {
+      "id": "stir_step_10",
+      "descr": "Divide the dough into 12 pieces and gently roll each...",
+      "instructions": "Divide the dough into 12 pieces and gently roll each into a round dumpling. The dumplings will suck up quite a bit of moisture, so if your stew looks dry, add a cup of boiling water and give it a good stir.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_splash"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide the dough into 12 pieces and gently roll each into a round dumpling. The dumplings will suck up quite a bit of moisture, so if your stew looks dry, add a cup of boiling water and give it a good stir."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Place the dumplings on top of your stew and press down...",
+      "instructions": "Place the dumplings on top of your stew and press down lightly, so they\u2019re half submerged. Cook in the oven, or on the hob over a medium heat, with the lid on for 30 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "stir_step_10"
+      ],
+      "next": [
+        "preheat_turn"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the dumplings on top of your stew and press down lightly, so they\u2019re half submerged. Cook in the oven, or on the hob over a medium heat, with the lid on for 30 minutes."
+        }
+      ]
+    },
+    {
+      "id": "preheat_turn",
+      "descr": "TO MAKE SHEPHERD'S PIE Preheat or turn the oven up to...",
+      "instructions": "TO MAKE SHEPHERD'S PIE Preheat or turn the oven up to 190\u00b0C/375\u00b0F/gas 5. Transfer your cooked stew to a large baking dish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "TO MAKE SHEPHERD'S PIE Preheat or turn the oven up to 190\u00b0C/375\u00b0F/gas 5. Transfer your cooked stew to a large baking dish."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "Peel the potatoes, cut them in half into even-sized...",
+      "instructions": "Peel the potatoes, cut them in half into even-sized pieces, and put them into a pan of salted, boiling water. Boil for about 10 minutes or until tender, then drain, steam dry and return them to the pan.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "preheat_turn"
+      ],
+      "next": [
+        "add_milk"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the potatoes, cut them in half into even-sized pieces, and put them into a pan of salted, boiling water. Boil for about 10 minutes or until tender, then drain, steam dry and return them to the pan."
+        }
+      ]
+    },
+    {
+      "id": "add_milk",
+      "descr": "Add the milk, butter and a pinch of salt and pepper,...",
+      "instructions": "Add the milk, butter and a pinch of salt and pepper, then mash until smooth and creamy, adding another splash of milk if necessary.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "top_stew"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the milk, butter and a pinch of salt and pepper, then mash until smooth and creamy, adding another splash of milk if necessary."
+        }
+      ]
+    },
+    {
+      "id": "top_stew",
+      "descr": "Roughly top the stew with the mashed potato (don\u2019t worry...",
+      "instructions": "Roughly top the stew with the mashed potato (don\u2019t worry about it being smooth and even), pick over a few rosemary leaves and lightly push them into the potato.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_milk"
+      ],
+      "next": [
+        "drizzle_some"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly top the stew with the mashed potato (don\u2019t worry about it being smooth and even), pick over a few rosemary leaves and lightly push them into the potato."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_some",
+      "descr": "Drizzle with some olive oil, lightly coating the...",
+      "instructions": "Drizzle with some olive oil, lightly coating the rosemary leaves, then cook in the oven for 25 minutes, or until golden and bubbling.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1500S",
+      "depends_on": [
+        "top_stew"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle with some olive oil, lightly coating the rosemary leaves, then cook in the oven for 25 minutes, or until golden and bubbling."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "501 calories",
+    "carbohydrates": "22.6 g",
+    "fat": "22.8 g",
+    "fiber": "3.6 g",
+    "protein": "31.8 g"
+  }
+}

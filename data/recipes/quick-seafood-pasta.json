@@ -1,0 +1,323 @@
+{
+  "recipe": {
+    "id": "quick-seafood-pasta",
+    "title": "Quick seafood pasta",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "You can\u2019t beat a good seafood linguine and this recipe is super-quick and delicious.",
+    "tags": [
+      "pasta",
+      "valentine-s-day",
+      "pasta-amp-risotto",
+      "course",
+      "dish-type",
+      "mains",
+      "seafood",
+      "occasion",
+      "italian",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/quick-seafood-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ac61bb0979794c561e01079658f2d7a5c2e722f4-958x1280.jpg/134449920?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ac61bb0979794c561e01079658f2d7a5c2e722f4-958x1280.jpg/134449920?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ac61bb0979794c561e01079658f2d7a5c2e722f4-958x1280.jpg/134449920?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/ac61bb0979794c561e01079658f2d7a5c2e722f4-958x1280.jpg/134449920?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-linguine",
+      "name": "dried linguine",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "squid",
+      "name": "squid",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "gutted, cleaned, from sustainable sources"
+    },
+    {
+      "id": "mussels",
+      "name": "mussels",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "scrubbed, debearded, from sustainable sources"
+    },
+    {
+      "id": "cockles-or-clams",
+      "name": "cockles or clams",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "scrubbed, from sustainable sources"
+    },
+    {
+      "id": "scallops-with-roe-attached",
+      "name": "scallops with roe attached",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "from sustainable sources"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "fresh-flat-leaf-parsley",
+      "name": "fresh flat-leaf parsley",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-1-fresh-red-chilli",
+      "name": "optional: 1 fresh red chilli",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-capers",
+      "name": "baby capers",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "optional-1-handful-of-samphire",
+      "name": "optional: 1 handful of samphire",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-quality-plum-tomat",
+      "name": "400g tin of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "boil_salted",
+      "descr": "Cook 300g of dried linguine in a large pan of boiling...",
+      "instructions": "Cook 300g of dried linguine in a large pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of starchy water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_squid"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook 300g of dried linguine in a large pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of starchy water."
+        }
+      ]
+    },
+    {
+      "id": "slice_squid",
+      "descr": "Meanwhile, slice 250g of squid into 1cm rings, sort...",
+      "instructions": "Meanwhile, slice 250g of squid into 1cm rings, sort through 250g of mussels and 250g of cockles (or clams), giving any that aren\u2019t tightly closed a tap. If they don\u2019t close, discard them. Slice the 4 scallops.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "chop_bunch"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, slice 250g of squid into 1cm rings, sort through 250g of mussels and 250g of cockles (or clams), giving any that aren\u2019t tightly closed a tap. If they don\u2019t close, discard them. Slice the 4 scallops."
+        }
+      ]
+    },
+    {
+      "id": "chop_bunch",
+      "descr": "Peel and finely slice 1 clove of garlic, pick and finely...",
+      "instructions": "Peel and finely slice 1 clove of garlic, pick and finely chop 1 bunch of fresh flat-leaf parsley (30g), and finely grate the zest of \u00bd a lemon. Trim and finely chop 1 fresh red chilli (if using).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_squid"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice 1 clove of garlic, pick and finely chop 1 bunch of fresh flat-leaf parsley (30g), and finely grate the zest of \u00bd a lemon. Trim and finely chop 1 fresh red chilli (if using)."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Place a large non-stick pan on a medium-high heat with 1...",
+      "instructions": "Place a large non-stick pan on a medium-high heat with 1 tablespoon of olive oil. Add the garlic, chilli and 1 tablespoon of baby capers, cook for 1 minute, then add the clams and mussels. Cook for a couple of minutes, then add the squid, scallops, lemon zest and parsley, and give it a good stir.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_bunch"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large non-stick pan on a medium-high heat with 1 tablespoon of olive oil. Add the garlic, chilli and 1 tablespoon of baby capers, cook for 1 minute, then add the clams and mussels. Cook for a couple of minutes, then add the squid, scallops, lemon zest and parsley, and give it a good stir."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Scrunch in 1 x 400g tin of plum tomatoes through your...",
+      "instructions": "Scrunch in 1 x 400g tin of plum tomatoes through your clean hands, bring to the boil, then reduce the heat and simmer for 2 minutes to let the flavours mingle, stirring regularly and breaking up the tomatoes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "stir_handful"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrunch in 1 x 400g tin of plum tomatoes through your clean hands, bring to the boil, then reduce the heat and simmer for 2 minutes to let the flavours mingle, stirring regularly and breaking up the tomatoes."
+        }
+      ]
+    },
+    {
+      "id": "stir_handful",
+      "descr": "Stir in 1 handful of samphire (if using) and squeeze in...",
+      "instructions": "Stir in 1 handful of samphire (if using) and squeeze in the juice of \u00bd a lemon. Give the pan a jiggle and simmer for 1 minute more, or until perfectly cooked (discarding any shells that remain closed).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "heat_carefully"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in 1 handful of samphire (if using) and squeeze in the juice of \u00bd a lemon. Give the pan a jiggle and simmer for 1 minute more, or until perfectly cooked (discarding any shells that remain closed)."
+        }
+      ]
+    },
+    {
+      "id": "heat_carefully",
+      "descr": "Remove the pan from the heat and carefully pick the meat...",
+      "instructions": "Remove the pan from the heat and carefully pick the meat out of the shells, if you like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_handful"
+      ],
+      "next": [
+        "add_extra"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pan from the heat and carefully pick the meat out of the shells, if you like."
+        }
+      ]
+    },
+    {
+      "id": "add_extra",
+      "descr": "Grate in 20g of Parmesan, then taste and season to...",
+      "instructions": "Grate in 20g of Parmesan, then taste and season to perfection, adding an extra squeeze of lemon juice, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_carefully"
+      ],
+      "next": [
+        "step_step_9"
+      ],
+      "on_enter": [
+        {
+          "say": "Grate in 20g of Parmesan, then taste and season to perfection, adding an extra squeeze of lemon juice, if needed."
+        }
+      ]
+    },
+    {
+      "id": "step_step_9",
+      "descr": "Toss the pasta into the sauce, loosening with a splash...",
+      "instructions": "Toss the pasta into the sauce, loosening with a splash of pasta water, if needed, then finish with a kiss of extra virgin olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_extra"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss the pasta into the sauce, loosening with a splash of pasta water, if needed, then finish with a kiss of extra virgin olive oil."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "507 calories",
+    "carbohydrates": "68.3 g",
+    "fat": "11.5 g",
+    "fiber": "5 g",
+    "protein": "36.6 g"
+  }
+}

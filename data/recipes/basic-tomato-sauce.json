@@ -1,0 +1,194 @@
+{
+  "recipe": {
+    "id": "basic-tomato-sauce",
+    "title": "Basic tomato sauce",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "This easy tomato sauce recipe from Jamie Oliver is so versatile. Perfect for stirring through pasta, as a homemade pizza topping, or use to make a lasagne!",
+    "tags": [
+      "penguin-anniversary-edition",
+      "sauce",
+      "tomato-sauce",
+      "dish-type",
+      "sauces",
+      "sides-and-sauces",
+      "tomato",
+      "sauces-amp-condiments",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/basic-tomato-sauce",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1adee1d2881e6cdce8bd35112c84b11a13ce5be1-958x1280.jpg/89248537?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1adee1d2881e6cdce8bd35112c84b11a13ce5be1-958x1280.jpg/89248537?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1adee1d2881e6cdce8bd35112c84b11a13ce5be1-958x1280.jpg/89248537?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1adee1d2881e6cdce8bd35112c84b11a13ce5be1-958x1280.jpg/89248537?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-clove-of-garlic",
+      "name": "large clove of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-dried-red-chilli",
+      "name": "small dried red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-italian-p",
+      "name": "\u00d7 400g tins of quality Italian plum tomatoes",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "fresh-basil-or-marjoram",
+      "name": "fresh basil or marjoram",
+      "quantity": 1.0,
+      "unit": "handful",
+      "note": "or both"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "chop_garlic",
+      "descr": "Peel and finely chop the garlic, then gently fry in a...",
+      "instructions": "Peel and finely chop the garlic, then gently fry in a thick-bottomed pan with 2 tablespoons of olive oil. Crumble in the chilli, add the oregano and tomatoes.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_gently"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the garlic, then gently fry in a thick-bottomed pan with 2 tablespoons of olive oil. Crumble in the chilli, add the oregano and tomatoes."
+        }
+      ]
+    },
+    {
+      "id": "mix_gently",
+      "descr": "Mix gently, but do not break up the tomatoes as this...",
+      "instructions": "Mix gently, but do not break up the tomatoes as this will release the pips, which will make the sauce slightly bitter \u2013 by leaving the tomatoes whole and letting the mixture cook slowly you\u2019ll get a nice sweet sauce. (You can remove the pips from the tomatoes if you want, but I don\u2019t bother.) Bring to the boil and simmer gently for 1 hour.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "chop_garlic"
+      ],
+      "next": [
+        "chop_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix gently, but do not break up the tomatoes as this will release the pips, which will make the sauce slightly bitter \u2013 by leaving the tomatoes whole and letting the mixture cook slowly you\u2019ll get a nice sweet sauce. (You can remove the pips from the tomatoes if you want, but I don\u2019t bother.) Bring to the boil and simmer gently for 1 hour."
+        }
+      ]
+    },
+    {
+      "id": "chop_tomatoes",
+      "descr": "Add the vinegar to the pan, then stir and chop up the...",
+      "instructions": "Add the vinegar to the pan, then stir and chop up the tomatoes in the sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_gently"
+      ],
+      "next": [
+        "chop_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the vinegar to the pan, then stir and chop up the tomatoes in the sauce."
+        }
+      ]
+    },
+    {
+      "id": "chop_step_4",
+      "descr": "Pick the basil or marjoram and roughly chop, then add to...",
+      "instructions": "Pick the basil or marjoram and roughly chop, then add to the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_tomatoes"
+      ],
+      "next": [
+        "season_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick the basil or marjoram and roughly chop, then add to the pan."
+        }
+      ]
+    },
+    {
+      "id": "season_well",
+      "descr": "Season well to taste with sea salt and black pepper, and...",
+      "instructions": "Season well to taste with sea salt and black pepper, and finish with 2-3 tablespoons of extra virgin olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Season well to taste with sea salt and black pepper, and finish with 2-3 tablespoons of extra virgin olive oil."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "115 calories",
+    "carbohydrates": "7.8 g",
+    "fat": "8.6 g",
+    "fiber": "1.8 g",
+    "protein": "2.4 g"
+  }
+}

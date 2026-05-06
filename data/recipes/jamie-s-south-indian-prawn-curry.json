@@ -1,0 +1,297 @@
+{
+  "recipe": {
+    "id": "jamie-s-south-indian-prawn-curry",
+    "title": "Jamie's South Indian prawn curry",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT25M",
+    "description": "A quick and easy Indian prawn curry recipe from Jamie Oliver. This curry is ready in just 25 minutes, so it's a real weeknight winner. Great with naan bread",
+    "tags": [
+      "dinner-for-two",
+      "curry",
+      "quick-easy",
+      "indian-style",
+      "prawn",
+      "seafood"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/seafood/jamie-s-south-indian-prawn-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/75da182feb0c7fc220babc93672bae44dfc3dbd4-958x1280.png/46325051?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/75da182feb0c7fc220babc93672bae44dfc3dbd4-958x1280.png/46325051?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/75da182feb0c7fc220babc93672bae44dfc3dbd4-958x1280.png/46325051?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/75da182feb0c7fc220babc93672bae44dfc3dbd4-958x1280.png/46325051?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "seafood"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 7.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-green-chilli",
+      "name": "fresh green chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-tomatoes",
+      "name": "ripe tomatoes",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "basmati-rice",
+      "name": "basmati rice",
+      "quantity": 175.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vegetable-oil",
+      "name": "vegetable oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "black-mustard-seeds",
+      "name": "black mustard seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "teaspoons-garam-masala",
+      "name": "\u00bd teaspoons garam masala",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "teaspoon-ground-turmeric",
+      "name": "\u00be teaspoon ground turmeric",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-raw-peeled-tiger-prawns",
+      "name": "large raw peeled tiger prawns",
+      "quantity": 120.0,
+      "unit": "g",
+      "note": "from sustainable sources"
+    },
+    {
+      "id": "x-400g-tin-of-light-coconut-mi",
+      "name": "\u00bd x 400g tin of light coconut milk",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "lime",
+      "name": "lime",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "ladle",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "heat_bring",
+      "descr": "Fill a medium pan with salted water, place over a high...",
+      "instructions": "Fill a medium pan with salted water, place over a high heat and bring to a boil.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Fill a medium pan with salted water, place over a high heat and bring to a boil."
+        }
+      ]
+    },
+    {
+      "id": "chop_tomatoes",
+      "descr": "Peel and finely slice the garlic and onion, then peel...",
+      "instructions": "Peel and finely slice the garlic and onion, then peel and finely grate the ginger. Halve and deseed the chilli, then finely slice. Roughly chop the tomatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_bring"
+      ],
+      "next": [
+        "heat_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the garlic and onion, then peel and finely grate the ginger. Halve and deseed the chilli, then finely slice. Roughly chop the tomatoes."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_3",
+      "descr": "Add the rice to the boiling water and cook for 10...",
+      "instructions": "Add the rice to the boiling water and cook for 10 minutes, or until tender. Drain in a sieve, then return to the warm pan, cover with a lid and set aside off the heat.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_tomatoes"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the rice to the boiling water and cook for 10 minutes, or until tender. Drain in a sieve, then return to the warm pan, cover with a lid and set aside off the heat."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Heat 2 tablespoons of oil in a medium pan over a medium...",
+      "instructions": "Heat 2 tablespoons of oil in a medium pan over a medium heat, add the mustard seeds, garam masala and turmeric, then fry for 1 minute.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "heat_step_3"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 2 tablespoons of oil in a medium pan over a medium heat, add the mustard seeds, garam masala and turmeric, then fry for 1 minute."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Add the onion, garlic and ginger, then fry for 10...",
+      "instructions": "Add the onion, garlic and ginger, then fry for 10 minutes, or until softened. Add the chilli, tomatoes and a splash of water, then turn the heat up and cook for a further 3 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "heat_slightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the onion, garlic and ginger, then fry for 10 minutes, or until softened. Add the chilli, tomatoes and a splash of water, then turn the heat up and cook for a further 3 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_slightly",
+      "descr": "Next, add the prawns and coconut milk, bring to the boil...",
+      "instructions": "Next, add the prawns and coconut milk, bring to the boil then reduce the heat slightly and simmer gently for 3 to 4 minutes, or until the prawns are just cooked.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "heat_cook"
+      ],
+      "next": [
+        "stir_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Next, add the prawns and coconut milk, bring to the boil then reduce the heat slightly and simmer gently for 3 to 4 minutes, or until the prawns are just cooked."
+        }
+      ]
+    },
+    {
+      "id": "stir_through",
+      "descr": "Stir through the spinach and cook for a further 1 to 2...",
+      "instructions": "Stir through the spinach and cook for a further 1 to 2 minutes until the spinach has wilted.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_slightly"
+      ],
+      "next": [
+        "season_prawn"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir through the spinach and cook for a further 1 to 2 minutes until the spinach has wilted."
+        }
+      ]
+    },
+    {
+      "id": "season_prawn",
+      "descr": "Divide the rice between plates",
+      "instructions": "Divide the rice between plates. Season the prawn curry to taste with salt, black pepper and a squeeze of lime juice, then ladle the curry onto the rice. Serve with the remaining lime, cut into wedges for squeezing over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide the rice between plates. Season the prawn curry to taste with salt, black pepper and a squeeze of lime juice, then ladle the curry onto the rice. Serve with the remaining lime, cut into wedges for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "642 calories",
+    "carbohydrates": "92.4 g",
+    "fat": "22.5 g",
+    "fiber": "5.1 g",
+    "protein": "24.0 g"
+  }
+}

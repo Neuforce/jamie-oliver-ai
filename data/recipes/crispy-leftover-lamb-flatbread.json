@@ -1,0 +1,264 @@
+{
+  "recipe": {
+    "id": "crispy-leftover-lamb-flatbread",
+    "title": "Crispy leftover lamb flatbread",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT25M",
+    "description": "Super-quick and delicious gnarly spiced-lamb flatbread, topped with fresh rainbow slaw, cooling yoghurt and chilli sauce. ",
+    "tags": [
+      "lamb",
+      "leftovers",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/lamb/crispy-leftover-lamb-flatbread",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2731d0e9f9b0f618f5cc31bea2f3ce24c3efa637-957x1280.jpg/120942568?rect=0,162,957,957&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2731d0e9f9b0f618f5cc31bea2f3ce24c3efa637-957x1280.jpg/120942568?rect=0,162,957,957&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2731d0e9f9b0f618f5cc31bea2f3ce24c3efa637-957x1280.jpg/120942568?rect=0,281,957,718&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2731d0e9f9b0f618f5cc31bea2f3ce24c3efa637-957x1280.jpg/120942568?rect=0,371,957,538&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "lamb"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-cabbage",
+      "name": "red cabbage",
+      "quantity": 180.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "radishes",
+      "name": "radishes",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mint",
+      "name": "mint",
+      "quantity": 5.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "lemons",
+      "name": "lemons",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "leftover-roast-lamb",
+      "name": "leftover roast lamb",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "ground-coriander",
+      "name": "ground coriander",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "greek-style-yoghurt",
+      "name": "Greek-style yoghurt",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "optional-chilli-sauce",
+      "name": "optional: chilli sauce",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "large bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mix_together",
+      "descr": "Place the flour in a large bowl with a tiny pinch of...",
+      "instructions": "Place the flour in a large bowl with a tiny pinch of salt and 100ml of cold water. Mix together with a fork until it starts to come together, then use your hand to gently knead into a soft dough and set aside to rest.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_mint"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the flour in a large bowl with a tiny pinch of salt and 100ml of cold water. Mix together with a fork until it starts to come together, then use your hand to gently knead into a soft dough and set aside to rest."
+        }
+      ]
+    },
+    {
+      "id": "chop_mint",
+      "descr": "Coarsely grate the carrot, cabbage and radishes into a...",
+      "instructions": "Coarsely grate the carrot, cabbage and radishes into a large bowl. Pick and roughly chop the mint leaves, saving a few smaller ones for later, and add to the bowl. Squeeze over the juice of \u00bd a lemon, season to perfection, and set aside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_together"
+      ],
+      "next": [
+        "heat_dough"
+      ],
+      "on_enter": [
+        {
+          "say": "Coarsely grate the carrot, cabbage and radishes into a large bowl. Pick and roughly chop the mint leaves, saving a few smaller ones for later, and add to the bowl. Squeeze over the juice of \u00bd a lemon, season to perfection, and set aside."
+        }
+      ]
+    },
+    {
+      "id": "heat_dough",
+      "descr": "Place a large, non-stick frying pan over a high heat",
+      "instructions": "Place a large, non-stick frying pan over a high heat. Roll out the dough on a flour-dusted surface until just under \u00bd cm thick. Lay into the dry pan and cook for 1\u00bd minutes on each side, until golden and charred.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_mint"
+      ],
+      "next": [
+        "chop_lamb"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large, non-stick frying pan over a high heat. Roll out the dough on a flour-dusted surface until just under \u00bd cm thick. Lay into the dry pan and cook for 1\u00bd minutes on each side, until golden and charred."
+        }
+      ]
+    },
+    {
+      "id": "chop_lamb",
+      "descr": "Meanwhile, roughly chop the lamb and place in a bowl...",
+      "instructions": "Meanwhile, roughly chop the lamb and place in a bowl with the coriander, oregano, the zest of 1 lemon, 1 teaspoon of olive oil, a pinch of salt and pepper, and gently toss to combine.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_dough"
+      ],
+      "next": [
+        "heat_lamb"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, roughly chop the lamb and place in a bowl with the coriander, oregano, the zest of 1 lemon, 1 teaspoon of olive oil, a pinch of salt and pepper, and gently toss to combine."
+        }
+      ]
+    },
+    {
+      "id": "heat_lamb",
+      "descr": "Place a medium frying pan on a high heat, add the lamb...",
+      "instructions": "Place a medium frying pan on a high heat, add the lamb and fry for 10 minutes, until golden and crispy. Squeeze over the lemon juice, drizzle with the honey and toss it all together.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_lamb"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a medium frying pan on a high heat, add the lamb and fry for 10 minutes, until golden and crispy. Squeeze over the lemon juice, drizzle with the honey and toss it all together."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Lay the flatbread over the lamb in the pan and gently...",
+      "instructions": "Lay the flatbread over the lamb in the pan and gently push down to soak up the lovely juices, then turn out onto a board.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_lamb"
+      ],
+      "next": [
+        "drizzle_yoghurt"
+      ],
+      "on_enter": [
+        {
+          "say": "Lay the flatbread over the lamb in the pan and gently push down to soak up the lovely juices, then turn out onto a board."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_yoghurt",
+      "descr": "Pile the slaw over the lamb, sprinkle with the reserved...",
+      "instructions": "Pile the slaw over the lamb, sprinkle with the reserved mint leaves, and drizzle with yoghurt and a drizzle of chilli sauce, if you like. Roll up, cut in half and serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Pile the slaw over the lamb, sprinkle with the reserved mint leaves, and drizzle with yoghurt and a drizzle of chilli sauce, if you like. Roll up, cut in half and serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "520 calories",
+    "carbohydrates": "44.7 g",
+    "fat": "27.8 g",
+    "fiber": "3.5 g",
+    "protein": "25.7 g"
+  }
+}

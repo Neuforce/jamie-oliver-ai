@@ -1,0 +1,212 @@
+{
+  "recipe": {
+    "id": "easy-egg-bean-filo-twists",
+    "title": "Easy egg & bean filo twists",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT22M",
+    "description": "This filo recipe is a real treat! Made with pre-made pastry it is perfect for a delicious brunch or a light snack. ",
+    "tags": [
+      "beans",
+      "healthy-snacks",
+      "breakfast-brunch",
+      "egg",
+      "pastry",
+      "snacks",
+      "vegetarian",
+      "pepper",
+      "salsa",
+      "cheese"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/egg/easy-egg-bean-filo-twists",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/edc64e742ef6cfda786c7817a4a050464b6d3dae-853x1280.jpg/162657369?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/edc64e742ef6cfda786c7817a4a050464b6d3dae-853x1280.jpg/162657369?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/edc64e742ef6cfda786c7817a4a050464b6d3dae-853x1280.jpg/162657369?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/edc64e742ef6cfda786c7817a4a050464b6d3dae-853x1280.jpg/162657369?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "egg"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sheets-of-filo-pastry",
+      "name": "sheets of filo pastry",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-haricot-beans",
+      "name": "400g tins of haricot beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-harissa-past",
+      "name": "heaped tablespoon harissa paste",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-tomato-pur-",
+      "name": "heaped tablespoons tomato pur\u00e9e",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sesame-seeds",
+      "name": "sesame seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "mixed-colour-peppers",
+      "name": "mixed-colour peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dill",
+      "name": "dill",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "20g"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Spritz 2 sheets of filo with olive oil, line up the two short sides so they slightly overlap, then scrunch up lengthways and twist into a nest about 15cm wide, making sure it has a base. Place on an oil-spritzed baking tray, and repeat.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Spritz 2 sheets of filo with olive oil, line up the two short sides so they slightly overlap, then scrunch up lengthways and twist into a nest about 15cm wide, making sure it has a base. Place on an oil-spritzed baking tray, and repeat."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Drain the beans, toss with the harissa, tomato pur\u00e9e and...",
+      "instructions": "Drain the beans, toss with the harissa, tomato pur\u00e9e and \u00bd a tablespoon of red wine vinegar, then divide evenly between the filo nests. Crack an egg onto each one, season with sea salt and black pepper, grate over the cheese, then divide and sprinkle over the sesame seeds. Bake for 15 minutes, or until golden and crisp.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_peppers"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the beans, toss with the harissa, tomato pur\u00e9e and \u00bd a tablespoon of red wine vinegar, then divide evenly between the filo nests. Crack an egg onto each one, season with sea salt and black pepper, grate over the cheese, then divide and sprinkle over the sesame seeds. Bake for 15 minutes, or until golden and crisp."
+        }
+      ]
+    },
+    {
+      "id": "chop_peppers",
+      "descr": "Meanwhile, deseed and very finely chop the peppers",
+      "instructions": "Meanwhile, deseed and very finely chop the peppers. Trim and finely chop the spring onions. Finely chop the dill, mix together, then dress with 2 tablespoons of red wine vinegar, 1 tablespoon of extra virgin olive oil, and a good pinch of salt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "sprinkle_over"
+      ],
+      "next": [
+        "serve_filo"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, deseed and very finely chop the peppers. Trim and finely chop the spring onions. Finely chop the dill, mix together, then dress with 2 tablespoons of red wine vinegar, 1 tablespoon of extra virgin olive oil, and a good pinch of salt."
+        }
+      ]
+    },
+    {
+      "id": "serve_filo",
+      "descr": "Serve the egg filo twists with the pepper salsa on the side",
+      "instructions": "Serve the egg filo twists with the pepper salsa on the side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_peppers"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve the egg filo twists with the pepper salsa on the side."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "400 calories",
+    "carbohydrates": "42.3 g",
+    "fat": "17.1 g",
+    "fiber": "11.3 g",
+    "protein": "22.5 g"
+  }
+}

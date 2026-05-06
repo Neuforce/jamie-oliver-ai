@@ -1,0 +1,205 @@
+{
+  "recipe": {
+    "id": "chicken-berry-grain-bowl",
+    "title": "Chicken & berry grain bowl",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT21M",
+    "description": "Try Jamie's healthy chicken grain bowl, with glorious grains and blistered blueberries.",
+    "tags": [
+      "dinner-for-two",
+      "chicken",
+      "healthy",
+      "lentils",
+      "quick-healthy",
+      "healthy-lunches",
+      "feta",
+      "healthy-dinners",
+      "healthy-chicken",
+      "chicken-breast",
+      "mint",
+      "lemon",
+      "grains-pulses"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-and-berry-grain-bowl",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e85156677758fdb9671d129f474715052f7b4ad9-1024x1280.jpg/163881229?rect=0,128,1024,1024&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e85156677758fdb9671d129f474715052f7b4ad9-1024x1280.jpg/163881229?rect=0,128,1024,1024&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e85156677758fdb9671d129f474715052f7b4ad9-1024x1280.jpg/163881229?rect=0,256,1024,768&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e85156677758fdb9671d129f474715052f7b4ad9-1024x1280.jpg/163881229?rect=0,352,1024,576&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "150g-skinless-free-range-chick",
+      "name": "150g skinless free-range chicken breasts",
+      "quantity": 150.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ras-el-hanout",
+      "name": "ras el hanout",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "blueberries",
+      "name": "blueberries",
+      "quantity": 160.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "250g-packet-of-cooked-mixed-gr",
+      "name": "250g packet of cooked mixed grains",
+      "quantity": 250.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-lentils",
+      "name": "400g tin of lentils",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 160.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-mint",
+      "name": "\u00bd a bunch of mint",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "feta-cheese",
+      "name": "feta cheese",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "pan",
+    "peeler"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Lightly score the thickest part of the chicken and...",
+      "instructions": "Lightly score the thickest part of the chicken and season with sea salt, black pepper and the ras el hanout. Place in a large non-stick frying pan on a medium-high heat with 1 tablespoon of olive oil and cook for 5 minutes, or until golden, turning halfway.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "heat_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Lightly score the thickest part of the chicken and season with sea salt, black pepper and the ras el hanout. Place in a large non-stick frying pan on a medium-high heat with 1 tablespoon of olive oil and cook for 5 minutes, or until golden, turning halfway."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_2",
+      "descr": "Peel and finely slice the garlic, use a speed-peeler to...",
+      "instructions": "Peel and finely slice the garlic, use a speed-peeler to strip the lemon peel into small pieces and add both to the pan. Cook for 2 minutes, or until the garlic is golden, then move the garlic on top of the chicken and add the blueberries. Once they start to pop and the chicken is cooked through, remove it all to a board, leaving the pan on the heat.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "add_peas"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the garlic, use a speed-peeler to strip the lemon peel into small pieces and add both to the pan. Cook for 2 minutes, or until the garlic is golden, then move the garlic on top of the chicken and add the blueberries. Once they start to pop and the chicken is cooked through, remove it all to a board, leaving the pan on the heat."
+        }
+      ]
+    },
+    {
+      "id": "add_peas",
+      "descr": "Tip in the grains with the lentils, juice and all",
+      "instructions": "Tip in the grains with the lentils, juice and all. Reduce for 2 minutes, then add the peas and cook until hot through. Squeeze in half the lemon juice, season to perfection and divide between serving bowls with the blueberries.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "heat_step_2"
+      ],
+      "next": [
+        "slice_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip in the grains with the lentils, juice and all. Reduce for 2 minutes, then add the peas and cook until hot through. Squeeze in half the lemon juice, season to perfection and divide between serving bowls with the blueberries."
+        }
+      ]
+    },
+    {
+      "id": "slice_chicken",
+      "descr": "Slice and add the chicken, plus any resting juices",
+      "instructions": "Slice and add the chicken, plus any resting juices. Pick over the mint and crumble over the feta. Serve with lemon wedges and extra ras el hanout.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_peas"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice and add the chicken, plus any resting juices. Pick over the mint and crumble over the feta. Serve with lemon wedges and extra ras el hanout."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "595 calories",
+    "carbohydrates": "63.3 g",
+    "fat": "12.7 g",
+    "fiber": "16.6 g",
+    "protein": "55.8 g"
+  }
+}

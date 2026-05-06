@@ -1,0 +1,190 @@
+{
+  "recipe": {
+    "id": "oaty-fridge-balls-2-tasty-ways",
+    "title": "Oaty fridge balls: 2 tasty ways",
+    "servings": 20,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT13M",
+    "description": "These oaty fridge bites are perfect for snacking on the go. With 2 delicious and satisfying combos, this snack will keep you full between meals! ",
+    "tags": [
+      "healthy-snacks",
+      "mango",
+      "vegan",
+      "snacks",
+      "vegetarian",
+      "low-lactose",
+      "chocolate",
+      "dairy-free"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/healthy-snacks/oaty-fridge-balls-2-tasty-ways",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/075950373c5f5a66a590a4a83945d3317d7ca6c8-969x1279.jpg/163881236?rect=0,156,969,969&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/075950373c5f5a66a590a4a83945d3317d7ca6c8-969x1279.jpg/163881236?rect=0,156,969,969&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/075950373c5f5a66a590a4a83945d3317d7ca6c8-969x1279.jpg/163881236?rect=0,277,969,727&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/075950373c5f5a66a590a4a83945d3317d7ca6c8-969x1279.jpg/163881236?rect=0,368,969,545&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "healthy-snacks"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "almond",
+      "name": "ALMOND",
+      "quantity": null,
+      "unit": null,
+      "note": "APRICOT & CHOC"
+    },
+    {
+      "id": "dark-chocolate",
+      "name": "dark chocolate",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": "70%"
+    },
+    {
+      "id": "dried-apricots",
+      "name": "dried apricots",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "toasted-flaked-almonds",
+      "name": "toasted flaked almonds",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "porridge-oats",
+      "name": "porridge oats",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "soft-pitted-dates",
+      "name": "soft pitted dates",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cocoa-powder",
+      "name": "cocoa powder",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": "for dusting"
+    },
+    {
+      "id": "mango",
+      "name": "MANGO",
+      "quantity": null,
+      "unit": null,
+      "note": "COCONUT & VANILLA"
+    },
+    {
+      "id": "dried-mango",
+      "name": "dried mango",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "desiccated-coconut",
+      "name": "desiccated coconut",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "porridge-oats",
+      "name": "porridge oats",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "soft-pitted-dates",
+      "name": "soft pitted dates",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vanilla-bean-paste",
+      "name": "vanilla bean paste",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor"
+  ],
+  "steps": [
+    {
+      "id": "coat_step_1",
+      "descr": "For the Almond, apricot & choc combo, snap the chocolate...",
+      "instructions": "For the Almond, apricot & choc combo, snap the chocolate into a food processor, then blitz with everything but the cocoa powder until fine and starting to come together. Divide into 20 and, with clean wet hands, roll into balls. Put the cocoa and balls into a shallow bowl, and gently shake until well coated.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_balls"
+      ],
+      "on_enter": [
+        {
+          "say": "For the Almond, apricot & choc combo, snap the chocolate into a food processor, then blitz with everything but the cocoa powder until fine and starting to come together. Divide into 20 and, with clean wet hands, roll into balls. Put the cocoa and balls into a shallow bowl, and gently shake until well coated."
+        }
+      ]
+    },
+    {
+      "id": "add_balls",
+      "descr": "For the Mango, coconut & vanilla, in a food processor,...",
+      "instructions": "For the Mango, coconut & vanilla, in a food processor, blitz everything with 1 tablespoon of water until fine and starting to come together. Divide into 20 and, with clean wet hands, roll into balls. Put some extra coconut into a shallow bowl, add the balls and gently shake until well coated.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "coat_step_1"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "For the Mango, coconut & vanilla, in a food processor, blitz everything with 1 tablespoon of water until fine and starting to come together. Divide into 20 and, with clean wet hands, roll into balls. Put some extra coconut into a shallow bowl, add the balls and gently shake until well coated."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "For both versions, pop the balls into the fridge or...",
+      "instructions": "For both versions, pop the balls into the fridge or freezer, ready to enjoy as and when you want one! They\u2019ll last for up to 1 week in the fridge and 3 months in the freezer.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_balls"
+      ],
+      "on_enter": [
+        {
+          "say": "For both versions, pop the balls into the fridge or freezer, ready to enjoy as and when you want one! They\u2019ll last for up to 1 week in the fridge and 3 months in the freezer."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "63 calories",
+    "carbohydrates": "6.4 g",
+    "fat": "3.7 g",
+    "fiber": "1.4 g",
+    "protein": "1.7 g"
+  }
+}

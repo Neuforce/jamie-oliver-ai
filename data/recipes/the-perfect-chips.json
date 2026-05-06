@@ -1,0 +1,220 @@
+{
+  "recipe": {
+    "id": "the-perfect-chips",
+    "title": "The perfect chips",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "This super-simple homemade chips recipe shows you how to fry chips at home with brilliant results. Great dunked into tomato ketchup or mayonnaise \u2013 naughty!",
+    "tags": [
+      "main-ingredient",
+      "vegetable-sides",
+      "vegan",
+      "course",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "father-s-day",
+      "sides",
+      "low-lactose",
+      "gluten-free",
+      "vegetables",
+      "potato",
+      "dairy-free",
+      "occasion",
+      "frying",
+      "chips"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/the-perfect-chips",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/02b914477eef6b6a213af4f935454bc05f254247-973x1300.jpg/02b914477eef6b6a213af4f935454bc05f254247-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/02b914477eef6b6a213af4f935454bc05f254247-973x1300.jpg/02b914477eef6b6a213af4f935454bc05f254247-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/02b914477eef6b6a213af4f935454bc05f254247-973x1300.jpg/02b914477eef6b6a213af4f935454bc05f254247-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/02b914477eef6b6a213af4f935454bc05f254247-973x1300.jpg/02b914477eef6b6a213af4f935454bc05f254247-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "maris-piper-potatoes",
+      "name": "Maris Piper potatoes",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sunflower-oil",
+      "name": "sunflower oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "pan",
+    "pot",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Three obvious things are important on your journey to...",
+      "instructions": "Three obvious things are important on your journey to perfection \u2013 your choice of potato, your choice of oil and your choice of salt. For me, the Maris Piper potato wins every time, and you want to use nice large ones.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Three obvious things are important on your journey to perfection \u2013 your choice of potato, your choice of oil and your choice of salt. For me, the Maris Piper potato wins every time, and you want to use nice large ones."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "On oil, sunflower and sunseed are very efficient, and...",
+      "instructions": "On oil, sunflower and sunseed are very efficient, and many people swear by using groundnut oil. But, if you\u2019re after flavour, cooking chips in beef tallow (rendered beef fat you can get from your butcher) gives you better flavour and colour \u2013 the choice is yours.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "On oil, sunflower and sunseed are very efficient, and many people swear by using groundnut oil. But, if you\u2019re after flavour, cooking chips in beef tallow (rendered beef fat you can get from your butcher) gives you better flavour and colour \u2013 the choice is yours."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Finally, on salt, being an Essex boy, in my house it has...",
+      "instructions": "Finally, on salt, being an Essex boy, in my house it has to be Maldon sea salt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "chop_maris"
+      ],
+      "on_enter": [
+        {
+          "say": "Finally, on salt, being an Essex boy, in my house it has to be Maldon sea salt."
+        }
+      ]
+    },
+    {
+      "id": "chop_maris",
+      "descr": "So down to business: chop 800g of Maris Piper potatoes...",
+      "instructions": "So down to business: chop 800g of Maris Piper potatoes into finger-sized chips, leaving the skin on \u2013 don\u2019t be too exact.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "heat_unless"
+      ],
+      "on_enter": [
+        {
+          "say": "So down to business: chop 800g of Maris Piper potatoes into finger-sized chips, leaving the skin on \u2013 don\u2019t be too exact."
+        }
+      ]
+    },
+    {
+      "id": "heat_unless",
+      "descr": "Chip shops have massive industrial fryers, which you...",
+      "instructions": "Chip shops have massive industrial fryers, which you can\u2019t recreate at home, so you need to use a large sturdy pan on a medium to high heat (unless you own a deep-fat fryer, of course). Your oil should be 8cm deep, but never fill your pan more than half full. If you don\u2019t have a thermometer, use a raw chip, and as it starts to float and fry the temperature should be about 140\u00b0C, which is perfect for blanching.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_maris"
+      ],
+      "next": [
+        "cool_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Chip shops have massive industrial fryers, which you can\u2019t recreate at home, so you need to use a large sturdy pan on a medium to high heat (unless you own a deep-fat fryer, of course). Your oil should be 8cm deep, but never fill your pan more than half full. If you don\u2019t have a thermometer, use a raw chip, and as it starts to float and fry the temperature should be about 140\u00b0C, which is perfect for blanching."
+        }
+      ]
+    },
+    {
+      "id": "cool_step_6",
+      "descr": "Use a large metal sieve to gently lower the chips into...",
+      "instructions": "Use a large metal sieve to gently lower the chips into the pan for around 8 minutes, or until soft but not coloured, then remove to a tray to cool.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "heat_unless"
+      ],
+      "next": [
+        "heat_under"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a large metal sieve to gently lower the chips into the pan for around 8 minutes, or until soft but not coloured, then remove to a tray to cool."
+        }
+      ]
+    },
+    {
+      "id": "heat_under",
+      "descr": "Turn the heat up under the oil and return one blanched...",
+      "instructions": "Turn the heat up under the oil and return one blanched chip to the oil as a guide again. Once it\u2019s floating and golden the temperature should be about 180\u00b0C, which is perfect for frying and will give you chips with those all-important crispy outsides and fluffy middles.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cool_step_6"
+      ],
+      "next": [
+        "fry_chips"
+      ],
+      "on_enter": [
+        {
+          "say": "Turn the heat up under the oil and return one blanched chip to the oil as a guide again. Once it\u2019s floating and golden the temperature should be about 180\u00b0C, which is perfect for frying and will give you chips with those all-important crispy outsides and fluffy middles."
+        }
+      ]
+    },
+    {
+      "id": "fry_chips",
+      "descr": "At this stage you may want to cook your chips in...",
+      "instructions": "At this stage you may want to cook your chips in 2-portion batches, so you don\u2019t decrease the temperature of the oil too much or overcrowd the pan. Fry the chips until beautifully golden, then remove to a bowl lined with kitchen paper, shake around a bit, season with sea salt and serve right away.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_under"
+      ],
+      "on_enter": [
+        {
+          "say": "At this stage you may want to cook your chips in 2-portion batches, so you don\u2019t decrease the temperature of the oil too much or overcrowd the pan. Fry the chips until beautifully golden, then remove to a bowl lined with kitchen paper, shake around a bit, season with sea salt and serve right away."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "330 calories",
+    "carbohydrates": "34.8 g",
+    "fat": "20.3 g",
+    "fiber": "2.6 g",
+    "protein": "4 g"
+  }
+}

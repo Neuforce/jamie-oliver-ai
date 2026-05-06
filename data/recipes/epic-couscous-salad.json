@@ -1,0 +1,293 @@
+{
+  "recipe": {
+    "id": "epic-couscous-salad",
+    "title": "Epic couscous salad",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "This beautiful couscous number is piled high with roasted veg, feta, pomegranate and fresh herbs. A joy to eat hot or cold!",
+    "tags": [
+      "summer",
+      "vegetarian",
+      "vegetable",
+      "salad",
+      "tomato",
+      "barbecue",
+      "couscous",
+      "feta"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/epic-couscous-salad",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b103489742738c33c92e0a8567e41d39b01343e5-853x1279.jpg/162944882?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b103489742738c33c92e0a8567e41d39b01343e5-853x1279.jpg/162944882?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b103489742738c33c92e0a8567e41d39b01343e5-853x1279.jpg/162944882?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b103489742738c33c92e0a8567e41d39b01343e5-853x1279.jpg/162944882?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "ripe-mixed-colour-tomatoes",
+      "name": "ripe mixed-colour tomatoes",
+      "quantity": 700.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "fresh-mint",
+      "name": "fresh mint",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mug-of-couscous",
+      "name": "mug of couscous",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "300g"
+    },
+    {
+      "id": "aubergine",
+      "name": "aubergine",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "courgette",
+      "name": "courgette",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-red-onion",
+      "name": "large red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "romano-peppers",
+      "name": "Romano peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "feta-cheese",
+      "name": "feta cheese",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "oregano",
+      "name": "oregano",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "fresh-soft-herbs",
+      "name": "fresh soft herbs",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g, such as flat-leaf parsley, mint, basil"
+    },
+    {
+      "id": "a-pomegranate",
+      "name": "\u00bd a pomegranate",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-shelled-pistachios",
+      "name": "unsalted shelled pistachios",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "optional-extra-virgin-oil",
+      "name": "optional: extra virgin oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shop-jamie-s-serveware",
+      "name": "Shop Jamie's serveware",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "super-server",
+      "name": "Super Server",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "oven",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "chop_tomatoes",
+      "descr": "Roughly chop the tomatoes, peel the garlic and place in...",
+      "instructions": "Roughly chop the tomatoes, peel the garlic and place in a blender. Tear in the mint, reserving a handful of nice baby leaves. Add 2 tablespoons of red wine vinegar, 1 tablespoon of water and a pinch of sea salt, then blitz until smooth (work in batches, if needed). Pour the mixture through a coarse sieve into a deep enamel tray or bowl. Season to perfection, tasting and tweaking, then stir in the couscous, cover, and leave to rehydrate in the fridge for 1 hour.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly chop the tomatoes, peel the garlic and place in a blender. Tear in the mint, reserving a handful of nice baby leaves. Add 2 tablespoons of red wine vinegar, 1 tablespoon of water and a pinch of sea salt, then blitz until smooth (work in batches, if needed). Pour the mixture through a coarse sieve into a deep enamel tray or bowl. Season to perfection, tasting and tweaking, then stir in the couscous, cover, and leave to rehydrate in the fridge for 1 hour."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Meanwhile, preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Meanwhile, preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_tomatoes"
+      ],
+      "next": [
+        "drizzle_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, preheat the oven to 180\u00b0C/350\u00b0F/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_tablespoons",
+      "descr": "Trim and cut the aubergine and courgette into 8...",
+      "instructions": "Trim and cut the aubergine and courgette into 8 lengthways, peel and cut the onion into quarters, deseed the peppers and cut into quarters lengthways. Place it all in a large roasting tray, drizzle with 2 tablespoons of oil, lightly season and toss together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "drizzle_honey"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim and cut the aubergine and courgette into 8 lengthways, peel and cut the onion into quarters, deseed the peppers and cut into quarters lengthways. Place it all in a large roasting tray, drizzle with 2 tablespoons of oil, lightly season and toss together."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_honey",
+      "descr": "Rub the feta with a little oil, strip over the oregano...",
+      "instructions": "Rub the feta with a little oil, strip over the oregano leaves, drizzle with the honey, then place in the centre of the tray and roast for 30 minutes, or until everything is lightly golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "drizzle_tablespoons"
+      ],
+      "next": [
+        "chop_soft"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub the feta with a little oil, strip over the oregano leaves, drizzle with the honey, then place in the centre of the tray and roast for 30 minutes, or until everything is lightly golden."
+        }
+      ]
+    },
+    {
+      "id": "chop_soft",
+      "descr": "Pick and finely chop the soft herbs, reserving a few...",
+      "instructions": "Pick and finely chop the soft herbs, reserving a few small leaves for garnish, toss through the couscous with the roasted veg, then crumble over the feta.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_honey"
+      ],
+      "next": [
+        "drizzle_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the soft herbs, reserving a few small leaves for garnish, toss through the couscous with the roasted veg, then crumble over the feta."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_tablespoon",
+      "descr": "Hold the pomegranate half cut-side down in your fingers...",
+      "instructions": "Hold the pomegranate half cut-side down in your fingers and bash the back of it with a spoon so the seeds tumble over the couscous. Scatter over the reserved herb leaves, then bash and sprinkle over the pistachios. Drizzle with 1 tablespoon of extra virgin olive oil, if you like, then tuck in!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_soft"
+      ],
+      "on_enter": [
+        {
+          "say": "Hold the pomegranate half cut-side down in your fingers and bash the back of it with a spoon so the seeds tumble over the couscous. Scatter over the reserved herb leaves, then bash and sprinkle over the pistachios. Drizzle with 1 tablespoon of extra virgin olive oil, if you like, then tuck in!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "522 calories",
+    "carbohydrates": "81.9 g",
+    "fat": "16.1 g",
+    "fiber": "11 g",
+    "protein": "18.4 g"
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "recipe": {
+    "id": "amazing-yorkies",
+    "title": "Amazing Yorkies",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "Learn how to make the perfect Yorkshire puddings with Jamie Oliver's easy Yorkshire pudding recipe \u2013 it's the perfect accompaniment to any Sunday roast!",
+    "tags": [
+      "christmas",
+      "yorkshire-puddings",
+      "course",
+      "dish-type",
+      "vegetarian",
+      "method",
+      "non-promotable",
+      "eggs",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/eggs/amazing-yorkies",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d9d1b6d4eba2fe37806c5849ee11434becdaeb4e-973x1300.jpg/d9d1b6d4eba2fe37806c5849ee11434becdaeb4e-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d9d1b6d4eba2fe37806c5849ee11434becdaeb4e-973x1300.jpg/d9d1b6d4eba2fe37806c5849ee11434becdaeb4e-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d9d1b6d4eba2fe37806c5849ee11434becdaeb4e-973x1300.jpg/d9d1b6d4eba2fe37806c5849ee11434becdaeb4e-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d9d1b6d4eba2fe37806c5849ee11434becdaeb4e-973x1300.jpg/d9d1b6d4eba2fe37806c5849ee11434becdaeb4e-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "eggs"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "vegetable-oil",
+      "name": "vegetable oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 225\u00b0C/425\u00b0F/gas 9",
+      "instructions": "Preheat the oven to 225\u00b0C/425\u00b0F/gas 9.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "pour_vegetable"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 225\u00b0C/425\u00b0F/gas 9."
+        }
+      ]
+    },
+    {
+      "id": "pour_vegetable",
+      "descr": "Get yourself a cupcake tin and pour 1cm of vegetable oil...",
+      "instructions": "Get yourself a cupcake tin and pour 1cm of vegetable oil into each of the 12 compartments.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Get yourself a cupcake tin and pour 1cm of vegetable oil into each of the 12 compartments."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Pop into the oven for 10 to 15 minutes so the oil gets...",
+      "instructions": "Pop into the oven for 10 to 15 minutes so the oil gets really hot.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "pour_vegetable"
+      ],
+      "next": [
+        "beat_eggs"
+      ],
+      "on_enter": [
+        {
+          "say": "Pop into the oven for 10 to 15 minutes so the oil gets really hot."
+        }
+      ]
+    },
+    {
+      "id": "beat_eggs",
+      "descr": "Meanwhile, beat the eggs, flour, milk and a pinch of...",
+      "instructions": "Meanwhile, beat the eggs, flour, milk and a pinch of salt and pepper together in a jug until light and smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "pour_batter"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, beat the eggs, flour, milk and a pinch of salt and pepper together in a jug until light and smooth."
+        }
+      ]
+    },
+    {
+      "id": "pour_batter",
+      "descr": "Carefully remove the tray from the oven, then...",
+      "instructions": "Carefully remove the tray from the oven, then confidently pour the batter evenly into the compartments.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "beat_eggs"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully remove the tray from the oven, then confidently pour the batter evenly into the compartments."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Pop the tray back in the oven to cook for 12 to 15...",
+      "instructions": "Pop the tray back in the oven to cook for 12 to 15 minutes, or until risen and golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "pour_batter"
+      ],
+      "on_enter": [
+        {
+          "say": "Pop the tray back in the oven to cook for 12 to 15 minutes, or until risen and golden."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "73 calories",
+    "carbohydrates": "6.9 g",
+    "fat": "4.3 g",
+    "fiber": "0.3 g",
+    "protein": "2.3 g"
+  }
+}

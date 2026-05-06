@@ -1,0 +1,280 @@
+{
+  "recipe": {
+    "id": "trevor-s-chicken",
+    "title": "Trevor's chicken",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "This beautifully cooked chicken stuffed with mushrooms and encased in golden pastry is an absolute classic.",
+    "tags": [
+      "chicken",
+      "pastry",
+      "meat",
+      "the-naked-chef",
+      "mains",
+      "chicken-breast",
+      "dinner",
+      "mushroom"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/my-old-man-s-superb-chicken",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a542b08b197001abc5fbd4de5d4891a9d54f0ad6-958x1280.jpg/139738482?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a542b08b197001abc5fbd4de5d4891a9d54f0ad6-958x1280.jpg/139738482?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a542b08b197001abc5fbd4de5d4891a9d54f0ad6-958x1280.jpg/139738482?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a542b08b197001abc5fbd4de5d4891a9d54f0ad6-958x1280.jpg/139738482?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-flat-leaf-parsley",
+      "name": "fresh flat-leaf parsley",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "a-lemon",
+      "name": "\u00bd a lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "chicken-breasts",
+      "name": "chicken breasts",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "skin off"
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": null,
+      "unit": null,
+      "note": "for dusting"
+    },
+    {
+      "id": "ready-rolled-puff-pastry",
+      "name": "ready-rolled puff pastry",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-egg",
+      "name": "large egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-wholegrain-",
+      "name": "heaped tablespoons wholegrain mustard",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "white-wine",
+      "name": "white wine",
+      "quantity": 150.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "double-cream",
+      "name": "double cream",
+      "quantity": 150.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "cranberry-sauce",
+      "name": "cranberry sauce",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "optional-extra-virgin-olive-oi",
+      "name": "optional: extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "frying pan",
+    "knife",
+    "oven",
+    "pan",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Place a large non-stick frying pan on a medium-high heat...",
+      "instructions": "Place a large non-stick frying pan on a medium-high heat with 2 tablespoons of olive oil. Peel, finely slice and add the garlic. Finely slice half the mushrooms, roughly tearing up the rest and transferring to the pan as you go. Season to perfection with a pinch of sea salt and black pepper and cook for 10 minutes, or until beautifully golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_transfer"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large non-stick frying pan on a medium-high heat with 2 tablespoons of olive oil. Peel, finely slice and add the garlic. Finely slice half the mushrooms, roughly tearing up the rest and transferring to the pan as you go. Season to perfection with a pinch of sea salt and black pepper and cook for 10 minutes, or until beautifully golden."
+        }
+      ]
+    },
+    {
+      "id": "heat_transfer",
+      "descr": "Finely slice and add the parsley stalks, then roughly...",
+      "instructions": "Finely slice and add the parsley stalks, then roughly chop and toss in the leaves. Squeeze in a little lemon juice, remove from the heat and transfer to a board to cool completely (at this stage you can chop the stuffing a little bit finer, if you like, or leave it chunky).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "slice_thickest"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely slice and add the parsley stalks, then roughly chop and toss in the leaves. Squeeze in a little lemon juice, remove from the heat and transfer to a board to cool completely (at this stage you can chop the stuffing a little bit finer, if you like, or leave it chunky)."
+        }
+      ]
+    },
+    {
+      "id": "slice_thickest",
+      "descr": "Use the tip of a sharp knife to slice into the thickest...",
+      "instructions": "Use the tip of a sharp knife to slice into the thickest part of each chicken breast and create a pocket. Divide and stuff in the mushrooms, then shape the breasts back into their original form, sealing the stuffing inside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_transfer"
+      ],
+      "next": [
+        "slice_pastry"
+      ],
+      "on_enter": [
+        {
+          "say": "Use the tip of a sharp knife to slice into the thickest part of each chicken breast and create a pocket. Divide and stuff in the mushrooms, then shape the breasts back into their original form, sealing the stuffing inside."
+        }
+      ]
+    },
+    {
+      "id": "slice_pastry",
+      "descr": "On a clean, flour-dusted surface, slice the pastry...",
+      "instructions": "On a clean, flour-dusted surface, slice the pastry lengthways into 4 pieces, and wrap around each chicken breast, transferring to a large oiled baking tray as you go. Beat the egg and brush it over the pastry, then roast in the oven for 35 minutes, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2100S",
+      "depends_on": [
+        "slice_thickest"
+      ],
+      "next": [
+        "heat_allow"
+      ],
+      "on_enter": [
+        {
+          "say": "On a clean, flour-dusted surface, slice the pastry lengthways into 4 pieces, and wrap around each chicken breast, transferring to a large oiled baking tray as you go. Beat the egg and brush it over the pastry, then roast in the oven for 35 minutes, or until golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "heat_allow",
+      "descr": "While the chicken is cooking, place the mustard and...",
+      "instructions": "While the chicken is cooking, place the mustard and white wine into a frying pan on a medium-high heat and allow to reduce until you\u2019ve cooked away the alcohol. Pour in the cream and simmer until the sauce coats the back of a spoon, then remove from the heat and season to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_pastry"
+      ],
+      "next": [
+        "slice_each"
+      ],
+      "on_enter": [
+        {
+          "say": "While the chicken is cooking, place the mustard and white wine into a frying pan on a medium-high heat and allow to reduce until you\u2019ve cooked away the alcohol. Pour in the cream and simmer until the sauce coats the back of a spoon, then remove from the heat and season to taste."
+        }
+      ]
+    },
+    {
+      "id": "slice_each",
+      "descr": "Slice each chicken breast into 3 and serve with the...",
+      "instructions": "Slice each chicken breast into 3 and serve with the mustard sauce, a dollop of cranberry sauce, and finish with a little drizzle of extra virgin olive oil, if you like. Delicious served with steamed greens and fluffy mashed potatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_allow"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice each chicken breast into 3 and serve with the mustard sauce, a dollop of cranberry sauce, and finish with a little drizzle of extra virgin olive oil, if you like. Delicious served with steamed greens and fluffy mashed potatoes."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "423 calories",
+    "carbohydrates": "19.2 g",
+    "fat": "26.5 g",
+    "fiber": "1.8 g",
+    "protein": "22.8 g"
+  }
+}

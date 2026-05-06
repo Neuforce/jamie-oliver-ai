@@ -1,0 +1,153 @@
+{
+  "recipe": {
+    "id": "chocolate-orange-pots",
+    "title": "Chocolate orange pots",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT12M",
+    "description": "When only chocolate will do, these pots are sweet, tangy, comforting, silky and utterly delicious. Super quick and easy to make as a weeknight dessert!",
+    "tags": [
+      "tofu",
+      "dessert",
+      "yoghurt",
+      "quick-easy",
+      "orange",
+      "chocolate",
+      "fruit",
+      "quick-healthy"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chocolate/chocolate-orange-pots",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9de5e507827055936e12ed442aa901f8e8931fc-853x1279.jpg/163032099?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9de5e507827055936e12ed442aa901f8e8931fc-853x1279.jpg/163032099?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9de5e507827055936e12ed442aa901f8e8931fc-853x1279.jpg/163032099?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9de5e507827055936e12ed442aa901f8e8931fc-853x1279.jpg/163032099?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chocolate"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "pitted-medjool-dates",
+      "name": "pitted Medjool dates",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "blanched-hazelnuts",
+      "name": "blanched hazelnuts",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "silken-tofu",
+      "name": "silken tofu",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cocoa-powder",
+      "name": "cocoa powder",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "orange",
+      "name": "orange",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-greek-or-pl",
+      "name": "heaped tablespoons Greek or plant-based yoghurt",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "seasonal-fruit",
+      "name": "seasonal fruit",
+      "quantity": null,
+      "unit": null,
+      "note": "such as oranges, cherries, strawberries, raspberries, to serve"
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "frying pan",
+    "pan",
+    "pot",
+    "spatula"
+  ],
+  "steps": [
+    {
+      "id": "fry_lightly",
+      "descr": "In a bowl, just cover the dates with boiling kettle...",
+      "instructions": "In a bowl, just cover the dates with boiling kettle water and leave to soak for 5 minutes, then drain. Toast the hazelnuts in a small frying pan until lightly golden, shaking regularly, then crush in a pestle and mortar until fine.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "cube_have"
+      ],
+      "on_enter": [
+        {
+          "say": "In a bowl, just cover the dates with boiling kettle water and leave to soak for 5 minutes, then drain. Toast the hazelnuts in a small frying pan until lightly golden, shaking regularly, then crush in a pestle and mortar until fine."
+        }
+      ]
+    },
+    {
+      "id": "cube_have",
+      "descr": "Put the dates in a blender with the tofu and cocoa",
+      "instructions": "Put the dates in a blender with the tofu and cocoa. Finely grate in the orange zest, squeeze in the juice, add 1 ice cube, if you have it, and blitz until super-smooth, stopping to scrape down the sides with a spatula a few times.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fry_lightly"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the dates in a blender with the tofu and cocoa. Finely grate in the orange zest, squeeze in the juice, add 1 ice cube, if you have it, and blitz until super-smooth, stopping to scrape down the sides with a spatula a few times."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Decant the mixture between little pots, glasses or cups,...",
+      "instructions": "Decant the mixture between little pots, glasses or cups, and either eat right away, or cover and stash in the fridge until you want them (up to 3 days). Serve each pot with a spoonful of yoghurt, a sprinkling of crushed hazelnuts and some extra fruit, of your choice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "cube_have"
+      ],
+      "on_enter": [
+        {
+          "say": "Decant the mixture between little pots, glasses or cups, and either eat right away, or cover and stash in the fridge until you want them (up to 3 days). Serve each pot with a spoonful of yoghurt, a sprinkling of crushed hazelnuts and some extra fruit, of your choice."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "142 calories",
+    "carbohydrates": "13.1 g",
+    "fat": "6.6 g",
+    "fiber": "0.3 g",
+    "protein": "8.4 g"
+  }
+}

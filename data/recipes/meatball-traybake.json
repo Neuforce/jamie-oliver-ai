@@ -1,0 +1,229 @@
+{
+  "recipe": {
+    "id": "meatball-traybake",
+    "title": "Meatball traybake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "A fantastic veggie-packed meatball traybake, with 5 portions of your daily veg in one plateful!",
+    "tags": [
+      "healthy",
+      "family-favourites",
+      "vegetable",
+      "healthy-dinners",
+      "gluten-free",
+      "tomato",
+      "meatball",
+      "pepper",
+      "carrot",
+      "lemon",
+      "fennel",
+      "bonfire-night"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beans/meatball-traybake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cd6ceaf60d3f43a201979059d0efbd2537a88bb2-1009x1279.jpg/163194098?rect=0,136,1009,1009&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cd6ceaf60d3f43a201979059d0efbd2537a88bb2-1009x1279.jpg/163194098?rect=0,136,1009,1009&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cd6ceaf60d3f43a201979059d0efbd2537a88bb2-1009x1279.jpg/163194098?rect=0,262,1009,757&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/cd6ceaf60d3f43a201979059d0efbd2537a88bb2-1009x1279.jpg/163194098?rect=0,356,1009,568&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beans"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-bulb-of-fennel",
+      "name": "large bulb of fennel",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-cannellini-beans",
+      "name": "400g tin of cannellini beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-beef-or-pork-mi",
+      "name": "higher-welfare beef or pork mince",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "460g-jar-of-roasted-red-pepper",
+      "name": "460g jar of roasted red peppers",
+      "quantity": 460.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "feta-cheese",
+      "name": "feta cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "optional-extra-virgin-olive-oi",
+      "name": "optional: extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "frying pan",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Trim the fennel, reserving any leafy tops, peel the onions, then cut it all into wedges and place in a deep 30cm x 40cm roasting tray. Peel, halve and add the carrots. Toss with 1 tablespoon of olive oil, season with sea salt and black pepper, and roast for 40 minutes.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Trim the fennel, reserving any leafy tops, peel the onions, then cut it all into wedges and place in a deep 30cm x 40cm roasting tray. Peel, halve and add the carrots. Toss with 1 tablespoon of olive oil, season with sea salt and black pepper, and roast for 40 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Meanwhile, drain the beans and pulse a couple of times...",
+      "instructions": "Meanwhile, drain the beans and pulse a couple of times in a food processor. Add the mince and oregano, season, and pulse until just combined. With clean wet hands, divide the mixture into 12, roll into balls, then place in a large non-stick frying pan on a medium-high heat with 2 tablespoons of oil and cook until golden all over, turning regularly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "pour_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, drain the beans and pulse a couple of times in a food processor. Add the mince and oregano, season, and pulse until just combined. With clean wet hands, divide the mixture into 12, roll into balls, then place in a large non-stick frying pan on a medium-high heat with 2 tablespoons of oil and cook until golden all over, turning regularly."
+        }
+      ]
+    },
+    {
+      "id": "pour_tomatoes",
+      "descr": "Pour the tomatoes and peppers, juice and all, into the...",
+      "instructions": "Pour the tomatoes and peppers, juice and all, into the processor (there\u2019s no need to clean it). Finely grate and reserve the lemon zest, then squeeze the juice into the processor, season, and blitz until smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "pour_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the tomatoes and peppers, juice and all, into the processor (there\u2019s no need to clean it). Finely grate and reserve the lemon zest, then squeeze the juice into the processor, season, and blitz until smooth."
+        }
+      ]
+    },
+    {
+      "id": "pour_sauce",
+      "descr": "Remove the tray from the oven, pour the sauce over the...",
+      "instructions": "Remove the tray from the oven, pour the sauce over the veg, then evenly sit the golden balls around the tray. Return to the oven for a final 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "pour_tomatoes"
+      ],
+      "next": [
+        "drizzle_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the tray from the oven, pour the sauce over the veg, then evenly sit the golden balls around the tray. Return to the oven for a final 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_little",
+      "descr": "To serve, crumble over the feta, sprinkle over the...",
+      "instructions": "To serve, crumble over the feta, sprinkle over the reserved lemon zest and any fennel tops, and drizzle with a little extra virgin olive oil, if you like. Great as it is, or with wholemeal toast, couscous, rice or spaghetti.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "pour_sauce"
+      ],
+      "on_enter": [
+        {
+          "say": "To serve, crumble over the feta, sprinkle over the reserved lemon zest and any fennel tops, and drizzle with a little extra virgin olive oil, if you like. Great as it is, or with wholemeal toast, couscous, rice or spaghetti."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "441 calories",
+    "carbohydrates": "36.4 g",
+    "fat": "18.1 g",
+    "fiber": "13.3 g",
+    "protein": "33 g"
+  }
+}

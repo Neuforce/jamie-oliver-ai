@@ -1,0 +1,341 @@
+{
+  "recipe": {
+    "id": "a-killer-mac-n-cheese",
+    "title": "A killer mac 'n' cheese",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "This cheesy pasta bake is a proper weekend treat. Jamie Oliver\u2019s mac & cheese recipe is packed with oozy Cheddar and Parmesan, fresh tomatoes, and crunchy breadcrumbs.",
+    "tags": [
+      "main-ingredient",
+      "pasta",
+      "pasta-amp-risotto",
+      "baking",
+      "course",
+      "vegetarian",
+      "macaroni-cheese",
+      "mains",
+      "macaroni",
+      "dish-type",
+      "method",
+      "occasion",
+      "cheese"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/a-killer-mac-n-cheese",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3fa0f7cba314995cfd0b0623d5c4198124a5eb6b-973x1300.jpg/3fa0f7cba314995cfd0b0623d5c4198124a5eb6b-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3fa0f7cba314995cfd0b0623d5c4198124a5eb6b-973x1300.jpg/3fa0f7cba314995cfd0b0623d5c4198124a5eb6b-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3fa0f7cba314995cfd0b0623d5c4198124a5eb6b-973x1300.jpg/3fa0f7cba314995cfd0b0623d5c4198124a5eb6b-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3fa0f7cba314995cfd0b0623d5c4198124a5eb6b-973x1300.jpg/3fa0f7cba314995cfd0b0623d5c4198124a5eb6b-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 10.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 45.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-plain-flour",
+      "name": "heaped tablespoons plain flour",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 1.0,
+      "unit": "litre",
+      "note": null
+    },
+    {
+      "id": "dried-macaroni",
+      "name": "dried macaroni",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "tomatoes",
+      "name": "tomatoes",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-thyme",
+      "name": "a few sprigs of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-a-couple-of-splashes-",
+      "name": "optional: a couple of splashes of Worcestershire sauce",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-1-whole-nutmeg",
+      "name": "optional: 1 whole nutmeg",
+      "quantity": null,
+      "unit": null,
+      "note": "for grating"
+    },
+    {
+      "id": "big-handfuls-of-fresh-breadcru",
+      "name": "big handfuls of fresh breadcrumbs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan",
+    "pot",
+    "saucepan",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "slice_garlic",
+      "descr": "Peel and finely slice the garlic",
+      "instructions": "Peel and finely slice the garlic.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the garlic."
+        }
+      ]
+    },
+    {
+      "id": "heat_flour",
+      "descr": "Get a large pan of salted water on the boil",
+      "instructions": "Get a large pan of salted water on the boil. Melt the butter in a large ovenproof saucepan over a low heat, then add the flour and turn the heat up to medium, stirring all the time, until you get a paste \u2013 this is your roux.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_garlic"
+      ],
+      "next": [
+        "slice_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Get a large pan of salted water on the boil. Melt the butter in a large ovenproof saucepan over a low heat, then add the flour and turn the heat up to medium, stirring all the time, until you get a paste \u2013 this is your roux."
+        }
+      ]
+    },
+    {
+      "id": "slice_garlic",
+      "descr": "Add all the sliced garlic \u2013 don\u2019t worry about the amount...",
+      "instructions": "Add all the sliced garlic \u2013 don\u2019t worry about the amount because each slice will caramelise like toffee in the roux. Keep cooking and stirring until golden and the garlic is nice and sticky.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_flour"
+      ],
+      "next": [
+        "heat_tick"
+      ],
+      "on_enter": [
+        {
+          "say": "Add all the sliced garlic \u2013 don\u2019t worry about the amount because each slice will caramelise like toffee in the roux. Keep cooking and stirring until golden and the garlic is nice and sticky."
+        }
+      ]
+    },
+    {
+      "id": "heat_tick",
+      "descr": "Add the bay leaves and slowly whisk in the milk a little...",
+      "instructions": "Add the bay leaves and slowly whisk in the milk a little at a time to ensure you get a nice smooth sauce. Bring the mixture to the boil, then leave it on a low heat to simmer and tick away, stirring occasionally.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_garlic"
+      ],
+      "next": [
+        "preheat_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the bay leaves and slowly whisk in the milk a little at a time to ensure you get a nice smooth sauce. Bring the mixture to the boil, then leave it on a low heat to simmer and tick away, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "preheat_your",
+      "descr": "Preheat your oven to 220\u00b0C/425\u00b0F/gas 7",
+      "instructions": "Preheat your oven to 220\u00b0C/425\u00b0F/gas 7.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tick"
+      ],
+      "next": [
+        "chop_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat your oven to 220\u00b0C/425\u00b0F/gas 7."
+        }
+      ]
+    },
+    {
+      "id": "chop_tomatoes",
+      "descr": "Add the pasta to the pan of boiling salted water and...",
+      "instructions": "Add the pasta to the pan of boiling salted water and cook according to the packet instructions. Meanwhile, roughly chop the tomatoes on a board and season them well with sea salt and black pepper. Grate the Cheddar and Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_your"
+      ],
+      "next": [
+        "heat_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the pasta to the pan of boiling salted water and cook according to the packet instructions. Meanwhile, roughly chop the tomatoes on a board and season them well with sea salt and black pepper. Grate the Cheddar and Parmesan."
+        }
+      ]
+    },
+    {
+      "id": "heat_your",
+      "descr": "Drain the pasta and add it immediately to the sauce",
+      "instructions": "Drain the pasta and add it immediately to the sauce. Give it a good stir and take the pan off the heat. Stir in your grated cheeses, chopped tomatoes and pick in half of the thyme leaves. A little Worcestershire sauce added now is nice, and so is a little grating or two of nutmeg. Now work on the flavour \u2013 taste it and season it until it\u2019s hitting the right spot. You want it to be slightly too wet because it will thicken up again in the oven, so add a splash of water if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_tomatoes"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the pasta and add it immediately to the sauce. Give it a good stir and take the pan off the heat. Stir in your grated cheeses, chopped tomatoes and pick in half of the thyme leaves. A little Worcestershire sauce added now is nice, and so is a little grating or two of nutmeg. Now work on the flavour \u2013 taste it and season it until it\u2019s hitting the right spot. You want it to be slightly too wet because it will thicken up again in the oven, so add a splash of water if needed."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "If you\u2019ve made your sauce in an ovenproof casserole-type...",
+      "instructions": "If you\u2019ve made your sauce in an ovenproof casserole-type pan, leave everything in there; if not, transfer it to a deep earthenware dish. Bake it for 30 minutes in the oven, until golden, bubbling, crispy and delicious.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "heat_your"
+      ],
+      "next": [
+        "heat_toss"
+      ],
+      "on_enter": [
+        {
+          "say": "If you\u2019ve made your sauce in an ovenproof casserole-type pan, leave everything in there; if not, transfer it to a deep earthenware dish. Bake it for 30 minutes in the oven, until golden, bubbling, crispy and delicious."
+        }
+      ]
+    },
+    {
+      "id": "heat_toss",
+      "descr": "While it\u2019s cooking, put your breadcrumbs and the rest of...",
+      "instructions": "While it\u2019s cooking, put your breadcrumbs and the rest of the the thyme leaves into a pan with a few drizzles of olive oil over a medium heat. Stir and toss the crumbs around until crunchy and golden all over. Remove from the heat and tip into a nice bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "bake_minutes"
+      ],
+      "next": [
+        "serve_your"
+      ],
+      "on_enter": [
+        {
+          "say": "While it\u2019s cooking, put your breadcrumbs and the rest of the the thyme leaves into a pan with a few drizzles of olive oil over a medium heat. Stir and toss the crumbs around until crunchy and golden all over. Remove from the heat and tip into a nice bowl."
+        }
+      ]
+    },
+    {
+      "id": "serve_your",
+      "descr": "Serve your macaroni cheese in the centre of the table,...",
+      "instructions": "Serve your macaroni cheese in the centre of the table, with your bowl of crispy breadcrumbs for sprinkling over, and a lovely green salad.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_toss"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve your macaroni cheese in the centre of the table, with your bowl of crispy breadcrumbs for sprinkling over, and a lovely green salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "581 calories",
+    "carbohydrates": "78.5 g",
+    "fat": "20.8 g",
+    "fiber": "3.8 g",
+    "protein": "25.3 g"
+  }
+}

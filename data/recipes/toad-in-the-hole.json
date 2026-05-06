@@ -1,0 +1,272 @@
+{
+  "recipe": {
+    "id": "toad-in-the-hole",
+    "title": "Toad in the hole",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "This toad in the hole recipe from Jamie Oliver shows you how to make batter for toad in the hole. Serve with gravy and mash for the ultimate comfort food!",
+    "tags": [
+      "dinner-party",
+      "sunday-lunch",
+      "main-ingredient",
+      "yorkshire-puddings",
+      "baking",
+      "father-s-day",
+      "mains",
+      "dish-type",
+      "method",
+      "pork",
+      "st-george-s-day",
+      "bonfire-night-recipes",
+      "pies-amp-pastries",
+      "toad-in-the-hole",
+      "sausages",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/classic-toad-in-the-hole",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/31d091d93453e8252d5073e6d2debf41073f5934-1504x2256.jpg/toadinhole.jpg?rect=0,621,1504,1504&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/31d091d93453e8252d5073e6d2debf41073f5934-1504x2256.jpg/toadinhole.jpg?rect=0,621,1504,1504&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/31d091d93453e8252d5073e6d2debf41073f5934-1504x2256.jpg/toadinhole.jpg?rect=0,809,1504,1128&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/31d091d93453e8252d5073e6d2debf41073f5934-1504x2256.jpg/toadinhole.jpg?rect=0,950,1504,846&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "sunflower-oil",
+      "name": "sunflower oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-sausages",
+      "name": "higher-welfare sausages",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "large-red-onions",
+      "name": "large red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "knobs-of-unsalted-butter",
+      "name": "knobs of unsalted butter",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 6.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "level-tablespoon-vegetable-sto",
+      "name": "level tablespoon vegetable stock powder or 1 organic vegetable stock cube",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "batter",
+      "name": "BATTER",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 285.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 115.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pot",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "whisk_batter",
+      "descr": "Whisk the batter ingredients together with a pinch of...",
+      "instructions": "Whisk the batter ingredients together with a pinch of sea salt, and put to one side. I like the batter to go huge so the key thing is to have an appropriately-sized baking tin \u2013 the thinner the better \u2013 as we need to get the oil smoking hot.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Whisk the batter ingredients together with a pinch of sea salt, and put to one side. I like the batter to go huge so the key thing is to have an appropriately-sized baking tin \u2013 the thinner the better \u2013 as we need to get the oil smoking hot."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Put 2 tablespoons of sunflower oil into a baking tin,...",
+      "instructions": "Put 2 tablespoons of sunflower oil into a baking tin, then place on the middle shelf of your oven at its highest setting (240\u2013250\u00baC/475\u00baF/gas 9). Place a larger tray underneath it to catch any oil that overflows from the tin while cooking.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "whisk_batter"
+      ],
+      "next": [
+        "add_sausages"
+      ],
+      "on_enter": [
+        {
+          "say": "Put 2 tablespoons of sunflower oil into a baking tin, then place on the middle shelf of your oven at its highest setting (240\u2013250\u00baC/475\u00baF/gas 9). Place a larger tray underneath it to catch any oil that overflows from the tin while cooking."
+        }
+      ]
+    },
+    {
+      "id": "add_sausages",
+      "descr": "When the oil is very hot, add the sausages \u2013 keep an eye...",
+      "instructions": "When the oil is very hot, add the sausages \u2013 keep an eye on them and allow them to colour until lightly golden.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "pour_batter"
+      ],
+      "on_enter": [
+        {
+          "say": "When the oil is very hot, add the sausages \u2013 keep an eye on them and allow them to colour until lightly golden."
+        }
+      ]
+    },
+    {
+      "id": "pour_batter",
+      "descr": "At this point, take the tin out of the oven, being very...",
+      "instructions": "At this point, take the tin out of the oven, being very careful, and pour the batter over the sausages. Throw a couple of sprigs of rosemary into the batter.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_sausages"
+      ],
+      "next": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "At this point, take the tin out of the oven, being very careful, and pour the batter over the sausages. Throw a couple of sprigs of rosemary into the batter."
+        }
+      ]
+    },
+    {
+      "id": "step_step_5",
+      "descr": "It will bubble and possibly even spit a little, so...",
+      "instructions": "It will bubble and possibly even spit a little, so carefully put the tin back in the oven, and close the door. Don't open it for at least 20 minutes, as Yorkshire puddings can be a bit temperamental when rising. Remove from the oven when golden and crisp.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "pour_batter"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "It will bubble and possibly even spit a little, so carefully put the tin back in the oven, and close the door. Don't open it for at least 20 minutes, as Yorkshire puddings can be a bit temperamental when rising. Remove from the oven when golden and crisp."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "For the onion gravy, peel and finely slice the onions...",
+      "instructions": "For the onion gravy, peel and finely slice the onions and garlic, then simply fry off in the butter on a medium heat for about 5 minutes, or until they go sweet and translucent. You could add a little thyme or rosemary here, if you like. Add the balsamic vinegar and allow it to cook down by half. At this point, I do cheat a little and add a stock cube or powder. You can get some good ones in the supermarkets now that aren't full of rubbish. Sprinkle this in and add a little water. Allow to simmer and you'll have a really tasty onion gravy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "step_step_5"
+      ],
+      "next": [
+        "bake_beans"
+      ],
+      "on_enter": [
+        {
+          "say": "For the onion gravy, peel and finely slice the onions and garlic, then simply fry off in the butter on a medium heat for about 5 minutes, or until they go sweet and translucent. You could add a little thyme or rosemary here, if you like. Add the balsamic vinegar and allow it to cook down by half. At this point, I do cheat a little and add a stock cube or powder. You can get some good ones in the supermarkets now that aren't full of rubbish. Sprinkle this in and add a little water. Allow to simmer and you'll have a really tasty onion gravy."
+        }
+      ]
+    },
+    {
+      "id": "bake_beans",
+      "descr": "Serve at the table with the Toad in the hole, mashed...",
+      "instructions": "Serve at the table with the Toad in the hole, mashed potatoes, greens and baked beans or maybe a green salad if you're feeling a little guilty!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve at the table with the Toad in the hole, mashed potatoes, greens and baked beans or maybe a green salad if you're feeling a little guilty!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "677 calories",
+    "carbohydrates": "44.1 g",
+    "fat": "44.3 g",
+    "fiber": "3.6 g",
+    "protein": "27.6 g"
+  }
+}

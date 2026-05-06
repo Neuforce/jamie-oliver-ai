@@ -1,0 +1,197 @@
+{
+  "recipe": {
+    "id": "focaccia",
+    "title": "Focaccia",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "This epic focaccia recipe is a real classic, with three tasty toppings to take it to the next level. You'll never buy focaccia again!",
+    "tags": [
+      "baking",
+      "focaccia",
+      "dish-type",
+      "course",
+      "bread-amp-doughs",
+      "method",
+      "20-years",
+      "bread-doughs",
+      "bread-dough",
+      "bread",
+      "beautiful-baking-recipes",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/bread/focaccia",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b984c0f3ab82659dec28d19a427df16c251959b2-958x1280.png/91841794?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b984c0f3ab82659dec28d19a427df16c251959b2-958x1280.png/91841794?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b984c0f3ab82659dec28d19a427df16c251959b2-958x1280.png/91841794?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b984c0f3ab82659dec28d19a427df16c251959b2-958x1280.png/91841794?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "bread"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "fresh-yeast",
+      "name": "fresh yeast",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": "or 2 \u00d7 7g sachets of dried yeast"
+    },
+    {
+      "id": "runny-honey",
+      "name": "runny honey",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "strong-bread-flour",
+      "name": "strong bread flour",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "fine-semolina-flour",
+      "name": "fine semolina flour",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "plus extra for dusting (if you can\u2019t get hold of any semolina flour then plain flour will"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "step_split",
+      "descr": "Follow the basic recipe until Step 8, then split the...",
+      "instructions": "Follow the basic recipe until Step 8, then split the dough into half or quarters.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "roll_push"
+      ],
+      "on_enter": [
+        {
+          "say": "Follow the basic recipe until Step 8, then split the dough into half or quarters."
+        }
+      ]
+    },
+    {
+      "id": "roll_push",
+      "descr": "Roll or push it out to an oval shape roughly 1",
+      "instructions": "Roll or push it out to an oval shape roughly 1.5cm thick; don\u2019t fuss around for perfection, it\u2019s supposed to be rough and rustic, so what a great excuse for a beginner!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_split"
+      ],
+      "next": [
+        "top_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Roll or push it out to an oval shape roughly 1.5cm thick; don\u2019t fuss around for perfection, it\u2019s supposed to be rough and rustic, so what a great excuse for a beginner!"
+        }
+      ]
+    },
+    {
+      "id": "top_ping",
+      "descr": "Place on a baking tray liberally dusted with semolina,...",
+      "instructions": "Place on a baking tray liberally dusted with semolina, and spread evenly with your chosen topping (see tips).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_push"
+      ],
+      "next": [
+        "top_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Place on a baking tray liberally dusted with semolina, and spread evenly with your chosen topping (see tips)."
+        }
+      ]
+    },
+    {
+      "id": "top_ping",
+      "descr": "Finally, make those characteristic holes by pushing all...",
+      "instructions": "Finally, make those characteristic holes by pushing all your fingers deep into the dough many times, which allows the flavour of the topping to penetrate.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "top_ping"
+      ],
+      "next": [
+        "warm_place"
+      ],
+      "on_enter": [
+        {
+          "say": "Finally, make those characteristic holes by pushing all your fingers deep into the dough many times, which allows the flavour of the topping to penetrate."
+        }
+      ]
+    },
+    {
+      "id": "warm_place",
+      "descr": "Leave to prove again in a warm place and after about 45...",
+      "instructions": "Leave to prove again in a warm place and after about 45 minutes it will prove to that classic 3cm high.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "top_ping"
+      ],
+      "next": [
+        "drizzle_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave to prove again in a warm place and after about 45 minutes it will prove to that classic 3cm high."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_your",
+      "descr": "Bake for about 15 minutes at full whack (240\u00b0C/475\u00b0F/gas...",
+      "instructions": "Bake for about 15 minutes at full whack (240\u00b0C/475\u00b0F/gas 9) until ready. As soon as the focaccia comes out of the oven, feed it with a good drizzle of your very best extra virgin olive oil and a light scattering of sea salt. You can eat the focaccia as soon as it has cooled slightly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "warm_place"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake for about 15 minutes at full whack (240\u00b0C/475\u00b0F/gas 9) until ready. As soon as the focaccia comes out of the oven, feed it with a good drizzle of your very best extra virgin olive oil and a light scattering of sea salt. You can eat the focaccia as soon as it has cooled slightly."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "270 calories",
+    "carbohydrates": "58.8 g",
+    "fat": "1.7 g",
+    "fiber": "2.3 g",
+    "protein": "8.5 g"
+  }
+}

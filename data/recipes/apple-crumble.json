@@ -1,0 +1,226 @@
+{
+  "recipe": {
+    "id": "apple-crumble",
+    "title": "Apple crumble",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "This Jamie Oliver recipe shows you how to make apple crumble step by step. You could add nuts to this basic apple crumble recipe, if you like. Happy days!",
+    "tags": [
+      "apple",
+      "dinner-party",
+      "desserts",
+      "dessert",
+      "main-ingredient",
+      "fruit",
+      "baking",
+      "apple-crumble",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "easter-treats",
+      "desert",
+      "deserts",
+      "puddings-amp-desserts",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/apple-crumble",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0f24e01208a497d6610b28ef02d481009aee6b7f-973x1300.jpg/0f24e01208a497d6610b28ef02d481009aee6b7f-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0f24e01208a497d6610b28ef02d481009aee6b7f-973x1300.jpg/0f24e01208a497d6610b28ef02d481009aee6b7f-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0f24e01208a497d6610b28ef02d481009aee6b7f-973x1300.jpg/0f24e01208a497d6610b28ef02d481009aee6b7f-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0f24e01208a497d6610b28ef02d481009aee6b7f-973x1300.jpg/0f24e01208a497d6610b28ef02d481009aee6b7f-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "filling",
+      "name": "FILLING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cooking-apples",
+      "name": "cooking apples",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "crumble",
+      "name": "CRUMBLE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "wholemeal-flour",
+      "name": "wholemeal flour",
+      "quantity": 35.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "rolled-oats",
+      "name": "rolled oats",
+      "quantity": 35.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 35.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "caster-sugar",
+      "name": "caster sugar",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5",
+      "instructions": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 190\u00b0C/375\u00b0F/gas 5."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Peel and core the apples, then quarter and cut in to chunks",
+      "instructions": "Peel and core the apples, then quarter and cut in to chunks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and core the apples, then quarter and cut in to chunks."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Put the apples into a pan with the sugar and 1...",
+      "instructions": "Put the apples into a pan with the sugar and 1 tablespoon of water, then cook over a low heat for 5 minutes to soften slightly, stirring occasionally, then tip into a small ovenproof baking dish.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "chop_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the apples into a pan with the sugar and 1 tablespoon of water, then cook over a low heat for 5 minutes to soften slightly, stirring occasionally, then tip into a small ovenproof baking dish."
+        }
+      ]
+    },
+    {
+      "id": "chop_butter",
+      "descr": "Place the flour and oats in a bowl and mix well",
+      "instructions": "Place the flour and oats in a bowl and mix well. Chop the butter into small cubes and add this to the oats and flour. Mix and rub in with your fingertips until it resembles an even crumb texture.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "mix_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the flour and oats in a bowl and mix well. Chop the butter into small cubes and add this to the oats and flour. Mix and rub in with your fingertips until it resembles an even crumb texture."
+        }
+      ]
+    },
+    {
+      "id": "mix_through",
+      "descr": "Add the sugar and mix through, then cover the fruit with...",
+      "instructions": "Add the sugar and mix through, then cover the fruit with the crumble mixture.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_butter"
+      ],
+      "next": [
+        "bake_around"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the sugar and mix through, then cover the fruit with the crumble mixture."
+        }
+      ]
+    },
+    {
+      "id": "bake_around",
+      "descr": "Bake for around 20 minutes, or until golden and cooked...",
+      "instructions": "Bake for around 20 minutes, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1200S",
+      "depends_on": [
+        "mix_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake for around 20 minutes, or until golden and cooked through."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "443 calories",
+    "carbohydrates": "76.4 g",
+    "fat": "16.3 g",
+    "fiber": "6.2 g",
+    "protein": "4.7 g"
+  }
+}

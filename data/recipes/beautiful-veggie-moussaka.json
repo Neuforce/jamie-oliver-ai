@@ -1,0 +1,542 @@
+{
+  "recipe": {
+    "id": "beautiful-veggie-moussaka",
+    "title": "Beautiful veggie moussaka",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT150M",
+    "description": "If you've wondered how to make a vegetarian moussaka recipe, this is a great one to use. Filled with aubergines & lentils, as seen on Friday Night Feast.",
+    "tags": [
+      "dinner-party",
+      "dish-type",
+      "healthy-vegetarian-recipes",
+      "vegetables",
+      "potato",
+      "episode-3",
+      "course",
+      "jamie-and-jimmy-s-friday-night-feast",
+      "greek",
+      "mains",
+      "celebrity-recipe",
+      "tomato",
+      "occasion",
+      "cheese",
+      "sunday-lunch",
+      "vegetarian",
+      "method",
+      "healthy-meals",
+      "main-ingredient",
+      "aubergine",
+      "tv",
+      "moussaka",
+      "mother-s-day",
+      "series-1",
+      "healthy-dinner-ideas"
+    ],
+    "course": "main",
+    "cuisine": "greek",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/beautiful-veggie-moussaka",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f31266028866d2f31678d9cbcc0d752ff61c0f12-958x1280.jpg/83619445?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f31266028866d2f31678d9cbcc0d752ff61c0f12-958x1280.jpg/83619445?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f31266028866d2f31678d9cbcc0d752ff61c0f12-958x1280.jpg/83619445?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/f31266028866d2f31678d9cbcc0d752ff61c0f12-958x1280.jpg/83619445?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-porcini-mushrooms",
+      "name": "dried porcini mushrooms",
+      "quantity": 15.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "fresh-sage",
+      "name": "fresh sage",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine",
+      "name": "red wine",
+      "quantity": 250.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "660g-jar-of-chickpeas",
+      "name": "660g jar of chickpeas",
+      "quantity": 660.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-brown-lentils",
+      "name": "dried brown lentils",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-firm-aubergines",
+      "name": "large firm aubergines",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 750.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "black-peppercorns",
+      "name": "black peppercorns",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "feta-cheese",
+      "name": "feta cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "kefalotyri-or-pecorino-cheese",
+      "name": "kefalotyri or pecorino cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "colander",
+    "oven",
+    "pan",
+    "peeler",
+    "pot",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "Just cover the porcini with boiling water, then set...",
+      "instructions": "Just cover the porcini with boiling water, then set aside to rehydrate.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Just cover the porcini with boiling water, then set aside to rehydrate."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Peel and finely slice the onions and garlic, then place...",
+      "instructions": "Peel and finely slice the onions and garlic, then place in a large pan over a medium-low heat with 1 tablespoon of oil. Strip in the rosemary and sage leaves and add 1 teaspoon of dried oregano.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "heat_high"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the onions and garlic, then place in a large pan over a medium-low heat with 1 tablespoon of oil. Strip in the rosemary and sage leaves and add 1 teaspoon of dried oregano."
+        }
+      ]
+    },
+    {
+      "id": "heat_high",
+      "descr": "Roughly chop the porcini (reserving the soaking liquor)...",
+      "instructions": "Roughly chop the porcini (reserving the soaking liquor) and add to the pan, then fry for 10 minutes, or until softened, stirring occasionally. Turn the heat up to high, then add the wine and let it bubble and cook away.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "stir_chickpeas"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly chop the porcini (reserving the soaking liquor) and add to the pan, then fry for 10 minutes, or until softened, stirring occasionally. Turn the heat up to high, then add the wine and let it bubble and cook away."
+        }
+      ]
+    },
+    {
+      "id": "stir_chickpeas",
+      "descr": "Stir in the chickpeas (juice and all), lentils and 2 bay...",
+      "instructions": "Stir in the chickpeas (juice and all), lentils and 2 bay leaves. Scrunch in the tomatoes through your clean hands, then pour in the porcini soaking liquor (discarding just the last gritty bit).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_high"
+      ],
+      "next": [
+        "heat_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the chickpeas (juice and all), lentils and 2 bay leaves. Scrunch in the tomatoes through your clean hands, then pour in the porcini soaking liquor (discarding just the last gritty bit)."
+        }
+      ]
+    },
+    {
+      "id": "heat_hour",
+      "descr": "Season with sea salt and black pepper, bring to the...",
+      "instructions": "Season with sea salt and black pepper, bring to the boil, then simmer on a low heat for 1 hour, or until thickened and reduced, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "stir_chickpeas"
+      ],
+      "next": [
+        "slice_thick"
+      ],
+      "on_enter": [
+        {
+          "say": "Season with sea salt and black pepper, bring to the boil, then simmer on a low heat for 1 hour, or until thickened and reduced, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "slice_thick",
+      "descr": "Trim the aubergines and peel with a speed-peeler,...",
+      "instructions": "Trim the aubergines and peel with a speed-peeler, leaving a little of the skin to create a stripy effect, then slice into 1cm-thick rounds. Place in a colander, sprinkle with a good pinch of salt and leave in the sink to drain (the salt will draw out the moisture).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_hour"
+      ],
+      "next": [
+        "slice_rough"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the aubergines and peel with a speed-peeler, leaving a little of the skin to create a stripy effect, then slice into 1cm-thick rounds. Place in a colander, sprinkle with a good pinch of salt and leave in the sink to drain (the salt will draw out the moisture)."
+        }
+      ]
+    },
+    {
+      "id": "slice_rough",
+      "descr": "Peel the potatoes and slice into rough 1cm rounds, then...",
+      "instructions": "Peel the potatoes and slice into rough 1cm rounds, then parboil in a pan of boiling salted water for 5 minutes. Drain and leave to steam dry, then place in a large, deep roasting tray (30cm x 40cm).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "slice_thick"
+      ],
+      "next": [
+        "drizzle_scatter"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the potatoes and slice into rough 1cm rounds, then parboil in a pan of boiling salted water for 5 minutes. Drain and leave to steam dry, then place in a large, deep roasting tray (30cm x 40cm)."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_scatter",
+      "descr": "Season, drizzle with oil and scatter over 1 heaped...",
+      "instructions": "Season, drizzle with oil and scatter over 1 heaped tablespoon of dried oregano. Toss well to coat, then roast in a single layer for 30 to 40 minutes, or until golden and tender.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "slice_rough"
+      ],
+      "next": [
+        "roast_trays"
+      ],
+      "on_enter": [
+        {
+          "say": "Season, drizzle with oil and scatter over 1 heaped tablespoon of dried oregano. Toss well to coat, then roast in a single layer for 30 to 40 minutes, or until golden and tender."
+        }
+      ]
+    },
+    {
+      "id": "roast_trays",
+      "descr": "Meanwhile, rinse the aubergines and pat dry with kitchen...",
+      "instructions": "Meanwhile, rinse the aubergines and pat dry with kitchen paper, then spread out across a few large roasting trays.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_scatter"
+      ],
+      "next": [
+        "drizzle_pepper"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, rinse the aubergines and pat dry with kitchen paper, then spread out across a few large roasting trays."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_pepper",
+      "descr": "Drizzle with oil, season with pepper and oregano, then...",
+      "instructions": "Drizzle with oil, season with pepper and oregano, then roast alongside the potatoes for 30 to 40 minutes, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "roast_trays"
+      ],
+      "next": [
+        "heat_keep"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle with oil, season with pepper and oregano, then roast alongside the potatoes for 30 to 40 minutes, or until golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "heat_keep",
+      "descr": "Warm the milk with the remaining 2 bay leaves and the...",
+      "instructions": "Warm the milk with the remaining 2 bay leaves and the peppercorns in a pan on a medium-low heat \u2013 keep an eye on it. Before it boils, strain into a jug, then wipe out the pan and return to a medium heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_pepper"
+      ],
+      "next": [
+        "stir_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Warm the milk with the remaining 2 bay leaves and the peppercorns in a pan on a medium-low heat \u2013 keep an eye on it. Before it boils, strain into a jug, then wipe out the pan and return to a medium heat."
+        }
+      ]
+    },
+    {
+      "id": "stir_flour",
+      "descr": "Melt the butter, then stir in the flour to form a paste",
+      "instructions": "Melt the butter, then stir in the flour to form a paste. Start adding the hot milk, a splash at a time, stirring in each addition before adding more, until you have a smooth, creamy sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_keep"
+      ],
+      "next": [
+        "heat_further"
+      ],
+      "on_enter": [
+        {
+          "say": "Melt the butter, then stir in the flour to form a paste. Start adding the hot milk, a splash at a time, stirring in each addition before adding more, until you have a smooth, creamy sauce."
+        }
+      ]
+    },
+    {
+      "id": "heat_further",
+      "descr": "Crumble in one-third of the feta and grate in one-third...",
+      "instructions": "Crumble in one-third of the feta and grate in one-third of the kefalotyri, then simmer over a low heat for a further 5 minutes, or until thick and smooth. Leave to cool slightly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "stir_flour"
+      ],
+      "next": [
+        "top_repeat"
+      ],
+      "on_enter": [
+        {
+          "say": "Crumble in one-third of the feta and grate in one-third of the kefalotyri, then simmer over a low heat for a further 5 minutes, or until thick and smooth. Leave to cool slightly."
+        }
+      ]
+    },
+    {
+      "id": "top_repeat",
+      "descr": "To assemble, spoon half the rag\u00f9 over the tray of...",
+      "instructions": "To assemble, spoon half the rag\u00f9 over the tray of potatoes, then layer half the aubergines on top. Repeat with the remaining rag\u00f9 and aubergines.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_further"
+      ],
+      "next": [
+        "whisk_yolks"
+      ],
+      "on_enter": [
+        {
+          "say": "To assemble, spoon half the rag\u00f9 over the tray of potatoes, then layer half the aubergines on top. Repeat with the remaining rag\u00f9 and aubergines."
+        }
+      ]
+    },
+    {
+      "id": "whisk_yolks",
+      "descr": "Separate the eggs (saving the whites for another recipe)",
+      "instructions": "Separate the eggs (saving the whites for another recipe). Whisk the yolks into the sauce, then pour over the aubergines. Crumble and grate over the remaining cheese, drizzle with oil, and bake for 40 minutes, or until golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "top_repeat"
+      ],
+      "next": [
+        "serve_great"
+      ],
+      "on_enter": [
+        {
+          "say": "Separate the eggs (saving the whites for another recipe). Whisk the yolks into the sauce, then pour over the aubergines. Crumble and grate over the remaining cheese, drizzle with oil, and bake for 40 minutes, or until golden."
+        }
+      ]
+    },
+    {
+      "id": "serve_great",
+      "descr": "Leave to stand for 30 minutes, then serve",
+      "instructions": "Leave to stand for 30 minutes, then serve. Great with a Greek salad.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "whisk_yolks"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave to stand for 30 minutes, then serve. Great with a Greek salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "311 calories",
+    "carbohydrates": "35.4 g",
+    "fat": "12.6 g",
+    "fiber": "5.8 g",
+    "protein": "12.6 g"
+  }
+}

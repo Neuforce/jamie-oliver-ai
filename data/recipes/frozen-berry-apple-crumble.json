@@ -1,0 +1,171 @@
+{
+  "recipe": {
+    "id": "frozen-berry-apple-crumble",
+    "title": "Frozen berry & apple crumble",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "Beautifully soft berries, sweet apples and a buttery oat topping, this recipe is proof that you don\u2019t need fresh fruit to make a cracking crumble.",
+    "tags": [
+      "desserts",
+      "crumble",
+      "vegetarian",
+      "dish-type",
+      "course",
+      "puddings-amp-desserts",
+      "budget-friendly-desserts"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/frozen-berry-apple-crumble",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/187741035502b071ca84e12650d8072cd1d57f9d-958x1280.jpg/141933996?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/187741035502b071ca84e12650d8072cd1d57f9d-958x1280.jpg/141933996?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/187741035502b071ca84e12650d8072cd1d57f9d-958x1280.jpg/141933996?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/187741035502b071ca84e12650d8072cd1d57f9d-958x1280.jpg/141933996?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "mixed-frozen-berries",
+      "name": "mixed frozen berries",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "eating-apples",
+      "name": "eating apples",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "300g"
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": "cold"
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "rolled-oats",
+      "name": "rolled oats",
+      "quantity": 75.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "granulated-sugar",
+      "name": "granulated sugar",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vanilla-ice-cream",
+      "name": "vanilla ice cream",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "bowl",
+    "large bowl",
+    "mixing bowl",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Tip the frozen berries into a large bowl, and place in the microwave on high (800W) for 10 minutes until defrosted. Or leave to defrost in the fridge overnight. Once defrosted, drain and reserve the excess juice (see tip).",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "chop_apples"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Tip the frozen berries into a large bowl, and place in the microwave on high (800W) for 10 minutes until defrosted. Or leave to defrost in the fridge overnight. Once defrosted, drain and reserve the excess juice (see tip)."
+        }
+      ]
+    },
+    {
+      "id": "chop_apples",
+      "descr": "Meanwhile, roughly chop apples into 1cm cubes (skin and all)",
+      "instructions": "Meanwhile, roughly chop apples into 1cm cubes (skin and all).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "cube_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, roughly chop apples into 1cm cubes (skin and all)."
+        }
+      ]
+    },
+    {
+      "id": "cube_butter",
+      "descr": "Cube the butter and place in a mixing bowl with the flour",
+      "instructions": "Cube the butter and place in a mixing bowl with the flour. Rub together with your fingertips until it resembles breadcrumbs, then stir in the oats and half of the sugar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_apples"
+      ],
+      "next": [
+        "chop_apple"
+      ],
+      "on_enter": [
+        {
+          "say": "Cube the butter and place in a mixing bowl with the flour. Rub together with your fingertips until it resembles breadcrumbs, then stir in the oats and half of the sugar."
+        }
+      ]
+    },
+    {
+      "id": "chop_apple",
+      "descr": "Tip the berries into a 30cm x 25cm baking dish, stir in...",
+      "instructions": "Tip the berries into a 30cm x 25cm baking dish, stir in the chopped apple and remaining sugar, tossing until the apples are well coated. Sprinkle over the crumble topping, then bake in the oven for 25 minutes, or until beautifully golden. Delicious served with scoops of vanilla ice cream.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1500S",
+      "depends_on": [
+        "cube_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the berries into a 30cm x 25cm baking dish, stir in the chopped apple and remaining sugar, tossing until the apples are well coated. Sprinkle over the crumble topping, then bake in the oven for 25 minutes, or until beautifully golden. Delicious served with scoops of vanilla ice cream."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "320 calories",
+    "carbohydrates": "53.1 g",
+    "fat": "11.4 g",
+    "fiber": "5.3 g",
+    "protein": "4.1 g"
+  }
+}

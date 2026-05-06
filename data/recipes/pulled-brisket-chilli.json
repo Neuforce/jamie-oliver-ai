@@ -1,0 +1,393 @@
+{
+  "recipe": {
+    "id": "pulled-brisket-chilli",
+    "title": "Pulled brisket chilli",
+    "servings": 20,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT295M",
+    "description": "Jamie swears by this pulled beef brisket chilli recipe because it has more texture than regular chilli, the same goes for his hand scrunched guacamole.",
+    "tags": [
+      "mexican",
+      "party-food",
+      "main-ingredient",
+      "chili-con-carne",
+      "dish-type",
+      "mains",
+      "beef",
+      "method",
+      "chilli-con-carne",
+      "chilli",
+      "one-pan-recipes",
+      "guacamole",
+      "stewing",
+      "occasion",
+      "avocado",
+      "stew",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "mexican",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/pulled-brisket-chilli",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aa0d1d64f4f46d1acd7b6475bdef44b47aacc4ce-973x1300.jpg/46258462?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aa0d1d64f4f46d1acd7b6475bdef44b47aacc4ce-973x1300.jpg/46258462?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aa0d1d64f4f46d1acd7b6475bdef44b47aacc4ce-973x1300.jpg/46258462?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/aa0d1d64f4f46d1acd7b6475bdef44b47aacc4ce-973x1300.jpg/46258462?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "beef-brisket",
+      "name": "beef brisket",
+      "quantity": 1.5,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "large-stick-of-cinnamon",
+      "name": "large stick of cinnamon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ground-cumin",
+      "name": "ground cumin",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "smoked-paprika",
+      "name": "smoked paprika",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-dried-oregan",
+      "name": "heaped tablespoon dried oregano",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-peppers",
+      "name": "red peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "yellow-peppers",
+      "name": "yellow peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-beef-stock",
+      "name": "organic beef stock",
+      "quantity": 400.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 3.5,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "soft-tortillas",
+      "name": "soft tortillas",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "greek-style-yoghurt",
+      "name": "Greek-style yoghurt",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "guacamole",
+      "name": "GUACAMOLE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-avocados",
+      "name": "ripe avocados",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-coriander",
+      "name": "fresh coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "small-red-onion",
+      "name": "small red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "limes",
+      "name": "limes",
+      "quantity": 4.5,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-mixed-colour-tomatoes",
+      "name": "ripe mixed-colour tomatoes",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 1.5,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Place the beef on a board and lightly score one side",
+      "instructions": "Place the beef on a board and lightly score one side.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the beef on a board and lightly score one side."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_2",
+      "descr": "Bash the cinnamon, cumin, paprika and oregano in pestle...",
+      "instructions": "Bash the cinnamon, cumin, paprika and oregano in pestle and mortar, then rub into the cuts in the beef. Season well with sea salt and black pepper, drizzle over a little oil and brown the brisket well in a large pan over a high heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "boil_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Bash the cinnamon, cumin, paprika and oregano in pestle and mortar, then rub into the cuts in the beef. Season well with sea salt and black pepper, drizzle over a little oil and brown the brisket well in a large pan over a high heat."
+        }
+      ]
+    },
+    {
+      "id": "boil_step_3",
+      "descr": "Place the bay leaves, whole peppers, plum tomatoes...",
+      "instructions": "Place the bay leaves, whole peppers, plum tomatoes (breaking them up with the back of a spoon as you go), and the stock in a large pot and bring to the boil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_2"
+      ],
+      "next": [
+        "chop_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the bay leaves, whole peppers, plum tomatoes (breaking them up with the back of a spoon as you go), and the stock in a large pot and bring to the boil."
+        }
+      ]
+    },
+    {
+      "id": "chop_coriander",
+      "descr": "Meanwhile, deseed half the chillies, then finely slice...",
+      "instructions": "Meanwhile, deseed half the chillies, then finely slice them all. Peel and finely slice the onions, then pick and finely chop the coriander.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_step_3"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, deseed half the chillies, then finely slice them all. Peel and finely slice the onions, then pick and finely chop the coriander."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Add the chilli and onion to the pan with the brisket,...",
+      "instructions": "Add the chilli and onion to the pan with the brisket, cook for 5 minutes, then transfer the lot to the large pot, cover, and leave to simmer for 4 to 4\u00bd hours, or until beautifully tender, stirring occasionally and adding splashes of water to loosen, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "chop_coriander"
+      ],
+      "next": [
+        "add_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the chilli and onion to the pan with the brisket, cook for 5 minutes, then transfer the lot to the large pot, cover, and leave to simmer for 4 to 4\u00bd hours, or until beautifully tender, stirring occasionally and adding splashes of water to loosen, if needed."
+        }
+      ]
+    },
+    {
+      "id": "add_little",
+      "descr": "Gently pull the beef apart using 2 forks",
+      "instructions": "Gently pull the beef apart using 2 forks. Remove the bay, add a little vinegar to taste, scatter over the coriander and adjust the seasoning to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Gently pull the beef apart using 2 forks. Remove the bay, add a little vinegar to taste, scatter over the coriander and adjust the seasoning to taste."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "For the guacamole, squeeze the avocado flesh into a...",
+      "instructions": "For the guacamole, squeeze the avocado flesh into a bowl, discarding the skin and stones. Pick and roughly tear in the coriander leaves, peel and finely gate in the red onion, and squeeze in the lime juice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_little"
+      ],
+      "next": [
+        "chop_scrunch"
+      ],
+      "on_enter": [
+        {
+          "say": "For the guacamole, squeeze the avocado flesh into a bowl, discarding the skin and stones. Pick and roughly tear in the coriander leaves, peel and finely gate in the red onion, and squeeze in the lime juice."
+        }
+      ]
+    },
+    {
+      "id": "chop_scrunch",
+      "descr": "Have a taste, then tweak with more salt, pepper or lime...",
+      "instructions": "Have a taste, then tweak with more salt, pepper or lime juice, if needed. Roughly chop then scrunch in the tomatoes, picking out any large bits of skin.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Have a taste, then tweak with more salt, pepper or lime juice, if needed. Roughly chop then scrunch in the tomatoes, picking out any large bits of skin."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Deseed and finely grate in the chilli flesh and mix well",
+      "instructions": "Deseed and finely grate in the chilli flesh and mix well. Serve with the chilli, tortillas and dollops of yoghurt. Delicious served with a fresh green salad on the side, too.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_scrunch"
+      ],
+      "on_enter": [
+        {
+          "say": "Deseed and finely grate in the chilli flesh and mix well. Serve with the chilli, tortillas and dollops of yoghurt. Delicious served with a fresh green salad on the side, too."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "438 calories",
+    "carbohydrates": "33.3 g",
+    "fat": "22.4 g",
+    "fiber": null,
+    "protein": "23.5 g"
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "recipe": {
+    "id": "good-old-chilli-con-carne",
+    "title": "Good old chilli con carne",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT75M",
+    "description": "A quick and easy chilli con carne recipe from Jamie Oliver. Simple chilli con carne is a favourite, and this one's a real crowd-pleaser. Just add rice!",
+    "tags": [
+      "healthy-meals",
+      "main-ingredient",
+      "chili-con-carne",
+      "halloween-bonfire-night",
+      "healthy-dinner-ideas",
+      "student-recipes",
+      "dish-type",
+      "method",
+      "beef",
+      "minced-beef",
+      "gluten-free",
+      "chilli",
+      "popular",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/good-old-chilli-con-carne",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2abc7a476bb2fe5c5357fcb9f7558be0e2e1d07d-1265x1897.jpg/classicchilli.jpg?rect=0,317,1265,1265&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2abc7a476bb2fe5c5357fcb9f7558be0e2e1d07d-1265x1897.jpg/classicchilli.jpg?rect=0,317,1265,1265&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2abc7a476bb2fe5c5357fcb9f7558be0e2e1d07d-1265x1897.jpg/classicchilli.jpg?rect=0,475,1265,949&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2abc7a476bb2fe5c5357fcb9f7558be0e2e1d07d-1265x1897.jpg/classicchilli.jpg?rect=0,593,1265,712&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "medium-onions",
+      "name": "medium onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "medium-carrots",
+      "name": "medium carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "red-peppers",
+      "name": "red peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-chilli-powder",
+      "name": "heaped teaspoon chilli powder",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-ground-cumin",
+      "name": "heaped teaspoon ground cumin",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-ground-cinnamo",
+      "name": "heaped teaspoon ground cinnamon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-red-kidney-beans",
+      "name": "400g tin of red kidney beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "quality-minced-beef",
+      "name": "quality minced beef",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "chop_onions",
+      "descr": "Peel and finely chop the onions, garlic, carrots and...",
+      "instructions": "Peel and finely chop the onions, garlic, carrots and celery \u2013 don\u2019t worry about the technique, just chop away until fine. Halve the red peppers, remove the stalks and seeds and roughly chop.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the onions, garlic, carrots and celery \u2013 don\u2019t worry about the technique, just chop away until fine. Halve the red peppers, remove the stalks and seeds and roughly chop."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Heat 2 tablespoons of oil in a large casserole pan on a...",
+      "instructions": "Heat 2 tablespoons of oil in a large casserole pan on a medium-high heat, add the chopped veg, chilli powder, cumin, cinnamon and a good pinch of sea salt and black pepper, then cook for 7 minutes, or until softened, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT420S",
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "mince_beef"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 2 tablespoons of oil in a large casserole pan on a medium-high heat, add the chopped veg, chilli powder, cumin, cinnamon and a good pinch of sea salt and black pepper, then cook for 7 minutes, or until softened, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "mince_beef",
+      "descr": "Drain and add the chickpeas and kidney beans, tip in the...",
+      "instructions": "Drain and add the chickpeas and kidney beans, tip in the tomatoes, breaking them up with the back of a spoon, then pour in 1 tin's worth of water. Add the minced beef, breaking any larger chunks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "chop_stalks"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain and add the chickpeas and kidney beans, tip in the tomatoes, breaking them up with the back of a spoon, then pour in 1 tin's worth of water. Add the minced beef, breaking any larger chunks."
+        }
+      ]
+    },
+    {
+      "id": "chop_stalks",
+      "descr": "Pick the coriander leaves and put aside, then finely...",
+      "instructions": "Pick the coriander leaves and put aside, then finely chop and add the stalks to the pan, with the balsamic vinegar. Season with a good pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mince_beef"
+      ],
+      "next": [
+        "heat_slightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick the coriander leaves and put aside, then finely chop and add the stalks to the pan, with the balsamic vinegar. Season with a good pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_slightly",
+      "descr": "Bring to the boil, then reduce the heat to low and...",
+      "instructions": "Bring to the boil, then reduce the heat to low and simmer with a lid slightly ajar for 1 hour, or until slightly thickened and reduced, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "chop_stalks"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, then reduce the heat to low and simmer with a lid slightly ajar for 1 hour, or until slightly thickened and reduced, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Serve up with fluffy rice or couscous, a hunk of crusty...",
+      "instructions": "Serve up with fluffy rice or couscous, a hunk of crusty bread, or over a jacket potato, with some yoghurt, guacamole, and wedges of lime on the side for squeezing over. Sprinkle over the reserved coriander, and some fresh chilli, if you like, then tuck in.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_slightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve up with fluffy rice or couscous, a hunk of crusty bread, or over a jacket potato, with some yoghurt, guacamole, and wedges of lime on the side for squeezing over. Sprinkle over the reserved coriander, and some fresh chilli, if you like, then tuck in."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "353 calories",
+    "carbohydrates": "29.8 g",
+    "fat": "14.4 g",
+    "fiber": "8.4 g",
+    "protein": "27.8 g"
+  }
+}

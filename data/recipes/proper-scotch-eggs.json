@@ -1,0 +1,311 @@
+{
+  "recipe": {
+    "id": "proper-scotch-eggs",
+    "title": "Proper Scotch eggs",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "A cracking recipe that shows you how to make perfect scotch eggs from scratch. Perfect for a picnic or a party. Just add crunchy pickles and some salad.",
+    "tags": [
+      "main-ingredient",
+      "egg",
+      "wimbledon",
+      "popular",
+      "snacks",
+      "picnic",
+      "course",
+      "dish-type",
+      "method",
+      "pork",
+      "low-lactose",
+      "sausages",
+      "eggs",
+      "antipasti",
+      "occasion",
+      "frying",
+      "cheese"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/eggs/proper-scotch-eggs-with-lovely-scottish-cheese-and-pickle",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6557ed5876b88ca811ab0de3aa064b8dbdbc4ebf-973x1300.jpg/6557ed5876b88ca811ab0de3aa064b8dbdbc4ebf-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6557ed5876b88ca811ab0de3aa064b8dbdbc4ebf-973x1300.jpg/6557ed5876b88ca811ab0de3aa064b8dbdbc4ebf-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6557ed5876b88ca811ab0de3aa064b8dbdbc4ebf-973x1300.jpg/6557ed5876b88ca811ab0de3aa064b8dbdbc4ebf-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6557ed5876b88ca811ab0de3aa064b8dbdbc4ebf-973x1300.jpg/6557ed5876b88ca811ab0de3aa064b8dbdbc4ebf-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "eggs"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 10.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-sausages",
+      "name": "higher-welfare sausages",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-chives",
+      "name": "\u00bd a bunch of fresh chives",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-flat-leaf-par",
+      "name": "\u00bd a bunch of fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    },
+    {
+      "id": "english-mustard",
+      "name": "English mustard",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": null,
+      "unit": null,
+      "note": "for dusting"
+    },
+    {
+      "id": "fresh-white-breadcrumbs",
+      "name": "fresh white breadcrumbs",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vegetable-oil",
+      "name": "vegetable oil",
+      "quantity": 2.0,
+      "unit": "litres",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan",
+    "pot",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "boil_minutes",
+      "descr": "Put 8 eggs into a pan of cold water and bring to the boil",
+      "instructions": "Put 8 eggs into a pan of cold water and bring to the boil. Boil for 3 to 4 minutes, then transfer to a bowl of cold water. Once cooled, carefully peel them.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Put 8 eggs into a pan of cold water and bring to the boil. Boil for 3 to 4 minutes, then transfer to a bowl of cold water. Once cooled, carefully peel them."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Squeeze the sausages out of their skins and into a bowl",
+      "instructions": "Squeeze the sausages out of their skins and into a bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_minutes"
+      ],
+      "next": [
+        "chop_herb"
+      ],
+      "on_enter": [
+        {
+          "say": "Squeeze the sausages out of their skins and into a bowl."
+        }
+      ]
+    },
+    {
+      "id": "chop_herb",
+      "descr": "Pick and finely chop the herb leaves, add to the sausage...",
+      "instructions": "Pick and finely chop the herb leaves, add to the sausage meat along with a good grating of nutmeg, the mustard and a good pinch of sea salt and black pepper. Give it all a good mix together then divide into 8 balls.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "beat_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the herb leaves, add to the sausage meat along with a good grating of nutmeg, the mustard and a good pinch of sea salt and black pepper. Give it all a good mix together then divide into 8 balls."
+        }
+      ]
+    },
+    {
+      "id": "beat_them",
+      "descr": "Have 3 plates ready - one with a small handful of flour,...",
+      "instructions": "Have 3 plates ready - one with a small handful of flour, one with the two remaining eggs (beat them together first), and a third with the breadcrumbs.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_herb"
+      ],
+      "next": [
+        "shape_pattie"
+      ],
+      "on_enter": [
+        {
+          "say": "Have 3 plates ready - one with a small handful of flour, one with the two remaining eggs (beat them together first), and a third with the breadcrumbs."
+        }
+      ]
+    },
+    {
+      "id": "shape_pattie",
+      "descr": "Start by flouring your hands, then in the palm of one...",
+      "instructions": "Start by flouring your hands, then in the palm of one hand, flatten one of the sausage balls into an oval-shaped pattie.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "beat_them"
+      ],
+      "next": [
+        "roll_peeled"
+      ],
+      "on_enter": [
+        {
+          "say": "Start by flouring your hands, then in the palm of one hand, flatten one of the sausage balls into an oval-shaped pattie."
+        }
+      ]
+    },
+    {
+      "id": "roll_peeled",
+      "descr": "Roll a peeled egg in flour, then pop it in the middle of...",
+      "instructions": "Roll a peeled egg in flour, then pop it in the middle of the patty Gently shape the meat evenly around the egg, moulding it with your hands until sealed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "shape_pattie"
+      ],
+      "next": [
+        "beat_followed"
+      ],
+      "on_enter": [
+        {
+          "say": "Roll a peeled egg in flour, then pop it in the middle of the patty Gently shape the meat evenly around the egg, moulding it with your hands until sealed."
+        }
+      ]
+    },
+    {
+      "id": "beat_followed",
+      "descr": "Roll the meat-wrapped egg in the flour, shake off any...",
+      "instructions": "Roll the meat-wrapped egg in the flour, shake off any excess, then dip into the beaten egg, followed by the breadcrumbs. Roll in the egg and breadcrumbs again for a really good coating.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_peeled"
+      ],
+      "next": [
+        "heat_deep"
+      ],
+      "on_enter": [
+        {
+          "say": "Roll the meat-wrapped egg in the flour, shake off any excess, then dip into the beaten egg, followed by the breadcrumbs. Roll in the egg and breadcrumbs again for a really good coating."
+        }
+      ]
+    },
+    {
+      "id": "heat_deep",
+      "descr": "Heat the oil in a deep pan or deep fat fryer to about...",
+      "instructions": "Heat the oil in a deep pan or deep fat fryer to about 150\u00baC/300\u00baF. If you have a cooking thermometer it\u2019s a good idea to use it. Otherwise, test if the oil is hot enough by adding a piece of raw potato and leaving it for about 1 minute \u2013 if it sizzles and browns, it\u2019s ready.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "beat_followed"
+      ],
+      "next": [
+        "fry_scotch"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat the oil in a deep pan or deep fat fryer to about 150\u00baC/300\u00baF. If you have a cooking thermometer it\u2019s a good idea to use it. Otherwise, test if the oil is hot enough by adding a piece of raw potato and leaving it for about 1 minute \u2013 if it sizzles and browns, it\u2019s ready."
+        }
+      ]
+    },
+    {
+      "id": "fry_scotch",
+      "descr": "Carefully lower the eggs into the pan and cook for 4...",
+      "instructions": "Carefully lower the eggs into the pan and cook for 4 minutes, or until golden, turning them every so often. Remove with a slotted spoon and drain on kitchen paper (if you\u2019re worried about the meat being under-cooked, deep-fry the scotch eggs until they\u2019re golden and crispy, then pop them in a hot oven for a couple of minutes.)",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "heat_deep"
+      ],
+      "next": [
+        "cool_scotch"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully lower the eggs into the pan and cook for 4 minutes, or until golden, turning them every so often. Remove with a slotted spoon and drain on kitchen paper (if you\u2019re worried about the meat being under-cooked, deep-fry the scotch eggs until they\u2019re golden and crispy, then pop them in a hot oven for a couple of minutes.)"
+        }
+      ]
+    },
+    {
+      "id": "cool_scotch",
+      "descr": "Cool the Scotch eggs slightly, then arrange on board...",
+      "instructions": "Cool the Scotch eggs slightly, then arrange on board with a good piece of Scottish Cheddar, some pickle and a few pickled onions. Heaven.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "fry_scotch"
+      ],
+      "on_enter": [
+        {
+          "say": "Cool the Scotch eggs slightly, then arrange on board with a good piece of Scottish Cheddar, some pickle and a few pickled onions. Heaven."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "613 calories",
+    "carbohydrates": "20.7 g",
+    "fat": "47 g",
+    "fiber": "1.3 g",
+    "protein": "28.6 g"
+  }
+}

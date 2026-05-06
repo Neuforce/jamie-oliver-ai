@@ -1,0 +1,329 @@
+{
+  "recipe": {
+    "id": "black-forest-trifle",
+    "title": "Black Forest trifle",
+    "servings": 14,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "This epic dessert looks super-impressive, but it\u2019s full of store-cupboard shortcuts that make it really easy to put together. Perfect for the festive season! ",
+    "tags": [
+      "christmas",
+      "christmas-tv-show",
+      "desserts",
+      "dessert",
+      "main-ingredient",
+      "pudding",
+      "trifle",
+      "dish-type",
+      "easy-christmas",
+      "christmas-shortcuts",
+      "baking-and-desserts",
+      "chocolate",
+      "puddings-amp-desserts",
+      "occasion",
+      "puddings",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/desserts/black-forest-trifle",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c81742d9c3f8ca4a0ed7c00d13f0ecdd4bd17e26-1599x2397.jpg/choccherrytriflebowl.jpg?rect=0,400,1599,1599&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c81742d9c3f8ca4a0ed7c00d13f0ecdd4bd17e26-1599x2397.jpg/choccherrytriflebowl.jpg?rect=0,400,1599,1599&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c81742d9c3f8ca4a0ed7c00d13f0ecdd4bd17e26-1599x2397.jpg/choccherrytriflebowl.jpg?rect=0,600,1599,1199&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/c81742d9c3f8ca4a0ed7c00d13f0ecdd4bd17e26-1599x2397.jpg/choccherrytriflebowl.jpg?rect=0,750,1599,899&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "desserts"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "425g-tins-of-cherries-in-syrup",
+      "name": "425g tins of cherries in syrup",
+      "quantity": 425.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dark-chocolate",
+      "name": "dark chocolate",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": "70% cocoa solids"
+    },
+    {
+      "id": "leaves-of-gelatine",
+      "name": "leaves of gelatine",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-custard",
+      "name": "400g tins of custard",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "hazelnuts",
+      "name": "hazelnuts",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "double-cream",
+      "name": "double cream",
+      "quantity": 600.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "vanilla-bean-paste",
+      "name": "vanilla bean paste",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-icing-sugar",
+      "name": "heaped tablespoon icing sugar",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "1cm-slices-of-panettone",
+      "name": "1cm slices of panettone",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "knife",
+    "mixing bowl",
+    "pan",
+    "sieve",
+    "spatula",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "heat_transfer",
+      "descr": "Drain the cherries through a sieve into a measuring jug,...",
+      "instructions": "Drain the cherries through a sieve into a measuring jug, topping up with cold water to make a pint (568ml), if needed. Pour into a medium pan and place on a medium heat. Transfer the cherries to a bowl.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "plate_leave"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the cherries through a sieve into a measuring jug, topping up with cold water to make a pint (568ml), if needed. Pour into a medium pan and place on a medium heat. Transfer the cherries to a bowl."
+        }
+      ]
+    },
+    {
+      "id": "plate_leave",
+      "descr": "To make the chocolate curls, lay the unwrapped chocolate...",
+      "instructions": "To make the chocolate curls, lay the unwrapped chocolate on the work surface, flat side up. Carefully drag a chef\u2019s knife towards you, from top to bottom. Repeat until you have 6 to 8 good curls. Transfer the curls to a plate, and leave in the fridge until you\u2019re ready to decorate.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_transfer"
+      ],
+      "next": [
+        "heat_proof"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the chocolate curls, lay the unwrapped chocolate on the work surface, flat side up. Carefully drag a chef\u2019s knife towards you, from top to bottom. Repeat until you have 6 to 8 good curls. Transfer the curls to a plate, and leave in the fridge until you\u2019re ready to decorate."
+        }
+      ]
+    },
+    {
+      "id": "heat_proof",
+      "descr": "Snap the remaining chocolate into a heatproof bowl, add...",
+      "instructions": "Snap the remaining chocolate into a heatproof bowl, add a pinch of sea salt and place over the pan of the cherry liquor, until melted.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "plate_leave"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Snap the remaining chocolate into a heatproof bowl, add a pinch of sea salt and place over the pan of the cherry liquor, until melted."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Snap 4 gelatine leaves into a small bowl, cover with...",
+      "instructions": "Snap 4 gelatine leaves into a small bowl, cover with cold water, and set aside to dissolve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_proof"
+      ],
+      "next": [
+        "heat_custard"
+      ],
+      "on_enter": [
+        {
+          "say": "Snap 4 gelatine leaves into a small bowl, cover with cold water, and set aside to dissolve."
+        }
+      ]
+    },
+    {
+      "id": "heat_custard",
+      "descr": "Remove the bowl of chocolate from the heat, pour in the...",
+      "instructions": "Remove the bowl of chocolate from the heat, pour in the custard and mix until completely combined.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_4"
+      ],
+      "next": [
+        "whisk_gelatine"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the bowl of chocolate from the heat, pour in the custard and mix until completely combined."
+        }
+      ]
+    },
+    {
+      "id": "whisk_gelatine",
+      "descr": "Whisk the gelatine into the cherry juice until...",
+      "instructions": "Whisk the gelatine into the cherry juice until dissolved, then pour into the trifle dish. Scatter in a handful of the cherries and leave to cool, then place in the fridge for 4 hours until set.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT14400S",
+      "depends_on": [
+        "heat_custard"
+      ],
+      "next": [
+        "toast_hazelnuts"
+      ],
+      "on_enter": [
+        {
+          "say": "Whisk the gelatine into the cherry juice until dissolved, then pour into the trifle dish. Scatter in a handful of the cherries and leave to cool, then place in the fridge for 4 hours until set."
+        }
+      ]
+    },
+    {
+      "id": "toast_hazelnuts",
+      "descr": "Toast the hazelnuts in a dry pan for 5 minutes, until golden",
+      "instructions": "Toast the hazelnuts in a dry pan for 5 minutes, until golden. Tip into a pestle and mortar and bash to crumbs.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "whisk_gelatine"
+      ],
+      "next": [
+        "mix_bowl"
+      ],
+      "on_enter": [
+        {
+          "say": "Toast the hazelnuts in a dry pan for 5 minutes, until golden. Tip into a pestle and mortar and bash to crumbs."
+        }
+      ]
+    },
+    {
+      "id": "mix_bowl",
+      "descr": "Pour the cream into a large mixing bowl, add the vanilla...",
+      "instructions": "Pour the cream into a large mixing bowl, add the vanilla bean paste and sugar, and whisk to soft peaks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "toast_hazelnuts"
+      ],
+      "next": [
+        "slice_panettone"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour the cream into a large mixing bowl, add the vanilla bean paste and sugar, and whisk to soft peaks."
+        }
+      ]
+    },
+    {
+      "id": "slice_panettone",
+      "descr": "Next, layer up the trifle",
+      "instructions": "Next, layer up the trifle. Spoon over \u2153 of the chocolate custard, spreading out with a spatula, and then top with 1 slice of panettone. Dot cherries over the panettone and drizzle with a little of the juice from the bottom of the bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "step_step_10"
+      ],
+      "on_enter": [
+        {
+          "say": "Next, layer up the trifle. Spoon over \u2153 of the chocolate custard, spreading out with a spatula, and then top with 1 slice of panettone. Dot cherries over the panettone and drizzle with a little of the juice from the bottom of the bowl."
+        }
+      ]
+    },
+    {
+      "id": "step_step_10",
+      "descr": "Repeat with a layer of cream, chocolate custard,...",
+      "instructions": "Repeat with a layer of cream, chocolate custard, panettone, and cherries and syrup until you have 3 x each layer. Pipe over a final layer of cream (or you can just spoon it on, if you prefer).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_panettone"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Repeat with a layer of cream, chocolate custard, panettone, and cherries and syrup until you have 3 x each layer. Pipe over a final layer of cream (or you can just spoon it on, if you prefer)."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Sprinkle over the chocolate curls, scatter over the...",
+      "instructions": "Sprinkle over the chocolate curls, scatter over the hazelnut crumbs and take to the table.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_10"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle over the chocolate curls, scatter over the hazelnut crumbs and take to the table."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "535 calories",
+    "carbohydrates": "49.4 g",
+    "fat": "35.5 g",
+    "fiber": "1.6 g",
+    "protein": "6.4 g"
+  }
+}

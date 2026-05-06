@@ -1,0 +1,274 @@
+{
+  "recipe": {
+    "id": "slow-cooker-beef",
+    "title": "Slow-cooker beef",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT490M",
+    "description": "Celebrate your slow cooker with this beautifully tender beef recipe \u2013 it's a proper winter warmer! ",
+    "tags": [
+      "slow-cook",
+      "father-s-day",
+      "beef",
+      "low-lactose",
+      "gluten-free",
+      "dairy-free",
+      "budget-friendly",
+      "bonfire-night"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/slow-cooker-beef",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7336022cd934a6ac19d3fa7417301b8269f02990-958x1280.jpg/161134397?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7336022cd934a6ac19d3fa7417301b8269f02990-958x1280.jpg/161134397?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7336022cd934a6ac19d3fa7417301b8269f02990-958x1280.jpg/161134397?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7336022cd934a6ac19d3fa7417301b8269f02990-958x1280.jpg/161134397?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "higher-welfare-rolled-brisket",
+      "name": "higher-welfare rolled brisket",
+      "quantity": 1.5,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-woody-herbs",
+      "name": "mixed woody herbs",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g, such as thyme, rosemary, bay"
+    },
+    {
+      "id": "690g-jar-of-passata",
+      "name": "690g jar of passata",
+      "quantity": 690.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-beef-stock",
+      "name": "organic beef stock",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "dark-brown-sugar",
+      "name": "dark brown sugar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "paprika",
+      "name": "paprika",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pan",
+    "pot",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Remove the beef from the fridge 30 minutes before you...",
+      "instructions": "Remove the beef from the fridge 30 minutes before you want to cook it, to let it come up to room temperature.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "next": [
+        "chop_carrots"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the beef from the fridge 30 minutes before you want to cook it, to let it come up to room temperature."
+        }
+      ]
+    },
+    {
+      "id": "chop_carrots",
+      "descr": "Peel the onions, wash and roughly chop the carrots and...",
+      "instructions": "Peel the onions, wash and roughly chop the carrots and celery \u2013 there\u2019s no need to peel them. Halve the garlic bulb across the middle.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the onions, wash and roughly chop the carrots and celery \u2013 there\u2019s no need to peel them. Halve the garlic bulb across the middle."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Pile all the veg, garlic and herbs into the slow cooker*",
+      "instructions": "Pile all the veg, garlic and herbs into the slow cooker*.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_carrots"
+      ],
+      "next": [
+        "stir_sugar"
+      ],
+      "on_enter": [
+        {
+          "say": "Pile all the veg, garlic and herbs into the slow cooker*."
+        }
+      ]
+    },
+    {
+      "id": "stir_sugar",
+      "descr": "Pour in the passata, beef stock and stir in the sugar",
+      "instructions": "Pour in the passata, beef stock and stir in the sugar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "drizzle_beef"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the passata, beef stock and stir in the sugar."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_beef",
+      "descr": "Drizzle the beef with 1 tablespoon of olive oil, rub all...",
+      "instructions": "Drizzle the beef with 1 tablespoon of olive oil, rub all over with the paprika and a pinch of sea salt and black pepper, then sit it on top of the veg.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_sugar"
+      ],
+      "next": [
+        "rest_while"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle the beef with 1 tablespoon of olive oil, rub all over with the paprika and a pinch of sea salt and black pepper, then sit it on top of the veg."
+        }
+      ]
+    },
+    {
+      "id": "rest_while",
+      "descr": "Cook on the lowest setting for 8 hours, until...",
+      "instructions": "Cook on the lowest setting for 8 hours, until beautifully tender, then remove the beef to a plate, cover with tin foil and leave to rest while you make the sauce.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT28800S",
+      "depends_on": [
+        "drizzle_beef"
+      ],
+      "next": [
+        "season_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook on the lowest setting for 8 hours, until beautifully tender, then remove the beef to a plate, cover with tin foil and leave to rest while you make the sauce."
+        }
+      ]
+    },
+    {
+      "id": "season_taste",
+      "descr": "Strain the tomato sauce through a sieve over a clean pan...",
+      "instructions": "Strain the tomato sauce through a sieve over a clean pan to catch the liquid, gently pressing to help it along, then season to taste with salt, pepper and a little more sugar, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_while"
+      ],
+      "next": [
+        "warm_ready"
+      ],
+      "on_enter": [
+        {
+          "say": "Strain the tomato sauce through a sieve over a clean pan to catch the liquid, gently pressing to help it along, then season to taste with salt, pepper and a little more sugar, if needed."
+        }
+      ]
+    },
+    {
+      "id": "warm_ready",
+      "descr": "Shred the meat back into the slow-cooker pot and pour...",
+      "instructions": "Shred the meat back into the slow-cooker pot and pour over the sauce, then leave on a low setting to keep warm until you\u2019re ready to eat, or enjoy straightaway with creamy mash and steamed seasonal greens.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "season_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Shred the meat back into the slow-cooker pot and pour over the sauce, then leave on a low setting to keep warm until you\u2019re ready to eat, or enjoy straightaway with creamy mash and steamed seasonal greens."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "686 calories",
+    "carbohydrates": "21.2 g",
+    "fat": "43.4 g",
+    "fiber": "4 g",
+    "protein": "53 g"
+  }
+}

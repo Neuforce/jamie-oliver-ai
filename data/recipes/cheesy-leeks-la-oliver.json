@@ -1,0 +1,287 @@
+{
+  "recipe": {
+    "id": "cheesy-leeks-la-oliver",
+    "title": "Cheesy leeks \u00e0 la Oliver",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Jazz up your side dish offering with this easy cheesy leeks recipe from Jamie Oliver. Sweet leeks in Parmesan, Cheddar and brie, baked to perfection \u2013 yum!",
+    "tags": [
+      "leeks",
+      "christmas",
+      "thanksgiving",
+      "dinner-party",
+      "main-ingredient",
+      "vegetable-sides",
+      "vegetarian",
+      "dish-type",
+      "method",
+      "sides",
+      "gluten-free",
+      "one-pan-recipes",
+      "occasion",
+      "cheese",
+      "course"
+    ],
+    "course": "side",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/cheese/cheesy-leeks-la-oliver",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/60a5c219b60890523c9aa45b64cc5f5cd603fc6c-958x1280.png/46260638?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/60a5c219b60890523c9aa45b64cc5f5cd603fc6c-958x1280.png/46260638?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/60a5c219b60890523c9aa45b64cc5f5cd603fc6c-958x1280.png/46260638?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/60a5c219b60890523c9aa45b64cc5f5cd603fc6c-958x1280.png/46260638?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "cheese"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-leeks",
+      "name": "large leeks",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 5.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "knob-of-unsalted-butter",
+      "name": "knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "single-cream",
+      "name": "single cream",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "brie",
+      "name": "brie",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_leeks"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "slice_leeks",
+      "descr": "Trim, wash and slice the leeks, about 2cm thick, at an angle",
+      "instructions": "Trim, wash and slice the leeks, about 2cm thick, at an angle. Peel and slice the garlic, then pick the thyme leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim, wash and slice the leeks, about 2cm thick, at an angle. Peel and slice the garlic, then pick the thyme leaves."
+        }
+      ]
+    },
+    {
+      "id": "heat_butter",
+      "descr": "Put a large casserole-type pan (ideally one you\u2019d be...",
+      "instructions": "Put a large casserole-type pan (ideally one you\u2019d be happy to serve in) on a medium heat and add a drizzle of oil, the butter, thyme leaves and garlic.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_leeks"
+      ],
+      "next": [
+        "stir_leeks"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large casserole-type pan (ideally one you\u2019d be happy to serve in) on a medium heat and add a drizzle of oil, the butter, thyme leaves and garlic."
+        }
+      ]
+    },
+    {
+      "id": "stir_leeks",
+      "descr": "Cook until it begins to bubble and fry, then stir in the...",
+      "instructions": "Cook until it begins to bubble and fry, then stir in the leeks. Continue cooking and checking on it every few minutes to stir and make sure it doesn\u2019t catch.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_butter"
+      ],
+      "next": [
+        "stir_ingredients"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook until it begins to bubble and fry, then stir in the leeks. Continue cooking and checking on it every few minutes to stir and make sure it doesn\u2019t catch."
+        }
+      ]
+    },
+    {
+      "id": "stir_ingredients",
+      "descr": "At this point, you have two choices: one is good, one is...",
+      "instructions": "At this point, you have two choices: one is good, one is great. You can either stir the rest of the ingredients into the leeks, grating in the Cheddar and Parmesan, and tearing in the brie, then put it into the oven to cook for 45 minutes uncovered, or, if you want the sweetest leeks in the world (and I think you do), do the following...",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "stir_leeks"
+      ],
+      "next": [
+        "heat_under"
+      ],
+      "on_enter": [
+        {
+          "say": "At this point, you have two choices: one is good, one is great. You can either stir the rest of the ingredients into the leeks, grating in the Cheddar and Parmesan, and tearing in the brie, then put it into the oven to cook for 45 minutes uncovered, or, if you want the sweetest leeks in the world (and I think you do), do the following..."
+        }
+      ]
+    },
+    {
+      "id": "heat_under",
+      "descr": "Turn the heat under the pan down a little and cook the...",
+      "instructions": "Turn the heat under the pan down a little and cook the leeks for about 35 minutes, or until soft and intensely gorgeous, stirring every now and then.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2100S",
+      "depends_on": [
+        "stir_ingredients"
+      ],
+      "next": [
+        "season_spoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Turn the heat under the pan down a little and cook the leeks for about 35 minutes, or until soft and intensely gorgeous, stirring every now and then."
+        }
+      ]
+    },
+    {
+      "id": "season_spoon",
+      "descr": "Season, then spoon it all into a dish, or leave in the pan",
+      "instructions": "Season, then spoon it all into a dish, or leave in the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_under"
+      ],
+      "next": [
+        "stir_cream"
+      ],
+      "on_enter": [
+        {
+          "say": "Season, then spoon it all into a dish, or leave in the pan."
+        }
+      ]
+    },
+    {
+      "id": "stir_cream",
+      "descr": "Stir in the cream and splash of water, grate over the...",
+      "instructions": "Stir in the cream and splash of water, grate over the Cheddar and Parmesan, then pull the brie into parts and bomb those on top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_spoon"
+      ],
+      "next": [
+        "step_step_9"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the cream and splash of water, grate over the Cheddar and Parmesan, then pull the brie into parts and bomb those on top."
+        }
+      ]
+    },
+    {
+      "id": "step_step_9",
+      "descr": "Pop in the oven for 15 minutes, or until golden and bubbling",
+      "instructions": "Pop in the oven for 15 minutes, or until golden and bubbling.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT900S",
+      "depends_on": [
+        "stir_cream"
+      ],
+      "on_enter": [
+        {
+          "say": "Pop in the oven for 15 minutes, or until golden and bubbling."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "151 calories",
+    "carbohydrates": "1.8 g",
+    "fat": "12.9 g",
+    "fiber": null,
+    "protein": "6.3 g"
+  }
+}

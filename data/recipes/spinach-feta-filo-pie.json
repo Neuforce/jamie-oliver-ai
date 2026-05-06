@@ -1,0 +1,364 @@
+{
+  "recipe": {
+    "id": "spinach-feta-filo-pie",
+    "title": "Spinach & feta filo pie",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "A flaky, crispy, crunchy, oozy, cheesy vegetarian pie recipe from Jamie Oliver. It's packed with spinach, too! A brilliant recipe for a weekend lunch or dinner party.",
+    "tags": [
+      "main-ingredient",
+      "greek",
+      "vegetarian",
+      "dish-type",
+      "30-minute-meals",
+      "spinach-and-feta",
+      "pies-amp-pastries",
+      "holidays-from-home",
+      "lemon",
+      "pie",
+      "spinach",
+      "cheese"
+    ],
+    "course": "main",
+    "cuisine": "greek",
+    "source_url": "https://www.jamieoliver.com/recipes/cheese/spinach-feta-filo-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9e3345d781c27c9d3995069dbeac2af121b3d09b-958x1280.png/76718257?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9e3345d781c27c9d3995069dbeac2af121b3d09b-958x1280.png/76718257?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9e3345d781c27c9d3995069dbeac2af121b3d09b-958x1280.png/76718257?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9e3345d781c27c9d3995069dbeac2af121b3d09b-958x1280.png/76718257?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "cheese"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "pine-nuts",
+      "name": "pine nuts",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-eggs",
+      "name": "large free-range eggs",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "feta-cheese",
+      "name": "feta cheese",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "knob-of-unsalted-butter",
+      "name": "knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "270g-pack-of-filo-pastry",
+      "name": "270g pack of filo pastry",
+      "quantity": 270.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cayenne-pepper",
+      "name": "cayenne pepper",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "mixing bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Toast the pine nuts in a large ovenproof frying pan over...",
+      "instructions": "Toast the pine nuts in a large ovenproof frying pan over a medium heat for 1 to 2 minutes, or until golden and smelling fantastic, tossing occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_bowl"
+      ],
+      "on_enter": [
+        {
+          "say": "Toast the pine nuts in a large ovenproof frying pan over a medium heat for 1 to 2 minutes, or until golden and smelling fantastic, tossing occasionally."
+        }
+      ]
+    },
+    {
+      "id": "mix_bowl",
+      "descr": "Crack the eggs into a large mixing bowl, crumble in the...",
+      "instructions": "Crack the eggs into a large mixing bowl, crumble in the feta, then grate in the Cheddar. Season with a pinch of black pepper and a couple of pinches of dried oregano.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Crack the eggs into a large mixing bowl, crumble in the feta, then grate in the Cheddar. Season with a pinch of black pepper and a couple of pinches of dried oregano."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Finely grate in the lemon zest, drizzle in a little oil,...",
+      "instructions": "Finely grate in the lemon zest, drizzle in a little oil, then toss in the toasted pine nuts. Mix well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_bowl"
+      ],
+      "next": [
+        "heat_half"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate in the lemon zest, drizzle in a little oil, then toss in the toasted pine nuts. Mix well."
+        }
+      ]
+    },
+    {
+      "id": "heat_half",
+      "descr": "Melt the butter in the frying pan over a medium heat...",
+      "instructions": "Melt the butter in the frying pan over a medium heat with a drizzle of oil, add half the spinach, stirring until wilted, then when there\u2019s space, add the remaining spinach, stirring regularly until wilted.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Melt the butter in the frying pan over a medium heat with a drizzle of oil, add half the spinach, stirring until wilted, then when there\u2019s space, add the remaining spinach, stirring regularly until wilted."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Lay a 50cm strip of greaseproof paper out on a clean...",
+      "instructions": "Lay a 50cm strip of greaseproof paper out on a clean work surface, rub lightly with oil and scrunch up, then flatten out again.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_half"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Lay a 50cm strip of greaseproof paper out on a clean work surface, rub lightly with oil and scrunch up, then flatten out again."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "Arrange 4 sheets of filo in a large rectangle on the...",
+      "instructions": "Arrange 4 sheets of filo in a large rectangle on the greaseproof paper, overlapping at the edges, so that it\u2019s almost covering the greaseproof.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "sprinkle_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "Arrange 4 sheets of filo in a large rectangle on the greaseproof paper, overlapping at the edges, so that it\u2019s almost covering the greaseproof."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_salt",
+      "descr": "Rub the filo with a little oil, sprinkle with sea salt,...",
+      "instructions": "Rub the filo with a little oil, sprinkle with sea salt, pepper and a pinch of cayenne pepper. Repeat until you have 3 layers.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub the filo with a little oil, sprinkle with sea salt, pepper and a pinch of cayenne pepper. Repeat until you have 3 layers."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Stir the wilted spinach into the egg mixture, then grate...",
+      "instructions": "Stir the wilted spinach into the egg mixture, then grate in half the nutmeg and mix well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "sprinkle_salt"
+      ],
+      "next": [
+        "fry_that"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the wilted spinach into the egg mixture, then grate in half the nutmeg and mix well."
+        }
+      ]
+    },
+    {
+      "id": "fry_that",
+      "descr": "Slide the greaseproof and filo into the empty frying...",
+      "instructions": "Slide the greaseproof and filo into the empty frying pan, so that the edges spill over, then push down into the sides of the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Slide the greaseproof and filo into the empty frying pan, so that the edges spill over, then push down into the sides of the pan."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Pour in the spinach mixture and spread out evenly, then...",
+      "instructions": "Pour in the spinach mixture and spread out evenly, then fold the filo up over the filling to cover.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fry_that"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the spinach mixture and spread out evenly, then fold the filo up over the filling to cover."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Place the pan over a medium heat for 2 minutes, just to...",
+      "instructions": "Place the pan over a medium heat for 2 minutes, just to get the bottom cooking, then transfer to the top shelf of the oven for 18 to 20 minutes, or until golden and crisp. Delicious served with a fresh seasonal salad.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT120S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the pan over a medium heat for 2 minutes, just to get the bottom cooking, then transfer to the top shelf of the oven for 18 to 20 minutes, or until golden and crisp. Delicious served with a fresh seasonal salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "830 calories",
+    "carbohydrates": "42.8 g",
+    "fat": "57 g",
+    "fiber": "3.5 g",
+    "protein": "36.6 g"
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "recipe": {
+    "id": "easy-homemade-bread",
+    "title": "Easy homemade bread",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "Cooking can be good for the soul and making bread is such a rewarding, therapeutic, tactile thing \u2013 you\u2019ll be so proud of yourself when you\u2019ve cracked it.",
+    "tags": [
+      "tv",
+      "keep-cooking-bread-and-baking",
+      "vegan",
+      "vegetarian",
+      "tv-shows",
+      "low-lactose",
+      "bread",
+      "keep-cooking-and-carry-on",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/bread/easy-homemade-bread",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8a0359d3b2ee8b4c184695ae23ba69623e2aada7-958x1280.jpg/105140174?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8a0359d3b2ee8b4c184695ae23ba69623e2aada7-958x1280.jpg/105140174?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8a0359d3b2ee8b4c184695ae23ba69623e2aada7-958x1280.jpg/105140174?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/8a0359d3b2ee8b4c184695ae23ba69623e2aada7-958x1280.jpg/105140174?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "bread"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "7g-sachet-of-dried-yeast",
+      "name": "7g sachet of dried yeast",
+      "quantity": 7.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "strong-bread-flour",
+      "name": "strong bread flour",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "plus extra for dusting"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "large bowl",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "mix_fork",
+      "descr": "Pour 650ml of tepid water into a large bowl",
+      "instructions": "Pour 650ml of tepid water into a large bowl. Add the yeast and mix with a fork for a couple of minutes.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_together"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour 650ml of tepid water into a large bowl. Add the yeast and mix with a fork for a couple of minutes."
+        }
+      ]
+    },
+    {
+      "id": "mix_together",
+      "descr": "Pour in most of the flour and half a teaspoon of sea...",
+      "instructions": "Pour in most of the flour and half a teaspoon of sea salt, then use a fork to mix together until you can\u2019t move it anymore.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_fork"
+      ],
+      "next": [
+        "add_more"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in most of the flour and half a teaspoon of sea salt, then use a fork to mix together until you can\u2019t move it anymore."
+        }
+      ]
+    },
+    {
+      "id": "add_more",
+      "descr": "Now get your clean hands in there and bring it together...",
+      "instructions": "Now get your clean hands in there and bring it together as a ball of dough, adding more flour as you need to stop your hands and the dough sticking.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_together"
+      ],
+      "next": [
+        "knead_pushing"
+      ],
+      "on_enter": [
+        {
+          "say": "Now get your clean hands in there and bring it together as a ball of dough, adding more flour as you need to stop your hands and the dough sticking."
+        }
+      ]
+    },
+    {
+      "id": "knead_pushing",
+      "descr": "Transfer the dough to a flour-dusted surface and keep it...",
+      "instructions": "Transfer the dough to a flour-dusted surface and keep it moving, kneading, pushing and stretching it for 5 minutes, or until you have a silky and elastic dough.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "add_more"
+      ],
+      "next": [
+        "warm_draught"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer the dough to a flour-dusted surface and keep it moving, kneading, pushing and stretching it for 5 minutes, or until you have a silky and elastic dough."
+        }
+      ]
+    },
+    {
+      "id": "warm_draught",
+      "descr": "Use your floured hands to shape the dough into a rough...",
+      "instructions": "Use your floured hands to shape the dough into a rough ball, put it in a bowl, flour the top and cover with a clean, damp tea towel. Allow it to prove for about an hour or an hour and 30 minutes, or until doubled in size \u2013 ideally in a warm, draught-free place.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "knead_pushing"
+      ],
+      "next": [
+        "knead_seconds"
+      ],
+      "on_enter": [
+        {
+          "say": "Use your floured hands to shape the dough into a rough ball, put it in a bowl, flour the top and cover with a clean, damp tea towel. Allow it to prove for about an hour or an hour and 30 minutes, or until doubled in size \u2013 ideally in a warm, draught-free place."
+        }
+      ]
+    },
+    {
+      "id": "knead_seconds",
+      "descr": "Once the dough has doubled in size, knock the air out by...",
+      "instructions": "Once the dough has doubled in size, knock the air out by punching it with your fist, then kneading for 30 seconds.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT30S",
+      "depends_on": [
+        "warm_draught"
+      ],
+      "next": [
+        "fold_filled"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the dough has doubled in size, knock the air out by punching it with your fist, then kneading for 30 seconds."
+        }
+      ]
+    },
+    {
+      "id": "fold_filled",
+      "descr": "You can now shape it or flavour it as required \u2013 folded,...",
+      "instructions": "You can now shape it or flavour it as required \u2013 folded, filled, traybaked, whatever \u2013 and leave it to prove for a second time, for 30 minutes to an hour, or until it has doubled in size once more.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "knead_seconds"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "You can now shape it or flavour it as required \u2013 folded, filled, traybaked, whatever \u2013 and leave it to prove for a second time, for 30 minutes to an hour, or until it has doubled in size once more."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fold_filled"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "Carefully transfer your bread dough to the oven and...",
+      "instructions": "Carefully transfer your bread dough to the oven and gently close the door. Bake for about 35 minutes, or until golden. You can tell if it\u2019s cooked by tapping its bottom \u2013 if it sounds hollow it\u2019s done; if it doesn\u2019t then pop it back in for a little longer.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2100S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "cool_rack"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully transfer your bread dough to the oven and gently close the door. Bake for about 35 minutes, or until golden. You can tell if it\u2019s cooked by tapping its bottom \u2013 if it sounds hollow it\u2019s done; if it doesn\u2019t then pop it back in for a little longer."
+        }
+      ]
+    },
+    {
+      "id": "cool_rack",
+      "descr": "Once cooked, place your loaf on a cooling rack and allow...",
+      "instructions": "Once cooked, place your loaf on a cooling rack and allow to cool.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Once cooked, place your loaf on a cooling rack and allow to cool."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "147 calories",
+    "carbohydrates": "32.4 g",
+    "fat": "0.6 g",
+    "fiber": "0.2 g",
+    "protein": "5 g"
+  }
+}

@@ -1,0 +1,349 @@
+{
+  "recipe": {
+    "id": "prawn-linguine",
+    "title": "Prawn linguine",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Sweet prawns and spaghetti in a rich tomato sauce with a kick of chilli - proper comfort food!",
+    "tags": [
+      "prawns",
+      "dinner-party",
+      "jamie-s-cook-and-save",
+      "pasta",
+      "main-ingredient",
+      "pasta-amp-risotto",
+      "aussie-christmas",
+      "mains",
+      "dish-type",
+      "method",
+      "tomato",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/prawn-linguine",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ba3012fc21730659f9e162265de378748d7b868-973x1300.jpg/7ba3012fc21730659f9e162265de378748d7b868-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ba3012fc21730659f9e162265de378748d7b868-973x1300.jpg/7ba3012fc21730659f9e162265de378748d7b868-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ba3012fc21730659f9e162265de378748d7b868-973x1300.jpg/7ba3012fc21730659f9e162265de378748d7b868-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ba3012fc21730659f9e162265de378748d7b868-973x1300.jpg/7ba3012fc21730659f9e162265de378748d7b868-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-raw-shell-on-king-prawns",
+      "name": "large raw shell-on king prawns from a sustainable source",
+      "quantity": 12.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "good-pinch-of-saffron",
+      "name": "good pinch of saffron",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "anchovy-fillets",
+      "name": "anchovy fillets",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "splash-of-crisp",
+      "name": "splash of crisp",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "dry Riesling"
+    },
+    {
+      "id": "400g-tin-of-chopped-tomatoes",
+      "name": "400g tin of chopped tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "ripe-cherry-tomatoes",
+      "name": "ripe cherry tomatoes",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-long-red-chillies",
+      "name": "fresh long red chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bulb-of-fennel",
+      "name": "\u00bd bulb of fennel",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "x-royal-pasta-dough-or-320g-dr",
+      "name": "\u00bd x royal pasta dough or 320g dried linguine",
+      "quantity": null,
+      "unit": null,
+      "note": "see Jamie\u2019s Comfort Food book"
+    },
+    {
+      "id": "large-handful-of-rocket",
+      "name": "large handful of rocket",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "knife",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "chop_prawns",
+      "descr": "Peel the prawns, reserving all the heads and shells",
+      "instructions": "Peel the prawns, reserving all the heads and shells. Run a knife down the back and pull out the veins. Keep 4 prawns whole, running your knife down those ones again to butterfly them. Chop the rest of the prawns into small chunks to help distribute that sweet taste throughout the dish.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the prawns, reserving all the heads and shells. Run a knife down the back and pull out the veins. Keep 4 prawns whole, running your knife down those ones again to butterfly them. Chop the rest of the prawns into small chunks to help distribute that sweet taste throughout the dish."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "Put the saffron into a little bowl with a thimble of...",
+      "instructions": "Put the saffron into a little bowl with a thimble of boiling water.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_prawns"
+      ],
+      "next": [
+        "heat_olive"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the saffron into a little bowl with a thimble of boiling water."
+        }
+      ]
+    },
+    {
+      "id": "heat_olive",
+      "descr": "Place the prawn heads and shells in a large pan on a...",
+      "instructions": "Place the prawn heads and shells in a large pan on a medium heat with a lug of olive oil and fry while you peel and finely chop the onion, then add it to the pan. Cook until the onion starts to soften, stirring occasionally.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "heat_wine"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the prawn heads and shells in a large pan on a medium heat with a lug of olive oil and fry while you peel and finely chop the onion, then add it to the pan. Cook until the onion starts to soften, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "heat_wine",
+      "descr": "Add the saffron with its soaking water and the anchovies",
+      "instructions": "Add the saffron with its soaking water and the anchovies. Turn the heat up, add the wine and cook it away, then add the tinned tomatoes, 1 tin\u2019s worth of water and a pinch of sea salt and black pepper. Bring to the boil, then simmer for 12 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT720S",
+      "depends_on": [
+        "heat_olive"
+      ],
+      "next": [
+        "season_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the saffron with its soaking water and the anchovies. Turn the heat up, add the wine and cook it away, then add the tinned tomatoes, 1 tin\u2019s worth of water and a pinch of sea salt and black pepper. Bring to the boil, then simmer for 12 minutes."
+        }
+      ]
+    },
+    {
+      "id": "season_taste",
+      "descr": "Leave the sauce to cool a little, then, in small...",
+      "instructions": "Leave the sauce to cool a little, then, in small batches, blitz in a blender until smooth, pass through a coarse sieve and season to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_wine"
+      ],
+      "next": [
+        "slice_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave the sauce to cool a little, then, in small batches, blitz in a blender until smooth, pass through a coarse sieve and season to taste."
+        }
+      ]
+    },
+    {
+      "id": "slice_garlic",
+      "descr": "Put a large pan of salted water on to boil for the pasta",
+      "instructions": "Put a large pan of salted water on to boil for the pasta. Peel and finely slice the garlic, quarter the cherry tomatoes and finely slice the chilli. Trim and finely slice the fennel, preferably on a mandolin (use the guard!).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_taste"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a large pan of salted water on to boil for the pasta. Peel and finely slice the garlic, quarter the cherry tomatoes and finely slice the chilli. Trim and finely slice the fennel, preferably on a mandolin (use the guard!)."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "You can make this with the fresh or dried pasta \u2013 if...",
+      "instructions": "You can make this with the fresh or dried pasta \u2013 if you're using fresh, cut the sheets into linguine.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_garlic"
+      ],
+      "next": [
+        "process_want"
+      ],
+      "on_enter": [
+        {
+          "say": "You can make this with the fresh or dried pasta \u2013 if you're using fresh, cut the sheets into linguine."
+        }
+      ]
+    },
+    {
+      "id": "process_want",
+      "descr": "Now it\u2019s time to focus",
+      "instructions": "Now it\u2019s time to focus. Great pasta is all about timing and confidence \u2013 the sauce takes 4 minutes, so if using dried pasta, get that on first and start the sauce after 8 minutes; if using the fresh, cook it halfway through the sauce process \u2013 I don\u2019t want you to overcook the prawns or pasta.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Now it\u2019s time to focus. Great pasta is all about timing and confidence \u2013 the sauce takes 4 minutes, so if using dried pasta, get that on first and start the sauce after 8 minutes; if using the fresh, cook it halfway through the sauce process \u2013 I don\u2019t want you to overcook the prawns or pasta."
+        }
+      ]
+    },
+    {
+      "id": "heat_once",
+      "descr": "Place a large pan on a high heat and, once hot, add a...",
+      "instructions": "Place a large pan on a high heat and, once hot, add a good lug of olive oil, quickly followed by the garlic and chilli. After 30 seconds, toss in the whole prawns, then after another 6 seconds add the chopped prawns, cherry tomatoes and fennel, and toss again. Pour over the sauce and bring to a simmer.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT30S",
+      "depends_on": [
+        "process_want"
+      ],
+      "next": [
+        "add_squeeze"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large pan on a high heat and, once hot, add a good lug of olive oil, quickly followed by the garlic and chilli. After 30 seconds, toss in the whole prawns, then after another 6 seconds add the chopped prawns, cherry tomatoes and fennel, and toss again. Pour over the sauce and bring to a simmer."
+        }
+      ]
+    },
+    {
+      "id": "add_squeeze",
+      "descr": "At this point, drain your cooked pasta and place it on...",
+      "instructions": "At this point, drain your cooked pasta and place it on top of the sauce. Toss again, quickly check the seasoning and divide between four bowls, followed by any leftover prawns and sauce. Top each portion with a clump of rocket, add a squeeze of lemon juice and drizzle with extra virgin olive oil. Eat it, and be proud of yourself.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "At this point, drain your cooked pasta and place it on top of the sauce. Toss again, quickly check the seasoning and divide between four bowls, followed by any leftover prawns and sauce. Top each portion with a clump of rocket, add a squeeze of lemon juice and drizzle with extra virgin olive oil. Eat it, and be proud of yourself."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "500 calories",
+    "carbohydrates": "51.9 g",
+    "fat": "22.1 g",
+    "fiber": "4.5 g",
+    "protein": "24.1 g"
+  }
+}

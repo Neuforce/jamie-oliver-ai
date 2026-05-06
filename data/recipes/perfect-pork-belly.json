@@ -1,0 +1,394 @@
+{
+  "recipe": {
+    "id": "perfect-pork-belly",
+    "title": "Perfect pork belly",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT180M",
+    "description": "Take your roast pork to the next level with this recipe from Jamie Oliver. With crispy crackling and cider gravy, it's perfect for your next Sunday roast.",
+    "tags": [
+      "roast",
+      "roast-pork",
+      "pork-belly",
+      "sunday-lunch",
+      "course",
+      "dish-type",
+      "roasting",
+      "method",
+      "gravy",
+      "low-lactose",
+      "pork",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/perfect-pork-belly",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/941883e73f85926198cc0999c34271b09df06fab-958x1280.png/92176677?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/941883e73f85926198cc0999c34271b09df06fab-958x1280.png/92176677?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/941883e73f85926198cc0999c34271b09df06fab-958x1280.png/92176677?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/941883e73f85926198cc0999c34271b09df06fab-958x1280.png/92176677?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "piece-of-higher-welfare-pork-b",
+      "name": "piece of higher-welfare pork belly",
+      "quantity": 4.0,
+      "unit": "kg",
+      "note": "bone in"
+    },
+    {
+      "id": "bay-leaves",
+      "name": "bay leaves",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sea-salt",
+      "name": "sea salt",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "fennel-seeds",
+      "name": "fennel seeds",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "black-peppercorns",
+      "name": "black peppercorns",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dry-cider",
+      "name": "dry cider",
+      "quantity": 300.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 3.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "veg",
+      "name": "VEG",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 4.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "bulbs-of-fennel",
+      "name": "bulbs of fennel",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "knife",
+    "oven",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Leave the pork uncovered in the fridge overnight to dry...",
+      "instructions": "Leave the pork uncovered in the fridge overnight to dry out the skin.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave the pork uncovered in the fridge overnight to dry out the skin."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to full whack (240\u00b0C/475\u00b0F/gas 9)",
+      "instructions": "Preheat the oven to full whack (240\u00b0C/475\u00b0F/gas 9).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "step_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to full whack (240\u00b0C/475\u00b0F/gas 9)."
+        }
+      ]
+    },
+    {
+      "id": "step_step_3",
+      "descr": "Carefully score the pork skin with a sharp knife or scalpel",
+      "instructions": "Carefully score the pork skin with a sharp knife or scalpel.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully score the pork skin with a sharp knife or scalpel."
+        }
+      ]
+    },
+    {
+      "id": "add_coriander",
+      "descr": "Place the bay leaves in a pestle and mortar with the sea...",
+      "instructions": "Place the bay leaves in a pestle and mortar with the sea salt and give it a good bashing. Add the coriander seeds, fennel seeds and peppercorns, then bash again until fine.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_3"
+      ],
+      "next": [
+        "rest_another"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the bay leaves in a pestle and mortar with the sea salt and give it a good bashing. Add the coriander seeds, fennel seeds and peppercorns, then bash again until fine."
+        }
+      ]
+    },
+    {
+      "id": "rest_another",
+      "descr": "Rub 2 tablespoons of the flavoured salt all over the...",
+      "instructions": "Rub 2 tablespoons of the flavoured salt all over the pork, massaging it into all the nooks and crannies, saving the rest for another day. Brush away any excess.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_coriander"
+      ],
+      "next": [
+        "roast_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub 2 tablespoons of the flavoured salt all over the pork, massaging it into all the nooks and crannies, saving the rest for another day. Brush away any excess."
+        }
+      ]
+    },
+    {
+      "id": "roast_minutes",
+      "descr": "Clank up the onions into wedges and arrange them...",
+      "instructions": "Clank up the onions into wedges and arrange them skin-side up in rows. Lay the pork directly over the onions, then roast for 40 to 50 minutes, or until the crackling is golden and super crunchy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3000S",
+      "depends_on": [
+        "rest_another"
+      ],
+      "next": [
+        "mix_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Clank up the onions into wedges and arrange them skin-side up in rows. Lay the pork directly over the onions, then roast for 40 to 50 minutes, or until the crackling is golden and super crunchy."
+        }
+      ]
+    },
+    {
+      "id": "mix_step_7",
+      "descr": "Meanwhile, prepare the veg",
+      "instructions": "Meanwhile, prepare the veg. Scrub the carrots and potatoes, trim the celery and fennel, then clank up into 2\u00bdcm chunks and place on a large baking tray. Pick over the rosemary leaves, then break up the garlic bulb and scatter over the cloves, leaving the skin on. Season with salt and pepper, then give it a good mix.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_minutes"
+      ],
+      "next": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, prepare the veg. Scrub the carrots and potatoes, trim the celery and fennel, then clank up into 2\u00bdcm chunks and place on a large baking tray. Pick over the rosemary leaves, then break up the garlic bulb and scatter over the cloves, leaving the skin on. Season with salt and pepper, then give it a good mix."
+        }
+      ]
+    },
+    {
+      "id": "step_step_8",
+      "descr": "Remove the pork from the oven and reduce the temperature...",
+      "instructions": "Remove the pork from the oven and reduce the temperature to 150\u00b0C/300\u00b0F/gas 2.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_step_7"
+      ],
+      "next": [
+        "coat_pork"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pork from the oven and reduce the temperature to 150\u00b0C/300\u00b0F/gas 2."
+        }
+      ]
+    },
+    {
+      "id": "coat_pork",
+      "descr": "Using tongs, carefully lift the pork off the onions and...",
+      "instructions": "Using tongs, carefully lift the pork off the onions and place it directly on the top bars of the oven. Position the tray of veg exactly underneath to catch the tasty juices. Cook the pork for a further 2 to 4 hours \u2013 after 2 hours, the meat will be soft and easy to carve, after 4 hours, the meat will be soft enough to \u2018pull\u2019. Toss the veg occasionally, turning to coat in the pork juices until caramelised and cooked to your liking, then remove. (Pop an empty tray under the pork to prevent the juices from making a mess in your oven.)",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT14400S",
+      "depends_on": [
+        "step_step_8"
+      ],
+      "next": [
+        "heat_cider"
+      ],
+      "on_enter": [
+        {
+          "say": "Using tongs, carefully lift the pork off the onions and place it directly on the top bars of the oven. Position the tray of veg exactly underneath to catch the tasty juices. Cook the pork for a further 2 to 4 hours \u2013 after 2 hours, the meat will be soft and easy to carve, after 4 hours, the meat will be soft enough to \u2018pull\u2019. Toss the veg occasionally, turning to coat in the pork juices until caramelised and cooked to your liking, then remove. (Pop an empty tray under the pork to prevent the juices from making a mess in your oven.)"
+        }
+      ]
+    },
+    {
+      "id": "heat_cider",
+      "descr": "To make the gravy, carefully drain the fat from the...",
+      "instructions": "To make the gravy, carefully drain the fat from the onions and reserve for another day. Place the tray on the hob over a medium heat, then pour in the cider and let it bubble away for a few minutes, scraping up all the sticky goodness from the base of the tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "coat_pork"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the gravy, carefully drain the fat from the onions and reserve for another day. Place the tray on the hob over a medium heat, then pour in the cider and let it bubble away for a few minutes, scraping up all the sticky goodness from the base of the tray."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Gradually stir in the flour, then pour in 1",
+      "instructions": "Gradually stir in the flour, then pour in 1.5 litres of boiling water and stir on the heat for 15 minutes, or until thickened and reduced.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_cider"
+      ],
+      "next": [
+        "serve_simple"
+      ],
+      "on_enter": [
+        {
+          "say": "Gradually stir in the flour, then pour in 1.5 litres of boiling water and stir on the heat for 15 minutes, or until thickened and reduced."
+        }
+      ]
+    },
+    {
+      "id": "serve_simple",
+      "descr": "When it\u2019s time to dish up, arrange the veg on a serving...",
+      "instructions": "When it\u2019s time to dish up, arrange the veg on a serving platter with the pork and strain the gravy into a jug. Carve or pull the pork and plate it up with a little bit of everything. Delicious served with a simple watercress and apple salad, and a dollop of English mustard.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "When it\u2019s time to dish up, arrange the veg on a serving platter with the pork and strain the gravy into a jug. Carve or pull the pork and plate it up with a little bit of everything. Delicious served with a simple watercress and apple salad, and a dollop of English mustard."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "508 calories",
+    "carbohydrates": "28.3 g",
+    "fat": "27.8 g",
+    "fiber": "6.5 g",
+    "protein": "36.1 g"
+  }
+}

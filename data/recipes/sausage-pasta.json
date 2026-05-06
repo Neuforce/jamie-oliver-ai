@@ -1,0 +1,363 @@
+{
+  "recipe": {
+    "id": "sausage-pasta",
+    "title": "Sausage pasta",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "Easy and healthy sausage pasta from Jamie Oliver's brilliant book Super Food Family Classics. This recipe is a real family favourite crowd-pleaser.",
+    "tags": [
+      "pasta",
+      "pasta-amp-risotto",
+      "course",
+      "dish-type",
+      "20-years",
+      "family-food",
+      "tv-shows",
+      "lunch-amp-dinner-recipes",
+      "pasta-sauce",
+      "broccoli",
+      "sausages",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/sausage-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3eaf564ef6e4f7110c04eaf734258ddf1764b602-958x1280.jpg/90246163?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3eaf564ef6e4f7110c04eaf734258ddf1764b602-958x1280.jpg/90246163?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3eaf564ef6e4f7110c04eaf734258ddf1764b602-958x1280.jpg/90246163?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3eaf564ef6e4f7110c04eaf734258ddf1764b602-958x1280.jpg/90246163?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "broccoli",
+      "name": "broccoli",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "higher-welfare-chipolata-sausa",
+      "name": "higher-welfare chipolata sausages",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "2-fresh-red-chillies",
+      "name": "\u20132 fresh red chillies",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fennel-seeds",
+      "name": "fennel seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-oregano",
+      "name": "\u00bd a bunch of fresh oregano",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-plum-tomatoes",
+      "name": "400g tin of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-wholewheat-tagliatelle",
+      "name": "dried wholewheat tagliatelle",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "chop_broccoli",
+      "descr": "Chop the broccoli florets off the stalk",
+      "instructions": "Chop the broccoli florets off the stalk.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Chop the broccoli florets off the stalk."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Cut the woody end off the stalk, halve the stalk...",
+      "instructions": "Cut the woody end off the stalk, halve the stalk lengthways and put into a large pan of boiling salted water with the sausages and whole chilli(es).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_broccoli"
+      ],
+      "next": [
+        "heat_step_3"
+      ],
+      "on_enter": [
+        {
+          "say": "Cut the woody end off the stalk, halve the stalk lengthways and put into a large pan of boiling salted water with the sausages and whole chilli(es)."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_3",
+      "descr": "Pop the lid on, boil for 5 minutes, then remove, leaving...",
+      "instructions": "Pop the lid on, boil for 5 minutes, then remove, leaving the water on the lowest heat.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "chop_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Pop the lid on, boil for 5 minutes, then remove, leaving the water on the lowest heat."
+        }
+      ]
+    },
+    {
+      "id": "chop_broccoli",
+      "descr": "Meanwhile, chop the broccoli florets into nice...",
+      "instructions": "Meanwhile, chop the broccoli florets into nice bite-sized chunks and put aside for later.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_3"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, chop the broccoli florets into nice bite-sized chunks and put aside for later."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Once cool enough to handle, finely slice the sausages,...",
+      "instructions": "Once cool enough to handle, finely slice the sausages, broccoli stalk and chilli and place in a large frying pan on a medium heat with 1 tablespoon of oil, the fennel seeds and a pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_broccoli"
+      ],
+      "next": [
+        "slice_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Once cool enough to handle, finely slice the sausages, broccoli stalk and chilli and place in a large frying pan on a medium heat with 1 tablespoon of oil, the fennel seeds and a pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "slice_garlic",
+      "descr": "Stir and fry while you peel and finely slice the garlic...",
+      "instructions": "Stir and fry while you peel and finely slice the garlic and onions.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "stir_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir and fry while you peel and finely slice the garlic and onions."
+        }
+      ]
+    },
+    {
+      "id": "stir_garlic",
+      "descr": "Once the sausage is lightly golden, stir in the garlic,...",
+      "instructions": "Once the sausage is lightly golden, stir in the garlic, followed a minute later by the onions, then pick in the oregano leaves. Cook for 15 minutes, or until softened, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "slice_garlic"
+      ],
+      "next": [
+        "add_vinegar"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the sausage is lightly golden, stir in the garlic, followed a minute later by the onions, then pick in the oregano leaves. Cook for 15 minutes, or until softened, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "add_vinegar",
+      "descr": "Add the vinegar and cook completely away, then pour in...",
+      "instructions": "Add the vinegar and cook completely away, then pour in the tomatoes, breaking them up with a wooden spoon. Half-fill the tin with water, swirl around and pour into the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_garlic"
+      ],
+      "next": [
+        "simmer_more"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the vinegar and cook completely away, then pour in the tomatoes, breaking them up with a wooden spoon. Half-fill the tin with water, swirl around and pour into the pan."
+        }
+      ]
+    },
+    {
+      "id": "simmer_more",
+      "descr": "Simmer for 15 more minutes, or until thickened, then...",
+      "instructions": "Simmer for 15 more minutes, or until thickened, then taste and season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_vinegar"
+      ],
+      "next": [
+        "add_broccoli"
+      ],
+      "on_enter": [
+        {
+          "say": "Simmer for 15 more minutes, or until thickened, then taste and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "add_broccoli",
+      "descr": "Meanwhile, bring the pan of water back up to boil, and...",
+      "instructions": "Meanwhile, bring the pan of water back up to boil, and cook the pasta according to the packet instructions, adding the broccoli florets for the last 4 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "simmer_more"
+      ],
+      "next": [
+        "serve_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, bring the pan of water back up to boil, and cook the pasta according to the packet instructions, adding the broccoli florets for the last 4 minutes."
+        }
+      ]
+    },
+    {
+      "id": "serve_water",
+      "descr": "Drain the pasta and broccoli, reserving a mugful of...",
+      "instructions": "Drain the pasta and broccoli, reserving a mugful of cooking water. Toss through the sauce, loosening with a little reserved water, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_broccoli"
+      ],
+      "next": [
+        "rest_parmesan"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the pasta and broccoli, reserving a mugful of cooking water. Toss through the sauce, loosening with a little reserved water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "rest_parmesan",
+      "descr": "Finely grate in most of the Parmesan and toss together,...",
+      "instructions": "Finely grate in most of the Parmesan and toss together, then serve with the rest of the Parmesan grated over the top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "serve_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate in most of the Parmesan and toss together, then serve with the rest of the Parmesan grated over the top."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "502 calories",
+    "carbohydrates": "64.3 g",
+    "fat": "17 g",
+    "fiber": "12.1 g",
+    "protein": "27 g"
+  }
+}

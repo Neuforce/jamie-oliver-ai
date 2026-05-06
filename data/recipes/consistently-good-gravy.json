@@ -1,0 +1,173 @@
+{
+  "recipe": {
+    "id": "consistently-good-gravy",
+    "title": "Consistently good gravy",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT25M",
+    "description": "Learn how to make perfect chicken gravy with this easy chicken gravy recipe. It'll seriously up your Sunday roast game! You can even freeze it, if you like.",
+    "tags": [
+      "christmas",
+      "dinner-party",
+      "father-s-day",
+      "dish-type",
+      "gravy",
+      "sauces",
+      "low-lactose",
+      "sides-and-sauces",
+      "course",
+      "thanksgiving",
+      "chicken-gravy",
+      "sauce",
+      "roasting",
+      "the-trimmings",
+      "occasion",
+      "sunday-lunch",
+      "chicken",
+      "method",
+      "sides",
+      "main-ingredient",
+      "mother-s-day",
+      "gravy-and-sauces",
+      "sauces-amp-condiments"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/consistently-good-gravy",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b500c0a4b206839bf965ccb0e4e774c0efb86141-973x1300.jpg/b500c0a4b206839bf965ccb0e4e774c0efb86141-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b500c0a4b206839bf965ccb0e4e774c0efb86141-973x1300.jpg/b500c0a4b206839bf965ccb0e4e774c0efb86141-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b500c0a4b206839bf965ccb0e4e774c0efb86141-973x1300.jpg/b500c0a4b206839bf965ccb0e4e774c0efb86141-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b500c0a4b206839bf965ccb0e4e774c0efb86141-973x1300.jpg/b500c0a4b206839bf965ccb0e4e774c0efb86141-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "roast-chicken",
+      "name": "roast chicken",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "roasted-vegetables",
+      "name": "roasted vegetables",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-dessertspoon-plain-flou",
+      "name": "heaped dessertspoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "wineglass-red-or-white-wine",
+      "name": "wineglass red or white wine",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "or cider, or a good splash of port or sherry"
+    },
+    {
+      "id": "organic-stock",
+      "name": "organic stock",
+      "quantity": 1.0,
+      "unit": "litre",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "ladle",
+    "pan",
+    "pot",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "rest_have",
+      "descr": "When you come to make your gravy, your chicken will be...",
+      "instructions": "When you come to make your gravy, your chicken will be covered and resting and you\u2019ll have your tray of chicken juices and vegetable trivet in front of you. Using a spoon, carefully remove 90 per cent of the hot fat from the tray by angling it away from yourself and scooping off the fatty layer that settles on top.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "When you come to make your gravy, your chicken will be covered and resting and you\u2019ll have your tray of chicken juices and vegetable trivet in front of you. Using a spoon, carefully remove 90 per cent of the hot fat from the tray by angling it away from yourself and scooping off the fatty layer that settles on top."
+        }
+      ]
+    },
+    {
+      "id": "heat_flour",
+      "descr": "Put the tray back on the hob over a high heat",
+      "instructions": "Put the tray back on the hob over a high heat. Add the flour, stir it around and, holding the tray steady with a tea towel in one hand, use a potato masher to mash all the veg to a pulp \u2013 don\u2019t worry if it\u2019s lumpy. You can rip the wings off the chicken and break them up into the tray to add more flavour at this point.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_have"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the tray back on the hob over a high heat. Add the flour, stir it around and, holding the tray steady with a tea towel in one hand, use a potato masher to mash all the veg to a pulp \u2013 don\u2019t worry if it\u2019s lumpy. You can rip the wings off the chicken and break them up into the tray to add more flavour at this point."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "When everything is mixed and mashed up, add the alcohol...",
+      "instructions": "When everything is mixed and mashed up, add the alcohol to give a little fragrance before you add your stock (the alcohol will cook away). Keep it over the heat and let it boil for a few minutes. Pour the stock into the tray, or add 1 litre of hot water. Bring everything in the pan to the boil, scraping all the goodness from the bottom of the pan as you go. Reduce the heat and simmer for 10 minutes, or until you\u2019ve achieved the gravy consistency you\u2019re looking for.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_flour"
+      ],
+      "next": [
+        "heat_thicken"
+      ],
+      "on_enter": [
+        {
+          "say": "When everything is mixed and mashed up, add the alcohol to give a little fragrance before you add your stock (the alcohol will cook away). Keep it over the heat and let it boil for a few minutes. Pour the stock into the tray, or add 1 litre of hot water. Bring everything in the pan to the boil, scraping all the goodness from the bottom of the pan as you go. Reduce the heat and simmer for 10 minutes, or until you\u2019ve achieved the gravy consistency you\u2019re looking for."
+        }
+      ]
+    },
+    {
+      "id": "heat_thicken",
+      "descr": "To serve, get yourself a large jug, bowl or pan and put...",
+      "instructions": "To serve, get yourself a large jug, bowl or pan and put a coarse sieve over it. Pour your gravy through the sieve, using a ladle to really push all the goodness through. Discard any veg or meat left behind. At this point you\u2019ve got a really cracking gravy, and you can either serve it straight away or put it back on the heat to simmer and thicken up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "To serve, get yourself a large jug, bowl or pan and put a coarse sieve over it. Pour your gravy through the sieve, using a ladle to really push all the goodness through. Discard any veg or meat left behind. At this point you\u2019ve got a really cracking gravy, and you can either serve it straight away or put it back on the heat to simmer and thicken up."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "140 calories",
+    "carbohydrates": "14.1 g",
+    "fat": "3.0 g",
+    "fiber": null,
+    "protein": "7.1 g"
+  }
+}

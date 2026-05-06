@@ -1,0 +1,234 @@
+{
+  "recipe": {
+    "id": "homemade-bagels",
+    "title": "Homemade bagels ",
+    "servings": 12,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "If you love a freshly baked bagel, you've got to try Jamie's foolproof recipe.",
+    "tags": [
+      "baking",
+      "vegetarian",
+      "method",
+      "bread-amp-doughs",
+      "dish-type",
+      "low-lactose",
+      "dairy-free",
+      "bread"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/bread/homemade-bagels",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fe04c7d7a3a6b3531f8bf0023b2ac36a72970470-958x1280.jpg/133967230?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fe04c7d7a3a6b3531f8bf0023b2ac36a72970470-958x1280.jpg/133967230?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fe04c7d7a3a6b3531f8bf0023b2ac36a72970470-958x1280.jpg/133967230?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fe04c7d7a3a6b3531f8bf0023b2ac36a72970470-958x1280.jpg/133967230?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "bread"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "strong-white-bread-flour",
+      "name": "strong white bread flour",
+      "quantity": 750.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "7g-sachet-of-instant-yeast",
+      "name": "7g sachet of instant yeast",
+      "quantity": 7.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "soft-brown-sugar",
+      "name": "soft brown sugar",
+      "quantity": 3.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "fine-sea-salt",
+      "name": "fine sea salt",
+      "quantity": 3.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "bicarbonate-of-soda",
+      "name": "bicarbonate of soda",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-2-tablespoons-sesame",
+      "name": "optional: 2 tablespoons sesame",
+      "quantity": null,
+      "unit": null,
+      "note": "poppy, pumpkin or sunflower seeds"
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "bowl",
+    "knife",
+    "large bowl",
+    "mixer",
+    "oven",
+    "pan",
+    "saucepan",
+    "slotted spoon",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "mix_method",
+      "descr": "FREE-STANDING MIXER METHOD:",
+      "instructions": "FREE-STANDING MIXER METHOD:",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_follow"
+      ],
+      "on_enter": [
+        {
+          "say": "FREE-STANDING MIXER METHOD:"
+        }
+      ]
+    },
+    {
+      "id": "heat_follow",
+      "descr": "Place the flour, yeast, sugar and salt into the bowl of...",
+      "instructions": "Place the flour, yeast, sugar and salt into the bowl of the free-standing mixer fitted with the dough hook. Turn onto a low speed to gently mix, then gradually pour in 450ml of tepid water and continue to mix until everything is combined. Turn the speed up to medium and knead for about 15 minutes. This dough is quite stiff so make sure the mixer doesn\u2019t overheat. Then follow the recipe from step 2, below. HAND MIX METHOD: Place the flour and sugar in a large bowl or on your largest clean surface. Make a well in the middle and pour in 450ml of tepid water. Add the yeast to the water, then gradually incorporate the flour into the yeast and water, whisking it together with a fork until you can\u2019t move the fork anymore. Using clean hands, gather it all up into a ball, adding more flour if the dough is a little sticky. Transfer to a flour-dusted surface and keep the dough moving; kneading, pushing and stretching for about 10 minutes (this is a stiff dough!), until you have a silky, smooth and elastic dough. Place the dough in a lightly oiled bowl, cover with a clean, damp tea towel, and leave to prove for 1\u00bd to 2 hours, or until it\u2019s doubled in size \u2013 ideally in a warm, draught-free place.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "mix_method"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the flour, yeast, sugar and salt into the bowl of the free-standing mixer fitted with the dough hook. Turn onto a low speed to gently mix, then gradually pour in 450ml of tepid water and continue to mix until everything is combined. Turn the speed up to medium and knead for about 15 minutes. This dough is quite stiff so make sure the mixer doesn\u2019t overheat. Then follow the recipe from step 2, below. HAND MIX METHOD: Place the flour and sugar in a large bowl or on your largest clean surface. Make a well in the middle and pour in 450ml of tepid water. Add the yeast to the water, then gradually incorporate the flour into the yeast and water, whisking it together with a fork until you can\u2019t move the fork anymore. Using clean hands, gather it all up into a ball, adding more flour if the dough is a little sticky. Transfer to a flour-dusted surface and keep the dough moving; kneading, pushing and stretching for about 10 minutes (this is a stiff dough!), until you have a silky, smooth and elastic dough. Place the dough in a lightly oiled bowl, cover with a clean, damp tea towel, and leave to prove for 1\u00bd to 2 hours, or until it\u2019s doubled in size \u2013 ideally in a warm, draught-free place."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Line 2 large flat baking trays with baking paper. Knock the air out of the dough by punching it with your fist, then shape into 12 equal balls (you can weigh the balls if you want them to be exactly the same size), now push a hole in the centre of each ball with your thumb, then gently stretch out the dough by spinning it on your two index fingers, until you have a bagel ring shape and the hole in the middle is around 2cm wide.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_follow"
+      ],
+      "next": [
+        "whisk_baking"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Line 2 large flat baking trays with baking paper. Knock the air out of the dough by punching it with your fist, then shape into 12 equal balls (you can weigh the balls if you want them to be exactly the same size), now push a hole in the centre of each ball with your thumb, then gently stretch out the dough by spinning it on your two index fingers, until you have a bagel ring shape and the hole in the middle is around 2cm wide."
+        }
+      ]
+    },
+    {
+      "id": "whisk_baking",
+      "descr": "Fill a large shallow saucepan with boiling kettle water",
+      "instructions": "Fill a large shallow saucepan with boiling kettle water. Reduce to a simmer then whisk in the baking soda (this gives the bagels that chewy, crispy texture) and a small pinch of salt. Cook the bagels in batches of six, for a minute on each side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "beat_fork"
+      ],
+      "on_enter": [
+        {
+          "say": "Fill a large shallow saucepan with boiling kettle water. Reduce to a simmer then whisk in the baking soda (this gives the bagels that chewy, crispy texture) and a small pinch of salt. Cook the bagels in batches of six, for a minute on each side."
+        }
+      ]
+    },
+    {
+      "id": "beat_fork",
+      "descr": "Lift them out using a slotted spoon, draining off the...",
+      "instructions": "Lift them out using a slotted spoon, draining off the water, and place on the lined baking tray. Beat the egg with a fork then egg-wash the bagels, and sprinkle with the seeds, if using.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "whisk_baking"
+      ],
+      "next": [
+        "bake_bagels"
+      ],
+      "on_enter": [
+        {
+          "say": "Lift them out using a slotted spoon, draining off the water, and place on the lined baking tray. Beat the egg with a fork then egg-wash the bagels, and sprinkle with the seeds, if using."
+        }
+      ]
+    },
+    {
+      "id": "bake_bagels",
+      "descr": "Bake the bagels for 20 to 25 minutes, until they are a...",
+      "instructions": "Bake the bagels for 20 to 25 minutes, until they are a deep golden brown. Remove from the oven and transfer to a wire rack to cool completely.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "beat_fork"
+      ],
+      "next": [
+        "serve_serrated"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake the bagels for 20 to 25 minutes, until they are a deep golden brown. Remove from the oven and transfer to a wire rack to cool completely."
+        }
+      ]
+    },
+    {
+      "id": "serve_serrated",
+      "descr": "To serve, cut with a serrated knife and top with your...",
+      "instructions": "To serve, cut with a serrated knife and top with your choice of fillings. I like peanut butter and jam, smoked salmon and cream cheese, or salt beef, mustard and pickles.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "bake_bagels"
+      ],
+      "on_enter": [
+        {
+          "say": "To serve, cut with a serrated knife and top with your choice of fillings. I like peanut butter and jam, smoked salmon and cream cheese, or salt beef, mustard and pickles."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "225 calories",
+    "carbohydrates": "48.2 g",
+    "fat": "1.4 g",
+    "fiber": "0.9 g",
+    "protein": "8 g"
+  }
+}

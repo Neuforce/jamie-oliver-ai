@@ -1,0 +1,161 @@
+{
+  "recipe": {
+    "id": "chilli-jam",
+    "title": "Chilli jam",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "A sweet and spicy chilli jam recipe. Perfect to give as a gift or keep stocked in the fridge",
+    "tags": [
+      "vegan",
+      "vegetarian",
+      "low-lactose",
+      "gluten-free",
+      "occasion",
+      "valentine-s-day"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/dressings-condiments/chilli-jam",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/baae1ce96b690d653b355d347aad162f66f1c580-958x1280.jpg/112056229?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/baae1ce96b690d653b355d347aad162f66f1c580-958x1280.jpg/112056229?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/baae1ce96b690d653b355d347aad162f66f1c580-958x1280.jpg/112056229?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/baae1ce96b690d653b355d347aad162f66f1c580-958x1280.jpg/112056229?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "dressings-condiments"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "fresh-red-chillies",
+      "name": "fresh red chillies",
+      "quantity": 10.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "jarred-roasted-red-peppers",
+      "name": "jarred roasted red peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "jam-sugar",
+      "name": "jam sugar",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "white-wine-or-cider-vinegar",
+      "name": "white wine or cider vinegar",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "fresh-scotch-bonnet-chillies",
+      "name": "fresh Scotch bonnet chillies",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "knife",
+    "pan",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "chop_step_1",
+      "descr": "Trim, halve and deseed the red chillies (use rubber...",
+      "instructions": "Trim, halve and deseed the red chillies (use rubber gloves to protect your hands, if you like), and peel the garlic cloves, then place in a food processor with the peppers and pulse until finely chopped.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_sugar"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim, halve and deseed the red chillies (use rubber gloves to protect your hands, if you like), and peel the garlic cloves, then place in a food processor with the peppers and pulse until finely chopped."
+        }
+      ]
+    },
+    {
+      "id": "heat_sugar",
+      "descr": "Scrape the chilli mixture into a high-sided pan over a...",
+      "instructions": "Scrape the chilli mixture into a high-sided pan over a medium-high heat, add the sugar and vinegar, then give everything a good stir.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_step_1"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrape the chilli mixture into a high-sided pan over a medium-high heat, add the sugar and vinegar, then give everything a good stir."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Prick the Scotch bonnets with a sharp knife and add to...",
+      "instructions": "Prick the Scotch bonnets with a sharp knife and add to the pan with 1 teaspoon of sea salt. Bring to the boil, then turn the heat down to low and simmer gently for 20 to 25 minutes, or until thick, glossy and reduced by half.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "heat_sugar"
+      ],
+      "next": [
+        "pour_sterilised"
+      ],
+      "on_enter": [
+        {
+          "say": "Prick the Scotch bonnets with a sharp knife and add to the pan with 1 teaspoon of sea salt. Bring to the boil, then turn the heat down to low and simmer gently for 20 to 25 minutes, or until thick, glossy and reduced by half."
+        }
+      ]
+    },
+    {
+      "id": "pour_sterilised",
+      "descr": "Pour into sterilised jam jars (leave the Scotch bonnets...",
+      "instructions": "Pour into sterilised jam jars (leave the Scotch bonnets in, if you like it hot, otherwise remove) and store in a cool dark place until needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour into sterilised jam jars (leave the Scotch bonnets in, if you like it hot, otherwise remove) and store in a cool dark place until needed."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "33 calories",
+    "carbohydrates": "8.1 g",
+    "fat": "0 g",
+    "fiber": "0 g",
+    "protein": "0.1 g"
+  }
+}

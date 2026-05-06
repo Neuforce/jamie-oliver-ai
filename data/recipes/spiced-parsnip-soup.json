@@ -1,0 +1,312 @@
+{
+  "recipe": {
+    "id": "spiced-parsnip-soup",
+    "title": "Spiced parsnip soup",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "A beautiful vegetarian parsnip soup recipe from Jamie Oliver. This soup is packed with sweet parsnips, warm spices and topped with crispy parsnip chips.",
+    "tags": [
+      "healthy-lunch-ideas",
+      "healthy-dinner-ideas",
+      "jamie-s-meat-free-meals",
+      "vegetarian",
+      "healthy-vegetarian-recipes",
+      "tv-shows",
+      "healthy-soup-recipes",
+      "healthy-meals",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/spiced-parsnip-soup",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e9fc1a0bc3e9684b8d47f0ce8c72560f09da07d4-958x1280.jpg/92507803?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e9fc1a0bc3e9684b8d47f0ce8c72560f09da07d4-958x1280.jpg/92507803?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e9fc1a0bc3e9684b8d47f0ce8c72560f09da07d4-958x1280.jpg/92507803?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e9fc1a0bc3e9684b8d47f0ce8c72560f09da07d4-958x1280.jpg/92507803?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "parsnips",
+      "name": "parsnips",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cumin-seeds",
+      "name": "cumin seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "garam-masala",
+      "name": "garam masala",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-split-lentils",
+      "name": "red split lentils",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "uncooked-poppadoms",
+      "name": "uncooked poppadoms",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-vegetable-stock",
+      "name": "organic vegetable stock",
+      "quantity": 1.5,
+      "unit": "litres",
+      "note": null
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "fresh-coriander",
+      "name": "fresh coriander",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "optional-chilli-oil",
+      "name": "optional: chilli oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "chop_remaining",
+      "descr": "Put 2 parsnips aside for later",
+      "instructions": "Put 2 parsnips aside for later. Peel the onion, roughly chop with the remaining parsnips (keep the skins on) and peel and finely grate the garlic and ginger.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Put 2 parsnips aside for later. Peel the onion, roughly chop with the remaining parsnips (keep the skins on) and peel and finely grate the garlic and ginger."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Place the parsnips and onions in a large pan over a...",
+      "instructions": "Place the parsnips and onions in a large pan over a medium heat with 1 tablespoon of olive oil, then cover and cook for 20 minutes, or until dark golden, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "chop_remaining"
+      ],
+      "next": [
+        "add_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the parsnips and onions in a large pan over a medium heat with 1 tablespoon of olive oil, then cover and cook for 20 minutes, or until dark golden, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "add_garlic",
+      "descr": "Add the garlic and ginger, then scatter over the cumin...",
+      "instructions": "Add the garlic and ginger, then scatter over the cumin seeds, 1 teaspoon of garam masala and the lentils and cook for a further 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "add_stock"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the garlic and ginger, then scatter over the cumin seeds, 1 teaspoon of garam masala and the lentils and cook for a further 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "add_stock",
+      "descr": "Roughly snap in the uncooked poppadoms, then add the...",
+      "instructions": "Roughly snap in the uncooked poppadoms, then add the stock and simmer for 20 minutes, loosening with a splash of water, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "add_garlic"
+      ],
+      "next": [
+        "boil_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Roughly snap in the uncooked poppadoms, then add the stock and simmer for 20 minutes, loosening with a splash of water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "boil_water",
+      "descr": "Meanwhile, speed-peel the reserved parsnips into ribbons...",
+      "instructions": "Meanwhile, speed-peel the reserved parsnips into ribbons until you reach the woody core (discard this bit), blanch for 30 seconds in fast boiling water, then drain and pat dry.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT30S",
+      "depends_on": [
+        "add_stock"
+      ],
+      "next": [
+        "roast_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, speed-peel the reserved parsnips into ribbons until you reach the woody core (discard this bit), blanch for 30 seconds in fast boiling water, then drain and pat dry."
+        }
+      ]
+    },
+    {
+      "id": "roast_minutes",
+      "descr": "Season with sea salt, then spread out in a single layer...",
+      "instructions": "Season with sea salt, then spread out in a single layer over a couple of oiled baking trays. Roast for 15 minutes, or until golden and crisp.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "warm_bowls"
+      ],
+      "on_enter": [
+        {
+          "say": "Season with sea salt, then spread out in a single layer over a couple of oiled baking trays. Roast for 15 minutes, or until golden and crisp."
+        }
+      ]
+    },
+    {
+      "id": "warm_bowls",
+      "descr": "Season the soup to perfection, ripple through the...",
+      "instructions": "Season the soup to perfection, ripple through the yoghurt and divide between warm bowls.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_minutes"
+      ],
+      "next": [
+        "warm_glow"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the soup to perfection, ripple through the yoghurt and divide between warm bowls."
+        }
+      ]
+    },
+    {
+      "id": "warm_glow",
+      "descr": "Pick over the coriander leaves, sprinkle with a little...",
+      "instructions": "Pick over the coriander leaves, sprinkle with a little garam masala, and top with the parsnip crisps. Feel free to drizzle with chilli oil for a warm glow.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "warm_bowls"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick over the coriander leaves, sprinkle with a little garam masala, and top with the parsnip crisps. Feel free to drizzle with chilli oil for a warm glow."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "428 calories",
+    "carbohydrates": "62.2 g",
+    "fat": "11.7 g",
+    "fiber": "11.3 g",
+    "protein": "21.6 g"
+  }
+}

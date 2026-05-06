@@ -7,11 +7,11 @@ export interface BackendRecipePayload {
     id: string;
     title: string;
     description: string;
-    estimated_total: string;
+    estimated_total?: string | null;
     locale: string;
     source: string;
     servings: number;
-    difficulty: string;
+    difficulty?: string | null;
     /** From crawl / ingest; first element drives API category when present */
     categories?: string[];
   };
@@ -108,7 +108,10 @@ function getImagePath(recipeId: string): string {
 }
 
 // Parse ISO 8601 duration (PT20M, PT1H5M) to "20 mins" format
-function parseDuration(duration: string): string {
+function parseDuration(duration: string | undefined | null): string {
+  if (duration == null || typeof duration !== 'string' || !duration.trim()) {
+    return '30 mins';
+  }
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
   if (!match) return '30 mins';
   
@@ -125,7 +128,10 @@ function parseDuration(duration: string): string {
 }
 
 // Map difficulty from jamie-oliver-ai to joui format
-function mapDifficulty(difficulty: string): 'Easy' | 'Medium' | 'Hard' {
+function mapDifficulty(difficulty: string | undefined | null): 'Easy' | 'Medium' | 'Hard' {
+  if (difficulty == null || typeof difficulty !== 'string') {
+    return 'Medium';
+  }
   const lower = difficulty.toLowerCase();
   if (lower.includes('not too tricky') || lower.includes('easy')) {
     return 'Easy';

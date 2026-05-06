@@ -1,0 +1,246 @@
+{
+  "recipe": {
+    "id": "grilled-mushroom-risotto",
+    "title": "Grilled mushroom risotto",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Who doesn't love mushroom risotto? Jamie Oliver's vegetarian risotto recipe grills the mushrooms for a gorgeous, nutty flavour, plus. fresh herbs & Parmesan",
+    "tags": [
+      "dinner-party",
+      "mushroom-risotto",
+      "main-ingredient",
+      "romantic-meals",
+      "rissotto",
+      "pasta-amp-risotto",
+      "vegetarian",
+      "mains",
+      "risotto",
+      "dish-type",
+      "method",
+      "rice",
+      "rissoto",
+      "mushroom",
+      "occasion",
+      "frying",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/rice/grilled-mushroom-risotto",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3e2be24d2beefe7498d831ae5b6d5f435ea69817-973x1300.jpg/3e2be24d2beefe7498d831ae5b6d5f435ea69817-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3e2be24d2beefe7498d831ae5b6d5f435ea69817-973x1300.jpg/3e2be24d2beefe7498d831ae5b6d5f435ea69817-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3e2be24d2beefe7498d831ae5b6d5f435ea69817-973x1300.jpg/3e2be24d2beefe7498d831ae5b6d5f435ea69817-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3e2be24d2beefe7498d831ae5b6d5f435ea69817-973x1300.jpg/3e2be24d2beefe7498d831ae5b6d5f435ea69817-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "rice"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "organic-chicken-stock",
+      "name": "organic chicken stock",
+      "quantity": 1.5,
+      "unit": "litres",
+      "note": null
+    },
+    {
+      "id": "dried-porcini-mushrooms",
+      "name": "dried porcini mushrooms",
+      "quantity": 1.0,
+      "unit": "handful",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-onion",
+      "name": "small onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "peeled and finely chopped"
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": "trimmed and finely chopped"
+    },
+    {
+      "id": "risotto-rice",
+      "name": "risotto rice",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vermouth-or-white-wine",
+      "name": "vermouth or white wine",
+      "quantity": 75.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "large-handfuls-of-wild-mushroo",
+      "name": "large handfuls of wild mushrooms",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "try shiitake, girolle, chestnut or oyster \u2013 definitely no button mushrooms, please!, cleaned and sliced"
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-chervil",
+      "name": "a few sprigs of fresh chervil",
+      "quantity": null,
+      "unit": null,
+      "note": "tarragon or parsley, leaves picked and chopped"
+    },
+    {
+      "id": "juice-of-1-lemon",
+      "name": "juice of 1 lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "small-handful-of-freshly-grate",
+      "name": "small handful of freshly grated Parmesan cheese",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "griddle",
+    "grill",
+    "ladle",
+    "pan",
+    "saucepan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "heat_your",
+      "descr": "Heat your stock in a saucepan and keep it on a low simmer",
+      "instructions": "Heat your stock in a saucepan and keep it on a low simmer. Place the porcini mushrooms in a bowl and pour in just enough hot stock to cover. Leave for a couple of minutes until they\u2019ve softened. Fish them out of the stock and chop them, reserving the soaking liquid.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_olive"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat your stock in a saucepan and keep it on a low simmer. Place the porcini mushrooms in a bowl and pour in just enough hot stock to cover. Leave for a couple of minutes until they\u2019ve softened. Fish them out of the stock and chop them, reserving the soaking liquid."
+        }
+      ]
+    },
+    {
+      "id": "heat_olive",
+      "descr": "In a large pan, heat a lug of olive oil and add the...",
+      "instructions": "In a large pan, heat a lug of olive oil and add the onion and celery. Slowly fry without colouring them for at least 10 minutes, then turn the heat up and add the rice. Give it a stir. Stir in the vermouth or wine \u2013 it\u2019ll smell fantastic! Keep stirring until the liquid has cooked into the rice. Now pour the porcini soaking liquid through a sieve into the pan and add the chopped porcini, a good pinch of salt and your first ladle of hot stock. Turn the heat down to a simmer and keep adding ladlefuls of stock, stirring and massaging the starch out of the rice, allowing each ladleful to be absorbed before adding the next.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_your"
+      ],
+      "next": [
+        "chop_herbs"
+      ],
+      "on_enter": [
+        {
+          "say": "In a large pan, heat a lug of olive oil and add the onion and celery. Slowly fry without colouring them for at least 10 minutes, then turn the heat up and add the rice. Give it a stir. Stir in the vermouth or wine \u2013 it\u2019ll smell fantastic! Keep stirring until the liquid has cooked into the rice. Now pour the porcini soaking liquid through a sieve into the pan and add the chopped porcini, a good pinch of salt and your first ladle of hot stock. Turn the heat down to a simmer and keep adding ladlefuls of stock, stirring and massaging the starch out of the rice, allowing each ladleful to be absorbed before adding the next."
+        }
+      ]
+    },
+    {
+      "id": "chop_herbs",
+      "descr": "Carry on adding stock until the rice is soft but with a...",
+      "instructions": "Carry on adding stock until the rice is soft but with a slight bite. This will take about 30 minutes. Meanwhile, get a dry griddle pan hot and grill the wild mushrooms until soft. If your pan isn\u2019t big enough, do this in batches. Put them into a bowl and add the chopped herbs, a pinch of salt and the lemon juice. Using your hands, get stuck in and toss everything together \u2013 this is going to be incredible!",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "heat_olive"
+      ],
+      "next": [
+        "heat_check"
+      ],
+      "on_enter": [
+        {
+          "say": "Carry on adding stock until the rice is soft but with a slight bite. This will take about 30 minutes. Meanwhile, get a dry griddle pan hot and grill the wild mushrooms until soft. If your pan isn\u2019t big enough, do this in batches. Put them into a bowl and add the chopped herbs, a pinch of salt and the lemon juice. Using your hands, get stuck in and toss everything together \u2013 this is going to be incredible!"
+        }
+      ]
+    },
+    {
+      "id": "heat_check",
+      "descr": "Take the risotto off the heat and check the seasoning...",
+      "instructions": "Take the risotto off the heat and check the seasoning carefully. Stir in the butter and the Parmesan. You want it to be creamy and oozy in texture, so add a bit more stock if you think it needs it. Put a lid on and leave the risotto to relax for about 3 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT180S",
+      "depends_on": [
+        "chop_herbs"
+      ],
+      "next": [
+        "add_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Take the risotto off the heat and check the seasoning carefully. Stir in the butter and the Parmesan. You want it to be creamy and oozy in texture, so add a bit more stock if you think it needs it. Put a lid on and leave the risotto to relax for about 3 minutes."
+        }
+      ]
+    },
+    {
+      "id": "add_little",
+      "descr": "Take your risotto and add a little more seasoning or...",
+      "instructions": "Take your risotto and add a little more seasoning or Parmesan if you like. Serve a good dollop of risotto topped with some grilled dressed mushrooms, a sprinkling of freshly grated Parmesan and a drizzle of extra virgin olive oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_check"
+      ],
+      "on_enter": [
+        {
+          "say": "Take your risotto and add a little more seasoning or Parmesan if you like. Serve a good dollop of risotto topped with some grilled dressed mushrooms, a sprinkling of freshly grated Parmesan and a drizzle of extra virgin olive oil."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "364 calories",
+    "carbohydrates": "55.9 g",
+    "fat": "8.3 g",
+    "fiber": "2.1 g",
+    "protein": "13.3 g"
+  }
+}

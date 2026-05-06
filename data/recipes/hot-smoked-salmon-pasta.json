@@ -1,0 +1,208 @@
+{
+  "recipe": {
+    "id": "hot-smoked-salmon-pasta",
+    "title": "Hot-smoked salmon pasta",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT12M",
+    "description": "Fresh, delicious and on the table in less than 15 minutes, this 5-ingredient pasta recipe will take care of you. The perfect for a midweek dinner for 4.",
+    "tags": [
+      "asparagus",
+      "smoked-salmon",
+      "pasta",
+      "salmon"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/salmon/hot-smoked-salmon-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ea316337ddef3db3283e0279cc8b49fffb6be4e-958x1280.jpg/108258867?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ea316337ddef3db3283e0279cc8b49fffb6be4e-958x1280.jpg/108258867?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ea316337ddef3db3283e0279cc8b49fffb6be4e-958x1280.jpg/108258867?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ea316337ddef3db3283e0279cc8b49fffb6be4e-958x1280.jpg/108258867?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "salmon"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "asparagus",
+      "name": "asparagus",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "dried-taglierini-or-angel-hair",
+      "name": "dried taglierini or angel-hair pasta",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "hot-smoked-salmon",
+      "name": "hot-smoked salmon",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "skin off, from sustainable sources"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "half-fat-cre-me-frai-che",
+      "name": "half-fat cre\u0300me frai\u0302che",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan",
+    "peeler"
+  ],
+  "steps": [
+    {
+      "id": "top_tender",
+      "descr": "Use a speed-peeler to strip the top tender half of the...",
+      "instructions": "Use a speed-peeler to strip the top tender half of the asparagus stalks into ribbons.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a speed-peeler to strip the top tender half of the asparagus stalks into ribbons."
+        }
+      ]
+    },
+    {
+      "id": "slice_remaining",
+      "descr": "Finely slice the remaining stalks, discarding the woody ends",
+      "instructions": "Finely slice the remaining stalks, discarding the woody ends.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "top_tender"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely slice the remaining stalks, discarding the woody ends."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Cook the pasta in a pan of boiling salted water...",
+      "instructions": "Cook the pasta in a pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of cooking water.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_remaining"
+      ],
+      "next": [
+        "heat_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta in a pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of cooking water."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_4",
+      "descr": "Meanwhile, roughly break the salmon into a large...",
+      "instructions": "Meanwhile, roughly break the salmon into a large non-stick frying pan on a medium-high heat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "slice_asparagus"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, roughly break the salmon into a large non-stick frying pan on a medium-high heat."
+        }
+      ]
+    },
+    {
+      "id": "slice_asparagus",
+      "descr": "Add the sliced asparagus stalks, and toss occasionally...",
+      "instructions": "Add the sliced asparagus stalks, and toss occasionally until the pasta\u2019s ready.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_4"
+      ],
+      "next": [
+        "serve_cooking"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the sliced asparagus stalks, and toss occasionally until the pasta\u2019s ready."
+        }
+      ]
+    },
+    {
+      "id": "serve_cooking",
+      "descr": "Finely grate half the lemon zest into the salmon pan,...",
+      "instructions": "Finely grate half the lemon zest into the salmon pan, squeeze in half the juice, then toss in the drained pasta, a good splash of reserved cooking water and the cre\u0300me frai\u0302che.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_asparagus"
+      ],
+      "next": [
+        "add_asparagus"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate half the lemon zest into the salmon pan, squeeze in half the juice, then toss in the drained pasta, a good splash of reserved cooking water and the cre\u0300me frai\u0302che."
+        }
+      ]
+    },
+    {
+      "id": "add_asparagus",
+      "descr": "Add the asparagus ribbons, toss again, then season to...",
+      "instructions": "Add the asparagus ribbons, toss again, then season to perfection with sea salt and black pepper. Serve with lemon wedges, for squeezing over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "serve_cooking"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the asparagus ribbons, toss again, then season to perfection with sea salt and black pepper. Serve with lemon wedges, for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "435 calories",
+    "carbohydrates": "59.3 g",
+    "fat": "11.1 g",
+    "fiber": "2.2 g",
+    "protein": "28.1 g"
+  }
+}

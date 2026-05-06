@@ -1,0 +1,263 @@
+{
+  "recipe": {
+    "id": "a-better-bolognese",
+    "title": "A better Bolognese",
+    "servings": 14,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT160M",
+    "description": "A meat-reduced Bolognese for all your batch-cooking needs! Check out Simply Jamie for loads of ways to use this sauce!",
+    "tags": [
+      "gravy-sauces",
+      "pasta",
+      "low-lactose",
+      "gluten-free",
+      "dairy-free",
+      "batch-cooking"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/a-better-bolognese",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/63c8b421fa2a36d87ac395a7d13f9cd9b0139980-958x1280.jpg/160333760?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/63c8b421fa2a36d87ac395a7d13f9cd9b0139980-958x1280.jpg/160333760?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/63c8b421fa2a36d87ac395a7d13f9cd9b0139980-958x1280.jpg/160333760?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/63c8b421fa2a36d87ac395a7d13f9cd9b0139980-958x1280.jpg/160333760?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "rosemary",
+      "name": "rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "rashers-of-higher-welfare-smok",
+      "name": "rashers of higher-welfare smoked streaky bacon",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-beef-mince",
+      "name": "higher-welfare beef mince",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "higher-welfare-pork-mince",
+      "name": "higher-welfare pork mince",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-lentils",
+      "name": "400g tins of lentils",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-baby-back-ribs",
+      "name": "higher-welfare baby back ribs",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoons",
+      "descr": "Pick and finely chop the rosemary leaves, finely slice...",
+      "instructions": "Pick and finely chop the rosemary leaves, finely slice the bacon, then place in a large deep casserole pan on a high heat with 4 tablespoons of olive oil, stirring regularly, until lightly golden.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mince_breaking"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the rosemary leaves, finely slice the bacon, then place in a large deep casserole pan on a high heat with 4 tablespoons of olive oil, stirring regularly, until lightly golden."
+        }
+      ]
+    },
+    {
+      "id": "mince_breaking",
+      "descr": "Add all the mince, breaking it up with your spoon, and...",
+      "instructions": "Add all the mince, breaking it up with your spoon, and let it brown for 15 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "chop_mushrooms"
+      ],
+      "on_enter": [
+        {
+          "say": "Add all the mince, breaking it up with your spoon, and let it brown for 15 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "chop_mushrooms",
+      "descr": "Peel the onions, carrots, garlic and celery and finely...",
+      "instructions": "Peel the onions, carrots, garlic and celery and finely chop with the mushrooms (I pulse it all in a food processor to save time), then add to the pan and cook for another 15 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "mince_breaking"
+      ],
+      "next": [
+        "stir_tomato"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the onions, carrots, garlic and celery and finely chop with the mushrooms (I pulse it all in a food processor to save time), then add to the pan and cook for another 15 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_tomato",
+      "descr": "Stir in the tomato pur\u00e9e and balsamic, then tip in the...",
+      "instructions": "Stir in the tomato pur\u00e9e and balsamic, then tip in the lentils, juice and all. Add the tomatoes, then fill each tin with water, swirl around and pour into the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_mushrooms"
+      ],
+      "next": [
+        "heat_hours"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the tomato pur\u00e9e and balsamic, then tip in the lentils, juice and all. Add the tomatoes, then fill each tin with water, swirl around and pour into the pan."
+        }
+      ]
+    },
+    {
+      "id": "heat_hours",
+      "descr": "Bring to the boil, then halve and add the rack of ribs",
+      "instructions": "Bring to the boil, then halve and add the rack of ribs. Simmer on a medium-low heat for 2 hours, mashing occasionally with a potato masher to thicken the texture, and scraping up all the nice sticky bits from the bottom of the pan.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT7200S",
+      "depends_on": [
+        "stir_tomato"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, then halve and add the rack of ribs. Simmer on a medium-low heat for 2 hours, mashing occasionally with a potato masher to thicken the texture, and scraping up all the nice sticky bits from the bottom of the pan."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Season to perfection with sea salt and black pepper,...",
+      "instructions": "Season to perfection with sea salt and black pepper, remove the rib bones, then portion up what you need, stashing the rest in the fridge (for up to 3 days) or freezer (for up to 3 months), ready for future meals.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_hours"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to perfection with sea salt and black pepper, remove the rib bones, then portion up what you need, stashing the rest in the fridge (for up to 3 days) or freezer (for up to 3 months), ready for future meals."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "225 calories",
+    "carbohydrates": "14.2 g",
+    "fat": "11.6 g",
+    "fiber": "1.6 g",
+    "protein": "17 g"
+  }
+}

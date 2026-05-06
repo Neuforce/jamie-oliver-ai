@@ -1,0 +1,184 @@
+{
+  "recipe": {
+    "id": "speedy-folded-flatbread",
+    "title": "Speedy folded flatbread",
+    "servings": 1,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT13M",
+    "description": "For those days when you\u2019re after a quick bite to eat, this speedy flatbread hits the spot. You\u2019ll only need one pan, a handful of ingredients and less than 15 minutes.",
+    "tags": [
+      "one-pan-wonders",
+      "tv-shows",
+      "quick-amp-healthy-recipes",
+      "one-pan-recipes",
+      "quick-amp-easy-recipes",
+      "quick-fixes",
+      "cheap-amp-cheerful",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/bread/speedy-folded-flatbread",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9b20f966117df855eb22218f3df45e2e33455fe7-522x697.jpg/136595727?rect=0,88,522,522&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9b20f966117df855eb22218f3df45e2e33455fe7-522x697.jpg/136595727?rect=0,88,522,522&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9b20f966117df855eb22218f3df45e2e33455fe7-522x697.jpg/136595727?rect=0,153,522,392&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9b20f966117df855eb22218f3df45e2e33455fe7-522x697.jpg/136595727?rect=0,202,522,294&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "bread"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "gouda-or-cheddar-cheese",
+      "name": "Gouda or Cheddar cheese",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "smoked-ham",
+      "name": "smoked ham",
+      "quantity": 1.0,
+      "unit": "slice",
+      "note": null
+    },
+    {
+      "id": "fresh-chives",
+      "name": "fresh chives",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-cherry-tomatoes",
+      "name": "ripe cherry tomatoes",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "english-mustard",
+      "name": "English mustard",
+      "quantity": null,
+      "unit": null,
+      "note": "to taste"
+    },
+    {
+      "id": "strong-white-bread-flour",
+      "name": "strong white bread flour",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "level-teaspoon-baking-powder",
+      "name": "level teaspoon baking powder",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan",
+    "spatula",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "chop_chives",
+      "descr": "Start by prepping your filling",
+      "instructions": "Start by prepping your filling. Grate the cheese. Tear the ham. Finely chop the chives. Quarter the cherry tomatoes.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_simply"
+      ],
+      "on_enter": [
+        {
+          "say": "Start by prepping your filling. Grate the cheese. Tear the ham. Finely chop the chives. Quarter the cherry tomatoes."
+        }
+      ]
+    },
+    {
+      "id": "heat_simply",
+      "descr": "Next, make the flatbread",
+      "instructions": "Next, make the flatbread. Put a 24cm non-stick frying pan on a medium heat. Now, simply whisk together the flour, baking powder and yoghurt with a pinch of sea salt and 4 tablespoons of water until smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_chives"
+      ],
+      "next": [
+        "drizzle_olive"
+      ],
+      "on_enter": [
+        {
+          "say": "Next, make the flatbread. Put a 24cm non-stick frying pan on a medium heat. Now, simply whisk together the flour, baking powder and yoghurt with a pinch of sea salt and 4 tablespoons of water until smooth."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_olive",
+      "descr": "Put a little drizzle of olive oil into the hot pan, then...",
+      "instructions": "Put a little drizzle of olive oil into the hot pan, then use a spatula to gently and evenly spread the batter across the base of the pan. As it starts to cook, drizzle a little oil around the edge of the pan and, when the top starts to bubble, loosen the edges with a spatula, jiggling the bread in the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_simply"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a little drizzle of olive oil into the hot pan, then use a spatula to gently and evenly spread the batter across the base of the pan. As it starts to cook, drizzle a little oil around the edge of the pan and, when the top starts to bubble, loosen the edges with a spatula, jiggling the bread in the pan."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Spread or spoon over your topping, add a pinch of black...",
+      "instructions": "Spread or spoon over your topping, add a pinch of black pepper, then fold one half of the bread over the other. Reduce to a low heat, cook for 2 minutes more on each side, or until beautifully golden, then slide out, let it cool for a minute, slice and enjoy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT120S",
+      "depends_on": [
+        "drizzle_olive"
+      ],
+      "on_enter": [
+        {
+          "say": "Spread or spoon over your topping, add a pinch of black pepper, then fold one half of the bread over the other. Reduce to a low heat, cook for 2 minutes more on each side, or until beautifully golden, then slide out, let it cool for a minute, slice and enjoy."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "459 calories",
+    "carbohydrates": "63.7 g",
+    "fat": "16.7 g",
+    "fiber": "3.1 g",
+    "protein": "17.7 g"
+  }
+}

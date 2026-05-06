@@ -1,0 +1,183 @@
+{
+  "recipe": {
+    "id": "chocolate-tiramis",
+    "title": "Chocolate tiramis\u00f9",
+    "servings": 16,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT42 plus coolingM",
+    "description": "If you want a fast way to enjoy tiramis\u00f9 then Jamie has got your back. Try his chocolate version; it's gluten-free, full of chocolate and totally delicious.",
+    "tags": [
+      "entertaining",
+      "dessert",
+      "cake",
+      "gluten-free",
+      "chocolate"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/desserts/chocolate-tiramisu",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0ea2a4f3c3912148e94e422c89620bbefbe0411c-958x1280.jpg/160334082?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0ea2a4f3c3912148e94e422c89620bbefbe0411c-958x1280.jpg/160334082?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0ea2a4f3c3912148e94e422c89620bbefbe0411c-958x1280.jpg/160334082?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0ea2a4f3c3912148e94e422c89620bbefbe0411c-958x1280.jpg/160334082?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "desserts"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "decadent-chocolate-cake",
+      "name": "Decadent chocolate cake",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "strong-coffee",
+      "name": "strong coffee",
+      "quantity": 150.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "cointreau",
+      "name": "Cointreau",
+      "quantity": 50.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "ricotta-cheese",
+      "name": "ricotta cheese",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mascarpone-cheese",
+      "name": "mascarpone cheese",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vanilla-bean-paste",
+      "name": "vanilla bean paste",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "an-orange",
+      "name": "\u00bd an orange",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cocoa-powder",
+      "name": "cocoa powder",
+      "quantity": null,
+      "unit": null,
+      "note": "for dusting"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "knife",
+    "large bowl",
+    "sharp knife",
+    "spatula",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "bake_directly",
+      "descr": "Make the Decadent chocolate cake and bake directly in a...",
+      "instructions": "Make the Decadent chocolate cake and bake directly in a greased 25cm x 30cm roasting tray at 180\u00b0C for 15 minutes exactly \u2013 until just springy to the touch and gooey in the middle.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "next": [
+        "pour_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Make the Decadent chocolate cake and bake directly in a greased 25cm x 30cm roasting tray at 180\u00b0C for 15 minutes exactly \u2013 until just springy to the touch and gooey in the middle."
+        }
+      ]
+    },
+    {
+      "id": "pour_over",
+      "descr": "Stab the sponge a few times with a skewer or sharp...",
+      "instructions": "Stab the sponge a few times with a skewer or sharp knife, evenly pour over the coffee and Cointreau, then leave to cool.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "bake_directly"
+      ],
+      "next": [
+        "slice_make"
+      ],
+      "on_enter": [
+        {
+          "say": "Stab the sponge a few times with a skewer or sharp knife, evenly pour over the coffee and Cointreau, then leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "slice_make",
+      "descr": "In a large bowl, mix the ricotta, mascarpone, vanilla...",
+      "instructions": "In a large bowl, mix the ricotta, mascarpone, vanilla paste and sugar, whisking until silky smooth, then spread over the soaked cake. Get creative with the side of a spatula or cake slice to make a fun pattern on the top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_over"
+      ],
+      "next": [
+        "add_grating"
+      ],
+      "on_enter": [
+        {
+          "say": "In a large bowl, mix the ricotta, mascarpone, vanilla paste and sugar, whisking until silky smooth, then spread over the soaked cake. Get creative with the side of a spatula or cake slice to make a fun pattern on the top."
+        }
+      ]
+    },
+    {
+      "id": "add_grating",
+      "descr": "Finely grate over the orange zest, top with a dusting of...",
+      "instructions": "Finely grate over the orange zest, top with a dusting of cocoa powder, and you\u2019re ready to serve. If you want to go extra indulgent, add a grating or scraping of dark chocolate instead of the cocoa.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_make"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate over the orange zest, top with a dusting of cocoa powder, and you\u2019re ready to serve. If you want to go extra indulgent, add a grating or scraping of dark chocolate instead of the cocoa."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "434 calories",
+    "carbohydrates": "29.3 g",
+    "fat": "31.3 g",
+    "fiber": "0.7 g",
+    "protein": "9.3 g"
+  }
+}

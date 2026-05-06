@@ -1,0 +1,248 @@
+{
+  "recipe": {
+    "id": "7-veg-tomato-sauce",
+    "title": "7-veg tomato sauce",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Jam-packed with nutritious veg, this recipe has to be one of the easiest ways to get extra veggie portions into your diet!",
+    "tags": [
+      "courgette",
+      "tv",
+      "butternut-squash",
+      "keep-cooking-pasta",
+      "family-store-cupboard-recipes",
+      "vegetarian",
+      "tomato-sauce",
+      "batch-cooking",
+      "tv-shows",
+      "family-food",
+      "pasta-sauce",
+      "tomato",
+      "keep-cooking-vegetarian",
+      "family-batch-cooking",
+      "leeks",
+      "keep-cooking-and-carry-on",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/seven-veg-tomato-sauce",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6eb9c24fb4407c3319ef31ef7c89100155eb1a42-958x1280.png/51137557?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6eb9c24fb4407c3319ef31ef7c89100155eb1a42-958x1280.png/51137557?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6eb9c24fb4407c3319ef31ef7c89100155eb1a42-958x1280.png/51137557?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/6eb9c24fb4407c3319ef31ef7c89100155eb1a42-958x1280.png/51137557?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "small-onions",
+      "name": "small onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-leeks",
+      "name": "small leeks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "courgettes",
+      "name": "courgettes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-peppers",
+      "name": "red peppers",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-butternut-squash",
+      "name": "\u00bd a butternut squash",
+      "quantity": null,
+      "unit": null,
+      "note": "600g"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-quality-plum-toma",
+      "name": "400g tins of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "knife",
+    "pan",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "process_step_1",
+      "descr": "Start with your veg prep \u2013 you can either do this by...",
+      "instructions": "Start with your veg prep \u2013 you can either do this by hand (which is a great way to practise your knife skills) or, in batches, rattle it all through a food processor.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_peel"
+      ],
+      "on_enter": [
+        {
+          "say": "Start with your veg prep \u2013 you can either do this by hand (which is a great way to practise your knife skills) or, in batches, rattle it all through a food processor."
+        }
+      ]
+    },
+    {
+      "id": "chop_peel",
+      "descr": "Peel the onions, wash and trim the leeks, celery,...",
+      "instructions": "Peel the onions, wash and trim the leeks, celery, carrots and courgettes, deseed the peppers and squash (there\u2019s no need to peel it), then finely chop it all. Peel the garlic and finely chop by hand.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "process_step_1"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the onions, wash and trim the leeks, celery, carrots and courgettes, deseed the peppers and squash (there\u2019s no need to peel it), then finely chop it all. Peel the garlic and finely chop by hand."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Put a super-large pan on a medium heat with 2...",
+      "instructions": "Put a super-large pan on a medium heat with 2 tablespoons of oil. Add the garlic and oregano, fry for 1 minute, then add all the prepped veg.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_peel"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Put a super-large pan on a medium heat with 2 tablespoons of oil. Add the garlic and oregano, fry for 1 minute, then add all the prepped veg."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Cook with the lid on for 25 minutes, or until the veg...",
+      "instructions": "Cook with the lid on for 25 minutes, or until the veg are soft but not coloured, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "pour_tinned"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook with the lid on for 25 minutes, or until the veg are soft but not coloured, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "pour_tinned",
+      "descr": "Pour in the tinned tomatoes, breaking them up with a...",
+      "instructions": "Pour in the tinned tomatoes, breaking them up with a wooden spoon, then just under half-fill each tin with water, swirl around and pour into the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "simmer_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the tinned tomatoes, breaking them up with a wooden spoon, then just under half-fill each tin with water, swirl around and pour into the pan."
+        }
+      ]
+    },
+    {
+      "id": "simmer_minutes",
+      "descr": "Simmer for 25 minutes, or until the sauce has reduced",
+      "instructions": "Simmer for 25 minutes, or until the sauce has reduced. Leave to cool a little, then blitz until smooth, taste, and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1500S",
+      "depends_on": [
+        "pour_tinned"
+      ],
+      "on_enter": [
+        {
+          "say": "Simmer for 25 minutes, or until the sauce has reduced. Leave to cool a little, then blitz until smooth, taste, and season to perfection."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "32 calories",
+    "carbohydrates": "4.8 g",
+    "fat": "1 g",
+    "fiber": "1 g",
+    "protein": "1.3 g"
+  }
+}

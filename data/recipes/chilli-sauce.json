@@ -1,0 +1,186 @@
+{
+  "recipe": {
+    "id": "chilli-sauce",
+    "title": "Chilli sauce",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "Jamie Oliver's hot sauce is super easy to make, but packs a real flavour punch. Make it, gift it and enjoy it with pretty much anything! It's a beautiful thing.",
+    "tags": [
+      "christmas",
+      "dish-type",
+      "sauces",
+      "chilli",
+      "sauces-amp-condiments",
+      "edible-gifts",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "mexican",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/chilli-sauce",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/abc01d0bfa47e32a4e2a4f97345d2005611125ab-866x1158.jpg/135678975?rect=0,146,866,866&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/abc01d0bfa47e32a4e2a4f97345d2005611125ab-866x1158.jpg/135678975?rect=0,146,866,866&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/abc01d0bfa47e32a4e2a4f97345d2005611125ab-866x1158.jpg/135678975?rect=0,254,866,650&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/abc01d0bfa47e32a4e2a4f97345d2005611125ab-866x1158.jpg/135678975?rect=0,336,866,487&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "fresh-mild-red-chillies",
+      "name": "fresh mild red chillies",
+      "quantity": 20.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "chilli-powder",
+      "name": "chilli powder",
+      "quantity": 4.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "ripe-tomatoes",
+      "name": "ripe tomatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "cider-vinegar",
+      "name": "cider vinegar",
+      "quantity": 300.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "unsweetened-apple-juice",
+      "name": "unsweetened apple juice",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "food processor",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoons",
+      "descr": "Peel the onions and garlic, pull the stalks off the...",
+      "instructions": "Peel the onions and garlic, pull the stalks off the chillies, then chop it all, either patiently by hand or in a food processor. Place a large casserole pan on a low heat with 2 tablespoons of oil, tip in the chopped veg and cook for around 10 minutes, or until soft but not coloured, stirring occasionally.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "chop_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the onions and garlic, pull the stalks off the chillies, then chop it all, either patiently by hand or in a food processor. Place a large casserole pan on a low heat with 2 tablespoons of oil, tip in the chopped veg and cook for around 10 minutes, or until soft but not coloured, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "chop_tomatoes",
+      "descr": "Stir the chilli powder into the pan, then chop and add...",
+      "instructions": "Stir the chilli powder into the pan, then chop and add the tomatoes, followed by the vinegar, sugar, apple juice, 200ml of water, and a good pinch of sea salt and black pepper. Bring to the boil, then simmer for 15 minutes, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the chilli powder into the pan, then chop and add the tomatoes, followed by the vinegar, sugar, apple juice, 200ml of water, and a good pinch of sea salt and black pepper. Bring to the boil, then simmer for 15 minutes, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Carefully pour the mixture into a blender, pop the lid...",
+      "instructions": "Carefully pour the mixture into a blender, pop the lid on and cover with a tea towel, then, holding it in place, blitz until silky smooth. If you like your chilli sauce with a bit of texture, you can absolutely leave it as it is. I prefer it lovely and smooth, so I pass it through a fine sieve to get a nice pouring consistency \u2013 add a splash of boiling kettle water to loosen, if needed. Either way, have a taste and season to absolute perfection. This is a make or break moment \u2013 give the sauce attitude, it\u2019s a condiment to be dribbled over things, so it needs to pack a punch.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_tomatoes"
+      ],
+      "next": [
+        "cool_dark"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully pour the mixture into a blender, pop the lid on and cover with a tea towel, then, holding it in place, blitz until silky smooth. If you like your chilli sauce with a bit of texture, you can absolutely leave it as it is. I prefer it lovely and smooth, so I pass it through a fine sieve to get a nice pouring consistency \u2013 add a splash of boiling kettle water to loosen, if needed. Either way, have a taste and season to absolute perfection. This is a make or break moment \u2013 give the sauce attitude, it\u2019s a condiment to be dribbled over things, so it needs to pack a punch."
+        }
+      ]
+    },
+    {
+      "id": "cool_dark",
+      "descr": "Divide between sterilized jars or bottles, label up and...",
+      "instructions": "Divide between sterilized jars or bottles, label up and get gifting. It will keep for up to 6 weeks in a cool, dark place. Once opened, keep in the fridge and use within a couple of weeks. Trust me, once you taste it, it won\u2019t last long!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide between sterilized jars or bottles, label up and get gifting. It will keep for up to 6 weeks in a cool, dark place. Once opened, keep in the fridge and use within a couple of weeks. Trust me, once you taste it, it won\u2019t last long!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "13 calories",
+    "carbohydrates": "2.4 g",
+    "fat": "0.3 g",
+    "fiber": "0.3 g",
+    "protein": "0.2 g"
+  }
+}

@@ -1,0 +1,426 @@
+{
+  "recipe": {
+    "id": "basic-pizza",
+    "title": "Basic pizza",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT80M",
+    "description": "Everybody loves a good pizza, and this easy pizza base recipe from Jamie Oliver shows you how to make pizza at home. Just add your favourite pizza toppings.",
+    "tags": [
+      "party-food",
+      "main-ingredient",
+      "baking",
+      "course",
+      "vegetarian",
+      "mains",
+      "dish-type",
+      "pizza-base",
+      "method",
+      "bread-dough",
+      "pizza-dough",
+      "kids-party-food",
+      "bread",
+      "occasion",
+      "pizza"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/bread/basic-pizza",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e8f5d5f7627eb882a04bad48c8405e489e13b1d8-973x1300.jpg/e8f5d5f7627eb882a04bad48c8405e489e13b1d8-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e8f5d5f7627eb882a04bad48c8405e489e13b1d8-973x1300.jpg/e8f5d5f7627eb882a04bad48c8405e489e13b1d8-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e8f5d5f7627eb882a04bad48c8405e489e13b1d8-973x1300.jpg/e8f5d5f7627eb882a04bad48c8405e489e13b1d8-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e8f5d5f7627eb882a04bad48c8405e489e13b1d8-973x1300.jpg/e8f5d5f7627eb882a04bad48c8405e489e13b1d8-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "bread"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dough",
+      "name": "DOUGH",
+      "quantity": null,
+      "unit": null,
+      "note": "8 PIZZAS"
+    },
+    {
+      "id": "strong-white-bread-flour",
+      "name": "strong white bread flour",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fine-ground-semolina-flour-or-",
+      "name": "fine ground semolina flour or strong white bread flour",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "7g-sachets-of-dried-yeast",
+      "name": "7g sachets of dried yeast",
+      "quantity": 7.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "tomato-sauce",
+      "name": "TOMATO SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": "4 PIZZAS"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "fresh-basil",
+      "name": "fresh basil",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-quality-plum-tomat",
+      "name": "400g tin of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "topping",
+      "name": "TOPPING",
+      "quantity": null,
+      "unit": null,
+      "note": "4 PIZZAS"
+    },
+    {
+      "id": "mozzarella-cheese",
+      "name": "mozzarella cheese",
+      "quantity": 85.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "For the dough, pile the flours and 1 level teaspoon of...",
+      "instructions": "For the dough, pile the flours and 1 level teaspoon of sea salt onto a clean surface and make a well in the centre.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "warm_water"
+      ],
+      "on_enter": [
+        {
+          "say": "For the dough, pile the flours and 1 level teaspoon of sea salt onto a clean surface and make a well in the centre."
+        }
+      ]
+    },
+    {
+      "id": "warm_water",
+      "descr": "Add the yeast and sugar to 650ml lukewarm water, mix...",
+      "instructions": "Add the yeast and sugar to 650ml lukewarm water, mix together and leave for a few minutes, then pour into the well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "mix_water"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the yeast and sugar to 650ml lukewarm water, mix together and leave for a few minutes, then pour into the well."
+        }
+      ]
+    },
+    {
+      "id": "mix_water",
+      "descr": "Using a fork and a circular movement, slowly bring in...",
+      "instructions": "Using a fork and a circular movement, slowly bring in the flour from the inner edge of the well and mix into the water. Continue to mix, bringing in all the flour \u2013 when the dough comes together and becomes too hard to mix with your fork, flour your hands and begin to pat it into a ball.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "warm_water"
+      ],
+      "next": [
+        "knead_dough"
+      ],
+      "on_enter": [
+        {
+          "say": "Using a fork and a circular movement, slowly bring in the flour from the inner edge of the well and mix into the water. Continue to mix, bringing in all the flour \u2013 when the dough comes together and becomes too hard to mix with your fork, flour your hands and begin to pat it into a ball."
+        }
+      ]
+    },
+    {
+      "id": "knead_dough",
+      "descr": "Knead the dough by rolling it backwards and forwards,...",
+      "instructions": "Knead the dough by rolling it backwards and forwards, using your hands to stretch, pull and push the dough. Keep kneading for 10 minutes, or until you have a smooth, springy, soft dough.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "mix_water"
+      ],
+      "next": [
+        "warm_place"
+      ],
+      "on_enter": [
+        {
+          "say": "Knead the dough by rolling it backwards and forwards, using your hands to stretch, pull and push the dough. Keep kneading for 10 minutes, or until you have a smooth, springy, soft dough."
+        }
+      ]
+    },
+    {
+      "id": "warm_place",
+      "descr": "Place the dough in a lightly greased bowl, cover with...",
+      "instructions": "Place the dough in a lightly greased bowl, cover with clingfilm and leave in a warm place to to prove for 45 minutes, or until doubled in size.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "knead_dough"
+      ],
+      "next": [
+        "chop_stalks"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the dough in a lightly greased bowl, cover with clingfilm and leave in a warm place to to prove for 45 minutes, or until doubled in size."
+        }
+      ]
+    },
+    {
+      "id": "chop_stalks",
+      "descr": "For the sauce, peel and finely slice the garlic, then...",
+      "instructions": "For the sauce, peel and finely slice the garlic, then pick the basil leaves and finely chop the stalks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "warm_place"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "For the sauce, peel and finely slice the garlic, then pick the basil leaves and finely chop the stalks."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Heat 1 tablespoon of oil in a pan on a medium-low heat,...",
+      "instructions": "Heat 1 tablespoon of oil in a pan on a medium-low heat, add the garlic and basil stalks, then cook gently for a couple of minutes, or until the garlic is lightly golden, then add most of the basil leaves, the tomatoes, and a pinch of salt and pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_stalks"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 1 tablespoon of oil in a pan on a medium-low heat, add the garlic and basil stalks, then cook gently for a couple of minutes, or until the garlic is lightly golden, then add most of the basil leaves, the tomatoes, and a pinch of salt and pepper."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Leave the sauce to tick away for around 20 minutes, or...",
+      "instructions": "Leave the sauce to tick away for around 20 minutes, or until smooth, breaking up the tomatoes up with a wooden spoon. When the time\u2019s up, taste, and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "step_step_9"
+      ],
+      "on_enter": [
+        {
+          "say": "Leave the sauce to tick away for around 20 minutes, or until smooth, breaking up the tomatoes up with a wooden spoon. When the time\u2019s up, taste, and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "step_step_9",
+      "descr": "To assemble the pizzas, divide the dough in half",
+      "instructions": "To assemble the pizzas, divide the dough in half. Wrap one half in clingfilm and freeze for another day. With the remaining half, divide the dough into 4 equal balls.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_perfection"
+      ],
+      "next": [
+        "rest_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "To assemble the pizzas, divide the dough in half. Wrap one half in clingfilm and freeze for another day. With the remaining half, divide the dough into 4 equal balls."
+        }
+      ]
+    },
+    {
+      "id": "rest_minutes",
+      "descr": "Flour each dough ball, then cover with clingfilm, and...",
+      "instructions": "Flour each dough ball, then cover with clingfilm, and leave to rest for about 15 minutes \u2013 this will make them easier to roll it thinly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "step_step_9"
+      ],
+      "next": [
+        "roll_rough"
+      ],
+      "on_enter": [
+        {
+          "say": "Flour each dough ball, then cover with clingfilm, and leave to rest for about 15 minutes \u2013 this will make them easier to roll it thinly."
+        }
+      ]
+    },
+    {
+      "id": "roll_rough",
+      "descr": "Dust a clean surface and the dough with a little flour...",
+      "instructions": "Dust a clean surface and the dough with a little flour or semolina, and roll it out into a rough circle, about \u00bdcm thick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_minutes"
+      ],
+      "next": [
+        "top_continue"
+      ],
+      "on_enter": [
+        {
+          "say": "Dust a clean surface and the dough with a little flour or semolina, and roll it out into a rough circle, about \u00bdcm thick."
+        }
+      ]
+    },
+    {
+      "id": "top_continue",
+      "descr": "Tear off an appropriately sized piece of tin foil, rub...",
+      "instructions": "Tear off an appropriately sized piece of tin foil, rub it with olive oil, dust well with flour or semolina and place the pizza base on top. Continue doing the same with the remaining dough, dust with a little flour so you can pile them up. Cover with clingfilm and place in the fridge.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roll_rough"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear off an appropriately sized piece of tin foil, rub it with olive oil, dust well with flour or semolina and place the pizza base on top. Continue doing the same with the remaining dough, dust with a little flour so you can pile them up. Cover with clingfilm and place in the fridge."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "When you're ready to cook them, preheat the oven to...",
+      "instructions": "When you're ready to cook them, preheat the oven to 250\u00b0C/500\u00b0F/gas 9.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "top_continue"
+      ],
+      "next": [
+        "add_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "When you're ready to cook them, preheat the oven to 250\u00b0C/500\u00b0F/gas 9."
+        }
+      ]
+    },
+    {
+      "id": "add_pinch",
+      "descr": "At this stage you can apply your topping: spread the...",
+      "instructions": "At this stage you can apply your topping: spread the tomato sauce over the base, spreading it out to the edges. Tear over the mozzarella and scatter with the remaining basil leaves. Drizzle with a tiny bit of olive oil and add a pinch of salt and pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "step_step_15"
+      ],
+      "on_enter": [
+        {
+          "say": "At this stage you can apply your topping: spread the tomato sauce over the base, spreading it out to the edges. Tear over the mozzarella and scatter with the remaining basil leaves. Drizzle with a tiny bit of olive oil and add a pinch of salt and pepper."
+        }
+      ]
+    },
+    {
+      "id": "step_step_15",
+      "descr": "If you can, cook the pizzas on a piece of granite in...",
+      "instructions": "If you can, cook the pizzas on a piece of granite in your conventional oven \u2013 if not, cook them one by one on pieces of tin foil directly on the bars of the oven shelf, towards the bottom of the oven (If you're going to cook your pizzas on the bars of the oven, make sure they're not too big \u2013 otherwise they'll be difficult to manoeuvre). Cook for 7 to 10 minutes, until the pizzas are golden and crispy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT600S",
+      "depends_on": [
+        "add_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "If you can, cook the pizzas on a piece of granite in your conventional oven \u2013 if not, cook them one by one on pieces of tin foil directly on the bars of the oven shelf, towards the bottom of the oven (If you're going to cook your pizzas on the bars of the oven, make sure they're not too big \u2013 otherwise they'll be difficult to manoeuvre). Cook for 7 to 10 minutes, until the pizzas are golden and crispy."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "481 calories",
+    "carbohydrates": "97.9 g",
+    "fat": "4.9 g",
+    "fiber": "4.2 g",
+    "protein": "17.6 g"
+  }
+}

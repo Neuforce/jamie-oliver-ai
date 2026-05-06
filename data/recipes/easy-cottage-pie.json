@@ -1,0 +1,243 @@
+{
+  "recipe": {
+    "id": "easy-cottage-pie",
+    "title": "Easy cottage pie",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "Frozen veg makes this cottage pie super-quick and easy to put together, whilst still tasting ridiculously good.",
+    "tags": [
+      "british-style",
+      "beef-mince",
+      "beef",
+      "quick-easy",
+      "carrot",
+      "family-favourites",
+      "potato",
+      "dinner",
+      "pie",
+      "bonfire-night"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/easy-cottage-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1e5d8b818d267a45d8d5fc75295c2f81aef02559-853x1280.jpg/46477658?rect=0,135,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1e5d8b818d267a45d8d5fc75295c2f81aef02559-853x1280.jpg/46477658?rect=0,135,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1e5d8b818d267a45d8d5fc75295c2f81aef02559-853x1280.jpg/46477658?rect=0,241,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1e5d8b818d267a45d8d5fc75295c2f81aef02559-853x1280.jpg/46477658?rect=0,321,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "desserts"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-chopped-mixed-casserole",
+      "name": "frozen chopped mixed casserole vegetables",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "such as carrot, onion, celery, turnip and swede"
+    },
+    {
+      "id": "higher-welfare-beef-mince",
+      "name": "higher-welfare beef mince",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "worcestershire-sauce",
+      "name": "Worcestershire sauce",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "organic-beef-stock",
+      "name": "organic beef stock",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Pick and finely chop the rosemary leaves, then place in...",
+      "instructions": "Pick and finely chop the rosemary leaves, then place in a large high-sided pan on a high heat with 2 tablespoons of olive oil and the chopped mixed vegetables. Cook for 15 minutes, or until soft and lightly golden, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mince_breaking"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and finely chop the rosemary leaves, then place in a large high-sided pan on a high heat with 2 tablespoons of olive oil and the chopped mixed vegetables. Cook for 15 minutes, or until soft and lightly golden, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "mince_breaking",
+      "descr": "Go in with the mince, breaking it up with your spoon,...",
+      "instructions": "Go in with the mince, breaking it up with your spoon, add the Worcestershire sauce, along with a pinch of sea salt and black pepper, and let it brown for 5 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Go in with the mince, breaking it up with your spoon, add the Worcestershire sauce, along with a pinch of sea salt and black pepper, and let it brown for 5 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Stir in the flour, cook for a further 2 minutes, then...",
+      "instructions": "Stir in the flour, cook for a further 2 minutes, then pour in the stock and bring to the boil. Turn the heat down to medium and simmer for 20 minutes, then add the peas.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "mince_breaking"
+      ],
+      "next": [
+        "mix_most"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the flour, cook for a further 2 minutes, then pour in the stock and bring to the boil. Turn the heat down to medium and simmer for 20 minutes, then add the peas."
+        }
+      ]
+    },
+    {
+      "id": "mix_most",
+      "descr": "Meanwhile, peel the potatoes, halving any larger ones,...",
+      "instructions": "Meanwhile, peel the potatoes, halving any larger ones, then cook in a large pan of boiling salted water for 20 minutes, or until tender, then drain and steam dry. Mash with the butter, grate and mix in most of the cheese and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "mince_baking"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel the potatoes, halving any larger ones, then cook in a large pan of boiling salted water for 20 minutes, or until tender, then drain and steam dry. Mash with the butter, grate and mix in most of the cheese and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "mince_baking",
+      "descr": "Spoon the mince and veg into a 20cm x 30cm baking dish...",
+      "instructions": "Spoon the mince and veg into a 20cm x 30cm baking dish and cover with the mash, making dips and peaks with the back of your spoon. Spritz the top with a little oil, if you like, sprinkle over the remaining cheese, then bake for 25 minutes, or until golden, bubbling and crispy on top.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1500S",
+      "depends_on": [
+        "mix_most"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon the mince and veg into a 20cm x 30cm baking dish and cover with the mash, making dips and peaks with the back of your spoon. Spritz the top with a little oil, if you like, sprinkle over the remaining cheese, then bake for 25 minutes, or until golden, bubbling and crispy on top."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "707 calories",
+    "carbohydrates": "75 g",
+    "fat": "26.6 g",
+    "fiber": "10.6 g",
+    "protein": "46.2 g"
+  }
+}

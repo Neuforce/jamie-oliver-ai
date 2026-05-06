@@ -1,0 +1,177 @@
+{
+  "recipe": {
+    "id": "speedy-cod-curry",
+    "title": "Speedy cod curry",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "Pearly, white flaked fish simmered in a delicately spiced sauce \u2013 this is a quick and easy curry that cooks in the time it takes to boil the rice.",
+    "tags": [
+      "dinner-for-two",
+      "healthy",
+      "healthy-fish",
+      "15-minute-recipes",
+      "curry",
+      "quick-easy",
+      "healthy-dinners",
+      "gluten-free",
+      "cod",
+      "dinner",
+      "quick-fixes",
+      "quick-healthy"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/curry/speedy-cod-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e148ed1da7cb681c3fd350fbfd01044ca163db6e-890x1280.jpg/120668898?rect=0,195,890,890&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e148ed1da7cb681c3fd350fbfd01044ca163db6e-890x1280.jpg/120668898?rect=0,195,890,890&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e148ed1da7cb681c3fd350fbfd01044ca163db6e-890x1280.jpg/120668898?rect=0,306,890,668&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e148ed1da7cb681c3fd350fbfd01044ca163db6e-890x1280.jpg/120668898?rect=0,390,890,501&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "curry"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "jamie-s-tikka-masala-paste",
+      "name": "Jamie's tikka masala paste",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "mango-chutney",
+      "name": "mango chutney",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-quality-plum-tomat",
+      "name": "400g tin of quality plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "140g-fillets-white-fish",
+      "name": "140g fillets white fish",
+      "quantity": 140.0,
+      "unit": null,
+      "note": "skin off, such as pollock, haddock, hake or cod, from sustainable sources"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 3.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "optional-fresh-coriander",
+      "name": "optional: fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-fresh-red-chilli",
+      "name": "optional: fresh red chilli",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "pan",
+    "saucepan"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Place a large saucepan on a medium heat with 1...",
+      "instructions": "Place a large saucepan on a medium heat with 1 tablespoon of olive oil. Peel and finely slice the garlic then add to the pan and cook for 1 minute, or until turning golden. Stir in the curry paste and cook for a further minute. Add the mango chutney and tomatoes, breaking them up with a spoon, then bring to the boil and simmer for 2 minutes. Leave to cool slightly then blitz with a hand blender until smooth.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "next": [
+        "heat_chickpeas"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large saucepan on a medium heat with 1 tablespoon of olive oil. Peel and finely slice the garlic then add to the pan and cook for 1 minute, or until turning golden. Stir in the curry paste and cook for a further minute. Add the mango chutney and tomatoes, breaking them up with a spoon, then bring to the boil and simmer for 2 minutes. Leave to cool slightly then blitz with a hand blender until smooth."
+        }
+      ]
+    },
+    {
+      "id": "heat_chickpeas",
+      "descr": "Return the pan to a medium heat, stir in the chickpeas...",
+      "instructions": "Return the pan to a medium heat, stir in the chickpeas (juice and all) and bring to the boil. Add the fish fillets and simmer for 4 to 5 minutes, or until the fish is opaque and cooked through. Ripple through 2 tablespoons of the yoghurt, finely grate over a little lemon zest, squeeze in a little of the juice and season with sea salt and black pepper.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "slice_chilli"
+      ],
+      "on_enter": [
+        {
+          "say": "Return the pan to a medium heat, stir in the chickpeas (juice and all) and bring to the boil. Add the fish fillets and simmer for 4 to 5 minutes, or until the fish is opaque and cooked through. Ripple through 2 tablespoons of the yoghurt, finely grate over a little lemon zest, squeeze in a little of the juice and season with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "slice_chilli",
+      "descr": "Spoon into bowls and top with a dollop of yoghurt and...",
+      "instructions": "Spoon into bowls and top with a dollop of yoghurt and some coriander leaves and slices of chilli, if you like. Delicious served with steamed rice, naan and a fresh salad.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_chickpeas"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon into bowls and top with a dollop of yoghurt and some coriander leaves and slices of chilli, if you like. Delicious served with steamed rice, naan and a fresh salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "445 calories",
+    "carbohydrates": "41.1 g",
+    "fat": "14.8 g",
+    "fiber": "8.2 g",
+    "protein": "37.9 g"
+  }
+}

@@ -1,0 +1,367 @@
+{
+  "recipe": {
+    "id": "a-cracking-burger",
+    "title": "A cracking burger",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT40M",
+    "description": "This is our best beef burger recipe! It shows you how to make your own burger patties from scratch, with a secret ingredient. Add your favourite toppings.",
+    "tags": [
+      "main-ingredient",
+      "student-recipes",
+      "bbq-amp-grilling",
+      "burger",
+      "mains",
+      "dish-type",
+      "beef",
+      "method",
+      "occasion",
+      "low-lactose",
+      "beef-burger",
+      "dairy-free",
+      "bbq-food",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "american",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/a-cracking-burger",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/817755b8b6ee0e79db51a86d50008a2a59351797-973x1300.jpg/817755b8b6ee0e79db51a86d50008a2a59351797-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/817755b8b6ee0e79db51a86d50008a2a59351797-973x1300.jpg/817755b8b6ee0e79db51a86d50008a2a59351797-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/817755b8b6ee0e79db51a86d50008a2a59351797-973x1300.jpg/817755b8b6ee0e79db51a86d50008a2a59351797-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/817755b8b6ee0e79db51a86d50008a2a59351797-973x1300.jpg/817755b8b6ee0e79db51a86d50008a2a59351797-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "jacob-s-cream-crackers",
+      "name": "Jacob's cream crackers",
+      "quantity": 12.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-flat-leaf-parsley",
+      "name": "fresh flat-leaf parsley",
+      "quantity": 8.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "optional-2-heaped-teaspoons-di",
+      "name": "optional: 2 heaped teaspoons Dijon mustard",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "quality-minced-beef",
+      "name": "quality minced beef",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cos-or-round-lettuce",
+      "name": "cos or round lettuce",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ripe-tomatoes",
+      "name": "ripe tomatoes",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "gherkins",
+      "name": "gherkins",
+      "quantity": 3.5,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "optional-6-slices-of-cheddar-c",
+      "name": "optional: 6 slices of Cheddar cheese",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "quality-burger-buns",
+      "name": "quality burger buns",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "griddle",
+    "large bowl",
+    "pan",
+    "spatula"
+  ],
+  "steps": [
+    {
+      "id": "mash_fine",
+      "descr": "Wrap the crackers in a tea towel and smash up until...",
+      "instructions": "Wrap the crackers in a tea towel and smash up until fine, breaking up any big bits with your hands, then tip into a large bowl.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Wrap the crackers in a tea towel and smash up until fine, breaking up any big bits with your hands, then tip into a large bowl."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Finely chop the parsley (stalks and all), then add to...",
+      "instructions": "Finely chop the parsley (stalks and all), then add to the bowl with the mustard (if using), and the minced beef.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mash_fine"
+      ],
+      "next": [
+        "add_good"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely chop the parsley (stalks and all), then add to the bowl with the mustard (if using), and the minced beef."
+        }
+      ]
+    },
+    {
+      "id": "add_good",
+      "descr": "Crack the egg into the bowl, then add a good pinch of...",
+      "instructions": "Crack the egg into the bowl, then add a good pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "next": [
+        "mix_everything"
+      ],
+      "on_enter": [
+        {
+          "say": "Crack the egg into the bowl, then add a good pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "mix_everything",
+      "descr": "With clean hands, scrunch and mix everything up well",
+      "instructions": "With clean hands, scrunch and mix everything up well. Divide into 6 and pat and mould each piece into a roundish shape, roughly 2cm thick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_good"
+      ],
+      "next": [
+        "drizzle_cover"
+      ],
+      "on_enter": [
+        {
+          "say": "With clean hands, scrunch and mix everything up well. Divide into 6 and pat and mould each piece into a roundish shape, roughly 2cm thick."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_cover",
+      "descr": "Place the burgers onto a plate, drizzle with oil, then...",
+      "instructions": "Place the burgers onto a plate, drizzle with oil, then cover and place in the fridge until needed \u2013 this will help to firm them up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_everything"
+      ],
+      "next": [
+        "preheat_large"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the burgers onto a plate, drizzle with oil, then cover and place in the fridge until needed \u2013 this will help to firm them up."
+        }
+      ]
+    },
+    {
+      "id": "preheat_large",
+      "descr": "To cook the burgers, preheat a large griddle or frying...",
+      "instructions": "To cook the burgers, preheat a large griddle or frying pan for 4 minutes on a high heat, then turn the heat down to medium.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "drizzle_cover"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "To cook the burgers, preheat a large griddle or frying pan for 4 minutes on a high heat, then turn the heat down to medium."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "Place the burgers on the griddle or into the pan, then...",
+      "instructions": "Place the burgers on the griddle or into the pan, then use a spatula to lightly press them down, making sure the burger is in full contact with the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_large"
+      ],
+      "next": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the burgers on the griddle or into the pan, then use a spatula to lightly press them down, making sure the burger is in full contact with the pan."
+        }
+      ]
+    },
+    {
+      "id": "step_step_8",
+      "descr": "Cook the burgers for 3 or 4 minutes on each side,...",
+      "instructions": "Cook the burgers for 3 or 4 minutes on each side, depending on how you like them \u2013 you may need to work in batches.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "slice_tomatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the burgers for 3 or 4 minutes on each side, depending on how you like them \u2013 you may need to work in batches."
+        }
+      ]
+    },
+    {
+      "id": "slice_tomatoes",
+      "descr": "Meanwhile, wash and dry a few small lettuce leaves,...",
+      "instructions": "Meanwhile, wash and dry a few small lettuce leaves, tearing up the larger ones. Slice the tomatoes, peel and finely slice the red onion, then slice the gherkins lengthways as finely as you can.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_8"
+      ],
+      "next": [
+        "plate_cutlery"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, wash and dry a few small lettuce leaves, tearing up the larger ones. Slice the tomatoes, peel and finely slice the red onion, then slice the gherkins lengthways as finely as you can."
+        }
+      ]
+    },
+    {
+      "id": "plate_cutlery",
+      "descr": "Place all the veg toppings, and the cheese (if using) on...",
+      "instructions": "Place all the veg toppings, and the cheese (if using) on a platter and put in the middle of the table with plates, cutlery, ketchup and drinks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_tomatoes"
+      ],
+      "next": [
+        "plate_carefully"
+      ],
+      "on_enter": [
+        {
+          "say": "Place all the veg toppings, and the cheese (if using) on a platter and put in the middle of the table with plates, cutlery, ketchup and drinks."
+        }
+      ]
+    },
+    {
+      "id": "plate_carefully",
+      "descr": "Once cooked, remove the burgers to a plate and carefully...",
+      "instructions": "Once cooked, remove the burgers to a plate and carefully wipe the pan clean with a ball of kitchen paper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "plate_cutlery"
+      ],
+      "next": [
+        "serve_step_12"
+      ],
+      "on_enter": [
+        {
+          "say": "Once cooked, remove the burgers to a plate and carefully wipe the pan clean with a ball of kitchen paper."
+        }
+      ]
+    },
+    {
+      "id": "serve_step_12",
+      "descr": "Halve the burger buns and lightly toast them in the pan,...",
+      "instructions": "Halve the burger buns and lightly toast them in the pan, then serve up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "plate_carefully"
+      ],
+      "on_enter": [
+        {
+          "say": "Halve the burger buns and lightly toast them in the pan, then serve up."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "569 calories",
+    "carbohydrates": "45.8 g",
+    "fat": "28.8 g",
+    "fiber": "2.6 g",
+    "protein": "32.1 g"
+  }
+}

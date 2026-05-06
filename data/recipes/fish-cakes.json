@@ -1,0 +1,290 @@
+{
+  "recipe": {
+    "id": "fish-cakes",
+    "title": "Fish cakes",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "A simple fish cake recipe that shows you how to make salmon fish cakes from scratch. These are great with homemade tartare sauce and some green veggies.",
+    "tags": [
+      "dinner-party",
+      "main-ingredient",
+      "healthy-dinner-ideas",
+      "light-meals",
+      "fish-cake",
+      "lighter-new-year",
+      "mains",
+      "dish-type",
+      "method",
+      "roasting",
+      "low-lactose",
+      "salmon",
+      "fish",
+      "dairy-free",
+      "healthy-meals",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/fish-cakes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/97fb2c78a41c252ac1f6819e542e6f752fd8c7ff-767x1025.jpg/97fb2c78a41c252ac1f6819e542e6f752fd8c7ff-767x1025.jpg?rect=0,130,767,767&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/97fb2c78a41c252ac1f6819e542e6f752fd8c7ff-767x1025.jpg/97fb2c78a41c252ac1f6819e542e6f752fd8c7ff-767x1025.jpg?rect=0,130,767,767&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/97fb2c78a41c252ac1f6819e542e6f752fd8c7ff-767x1025.jpg/97fb2c78a41c252ac1f6819e542e6f752fd8c7ff-767x1025.jpg?rect=0,226,767,575&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/97fb2c78a41c252ac1f6819e542e6f752fd8c7ff-767x1025.jpg/97fb2c78a41c252ac1f6819e542e6f752fd8c7ff-767x1025.jpg?rect=0,298,767,431&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "salmon-fillet",
+      "name": "salmon fillet",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": "skin on, scaled, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-flat-lea",
+      "name": "a few sprigs of fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "colander",
+    "frying pan",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "bake_potatoes",
+      "descr": "Peel the potatoes, cut into 2cm chunks, and cook in...",
+      "instructions": "Peel the potatoes, cut into 2cm chunks, and cook in boiling salted water for 10 minutes (or use baked potatoes \u2013 scoop out the potato and discard the skin).",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the potatoes, cut into 2cm chunks, and cook in boiling salted water for 10 minutes (or use baked potatoes \u2013 scoop out the potato and discard the skin)."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Rub the salmon fillet all over with 1 teaspoon of oil...",
+      "instructions": "Rub the salmon fillet all over with 1 teaspoon of oil and a pinch of sea salt and black pepper, then place in a colander and cover with tin foil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "bake_potatoes"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub the salmon fillet all over with 1 teaspoon of oil and a pinch of sea salt and black pepper, then place in a colander and cover with tin foil."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "When the time's up on the potatoes, place colander...",
+      "instructions": "When the time's up on the potatoes, place colander directly over the pan of boiling potatoes. Turn the heat down to medium-low and cook for 8 to 10 minutes, or until the salmon and potatoes are both cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "When the time's up on the potatoes, place colander directly over the pan of boiling potatoes. Turn the heat down to medium-low and cook for 8 to 10 minutes, or until the salmon and potatoes are both cooked through."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Meanwhile, pick and finely chop the parsley leaves,...",
+      "instructions": "Meanwhile, pick and finely chop the parsley leaves, discarding the stalks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_down"
+      ],
+      "next": [
+        "steam_minute"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, pick and finely chop the parsley leaves, discarding the stalks."
+        }
+      ]
+    },
+    {
+      "id": "steam_minute",
+      "descr": "Once cooked, remove the fish from the colander to a...",
+      "instructions": "Once cooked, remove the fish from the colander to a plate, and discard the skin. Drain the potatoes, and leave to steam dry for 1 minute, then tip back into the pan.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "next": [
+        "cool_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Once cooked, remove the fish from the colander to a plate, and discard the skin. Drain the potatoes, and leave to steam dry for 1 minute, then tip back into the pan."
+        }
+      ]
+    },
+    {
+      "id": "cool_down",
+      "descr": "Mash the potatoes, spreading the mash round the sides of...",
+      "instructions": "Mash the potatoes, spreading the mash round the sides of the pan to help it cool down quickly. When the potatoes are cooled, transfer to a bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "steam_minute"
+      ],
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Mash the potatoes, spreading the mash round the sides of the pan to help it cool down quickly. When the potatoes are cooled, transfer to a bowl."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Flake the salmon into the bowl, add 1 tablespoon of...",
+      "instructions": "Flake the salmon into the bowl, add 1 tablespoon of flour, the chopped parsley and a really good pinch of sea salt and black pepper. Finely grate over the lemon zest, then mash and mix together really well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cool_down"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Flake the salmon into the bowl, add 1 tablespoon of flour, the chopped parsley and a really good pinch of sea salt and black pepper. Finely grate over the lemon zest, then mash and mix together really well."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Dust a plate with a little flour",
+      "instructions": "Dust a plate with a little flour. Divide the mixture into 4, then lightly shape and pat into circles about 2cm thick, dusting them with flour as you go. Put them onto a clean plate also dusted with a little flour. If you're going to freeze them, wrap them in clingfilm at this point and put them into the freezer. Otherwise simply pop them into the fridge for an hour before cooking \u2013 this will allow them to firm up slightly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Dust a plate with a little flour. Divide the mixture into 4, then lightly shape and pat into circles about 2cm thick, dusting them with flour as you go. Put them onto a clean plate also dusted with a little flour. If you're going to freeze them, wrap them in clingfilm at this point and put them into the freezer. Otherwise simply pop them into the fridge for an hour before cooking \u2013 this will allow them to firm up slightly."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Heat 2 tablespoons of oil in a large frying pan over a...",
+      "instructions": "Heat 2 tablespoons of oil in a large frying pan over a medium heat, add the fishcakes and cook for 3 to 4 minutes on each side, or until crisp and golden \u2013 you may need to work in batches.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "serve_straight"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat 2 tablespoons of oil in a large frying pan over a medium heat, add the fishcakes and cook for 3 to 4 minutes on each side, or until crisp and golden \u2013 you may need to work in batches."
+        }
+      ]
+    },
+    {
+      "id": "serve_straight",
+      "descr": "Serve straight away, with veg or salad and lemon wedges...",
+      "instructions": "Serve straight away, with veg or salad and lemon wedges for squeezing over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve straight away, with veg or salad and lemon wedges for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "186 calories",
+    "carbohydrates": "16.9 g",
+    "fat": "10.5 g",
+    "fiber": "1.3 g",
+    "protein": "7.1 g"
+  }
+}

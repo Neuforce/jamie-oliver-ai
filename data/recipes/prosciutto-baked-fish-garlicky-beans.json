@@ -1,0 +1,212 @@
+{
+  "recipe": {
+    "id": "prosciutto-baked-fish-garlicky-beans",
+    "title": "Prosciutto baked fish & garlicky beans",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT24M",
+    "description": "Jamie uses tinned beans, frozen fish fillets and the air fryer to create a quick and delicious mid-week meal.",
+    "tags": [
+      "beans",
+      "air-fryer",
+      "main-ingredient",
+      "dish-type",
+      "lunch-amp-dinner-recipes",
+      "gluten-free",
+      "no-index",
+      "fish",
+      "quick-fixes",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/air-fryer-prosciutto-baked-fish",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4f738294f56cd213340abb8dd2b19cc72f81d3e8-973x1300.jpg/Prosciutto%20baked%20fish%20and%20garlicky%20beans%20crop.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4f738294f56cd213340abb8dd2b19cc72f81d3e8-973x1300.jpg/Prosciutto%20baked%20fish%20and%20garlicky%20beans%20crop.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4f738294f56cd213340abb8dd2b19cc72f81d3e8-973x1300.jpg/Prosciutto%20baked%20fish%20and%20garlicky%20beans%20crop.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4f738294f56cd213340abb8dd2b19cc72f81d3e8-973x1300.jpg/Prosciutto%20baked%20fish%20and%20garlicky%20beans%20crop.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "rosemary",
+      "name": "rosemary",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "blanched-almonds",
+      "name": "blanched almonds",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sun-dried-tomatoes-in-oil",
+      "name": "sun-dried tomatoes in oil",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "130g-white-fish-fillets",
+      "name": "130g white fish fillets",
+      "quantity": 130.0,
+      "unit": null,
+      "note": "skin off, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "higher-welfare-prosciutto-or-p",
+      "name": "higher-welfare prosciutto or Parma ham",
+      "quantity": 4.0,
+      "unit": "slices",
+      "note": null
+    },
+    {
+      "id": "a-lemon",
+      "name": "\u00bd a lemon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-white-beans",
+      "name": "400g tin of white beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 160.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [],
+  "steps": [
+    {
+      "id": "chop_sprigs",
+      "descr": "Peel and finely slice the garlic, pick and finely chop 2...",
+      "instructions": "Peel and finely slice the garlic, pick and finely chop 2 sprigs of rosemary, then remove the shelf from the small air-fryer drawer and scatter it all into the base. Drizzle in 1 tablespoon of olive oil, then cook for 5 minutes at 200\u00b0C, or until the garlic is lightly golden.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "next": [
+        "slice_prosciutto"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the garlic, pick and finely chop 2 sprigs of rosemary, then remove the shelf from the small air-fryer drawer and scatter it all into the base. Drizzle in 1 tablespoon of olive oil, then cook for 5 minutes at 200\u00b0C, or until the garlic is lightly golden."
+        }
+      ]
+    },
+    {
+      "id": "slice_prosciutto",
+      "descr": "Meanwhile, bash the almonds and sun-dried tomatoes in a...",
+      "instructions": "Meanwhile, bash the almonds and sun-dried tomatoes in a pestle and mortar with \u00bd a tablespoon of oil from the tomato jar and a few gratings of Parmesan until you have a thick paste, then spoon over the fish. Drape 2 slices of prosciutto or parma ham over each fillet, also tucking in a rosemary sprig. Drizzle with \u00bd a tablespoon of oil from the tomato jar and place in the large drawer, then cut the lemon half into wedges and place alongside. Cook for 10 minutes at 200\u00b0C, or until cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_sprigs"
+      ],
+      "next": [
+        "stir_beans"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, bash the almonds and sun-dried tomatoes in a pestle and mortar with \u00bd a tablespoon of oil from the tomato jar and a few gratings of Parmesan until you have a thick paste, then spoon over the fish. Drape 2 slices of prosciutto or parma ham over each fillet, also tucking in a rosemary sprig. Drizzle with \u00bd a tablespoon of oil from the tomato jar and place in the large drawer, then cut the lemon half into wedges and place alongside. Cook for 10 minutes at 200\u00b0C, or until cooked through."
+        }
+      ]
+    },
+    {
+      "id": "stir_beans",
+      "descr": "Stir the beans and half their juice into the small...",
+      "instructions": "Stir the beans and half their juice into the small drawer with 1 tablespoon of red wine vinegar and cook for 10 minutes at 200\u00b0C, or until piping hot, then season to perfection, and divide between plates.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "slice_prosciutto"
+      ],
+      "next": [
+        "drizzle_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the beans and half their juice into the small drawer with 1 tablespoon of red wine vinegar and cook for 10 minutes at 200\u00b0C, or until piping hot, then season to perfection, and divide between plates."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_little",
+      "descr": "Sit the fish on top of the beans",
+      "instructions": "Sit the fish on top of the beans. Pack the spinach into the large drawer, season, and cook for 2 minutes at 200\u00b0C, or until just wilted, then drizzle with a little extra virgin olive oil, and serve alongside the fish. Finely grate over the remaining Parmesan, and serve with the jammy lemon wedges.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT120S",
+      "depends_on": [
+        "stir_beans"
+      ],
+      "on_enter": [
+        {
+          "say": "Sit the fish on top of the beans. Pack the spinach into the large drawer, season, and cook for 2 minutes at 200\u00b0C, or until just wilted, then drizzle with a little extra virgin olive oil, and serve alongside the fish. Finely grate over the remaining Parmesan, and serve with the jammy lemon wedges."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "547 calories",
+    "carbohydrates": "22.6 g",
+    "fat": "29.3 g",
+    "fiber": "9.9 g",
+    "protein": "49.1 g"
+  }
+}

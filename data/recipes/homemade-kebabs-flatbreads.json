@@ -1,0 +1,326 @@
+{
+  "recipe": {
+    "id": "homemade-kebabs-flatbreads",
+    "title": "Homemade kebabs & flatbreads",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT25M",
+    "description": "Try this easy recipe for how to make meat-reduced kebabs and flatbreads from scratch. With salad and yoghurt, this is a lovely meal for 4.",
+    "tags": [
+      "30-minute-recipes",
+      "budget-friendly",
+      "beef-mince",
+      "father-s-day",
+      "beef",
+      "family-favourites",
+      "flatbread",
+      "bread-doughs",
+      "pork",
+      "chickpea",
+      "fakeaway"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/meat/homemade-kebabs-flatbreads",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fd6f777440769ffe140d7d79a32e71921eb67928-958x1280.jpg/161817450?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fd6f777440769ffe140d7d79a32e71921eb67928-958x1280.jpg/161817450?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fd6f777440769ffe140d7d79a32e71921eb67928-958x1280.jpg/161817450?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fd6f777440769ffe140d7d79a32e71921eb67928-958x1280.jpg/161817450?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "meat"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "luxury-fruit-and-nut-mix",
+      "name": "luxury fruit and nut mix",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "garam-masala",
+      "name": "garam masala",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "large-free-range-egg",
+      "name": "large free-range egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lean-higher-welfare-beef-mince",
+      "name": "lean higher-welfare beef mince",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "lean-higher-welfare-pork-mince",
+      "name": "lean higher-welfare pork mince",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "self-raising-flour",
+      "name": "self-raising flour",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mixed-crunchy-veg",
+      "name": "mixed crunchy veg",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "such as red onion, cabbage, onion, baby gem, radishes, broccoli stalks, cucumber"
+    },
+    {
+      "id": "wholegrain-mustard",
+      "name": "wholegrain mustard",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "white-wine-vinegar",
+      "name": "white wine vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "greek-yoghurt",
+      "name": "Greek yoghurt",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "chilli-oil",
+      "name": "chilli oil",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-mint",
+      "name": "\u00bd a bunch of fresh mint",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "frying pan",
+    "grill",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_high",
+      "descr": "Preheat the grill to high",
+      "instructions": "Preheat the grill to high.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mince_pulse"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the grill to high."
+        }
+      ]
+    },
+    {
+      "id": "mince_pulse",
+      "descr": "Drain the chickpeas and blitz half in a food processor...",
+      "instructions": "Drain the chickpeas and blitz half in a food processor with the fruit and nuts, garam masala and a pinch of sea salt and black pepper, then crack in the egg, add the mince and pulse until combined.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_high"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the chickpeas and blitz half in a food processor with the fruit and nuts, garam masala and a pinch of sea salt and black pepper, then crack in the egg, add the mince and pulse until combined."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Divide the mixture into 4 equal-sized pieces on a piece...",
+      "instructions": "Divide the mixture into 4 equal-sized pieces on a piece of greaseproof, shape into koftas (about 20cm in length), and use your fingertips to leave dents in the surface to increase the gnarly bits as they cook.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mince_pulse"
+      ],
+      "next": [
+        "grill_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide the mixture into 4 equal-sized pieces on a piece of greaseproof, shape into koftas (about 20cm in length), and use your fingertips to leave dents in the surface to increase the gnarly bits as they cook."
+        }
+      ]
+    },
+    {
+      "id": "grill_minutes",
+      "descr": "Lay them across an oiled tray and grill for 10 minutes,...",
+      "instructions": "Lay them across an oiled tray and grill for 10 minutes, or until golden, gnarly and cooked through, turning halfway, then remove to a board to rest.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "chop_salad"
+      ],
+      "on_enter": [
+        {
+          "say": "Lay them across an oiled tray and grill for 10 minutes, or until golden, gnarly and cooked through, turning halfway, then remove to a board to rest."
+        }
+      ]
+    },
+    {
+      "id": "chop_salad",
+      "descr": "For the flatbreads, pile the flour onto a clean work...",
+      "instructions": "For the flatbreads, pile the flour onto a clean work surface, make a well in the centre, add a pinch of salt, 150ml of water and 1 tablespoon of olive oil. Use a fork to bring it together, then knead into a smooth dough. Divide the dough into 4 pieces, roll into even-sized rounds (around 18-20cm) on a flour-dusted surface, cover with a clean damp tea towel and put aside while you make the chopped salad.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "grill_minutes"
+      ],
+      "next": [
+        "chop_large"
+      ],
+      "on_enter": [
+        {
+          "say": "For the flatbreads, pile the flour onto a clean work surface, make a well in the centre, add a pinch of salt, 150ml of water and 1 tablespoon of olive oil. Use a fork to bring it together, then knead into a smooth dough. Divide the dough into 4 pieces, roll into even-sized rounds (around 18-20cm) on a flour-dusted surface, cover with a clean damp tea towel and put aside while you make the chopped salad."
+        }
+      ]
+    },
+    {
+      "id": "chop_large",
+      "descr": "Prep the mixed crunchy veg, then finely chop it all on a...",
+      "instructions": "Prep the mixed crunchy veg, then finely chop it all on a large board. Make a well in the middle, add the mustard and vinegar, 2 tablespoons of extra virgin olive oil and mix together. Toss the salad into the dressing, then taste and season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_salad"
+      ],
+      "next": [
+        "chill_small"
+      ],
+      "on_enter": [
+        {
+          "say": "Prep the mixed crunchy veg, then finely chop it all on a large board. Make a well in the middle, add the mustard and vinegar, 2 tablespoons of extra virgin olive oil and mix together. Toss the salad into the dressing, then taste and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "chill_small",
+      "descr": "Ripple the yoghurt with the chilli oil in a small bowl...",
+      "instructions": "Ripple the yoghurt with the chilli oil in a small bowl with a pinch of salt and pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_large"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Ripple the yoghurt with the chilli oil in a small bowl with a pinch of salt and pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Place a large non-stick frying pan on a low heat and...",
+      "instructions": "Place a large non-stick frying pan on a low heat and cook the flatbreads one at a time for 2 minutes, until puffed up and golden, turning halfway and stacking them up in a tea towel as you go to keep warm.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "chill_small"
+      ],
+      "next": [
+        "warm_flatbreads"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a large non-stick frying pan on a low heat and cook the flatbreads one at a time for 2 minutes, until puffed up and golden, turning halfway and stacking them up in a tea towel as you go to keep warm."
+        }
+      ]
+    },
+    {
+      "id": "warm_flatbreads",
+      "descr": "When you\u2019re ready to eat, transfer the chopped salad to...",
+      "instructions": "When you\u2019re ready to eat, transfer the chopped salad to a serving platter (or keep it on the large board, if you like). Scatter over the remaining chickpeas, sprinkle with a pinch of garam masala and tear over the mint leaves. Lay over the kebabs, dollop over the chilli-rippled yoghurt, scatter over the reserved baby mint leaves and serve with the warm flatbreads.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "When you\u2019re ready to eat, transfer the chopped salad to a serving platter (or keep it on the large board, if you like). Scatter over the remaining chickpeas, sprinkle with a pinch of garam masala and tear over the mint leaves. Lay over the kebabs, dollop over the chilli-rippled yoghurt, scatter over the reserved baby mint leaves and serve with the warm flatbreads."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "869 calories",
+    "carbohydrates": "87.1 g",
+    "fat": "37.8 g",
+    "fiber": "13.3 g",
+    "protein": "48.0 g"
+  }
+}

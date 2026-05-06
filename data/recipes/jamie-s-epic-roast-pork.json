@@ -1,0 +1,541 @@
+{
+  "recipe": {
+    "id": "jamie-s-epic-roast-pork",
+    "title": "Jamie's epic roast pork",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT150M",
+    "description": "As seen on Jamie and Jimmy's Friday Night Feast, this epic roast pork recipe us unbeatable. Crackling, a fruit sauce and juicy meat, it's a weekend treat.",
+    "tags": [
+      "roast",
+      "roast-pork",
+      "tv",
+      "episode-1",
+      "series-6",
+      "jamie-and-jimmy-s-friday-night-feast-back-catalogue",
+      "course",
+      "dish-type",
+      "roasting",
+      "method",
+      "lunch-amp-dinner-recipes",
+      "low-lactose",
+      "jamie-recipe",
+      "jamie-and-jimmy-s-friday-night-feast"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/jamie-s-epic-roast-pork",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a5ea17d84683643e1605aba590e4d49c0be72201-958x1280.jpg/83653970?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a5ea17d84683643e1605aba590e4d49c0be72201-958x1280.jpg/83653970?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a5ea17d84683643e1605aba590e4d49c0be72201-958x1280.jpg/83653970?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a5ea17d84683643e1605aba590e4d49c0be72201-958x1280.jpg/83653970?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "rib-higher-welfare-pork-loin",
+      "name": "-rib higher-welfare pork loin",
+      "quantity": 8.0,
+      "unit": null,
+      "note": "ask your butcher to remove the skin but hang onto it for amazing double crackling, chine bone removed"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-maris-piper-potatoes",
+      "name": "small Maris Piper potatoes",
+      "quantity": 2.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "small-parsnips",
+      "name": "small parsnips",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bourbon",
+      "name": "bourbon",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-pumpkin",
+      "name": "small pumpkin",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "2kg"
+    },
+    {
+      "id": "flavoured-salt",
+      "name": "FLAVOURED SALT",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fennel-seeds",
+      "name": "fennel seeds",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "black-peppercorns",
+      "name": "black peppercorns",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 1.0,
+      "unit": "sprig",
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 1.0,
+      "unit": "sprig",
+      "note": null
+    },
+    {
+      "id": "maldon-sea-salt",
+      "name": "Maldon sea salt",
+      "quantity": 125.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sauce",
+      "name": "SAUCE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "apple",
+      "name": "apple",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pear",
+      "name": "pear",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "peach",
+      "name": "peach",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "gravy",
+      "name": "GRAVY",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-minced-pork-sho",
+      "name": "higher-welfare minced pork shoulder",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "heaped-teaspoon-whoelgrain-mus",
+      "name": "heaped teaspoon whoelgrain mustard",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-stock",
+      "name": "organic chicken stock",
+      "quantity": 1.0,
+      "unit": "litre",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "blender",
+    "bowl",
+    "chopping board",
+    "frying pan",
+    "knife",
+    "oven",
+    "pan",
+    "pot",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Put the pork skin in the fridge, uncovered, to dry out...",
+      "instructions": "Put the pork skin in the fridge, uncovered, to dry out while you cook the pork. You\u2019ll get double crackling \u2013 one from the pork joint and one from the skin.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the pork skin in the fridge, uncovered, to dry out while you cook the pork. You\u2019ll get double crackling \u2013 one from the pork joint and one from the skin."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 240\u00b0C/475\u00b0F/gas 9 (full whack)",
+      "instructions": "Preheat the oven to 240\u00b0C/475\u00b0F/gas 9 (full whack).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "add_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 240\u00b0C/475\u00b0F/gas 9 (full whack)."
+        }
+      ]
+    },
+    {
+      "id": "add_salt",
+      "descr": "To make the flavoured salt, place the fennel,...",
+      "instructions": "To make the flavoured salt, place the fennel, peppercorns and bay in a pestle and mortar and smash the living daylights out of it. Peel in the lemon zest, then pick in the herbs and have another bash. Add the salt and bash again until fine (alternatively whiz in a blender).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "drizzle_olive"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the flavoured salt, place the fennel, peppercorns and bay in a pestle and mortar and smash the living daylights out of it. Peel in the lemon zest, then pick in the herbs and have another bash. Add the salt and bash again until fine (alternatively whiz in a blender)."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_olive",
+      "descr": "Score the pork fat in a diamond pattern, then rub in 1...",
+      "instructions": "Score the pork fat in a diamond pattern, then rub in 1 tablespoon of flavoured salt with a good drizzle of olive oil, massaging it into all the nooks and crannies.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_salt"
+      ],
+      "next": [
+        "boil_large"
+      ],
+      "on_enter": [
+        {
+          "say": "Score the pork fat in a diamond pattern, then rub in 1 tablespoon of flavoured salt with a good drizzle of olive oil, massaging it into all the nooks and crannies."
+        }
+      ]
+    },
+    {
+      "id": "boil_large",
+      "descr": "Peel the potatoes and parboil in a large pan of salted...",
+      "instructions": "Peel the potatoes and parboil in a large pan of salted boiling water for 10 to 15 minutes until softened. Drain and steam dry, then tip into a large baking tray.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "drizzle_olive"
+      ],
+      "next": [
+        "top_tail"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the potatoes and parboil in a large pan of salted boiling water for 10 to 15 minutes until softened. Drain and steam dry, then tip into a large baking tray."
+        }
+      ]
+    },
+    {
+      "id": "top_tail",
+      "descr": "Scrub, top and tail the parsnips and slot them in with...",
+      "instructions": "Scrub, top and tail the parsnips and slot them in with the potatoes, then place the tray on the bottom shelf of the oven.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_large"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub, top and tail the parsnips and slot them in with the potatoes, then place the tray on the bottom shelf of the oven."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "Place the pork directly on the bars of the oven above...",
+      "instructions": "Place the pork directly on the bars of the oven above the potatoes and parsnips to catch all the tasty juices. Reduce the oven temperature to 200\u00b0C/400\u00b0F/gas 6 and cook for 1 hour 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "top_tail"
+      ],
+      "next": [
+        "fold_edges"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the pork directly on the bars of the oven above the potatoes and parsnips to catch all the tasty juices. Reduce the oven temperature to 200\u00b0C/400\u00b0F/gas 6 and cook for 1 hour 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "fold_edges",
+      "descr": "For the sauce, place a large sheet of non-stick baking...",
+      "instructions": "For the sauce, place a large sheet of non-stick baking paper over a large sheet of tin foil. Place the onion, apple, pear and peach in the middle with a good lug of bourbon, then fold up the edges and twist to make a sealed \u2018money bag\u2019 parcel.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "step_step_9"
+      ],
+      "on_enter": [
+        {
+          "say": "For the sauce, place a large sheet of non-stick baking paper over a large sheet of tin foil. Place the onion, apple, pear and peach in the middle with a good lug of bourbon, then fold up the edges and twist to make a sealed \u2018money bag\u2019 parcel."
+        }
+      ]
+    },
+    {
+      "id": "step_step_9",
+      "descr": "Cook in the oven with the pork for 1 hour 10 minutes, or...",
+      "instructions": "Cook in the oven with the pork for 1 hour 10 minutes, or until soft.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "fold_edges"
+      ],
+      "next": [
+        "rest_least"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook in the oven with the pork for 1 hour 10 minutes, or until soft."
+        }
+      ]
+    },
+    {
+      "id": "rest_least",
+      "descr": "Remove the pork, potatoes and fruit from the oven",
+      "instructions": "Remove the pork, potatoes and fruit from the oven. Cover the pork with tin foil and leave to rest for at least 30 minutes while you make the crackling. Carefully drain the fat from the potatoes (cool and reserve for another day), and set aside.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "step_step_9"
+      ],
+      "next": [
+        "chop_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pork, potatoes and fruit from the oven. Cover the pork with tin foil and leave to rest for at least 30 minutes while you make the crackling. Carefully drain the fat from the potatoes (cool and reserve for another day), and set aside."
+        }
+      ]
+    },
+    {
+      "id": "chop_ping",
+      "descr": "Carefully remove the foil layer from the fruit parcel,...",
+      "instructions": "Carefully remove the foil layer from the fruit parcel, then hold the paper bag over a bowl and pierce a hole in it with a sharp knife to release the juice. Squeeze any remaining juice from the fruit, then transfer to a chopping board, roughly chop (discarding the cores, pips and onion skin) and add to the bowl. Leave to cool, then cover and set aside until ready to serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_least"
+      ],
+      "next": [
+        "season_salt"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully remove the foil layer from the fruit parcel, then hold the paper bag over a bowl and pierce a hole in it with a sharp knife to release the juice. Squeeze any remaining juice from the fruit, then transfer to a chopping board, roughly chop (discarding the cores, pips and onion skin) and add to the bowl. Leave to cool, then cover and set aside until ready to serve."
+        }
+      ]
+    },
+    {
+      "id": "season_salt",
+      "descr": "Deseed and clank up the pumpkin into wedges, place into...",
+      "instructions": "Deseed and clank up the pumpkin into wedges, place into a baking tray and season with salt and pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "serve_pork"
+      ],
+      "on_enter": [
+        {
+          "say": "Deseed and clank up the pumpkin into wedges, place into a baking tray and season with salt and pepper."
+        }
+      ]
+    },
+    {
+      "id": "serve_pork",
+      "descr": "Turn the oven back up to full whack",
+      "instructions": "Turn the oven back up to full whack. Score the reserved pork skin in a zig-zag fashion and place directly on the bars of the oven. Put the pumpkin underneath and cook for 30 minutes or until golden and crisp.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "season_salt"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Turn the oven back up to full whack. Score the reserved pork skin in a zig-zag fashion and place directly on the bars of the oven. Put the pumpkin underneath and cook for 30 minutes or until golden and crisp."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "To make the gravy, peel and roughly chop the onion, then...",
+      "instructions": "To make the gravy, peel and roughly chop the onion, then fry with the minced pork in a large frying pan on a medium heat for 10 minutes, or until golden and soft. Stir in the flour and mustard, then add a good lug of bourbon and flamb\u00e9, if you like. Pour in the stock, bring to the boil and simmer for 10 to 15 minutes until thick and delicious.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "serve_pork"
+      ],
+      "next": [
+        "warm_through"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the gravy, peel and roughly chop the onion, then fry with the minced pork in a large frying pan on a medium heat for 10 minutes, or until golden and soft. Stir in the flour and mustard, then add a good lug of bourbon and flamb\u00e9, if you like. Pour in the stock, bring to the boil and simmer for 10 to 15 minutes until thick and delicious."
+        }
+      ]
+    },
+    {
+      "id": "warm_through",
+      "descr": "Remove the crackling and pumpkin from the oven",
+      "instructions": "Remove the crackling and pumpkin from the oven. Drain the fat from the pumpkin and discard, then tip the pumpkin into the tray with the other roasted veg and return to the oven to warm through.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "slice_ribs"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the crackling and pumpkin from the oven. Drain the fat from the pumpkin and discard, then tip the pumpkin into the tray with the other roasted veg and return to the oven to warm through."
+        }
+      ]
+    },
+    {
+      "id": "slice_ribs",
+      "descr": "Slice up the ribs and carve the rest of the pork",
+      "instructions": "Slice up the ribs and carve the rest of the pork. Bring it all together at the table and serve with the veg, crackling and fruity sauce.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "warm_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice up the ribs and carve the rest of the pork. Bring it all together at the table and serve with the veg, crackling and fruity sauce."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "659 calories",
+    "carbohydrates": "75.6 g",
+    "fat": "26.4 g",
+    "fiber": "14.3 g",
+    "protein": "34.2 g"
+  }
+}

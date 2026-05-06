@@ -1,0 +1,253 @@
+{
+  "recipe": {
+    "id": "creamy-chicken-korma",
+    "title": "Creamy chicken korma",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT30M",
+    "description": "Try Jamie's new Creamy Korma curry paste in this super-easy midweek curry recipe.",
+    "tags": [
+      "30-minute-recipes",
+      "chicken",
+      "curry",
+      "quick-easy",
+      "family-favourites",
+      "big-love",
+      "gluten-free",
+      "chickpea",
+      "serveware"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/creamy-chicken-korma",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2397429b46f39a8757485e25cc4cdf0ef849ecc9-853x1280.jpg/163163989?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2397429b46f39a8757485e25cc4cdf0ef849ecc9-853x1280.jpg/163163989?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2397429b46f39a8757485e25cc4cdf0ef849ecc9-853x1280.jpg/163163989?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2397429b46f39a8757485e25cc4cdf0ef849ecc9-853x1280.jpg/163163989?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "free-range-skinless-chicken-br",
+      "name": "free-range skinless chicken breasts",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ground-almonds",
+      "name": "ground almonds",
+      "quantity": 25.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "jar-of-jamie-oliver-creamy-kor",
+      "name": "jar of Jamie Oliver Creamy Korma paste",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-stock",
+      "name": "organic chicken stock",
+      "quantity": 200.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-chickpeas",
+      "name": "400g tins of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "greek-yoghurt",
+      "name": "Greek yoghurt",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "mango-chutney",
+      "name": "mango chutney",
+      "quantity": null,
+      "unit": null,
+      "note": "to serve"
+    },
+    {
+      "id": "coconut-topping",
+      "name": "COCONUT TOPPING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "flaked-coconut",
+      "name": "flaked coconut",
+      "quantity": 25.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "flaked-almonds",
+      "name": "flaked almonds",
+      "quantity": 25.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "optional-a-pinch-of-dried-chil",
+      "name": "optional: a pinch of dried chilli flakes",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shop-jamie-s-serveware",
+      "name": "SHOP JAMIE'S SERVEWARE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "all-rounder-board",
+      "name": "All-Rounder Board",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_tablespoon",
+      "descr": "Peel and finely slice the onions, then place in a deep...",
+      "instructions": "Peel and finely slice the onions, then place in a deep pan on a medium-high heat with 1 tablespoon of olive oil. Finely slice and stir in the coriander stalks (putting the leaves aside for later). Cook for 10 minutes, or until the onions start to caramelise, stirring regularly.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "chop_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the onions, then place in a deep pan on a medium-high heat with 1 tablespoon of olive oil. Finely slice and stir in the coriander stalks (putting the leaves aside for later). Cook for 10 minutes, or until the onions start to caramelise, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "chop_chicken",
+      "descr": "Chop the chicken breasts into 2cm chunks, add to the pan...",
+      "instructions": "Chop the chicken breasts into 2cm chunks, add to the pan and fry for 5 minutes, or until golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "stir_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Chop the chicken breasts into 2cm chunks, add to the pan and fry for 5 minutes, or until golden."
+        }
+      ]
+    },
+    {
+      "id": "stir_through",
+      "descr": "Add the ground almonds and stir through the curry paste",
+      "instructions": "Add the ground almonds and stir through the curry paste. Cook for 1 minute, then pour in the chicken stock and chickpeas (juice and all). Simmer for 10 minutes, or until cooked through, stirring occasionally, then stir through the yoghurt.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_chicken"
+      ],
+      "next": [
+        "heat_golden"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the ground almonds and stir through the curry paste. Cook for 1 minute, then pour in the chicken stock and chickpeas (juice and all). Simmer for 10 minutes, or until cooked through, stirring occasionally, then stir through the yoghurt."
+        }
+      ]
+    },
+    {
+      "id": "heat_golden",
+      "descr": "Meanwhile, toast the flaked coconut and flaked almonds...",
+      "instructions": "Meanwhile, toast the flaked coconut and flaked almonds with the chilli flakes, if using, in a frying pan on a medium heat, until golden and fragrant.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_through"
+      ],
+      "next": [
+        "serve_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, toast the flaked coconut and flaked almonds with the chilli flakes, if using, in a frying pan on a medium heat, until golden and fragrant."
+        }
+      ]
+    },
+    {
+      "id": "serve_coriander",
+      "descr": "Scatter over the coconut topping and reserved coriander...",
+      "instructions": "Scatter over the coconut topping and reserved coriander leaves, and serve with the mango chutney and extra dollops of yoghurt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_golden"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter over the coconut topping and reserved coriander leaves, and serve with the mango chutney and extra dollops of yoghurt."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "514 calories",
+    "carbohydrates": "32 g",
+    "fat": "27.9 g",
+    "fiber": "12.9 g",
+    "protein": "34 g"
+  }
+}

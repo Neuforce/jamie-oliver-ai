@@ -1,0 +1,207 @@
+{
+  "recipe": {
+    "id": "jarred-pepper-pasta",
+    "title": "Jarred pepper pasta",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT12M",
+    "description": "Jamie shows us how to make a midweek meal in no time with his easy no-cook pasta sauce. Creamy cottage cheese and chilli flakes take this to the next level.",
+    "tags": [
+      "dinner",
+      "pasta",
+      "15-minute-recipes",
+      "quick-easy",
+      "pepper",
+      "italian-style",
+      "cheese"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/jarred-red-pepper-pasta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9d69fc8cb4f49f81b00755d9202e7b195456248-958x1280.jpg/160304795?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9d69fc8cb4f49f81b00755d9202e7b195456248-958x1280.jpg/160304795?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9d69fc8cb4f49f81b00755d9202e7b195456248-958x1280.jpg/160304795?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a9d69fc8cb4f49f81b00755d9202e7b195456248-958x1280.jpg/160304795?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-penne",
+      "name": "dried penne",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "flat-leaf-parsley",
+      "name": "flat-leaf parsley",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "460g-jar-of-roasted-red-pepper",
+      "name": "460g jar of roasted red peppers",
+      "quantity": 460.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "blanched-almonds",
+      "name": "blanched almonds",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "1-teaspoon-dried-red-chilli-fl",
+      "name": "\u00bd\u20131 teaspoon dried red chilli flakes",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cottage-cheese",
+      "name": "cottage cheese",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Cook the pasta according to the packet instructions",
+      "instructions": "Cook the pasta according to the packet instructions.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "pour_clean"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta according to the packet instructions."
+        }
+      ]
+    },
+    {
+      "id": "pour_clean",
+      "descr": "Blitz the parsley (stalks and all) in a blender with...",
+      "instructions": "Blitz the parsley (stalks and all) in a blender with enough extra virgin olive oil to make a vibrant green oil, then pour into a clean jam jar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "chill_flakes"
+      ],
+      "on_enter": [
+        {
+          "say": "Blitz the parsley (stalks and all) in a blender with enough extra virgin olive oil to make a vibrant green oil, then pour into a clean jam jar."
+        }
+      ]
+    },
+    {
+      "id": "chill_flakes",
+      "descr": "Peel the garlic and place in the blender (there\u2019s no...",
+      "instructions": "Peel the garlic and place in the blender (there\u2019s no need to clean it) with the jarred peppers (juice and all), the almonds, chilli flakes, 2 tablespoons of olive oil, 1 tablespoon of red wine vinegar and half the cottage cheese. Blitz until super-smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_clean"
+      ],
+      "next": [
+        "heat_loosening"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel the garlic and place in the blender (there\u2019s no need to clean it) with the jarred peppers (juice and all), the almonds, chilli flakes, 2 tablespoons of olive oil, 1 tablespoon of red wine vinegar and half the cottage cheese. Blitz until super-smooth."
+        }
+      ]
+    },
+    {
+      "id": "heat_loosening",
+      "descr": "Drain the pasta, reserving a mugful of starchy cooking...",
+      "instructions": "Drain the pasta, reserving a mugful of starchy cooking water, then return it to the pan. Pour over the pepper sauce and toss together over the heat, loosening with a splash of cooking water, if needed, then season to perfection with sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chill_flakes"
+      ],
+      "next": [
+        "cube_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the pasta, reserving a mugful of starchy cooking water, then return it to the pan. Pour over the pepper sauce and toss together over the heat, loosening with a splash of cooking water, if needed, then season to perfection with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "cube_tray",
+      "descr": "Divide between serving plates, dot over the remaining...",
+      "instructions": "Divide between serving plates, dot over the remaining cottage cheese, then drizzle with parsley oil, to taste, keeping the rest in the fridge for up to 3 days, or freezing in an ice cube tray for future meals.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_loosening"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide between serving plates, dot over the remaining cottage cheese, then drizzle with parsley oil, to taste, keeping the rest in the fridge for up to 3 days, or freezing in an ice cube tray for future meals."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "591 calories",
+    "carbohydrates": "64.1 g",
+    "fat": "30.6 g",
+    "fiber": "1.1 g",
+    "protein": "18.4 g"
+  }
+}

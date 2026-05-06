@@ -1,0 +1,311 @@
+{
+  "recipe": {
+    "id": "savoy-cabbage-pancetta-farfalle",
+    "title": "Savoy cabbage & pancetta farfalle",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "Need new and delicious ways to cook with Savoy cabbage? Try Jamie's farfalle dish, which uses all parts of the cabbage, pairs it with salty pancetta and golden pine nuts to finish.",
+    "tags": [
+      "30-minute-recipes",
+      "bacon",
+      "pasta",
+      "italian-style",
+      "autumn"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/savoy-cabbage-pancetta-farfalle",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0fd5049d0c38c6e229aa573a1b9e41f952703fc0-973x1300.jpg/savoycabbagepancettafarfallecropcopy.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0fd5049d0c38c6e229aa573a1b9e41f952703fc0-973x1300.jpg/savoycabbagepancettafarfallecropcopy.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0fd5049d0c38c6e229aa573a1b9e41f952703fc0-973x1300.jpg/savoycabbagepancettafarfallecropcopy.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0fd5049d0c38c6e229aa573a1b9e41f952703fc0-973x1300.jpg/savoycabbagepancettafarfallecropcopy.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pine-nuts",
+      "name": "pine nuts",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-thyme",
+      "name": "\u00bd a bunch of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "10g"
+    },
+    {
+      "id": "thick-rashers-of-higher-welfar",
+      "name": "thick rashers of higher-welfare dry cured smoked streaky bacon or pancetta",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.5,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "small-dried-chilli-or-1-pinch-",
+      "name": "small dried chilli or 1 pinch of dried chilli flakes",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-large-savoy-cabbage",
+      "name": "\u00bd a large Savoy cabbage",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-farfalle",
+      "name": "dried farfalle",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 60.0,
+      "unit": "g",
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "125g-ball-of-buffalo-mozzarell",
+      "name": "125g ball of buffalo mozzarella",
+      "quantity": 125.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "heat_large",
+      "descr": "Heat a large non-stick frying pan over a medium-high...",
+      "instructions": "Heat a large non-stick frying pan over a medium-high heat with \u00bd a tablespoon of olive oil, then add the pine nuts and lightly toast for 1 minute. Pick in half of the thyme leaves and cook for another minute, or until the pine nuts are golden, tossing the pan occasionally. Transfer to a bowl and set aside.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "next": [
+        "heat_finely"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a large non-stick frying pan over a medium-high heat with \u00bd a tablespoon of olive oil, then add the pine nuts and lightly toast for 1 minute. Pick in half of the thyme leaves and cook for another minute, or until the pine nuts are golden, tossing the pan occasionally. Transfer to a bowl and set aside."
+        }
+      ]
+    },
+    {
+      "id": "heat_finely",
+      "descr": "Return the pan to the heat",
+      "instructions": "Return the pan to the heat. Finely slice and add the pancetta with \u00bd a tablespoon of olive oil and fry until the fat has rendered and the pancetta is lightly golden.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_large"
+      ],
+      "next": [
+        "slice_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Return the pan to the heat. Finely slice and add the pancetta with \u00bd a tablespoon of olive oil and fry until the fat has rendered and the pancetta is lightly golden."
+        }
+      ]
+    },
+    {
+      "id": "slice_garlic",
+      "descr": "Peel, finely slice and add the garlic, then crumble in...",
+      "instructions": "Peel, finely slice and add the garlic, then crumble in the dried chilli and strip in the remaining thyme leaves. Season generously with black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_finely"
+      ],
+      "next": [
+        "slice_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel, finely slice and add the garlic, then crumble in the dried chilli and strip in the remaining thyme leaves. Season generously with black pepper."
+        }
+      ]
+    },
+    {
+      "id": "slice_cook",
+      "descr": "Click off the darker, tougher leaves from the cabbage,...",
+      "instructions": "Click off the darker, tougher leaves from the cabbage, discarding any tough stalky bits, then roll up and finely slice. Add to the pan and cook for a few minutes, or until beginning to soften.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_garlic"
+      ],
+      "next": [
+        "heat_medium"
+      ],
+      "on_enter": [
+        {
+          "say": "Click off the darker, tougher leaves from the cabbage, discarding any tough stalky bits, then roll up and finely slice. Add to the pan and cook for a few minutes, or until beginning to soften."
+        }
+      ]
+    },
+    {
+      "id": "heat_medium",
+      "descr": "Tear up the paler cabbage leaves and finely chop the...",
+      "instructions": "Tear up the paler cabbage leaves and finely chop the stalk, then add to the pan with a good splash of boiling water. Season with sea salt, reduce the heat to medium, cover and cook for a further 10 minutes, or until tender.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "slice_cook"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear up the paler cabbage leaves and finely chop the stalk, then add to the pan with a good splash of boiling water. Season with sea salt, reduce the heat to medium, cover and cook for a further 10 minutes, or until tender."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Cook the pasta in a large pan of boiling salted water,...",
+      "instructions": "Cook the pasta in a large pan of boiling salted water, according to the packet instructions.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_medium"
+      ],
+      "next": [
+        "chop_mozzarella"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta in a large pan of boiling salted water, according to the packet instructions."
+        }
+      ]
+    },
+    {
+      "id": "chop_mozzarella",
+      "descr": "Finely grate the Parmesan and chop the mozzarella into...",
+      "instructions": "Finely grate the Parmesan and chop the mozzarella into 1cm chunks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "drain_pasta"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate the Parmesan and chop the mozzarella into 1cm chunks."
+        }
+      ]
+    },
+    {
+      "id": "drain_pasta",
+      "descr": "Drain the pasta, reserving a mugful of the cooking...",
+      "instructions": "Drain the pasta, reserving a mugful of the cooking water, and toss with the cabbage.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_mozzarella"
+      ],
+      "next": [
+        "heat_parmesan"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain the pasta, reserving a mugful of the cooking water, and toss with the cabbage."
+        }
+      ]
+    },
+    {
+      "id": "heat_parmesan",
+      "descr": "Remove the pan from the heat, add the Parmesan and a...",
+      "instructions": "Remove the pan from the heat, add the Parmesan and a drizzle of extra virgin olive oil and toss well, adding splashes of the cooking water, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drain_pasta"
+      ],
+      "next": [
+        "add_mozzarella"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pan from the heat, add the Parmesan and a drizzle of extra virgin olive oil and toss well, adding splashes of the cooking water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "add_mozzarella",
+      "descr": "Add the mozzarella, tossing for 30 seconds, or until...",
+      "instructions": "Add the mozzarella, tossing for 30 seconds, or until stringy and oozy, before serving with a scattering of toasted pine nuts and an extra grating of Parmesan, if you like.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT30S",
+      "depends_on": [
+        "heat_parmesan"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the mozzarella, tossing for 30 seconds, or until stringy and oozy, before serving with a scattering of toasted pine nuts and an extra grating of Parmesan, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "561 calories",
+    "carbohydrates": "61.4 g",
+    "fat": "26.1 g",
+    "fiber": "2.5 g",
+    "protein": "24.2 g"
+  }
+}

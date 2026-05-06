@@ -1,0 +1,309 @@
+{
+  "recipe": {
+    "id": "easy-chicken-curry",
+    "title": "Easy chicken curry",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT90M",
+    "description": "A simple yet irresistibly flavourful chicken curry that happens to be budget-friendly too!",
+    "tags": [
+      "chicken",
+      "curry",
+      "family-favourites",
+      "rice",
+      "chickpea",
+      "dinner",
+      "budget-friendly"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/easy-chicken-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9c7934ddce98bb4215f0138680dbbb2024e76a55-958x1280.jpg/161894940?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9c7934ddce98bb4215f0138680dbbb2024e76a55-958x1280.jpg/161894940?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9c7934ddce98bb4215f0138680dbbb2024e76a55-958x1280.jpg/161894940?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/9c7934ddce98bb4215f0138680dbbb2024e76a55-958x1280.jpg/161894940?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "skinless-boneless-higher-welfa",
+      "name": "skinless boneless higher-welfare chicken thighs",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tikka-masala-paste",
+      "name": "tikka masala paste",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 6.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-red-chilli",
+      "name": "fresh red chilli",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "coriander",
+      "name": "coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "400g-tin-of-chopped-tomatoes",
+      "name": "400g tin of chopped tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-light-coconut-milk",
+      "name": "400g tin of light coconut milk",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "basmati-rice",
+      "name": "basmati rice",
+      "quantity": 450.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "cloves",
+      "name": "cloves",
+      "quantity": 4.0,
+      "unit": "whole",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-chickpeas",
+      "name": "400g tins of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-frozen-veg",
+      "name": "mixed frozen veg",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": "such as green beans and peas"
+    },
+    {
+      "id": "mango-chutney",
+      "name": "mango chutney",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "poppadoms",
+      "name": "poppadoms",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "griddle",
+    "large bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mix_together",
+      "descr": "Cut each of the chicken thighs in half and place them in...",
+      "instructions": "Cut each of the chicken thighs in half and place them in a large bowl with 1 tablespoon of curry paste, 3 tablespoons of yoghurt and a generous pinch of sea salt and black pepper. Finely grate the lemon zest and put aside for later, then squeeze half the lemon juice over the chicken and mix together well. Cover and leave to marinate in the fridge for at least 2 hours, but ideally overnight.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT7200S",
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Cut each of the chicken thighs in half and place them in a large bowl with 1 tablespoon of curry paste, 3 tablespoons of yoghurt and a generous pinch of sea salt and black pepper. Finely grate the lemon zest and put aside for later, then squeeze half the lemon juice over the chicken and mix together well. Cover and leave to marinate in the fridge for at least 2 hours, but ideally overnight."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Peel and finely chop the garlic and ginger, finely slice...",
+      "instructions": "Peel and finely chop the garlic and ginger, finely slice the chilli, then place in a deep pan on a medium-high heat with 2 tablespoons of olive oil. Peel, finely slice and add the onion, finely slice and stir in the coriander stalks (putting the leaves aside for later). Cook for 5 minutes, or until the onions start to soften, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "mix_together"
+      ],
+      "next": [
+        "stir_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the garlic and ginger, finely slice the chilli, then place in a deep pan on a medium-high heat with 2 tablespoons of olive oil. Peel, finely slice and add the onion, finely slice and stir in the coriander stalks (putting the leaves aside for later). Cook for 5 minutes, or until the onions start to soften, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_remaining",
+      "descr": "Push the onions to one side of the pan, then tip the...",
+      "instructions": "Push the onions to one side of the pan, then tip the tomatoes into the empty side and leave to tick away for 5 minutes, then stir in the remaining tablespoon of curry paste, coconut milk and \u00bd a tin\u2019s worth of water and leave to simmer.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "heat_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "Push the onions to one side of the pan, then tip the tomatoes into the empty side and leave to tick away for 5 minutes, then stir in the remaining tablespoon of curry paste, coconut milk and \u00bd a tin\u2019s worth of water and leave to simmer."
+        }
+      ]
+    },
+    {
+      "id": "heat_pinch",
+      "descr": "Place the rice and 450ml of water in a 24cm non-stick...",
+      "instructions": "Place the rice and 450ml of water in a 24cm non-stick frying pan on a high heat with a pinch of sea salt and the cloves. Bring to the boil, then make a well in the centre and tip in the chickpeas (juice and all), pushing the chickpeas into the rice. Cover and cook for 20 minutes, or until the base is crispy and the rice is fluffy and hot through, after which you\u2019ll be able to turn it out as a rice cake and scatter over the reserved lemon zest.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "stir_remaining"
+      ],
+      "next": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the rice and 450ml of water in a 24cm non-stick frying pan on a high heat with a pinch of sea salt and the cloves. Bring to the boil, then make a well in the centre and tip in the chickpeas (juice and all), pushing the chickpeas into the rice. Cover and cook for 20 minutes, or until the base is crispy and the rice is fluffy and hot through, after which you\u2019ll be able to turn it out as a rice cake and scatter over the reserved lemon zest."
+        }
+      ]
+    },
+    {
+      "id": "heat_once",
+      "descr": "Meanwhile, place a griddle pan or non-stick frying pan...",
+      "instructions": "Meanwhile, place a griddle pan or non-stick frying pan on a high heat and once it starts to smoke, cook the chicken for 10 minutes, turning halfway, and transferring to the curry once charred (you may need to do this in batches).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_pinch"
+      ],
+      "next": [
+        "stir_most"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, place a griddle pan or non-stick frying pan on a high heat and once it starts to smoke, cook the chicken for 10 minutes, turning halfway, and transferring to the curry once charred (you may need to do this in batches)."
+        }
+      ]
+    },
+    {
+      "id": "stir_most",
+      "descr": "Stir most of the coriander leaves into the curry and...",
+      "instructions": "Stir most of the coriander leaves into the curry and simmer for another 10 minutes, adding the frozen veg for the final 5 minutes, then taste and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_once"
+      ],
+      "next": [
+        "serve_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir most of the coriander leaves into the curry and simmer for another 10 minutes, adding the frozen veg for the final 5 minutes, then taste and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "serve_coriander",
+      "descr": "Divide the curry and rice between plates, dollop over...",
+      "instructions": "Divide the curry and rice between plates, dollop over the remaining yoghurt and a little mango chutney, and scatter over the reserved coriander leaves. Serve with poppadoms and lemon wedges, for squeezing over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_most"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide the curry and rice between plates, dollop over the remaining yoghurt and a little mango chutney, and scatter over the reserved coriander leaves. Serve with poppadoms and lemon wedges, for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "705 calories",
+    "carbohydrates": "94.2 g",
+    "fat": "21.3 g",
+    "fiber": "8.8 g",
+    "protein": "38.3 g"
+  }
+}

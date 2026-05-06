@@ -1,0 +1,359 @@
+{
+  "recipe": {
+    "id": "chicken-garden-soup",
+    "title": "Chicken garden soup",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT100M",
+    "description": "A chicken soup recipe is a real staple, and this one uses roast chicken, so it\u2019s a great way to use up any leftovers. A beautiful, hearty, winter soup recipe.",
+    "tags": [
+      "soup",
+      "chicken",
+      "chicken-soup",
+      "main-ingredient",
+      "kosher-for-passover",
+      "dish-type",
+      "method",
+      "gluten-free",
+      "soups",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-garden-soup",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e40c26deaf87befa80cb86fdfa70ff9807311091-973x1300.jpg/e40c26deaf87befa80cb86fdfa70ff9807311091-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e40c26deaf87befa80cb86fdfa70ff9807311091-973x1300.jpg/e40c26deaf87befa80cb86fdfa70ff9807311091-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e40c26deaf87befa80cb86fdfa70ff9807311091-973x1300.jpg/e40c26deaf87befa80cb86fdfa70ff9807311091-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e40c26deaf87befa80cb86fdfa70ff9807311091-973x1300.jpg/e40c26deaf87befa80cb86fdfa70ff9807311091-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 6.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "fresh-bay-leaves",
+      "name": "fresh bay leaves",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "peppercorns",
+      "name": "peppercorns",
+      "quantity": 4.0,
+      "unit": "whole",
+      "note": null
+    },
+    {
+      "id": "free-range-cooked-chicken-carc",
+      "name": "free-range cooked chicken carcass",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "with leftover chicken attached"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "shallots",
+      "name": "shallots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-flat-lea",
+      "name": "a few sprigs of fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-knob-of-unsalted-butter",
+      "name": "large knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "seasonal-greens",
+      "name": "seasonal greens",
+      "quantity": 2.0,
+      "unit": "handfuls",
+      "note": "such as kale, cavalo nero"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "roast_chicken",
+      "descr": "For this recipe, you will need 1 higher-welfare roast...",
+      "instructions": "For this recipe, you will need 1 higher-welfare roast chicken carcass, with leftover chicken attached.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_onions"
+      ],
+      "on_enter": [
+        {
+          "say": "For this recipe, you will need 1 higher-welfare roast chicken carcass, with leftover chicken attached."
+        }
+      ]
+    },
+    {
+      "id": "chop_onions",
+      "descr": "Peel and roughly chop the onions, roughly chop 2 carrots...",
+      "instructions": "Peel and roughly chop the onions, roughly chop 2 carrots and celery sticks, then place them in a large pan with the bay leaves, peppercorns, a pinch of sea salt and the chicken carcass.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_chicken"
+      ],
+      "next": [
+        "heat_bring"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and roughly chop the onions, roughly chop 2 carrots and celery sticks, then place them in a large pan with the bay leaves, peppercorns, a pinch of sea salt and the chicken carcass."
+        }
+      ]
+    },
+    {
+      "id": "heat_bring",
+      "descr": "Fill the pan with cold water so that everything is...",
+      "instructions": "Fill the pan with cold water so that everything is covered, then place on a high heat and bring to the boil. Reduce to a simmer and cook for 1 hour, skimming off any scum that rises to the surface from time to time.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "chop_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Fill the pan with cold water so that everything is covered, then place on a high heat and bring to the boil. Reduce to a simmer and cook for 1 hour, skimming off any scum that rises to the surface from time to time."
+        }
+      ]
+    },
+    {
+      "id": "chop_ping",
+      "descr": "About 20 minutes before the stock is ready, crack on...",
+      "instructions": "About 20 minutes before the stock is ready, crack on with the base of the soup: peel the remaining carrots and slice \u00bdcm thick with the remaining celery. Peel and finely slice the garlic and shallots. Pick the parsley leaves, finely chopping the leaves and stalks. Roughly shred the spinach.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_bring"
+      ],
+      "next": [
+        "heat_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "About 20 minutes before the stock is ready, crack on with the base of the soup: peel the remaining carrots and slice \u00bdcm thick with the remaining celery. Peel and finely slice the garlic and shallots. Pick the parsley leaves, finely chopping the leaves and stalks. Roughly shred the spinach."
+        }
+      ]
+    },
+    {
+      "id": "heat_garlic",
+      "descr": "Place the butter and 1 tablespoon of oil in another...",
+      "instructions": "Place the butter and 1 tablespoon of oil in another large pan on a low heat, add the garlic, shallots and parsley stalks and cook for 5 to 10 minutes, or until softened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "add_carrots"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the butter and 1 tablespoon of oil in another large pan on a low heat, add the garlic, shallots and parsley stalks and cook for 5 to 10 minutes, or until softened."
+        }
+      ]
+    },
+    {
+      "id": "add_carrots",
+      "descr": "Add the carrots and celery and cook for a further 5 minutes",
+      "instructions": "Add the carrots and celery and cook for a further 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_garlic"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the carrots and celery and cook for a further 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "When the stock is ready, remove the chicken carcass,...",
+      "instructions": "When the stock is ready, remove the chicken carcass, pull off any remaining pieces of meat and leave to one side, then discard the carcass.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_carrots"
+      ],
+      "next": [
+        "boil_reduce"
+      ],
+      "on_enter": [
+        {
+          "say": "When the stock is ready, remove the chicken carcass, pull off any remaining pieces of meat and leave to one side, then discard the carcass."
+        }
+      ]
+    },
+    {
+      "id": "boil_reduce",
+      "descr": "Strain the stock through a sieve into the veg pan",
+      "instructions": "Strain the stock through a sieve into the veg pan. Bring to the boil, then reduce to low and simmer for 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "add_seasonal"
+      ],
+      "on_enter": [
+        {
+          "say": "Strain the stock through a sieve into the veg pan. Bring to the boil, then reduce to low and simmer for 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "add_seasonal",
+      "descr": "Add the seasonal greens and cook for a further 10...",
+      "instructions": "Add the seasonal greens and cook for a further 10 minutes, adding the spinach for the last minute.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "boil_reduce"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the seasonal greens and cook for a further 10 minutes, adding the spinach for the last minute."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Finish the soup by squeezing in the lemon juice, then...",
+      "instructions": "Finish the soup by squeezing in the lemon juice, then taste and season to perfection, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_seasonal"
+      ],
+      "next": [
+        "top_leftover"
+      ],
+      "on_enter": [
+        {
+          "say": "Finish the soup by squeezing in the lemon juice, then taste and season to perfection, if needed."
+        }
+      ]
+    },
+    {
+      "id": "top_leftover",
+      "descr": "Divide between bowls and top with any leftover shredded...",
+      "instructions": "Divide between bowls and top with any leftover shredded chicken, a sprinkling of parsley leaves and a good hit of black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Divide between bowls and top with any leftover shredded chicken, a sprinkling of parsley leaves and a good hit of black pepper."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "402 calories",
+    "carbohydrates": "13.5 g",
+    "fat": "17.7 g",
+    "fiber": "2.6 g",
+    "protein": "47.7 g"
+  }
+}

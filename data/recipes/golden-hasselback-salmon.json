@@ -1,0 +1,199 @@
+{
+  "recipe": {
+    "id": "golden-hasselback-salmon",
+    "title": "Golden hasselback salmon",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT42M",
+    "description": "An impressive yet easy one-pan salmon dish with couscous, chickpeas and roasted veg. The perfect meal to share!",
+    "tags": [
+      "healthy",
+      "anchovy",
+      "yoghurt",
+      "family-favourites",
+      "vegetable",
+      "healthy-dinners",
+      "salmon",
+      "chickpea"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/salmon/golden-hasselback-salmon",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fc30b99b36befaab2209d019dff6447f63e86faa-968x1280.jpg/163881226?rect=0,156,968,968&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fc30b99b36befaab2209d019dff6447f63e86faa-968x1280.jpg/163881226?rect=0,156,968,968&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fc30b99b36befaab2209d019dff6447f63e86faa-968x1280.jpg/163881226?rect=0,277,968,726&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fc30b99b36befaab2209d019dff6447f63e86faa-968x1280.jpg/163881226?rect=0,368,968,545&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "salmon"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "1kg-side-of-salmon",
+      "name": "1kg side of salmon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "skin on, scaled, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "basil",
+      "name": "basil",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "50g-tin-of-anchovy-fillets-in-",
+      "name": "50g tin of anchovy fillets in oil",
+      "quantity": 50.0,
+      "unit": null,
+      "note": "from sustainable sources"
+    },
+    {
+      "id": "ripe-tomatoes",
+      "name": "ripe tomatoes",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "on the vine"
+    },
+    {
+      "id": "harissa-paste",
+      "name": "harissa paste",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "wholewheat-couscous",
+      "name": "wholewheat couscous",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "700g-jar-of-queen-chickpeas",
+      "name": "700g jar of queen chickpeas",
+      "quantity": 700.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-mixed-mediterranean-veg",
+      "name": "frozen mixed Mediterranean veg",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "knife",
+    "oven",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 220\u00baC/425\u00b0F/gas 7",
+      "instructions": "Preheat the oven to 220\u00baC/425\u00b0F/gas 7. Use a sharp knife to score through the salmon flesh at 1cm intervals, slicing most of the way through towards the skin.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_together"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 220\u00baC/425\u00b0F/gas 7. Use a sharp knife to score through the salmon flesh at 1cm intervals, slicing most of the way through towards the skin."
+        }
+      ]
+    },
+    {
+      "id": "chop_together",
+      "descr": "Finely grate the lemon zest on to a board",
+      "instructions": "Finely grate the lemon zest on to a board. Pick over most of the basil leaves, reserving some nice ones in a bowl of cold water, and place the stalks in a blender. Add the anchovies to the board with a drizzle of oil from their tin and a pinch of sea salt and black pepper, finely chop together, then rub into all the cuts in the salmon.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "stir_couscous"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate the lemon zest on to a board. Pick over most of the basil leaves, reserving some nice ones in a bowl of cold water, and place the stalks in a blender. Add the anchovies to the board with a drizzle of oil from their tin and a pinch of sea salt and black pepper, finely chop together, then rub into all the cuts in the salmon."
+        }
+      ]
+    },
+    {
+      "id": "stir_couscous",
+      "descr": "Add the tomatoes, 1 tablespoon of harissa and 2...",
+      "instructions": "Add the tomatoes, 1 tablespoon of harissa and 2 tablespoons of red wine vinegar to the blender. Blitz until smooth, season to perfection, then pour into a deep 30cm x 40cm roasting tray and stir in the couscous and chickpeas, juice and all. Sit the prepped salmon on top in the centre, then scatter the frozen veg around it. Cook on the top shelf of the oven for 30 minutes, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "chop_together"
+      ],
+      "next": [
+        "slice_move"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the tomatoes, 1 tablespoon of harissa and 2 tablespoons of red wine vinegar to the blender. Blitz until smooth, season to perfection, then pour into a deep 30cm x 40cm roasting tray and stir in the couscous and chickpeas, juice and all. Sit the prepped salmon on top in the centre, then scatter the frozen veg around it. Cook on the top shelf of the oven for 30 minutes, or until golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "slice_move",
+      "descr": "Sprinkle over the reserved basil leaves",
+      "instructions": "Sprinkle over the reserved basil leaves. Use fish slices to move the salmon to a board and portion up, then mix everything left in the tray. Mix the remaining harissa into the yoghurt. Serve with lemon wedges.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "stir_couscous"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle over the reserved basil leaves. Use fish slices to move the salmon to a board and portion up, then mix everything left in the tray. Mix the remaining harissa into the yoghurt. Serve with lemon wedges."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "529 calories",
+    "carbohydrates": "30.6 g",
+    "fat": "25.1 g",
+    "fiber": "7.4 g",
+    "protein": "44.6 g"
+  }
+}

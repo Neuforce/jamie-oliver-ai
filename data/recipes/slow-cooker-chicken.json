@@ -1,0 +1,190 @@
+{
+  "recipe": {
+    "id": "slow-cooker-chicken",
+    "title": "Slow-cooker chicken",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT255M",
+    "description": "Get out the slow cooker and try Jamie's warming chicken stew with herbs and veg. Perfect for cold nights.",
+    "tags": [
+      "slow-cook",
+      "chicken",
+      "low-lactose",
+      "gluten-free",
+      "potato",
+      "dairy-free",
+      "stew"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/slow-cooker-chicken",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ac2d4f452a148881ffebaf50cfc030e62c994f7-958x1280.jpg/161448690?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ac2d4f452a148881ffebaf50cfc030e62c994f7-958x1280.jpg/161448690?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ac2d4f452a148881ffebaf50cfc030e62c994f7-958x1280.jpg/161448690?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ac2d4f452a148881ffebaf50cfc030e62c994f7-958x1280.jpg/161448690?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "free-range-mixed-chicken-thigh",
+      "name": "free-range mixed chicken thighs & drumsticks",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "skin on, bone in"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "small-carrots",
+      "name": "small carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parsnips",
+      "name": "parsnips",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onion",
+      "name": "red onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-potatoes",
+      "name": "baby potatoes",
+      "quantity": 750.0,
+      "unit": "g",
+      "note": "red or white"
+    },
+    {
+      "id": "a-mixed-bunch-of-fresh-woody-h",
+      "name": "\u00bd a mixed bunch of fresh woody herbs",
+      "quantity": null,
+      "unit": null,
+      "note": "15g, such as rosemary, thyme, sage, bay, oregano"
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "heat_minutes",
+      "descr": "Toss the chicken pieces in 2 tablespoons of olive oil...",
+      "instructions": "Toss the chicken pieces in 2 tablespoons of olive oil and a pinch of sea salt and black pepper. Halve the lemon, then brown in a large non-stick frying pan on a medium-high heat for 10 minutes with the chicken, turning regularly, until golden.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "mix_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss the chicken pieces in 2 tablespoons of olive oil and a pinch of sea salt and black pepper. Halve the lemon, then brown in a large non-stick frying pan on a medium-high heat for 10 minutes with the chicken, turning regularly, until golden."
+        }
+      ]
+    },
+    {
+      "id": "mix_step_2",
+      "descr": "Wash the celery, carrots and parsnips \u2013 there\u2019s no need...",
+      "instructions": "Wash the celery, carrots and parsnips \u2013 there\u2019s no need to peel them, then cut the celery into thirds, halve the carrots lengthways and trim and cut the parsnips into quarters. Peel and cut the onion into wedges and break apart the unpeeled garlic bulb. Place the veg in the base of the slow cooker* with the potatoes, halving any larger ones. Strip the woody herb leaves, tearing up any larger ones, and mix into the veg.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "pour_boiling"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash the celery, carrots and parsnips \u2013 there\u2019s no need to peel them, then cut the celery into thirds, halve the carrots lengthways and trim and cut the parsnips into quarters. Peel and cut the onion into wedges and break apart the unpeeled garlic bulb. Place the veg in the base of the slow cooker* with the potatoes, halving any larger ones. Strip the woody herb leaves, tearing up any larger ones, and mix into the veg."
+        }
+      ]
+    },
+    {
+      "id": "pour_boiling",
+      "descr": "Boil the kettle",
+      "instructions": "Boil the kettle. Place the chicken on top of the veg, carefully pour in 200ml of boiling kettle water around the chicken.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_step_2"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Boil the kettle. Place the chicken on top of the veg, carefully pour in 200ml of boiling kettle water around the chicken."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Cook on the highest setting for 4 hours or the lowest...",
+      "instructions": "Cook on the highest setting for 4 hours or the lowest setting for 8 hours, until the chicken is cooked through and the juices run clear.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT14400S",
+      "depends_on": [
+        "pour_boiling"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook on the highest setting for 4 hours or the lowest setting for 8 hours, until the chicken is cooked through and the juices run clear."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "609 calories",
+    "carbohydrates": "56.8 g",
+    "fat": "24 g",
+    "fiber": "9.8 g",
+    "protein": "45.6 g"
+  }
+}

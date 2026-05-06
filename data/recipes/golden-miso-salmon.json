@@ -1,0 +1,228 @@
+{
+  "recipe": {
+    "id": "golden-miso-salmon",
+    "title": "Golden miso salmon",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT23M",
+    "description": "Get an exciting midweek dinner without the effort with this delicious miso-flavoured salmon traybake recipe.",
+    "tags": [
+      "one-pan",
+      "30-minute-recipes",
+      "quick-easy",
+      "low-lactose",
+      "salmon",
+      "fish",
+      "dairy-free"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/golden-miso-salmon",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2dd0ccae634dfcf555c89ecb603c30bb34c1e0f4-958x1280.jpg/160515618?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2dd0ccae634dfcf555c89ecb603c30bb34c1e0f4-958x1280.jpg/160515618?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2dd0ccae634dfcf555c89ecb603c30bb34c1e0f4-958x1280.jpg/160515618?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2dd0ccae634dfcf555c89ecb603c30bb34c1e0f4-958x1280.jpg/160515618?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "asparagus",
+      "name": "asparagus",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sugar-snap-peas",
+      "name": "sugar snap peas",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dark-miso",
+      "name": "dark miso",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "low-salt-soy-sauce",
+      "name": "low-salt soy sauce",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "sesame-oil",
+      "name": "sesame oil",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "limes",
+      "name": "limes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "130g-salmon-fillets",
+      "name": "130g salmon fillets",
+      "quantity": 130.0,
+      "unit": null,
+      "note": "skin on, scaled, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "sesame-seeds",
+      "name": "sesame seeds",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "carrot",
+      "name": "carrot",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "radishes",
+      "name": "radishes",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-mint",
+      "name": "fresh mint",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "grill"
+  ],
+  "steps": [
+    {
+      "id": "preheat_high",
+      "descr": "Preheat the grill to high",
+      "instructions": "Preheat the grill to high. Snap the woody ends off the asparagus and place it in a 25cm x 35cm roasting tray with the sugar snap peas, then drizzle with 1 tablespoon of olive oil and shake to coat.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "slice_salmon"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the grill to high. Snap the woody ends off the asparagus and place it in a 25cm x 35cm roasting tray with the sugar snap peas, then drizzle with 1 tablespoon of olive oil and shake to coat."
+        }
+      ]
+    },
+    {
+      "id": "slice_salmon",
+      "descr": "Mix the miso, soy and sesame oil in a shallow bowl, then...",
+      "instructions": "Mix the miso, soy and sesame oil in a shallow bowl, then finely grate in the zest of 1 lime and squeeze in the juice to make a marinade. Slice the salmon fillets in half lengthways, toss in the marinade, then drape over the veg in the tray, drizzling over the excess marinade. Scatter over the sesame seeds.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_high"
+      ],
+      "next": [
+        "grill_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix the miso, soy and sesame oil in a shallow bowl, then finely grate in the zest of 1 lime and squeeze in the juice to make a marinade. Slice the salmon fillets in half lengthways, toss in the marinade, then drape over the veg in the tray, drizzling over the excess marinade. Scatter over the sesame seeds."
+        }
+      ]
+    },
+    {
+      "id": "grill_minutes",
+      "descr": "Grill for 12 minutes, or until the greens are blistered...",
+      "instructions": "Grill for 12 minutes, or until the greens are blistered and the salmon is golden and just cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT720S",
+      "depends_on": [
+        "slice_salmon"
+      ],
+      "next": [
+        "chop_spring"
+      ],
+      "on_enter": [
+        {
+          "say": "Grill for 12 minutes, or until the greens are blistered and the salmon is golden and just cooked through."
+        }
+      ]
+    },
+    {
+      "id": "chop_spring",
+      "descr": "To make a quick pickle, peel and matchstick the carrot,...",
+      "instructions": "To make a quick pickle, peel and matchstick the carrot, trim and finely chop the spring onions, finely slice the radishes, pick and roughly chop the mint leaves, then dress it all with lime juice, sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "grill_minutes"
+      ],
+      "next": [
+        "serve_delicious"
+      ],
+      "on_enter": [
+        {
+          "say": "To make a quick pickle, peel and matchstick the carrot, trim and finely chop the spring onions, finely slice the radishes, pick and roughly chop the mint leaves, then dress it all with lime juice, sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "serve_delicious",
+      "descr": "Scatter the pickle over the salmon in the tray, and serve",
+      "instructions": "Scatter the pickle over the salmon in the tray, and serve. Delicious with noodles or fluffy rice on the side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "chop_spring"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter the pickle over the salmon in the tray, and serve. Delicious with noodles or fluffy rice on the side."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "360 calories",
+    "carbohydrates": "8.6 g",
+    "fat": "21.9 g",
+    "fiber": "3.4 g",
+    "protein": "32.3 g"
+  }
+}

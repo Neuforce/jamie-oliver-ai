@@ -1,0 +1,175 @@
+{
+  "recipe": {
+    "id": "the-world-famous-tarte-tatin",
+    "title": "The world-famous tarte Tatin",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "This world-famous Tarte Tatin recipe is dead simple to make and combines light golden puff pastry, soft juicy apples and delicious caramel.",
+    "tags": [
+      "dinner-party",
+      "desserts",
+      "fruit",
+      "baking",
+      "course",
+      "dish-type",
+      "method",
+      "tart",
+      "puddings-amp-desserts",
+      "occasion",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "french",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/the-world-famous-tarte-tatin",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e95ac46a637bfca58a82c2ed1689e23527c6d6c4-973x1300.jpg/e95ac46a637bfca58a82c2ed1689e23527c6d6c4-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e95ac46a637bfca58a82c2ed1689e23527c6d6c4-973x1300.jpg/e95ac46a637bfca58a82c2ed1689e23527c6d6c4-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e95ac46a637bfca58a82c2ed1689e23527c6d6c4-973x1300.jpg/e95ac46a637bfca58a82c2ed1689e23527c6d6c4-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e95ac46a637bfca58a82c2ed1689e23527c6d6c4-973x1300.jpg/e95ac46a637bfca58a82c2ed1689e23527c6d6c4-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "plain-flour",
+      "name": "plain flour",
+      "quantity": null,
+      "unit": null,
+      "note": "for dusting"
+    },
+    {
+      "id": "puff-pastry",
+      "name": "puff pastry",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "small-eating-apples",
+      "name": "small eating apples",
+      "quantity": 5.0,
+      "unit": null,
+      "note": "approximately 800g, a mixture of sweet and acidic varieties"
+    },
+    {
+      "id": "golden-caster-sugar",
+      "name": "golden caster sugar",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "calvados",
+      "name": "Calvados",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "vanilla-pod",
+      "name": "vanilla pod",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "halved lengthways, seeds scraped out"
+    },
+    {
+      "id": "butter",
+      "name": "butter",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": "cubed"
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "oven",
+    "pan",
+    "wooden spoon"
+  ],
+  "steps": [
+    {
+      "id": "preheat_your",
+      "descr": "Preheat your oven to 190\u02daC/375\u02daF/gas 5",
+      "instructions": "Preheat your oven to 190\u02daC/375\u02daF/gas 5. Dust a clean surface and a rolling pin with flour and roll out your puff pastry until it\u2019s just over 0.5cm thick. This will be enough to cover the ovenproof frying pan you\u2019ll be cooking the tarte Tatin in, leaving about 5cm extra around the edge. Put the pastry to one side for now. Peel your apples, then halve them horizontally and use a teaspoon to get rid of the seeds and core.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_sugar"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat your oven to 190\u02daC/375\u02daF/gas 5. Dust a clean surface and a rolling pin with flour and roll out your puff pastry until it\u2019s just over 0.5cm thick. This will be enough to cover the ovenproof frying pan you\u2019ll be cooking the tarte Tatin in, leaving about 5cm extra around the edge. Put the pastry to one side for now. Peel your apples, then halve them horizontally and use a teaspoon to get rid of the seeds and core."
+        }
+      ]
+    },
+    {
+      "id": "heat_sugar",
+      "descr": "Put the ovenproof pan on a medium heat and add the...",
+      "instructions": "Put the ovenproof pan on a medium heat and add the sugar, Calvados, vanilla seeds and pod. Let the sugar dissolve and cook until the mixture forms a light caramel. Just please remember never ever to touch or taste hot caramel, as it can burn really badly.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_your"
+      ],
+      "next": [
+        "cube_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Put the ovenproof pan on a medium heat and add the sugar, Calvados, vanilla seeds and pod. Let the sugar dissolve and cook until the mixture forms a light caramel. Just please remember never ever to touch or taste hot caramel, as it can burn really badly."
+        }
+      ]
+    },
+    {
+      "id": "cube_butter",
+      "descr": "Once the caramel looks and smells delicious \u2013 it should...",
+      "instructions": "Once the caramel looks and smells delicious \u2013 it should be a lovely chestnut brown \u2013 add your halved apples. Carefully stir everything in the pan and cook for about 5 minutes or until the apples start to soften and you get a toffee apple vibe happening. Add the cubed butter, then lay the pastry over the top. Quickly and carefully tuck the pastry down right into the edges \u2013 it\u2019s best to use a wooden spoon so you don\u2019t touch the caramel.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_sugar"
+      ],
+      "next": [
+        "bake_tarte"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the caramel looks and smells delicious \u2013 it should be a lovely chestnut brown \u2013 add your halved apples. Carefully stir everything in the pan and cook for about 5 minutes or until the apples start to soften and you get a toffee apple vibe happening. Add the cubed butter, then lay the pastry over the top. Quickly and carefully tuck the pastry down right into the edges \u2013 it\u2019s best to use a wooden spoon so you don\u2019t touch the caramel."
+        }
+      ]
+    },
+    {
+      "id": "bake_tarte",
+      "descr": "Bake the tarte Tatin for about 25 to 30 minutes, or...",
+      "instructions": "Bake the tarte Tatin for about 25 to 30 minutes, or until golden, with crispy caramelly pieces bubbling up from under the edges. Take it out of the oven. To make it look like a tarte Tatin you need to turn it out, which isn't hard \u2013 but you do need to be careful with that hot caramel. So get a serving plate or board larger than your pan and put an oven glove on to protect the arm holding the board. Put the board or plate on top of the pan, then quickly, carefully and confidently turn it out. Put it to one side for a few minutes, so the caramel can cool down, then divide it up and serve with a spoonful of cr\u00e8me fra\u00eeche or ice cream.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "cube_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Bake the tarte Tatin for about 25 to 30 minutes, or until golden, with crispy caramelly pieces bubbling up from under the edges. Take it out of the oven. To make it look like a tarte Tatin you need to turn it out, which isn't hard \u2013 but you do need to be careful with that hot caramel. So get a serving plate or board larger than your pan and put an oven glove on to protect the arm holding the board. Put the board or plate on top of the pan, then quickly, carefully and confidently turn it out. Put it to one side for a few minutes, so the caramel can cool down, then divide it up and serve with a spoonful of cr\u00e8me fra\u00eeche or ice cream."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "586 calories",
+    "carbohydrates": "67.2 g",
+    "fat": "29.6 g",
+    "fiber": "4.2 g",
+    "protein": "4.7 g"
+  }
+}

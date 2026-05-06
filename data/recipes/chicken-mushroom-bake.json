@@ -1,0 +1,180 @@
+{
+  "recipe": {
+    "id": "chicken-mushroom-bake",
+    "title": "Chicken & mushroom bake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT65M",
+    "description": "Fancy an easy one-pan traybake recipe? Try Jamie's chicken & mushroom number for big, fast flavour.",
+    "tags": [
+      "beans",
+      "one-pan",
+      "chicken",
+      "quick-easy",
+      "rice",
+      "mushroom"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-mushroom-bake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1dc31618d3438eec90319cad51fafed39d9ce222-958x1280.jpg/160722699?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1dc31618d3438eec90319cad51fafed39d9ce222-958x1280.jpg/160722699?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1dc31618d3438eec90319cad51fafed39d9ce222-958x1280.jpg/160722699?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1dc31618d3438eec90319cad51fafed39d9ce222-958x1280.jpg/160722699?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-free-range-chicken-thigh",
+      "name": "large free-range chicken thighs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "skin on, bone in"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "295g-tin-of-campbell-s-condens",
+      "name": "295g tin of Campbell\u2019s condensed mushroom soup",
+      "quantity": 295.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-butter-beans",
+      "name": "400g tin of butter beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "basmati-rice",
+      "name": "basmati rice",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-leaf-spinach",
+      "name": "frozen leaf spinach",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "english-mustard",
+      "name": "English mustard",
+      "quantity": 4.0,
+      "unit": "teaspoons",
+      "note": "plus extra to serve"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. In a 25cm x 35cm roasting tray, toss the chicken with 1 tablespoon of olive oil and a pinch of black pepper, then scatter in the mushrooms, tearing any larger ones (if you like your chicken skin extra crispy, fry the thighs until golden before adding the mushrooms).",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_everything"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. In a 25cm x 35cm roasting tray, toss the chicken with 1 tablespoon of olive oil and a pinch of black pepper, then scatter in the mushrooms, tearing any larger ones (if you like your chicken skin extra crispy, fry the thighs until golden before adding the mushrooms)."
+        }
+      ]
+    },
+    {
+      "id": "mix_everything",
+      "descr": "Tip in the soup, then drain and tip in the butter beans,...",
+      "instructions": "Tip in the soup, then drain and tip in the butter beans, followed by the rice. Fill the bean tin with water and pour into the tray. Finely grate in the lemon zest, then mix everything together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip in the soup, then drain and tip in the butter beans, followed by the rice. Fill the bean tin with water and pour into the tray. Finely grate in the lemon zest, then mix everything together."
+        }
+      ]
+    },
+    {
+      "id": "bake_minutes",
+      "descr": "Bring the chicken to the top, skin side up, making sure...",
+      "instructions": "Bring the chicken to the top, skin side up, making sure the rice is submerged, then nestle in the frozen spinach. Cover with oiled tin foil and bake for 50 minutes, or until the chicken is cooked through and the rice is tender, removing the foil for the last 5 minutes. Fluff up the rice and spinach and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3000S",
+      "depends_on": [
+        "mix_everything"
+      ],
+      "next": [
+        "mix_mustard"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring the chicken to the top, skin side up, making sure the rice is submerged, then nestle in the frozen spinach. Cover with oiled tin foil and bake for 50 minutes, or until the chicken is cooked through and the rice is tender, removing the foil for the last 5 minutes. Fluff up the rice and spinach and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "mix_mustard",
+      "descr": "Mix the mustard with the lemon juice in a small bowl,...",
+      "instructions": "Mix the mustard with the lemon juice in a small bowl, then drizzle over the bake, and serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "bake_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix the mustard with the lemon juice in a small bowl, then drizzle over the bake, and serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "644 calories",
+    "carbohydrates": "77.3 g",
+    "fat": "23.1 g",
+    "fiber": "4.1 g",
+    "protein": "31.1 g"
+  }
+}

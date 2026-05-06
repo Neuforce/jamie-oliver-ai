@@ -1,0 +1,231 @@
+{
+  "recipe": {
+    "id": "beef-cheek-rag",
+    "title": "Beef cheek rag\u00f9",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT290M",
+    "description": "This incredible slow cooked beef rag\u00f9 shows you how to cook beef cheeks, and it's just so easy. Amazing served with mash, crusty bread or oozy polenta.",
+    "tags": [
+      "beef-stew",
+      "beef",
+      "jamie-cooks-italy",
+      "low-lactose",
+      "gluten-free",
+      "ragu",
+      "italian",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/beef-cheek-rag",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/316e3e512169a9324d9c33e4a7d32baf8c123bb6-958x1280.png/77639009?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/316e3e512169a9324d9c33e4a7d32baf8c123bb6-958x1280.png/77639009?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/316e3e512169a9324d9c33e4a7d32baf8c123bb6-958x1280.png/77639009?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/316e3e512169a9324d9c33e4a7d32baf8c123bb6-958x1280.png/77639009?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-porcini-mushrooms",
+      "name": "dried porcini mushrooms",
+      "quantity": 20.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "beef-cheeks",
+      "name": "beef cheeks",
+      "quantity": 5.0,
+      "unit": null,
+      "note": "trimmed"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "piece-of-higher-welfare-smoked",
+      "name": "piece of higher-welfare smoked pancetta",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-celery-heart",
+      "name": "\u00bd a celery heart",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "5-cloves",
+      "name": "5 cloves",
+      "quantity": 5.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 8.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "a-cinnamon-stick",
+      "name": "\u00bd a cinnamon stick",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-fresh-herbs",
+      "name": "mixed fresh herbs",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g, such as sage, bay, rosemary, thyme, basil, parsley"
+    },
+    {
+      "id": "barolo-red-wine",
+      "name": "Barolo red wine",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "680g-jar-of-passata",
+      "name": "680g jar of passata",
+      "quantity": 680.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 160\u00baC/325\u00baF/gas 3",
+      "instructions": "Preheat the oven to 160\u00baC/325\u00baF/gas 3. Cover the porcini with boiling kettle water and leave to rehydrate. Season the beef cheeks with sea salt and black pepper, then brown them in a large casserole pan on a high heat with a splash of oil, turning until well coloured all over.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_rough"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 160\u00baC/325\u00baF/gas 3. Cover the porcini with boiling kettle water and leave to rehydrate. Season the beef cheeks with sea salt and black pepper, then brown them in a large casserole pan on a high heat with a splash of oil, turning until well coloured all over."
+        }
+      ]
+    },
+    {
+      "id": "chop_rough",
+      "descr": "Meanwhile, slice the pancetta into lardons",
+      "instructions": "Meanwhile, slice the pancetta into lardons. Peel the celery, onions and carrots, then chop into rough 1cm dice. In a pestle and mortar, crush the cloves with 1 teaspoon each of salt and pepper, then peel and pound in the fresh garlic.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_pancetta"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, slice the pancetta into lardons. Peel the celery, onions and carrots, then chop into rough 1cm dice. In a pestle and mortar, crush the cloves with 1 teaspoon each of salt and pepper, then peel and pound in the fresh garlic."
+        }
+      ]
+    },
+    {
+      "id": "heat_pancetta",
+      "descr": "When brown, push the cheeks to one side of the pan and...",
+      "instructions": "When brown, push the cheeks to one side of the pan and reduce to a medium heat. Add the pancetta and cinnamon, stirring until the pancetta is lightly golden. Drain the porcini, reserving the liquor, then roughly chop and add to the pan with the veg. Tie the herbs together, then stir in with the garlic mixture. Fry for 15 minutes, or until soft, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "chop_rough"
+      ],
+      "next": [
+        "pour_wine"
+      ],
+      "on_enter": [
+        {
+          "say": "When brown, push the cheeks to one side of the pan and reduce to a medium heat. Add the pancetta and cinnamon, stirring until the pancetta is lightly golden. Drain the porcini, reserving the liquor, then roughly chop and add to the pan with the veg. Tie the herbs together, then stir in with the garlic mixture. Fry for 15 minutes, or until soft, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "pour_wine",
+      "descr": "Pour in the wine, let it reduce by half, then pour in...",
+      "instructions": "Pour in the wine, let it reduce by half, then pour in the reserved porcini water (discarding just the last gritty bit) and the passata. Fill the passata bottle with water and pour into the pan. Cover with a scrunched-up sheet of wet greaseproof paper and a lid.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_pancetta"
+      ],
+      "next": [
+        "season_needed"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the wine, let it reduce by half, then pour in the reserved porcini water (discarding just the last gritty bit) and the passata. Fill the passata bottle with water and pour into the pan. Cover with a scrunched-up sheet of wet greaseproof paper and a lid."
+        }
+      ]
+    },
+    {
+      "id": "season_needed",
+      "descr": "Cook in the oven for 4 hours, or until the meat is...",
+      "instructions": "Cook in the oven for 4 hours, or until the meat is outrageously tender and the sauce has thickened. Taste the sauce and season, if needed, then serve up however you wish.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT14400S",
+      "depends_on": [
+        "pour_wine"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook in the oven for 4 hours, or until the meat is outrageously tender and the sauce has thickened. Taste the sauce and season, if needed, then serve up however you wish."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "359 calories",
+    "carbohydrates": "16.4 g",
+    "fat": "12.6 g",
+    "fiber": "3 g",
+    "protein": "19.6 g"
+  }
+}

@@ -1,0 +1,227 @@
+{
+  "recipe": {
+    "id": "potato-gnocchi",
+    "title": "Potato gnocchi",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT90M",
+    "description": "A beautiful potato gnocchi recipe from Jamie Oliver. The best potatoes for gnocchi are floury potatoes, such as Maris Piper or King Edward. Total comfort food.",
+    "tags": [
+      "tv",
+      "pasta",
+      "dumplings",
+      "pasta-amp-risotto",
+      "course",
+      "vegetarian",
+      "dish-type",
+      "gnocchi",
+      "jamie-cooks-italy",
+      "lunch-amp-dinner-recipes",
+      "tv-shows",
+      "keep-cooking-vegetarian",
+      "potato",
+      "keep-cooking-and-carry-on",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/potato/potato-gnocchi",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1f26a21d17885e6fe79ce2cec8ef39b8d586ca9f-958x1280.jpg/77878571?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1f26a21d17885e6fe79ce2cec8ef39b8d586ca9f-958x1280.jpg/77878571?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1f26a21d17885e6fe79ce2cec8ef39b8d586ca9f-958x1280.jpg/77878571?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/1f26a21d17885e6fe79ce2cec8ef39b8d586ca9f-958x1280.jpg/77878571?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "potato"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "floury-potatoes",
+      "name": "floury potatoes",
+      "quantity": 1.0,
+      "unit": "kg",
+      "note": "such as Maris Piper, King Edward"
+    },
+    {
+      "id": "tipo-00-flour",
+      "name": "Tipo 00 flour",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": "plus extra for dusting"
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    }
+  ],
+  "utensils": [
+    "grater",
+    "pan",
+    "pot",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "boil_salted",
+      "descr": "Use potatoes of a fairly even size, as you\u2019re going to...",
+      "instructions": "Use potatoes of a fairly even size, as you\u2019re going to cook them whole. Cook in a large pan of boiling salted water for 20 to 25 minutes, or until tender.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT1500S",
+      "next": [
+        "cool_enough"
+      ],
+      "on_enter": [
+        {
+          "say": "Use potatoes of a fairly even size, as you\u2019re going to cook them whole. Cook in a large pan of boiling salted water for 20 to 25 minutes, or until tender."
+        }
+      ]
+    },
+    {
+      "id": "cool_enough",
+      "descr": "Drain and leave until cool enough to handle, then remove...",
+      "instructions": "Drain and leave until cool enough to handle, then remove the skins.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "mash_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain and leave until cool enough to handle, then remove the skins."
+        }
+      ]
+    },
+    {
+      "id": "mash_potatoes",
+      "descr": "Mash the potatoes using a potato ricer or masher on to a...",
+      "instructions": "Mash the potatoes using a potato ricer or masher on to a large clean board.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cool_enough"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Mash the potatoes using a potato ricer or masher on to a large clean board."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Sprinkle over the flour, finely grate over half the...",
+      "instructions": "Sprinkle over the flour, finely grate over half the nutmeg, season well with sea salt and black pepper, then scrunch and push the mixture together with clean hands. Depending on the potatoes, you may need to add a little more flour \u2013 use your common sense.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mash_potatoes"
+      ],
+      "next": [
+        "knead_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle over the flour, finely grate over half the nutmeg, season well with sea salt and black pepper, then scrunch and push the mixture together with clean hands. Depending on the potatoes, you may need to add a little more flour \u2013 use your common sense."
+        }
+      ]
+    },
+    {
+      "id": "knead_flour",
+      "descr": "Knead on a flour-dusted surface for a few minutes until...",
+      "instructions": "Knead on a flour-dusted surface for a few minutes until pliable, then divide into 4 equal pieces and roll each into a sausage about 2cm thick.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "slice_lengths"
+      ],
+      "on_enter": [
+        {
+          "say": "Knead on a flour-dusted surface for a few minutes until pliable, then divide into 4 equal pieces and roll each into a sausage about 2cm thick."
+        }
+      ]
+    },
+    {
+      "id": "slice_lengths",
+      "descr": "Slice into 3cm lengths \u2013 this is your basic gnocchi",
+      "instructions": "Slice into 3cm lengths \u2013 this is your basic gnocchi. Now you can gently roll each piece down a butter pat, the back of a fork or a fine grater to add grooves, which will help your sauce to stick, or simply roll into balls.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "knead_flour"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice into 3cm lengths \u2013 this is your basic gnocchi. Now you can gently roll each piece down a butter pat, the back of a fork or a fine grater to add grooves, which will help your sauce to stick, or simply roll into balls."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Nonna Teresa cooked her gnocchi 2 portions at a time, as...",
+      "instructions": "Nonna Teresa cooked her gnocchi 2 portions at a time, as it\u2019s so quick, and it also means they\u2019re less likely to break up. Cook in a pan of boiling salted water for 2 to 3 minutes \u2013 as soon as they come up to the surface they\u2019re ready.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT180S",
+      "depends_on": [
+        "slice_lengths"
+      ],
+      "next": [
+        "add_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Nonna Teresa cooked her gnocchi 2 portions at a time, as it\u2019s so quick, and it also means they\u2019re less likely to break up. Cook in a pan of boiling salted water for 2 to 3 minutes \u2013 as soon as they come up to the surface they\u2019re ready."
+        }
+      ]
+    },
+    {
+      "id": "add_little",
+      "descr": "Remove with a slotted spoon and toss with melted butter...",
+      "instructions": "Remove with a slotted spoon and toss with melted butter and finely grated Parmesan, my Hero tomato sauce (or leftover sauce from a stew, which you can see in the picture), then finely grate over a little Parmesan, to serve. I also like to add a little dollop of pesto \u2013 homemade or jarred, it\u2019s up to you.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove with a slotted spoon and toss with melted butter and finely grated Parmesan, my Hero tomato sauce (or leftover sauce from a stew, which you can see in the picture), then finely grate over a little Parmesan, to serve. I also like to add a little dollop of pesto \u2013 homemade or jarred, it\u2019s up to you."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "181 calories",
+    "carbohydrates": "40.1 g",
+    "fat": "0.6 g",
+    "fiber": "2.7 g",
+    "protein": "5.7 g"
+  }
+}

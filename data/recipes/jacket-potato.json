@@ -1,0 +1,179 @@
+{
+  "recipe": {
+    "id": "jacket-potato",
+    "title": "Jacket potato",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT62M",
+    "description": "Nothing quite hits the spot like a good jacket potato. Learn the best way to cook the perfect crispy-skinned potato, with fabulous filling ideas.",
+    "tags": [
+      "dairy-free",
+      "vegan",
+      "healthy-lunches",
+      "vegetarian",
+      "quick-easy",
+      "family-favourites",
+      "lunch",
+      "healthy-vegetarian",
+      "low-lactose",
+      "gluten-free",
+      "healthy-dinners",
+      "potato",
+      "dinner",
+      "quick-fixes",
+      "bonfire-night"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/potato/jacket-potato",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0d2d7c5bf7b5f2c1efd8c51ec728e6741d14314a-853x1280.jpg/107343475?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0d2d7c5bf7b5f2c1efd8c51ec728e6741d14314a-853x1280.jpg/107343475?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0d2d7c5bf7b5f2c1efd8c51ec728e6741d14314a-853x1280.jpg/107343475?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0d2d7c5bf7b5f2c1efd8c51ec728e6741d14314a-853x1280.jpg/107343475?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "potato"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "baking-potatoes",
+      "name": "baking potatoes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "250g each"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "oven",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "bake_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "bake_step_2",
+      "descr": "Wash and scrub the potatoes and dry with a clean tea...",
+      "instructions": "Wash and scrub the potatoes and dry with a clean tea towel \u2013 dry skin will ensure it\u2019ll be crispy once baked.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "season_small"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash and scrub the potatoes and dry with a clean tea towel \u2013 dry skin will ensure it\u2019ll be crispy once baked."
+        }
+      ]
+    },
+    {
+      "id": "season_small",
+      "descr": "Rub each potato with 1 teaspoon of olive oil (oil also...",
+      "instructions": "Rub each potato with 1 teaspoon of olive oil (oil also helps the skin go golden) and season with a small pinch of sea salt, then use a fork to pierce it six times, all around the potato.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "bake_step_2"
+      ],
+      "next": [
+        "bake_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Rub each potato with 1 teaspoon of olive oil (oil also helps the skin go golden) and season with a small pinch of sea salt, then use a fork to pierce it six times, all around the potato."
+        }
+      ]
+    },
+    {
+      "id": "bake_hour",
+      "descr": "Place on a baking tray and bake for 1 hour to 1\u00bc hours,...",
+      "instructions": "Place on a baking tray and bake for 1 hour to 1\u00bc hours, until the potatoes are crispy on the outside and soft on the inside.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "season_small"
+      ],
+      "next": [
+        "steam_potato"
+      ],
+      "on_enter": [
+        {
+          "say": "Place on a baking tray and bake for 1 hour to 1\u00bc hours, until the potatoes are crispy on the outside and soft on the inside."
+        }
+      ]
+    },
+    {
+      "id": "steam_potato",
+      "descr": "Transfer to a board and cut open straight away \u2013 if you...",
+      "instructions": "Transfer to a board and cut open straight away \u2013 if you let the potato sit after baking, the interior will steam and the potato can become soggy and heavy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "bake_hour"
+      ],
+      "next": [
+        "top_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer to a board and cut open straight away \u2013 if you let the potato sit after baking, the interior will steam and the potato can become soggy and heavy."
+        }
+      ]
+    },
+    {
+      "id": "top_your",
+      "descr": "Top with your favourite filling, or check out our ideas...",
+      "instructions": "Top with your favourite filling, or check out our ideas below for some inspo!",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "steam_potato"
+      ],
+      "on_enter": [
+        {
+          "say": "Top with your favourite filling, or check out our ideas below for some inspo!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "224 calories",
+    "carbohydrates": "43.3 g",
+    "fat": "4.5 g",
+    "fiber": "3.3 g",
+    "protein": "5 g"
+  }
+}

@@ -1,0 +1,202 @@
+{
+  "recipe": {
+    "id": "outrageous-pulled-pork",
+    "title": "Outrageous pulled pork",
+    "servings": 14,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT315M",
+    "description": "A batch cook beauty, Jamie's outrageously good pulled pork is the gift that keeps on giving.",
+    "tags": [
+      "one-pan-wonders",
+      "tv-shows",
+      "one-pan-recipes",
+      "pork",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/outrageous-pulled-pork",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3a802b1860ec6d3821f346122e9d5996f10eb57c-958x1280.jpg/137902717?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3a802b1860ec6d3821f346122e9d5996f10eb57c-958x1280.jpg/137902717?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3a802b1860ec6d3821f346122e9d5996f10eb57c-958x1280.jpg/137902717?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/3a802b1860ec6d3821f346122e9d5996f10eb57c-958x1280.jpg/137902717?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "a-pork-shoulder",
+      "name": "\u00bd a pork shoulder",
+      "quantity": null,
+      "unit": null,
+      "note": "4.5kg, bone in"
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-carrots",
+      "name": "large carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "eating-apples",
+      "name": "eating apples",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sage",
+      "name": "sage",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "20g"
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. It\u2019s important to use a snug-fitting roasting tray for this recipe. Sit the pork shoulder in the tray and drizzle with 2 tablespoons each of olive oil and red wine vinegar, finely grate over the whole nutmeg, season generously with sea salt and black pepper, and rub well.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. It\u2019s important to use a snug-fitting roasting tray for this recipe. Sit the pork shoulder in the tray and drizzle with 2 tablespoons each of olive oil and red wine vinegar, finely grate over the whole nutmeg, season generously with sea salt and black pepper, and rub well."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Peel and halve the onions",
+      "instructions": "Peel and halve the onions. Wash, trim and halve the carrots lengthways. Quarter and core the apples. Pick the sage leaves. Lift up the pork and sit the onions, carrots, apples, sage leaves and whole unpeeled garlic bulb underneath the meat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and halve the onions. Wash, trim and halve the carrots lengthways. Quarter and core the apples. Pick the sage leaves. Lift up the pork and sit the onions, carrots, apples, sage leaves and whole unpeeled garlic bulb underneath the meat."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Roast for 2 hours, then reduce the heat to...",
+      "instructions": "Roast for 2 hours, then reduce the heat to 150\u00b0C/300\u00b0F/gas 2 and cook for another 3 hours, or until the meat effortlessly pulls apart, adding splashes of water occasionally to prevent it from drying out, if needed.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT7200S",
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "rest_spoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast for 2 hours, then reduce the heat to 150\u00b0C/300\u00b0F/gas 2 and cook for another 3 hours, or until the meat effortlessly pulls apart, adding splashes of water occasionally to prevent it from drying out, if needed."
+        }
+      ]
+    },
+    {
+      "id": "rest_spoon",
+      "descr": "Lift off all the crackling and put aside",
+      "instructions": "Lift off all the crackling and put aside. Remove the pork to a board to rest. Spoon the excess fat off the tray into a jam jar (save for tasty cooking another day), then squeeze the soft garlic cloves out of the skins, and mush up the carrots, onions and apples.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_cook"
+      ],
+      "next": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Lift off all the crackling and put aside. Remove the pork to a board to rest. Spoon the excess fat off the tray into a jam jar (save for tasty cooking another day), then squeeze the soft garlic cloves out of the skins, and mush up the carrots, onions and apples."
+        }
+      ]
+    },
+    {
+      "id": "step_step_5",
+      "descr": "Return the pork to the tray, then shred and pull apart...",
+      "instructions": "Return the pork to the tray, then shred and pull apart with two forks, removing any gristly bits and bones.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "rest_spoon"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Return the pork to the tray, then shred and pull apart with two forks, removing any gristly bits and bones."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Mix well until beautifully dressed in all the outrageous...",
+      "instructions": "Mix well until beautifully dressed in all the outrageous tray juices, then season to perfection. Snap up the crackling and place back on top, then enjoy as is or hold in the oven until needed. Batch up the extra portions to stash in the fridge or freezer for future meals.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix well until beautifully dressed in all the outrageous tray juices, then season to perfection. Snap up the crackling and place back on top, then enjoy as is or hold in the oven until needed. Batch up the extra portions to stash in the fridge or freezer for future meals."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "376 calories",
+    "carbohydrates": "7.2 g",
+    "fat": "26.2 g",
+    "fiber": "1.6 g",
+    "protein": "28.6 g"
+  }
+}

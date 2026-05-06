@@ -1,0 +1,238 @@
+{
+  "recipe": {
+    "id": "roast-forerib-of-beef-with-garlic-rosemary",
+    "title": "Roast forerib of beef with garlic & rosemary",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "Try out Jamie's roast forerib of beef with garlic and rosemary for your next Sunday lunch and make it that little bit more special.",
+    "tags": [
+      "roast",
+      "christmas",
+      "sunday-lunch",
+      "christmas-dinner",
+      "main-ingredient",
+      "dish-type",
+      "method",
+      "beef",
+      "roasting",
+      "roast-beef",
+      "gluten-free",
+      "occasion",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/beef/roast-forerib-of-beef-with-garlic-rosemary",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/47e87aac85a4e1927432917359ee02f30b83dc91-973x1300.jpg/46346069?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/47e87aac85a4e1927432917359ee02f30b83dc91-973x1300.jpg/46346069?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/47e87aac85a4e1927432917359ee02f30b83dc91-973x1300.jpg/46346069?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/47e87aac85a4e1927432917359ee02f30b83dc91-973x1300.jpg/46346069?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "2-25kg-forerib-of-beef",
+      "name": "2.25kg forerib of beef",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "with 2 bones"
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 4.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "knob-of-unsalted-butter",
+      "name": "knob of unsalted butter",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 240\u00b0C/475\u00b0F/ gas 9",
+      "instructions": "Preheat the oven to 240\u00b0C/475\u00b0F/ gas 9.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 240\u00b0C/475\u00b0F/ gas 9."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_2",
+      "descr": "Take the beef out of the fridge 1 hour before you want...",
+      "instructions": "Take the beef out of the fridge 1 hour before you want to cook it, to let it come up to room temperature. Place a large sturdy roasting tray in the oven to heat up.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "add_cloves"
+      ],
+      "on_enter": [
+        {
+          "say": "Take the beef out of the fridge 1 hour before you want to cook it, to let it come up to room temperature. Place a large sturdy roasting tray in the oven to heat up."
+        }
+      ]
+    },
+    {
+      "id": "add_cloves",
+      "descr": "Strip most of the rosemary leaves into a pestle and...",
+      "instructions": "Strip most of the rosemary leaves into a pestle and mortar, and peel and add 3 cloves of garlic, then bash to a paste with a pinch of sea salt and a lug of oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_2"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Strip most of the rosemary leaves into a pestle and mortar, and peel and add 3 cloves of garlic, then bash to a paste with a pinch of sea salt and a lug of oil."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Tip the paste onto the beef and massage all over,...",
+      "instructions": "Tip the paste onto the beef and massage all over, getting into all the nooks and crannies.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_cloves"
+      ],
+      "next": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the paste onto the beef and massage all over, getting into all the nooks and crannies."
+        }
+      ]
+    },
+    {
+      "id": "roast_tray",
+      "descr": "Quickly squash the remaining unpeeled garlic cloves and...",
+      "instructions": "Quickly squash the remaining unpeeled garlic cloves and scatter into the hot roasting tray with the beef. Place straight into the oven and roast for around 50 minutes, basting occasionally with the juices from the tray.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3000S",
+      "depends_on": [
+        "step_step_4"
+      ],
+      "next": [
+        "brown_outside"
+      ],
+      "on_enter": [
+        {
+          "say": "Quickly squash the remaining unpeeled garlic cloves and scatter into the hot roasting tray with the beef. Place straight into the oven and roast for around 50 minutes, basting occasionally with the juices from the tray."
+        }
+      ]
+    },
+    {
+      "id": "brown_outside",
+      "descr": "When the time\u2019s up, reduce the temperature to...",
+      "instructions": "When the time\u2019s up, reduce the temperature to 190\u00b0C/375\u00b0F/gas 5 for around 10 minutes, or until the beef is beautifully golden brown on the outside and pink in the middle \u2013 leave in for longer if you prefer your beef well done.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "roast_tray"
+      ],
+      "next": [
+        "rest_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "When the time\u2019s up, reduce the temperature to 190\u00b0C/375\u00b0F/gas 5 for around 10 minutes, or until the beef is beautifully golden brown on the outside and pink in the middle \u2013 leave in for longer if you prefer your beef well done."
+        }
+      ]
+    },
+    {
+      "id": "rest_step_7",
+      "descr": "Carefully transfer the beef to a platter, dot the knob...",
+      "instructions": "Carefully transfer the beef to a platter, dot the knob of butter on top, then use the remaining rosemary to brush all over the meat. Cover with a double layer of tin foil and a tea towel, then leave to rest.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "brown_outside"
+      ],
+      "next": [
+        "drizzle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Carefully transfer the beef to a platter, dot the knob of butter on top, then use the remaining rosemary to brush all over the meat. Cover with a double layer of tin foil and a tea towel, then leave to rest."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_over",
+      "descr": "Serve the beef with the resting juices drizzled over the...",
+      "instructions": "Serve the beef with the resting juices drizzled over the top \u2013 delicious served with perfectly golden roast potatoes, Amazing Yorkies, dressed watercress and a good dollop of horseradish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "rest_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve the beef with the resting juices drizzled over the top \u2013 delicious served with perfectly golden roast potatoes, Amazing Yorkies, dressed watercress and a good dollop of horseradish."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "319 calories",
+    "carbohydrates": "1.5 g",
+    "fat": "22.5 g",
+    "fiber": "0.4 g",
+    "protein": "26.8 g"
+  }
+}

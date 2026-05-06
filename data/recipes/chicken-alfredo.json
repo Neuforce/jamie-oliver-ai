@@ -1,0 +1,255 @@
+{
+  "recipe": {
+    "id": "chicken-alfredo",
+    "title": "Chicken Alfredo",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT22M",
+    "description": "Try Jamie's chicken Alfredo \u2013 creamy butter and Parmesan sauce, silky pasta and juicy chicken on top. What's not to love?",
+    "tags": [
+      "dinner-for-two",
+      "chicken",
+      "pasta",
+      "platter",
+      "big-love",
+      "american-style",
+      "italian-style",
+      "cheese"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/chicken-alfredo",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b0915deac5a36889dd76179daab627e17419bac1-853x1279.jpg/163163978?rect=0,214,853,853&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b0915deac5a36889dd76179daab627e17419bac1-853x1279.jpg/163163978?rect=0,214,853,853&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b0915deac5a36889dd76179daab627e17419bac1-853x1279.jpg/163163978?rect=0,320,853,640&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/b0915deac5a36889dd76179daab627e17419bac1-853x1279.jpg/163163978?rect=0,400,853,480&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-fettuccine-or-tagliatell",
+      "name": "dried fettuccine or tagliatelle",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "150g-free-range-skinless-chick",
+      "name": "150g free-range skinless chicken breasts",
+      "quantity": 150.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 15.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "single-cream",
+      "name": "single cream",
+      "quantity": 150.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "nutmeg",
+      "name": "nutmeg",
+      "quantity": 1.0,
+      "unit": "whole",
+      "note": "for grating"
+    },
+    {
+      "id": "large-handful-of-rocket",
+      "name": "large handful of rocket",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "shop-jamie-s-serveware",
+      "name": "SHOP JAMIE'S SERVEWARE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "pass-me-platter",
+      "name": "Pass-Me Platter",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "drain_reserving",
+      "descr": "Cook the pasta according to the packet instructions,...",
+      "instructions": "Cook the pasta according to the packet instructions, then drain, reserving a mug of starchy water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_once"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta according to the packet instructions, then drain, reserving a mug of starchy water."
+        }
+      ]
+    },
+    {
+      "id": "heat_once",
+      "descr": "To cook the chicken, put a non-stick frying pan on a...",
+      "instructions": "To cook the chicken, put a non-stick frying pan on a medium-high heat and, once hot, add 1 teaspoon of olive oil, then squash and add the unpeeled garlic cloves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drain_reserving"
+      ],
+      "next": [
+        "season_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "To cook the chicken, put a non-stick frying pan on a medium-high heat and, once hot, add 1 teaspoon of olive oil, then squash and add the unpeeled garlic cloves."
+        }
+      ]
+    },
+    {
+      "id": "season_chicken",
+      "descr": "Season the chicken breasts all over with sea salt and...",
+      "instructions": "Season the chicken breasts all over with sea salt and black pepper, and, once the garlic starts to sizzle, lay the chicken into the pan, turning every minute for 4 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT240S",
+      "depends_on": [
+        "heat_once"
+      ],
+      "next": [
+        "heat_slightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Season the chicken breasts all over with sea salt and black pepper, and, once the garlic starts to sizzle, lay the chicken into the pan, turning every minute for 4 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_slightly",
+      "descr": "Add a small knob of the butter, then reduce the heat...",
+      "instructions": "Add a small knob of the butter, then reduce the heat slightly and cook for 1 more minute on each side, or until perfectly cooked through, angling the pan and spooning over the fat, then transfer the chicken to a plate to rest.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_chicken"
+      ],
+      "next": [
+        "add_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Add a small knob of the butter, then reduce the heat slightly and cook for 1 more minute on each side, or until perfectly cooked through, angling the pan and spooning over the fat, then transfer the chicken to a plate to rest."
+        }
+      ]
+    },
+    {
+      "id": "add_remaining",
+      "descr": "Add the remaining butter to the pan, along with the...",
+      "instructions": "Add the remaining butter to the pan, along with the cream and a generous splash of starchy pasta water, and let it simmer until reduced to a loose silky sauce consistency.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_slightly"
+      ],
+      "next": [
+        "heat_finely"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the remaining butter to the pan, along with the cream and a generous splash of starchy pasta water, and let it simmer until reduced to a loose silky sauce consistency."
+        }
+      ]
+    },
+    {
+      "id": "heat_finely",
+      "descr": "Use tongs to transfer the pasta straight into the sauce,...",
+      "instructions": "Use tongs to transfer the pasta straight into the sauce, then \u2013 off the heat \u2013 finely grate and stir in the Parmesan, along with a fine grating of nutmeg and season to perfection with sea salt and black pepper. Stir until silky and decadent, loosening with a little extra cooking water, if needed.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_remaining"
+      ],
+      "next": [
+        "slice_chicken"
+      ],
+      "on_enter": [
+        {
+          "say": "Use tongs to transfer the pasta straight into the sauce, then \u2013 off the heat \u2013 finely grate and stir in the Parmesan, along with a fine grating of nutmeg and season to perfection with sea salt and black pepper. Stir until silky and decadent, loosening with a little extra cooking water, if needed."
+        }
+      ]
+    },
+    {
+      "id": "slice_chicken",
+      "descr": "Transfer the pasta to 2 bowls, or a Big Love Pass-Me...",
+      "instructions": "Transfer the pasta to 2 bowls, or a Big Love Pass-Me Platter, if you\u2019re feeling fancy. Slice the chicken at an angle into thin slices and serve on top of the pasta with the rocket and another grating of Parmesan and nutmeg, if you like.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_finely"
+      ],
+      "on_enter": [
+        {
+          "say": "Transfer the pasta to 2 bowls, or a Big Love Pass-Me Platter, if you\u2019re feeling fancy. Slice the chicken at an angle into thin slices and serve on top of the pasta with the rocket and another grating of Parmesan and nutmeg, if you like."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "735 calories",
+    "carbohydrates": "58 g",
+    "fat": "33.4 g",
+    "fiber": "2.7 g",
+    "protein": "55.3 g"
+  }
+}

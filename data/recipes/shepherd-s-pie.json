@@ -1,0 +1,442 @@
+{
+  "recipe": {
+    "id": "shepherd-s-pie",
+    "title": "Shepherd's pie",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT390M",
+    "description": "This shepherd's pie recipe is perfect for using up leftovers; Jamie's lamb shepherd's pie has a twist with crispy potatoes all around !",
+    "tags": [
+      "dinner-party",
+      "dish-type",
+      "family-food",
+      "st-george-s-day",
+      "potato",
+      "course",
+      "lamb-shoulder",
+      "mash-potato",
+      "mains",
+      "easter-treats",
+      "occasion",
+      "pie",
+      "batch-cooking",
+      "leg-of-lamb",
+      "method",
+      "pies-amp-pastries",
+      "family-batch-cooking",
+      "main-ingredient",
+      "baking",
+      "lamb",
+      "shepherds-pie"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/lamb/shepherd-s-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e45c4d823a2fafbd8aea1616d7dc38151a0f629c-973x1300.jpg/e45c4d823a2fafbd8aea1616d7dc38151a0f629c-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e45c4d823a2fafbd8aea1616d7dc38151a0f629c-973x1300.jpg/e45c4d823a2fafbd8aea1616d7dc38151a0f629c-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e45c4d823a2fafbd8aea1616d7dc38151a0f629c-973x1300.jpg/e45c4d823a2fafbd8aea1616d7dc38151a0f629c-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e45c4d823a2fafbd8aea1616d7dc38151a0f629c-973x1300.jpg/e45c4d823a2fafbd8aea1616d7dc38151a0f629c-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "lamb"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "roast-lamb",
+      "name": "ROAST LAMB",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-shoulder-of-lamb",
+      "name": "small shoulder of lamb",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "2kg, bone in"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "filling",
+      "name": "FILLING",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 4.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "medium-swede",
+      "name": "medium swede",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-few-sprigs-of-fresh-rosemary",
+      "name": "a few sprigs of fresh rosemary",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "topping",
+      "name": "TOPPING",
+      "quantity": null,
+      "unit": null,
+      "note": "SIDES & BOTTOM"
+    },
+    {
+      "id": "maris-piper-potatoes",
+      "name": "Maris Piper potatoes",
+      "quantity": 2.5,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "good-knobs-of-unsalted-butter",
+      "name": "good knobs of unsalted butter",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cheddar-cheese",
+      "name": "Cheddar cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "fresh-breadcrumbs",
+      "name": "fresh breadcrumbs",
+      "quantity": 60.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan",
+    "pot",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 170\u00b0C/325\u00b0F/gas 3",
+      "instructions": "Preheat the oven to 170\u00b0C/325\u00b0F/gas 3.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_splash"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 170\u00b0C/325\u00b0F/gas 3."
+        }
+      ]
+    },
+    {
+      "id": "add_splash",
+      "descr": "In a snug-fitting high-sided roasting tray, rub the lamb...",
+      "instructions": "In a snug-fitting high-sided roasting tray, rub the lamb all over with a little oil and a good pinch of sea salt and black pepper. Add a splash of water to the tray, then roast for 4 hours, or until the meat is tender and will fall away from the bone.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT14400S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "chop_reserving"
+      ],
+      "on_enter": [
+        {
+          "say": "In a snug-fitting high-sided roasting tray, rub the lamb all over with a little oil and a good pinch of sea salt and black pepper. Add a splash of water to the tray, then roast for 4 hours, or until the meat is tender and will fall away from the bone."
+        }
+      ]
+    },
+    {
+      "id": "chop_reserving",
+      "descr": "Remove from the oven and leave to cool in the tray, then...",
+      "instructions": "Remove from the oven and leave to cool in the tray, then lift the lamb out onto a board, take all the meat and crispy skin off the bone and roughly chop it, reserving the bones.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_splash"
+      ],
+      "next": [
+        "stir_around"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove from the oven and leave to cool in the tray, then lift the lamb out onto a board, take all the meat and crispy skin off the bone and roughly chop it, reserving the bones."
+        }
+      ]
+    },
+    {
+      "id": "stir_around",
+      "descr": "Skim away any fat from the tray and pop it into a clean...",
+      "instructions": "Skim away any fat from the tray and pop it into a clean jam jar. Add a splash of boiling water to the tray and stir around to pick up all the lovely sticky bits from the bottom. Keep it all to one side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_reserving"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Skim away any fat from the tray and pop it into a clean jam jar. Add a splash of boiling water to the tray and stir around to pick up all the lovely sticky bits from the bottom. Keep it all to one side."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "For the filling, peel and roughly dice the onions,...",
+      "instructions": "For the filling, peel and roughly dice the onions, carrots, celery and swede, then put them into your biggest pan on a medium-high heat with 2 tablespoons of reserved lamb fat. Strip in the rosemary leaves, then fry the veg for 20 minutes, or until lightly caramelised, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "stir_around"
+      ],
+      "next": [
+        "stir_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "For the filling, peel and roughly dice the onions, carrots, celery and swede, then put them into your biggest pan on a medium-high heat with 2 tablespoons of reserved lamb fat. Strip in the rosemary leaves, then fry the veg for 20 minutes, or until lightly caramelised, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_flour",
+      "descr": "Stir in the flour, lamb, bones and tray juices, then...",
+      "instructions": "Stir in the flour, lamb, bones and tray juices, then pour in 1.5 litres of water. Bring to the boil, then put the lid on and reduce to a gentle simmer for 40 minutes, or until you\u2019ve got a loose, stew-like consistency, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2400S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the flour, lamb, bones and tray juices, then pour in 1.5 litres of water. Bring to the boil, then put the lid on and reduce to a gentle simmer for 40 minutes, or until you\u2019ve got a loose, stew-like consistency, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "To guarantee intense gravy and a tender but dense...",
+      "instructions": "To guarantee intense gravy and a tender but dense filling, remove and discard the bones, then place a large coarse sieve over a pan and, in batches, spoon the lamb stew into the sieve. Let the gravy drip through, and after a couple of minutes, when you get a dense pile of meat and veg in the sieve, transfer that to a bowl, leaving the gravy in the pan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_flour"
+      ],
+      "next": [
+        "cool_meat"
+      ],
+      "on_enter": [
+        {
+          "say": "To guarantee intense gravy and a tender but dense filling, remove and discard the bones, then place a large coarse sieve over a pan and, in batches, spoon the lamb stew into the sieve. Let the gravy drip through, and after a couple of minutes, when you get a dense pile of meat and veg in the sieve, transfer that to a bowl, leaving the gravy in the pan."
+        }
+      ]
+    },
+    {
+      "id": "cool_meat",
+      "descr": "Separately freeze half the cool meat and gravy for...",
+      "instructions": "Separately freeze half the cool meat and gravy for another day.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_7"
+      ],
+      "next": [
+        "chop_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Separately freeze half the cool meat and gravy for another day."
+        }
+      ]
+    },
+    {
+      "id": "chop_potatoes",
+      "descr": "For the topping, sides and bottom, peel and roughly chop...",
+      "instructions": "For the topping, sides and bottom, peel and roughly chop the potatoes and cook in boiling salted water for 12 to 15 minutes, or until tender. Drain and leave to steam dry, then add the butter, grate in half the cheese, season to perfection with salt and pepper, mash well and cool completely.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "cool_meat"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "For the topping, sides and bottom, peel and roughly chop the potatoes and cook in boiling salted water for 12 to 15 minutes, or until tender. Drain and leave to steam dry, then add the butter, grate in half the cheese, season to perfection with salt and pepper, mash well and cool completely."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_potatoes"
+      ],
+      "next": [
+        "add_incredible"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "add_incredible",
+      "descr": "Use a little reserved lamb fat to grease the inside of a...",
+      "instructions": "Use a little reserved lamb fat to grease the inside of a large pie dish (25cm x 30cm), then pick and tear over the rosemary leaves and sprinkle with half the breadcrumbs \u2013 they\u2019ll stick to the fat and add an incredible crunch.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "cool_dish"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a little reserved lamb fat to grease the inside of a large pie dish (25cm x 30cm), then pick and tear over the rosemary leaves and sprinkle with half the breadcrumbs \u2013 they\u2019ll stick to the fat and add an incredible crunch."
+        }
+      ]
+    },
+    {
+      "id": "cool_dish",
+      "descr": "A handful at a time, press the cooled mash into the...",
+      "instructions": "A handful at a time, press the cooled mash into the dish, covering the bottom and sides with a 1cm-thick layer. Spoon in the filling and a couple of spoonfuls of gravy, smooth out, then top with the remaining mash, pat it flat, scuff it up with a fork and pinch it at the edges.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_incredible"
+      ],
+      "next": [
+        "drizzle_lightly"
+      ],
+      "on_enter": [
+        {
+          "say": "A handful at a time, press the cooled mash into the dish, covering the bottom and sides with a 1cm-thick layer. Spoon in the filling and a couple of spoonfuls of gravy, smooth out, then top with the remaining mash, pat it flat, scuff it up with a fork and pinch it at the edges."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_lightly",
+      "descr": "Grate over the rest of the cheese, scatter with the...",
+      "instructions": "Grate over the rest of the cheese, scatter with the remaining breadcrumbs and drizzle lightly with oil. Importantly, bake on the bottom of the oven for 1 hour 10 minutes, or until crisp and golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "cool_dish"
+      ],
+      "next": [
+        "warm_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Grate over the rest of the cheese, scatter with the remaining breadcrumbs and drizzle lightly with oil. Importantly, bake on the bottom of the oven for 1 hour 10 minutes, or until crisp and golden."
+        }
+      ]
+    },
+    {
+      "id": "warm_your",
+      "descr": "Warm your gravy through (reducing if desired), then...",
+      "instructions": "Warm your gravy through (reducing if desired), then serve the pie with loads of seasonal greens or peas and lots of condiments.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "drizzle_lightly"
+      ],
+      "on_enter": [
+        {
+          "say": "Warm your gravy through (reducing if desired), then serve the pie with loads of seasonal greens or peas and lots of condiments."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "508 calories",
+    "carbohydrates": "64.2 g",
+    "fat": "19.9 g",
+    "fiber": "4.4 g",
+    "protein": "21.8 g"
+  }
+}

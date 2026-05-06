@@ -1,0 +1,315 @@
+{
+  "recipe": {
+    "id": "my-thai-red-chicken-squash-traybake",
+    "title": "My Thai red chicken & squash traybake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "Full of attitude with its punchy, aromatic flavours, this midweek chicken traybake recipe is a real winner. ",
+    "tags": [
+      "dairy-free",
+      "thai-style",
+      "chicken",
+      "rice",
+      "low-lactose",
+      "gluten-free",
+      "dinner",
+      "budget-friendly",
+      "butternut-squash"
+    ],
+    "course": "main",
+    "cuisine": "thai",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/my-thai-red-chicken-squash-traybake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/956745b79a0a4aef3bd75c55803ba858c7517eaa-1333x2000.jpg/JO_JV_F45_Thai_Red_Chicken_Sqaush_2088.jpg?rect=0,334,1333,1333&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/956745b79a0a4aef3bd75c55803ba858c7517eaa-1333x2000.jpg/JO_JV_F45_Thai_Red_Chicken_Sqaush_2088.jpg?rect=0,334,1333,1333&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/956745b79a0a4aef3bd75c55803ba858c7517eaa-1333x2000.jpg/JO_JV_F45_Thai_Red_Chicken_Sqaush_2088.jpg?rect=0,500,1333,1000&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/956745b79a0a4aef3bd75c55803ba858c7517eaa-1333x2000.jpg/JO_JV_F45_Thai_Red_Chicken_Sqaush_2088.jpg?rect=0,625,1333,750&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "a-butternut-squash",
+      "name": "\u00bd a butternut squash",
+      "quantity": null,
+      "unit": null,
+      "note": "500g"
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-thai-red-cur",
+      "name": "heaped tablespoon Thai red curry paste",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-basil",
+      "name": "\u00bd a bunch of fresh basil",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "chicken-legs",
+      "name": "chicken legs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "200g each"
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400ml-tin-of-light-coconut-mil",
+      "name": "400ml tin of light coconut milk",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mug-of-long-grain-rice",
+      "name": "mug of long grain rice",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "300g"
+    },
+    {
+      "id": "lime",
+      "name": "lime",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "frozen-peas",
+      "name": "frozen peas",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00baC/400\u00baF/gas 6",
+      "instructions": "Preheat the oven to 200\u00baC/400\u00baF/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00baC/400\u00baF/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Scrub the squash, then carefully cut into 3cm chunks",
+      "instructions": "Scrub the squash, then carefully cut into 3cm chunks.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "mix_together"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrub the squash, then carefully cut into 3cm chunks."
+        }
+      ]
+    },
+    {
+      "id": "mix_together",
+      "descr": "Drizzle 2 tablespoons of olive oil and 1 tablespoon of...",
+      "instructions": "Drizzle 2 tablespoons of olive oil and 1 tablespoon of red wine vinegar into a large roasting tray with a pinch of sea salt and black pepper, then add the curry paste and mix together.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "slice_stalks"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle 2 tablespoons of olive oil and 1 tablespoon of red wine vinegar into a large roasting tray with a pinch of sea salt and black pepper, then add the curry paste and mix together."
+        }
+      ]
+    },
+    {
+      "id": "slice_stalks",
+      "descr": "Add the squash and chicken legs to the tray",
+      "instructions": "Add the squash and chicken legs to the tray. Pick the basil leaves, adding them to a bowl of iced water, then finely slice the stalks and add to the tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_together"
+      ],
+      "next": [
+        "roast_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the squash and chicken legs to the tray. Pick the basil leaves, adding them to a bowl of iced water, then finely slice the stalks and add to the tray."
+        }
+      ]
+    },
+    {
+      "id": "roast_minutes",
+      "descr": "Toss everything together to coat, then spread out into a...",
+      "instructions": "Toss everything together to coat, then spread out into a single layer with the chicken skin-side up. Spritz with a little oil, season to perfection and roast for 45 minutes, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT2700S",
+      "depends_on": [
+        "slice_stalks"
+      ],
+      "next": [
+        "chop_white"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss everything together to coat, then spread out into a single layer with the chicken skin-side up. Spritz with a little oil, season to perfection and roast for 45 minutes, or until golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "chop_white",
+      "descr": "Meanwhile, finely slice the green spring onion tops and...",
+      "instructions": "Meanwhile, finely slice the green spring onion tops and add them to the bowl of iced water. Roughly chop the white parts.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_minutes"
+      ],
+      "next": [
+        "pour_most"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, finely slice the green spring onion tops and add them to the bowl of iced water. Roughly chop the white parts."
+        }
+      ]
+    },
+    {
+      "id": "pour_most",
+      "descr": "When the time's up, remove the tray from the oven,...",
+      "instructions": "When the time's up, remove the tray from the oven, basting the squash and chicken with any nice juices, then sprinkle over the spring onion whites and pour in most of the coconut milk, reserving a little for garnish. Return to the top of the oven for a final 15 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "chop_white"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "When the time's up, remove the tray from the oven, basting the squash and chicken with any nice juices, then sprinkle over the spring onion whites and pour in most of the coconut milk, reserving a little for garnish. Return to the top of the oven for a final 15 minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Meanwhile, place the rice in a pan with 600ml of boiling...",
+      "instructions": "Meanwhile, place the rice in a pan with 600ml of boiling kettle water and a pinch of salt. Halve the lime and place half in the centre of the pan, bring to the boil, then cover and cook on a medium heat for 12 to 14 minutes, or until all the water has been absorbed and the rice is light and fluffy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT840S",
+      "depends_on": [
+        "pour_most"
+      ],
+      "next": [
+        "heat_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, place the rice in a pan with 600ml of boiling kettle water and a pinch of salt. Halve the lime and place half in the centre of the pan, bring to the boil, then cover and cook on a medium heat for 12 to 14 minutes, or until all the water has been absorbed and the rice is light and fluffy."
+        }
+      ]
+    },
+    {
+      "id": "heat_through",
+      "descr": "Remove the tray from the oven and place onto the hob,...",
+      "instructions": "Remove the tray from the oven and place onto the hob, then tip in the peas and cook for a couple of minutes to heat through.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "next": [
+        "stir_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the tray from the oven and place onto the hob, then tip in the peas and cook for a couple of minutes to heat through."
+        }
+      ]
+    },
+    {
+      "id": "stir_through",
+      "descr": "Squeeze the jammy lime over the rice and stir through,...",
+      "instructions": "Squeeze the jammy lime over the rice and stir through, then divide between bowls. Scatter the basil leaves and reserved spring onion tops over the traybake, and drizzle over the reserved coconut milk. Serve with the remaining lime cut into wedges for squeezing over.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Squeeze the jammy lime over the rice and stir through, then divide between bowls. Scatter the basil leaves and reserved spring onion tops over the traybake, and drizzle over the reserved coconut milk. Serve with the remaining lime cut into wedges for squeezing over."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "666 calories",
+    "carbohydrates": "78.5 g",
+    "fat": "25.5 g",
+    "fiber": "4.5 g",
+    "protein": "35.2 g"
+  }
+}

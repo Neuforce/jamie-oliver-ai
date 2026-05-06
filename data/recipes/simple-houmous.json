@@ -1,0 +1,248 @@
+{
+  "recipe": {
+    "id": "simple-houmous",
+    "title": "Simple houmous",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "Have you ever wondered how to make hummus? This easy homemade hummus recipe shows you how! It's great with crudit\u00e9s and warm pitta breads for dunking.",
+    "tags": [
+      "vegan",
+      "picnic",
+      "dish-type",
+      "healthy-vegetarian-recipes",
+      "low-lactose",
+      "gluten-free",
+      "quick-fixes",
+      "course",
+      "healthy-snack-ideas",
+      "hummus",
+      "quick-amp-easy-recipes",
+      "occasion",
+      "jamie-s-food-revolution",
+      "store-cupboard-recipes",
+      "lighter-new-year",
+      "vegetarian",
+      "one-pan-recipes",
+      "main-ingredient",
+      "uncategorised",
+      "party-food",
+      "healthy-lunchbox",
+      "quick-amp-healthy-recipes",
+      "prep-amp-go-recipes",
+      "sauces-amp-condiments",
+      "chickpea",
+      "popular"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/simple-houmous",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e67e19f3ed57d03646455de30b98711e903bec05-958x1280.png/46287939?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e67e19f3ed57d03646455de30b98711e903bec05-958x1280.png/46287939?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e67e19f3ed57d03646455de30b98711e903bec05-958x1280.png/46287939?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/e67e19f3ed57d03646455de30b98711e903bec05-958x1280.png/46287939?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "small-clove-of-garlic",
+      "name": "small clove of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tahini",
+      "name": "tahini",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "spatula"
+  ],
+  "steps": [
+    {
+      "id": "process_step_1",
+      "descr": "Drain and tip the chickpeas into a food processor",
+      "instructions": "Drain and tip the chickpeas into a food processor.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain and tip the chickpeas into a food processor."
+        }
+      ]
+    },
+    {
+      "id": "add_garlic",
+      "descr": "Peel and add the garlic, then add the tahini, a good...",
+      "instructions": "Peel and add the garlic, then add the tahini, a good squeeze of lemon juice and 1 tablespoon of oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "process_step_1"
+      ],
+      "next": [
+        "season_pinch"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and add the garlic, then add the tahini, a good squeeze of lemon juice and 1 tablespoon of oil."
+        }
+      ]
+    },
+    {
+      "id": "season_pinch",
+      "descr": "Season with a pinch of sea salt, then pop the lid on and...",
+      "instructions": "Season with a pinch of sea salt, then pop the lid on and blitz.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_garlic"
+      ],
+      "next": [
+        "step_step_4"
+      ],
+      "on_enter": [
+        {
+          "say": "Season with a pinch of sea salt, then pop the lid on and blitz."
+        }
+      ]
+    },
+    {
+      "id": "step_step_4",
+      "descr": "Use a spatula to scrape the houmous down the sides of...",
+      "instructions": "Use a spatula to scrape the houmous down the sides of the bowl, then blitz again until smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_pinch"
+      ],
+      "next": [
+        "add_more"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a spatula to scrape the houmous down the sides of the bowl, then blitz again until smooth."
+        }
+      ]
+    },
+    {
+      "id": "add_more",
+      "descr": "Have a taste and add more lemon juice or a splash of...",
+      "instructions": "Have a taste and add more lemon juice or a splash of water to loosen, if needed, then transfer to a serving bowl.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_4"
+      ],
+      "next": [
+        "warm_flatbreads"
+      ],
+      "on_enter": [
+        {
+          "say": "Have a taste and add more lemon juice or a splash of water to loosen, if needed, then transfer to a serving bowl."
+        }
+      ]
+    },
+    {
+      "id": "warm_flatbreads",
+      "descr": "Serve with sliced crunchy veg, such as carrots,...",
+      "instructions": "Serve with sliced crunchy veg, such as carrots, cucumbers, radishes or peppers, and some warm flatbreads.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_more"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Serve with sliced crunchy veg, such as carrots, cucumbers, radishes or peppers, and some warm flatbreads."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "PRINT THIS RECIPE (UK)",
+      "instructions": "PRINT THIS RECIPE (UK)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "warm_flatbreads"
+      ],
+      "next": [
+        "step_step_8"
+      ],
+      "on_enter": [
+        {
+          "say": "PRINT THIS RECIPE (UK)"
+        }
+      ]
+    },
+    {
+      "id": "step_step_8",
+      "descr": "PRINT THIS RECIPE (USA)",
+      "instructions": "PRINT THIS RECIPE (USA)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "PRINT THIS RECIPE (USA)"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "64 calories",
+    "carbohydrates": "6.3 g",
+    "fat": "3 g",
+    "fiber": "1.9 g",
+    "protein": "3 g"
+  }
+}

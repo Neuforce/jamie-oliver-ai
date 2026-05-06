@@ -1,0 +1,179 @@
+{
+  "recipe": {
+    "id": "air-fryer-salmon-with-crispy-potatoes",
+    "title": "Air-fryer salmon with crispy potatoes",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "This simple air-fryer salmon recipe is a deliciously easy dinner for two \u2013 give it a go!",
+    "tags": [
+      "dinner-for-two",
+      "air-fryer",
+      "low-lactose",
+      "gluten-free",
+      "occasion"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/air-fryer-salmon-with-crispy-potatoes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ef88bffe568a00c864729a2b29daf5a25f77280-958x1280.jpg/152315753?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ef88bffe568a00c864729a2b29daf5a25f77280-958x1280.jpg/152315753?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ef88bffe568a00c864729a2b29daf5a25f77280-958x1280.jpg/152315753?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4ef88bffe568a00c864729a2b29daf5a25f77280-958x1280.jpg/152315753?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "new-potatoes",
+      "name": "new potatoes",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-thyme",
+      "name": "fresh thyme",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "20g"
+    },
+    {
+      "id": "150g-salmon-fillets",
+      "name": "150g salmon fillets",
+      "quantity": 150.0,
+      "unit": null,
+      "note": "skin on, scaled, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "asparagus",
+      "name": "asparagus",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "large bowl",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "slice_potatoes",
+      "descr": "Finely slice the potatoes and tip into a large bowl,...",
+      "instructions": "Finely slice the potatoes and tip into a large bowl, then toss together with \u00bd a tablespoon of olive oil and a small pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "fry_single"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely slice the potatoes and tip into a large bowl, then toss together with \u00bd a tablespoon of olive oil and a small pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "fry_single",
+      "descr": "Place the potatoes in the air-fryer* in a single layer...",
+      "instructions": "Place the potatoes in the air-fryer* in a single layer and cook at 180\u00b0C for 15 minutes, then pick and toss in the thyme. Spread the potatoes back into a single layer and cook for another 10 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "slice_potatoes"
+      ],
+      "next": [
+        "slice_each"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the potatoes in the air-fryer* in a single layer and cook at 180\u00b0C for 15 minutes, then pick and toss in the thyme. Spread the potatoes back into a single layer and cook for another 10 minutes."
+        }
+      ]
+    },
+    {
+      "id": "slice_each",
+      "descr": "Meanwhile, place the salmon fillets in the bowl, drizzle...",
+      "instructions": "Meanwhile, place the salmon fillets in the bowl, drizzle with \u00bd a tablespoon of oil and season with a small pinch of salt and pepper. Snap the woody ends off the asparagus and slice each stalk into three bite-sized pieces. Place in the bowl with the salmon and toss in the oil to coat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "fry_single"
+      ],
+      "next": [
+        "slice_thin"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, place the salmon fillets in the bowl, drizzle with \u00bd a tablespoon of oil and season with a small pinch of salt and pepper. Snap the woody ends off the asparagus and slice each stalk into three bite-sized pieces. Place in the bowl with the salmon and toss in the oil to coat."
+        }
+      ]
+    },
+    {
+      "id": "slice_thin",
+      "descr": "Once the time\u2019s up on the potatoes, lay the salmon...",
+      "instructions": "Once the time\u2019s up on the potatoes, lay the salmon fillets on top, then carefully slice two thin rounds of lemon and arrange on top of each fillet. Scatter the asparagus around the salmon and cook at 190\u00b0C for 10 minutes, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "slice_each"
+      ],
+      "next": [
+        "slice_transfer"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the time\u2019s up on the potatoes, lay the salmon fillets on top, then carefully slice two thin rounds of lemon and arrange on top of each fillet. Scatter the asparagus around the salmon and cook at 190\u00b0C for 10 minutes, or until golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "slice_transfer",
+      "descr": "Use a fish slice to transfer the salmon to serving...",
+      "instructions": "Use a fish slice to transfer the salmon to serving plates, then divide up the crispy potatoes and asparagus. Delicious with a seasonal green salad and a dollop of pesto on the side.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_thin"
+      ],
+      "on_enter": [
+        {
+          "say": "Use a fish slice to transfer the salmon to serving plates, then divide up the crispy potatoes and asparagus. Delicious with a seasonal green salad and a dollop of pesto on the side."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "504 calories",
+    "carbohydrates": "35.9 g",
+    "fat": "24.4 g",
+    "fiber": "3.7 g",
+    "protein": "36.9 g"
+  }
+}

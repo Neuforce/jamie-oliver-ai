@@ -1,0 +1,196 @@
+{
+  "recipe": {
+    "id": "easy-sausage-carbonara",
+    "title": "Easy sausage carbonara",
+    "servings": 2,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT15M",
+    "description": "This tagliatelle carbonara is a super easy carbonara recipe. Using sausages instead of pancetta or bacon gives this dish an extra level of flavour",
+    "tags": [
+      "pasta",
+      "student-recipes",
+      "carbonara",
+      "course",
+      "quick-amp-easy-series-1",
+      "lunch-amp-dinner-recipes",
+      "tv-shows",
+      "sausages",
+      "occasion",
+      "cheap-amp-cheerful",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/easy-sausage-carbonara",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/71877cf57a62a01428d663199d6ead625e7b02f8-956x1280.jpg/55846362?rect=0,162,956,956&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/71877cf57a62a01428d663199d6ead625e7b02f8-956x1280.jpg/55846362?rect=0,162,956,956&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/71877cf57a62a01428d663199d6ead625e7b02f8-956x1280.jpg/55846362?rect=0,282,956,717&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/71877cf57a62a01428d663199d6ead625e7b02f8-956x1280.jpg/55846362?rect=0,371,956,538&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-tagliatelle",
+      "name": "dried tagliatelle",
+      "quantity": 150.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sausages",
+      "name": "sausages",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-flat-leaf-par",
+      "name": "\u00bd a bunch of fresh flat-leaf parsley",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    },
+    {
+      "id": "large-egg",
+      "name": "large egg",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "boil_salted",
+      "descr": "Cook the pasta in a pan of boiling salted water...",
+      "instructions": "Cook the pasta in a pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of cooking water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "shape_even"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook the pasta in a pan of boiling salted water according to the packet instructions, then drain, reserving a mugful of cooking water."
+        }
+      ]
+    },
+    {
+      "id": "shape_even",
+      "descr": "Meanwhile, squeeze the sausagemeat out of the skins,...",
+      "instructions": "Meanwhile, squeeze the sausagemeat out of the skins, then, with wet hands, quickly shape into 18 even-sized balls.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, squeeze the sausagemeat out of the skins, then, with wet hands, quickly shape into 18 even-sized balls."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Roll and coat them in black pepper, then cook in a non-...",
+      "instructions": "Roll and coat them in black pepper, then cook in a non- stick frying pan on a medium heat with \u00bd a tablespoon of olive oil until golden and cooked through, tossing regularly, then turn the heat off.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "shape_even"
+      ],
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Roll and coat them in black pepper, then cook in a non- stick frying pan on a medium heat with \u00bd a tablespoon of olive oil until golden and cooked through, tossing regularly, then turn the heat off."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Finely chop the parsley, stalks and all, beat it with...",
+      "instructions": "Finely chop the parsley, stalks and all, beat it with the egg and a splash of pasta cooking water, then finely grate and mix in most of the Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "heat_will"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely chop the parsley, stalks and all, beat it with the egg and a splash of pasta cooking water, then finely grate and mix in most of the Parmesan."
+        }
+      ]
+    },
+    {
+      "id": "heat_will",
+      "descr": "Toss the drained pasta into the sausage pan, pour in the...",
+      "instructions": "Toss the drained pasta into the sausage pan, pour in the egg mixture, and toss for 1 minute off the heat (the egg will gently cook in the residual heat).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Toss the drained pasta into the sausage pan, pour in the egg mixture, and toss for 1 minute off the heat (the egg will gently cook in the residual heat)."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Loosen with a good splash of reserved cooking water,...",
+      "instructions": "Loosen with a good splash of reserved cooking water, season to perfection with sea salt and pepper, and finely grate over the remaining Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_will"
+      ],
+      "on_enter": [
+        {
+          "say": "Loosen with a good splash of reserved cooking water, season to perfection with sea salt and pepper, and finely grate over the remaining Parmesan."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "633 calories",
+    "carbohydrates": "59.3 g",
+    "fat": "30.6 g",
+    "fiber": "2.6 g",
+    "protein": "33.6 g"
+  }
+}

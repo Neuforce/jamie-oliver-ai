@@ -1,0 +1,290 @@
+{
+  "recipe": {
+    "id": "veggie-pasta-bake",
+    "title": "Veggie pasta bake",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "When it comes to family favourites, it\u2019s pretty hard to beat a good pasta bake. Sweet leeks, fresh basil and a garlic bread crumb make this easy pasta dish a midweek winner.  ",
+    "tags": [
+      "pasta",
+      "main-ingredient",
+      "healthy-family-recipes",
+      "pasta-amp-risotto",
+      "dish-type",
+      "vegetarian",
+      "mains",
+      "pasta-bake",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pasta/veggie-pasta-bake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a6f13f7951254a6b6286862db5aa3a127f1b6a67-958x1280.jpg/a6f13f7951254a6b6286862db5aa3a127f1b6a67-958x1280.jpg?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a6f13f7951254a6b6286862db5aa3a127f1b6a67-958x1280.jpg/a6f13f7951254a6b6286862db5aa3a127f1b6a67-958x1280.jpg?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a6f13f7951254a6b6286862db5aa3a127f1b6a67-958x1280.jpg/a6f13f7951254a6b6286862db5aa3a127f1b6a67-958x1280.jpg?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a6f13f7951254a6b6286862db5aa3a127f1b6a67-958x1280.jpg/a6f13f7951254a6b6286862db5aa3a127f1b6a67-958x1280.jpg?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pasta"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "x-170g-loaf-of-garlic-bread",
+      "name": "\u00bd x 170g loaf of garlic bread",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "leeks",
+      "name": "leeks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-basil",
+      "name": "fresh basil",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "dried-oregano",
+      "name": "dried oregano",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-plum-tomatoes",
+      "name": "400g tins of plum tomatoes",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-pasta",
+      "name": "dried pasta",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": "such as orecchiette, conchiglie or gemelli"
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": "plus extra to serve"
+    },
+    {
+      "id": "cubes-of-frozen-spinach",
+      "name": "cubes of frozen spinach",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mix_little",
+      "descr": "Tear the garlic bread into a blender and blitz into fine...",
+      "instructions": "Tear the garlic bread into a blender and blitz into fine crumbs, then mix in a little olive oil and set aside.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear the garlic bread into a blender and blitz into fine crumbs, then mix in a little olive oil and set aside."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Peel and finely slice the garlic and trim, wash and finely slice the white part of the leeks (save the green tops for tasty cooking another day \u2013 they work great in soups or stocks).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_little"
+      ],
+      "next": [
+        "heat_garlic"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Peel and finely slice the garlic and trim, wash and finely slice the white part of the leeks (save the green tops for tasty cooking another day \u2013 they work great in soups or stocks)."
+        }
+      ]
+    },
+    {
+      "id": "heat_garlic",
+      "descr": "Drizzle 2 tablespoons of oil into a large shallow...",
+      "instructions": "Drizzle 2 tablespoons of oil into a large shallow casserole pan over a medium heat and add the garlic. Finely slice the basil stalks, then add them to the pan, along with the dried oregano and gently fry for a couple of minutes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_they"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle 2 tablespoons of oil into a large shallow casserole pan over a medium heat and add the garlic. Finely slice the basil stalks, then add them to the pan, along with the dried oregano and gently fry for a couple of minutes."
+        }
+      ]
+    },
+    {
+      "id": "heat_they",
+      "descr": "Add the chopped leeks to the pan, season with a pinch of...",
+      "instructions": "Add the chopped leeks to the pan, season with a pinch of sea salt and black pepper and cook gently for 10 minutes, until softened, stirring regularly and adjusting the heat to low if they start to colour.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_garlic"
+      ],
+      "next": [
+        "pour_bring"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the chopped leeks to the pan, season with a pinch of sea salt and black pepper and cook gently for 10 minutes, until softened, stirring regularly and adjusting the heat to low if they start to colour."
+        }
+      ]
+    },
+    {
+      "id": "pour_bring",
+      "descr": "Tip in the tomatoes, breaking them up with the back of...",
+      "instructions": "Tip in the tomatoes, breaking them up with the back of your spoon, then half-fill each tin with water, swirl around and pour into the pan. Bring to the boil, then reduce to low and leave to tick away for 15 to 20 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_they"
+      ],
+      "next": [
+        "boil_salted"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip in the tomatoes, breaking them up with the back of your spoon, then half-fill each tin with water, swirl around and pour into the pan. Bring to the boil, then reduce to low and leave to tick away for 15 to 20 minutes."
+        }
+      ]
+    },
+    {
+      "id": "boil_salted",
+      "descr": "Meanwhile, cook the pasta in a large pan of boiling...",
+      "instructions": "Meanwhile, cook the pasta in a large pan of boiling salted water for 8 minutes, then drain, reserving a mugful of starchy cooking water.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT480S",
+      "depends_on": [
+        "pour_bring"
+      ],
+      "next": [
+        "stir_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, cook the pasta in a large pan of boiling salted water for 8 minutes, then drain, reserving a mugful of starchy cooking water."
+        }
+      ]
+    },
+    {
+      "id": "stir_through",
+      "descr": "Tip the sauce into a blender with most of the basil...",
+      "instructions": "Tip the sauce into a blender with most of the basil leaves (reserving a few to serve) and whiz until smooth (you may need to work in batches), then season to perfection. Return the sauce to the casserole pan, stir through the cooked pasta, loosening with the reserved cooking water if needs be.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_salted"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the sauce into a blender with most of the basil leaves (reserving a few to serve) and whiz until smooth (you may need to work in batches), then season to perfection. Return the sauce to the casserole pan, stir through the cooked pasta, loosening with the reserved cooking water if needs be."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Finely grate over the cheese, then nestle the frozen...",
+      "instructions": "Finely grate over the cheese, then nestle the frozen spinach into the pasta. Sprinkle over the garlic breadcrumbs and bake for 20 minutes, until the crumbs are golden, the pasta is tender and the sauce is blipping.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "stir_through"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate over the cheese, then nestle the frozen spinach into the pasta. Sprinkle over the garlic breadcrumbs and bake for 20 minutes, until the crumbs are golden, the pasta is tender and the sauce is blipping."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "When it\u2019s cooked, let it sit for a couple of minutes,...",
+      "instructions": "When it\u2019s cooked, let it sit for a couple of minutes, then sprinkle over the reserved basil leaves, and finish with a final grating of Parmesan. Delicious served with a crisp green salad.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "When it\u2019s cooked, let it sit for a couple of minutes, then sprinkle over the reserved basil leaves, and finish with a final grating of Parmesan. Delicious served with a crisp green salad."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "529 calories",
+    "carbohydrates": "98.8 g",
+    "fat": "14.8 g",
+    "fiber": "3.1 g",
+    "protein": "22.9 g"
+  }
+}

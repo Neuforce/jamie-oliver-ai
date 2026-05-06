@@ -1,0 +1,468 @@
+{
+  "recipe": {
+    "id": "porchetta",
+    "title": "Porchetta",
+    "servings": 16,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT330M",
+    "description": "Bursting with flavour, this porchetta recipe is the ultimate Christmas dinner party dish. Brilliant for feeding a crowd and getting everybody stuck in.",
+    "tags": [
+      "christmas",
+      "roast-pork",
+      "pork-belly",
+      "christmas-dinner",
+      "party-food",
+      "dinner-party",
+      "pork-loin",
+      "course",
+      "new-year-party-picks",
+      "lunch-amp-dinner-recipes",
+      "pork",
+      "jamie-s-italian-christmas",
+      "occasion",
+      "italian",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "cuisine": "italian",
+    "source_url": "https://www.jamieoliver.com/recipes/pork/porchetta",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0eedd5fcd1172256520b90d3f12400780dbee5ea-958x1280.jpg/63841225?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0eedd5fcd1172256520b90d3f12400780dbee5ea-958x1280.jpg/63841225?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0eedd5fcd1172256520b90d3f12400780dbee5ea-958x1280.jpg/63841225?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0eedd5fcd1172256520b90d3f12400780dbee5ea-958x1280.jpg/63841225?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "pork"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "5kg-higher-welfare-pork-loin-w",
+      "name": "5kg higher-welfare pork loin with belly attached",
+      "quantity": 5.0,
+      "unit": null,
+      "note": "ask your butcher to remove the bones and butterfly open the loin meat, skin on"
+    },
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "higher-welfare-smoked-pancetta",
+      "name": "higher-welfare smoked pancetta",
+      "quantity": 15.0,
+      "unit": "slices",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "fennel-seeds",
+      "name": "fennel seeds",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "free-range-chicken-livers",
+      "name": "free-range chicken livers",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": "cleaned, trimmed"
+    },
+    {
+      "id": "fresh-sage",
+      "name": "fresh sage",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "a-bottle-of-white-wine",
+      "name": "\u00bd a bottle of white wine",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-dried-apricots",
+      "name": "mixed dried apricots",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": "cranberries, raisins, sultanas"
+    },
+    {
+      "id": "pine-nuts",
+      "name": "pine nuts",
+      "quantity": 50.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 100.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "stale-breadcrumbs",
+      "name": "stale breadcrumbs",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "vin-santo",
+      "name": "Vin Santo",
+      "quantity": 125.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 8.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-plain-flour",
+      "name": "heaped tablespoons plain flour",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-stock",
+      "name": "organic chicken stock",
+      "quantity": 500.0,
+      "unit": "ml",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "knife",
+    "oven",
+    "pan",
+    "sieve"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Get your meat out of the fridge and up to room...",
+      "instructions": "Get your meat out of the fridge and up to room temperature before you cook it.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Get your meat out of the fridge and up to room temperature before you cook it."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "For the stuffing, peel and finely chop the onions,...",
+      "instructions": "For the stuffing, peel and finely chop the onions, finely slice the pancetta, then place in a large frying pan on a medium-high heat with 6 tablespoons of oil, the butter and fennel seeds. Cook for 5 minutes, stirring regularly, while you finely chop the chicken livers and herb leaves.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "step_step_1"
+      ],
+      "next": [
+        "heat_leave"
+      ],
+      "on_enter": [
+        {
+          "say": "For the stuffing, peel and finely chop the onions, finely slice the pancetta, then place in a large frying pan on a medium-high heat with 6 tablespoons of oil, the butter and fennel seeds. Cook for 5 minutes, stirring regularly, while you finely chop the chicken livers and herb leaves."
+        }
+      ]
+    },
+    {
+      "id": "heat_leave",
+      "descr": "Stir the livers into the pan, followed by the herbs and...",
+      "instructions": "Stir the livers into the pan, followed by the herbs and 50ml of wine. Roughly chop and add the dried fruit, along with the pine nuts. Cook and stir for 5 minutes, then remove from the heat and leave to cool.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "mix_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the livers into the pan, followed by the herbs and 50ml of wine. Roughly chop and add the dried fruit, along with the pine nuts. Cook and stir for 5 minutes, then remove from the heat and leave to cool."
+        }
+      ]
+    },
+    {
+      "id": "mix_them",
+      "descr": "Finely grate over the Parmesan",
+      "instructions": "Finely grate over the Parmesan. Toast the breadcrumbs and use your hands to mix them into the cool stuffing.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_leave"
+      ],
+      "next": [
+        "pour_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely grate over the Parmesan. Toast the breadcrumbs and use your hands to mix them into the cool stuffing."
+        }
+      ]
+    },
+    {
+      "id": "pour_over",
+      "descr": "Place the pork loin on a board, skin side down, open it...",
+      "instructions": "Place the pork loin on a board, skin side down, open it out and push it down flat. Season generously with sea salt and black pepper, then pour over and massage in half the Vin Santo.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_them"
+      ],
+      "next": [
+        "pour_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the pork loin on a board, skin side down, open it out and push it down flat. Season generously with sea salt and black pepper, then pour over and massage in half the Vin Santo."
+        }
+      ]
+    },
+    {
+      "id": "pour_over",
+      "descr": "Scatter over the stuffing, pour over the remaining Vin...",
+      "instructions": "Scatter over the stuffing, pour over the remaining Vin Santo, then roll up the pork, patting on and compacting the stuffing as you go.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_over"
+      ],
+      "next": [
+        "season_generously"
+      ],
+      "on_enter": [
+        {
+          "say": "Scatter over the stuffing, pour over the remaining Vin Santo, then roll up the pork, patting on and compacting the stuffing as you go."
+        }
+      ]
+    },
+    {
+      "id": "season_generously",
+      "descr": "Sit it with the seam underneath and tie with butcher\u2019s...",
+      "instructions": "Sit it with the seam underneath and tie with butcher\u2019s string to secure it, then score the skin and into the fat with your knife. Season generously and rub all over with oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_over"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Sit it with the seam underneath and tie with butcher\u2019s string to secure it, then score the skin and into the fat with your knife. Season generously and rub all over with oil."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "When you\u2019re ready to cook, preheat the oven to full...",
+      "instructions": "When you\u2019re ready to cook, preheat the oven to full whack (240\u00baC/475\u00baF/gas 9).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "season_generously"
+      ],
+      "next": [
+        "pour_water"
+      ],
+      "on_enter": [
+        {
+          "say": "When you\u2019re ready to cook, preheat the oven to full whack (240\u00baC/475\u00baF/gas 9)."
+        }
+      ]
+    },
+    {
+      "id": "pour_water",
+      "descr": "Wash the carrots and place in a large roasting tray",
+      "instructions": "Wash the carrots and place in a large roasting tray. Sit the porchetta on top, then pour in 500ml of water and the remaining 325ml of wine.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "step_step_10"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash the carrots and place in a large roasting tray. Sit the porchetta on top, then pour in 500ml of water and the remaining 325ml of wine."
+        }
+      ]
+    },
+    {
+      "id": "step_step_10",
+      "descr": "Place in the hot oven for 30 minutes, then reduce the...",
+      "instructions": "Place in the hot oven for 30 minutes, then reduce the temperature to 180\u00baC/350\u00baF/gas 4 and leave to cook for 4 to 5 hours, or until the meat is really tender, basting now and again.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "pour_water"
+      ],
+      "next": [
+        "heat_step_11"
+      ],
+      "on_enter": [
+        {
+          "say": "Place in the hot oven for 30 minutes, then reduce the temperature to 180\u00baC/350\u00baF/gas 4 and leave to cook for 4 to 5 hours, or until the meat is really tender, basting now and again."
+        }
+      ]
+    },
+    {
+      "id": "heat_step_11",
+      "descr": "Remove the porchetta to a board to rest for at least 30...",
+      "instructions": "Remove the porchetta to a board to rest for at least 30 minutes. Meanwhile, place the roasting tray over a medium heat on the hob.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "step_step_10"
+      ],
+      "next": [
+        "stir_flour"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the porchetta to a board to rest for at least 30 minutes. Meanwhile, place the roasting tray over a medium heat on the hob."
+        }
+      ]
+    },
+    {
+      "id": "stir_flour",
+      "descr": "Skim away most of the fat from the surface into a jar,...",
+      "instructions": "Skim away most of the fat from the surface into a jar, cool, and place in the fridge for tasty cooking another day. Stir the flour into the tray, mashing the carrots and scraping up all those gnarly bits from the base.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_step_11"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Skim away most of the fat from the surface into a jar, cool, and place in the fridge for tasty cooking another day. Stir the flour into the tray, mashing the carrots and scraping up all those gnarly bits from the base."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Pour in the stock, and simmer until the gravy is the...",
+      "instructions": "Pour in the stock, and simmer until the gravy is the consistency of your liking, stirring occasionally.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_flour"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the stock, and simmer until the gravy is the consistency of your liking, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Strain the gravy through a coarse sieve, pushing all the...",
+      "instructions": "Strain the gravy through a coarse sieve, pushing all the goodness through with the back of a spoon, then season to perfection.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "serve_wish"
+      ],
+      "on_enter": [
+        {
+          "say": "Strain the gravy through a coarse sieve, pushing all the goodness through with the back of a spoon, then season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "serve_wish",
+      "descr": "Carve up the beautiful porchetta, and serve it as you wish",
+      "instructions": "Carve up the beautiful porchetta, and serve it as you wish.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Carve up the beautiful porchetta, and serve it as you wish."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "725 calories",
+    "carbohydrates": "19.6 g",
+    "fat": "49.1 g",
+    "fiber": "3.2 g",
+    "protein": "48.1 g"
+  }
+}

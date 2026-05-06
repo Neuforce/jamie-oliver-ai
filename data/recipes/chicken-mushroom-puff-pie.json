@@ -1,0 +1,186 @@
+{
+  "recipe": {
+    "id": "chicken-mushroom-puff-pie",
+    "title": "Chicken & mushroom puff pie",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT33M",
+    "description": "Jamie's comforting chicken & mushroom puff pie is quick to make and can easily be made veggie.",
+    "tags": [
+      "chicken",
+      "dish-type",
+      "pies-amp-pastries",
+      "one-pan-recipes",
+      "family-one-pan-recipes",
+      "pie",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/chicken-mushroom-puff-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a8e1e980b5fd2dea66e62e633df04318c49bdbdb-958x1280.jpg/136440026?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a8e1e980b5fd2dea66e62e633df04318c49bdbdb-958x1280.jpg/136440026?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a8e1e980b5fd2dea66e62e633df04318c49bdbdb-958x1280.jpg/136440026?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/a8e1e980b5fd2dea66e62e633df04318c49bdbdb-958x1280.jpg/136440026?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "free-range-skinless-boneless-c",
+      "name": "free-range skinless boneless chicken thighs",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "mixed-mushrooms",
+      "name": "mixed mushrooms",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sheet-of-ready-rolled-puff-pas",
+      "name": "sheet of ready-rolled puff pastry",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "semi-skimmed-milk",
+      "name": "semi-skimmed milk",
+      "quantity": 600.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoon-plain-flour",
+      "name": "heaped tablespoon plain flour",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "wholegrain-mustard",
+      "name": "wholegrain mustard",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "mixed-bag-of-watercress",
+      "name": "mixed bag of watercress",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": "spinach & rocket"
+    }
+  ],
+  "utensils": [
+    "frying pan",
+    "knife",
+    "oven",
+    "pan",
+    "sharp knife"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Chop the chicken into 3cm chunks and place in a 30cm non-stick frying pan on a medium-high heat with 1 tablespoon of olive oil, stirring regularly. Trim the spring onions, chop into 1cm lengths and add to the pan. Trim and tear in the mushrooms. Cook for 10 minutes, or until golden, stirring regularly.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "roll_pastry"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Chop the chicken into 3cm chunks and place in a 30cm non-stick frying pan on a medium-high heat with 1 tablespoon of olive oil, stirring regularly. Trim the spring onions, chop into 1cm lengths and add to the pan. Trim and tear in the mushrooms. Cook for 10 minutes, or until golden, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "roll_pastry",
+      "descr": "Meanwhile, unroll the pastry sheet on its paper and...",
+      "instructions": "Meanwhile, unroll the pastry sheet on its paper and score a 3cm border around the edge (don\u2019t cut all the way through), then very lightly score a large criss-cross pattern across the inner section. Brush with a little milk, then place the pastry, still on its paper, directly on the middle shelf of the oven to cook for 17 minutes, or until golden, risen and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1020S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_pastry"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, unroll the pastry sheet on its paper and score a 3cm border around the edge (don\u2019t cut all the way through), then very lightly score a large criss-cross pattern across the inner section. Brush with a little milk, then place the pastry, still on its paper, directly on the middle shelf of the oven to cook for 17 minutes, or until golden, risen and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "heat_pastry",
+      "descr": "Stir the flour into the pan for 1 minute, then gradually...",
+      "instructions": "Stir the flour into the pan for 1 minute, then gradually stir in the milk. Simmer on a medium heat until the pastry is done, stirring occasionally, and loosening with extra splashes of milk, if needed. Turn the heat off, stir through the mustard and half of the leaves, then season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "roll_pastry"
+      ],
+      "next": [
+        "slice_carefully"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the flour into the pan for 1 minute, then gradually stir in the milk. Simmer on a medium heat until the pastry is done, stirring occasionally, and loosening with extra splashes of milk, if needed. Turn the heat off, stir through the mustard and half of the leaves, then season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "slice_carefully",
+      "descr": "Remove the pastry from the oven, leave to cool slightly,...",
+      "instructions": "Remove the pastry from the oven, leave to cool slightly, then transfer to a serving board, discarding the paper. Use a sharp knife to cut round the border, cutting through the top few layers of pastry only. Use a fish slice to carefully lift up and remove the inner section (like a lid), leaving a layer of pastry at the bottom. Pile in the remaining leaves and filling, then put the lid back on, slice and serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_pastry"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the pastry from the oven, leave to cool slightly, then transfer to a serving board, discarding the paper. Use a sharp knife to cut round the border, cutting through the top few layers of pastry only. Use a fish slice to carefully lift up and remove the inner section (like a lid), leaving a layer of pastry at the bottom. Pile in the remaining leaves and filling, then put the lid back on, slice and serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "679 calories",
+    "carbohydrates": "48.2 g",
+    "fat": "36.2 g",
+    "fiber": "4.7 g",
+    "protein": "39.8 g"
+  }
+}

@@ -1,0 +1,314 @@
+{
+  "recipe": {
+    "id": "lamb-tagine",
+    "title": "Lamb tagine",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT135M",
+    "description": "This is deliciously tender, lightly spiced Moroccan lamb tagine is great served with homemade flatbreads.",
+    "tags": [
+      "lamb-shoulder",
+      "lamb-stew",
+      "main-ingredient",
+      "lamb",
+      "dish-type",
+      "celebrity-recipe",
+      "fnf-series-five",
+      "moroccan-lamb",
+      "tagine",
+      "stew",
+      "jamie-and-jimmy-s-friday-night-feast"
+    ],
+    "course": "main",
+    "cuisine": "moroccan",
+    "source_url": "https://www.jamieoliver.com/recipes/lamb/lamb-tagine",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7130bbd3609d0ff372407f22d540b5950f23ae77-958x1280.png/63117558?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7130bbd3609d0ff372407f22d540b5950f23ae77-958x1280.png/63117558?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7130bbd3609d0ff372407f22d540b5950f23ae77-958x1280.png/63117558?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7130bbd3609d0ff372407f22d540b5950f23ae77-958x1280.png/63117558?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "lamb"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "large-pinch-of-saffron",
+      "name": "large pinch of saffron",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dried-prunes",
+      "name": "dried prunes",
+      "quantity": 8.0,
+      "unit": null,
+      "note": "stone in"
+    },
+    {
+      "id": "onions",
+      "name": "onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "ground-ginger",
+      "name": "ground ginger",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cinnamon",
+      "name": "cinnamon",
+      "quantity": 1.0,
+      "unit": "stick",
+      "note": null
+    },
+    {
+      "id": "diced-lamb-shoulder",
+      "name": "diced lamb shoulder",
+      "quantity": 750.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mixed-colour-baby-courgettes",
+      "name": "mixed-colour baby courgettes",
+      "quantity": 12.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-colour-baby-carrots",
+      "name": "mixed-colour baby carrots",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-butternut-squash",
+      "name": "\u00bd a butternut squash",
+      "quantity": null,
+      "unit": null,
+      "note": "600g"
+    },
+    {
+      "id": "couscous",
+      "name": "couscous",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "2-cloves",
+      "name": "2 cloves",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "rose-harissa",
+      "name": "rose harissa",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "natural-yoghurt",
+      "name": "natural yoghurt",
+      "quantity": 250.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-mint",
+      "name": "\u00bd a bunch of fresh mint",
+      "quantity": null,
+      "unit": null,
+      "note": "15g"
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "boil_water",
+      "descr": "In a small bowl, cover the saffron with 2 tablespoons of...",
+      "instructions": "In a small bowl, cover the saffron with 2 tablespoons of boiling water and leave to steep. Destone the prunes, place in a separate bowl and just cover with boiling water so the plump up.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_onions"
+      ],
+      "on_enter": [
+        {
+          "say": "In a small bowl, cover the saffron with 2 tablespoons of boiling water and leave to steep. Destone the prunes, place in a separate bowl and just cover with boiling water so the plump up."
+        }
+      ]
+    },
+    {
+      "id": "chop_onions",
+      "descr": "Peel and finely chop the onions and garlic, then season...",
+      "instructions": "Peel and finely chop the onions and garlic, then season with the ground ginger and a pinch of sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "heat_tablespoons"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the onions and garlic, then season with the ground ginger and a pinch of sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoons",
+      "descr": "Place a tagine or large casserole pan on a medium heat...",
+      "instructions": "Place a tagine or large casserole pan on a medium heat with 2 tablespoons of oil, then add the cinnamon for 1 minute to flavour the oil. Add the lamb, season with salt and pepper, then cook for 5 minutes, or until browned all over, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Place a tagine or large casserole pan on a medium heat with 2 tablespoons of oil, then add the cinnamon for 1 minute to flavour the oil. Add the lamb, season with salt and pepper, then cook for 5 minutes, or until browned all over, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Push the meat to one side of the pan, placing the...",
+      "instructions": "Push the meat to one side of the pan, placing the cinnamon stick on top, then add the seasoned onion and garlic alongside. Cook for 5 minutes, or until softened and caramelized, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoons"
+      ],
+      "next": [
+        "chop_chunks"
+      ],
+      "on_enter": [
+        {
+          "say": "Push the meat to one side of the pan, placing the cinnamon stick on top, then add the seasoned onion and garlic alongside. Cook for 5 minutes, or until softened and caramelized, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "chop_chunks",
+      "descr": "Gently scrub the courgettes and carrots, keeping them...",
+      "instructions": "Gently scrub the courgettes and carrots, keeping them whole, peel and deseed the squash, then chop into 3cm chunks, and add it all to the pan. Pour in the prunes, saffron and all the soaking water, then top up with 200ml of water, and stir well.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "heat_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Gently scrub the courgettes and carrots, keeping them whole, peel and deseed the squash, then chop into 3cm chunks, and add it all to the pan. Pour in the prunes, saffron and all the soaking water, then top up with 200ml of water, and stir well."
+        }
+      ]
+    },
+    {
+      "id": "heat_hour",
+      "descr": "Bring to the boil, then cover and cook on a low heat for...",
+      "instructions": "Bring to the boil, then cover and cook on a low heat for 1 hour 30 minutes to 2 hours, or until the lamb is tender and the veg are cooked through, stirring occasionally and adding splashes of water to loosen, if needed. Taste and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "chop_chunks"
+      ],
+      "next": [
+        "add_cloves"
+      ],
+      "on_enter": [
+        {
+          "say": "Bring to the boil, then cover and cook on a low heat for 1 hour 30 minutes to 2 hours, or until the lamb is tender and the veg are cooked through, stirring occasionally and adding splashes of water to loosen, if needed. Taste and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "add_cloves",
+      "descr": "Meanwhile, place the couscous in a bowl, season with...",
+      "instructions": "Meanwhile, place the couscous in a bowl, season with salt and add the cloves, then just cover with boiling water and a drizzle of oil. Pop a plate on top and leave for 5 to 10 minutes to fluff up, then use a fork to fluff up again.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_hour"
+      ],
+      "next": [
+        "fold_harissa"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, place the couscous in a bowl, season with salt and add the cloves, then just cover with boiling water and a drizzle of oil. Pop a plate on top and leave for 5 to 10 minutes to fluff up, then use a fork to fluff up again."
+        }
+      ]
+    },
+    {
+      "id": "fold_harissa",
+      "descr": "Fold the harissa through the yoghurt",
+      "instructions": "Fold the harissa through the yoghurt. Serve the tagine, couscous and flatbreads with the harissa yoghurt, finishing with a scattering of mint leaves.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "add_cloves"
+      ],
+      "on_enter": [
+        {
+          "say": "Fold the harissa through the yoghurt. Serve the tagine, couscous and flatbreads with the harissa yoghurt, finishing with a scattering of mint leaves."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "648 calories",
+    "carbohydrates": "58.3 g",
+    "fat": "32.9 g",
+    "fiber": "7.0 g",
+    "protein": "33.2 g"
+  }
+}

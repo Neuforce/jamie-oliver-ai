@@ -1,0 +1,312 @@
+{
+  "recipe": {
+    "id": "superb-squash-soup",
+    "title": "Superb squash soup",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT55M",
+    "description": "This simple butternut squash soup recipe is delicious; it's important to use good chicken stock and season the soup well to bring out the nutty flavours.",
+    "tags": [
+      "soup",
+      "thanksgiving",
+      "dinner-party",
+      "frying",
+      "main-ingredient",
+      "starters",
+      "gorgeous-winter-soups",
+      "dish-type",
+      "method",
+      "bonfire-night-recipes",
+      "vegetables",
+      "soups",
+      "occasion",
+      "butternut-squash",
+      "squash",
+      "course"
+    ],
+    "course": "starter",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/superb-squash-soup-with-the-best-parmesan-croutons",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2e44fdd3bc7b0ce18bae4b781a293ab564a3241e-955x1433.jpg/butternutsquashsoup.jpg?rect=0,352,955,955&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2e44fdd3bc7b0ce18bae4b781a293ab564a3241e-955x1433.jpg/butternutsquashsoup.jpg?rect=0,352,955,955&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2e44fdd3bc7b0ce18bae4b781a293ab564a3241e-955x1433.jpg/butternutsquashsoup.jpg?rect=0,471,955,716&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/2e44fdd3bc7b0ce18bae4b781a293ab564a3241e-955x1433.jpg/butternutsquashsoup.jpg?rect=0,561,955,537&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "red-onions",
+      "name": "red onions",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "1-fresh-red-chilli",
+      "name": "\u00bd\u20131 fresh red chilli",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-sage-leaves",
+      "name": "fresh sage leaves",
+      "quantity": 16.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "butternut-squash",
+      "name": "butternut squash",
+      "quantity": 2.0,
+      "unit": "kg",
+      "note": "onion squash or musque de Provence"
+    },
+    {
+      "id": "organic-chicken-or-vegetable-s",
+      "name": "organic chicken or vegetable stock",
+      "quantity": 2.0,
+      "unit": "litres",
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "croutons",
+      "name": "CROUTONS",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "extra-virgin-olive-oil",
+      "name": "extra virgin olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ciabatta-bread",
+      "name": "ciabatta bread",
+      "quantity": 16.0,
+      "unit": "slices",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl",
+    "pan",
+    "saucepan"
+  ],
+  "steps": [
+    {
+      "id": "chop_onions",
+      "descr": "Peel and finely chop the onions, carrots and garlic,...",
+      "instructions": "Peel and finely chop the onions, carrots and garlic, then trim and finely chop the celery. Deseed and finely chop the chilli. Pick and finely chop the rosemary.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_couple"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely chop the onions, carrots and garlic, then trim and finely chop the celery. Deseed and finely chop the chilli. Pick and finely chop the rosemary."
+        }
+      ]
+    },
+    {
+      "id": "heat_couple",
+      "descr": "Heat a couple of lugs of olive oil in a large saucepan...",
+      "instructions": "Heat a couple of lugs of olive oil in a large saucepan over a medium heat, add the sage leaves and fry for 30 seconds, or until crisp, then remove to kitchen paper.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT30S",
+      "depends_on": [
+        "chop_onions"
+      ],
+      "next": [
+        "heat_onion"
+      ],
+      "on_enter": [
+        {
+          "say": "Heat a couple of lugs of olive oil in a large saucepan over a medium heat, add the sage leaves and fry for 30 seconds, or until crisp, then remove to kitchen paper."
+        }
+      ]
+    },
+    {
+      "id": "heat_onion",
+      "descr": "Place the pan of flavoured oil back on the heat, add the...",
+      "instructions": "Place the pan of flavoured oil back on the heat, add the onion, carrot, garlic, celery, chilli, rosemary and a good pinch of sea salt and black pepper, then cook gently for 10 minutes, or until sweet and soft.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_couple"
+      ],
+      "next": [
+        "chop_squash"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the pan of flavoured oil back on the heat, add the onion, carrot, garlic, celery, chilli, rosemary and a good pinch of sea salt and black pepper, then cook gently for 10 minutes, or until sweet and soft."
+        }
+      ]
+    },
+    {
+      "id": "chop_squash",
+      "descr": "Meanwhile, halve, deseed and rough chop the squash",
+      "instructions": "Meanwhile, halve, deseed and rough chop the squash. When the time's up, add the squash and stock to the pan. Bring to the boil and simmer for 30 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "heat_onion"
+      ],
+      "next": [
+        "drizzle_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, halve, deseed and rough chop the squash. When the time's up, add the squash and stock to the pan. Bring to the boil and simmer for 30 minutes."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_little",
+      "descr": "For the croutons, drizzle a little olive oil over the...",
+      "instructions": "For the croutons, drizzle a little olive oil over the ciabatta, pat it in, then finely grate and press some grated Parmesan on to each side. Place in a dry, non-stick pan and fry until golden on both sides.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_squash"
+      ],
+      "next": [
+        "pour_blender"
+      ],
+      "on_enter": [
+        {
+          "say": "For the croutons, drizzle a little olive oil over the ciabatta, pat it in, then finely grate and press some grated Parmesan on to each side. Place in a dry, non-stick pan and fry until golden on both sides."
+        }
+      ]
+    },
+    {
+      "id": "pour_blender",
+      "descr": "When the squash is tender, whiz the soup with a stick...",
+      "instructions": "When the squash is tender, whiz the soup with a stick blender or pour it into a blender and pulse to a smooth pur\u00e9e \u2013 leave it slightly chunky, if you prefer.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "drizzle_little"
+      ],
+      "next": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "When the squash is tender, whiz the soup with a stick blender or pour it into a blender and pulse to a smooth pur\u00e9e \u2013 leave it slightly chunky, if you prefer."
+        }
+      ]
+    },
+    {
+      "id": "season_perfection",
+      "descr": "Season to perfection with salt and pepper, then divide...",
+      "instructions": "Season to perfection with salt and pepper, then divide between bowls, placing 2 croutons on top of each.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "pour_blender"
+      ],
+      "next": [
+        "drizzle_swirl"
+      ],
+      "on_enter": [
+        {
+          "say": "Season to perfection with salt and pepper, then divide between bowls, placing 2 croutons on top of each."
+        }
+      ]
+    },
+    {
+      "id": "drizzle_swirl",
+      "descr": "Sprinkle with a few crispy sage leaves and drizzle with...",
+      "instructions": "Sprinkle with a few crispy sage leaves and drizzle with a swirl of quality extra virgin olive oil, then serve.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "season_perfection"
+      ],
+      "on_enter": [
+        {
+          "say": "Sprinkle with a few crispy sage leaves and drizzle with a swirl of quality extra virgin olive oil, then serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "266 calories",
+    "carbohydrates": "43.5 g",
+    "fat": "7.8 g",
+    "fiber": "7.6 g",
+    "protein": "9.3 g"
+  }
+}

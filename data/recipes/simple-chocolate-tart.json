@@ -1,0 +1,228 @@
+{
+  "recipe": {
+    "id": "simple-chocolate-tart",
+    "title": "Simple chocolate tart",
+    "servings": 16,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT20M",
+    "description": "A beautiful chocolate dessert recipe that will wow your guest. This Jamie Oliver dessert recipe is great on its own, or served with sweet seasonal berries.",
+    "tags": [
+      "chocolate-tart",
+      "desserts",
+      "penguin-anniversary-edition",
+      "dessert",
+      "course",
+      "dish-type",
+      "chocolate",
+      "baking-and-desserts",
+      "puddings-amp-desserts",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chocolate/simple-chocolate-tart",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0748013e54b040253df97ef7184502a1ac40ad57-958x1280.jpg/105860262?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0748013e54b040253df97ef7184502a1ac40ad57-958x1280.jpg/105860262?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0748013e54b040253df97ef7184502a1ac40ad57-958x1280.jpg/105860262?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/0748013e54b040253df97ef7184502a1ac40ad57-958x1280.jpg/105860262?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chocolate"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "double-cream",
+      "name": "double cream",
+      "quantity": 300.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "level-tablespoons-caster-sugar",
+      "name": "level tablespoons caster sugar",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 90.0,
+      "unit": "g",
+      "note": "at room temperature"
+    },
+    {
+      "id": "quality-dark-chocolate",
+      "name": "quality dark chocolate",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": "70%, broken up"
+    },
+    {
+      "id": "milk",
+      "name": "milk",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "tart-shell",
+      "name": "tart shell",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "baked blind"
+    },
+    {
+      "id": "quality-cocoa-powder",
+      "name": "quality cocoa powder",
+      "quantity": null,
+      "unit": null,
+      "note": "for dusting"
+    }
+  ],
+  "utensils": [
+    "pan",
+    "spatula",
+    "whisk"
+  ],
+  "steps": [
+    {
+      "id": "boil_step_1",
+      "descr": "Place the double cream, sugar and a tiny pinch of sea...",
+      "instructions": "Place the double cream, sugar and a tiny pinch of sea salt in a pan and bring to the boil.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the double cream, sugar and a tiny pinch of sea salt in a pan and bring to the boil."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Break up the chocolate",
+      "instructions": "Break up the chocolate.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_step_1"
+      ],
+      "next": [
+        "heat_butter"
+      ],
+      "on_enter": [
+        {
+          "say": "Break up the chocolate."
+        }
+      ]
+    },
+    {
+      "id": "heat_butter",
+      "descr": "As soon as the mixture has boiled, remove from the heat...",
+      "instructions": "As soon as the mixture has boiled, remove from the heat and add the butter and chocolate. Stir until it has completely melted. Allow the mixture to cool slightly, stirring in the cold milk until smooth and shiny.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_2"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "As soon as the mixture has boiled, remove from the heat and add the butter and chocolate. Stir until it has completely melted. Allow the mixture to cool slightly, stirring in the cold milk until smooth and shiny."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Sometimes this mixture looks like it has split",
+      "instructions": "Sometimes this mixture looks like it has split. Allow to cool down a bit more and whisk in a little extra cold milk until smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_butter"
+      ],
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Sometimes this mixture looks like it has split. Allow to cool down a bit more and whisk in a little extra cold milk until smooth."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Scrape all the mixture into the cooked and cooled pastry...",
+      "instructions": "Scrape all the mixture into the cooked and cooled pastry shell with a spatula.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "cool_around"
+      ],
+      "on_enter": [
+        {
+          "say": "Scrape all the mixture into the cooked and cooled pastry shell with a spatula."
+        }
+      ]
+    },
+    {
+      "id": "cool_around",
+      "descr": "Shake the tart to even it out and allow to cool for...",
+      "instructions": "Shake the tart to even it out and allow to cool for around 1 to 2 hours until it is at room temperature. Dust with the cocoa powder.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT7200S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "step_step_7"
+      ],
+      "on_enter": [
+        {
+          "say": "Shake the tart to even it out and allow to cool for around 1 to 2 hours until it is at room temperature. Dust with the cocoa powder."
+        }
+      ]
+    },
+    {
+      "id": "step_step_7",
+      "descr": "Ultimately the pastry should be short and crisp and the...",
+      "instructions": "Ultimately the pastry should be short and crisp and the filling should be smooth and should cut like butter.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "cool_around"
+      ],
+      "on_enter": [
+        {
+          "say": "Ultimately the pastry should be short and crisp and the filling should be smooth and should cut like butter."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "436 calories",
+    "carbohydrates": "30.2 g",
+    "fat": "32.9 g",
+    "fiber": "3.6 g",
+    "protein": "4.8 g"
+  }
+}

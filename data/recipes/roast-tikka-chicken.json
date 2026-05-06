@@ -1,0 +1,236 @@
+{
+  "recipe": {
+    "id": "roast-tikka-chicken",
+    "title": "Roast tikka chicken",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT70M",
+    "description": "This spiced roast chicken recipe is a great twist on a classic Sunday roast, and has just 5 ingredients!",
+    "tags": [
+      "chicken",
+      "roast-potatoes",
+      "cauliflower",
+      "quick-amp-easy-series-1",
+      "tv-shows",
+      "low-lactose",
+      "gluten-free",
+      "curry-paste",
+      "potato",
+      "cheap-amp-cheerful",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "indian",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/roast-tikka-chicken",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4a8b1e04c4e8150635be3e4e94cf023fb643778f-956x1280.jpg/55846380?rect=0,162,956,956&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4a8b1e04c4e8150635be3e4e94cf023fb643778f-956x1280.jpg/55846380?rect=0,162,956,956&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4a8b1e04c4e8150635be3e4e94cf023fb643778f-956x1280.jpg/55846380?rect=0,282,956,717&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/4a8b1e04c4e8150635be3e4e94cf023fb643778f-956x1280.jpg/55846380?rect=0,371,956,538&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "small-head-of-cauliflower",
+      "name": "small head of cauliflower",
+      "quantity": 1.0,
+      "unit": null,
+      "note": "600g"
+    },
+    {
+      "id": "fresh-coriander",
+      "name": "fresh coriander",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "30g"
+    },
+    {
+      "id": "1-2kg-whole-chicken",
+      "name": "1.2kg whole chicken",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "tikka-curry-paste",
+      "name": "tikka curry paste",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00baC/350\u00baF/gas 4",
+      "instructions": "Preheat the oven to 180\u00baC/350\u00baF/gas 4.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_chunks"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00baC/350\u00baF/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "chop_chunks",
+      "descr": "Wash the potatoes and chop into 3cm chunks",
+      "instructions": "Wash the potatoes and chop into 3cm chunks. Trim the cauli stalk, remove any tough outer leaves, then chop the cauli and nice leaves the same size as the spuds.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "slice_coriander"
+      ],
+      "on_enter": [
+        {
+          "say": "Wash the potatoes and chop into 3cm chunks. Trim the cauli stalk, remove any tough outer leaves, then chop the cauli and nice leaves the same size as the spuds."
+        }
+      ]
+    },
+    {
+      "id": "slice_coriander",
+      "descr": "Finely slice the coriander stalks (reserving the leaves...",
+      "instructions": "Finely slice the coriander stalks (reserving the leaves in a bowl of cold water).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_chunks"
+      ],
+      "next": [
+        "roast_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely slice the coriander stalks (reserving the leaves in a bowl of cold water)."
+        }
+      ]
+    },
+    {
+      "id": "roast_tray",
+      "descr": "In a 30cm x 40cm roasting tray, toss the veg and...",
+      "instructions": "In a 30cm x 40cm roasting tray, toss the veg and coriander stalks with a pinch of sea salt and black pepper, and 1 tablespoon each of olive oil and red wine vinegar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "slice_coriander"
+      ],
+      "next": [
+        "step_step_5"
+      ],
+      "on_enter": [
+        {
+          "say": "In a 30cm x 40cm roasting tray, toss the veg and coriander stalks with a pinch of sea salt and black pepper, and 1 tablespoon each of olive oil and red wine vinegar."
+        }
+      ]
+    },
+    {
+      "id": "step_step_5",
+      "descr": "Sit the chicken in the tray and rub all over with the...",
+      "instructions": "Sit the chicken in the tray and rub all over with the tikka paste, getting into all the nooks and crannies.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_tray"
+      ],
+      "next": [
+        "step_step_6"
+      ],
+      "on_enter": [
+        {
+          "say": "Sit the chicken in the tray and rub all over with the tikka paste, getting into all the nooks and crannies."
+        }
+      ]
+    },
+    {
+      "id": "step_step_6",
+      "descr": "Place the chicken directly on the bars of the oven,...",
+      "instructions": "Place the chicken directly on the bars of the oven, scrunch everything in the tray and place exactly underneath the chicken to catch the tasty juices.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "step_step_5"
+      ],
+      "next": [
+        "roast_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the chicken directly on the bars of the oven, scrunch everything in the tray and place exactly underneath the chicken to catch the tasty juices."
+        }
+      ]
+    },
+    {
+      "id": "roast_hour",
+      "descr": "Roast for 1 hour, or until everything is golden and...",
+      "instructions": "Roast for 1 hour, or until everything is golden and cooked through, turning the veg halfway.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT3600S",
+      "depends_on": [
+        "step_step_6"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast for 1 hour, or until everything is golden and cooked through, turning the veg halfway."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Sit the chicken on top of the veg to rest for 5 minutes,...",
+      "instructions": "Sit the chicken on top of the veg to rest for 5 minutes, then sprinkle over the drained coriander leaves and serve, tossing the veg in all the tasty juices before dishing up.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT300S",
+      "depends_on": [
+        "roast_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Sit the chicken on top of the veg to rest for 5 minutes, then sprinkle over the drained coriander leaves and serve, tossing the veg in all the tasty juices before dishing up."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "467 calories",
+    "carbohydrates": "40.6 g",
+    "fat": "15.9 g",
+    "fiber": "5.9 g",
+    "protein": "42.3 g"
+  }
+}

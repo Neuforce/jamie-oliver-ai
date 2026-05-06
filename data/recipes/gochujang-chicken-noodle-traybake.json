@@ -1,0 +1,187 @@
+{
+  "recipe": {
+    "id": "gochujang-chicken-noodle-traybake",
+    "title": "Gochujang chicken noodle traybake",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT62M",
+    "description": "Jamie takes midweek meals up a notch with this Korean-spiced chicken one tray wonder \u2013 prep in no time and let the oven do the hard work.",
+    "tags": [
+      "one-pan",
+      "noodles",
+      "chicken",
+      "cabbage"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/gochujang-chicken-noodle-traybake",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d7f6659e46ba6c47ee1a9717f79a1c63c3e9748f-958x1280.jpg/160279485?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d7f6659e46ba6c47ee1a9717f79a1c63c3e9748f-958x1280.jpg/160279485?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d7f6659e46ba6c47ee1a9717f79a1c63c3e9748f-958x1280.jpg/160279485?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/d7f6659e46ba6c47ee1a9717f79a1c63c3e9748f-958x1280.jpg/160279485?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "6cm-pieces-of-ginger",
+      "name": "6cm pieces of ginger",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "80g total"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "sweetheart-cabbage",
+      "name": "sweetheart cabbage",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-chicken-thigh",
+      "name": "large free-range chicken thighs",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "skin on, bone in"
+    },
+    {
+      "id": "heaped-tablespoons-gochujang-p",
+      "name": "heaped tablespoons gochujang paste",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "nests-of-vermicelli-rice-noodl",
+      "name": "nests of vermicelli rice noodles",
+      "quantity": 4.0,
+      "unit": null,
+      "note": "200g total"
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "sesame-seeds",
+      "name": "sesame seeds",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "oven"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Peel and finely slice the ginger and garlic, quarter the cabbage lengthways, then place it all in a 25cm x 30cm roasting tray with the chicken thighs and gochujang paste.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6. Peel and finely slice the ginger and garlic, quarter the cabbage lengthways, then place it all in a 25cm x 30cm roasting tray with the chicken thighs and gochujang paste."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Drizzle everything with 1 tablespoon of olive oil and 2...",
+      "instructions": "Drizzle everything with 1 tablespoon of olive oil and 2 tablespoons of red wine vinegar, add a pinch of black pepper, then mix well, massaging that flavour in. Arrange the chicken skin side up and roast for 30 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "slice_reserve"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle everything with 1 tablespoon of olive oil and 2 tablespoons of red wine vinegar, add a pinch of black pepper, then mix well, massaging that flavour in. Arrange the chicken skin side up and roast for 30 minutes."
+        }
+      ]
+    },
+    {
+      "id": "slice_reserve",
+      "descr": "Plunge the noodles into a bowl of boiling water for 1...",
+      "instructions": "Plunge the noodles into a bowl of boiling water for 1 minute, then remove the tray from the oven and use tongs to drag the noodles into the tray, dressing them in the tray juices, and nestling them in the corners. Trim the spring onions, finely slice and reserve the green tops, then add the lengths to the tray. Move the chicken thighs to sit back on top \u2013 we want the skin to get nice and crispy.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "pour_cold"
+      ],
+      "on_enter": [
+        {
+          "say": "Plunge the noodles into a bowl of boiling water for 1 minute, then remove the tray from the oven and use tongs to drag the noodles into the tray, dressing them in the tray juices, and nestling them in the corners. Trim the spring onions, finely slice and reserve the green tops, then add the lengths to the tray. Move the chicken thighs to sit back on top \u2013 we want the skin to get nice and crispy."
+        }
+      ]
+    },
+    {
+      "id": "pour_cold",
+      "descr": "Pour 200ml of cold water into the tray, scatter over the...",
+      "instructions": "Pour 200ml of cold water into the tray, scatter over the sesame seeds, then roast for another 20 minutes, or until the chicken is cooked through, the cabbage is tender and the noodles have hydrated in all the cooking juices. Scatter over the reserved spring onion tops, to serve.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1200S",
+      "depends_on": [
+        "slice_reserve"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour 200ml of cold water into the tray, scatter over the sesame seeds, then roast for another 20 minutes, or until the chicken is cooked through, the cabbage is tender and the noodles have hydrated in all the cooking juices. Scatter over the reserved spring onion tops, to serve."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "549 calories",
+    "carbohydrates": "55.4 g",
+    "fat": "23 g",
+    "fiber": "5.4 g",
+    "protein": "30.1 g"
+  }
+}

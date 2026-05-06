@@ -1,0 +1,351 @@
+{
+  "recipe": {
+    "id": "allotment-cottage-pie",
+    "title": "Allotment cottage pie",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT120M",
+    "description": "Extraordinarily delicious, this corker of a recipe is super nutritious and comforting \u2013 and guaranteed to put a smile on anyone\u2019s face.",
+    "tags": [
+      "tv",
+      "mash-potato",
+      "jamie-s-meat-free-meals",
+      "vegetarian",
+      "course",
+      "tv-shows",
+      "gluten-free",
+      "vegetables",
+      "potato",
+      "keep-cooking-vegetarian",
+      "cheap-amp-cheerful",
+      "pie",
+      "keep-cooking-and-carry-on",
+      "main-ingredient"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/allotment-cottage-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/72e320c826f39d2dc2afed8e24ef3a645093e724-958x1280.jpg/92507776?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/72e320c826f39d2dc2afed8e24ef3a645093e724-958x1280.jpg/92507776?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/72e320c826f39d2dc2afed8e24ef3a645093e724-958x1280.jpg/92507776?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/72e320c826f39d2dc2afed8e24ef3a645093e724-958x1280.jpg/92507776?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "dried-porcini-mushrooms",
+      "name": "dried porcini mushrooms",
+      "quantity": 10.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "large-leeks",
+      "name": "large leeks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 3.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "swede",
+      "name": "swede",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "celeriac",
+      "name": "celeriac",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 3.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "cumin-seeds",
+      "name": "cumin seeds",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "potatoes",
+      "name": "potatoes",
+      "quantity": 2.0,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "unsalted-butter",
+      "name": "unsalted butter",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "splash-of-semi-skimmed-milk",
+      "name": "splash of semi-skimmed milk",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "marmite",
+      "name": "Marmite",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "tomato-pur-e",
+      "name": "tomato pur\u00e9e",
+      "quantity": 3.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-green-lentils",
+      "name": "400g tin of green lentils",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "oven",
+    "pan",
+    "pot",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "boil_water",
+      "descr": "In a blender, cover the porcini with 600ml of boiling water",
+      "instructions": "In a blender, cover the porcini with 600ml of boiling water.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_roughly"
+      ],
+      "on_enter": [
+        {
+          "say": "In a blender, cover the porcini with 600ml of boiling water."
+        }
+      ]
+    },
+    {
+      "id": "chop_roughly",
+      "descr": "Trim, wash and slice the leeks 2cm thick, then scrub the...",
+      "instructions": "Trim, wash and slice the leeks 2cm thick, then scrub the carrots, swede and celeriac and chop to roughly the same size.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "boil_water"
+      ],
+      "next": [
+        "heat_strip"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim, wash and slice the leeks 2cm thick, then scrub the carrots, swede and celeriac and chop to roughly the same size."
+        }
+      ]
+    },
+    {
+      "id": "heat_strip",
+      "descr": "Drizzle 2 tablespoons of oil into a large casserole pan...",
+      "instructions": "Drizzle 2 tablespoons of oil into a large casserole pan on a medium heat, strip in the rosemary, fry for 1 minute to crisp up, then remove to a plate with a slotted spoon.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT60S",
+      "depends_on": [
+        "chop_roughly"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Drizzle 2 tablespoons of oil into a large casserole pan on a medium heat, strip in the rosemary, fry for 1 minute to crisp up, then remove to a plate with a slotted spoon."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Add the cumin seeds and prepped veg to the flavoured...",
+      "instructions": "Add the cumin seeds and prepped veg to the flavoured oil, season with sea salt and black pepper, and cook for 30 minutes, stirring regularly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "heat_strip"
+      ],
+      "next": [
+        "chop_potatoes"
+      ],
+      "on_enter": [
+        {
+          "say": "Add the cumin seeds and prepped veg to the flavoured oil, season with sea salt and black pepper, and cook for 30 minutes, stirring regularly."
+        }
+      ]
+    },
+    {
+      "id": "chop_potatoes",
+      "descr": "Meanwhile, peel and roughly chop the potatoes, cook in a...",
+      "instructions": "Meanwhile, peel and roughly chop the potatoes, cook in a pan of boiling salted water for 15 minutes, or until tender, then drain well. Mash with the butter and milk, and season to taste.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, peel and roughly chop the potatoes, cook in a pan of boiling salted water for 15 minutes, or until tender, then drain well. Mash with the butter and milk, and season to taste."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 190\u00baC/375\u00baF/gas 5",
+      "instructions": "Preheat the oven to 190\u00baC/375\u00baF/gas 5.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_potatoes"
+      ],
+      "next": [
+        "add_porcini"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 190\u00baC/375\u00baF/gas 5."
+        }
+      ]
+    },
+    {
+      "id": "add_porcini",
+      "descr": "Quarter the onion, add to the porcini in the blender...",
+      "instructions": "Quarter the onion, add to the porcini in the blender along with the Marmite and tomato pur\u00e9e and whiz until smooth.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "stir_ring"
+      ],
+      "on_enter": [
+        {
+          "say": "Quarter the onion, add to the porcini in the blender along with the Marmite and tomato pur\u00e9e and whiz until smooth."
+        }
+      ]
+    },
+    {
+      "id": "stir_ring",
+      "descr": "Pour into the veg pan and cook for 20 minutes, or until...",
+      "instructions": "Pour into the veg pan and cook for 20 minutes, or until dark and caramelised, stirring regularly and scraping up any sticky bits from the bottom of the pan.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1200S",
+      "depends_on": [
+        "add_porcini"
+      ],
+      "next": [
+        "boil_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour into the veg pan and cook for 20 minutes, or until dark and caramelised, stirring regularly and scraping up any sticky bits from the bottom of the pan."
+        }
+      ]
+    },
+    {
+      "id": "boil_taste",
+      "descr": "Tip the lentils (juices and all) into the veg pan, bring...",
+      "instructions": "Tip the lentils (juices and all) into the veg pan, bring to the boil, then season to taste.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "stir_ring"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Tip the lentils (juices and all) into the veg pan, bring to the boil, then season to taste."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Spoon over the mash, place on a tray, bake for 30...",
+      "instructions": "Spoon over the mash, place on a tray, bake for 30 minutes, or until lightly golden and bubbling at the edges, then sprinkle over the crispy rosemary. Serve with simple steamed seasonal greens \u2013 it\u2019s a winner!",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1800S",
+      "depends_on": [
+        "boil_taste"
+      ],
+      "on_enter": [
+        {
+          "say": "Spoon over the mash, place on a tray, bake for 30 minutes, or until lightly golden and bubbling at the edges, then sprinkle over the crispy rosemary. Serve with simple steamed seasonal greens \u2013 it\u2019s a winner!"
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "466 calories",
+    "carbohydrates": "80 g",
+    "fat": "12 g",
+    "fiber": "13.7 g",
+    "protein": "14 g"
+  }
+}

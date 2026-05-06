@@ -1,0 +1,204 @@
+{
+  "recipe": {
+    "id": "fish-filo-parcel-beans",
+    "title": "Fish filo parcel & beans",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT45M",
+    "description": "Delicious, golden pastry filled with tender fish, spinach and aromatic herbs - all with flavour-packed beans and a dollop of creamy yoghurt. ",
+    "tags": [
+      "beans",
+      "yoghurt",
+      "tomato",
+      "fish",
+      "lemon",
+      "spinach"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fish/fish-filo-parcel-beans",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/00c414aefac0d5f2a4d5ff29f60c04aeab4e386d-969x1279.jpg/163881235?rect=0,156,969,969&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/00c414aefac0d5f2a4d5ff29f60c04aeab4e386d-969x1279.jpg/163881235?rect=0,156,969,969&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/00c414aefac0d5f2a4d5ff29f60c04aeab4e386d-969x1279.jpg/163881235?rect=0,277,969,727&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/00c414aefac0d5f2a4d5ff29f60c04aeab4e386d-969x1279.jpg/163881235?rect=0,368,969,545&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fish"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "baby-spinach",
+      "name": "baby spinach",
+      "quantity": 320.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "dill",
+      "name": "dill",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": "20g"
+    },
+    {
+      "id": "sheets-of-filo-pastry",
+      "name": "sheets of filo pastry",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "130g-trout-or-salmon-fillets",
+      "name": "130g trout or salmon fillets",
+      "quantity": 130.0,
+      "unit": null,
+      "note": "skin off, pin-boned, from sustainable sources"
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 2.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "ripe-cherry-tomatoes",
+      "name": "ripe cherry tomatoes",
+      "quantity": 500.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "400g-tins-of-cannellini-beans",
+      "name": "400g tins of cannellini beans",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "red-wine-vinegar",
+      "name": "red wine vinegar",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "dijon-mustard",
+      "name": "Dijon mustard",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "heaped-tablespoons-natural-yog",
+      "name": "heaped tablespoons natural yoghurt",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking tray",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Put a large shallow casserole pan on a medium-high heat with a spritz of olive oil, the spinach and most of the dill, stalks and all, reserving a few fronds for garnish. Cook for 10 minutes, or until the excess moisture has evaporated, stirring occasionally. Remove to a board, finely chop and season to perfection with sea salt and black pepper.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "next": [
+        "mix_ture"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 180\u00b0C/350\u00b0F/gas 4. Put a large shallow casserole pan on a medium-high heat with a spritz of olive oil, the spinach and most of the dill, stalks and all, reserving a few fronds for garnish. Cook for 10 minutes, or until the excess moisture has evaporated, stirring occasionally. Remove to a board, finely chop and season to perfection with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "mix_ture",
+      "descr": "Lay out 2 sheets of overlapping filo on a clean work...",
+      "instructions": "Lay out 2 sheets of overlapping filo on a clean work surface with the short ends facing you. Spritz with olive oil, then put the other 2 sheets on top and spritz again. Sit 2 trout fillets facing each other in the middle at the bottom, so the thinner ends of the fillets overlap, pile the spinach mixture on top in an even layer, then sit the remaining fillets on top. Fold in the sides of the filo, then roll it up into a parcel. Place on an oil-spritzed baking tray, generously spritz with oil and cook for 30 minutes, or until golden and cooked through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT1800S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Lay out 2 sheets of overlapping filo on a clean work surface with the short ends facing you. Spritz with olive oil, then put the other 2 sheets on top and spritz again. Sit 2 trout fillets facing each other in the middle at the bottom, so the thinner ends of the fillets overlap, pile the spinach mixture on top in an even layer, then sit the remaining fillets on top. Fold in the sides of the filo, then roll it up into a parcel. Place on an oil-spritzed baking tray, generously spritz with oil and cook for 30 minutes, or until golden and cooked through."
+        }
+      ]
+    },
+    {
+      "id": "heat_minutes",
+      "descr": "Meanwhile, wipe out the pan",
+      "instructions": "Meanwhile, wipe out the pan. Spritz it with oil, then peel, finely chop and add the garlic. Halve and add the tomatoes, and cook on a medium heat for 5 minutes, or until softened. Pour in the beans, juice and all, and simmer for another 5 minutes, or until thickened, then add \u00bd a tablespoon of red wine vinegar and season to perfection.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "mix_ture"
+      ],
+      "next": [
+        "stir_dijon"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, wipe out the pan. Spritz it with oil, then peel, finely chop and add the garlic. Halve and add the tomatoes, and cook on a medium heat for 5 minutes, or until softened. Pour in the beans, juice and all, and simmer for another 5 minutes, or until thickened, then add \u00bd a tablespoon of red wine vinegar and season to perfection."
+        }
+      ]
+    },
+    {
+      "id": "stir_dijon",
+      "descr": "Stir the Dijon through the yoghurt, and serve it all...",
+      "instructions": "Stir the Dijon through the yoghurt, and serve it all together, with lemon wedges on the side and the reserved dill scattered over the top.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_minutes"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir the Dijon through the yoghurt, and serve it all together, with lemon wedges on the side and the reserved dill scattered over the top."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "465 calories",
+    "carbohydrates": "46.3 g",
+    "fat": "11.9 g",
+    "fiber": "12.9 g",
+    "protein": "42.5 g"
+  }
+}

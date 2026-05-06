@@ -1,0 +1,337 @@
+{
+  "recipe": {
+    "id": "baked-meatballs-tomato-sauce",
+    "title": "Baked meatballs & tomato sauce",
+    "servings": 4,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT60M",
+    "description": "This beautiful, easy meatball recipe from Jamie Oliver shows you how to make meatballs and tomato sauce from scratch. Great with spaghetti, or crusty bread.",
+    "tags": [
+      "penguin-anniversary-edition",
+      "lamb",
+      "mince",
+      "tomato-sauce",
+      "minced-beef",
+      "meatballs",
+      "tomato",
+      "meatball",
+      "lunch-amp-dinner-recipes",
+      "course"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/minced-beef/naked-chef-meatballs",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/86fa5adcbcc5a7df56107854103f4145c310de8a-958x1280.jpg/89156533?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/86fa5adcbcc5a7df56107854103f4145c310de8a-958x1280.jpg/89156533?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/86fa5adcbcc5a7df56107854103f4145c310de8a-958x1280.jpg/89156533?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/86fa5adcbcc5a7df56107854103f4145c310de8a-958x1280.jpg/89156533?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "minced-beef"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "quality-lean-meat-for-mincing",
+      "name": "quality lean meat for mincing",
+      "quantity": 800.0,
+      "unit": "g",
+      "note": "or bought minced meat"
+    },
+    {
+      "id": "bread",
+      "name": "bread",
+      "quantity": 2.0,
+      "unit": "slices",
+      "note": null
+    },
+    {
+      "id": "teaspoon-cumin-seeds",
+      "name": "\u00bd teaspoon cumin seeds",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-small-dried-red-chilli",
+      "name": "\u00bd a small dried red chilli",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 1.0,
+      "unit": "sprig",
+      "note": null
+    },
+    {
+      "id": "level-tablespoons-dried-oregan",
+      "name": "level tablespoons dried oregano",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "large-free-range-egg-yolk",
+      "name": "large free-range egg yolk",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "basic-tomato-sauce",
+      "name": "Basic tomato sauce",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-basil",
+      "name": "fresh basil",
+      "quantity": 2.0,
+      "unit": "handfuls",
+      "note": null
+    },
+    {
+      "id": "mozzarella-cheese",
+      "name": "mozzarella cheese",
+      "quantity": 60.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "parmesan-cheese",
+      "name": "Parmesan cheese",
+      "quantity": 60.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "optional",
+      "name": "OPTIONAL",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 1.0,
+      "unit": "clove",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "level-tablespoon-dijon-mustard",
+      "name": "level tablespoon Dijon mustard",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "bowl",
+    "food processor",
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "mince_whiz",
+      "descr": "If your meat is not already minced, whiz it up in a food...",
+      "instructions": "If your meat is not already minced, whiz it up in a food processor to the required consistency and place it in a bowl.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "add_meat"
+      ],
+      "on_enter": [
+        {
+          "say": "If your meat is not already minced, whiz it up in a food processor to the required consistency and place it in a bowl."
+        }
+      ]
+    },
+    {
+      "id": "add_meat",
+      "descr": "Use the food processor to turn the bread into...",
+      "instructions": "Use the food processor to turn the bread into breadcrumbs, then add to the meat.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mince_whiz"
+      ],
+      "next": [
+        "chop_rosemary"
+      ],
+      "on_enter": [
+        {
+          "say": "Use the food processor to turn the bread into breadcrumbs, then add to the meat."
+        }
+      ]
+    },
+    {
+      "id": "chop_rosemary",
+      "descr": "Bash up the cumin seeds and dried chilli in a pestle and...",
+      "instructions": "Bash up the cumin seeds and dried chilli in a pestle and mortar, and pick and finely chop the rosemary leaves. Add to the mince with the dried oregano and egg yolk. Season well with sea salt and black pepper.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_meat"
+      ],
+      "next": [
+        "chop_ping"
+      ],
+      "on_enter": [
+        {
+          "say": "Bash up the cumin seeds and dried chilli in a pestle and mortar, and pick and finely chop the rosemary leaves. Add to the mince with the dried oregano and egg yolk. Season well with sea salt and black pepper."
+        }
+      ]
+    },
+    {
+      "id": "chop_ping",
+      "descr": "At this stage you could add your optional ingredients...",
+      "instructions": "At this stage you could add your optional ingredients (peeling and finely chopping the onion and garlic first, then cooked together gently in 1 tablespoon of oil until tender and allowed to cool).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_rosemary"
+      ],
+      "next": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "At this stage you could add your optional ingredients (peeling and finely chopping the onion and garlic first, then cooked together gently in 1 tablespoon of oil until tender and allowed to cool)."
+        }
+      ]
+    },
+    {
+      "id": "mix_well",
+      "descr": "Mix well, and, with wet hands, roll and pat into...",
+      "instructions": "Mix well, and, with wet hands, roll and pat into meatballs the size and shape you want (cook straight away or put on greaseproof paper and refrigerated for up to a day.)",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_ping"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Mix well, and, with wet hands, roll and pat into meatballs the size and shape you want (cook straight away or put on greaseproof paper and refrigerated for up to a day.)"
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6 and heat a...",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6 and heat a thick-bottomed casserole pan on the hob.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "mix_well"
+      ],
+      "next": [
+        "add_your"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6 and heat a thick-bottomed casserole pan on the hob."
+        }
+      ]
+    },
+    {
+      "id": "add_your",
+      "descr": "Swirl 4 tablespoons of oil around the pan and add your...",
+      "instructions": "Swirl 4 tablespoons of oil around the pan and add your meatballs. Fry until brown all over, being careful not to break them up.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Swirl 4 tablespoons of oil around the pan and add your meatballs. Fry until brown all over, being careful not to break them up."
+        }
+      ]
+    },
+    {
+      "id": "heat_down",
+      "descr": "Turn the heat down and cover with the Basic tomato...",
+      "instructions": "Turn the heat down and cover with the Basic tomato sauce, pick the basil leaves and tear in fresh basil, tear over the mozzarella and finely grate over the Parmesan.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_your"
+      ],
+      "next": [
+        "step_step_9"
+      ],
+      "on_enter": [
+        {
+          "say": "Turn the heat down and cover with the Basic tomato sauce, pick the basil leaves and tear in fresh basil, tear over the mozzarella and finely grate over the Parmesan."
+        }
+      ]
+    },
+    {
+      "id": "step_step_9",
+      "descr": "Cook in the oven for about 15 to 20 minutes, or until...",
+      "instructions": "Cook in the oven for about 15 to 20 minutes, or until the cheese is golden.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1200S",
+      "depends_on": [
+        "heat_down"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook in the oven for about 15 to 20 minutes, or until the cheese is golden."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "714 calories",
+    "carbohydrates": "21.0 g",
+    "fat": "44.2 g",
+    "fiber": "4.6 g",
+    "protein": "58.6 g"
+  }
+}

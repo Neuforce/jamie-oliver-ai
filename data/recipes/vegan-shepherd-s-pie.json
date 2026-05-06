@@ -1,0 +1,437 @@
+{
+  "recipe": {
+    "id": "vegan-shepherd-s-pie",
+    "title": "Vegan shepherd's pie",
+    "servings": 8,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT85M",
+    "description": "Jamie's vegan shepherd's pie recipe is a warm and comforting treat; topped with a root mash and breadcrumbs this vegan shepherds pie is a real crowd pleaser.",
+    "tags": [
+      "dinner-party",
+      "money-saving-recipes",
+      "vegan",
+      "lentils",
+      "source-of-fibre",
+      "dish-type",
+      "family-food",
+      "healthy-vegetarian-recipes",
+      "lunch-amp-dinner-recipes",
+      "low-lactose",
+      "vegetables",
+      "potato",
+      "low-salt",
+      "dairy-free",
+      "course",
+      "mash",
+      "mash-potato",
+      "mains",
+      "mushroom",
+      "occasion",
+      "pie",
+      "freezer-friendly-recipes",
+      "vegetarian",
+      "method",
+      "nutrition",
+      "low-saturated-fat",
+      "pies-amp-pastries",
+      "2-of-your-5-a-day",
+      "family-batch-cooking",
+      "healthy-meals",
+      "main-ingredient",
+      "family-money-saving-recipes",
+      "baking",
+      "shepherds-pie",
+      "winter-warmers",
+      "chickpea",
+      "healthy-dinner-ideas"
+    ],
+    "course": "main",
+    "cuisine": "british",
+    "source_url": "https://www.jamieoliver.com/recipes/vegetables/vegan-shepherd-s-pie",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/62439b2778e9f34f8dcf409e632662dffdcf4138-973x1300.jpg/62439b2778e9f34f8dcf409e632662dffdcf4138-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/62439b2778e9f34f8dcf409e632662dffdcf4138-973x1300.jpg/62439b2778e9f34f8dcf409e632662dffdcf4138-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/62439b2778e9f34f8dcf409e632662dffdcf4138-973x1300.jpg/62439b2778e9f34f8dcf409e632662dffdcf4138-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/62439b2778e9f34f8dcf409e632662dffdcf4138-973x1300.jpg/62439b2778e9f34f8dcf409e632662dffdcf4138-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "vegetables"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "maris-piper-potatoes",
+      "name": "Maris Piper potatoes",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sweet-potatoes",
+      "name": "sweet potatoes",
+      "quantity": 600.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "dairy-free-margarine",
+      "name": "dairy-free margarine",
+      "quantity": 40.0,
+      "unit": "g",
+      "note": "or use butter or margarine if you\u2019re not vegan"
+    },
+    {
+      "id": "onion",
+      "name": "onion",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "carrots",
+      "name": "carrots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 3.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "quantity": 2.0,
+      "unit": "sticks",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "coriander-seeds",
+      "name": "coriander seeds",
+      "quantity": 1.0,
+      "unit": "tablespoon",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-thyme",
+      "name": "\u00bd a bunch of fresh thyme",
+      "quantity": null,
+      "unit": null,
+      "note": "10g"
+    },
+    {
+      "id": "chestnut-mushrooms",
+      "name": "chestnut mushrooms",
+      "quantity": 350.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "sun-dried-tomatoes",
+      "name": "sun-dried tomatoes",
+      "quantity": 12.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "balsamic-vinegar",
+      "name": "balsamic vinegar",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "optional-vegan-red-wine",
+      "name": "optional: vegan red wine",
+      "quantity": null,
+      "unit": null,
+      "note": "or regular red wine if you\u2019re not vegan"
+    },
+    {
+      "id": "vegetable-stock",
+      "name": "vegetable stock",
+      "quantity": 100.0,
+      "unit": "ml",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-lentils",
+      "name": "400g tin of lentils",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-chickpeas",
+      "name": "400g tin of chickpeas",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-flat-leaf-parsley",
+      "name": "fresh flat-leaf parsley",
+      "quantity": 5.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "fresh-rosemary",
+      "name": "fresh rosemary",
+      "quantity": 2.0,
+      "unit": "sprigs",
+      "note": null
+    },
+    {
+      "id": "lemon",
+      "name": "lemon",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-breadcrumbs",
+      "name": "fresh breadcrumbs",
+      "quantity": 30.0,
+      "unit": "g",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "baking dish",
+    "bowl",
+    "grill",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6",
+      "instructions": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "heat_bring"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 200\u00b0C/400\u00b0F/gas 6."
+        }
+      ]
+    },
+    {
+      "id": "heat_bring",
+      "descr": "Peel and chop all the potatoes into rough 2cm chunks",
+      "instructions": "Peel and chop all the potatoes into rough 2cm chunks. Place the Maris Pipers into a large pan of cold salted water over a medium heat. Bring to the boil, then simmer for 10 to 15 minutes, or until tender, adding the sweet potatoes after 5 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "steam_return"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and chop all the potatoes into rough 2cm chunks. Place the Maris Pipers into a large pan of cold salted water over a medium heat. Bring to the boil, then simmer for 10 to 15 minutes, or until tender, adding the sweet potatoes after 5 minutes."
+        }
+      ]
+    },
+    {
+      "id": "steam_return",
+      "descr": "Drain and leave to steam dry, then return to the pan...",
+      "instructions": "Drain and leave to steam dry, then return to the pan with the margarine and a pinch of sea salt and black pepper. Mash until smooth, then set aside.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_bring"
+      ],
+      "next": [
+        "heat_good"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain and leave to steam dry, then return to the pan with the margarine and a pinch of sea salt and black pepper. Mash until smooth, then set aside."
+        }
+      ]
+    },
+    {
+      "id": "heat_good",
+      "descr": "Peel and finely slice the onion, carrots and 2 garlic...",
+      "instructions": "Peel and finely slice the onion, carrots and 2 garlic cloves, then trim and finely slice the celery. Add it all to a medium pan over a medium heat with a good splash of oil.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "steam_return"
+      ],
+      "next": [
+        "add_pick"
+      ],
+      "on_enter": [
+        {
+          "say": "Peel and finely slice the onion, carrots and 2 garlic cloves, then trim and finely slice the celery. Add it all to a medium pan over a medium heat with a good splash of oil."
+        }
+      ]
+    },
+    {
+      "id": "add_pick",
+      "descr": "Bash the coriander seeds in a pestle and mortar until...",
+      "instructions": "Bash the coriander seeds in a pestle and mortar until fine, then add to the pan. Pick in the thyme leaves and cook for around 10 minutes, or until softened.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_good"
+      ],
+      "next": [
+        "chop_mushrooms"
+      ],
+      "on_enter": [
+        {
+          "say": "Bash the coriander seeds in a pestle and mortar until fine, then add to the pan. Pick in the thyme leaves and cook for around 10 minutes, or until softened."
+        }
+      ]
+    },
+    {
+      "id": "chop_mushrooms",
+      "descr": "Meanwhile, roughly chop the mushrooms and sun-dried...",
+      "instructions": "Meanwhile, roughly chop the mushrooms and sun-dried tomatoes, then add to the pan along with the vinegar and 2 tablespoons of the sun-dried tomato oil from the jar.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_pick"
+      ],
+      "next": [
+        "heat_allow"
+      ],
+      "on_enter": [
+        {
+          "say": "Meanwhile, roughly chop the mushrooms and sun-dried tomatoes, then add to the pan along with the vinegar and 2 tablespoons of the sun-dried tomato oil from the jar."
+        }
+      ]
+    },
+    {
+      "id": "heat_allow",
+      "descr": "Cook for a further 10 minutes, then add a splash of...",
+      "instructions": "Cook for a further 10 minutes, then add a splash of wine, if using, turn up the heat, and allow it to bubble away. Stir in the stock, lentils and chickpeas (juice and all), then leave it to tick away for 5 to 10 minutes, or until slightly thickened and reduced.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "chop_mushrooms"
+      ],
+      "next": [
+        "chop_parsley"
+      ],
+      "on_enter": [
+        {
+          "say": "Cook for a further 10 minutes, then add a splash of wine, if using, turn up the heat, and allow it to bubble away. Stir in the stock, lentils and chickpeas (juice and all), then leave it to tick away for 5 to 10 minutes, or until slightly thickened and reduced."
+        }
+      ]
+    },
+    {
+      "id": "chop_parsley",
+      "descr": "Pick and roughly chop the parsley leaves, then stir into...",
+      "instructions": "Pick and roughly chop the parsley leaves, then stir into the pan. Season to taste, then transfer to a baking dish (roughly 25cm x 30cm).",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "heat_allow"
+      ],
+      "next": [
+        "top_scuffing"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick and roughly chop the parsley leaves, then stir into the pan. Season to taste, then transfer to a baking dish (roughly 25cm x 30cm)."
+        }
+      ]
+    },
+    {
+      "id": "top_scuffing",
+      "descr": "Spread the mash over the top, scuffing it up with the...",
+      "instructions": "Spread the mash over the top, scuffing it up with the back of a spoon.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_parsley"
+      ],
+      "next": [
+        "slice_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Spread the mash over the top, scuffing it up with the back of a spoon."
+        }
+      ]
+    },
+    {
+      "id": "slice_remaining",
+      "descr": "Finely slice the remaining garlic clove, then place into...",
+      "instructions": "Finely slice the remaining garlic clove, then place into a bowl with the rosemary leaves, lemon zest, breadcrumbs and 1 tablespoon of oil. Mix well, sprinkle over the mash, then place in the hot oven for around 10 minutes, or until piping hot through.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "top_scuffing"
+      ],
+      "next": [
+        "grill_further"
+      ],
+      "on_enter": [
+        {
+          "say": "Finely slice the remaining garlic clove, then place into a bowl with the rosemary leaves, lemon zest, breadcrumbs and 1 tablespoon of oil. Mix well, sprinkle over the mash, then place in the hot oven for around 10 minutes, or until piping hot through."
+        }
+      ]
+    },
+    {
+      "id": "grill_further",
+      "descr": "Place under the grill for a further 2 to 3 minutes, or...",
+      "instructions": "Place under the grill for a further 2 to 3 minutes, or until golden, then serve with seasonal greens.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT180S",
+      "depends_on": [
+        "slice_remaining"
+      ],
+      "on_enter": [
+        {
+          "say": "Place under the grill for a further 2 to 3 minutes, or until golden, then serve with seasonal greens."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "389 calories",
+    "carbohydrates": "51.3 g",
+    "fat": "16.3 g",
+    "fiber": "9.7 g",
+    "protein": "11.2 g"
+  }
+}

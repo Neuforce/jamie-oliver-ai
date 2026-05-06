@@ -1,0 +1,106 @@
+{
+  "recipe": {
+    "id": "peach-melba-overnight-oats",
+    "title": "Peach Melba overnight oats",
+    "servings": 1,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "description": "Using the overnight oats you made earlier in the week, layer it up with more fruit and yoghurt! Perfect on-the-go, get-ahead breakfast.",
+    "tags": [
+      "apple",
+      "breakfast-brunch",
+      "healthy-breakfasts",
+      "banana",
+      "vegetarian",
+      "healthy-vegetarian",
+      "fruit",
+      "meals-for-one"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/peach-melba-overnight-oats",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/52e8ad43ecf9bccc309b5db5998dc56dc005e90c-946x1279.jpg/163194083?rect=0,167,946,946&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/52e8ad43ecf9bccc309b5db5998dc56dc005e90c-946x1279.jpg/163194083?rect=0,167,946,946&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/52e8ad43ecf9bccc309b5db5998dc56dc005e90c-946x1279.jpg/163194083?rect=0,285,946,710&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/52e8ad43ecf9bccc309b5db5998dc56dc005e90c-946x1279.jpg/163194083?rect=0,374,946,532&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "raspberries",
+      "name": "raspberries",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "mothership-overnight-oats",
+      "name": "Mothership overnight oats",
+      "quantity": 220.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "drained-tinned-peaches",
+      "name": "drained tinned peaches",
+      "quantity": 80.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "greek-yoghurt",
+      "name": "Greek yoghurt",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "step_step_1",
+      "descr": "Crush the raspberries with a fork",
+      "instructions": "Crush the raspberries with a fork.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "step_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "Crush the raspberries with a fork."
+        }
+      ]
+    },
+    {
+      "id": "step_step_2",
+      "descr": "Layer them up in a jar or pot with the Mothership...",
+      "instructions": "Layer them up in a jar or pot with the Mothership overnight oats, peaches and yoghurt.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "step_step_1"
+      ],
+      "on_enter": [
+        {
+          "say": "Layer them up in a jar or pot with the Mothership overnight oats, peaches and yoghurt."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": null,
+    "carbohydrates": null,
+    "fat": null,
+    "fiber": null,
+    "protein": null
+  }
+}

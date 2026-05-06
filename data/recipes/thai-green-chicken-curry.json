@@ -1,0 +1,336 @@
+{
+  "recipe": {
+    "id": "thai-green-chicken-curry",
+    "title": "Thai green chicken curry",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT50M",
+    "description": "This Thai green chicken curry recipe is a real classic. The Thai green curry paste ingredients are an epic flavour combo that won't disappoint. It's fiery!",
+    "tags": [
+      "dinner-party",
+      "chicken",
+      "main-ingredient",
+      "thai",
+      "chicken-curry",
+      "course",
+      "mains",
+      "dish-type",
+      "curry",
+      "method",
+      "low-lactose",
+      "vegetables",
+      "one-pan-recipes",
+      "mushroom",
+      "stewing",
+      "occasion",
+      "thai-green-curry"
+    ],
+    "course": "main",
+    "cuisine": "thai",
+    "source_url": "https://www.jamieoliver.com/recipes/chicken/thai-green-chicken-curry",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/06b31aa7887c6d9013bdb9ff28ddba82baaeca0d-973x1300.jpg/06b31aa7887c6d9013bdb9ff28ddba82baaeca0d-973x1300.jpg?rect=0,164,973,973&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/06b31aa7887c6d9013bdb9ff28ddba82baaeca0d-973x1300.jpg/06b31aa7887c6d9013bdb9ff28ddba82baaeca0d-973x1300.jpg?rect=0,164,973,973&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/06b31aa7887c6d9013bdb9ff28ddba82baaeca0d-973x1300.jpg/06b31aa7887c6d9013bdb9ff28ddba82baaeca0d-973x1300.jpg?rect=0,285,973,730&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/06b31aa7887c6d9013bdb9ff28ddba82baaeca0d-973x1300.jpg/06b31aa7887c6d9013bdb9ff28ddba82baaeca0d-973x1300.jpg?rect=0,377,973,547&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "chicken"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "skinless-free-range-chicken-th",
+      "name": "skinless free-range chicken thighs",
+      "quantity": 750.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "groundnut-oil",
+      "name": "groundnut oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mixed-oriental-mushrooms",
+      "name": "mixed oriental mushrooms",
+      "quantity": 400.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "400g-tin-of-light-coconut-milk",
+      "name": "400g tin of light coconut milk",
+      "quantity": 400.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "organic-chicken-stock-cube",
+      "name": "organic chicken stock cube",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lime-leaves",
+      "name": "lime leaves",
+      "quantity": 6.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "mangetout",
+      "name": "mangetout",
+      "quantity": 200.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "a-bunch-fresh-thai-basil",
+      "name": "\u00bd a bunch fresh Thai basil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "limes",
+      "name": "limes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "curry-paste",
+      "name": "CURRY PASTE",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "garlic",
+      "name": "garlic",
+      "quantity": 4.0,
+      "unit": "cloves",
+      "note": null
+    },
+    {
+      "id": "shallots",
+      "name": "shallots",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cm-piece-of-ginger",
+      "name": "cm piece of ginger",
+      "quantity": 5.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "lemongrass-stalks",
+      "name": "lemongrass stalks",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "green-bird-s-eye-chillies",
+      "name": "green Bird\u2019s eye chillies",
+      "quantity": 4.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "ground-cumin",
+      "name": "ground cumin",
+      "quantity": 1.0,
+      "unit": "teaspoon",
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-coriander",
+      "name": "\u00bd a bunch of fresh coriander",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fish-sauce",
+      "name": "fish sauce",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    }
+  ],
+  "utensils": [
+    "food processor",
+    "pan",
+    "slotted spoon"
+  ],
+  "steps": [
+    {
+      "id": "chop_place",
+      "descr": "To make the curry paste, peel, roughly chop and place...",
+      "instructions": "To make the curry paste, peel, roughly chop and place the garlic, shallots and ginger into a food processor.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "chop_processor"
+      ],
+      "on_enter": [
+        {
+          "say": "To make the curry paste, peel, roughly chop and place the garlic, shallots and ginger into a food processor."
+        }
+      ]
+    },
+    {
+      "id": "chop_processor",
+      "descr": "Trim the lemongrass, remove the tough outer leaves, then...",
+      "instructions": "Trim the lemongrass, remove the tough outer leaves, then finely chop and add to the processor. Trim and add the chillies along with the cumin and half the coriander (stalks and all). Blitz until finely chopped, add the fish sauce and blitz again.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "chop_place"
+      ],
+      "next": [
+        "heat_tablespoon"
+      ],
+      "on_enter": [
+        {
+          "say": "Trim the lemongrass, remove the tough outer leaves, then finely chop and add to the processor. Trim and add the chillies along with the cumin and half the coriander (stalks and all). Blitz until finely chopped, add the fish sauce and blitz again."
+        }
+      ]
+    },
+    {
+      "id": "heat_tablespoon",
+      "descr": "Slice the chicken into 2",
+      "instructions": "Slice the chicken into 2.5cm strips. Heat 1 tablespoon of oil in a large pan on a medium heat, add the chicken and fry for 5 to 7 minutes, or until just turning golden, then transfer to a plate.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT420S",
+      "depends_on": [
+        "chop_processor"
+      ],
+      "next": [
+        "heat_mushrooms"
+      ],
+      "on_enter": [
+        {
+          "say": "Slice the chicken into 2.5cm strips. Heat 1 tablespoon of oil in a large pan on a medium heat, add the chicken and fry for 5 to 7 minutes, or until just turning golden, then transfer to a plate."
+        }
+      ]
+    },
+    {
+      "id": "heat_mushrooms",
+      "descr": "Tear the mushrooms into even pieces",
+      "instructions": "Tear the mushrooms into even pieces. Return the pan to a medium heat, add the mushrooms and fry for 4 to 5 minutes, or until golden. Transfer to a plate using a slotted spoon.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_tablespoon"
+      ],
+      "next": [
+        "heat_medium"
+      ],
+      "on_enter": [
+        {
+          "say": "Tear the mushrooms into even pieces. Return the pan to a medium heat, add the mushrooms and fry for 4 to 5 minutes, or until golden. Transfer to a plate using a slotted spoon."
+        }
+      ]
+    },
+    {
+      "id": "heat_medium",
+      "descr": "Reduce the heat to medium-low and add the Thai green...",
+      "instructions": "Reduce the heat to medium-low and add the Thai green paste for 4 to 5 minutes, stirring occasionally.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_mushrooms"
+      ],
+      "next": [
+        "heat_bring"
+      ],
+      "on_enter": [
+        {
+          "say": "Reduce the heat to medium-low and add the Thai green paste for 4 to 5 minutes, stirring occasionally."
+        }
+      ]
+    },
+    {
+      "id": "heat_bring",
+      "descr": "Pour in the coconut milk and 200ml of boiling water,...",
+      "instructions": "Pour in the coconut milk and 200ml of boiling water, crumble in the stock cube and add the lime leaves. Turn the heat up and bring gently to the boil, then simmer for 10 minutes, or until reduced slightly.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT600S",
+      "depends_on": [
+        "heat_medium"
+      ],
+      "next": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Pour in the coconut milk and 200ml of boiling water, crumble in the stock cube and add the lime leaves. Turn the heat up and bring gently to the boil, then simmer for 10 minutes, or until reduced slightly."
+        }
+      ]
+    },
+    {
+      "id": "heat_cook",
+      "descr": "Stir in the chicken and mushrooms, reduce the heat to...",
+      "instructions": "Stir in the chicken and mushrooms, reduce the heat to low and cook for a further 5 minutes, or until the chicken is cooked through, adding the mangetout for the final 2 minutes.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT300S",
+      "depends_on": [
+        "heat_bring"
+      ],
+      "next": [
+        "chop_through"
+      ],
+      "on_enter": [
+        {
+          "say": "Stir in the chicken and mushrooms, reduce the heat to low and cook for a further 5 minutes, or until the chicken is cooked through, adding the mangetout for the final 2 minutes."
+        }
+      ]
+    },
+    {
+      "id": "chop_through",
+      "descr": "Season carefully to taste with sea salt and freshly...",
+      "instructions": "Season carefully to taste with sea salt and freshly ground black pepper. Pick, roughly chop and stir through the basil leaves and remaining coriander leaves. Serve with lime wedges and steamed rice.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "heat_cook"
+      ],
+      "on_enter": [
+        {
+          "say": "Season carefully to taste with sea salt and freshly ground black pepper. Pick, roughly chop and stir through the basil leaves and remaining coriander leaves. Serve with lime wedges and steamed rice."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "285 calories",
+    "carbohydrates": "6.1 g",
+    "fat": "16.2 g",
+    "fiber": "2.2 g",
+    "protein": "28.9 g"
+  }
+}

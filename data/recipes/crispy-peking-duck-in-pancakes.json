@@ -1,0 +1,233 @@
+{
+  "recipe": {
+    "id": "crispy-peking-duck-in-pancakes",
+    "title": "Crispy Peking duck in pancakes",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT125M",
+    "description": "Four words: crispy peking duck pancakes. Jamie Oliver\u2019s recipe combines delicious crispy duck and plum sauce with all the trimmings. A simple way to knock up the Chinese classic at home.",
+    "tags": [
+      "great-british-produce",
+      "main-ingredient",
+      "pancakes",
+      "mains",
+      "dish-type",
+      "method",
+      "roasting",
+      "sandwiches-amp-wraps",
+      "low-lactose",
+      "dairy-free",
+      "duck",
+      "course"
+    ],
+    "course": "main",
+    "cuisine": "chinese",
+    "source_url": "https://www.jamieoliver.com/recipes/duck/crispy-peking-duck-in-pancakes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fbe7ddd60980ad0c6e81f40033eb3551f83a4510-958x1280.jpg/106350187?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fbe7ddd60980ad0c6e81f40033eb3551f83a4510-958x1280.jpg/106350187?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fbe7ddd60980ad0c6e81f40033eb3551f83a4510-958x1280.jpg/106350187?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/fbe7ddd60980ad0c6e81f40033eb3551f83a4510-958x1280.jpg/106350187?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "duck"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "duck",
+      "name": "duck",
+      "quantity": 1.2,
+      "unit": "kg",
+      "note": null
+    },
+    {
+      "id": "salt",
+      "name": "salt",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "five-spice",
+      "name": "five-spice",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "fresh-ginger",
+      "name": "fresh ginger",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "destoned-plums",
+      "name": "destoned plums",
+      "quantity": 11.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "sugar",
+      "name": "sugar",
+      "quantity": 5.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "five-spice",
+      "name": "five-spice",
+      "quantity": 2.0,
+      "unit": "pinches",
+      "note": null
+    },
+    {
+      "id": "soy-sauce",
+      "name": "soy sauce",
+      "quantity": 2.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "teaspoon-chilli-powder",
+      "name": "\u00bd teaspoon chilli powder",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "grated-orange-zest",
+      "name": "grated orange zest",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "cucumber",
+      "name": "\u00bd cucumber",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "spring-onions",
+      "name": "spring onions",
+      "quantity": 1.0,
+      "unit": "bunch",
+      "note": null
+    },
+    {
+      "id": "packs-pre-made-pancakes",
+      "name": "packs pre-made pancakes",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "oven",
+    "pan"
+  ],
+  "steps": [
+    {
+      "id": "roast_pumped",
+      "descr": "Peking duck is something that has always been very close...",
+      "instructions": "Peking duck is something that has always been very close to the Oliver family. Bizarrely enough, the fact that my parents ran a pub restaurant meant that we very rarely went out for dinner as a family, but when we did, my old man used to take us out to this Chinese restaurant in Sawbridgeworth where we all fell in love with Peking duck. There are hundreds of ways of cooking duck in Asian cultures \u2013 steamed, roasted, pumped up with bicycle pumps to remove the meat from the skin \u2013 but we're at home and so we can't do with all this mucking about. My way is simple and it works...",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Peking duck is something that has always been very close to the Oliver family. Bizarrely enough, the fact that my parents ran a pub restaurant meant that we very rarely went out for dinner as a family, but when we did, my old man used to take us out to this Chinese restaurant in Sawbridgeworth where we all fell in love with Peking duck. There are hundreds of ways of cooking duck in Asian cultures \u2013 steamed, roasted, pumped up with bicycle pumps to remove the meat from the skin \u2013 but we're at home and so we can't do with all this mucking about. My way is simple and it works..."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "Preheat the oven to 170\u00baC/325\u00baF/gas 3",
+      "instructions": "Preheat the oven to 170\u00baC/325\u00baF/gas 3. Rub a nice 1.2kg duck with loads of salt, inside and out. Dust the bird all over with five-spice and, if you've got any, grate some fresh ginger and rub it round the cavity, leaving the ginger inside to flavour. Place the duck in a roasting tray and put it in the oven. All you need to do is check on it every so often and spoon away the excess fat that has rendered out of the duck. This will make the skin go wonderfully crispy. Generally, after a couple of hours it will be perfect \u2013 the leg meat will pull off the bone and the skin will be wonderfully crisp. You don't always need to, but I sometimes turn the heat up to 200\u00baC/400\u00baF/gas 6 for a short while until it's really crispy.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_pumped"
+      ],
+      "next": [
+        "add_little"
+      ],
+      "on_enter": [
+        {
+          "say": "Preheat the oven to 170\u00baC/325\u00baF/gas 3. Rub a nice 1.2kg duck with loads of salt, inside and out. Dust the bird all over with five-spice and, if you've got any, grate some fresh ginger and rub it round the cavity, leaving the ginger inside to flavour. Place the duck in a roasting tray and put it in the oven. All you need to do is check on it every so often and spoon away the excess fat that has rendered out of the duck. This will make the skin go wonderfully crispy. Generally, after a couple of hours it will be perfect \u2013 the leg meat will pull off the bone and the skin will be wonderfully crisp. You don't always need to, but I sometimes turn the heat up to 200\u00baC/400\u00baF/gas 6 for a short while until it's really crispy."
+        }
+      ]
+    },
+    {
+      "id": "add_little",
+      "descr": "While this beautiful bird is cooking, you can make your...",
+      "instructions": "While this beautiful bird is cooking, you can make your plum sauce. Chuck 10 or 12 destoned plums into a pan with 5 tablespoons of sugar, a couple of pinches of five-spice, a couple of tablespoons of soy sauce, half a teaspoon of chilli powder and a splash of water. Bring to the boil, then simmer until you get a nice shiny pulp. You can remove the plum skins if you want to, but I usually leave them in. Sometimes I add a little grated orange zest, as this goes well with duck. Put the sauce to one side to cool before serving it, and taste to check the seasoning.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "slice_them"
+      ],
+      "on_enter": [
+        {
+          "say": "While this beautiful bird is cooking, you can make your plum sauce. Chuck 10 or 12 destoned plums into a pan with 5 tablespoons of sugar, a couple of pinches of five-spice, a couple of tablespoons of soy sauce, half a teaspoon of chilli powder and a splash of water. Bring to the boil, then simmer until you get a nice shiny pulp. You can remove the plum skins if you want to, but I usually leave them in. Sometimes I add a little grated orange zest, as this goes well with duck. Put the sauce to one side to cool before serving it, and taste to check the seasoning."
+        }
+      ]
+    },
+    {
+      "id": "slice_them",
+      "descr": "As for the spring onions and cucumber, that's...",
+      "instructions": "As for the spring onions and cucumber, that's straightforward. Use half a cucumber and a bunch of spring onions and finely slice them. I strongly advise buying a couple of packs of pre-made pancakes which you can place in a steamer or microwave and slowly steam until nice and hot. The bamboo steamers are only a few quid from Chinese supermarkets, so it's worth getting hold of some and they're great to serve at the table.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_little"
+      ],
+      "next": [
+        "rest_aurant"
+      ],
+      "on_enter": [
+        {
+          "say": "As for the spring onions and cucumber, that's straightforward. Use half a cucumber and a bunch of spring onions and finely slice them. I strongly advise buying a couple of packs of pre-made pancakes which you can place in a steamer or microwave and slowly steam until nice and hot. The bamboo steamers are only a few quid from Chinese supermarkets, so it's worth getting hold of some and they're great to serve at the table."
+        }
+      ]
+    },
+    {
+      "id": "rest_aurant",
+      "descr": "Once the duck has cooled a little bit, use two forks to...",
+      "instructions": "Once the duck has cooled a little bit, use two forks to shred all the meat off the carcass. I remember the Chinese lady at the restaurant in Sawbridgeworth doing this. You can do the same, putting all the meat with its crispy skin on to a serving plate. Take a pancake, place some duck, a bit of spring onion, a little cucumber and a dollop of plum sauce on to it, then roll it up \u2013 lovely.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "slice_them"
+      ],
+      "on_enter": [
+        {
+          "say": "Once the duck has cooled a little bit, use two forks to shred all the meat off the carcass. I remember the Chinese lady at the restaurant in Sawbridgeworth doing this. You can do the same, putting all the meat with its crispy skin on to a serving plate. Take a pancake, place some duck, a bit of spring onion, a little cucumber and a dollop of plum sauce on to it, then roll it up \u2013 lovely."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "152 calories",
+    "carbohydrates": "2.0 g",
+    "fat": "7.5 g",
+    "fiber": null,
+    "protein": "18.6 g"
+  }
+}

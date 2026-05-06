@@ -1,0 +1,261 @@
+{
+  "recipe": {
+    "id": "best-roast-potatoes",
+    "title": "Best roast potatoes",
+    "servings": 10,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT120M",
+    "description": "This roast potato recipe takes your roasties to the next level.",
+    "tags": [
+      "roast",
+      "christmas",
+      "christmas-tv-show",
+      "tv",
+      "getahead",
+      "roast-potatoes",
+      "easy-christmas-countdown",
+      "method",
+      "roasting",
+      "dish-type",
+      "keep-cooking-at-christmas",
+      "gluten-free",
+      "occasion",
+      "jamie-s-ultimate-christmas",
+      "jamie-and-jimmy-s-friday-night-feast"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/potato/best-roast-potatoes",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ad3d3b3137692babc45acd7596518d9a661a5d4-958x1280.png/51137607?rect=0,161,958,958&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ad3d3b3137692babc45acd7596518d9a661a5d4-958x1280.png/51137607?rect=0,161,958,958&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ad3d3b3137692babc45acd7596518d9a661a5d4-958x1280.png/51137607?rect=0,281,958,719&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/7ad3d3b3137692babc45acd7596518d9a661a5d4-958x1280.png/51137607?rect=0,371,958,539&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "potato"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "medium-floury-potatoes",
+      "name": "medium floury potatoes",
+      "quantity": 2.5,
+      "unit": "kg",
+      "note": "such as Maris Piper, King Edward"
+    },
+    {
+      "id": "goose-fat-or-unsalted-butter",
+      "name": "goose fat or unsalted butter",
+      "quantity": 4.0,
+      "unit": "tablespoons",
+      "note": null
+    },
+    {
+      "id": "olive-oil",
+      "name": "olive oil",
+      "quantity": null,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "bulb-of-garlic",
+      "name": "bulb of garlic",
+      "quantity": 1.0,
+      "unit": null,
+      "note": null
+    },
+    {
+      "id": "a-bunch-of-fresh-woody-herbs",
+      "name": "\u00bd a bunch of fresh woody herbs",
+      "quantity": null,
+      "unit": null,
+      "note": "15g, such as sage, rosemary, thyme"
+    }
+  ],
+  "utensils": [
+    "colander",
+    "oven",
+    "pan",
+    "pot"
+  ],
+  "steps": [
+    {
+      "id": "boil_them",
+      "descr": "GET AHEAD Peel the potatoes, keeping them whole, and...",
+      "instructions": "GET AHEAD Peel the potatoes, keeping them whole, and ideally all about the same size (8cm). Parboil them in a pan of boiling salted water for 15 minutes \u2013 this will ensure that the insides become really fluffy.",
+      "type": "timer",
+      "auto_start": true,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "next": [
+        "roast_step_2"
+      ],
+      "on_enter": [
+        {
+          "say": "GET AHEAD Peel the potatoes, keeping them whole, and ideally all about the same size (8cm). Parboil them in a pan of boiling salted water for 15 minutes \u2013 this will ensure that the insides become really fluffy."
+        }
+      ]
+    },
+    {
+      "id": "roast_step_2",
+      "descr": "Drain in a colander and leave to steam dry for 2 minutes...",
+      "instructions": "Drain in a colander and leave to steam dry for 2 minutes \u2013 this will help the fat to stick to the potatoes. Give the colander a few light shakes to chuff up the edges of the potatoes, giving you maximum surface area for a crispy exterior as they roast.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT120S",
+      "depends_on": [
+        "boil_them"
+      ],
+      "next": [
+        "add_good"
+      ],
+      "on_enter": [
+        {
+          "say": "Drain in a colander and leave to steam dry for 2 minutes \u2013 this will help the fat to stick to the potatoes. Give the colander a few light shakes to chuff up the edges of the potatoes, giving you maximum surface area for a crispy exterior as they roast."
+        }
+      ]
+    },
+    {
+      "id": "add_good",
+      "descr": "Place the goose fat or butter and 1 tablespoon of oil in...",
+      "instructions": "Place the goose fat or butter and 1 tablespoon of oil in your largest roasting tray. Tip in the potatoes, add a good pinch of sea salt and black pepper, then toss to coat, and spread out in one fairly snug, even layer but with small gaps between them.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_step_2"
+      ],
+      "next": [
+        "cool_cover"
+      ],
+      "on_enter": [
+        {
+          "say": "Place the goose fat or butter and 1 tablespoon of oil in your largest roasting tray. Tip in the potatoes, add a good pinch of sea salt and black pepper, then toss to coat, and spread out in one fairly snug, even layer but with small gaps between them."
+        }
+      ]
+    },
+    {
+      "id": "cool_cover",
+      "descr": "Cover and pop in the fridge overnight",
+      "instructions": "Cover and pop in the fridge overnight. Or, you can make these up to 1 month in advance \u2013 simply leave to cool, then cover and pop in the freezer.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "add_good"
+      ],
+      "next": [
+        "preheat_oven"
+      ],
+      "on_enter": [
+        {
+          "say": "Cover and pop in the fridge overnight. Or, you can make these up to 1 month in advance \u2013 simply leave to cool, then cover and pop in the freezer."
+        }
+      ]
+    },
+    {
+      "id": "preheat_oven",
+      "descr": "ON THE DAY Preheat the oven to 180\u00b0C/350\u00b0F/gas 4",
+      "instructions": "ON THE DAY Preheat the oven to 180\u00b0C/350\u00b0F/gas 4.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "cool_cover"
+      ],
+      "next": [
+        "add_tray"
+      ],
+      "on_enter": [
+        {
+          "say": "ON THE DAY Preheat the oven to 180\u00b0C/350\u00b0F/gas 4."
+        }
+      ]
+    },
+    {
+      "id": "add_tray",
+      "descr": "Squash the garlic bulbs, then lightly crush each...",
+      "instructions": "Squash the garlic bulbs, then lightly crush each unpeeled clove and add to the tray \u2013 this gives you sweet, caramelised garlic and adds a gentle perfume to the potatoes.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "preheat_oven"
+      ],
+      "next": [
+        "roast_hour"
+      ],
+      "on_enter": [
+        {
+          "say": "Squash the garlic bulbs, then lightly crush each unpeeled clove and add to the tray \u2013 this gives you sweet, caramelised garlic and adds a gentle perfume to the potatoes."
+        }
+      ]
+    },
+    {
+      "id": "roast_hour",
+      "descr": "Roast for 1 hour, or until the potatoes are crisp and...",
+      "instructions": "Roast for 1 hour, or until the potatoes are crisp and golden all over (if cooking straight from frozen, roast for 1 hour 15 minutes).",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": true,
+      "duration": "PT900S",
+      "depends_on": [
+        "add_tray"
+      ],
+      "next": [
+        "slice_masher"
+      ],
+      "on_enter": [
+        {
+          "say": "Roast for 1 hour, or until the potatoes are crisp and golden all over (if cooking straight from frozen, roast for 1 hour 15 minutes)."
+        }
+      ]
+    },
+    {
+      "id": "slice_masher",
+      "descr": "Remove the tray from the oven",
+      "instructions": "Remove the tray from the oven. We\u2019re nearly there, but we\u2019ve got one last application of love and care, which is the game-changer. Gently half-squash each potato with a fish slice or masher so they kind of push into each other and fill the tray.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": true,
+      "depends_on": [
+        "roast_hour"
+      ],
+      "next": [
+        "sprinkle_over"
+      ],
+      "on_enter": [
+        {
+          "say": "Remove the tray from the oven. We\u2019re nearly there, but we\u2019ve got one last application of love and care, which is the game-changer. Gently half-squash each potato with a fish slice or masher so they kind of push into each other and fill the tray."
+        }
+      ]
+    },
+    {
+      "id": "sprinkle_over",
+      "descr": "Pick the herb leaves and \u2013 importantly \u2013 toss with a...",
+      "instructions": "Pick the herb leaves and \u2013 importantly \u2013 toss with a little oil (this will transmit the flavour and make them deliciously crisp). Sprinkle over the potatoes and roast for a further 20 to 25 minutes, or until golden and amazing. Heaven \u2013 you could even serve these on their own in a restaurant, they\u2019re so good.",
+      "type": "timer",
+      "auto_start": false,
+      "requires_confirm": false,
+      "duration": "PT1500S",
+      "depends_on": [
+        "slice_masher"
+      ],
+      "on_enter": [
+        {
+          "say": "Pick the herb leaves and \u2013 importantly \u2013 toss with a little oil (this will transmit the flavour and make them deliciously crisp). Sprinkle over the potatoes and roast for a further 20 to 25 minutes, or until golden and amazing. Heaven \u2013 you could even serve these on their own in a restaurant, they\u2019re so good."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "217 calories",
+    "carbohydrates": "35.4 g",
+    "fat": "7.6 g",
+    "fiber": "4.2 g",
+    "protein": "4.2 g"
+  }
+}

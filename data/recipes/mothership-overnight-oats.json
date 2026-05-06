@@ -1,0 +1,118 @@
+{
+  "recipe": {
+    "id": "mothership-overnight-oats",
+    "title": "Mothership overnight oats",
+    "servings": 6,
+    "difficulty": "not-too-tricky",
+    "locale": "en",
+    "source": "jamieoliver.com",
+    "estimated_total": "PT10M",
+    "description": "These handy little overnight oats give you options at breakfast time. Get prepped and organised for the week!",
+    "tags": [
+      "apple",
+      "breakfast-brunch",
+      "healthy",
+      "vegan",
+      "healthy-breakfasts",
+      "banana",
+      "vegetarian",
+      "low-lactose",
+      "gluten-free",
+      "dairy-free",
+      "fruit"
+    ],
+    "course": "main",
+    "source_url": "https://www.jamieoliver.com/recipes/fruit/mothership-overnight-oats",
+    "images": [
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/21ed656d7d793dfbf1b30af1217abf76d0088c42-1064x1280.jpg/163194080?rect=0,108,1064,1064&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/21ed656d7d793dfbf1b30af1217abf76d0088c42-1064x1280.jpg/163194080?rect=0,108,1064,1064&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/21ed656d7d793dfbf1b30af1217abf76d0088c42-1064x1280.jpg/163194080?rect=0,241,1064,798&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+      "https://asset.jamieoliver.com/images/cq7w2e71/production/21ed656d7d793dfbf1b30af1217abf76d0088c42-1064x1280.jpg/163194080?rect=0,341,1064,599&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+    ],
+    "categories": [
+      "fruit"
+    ]
+  },
+  "ingredients": [
+    {
+      "id": "ripe-bananas",
+      "name": "ripe bananas",
+      "quantity": 2.0,
+      "unit": null,
+      "note": "320g"
+    },
+    {
+      "id": "semi-skimmed-milk-or-your-favo",
+      "name": "semi-skimmed milk or your favourite unsweetened",
+      "quantity": 700.0,
+      "unit": "ml",
+      "note": "fortified plant milk"
+    },
+    {
+      "id": "vanilla-bean-paste",
+      "name": "vanilla bean paste",
+      "quantity": 2.0,
+      "unit": "teaspoons",
+      "note": null
+    },
+    {
+      "id": "porridge-oats",
+      "name": "porridge oats",
+      "quantity": 300.0,
+      "unit": "g",
+      "note": null
+    },
+    {
+      "id": "eating-apples",
+      "name": "eating apples",
+      "quantity": 2.0,
+      "unit": null,
+      "note": null
+    }
+  ],
+  "utensils": [
+    "blender",
+    "bowl"
+  ],
+  "steps": [
+    {
+      "id": "mix_well",
+      "descr": "In a blender, blitz the peeled bananas with the milk and...",
+      "instructions": "In a blender, blitz the peeled bananas with the milk and vanilla until smooth, then pour over the oats in a bowl. Coarsely grate in the apples, mix well, then cover and pop into the fridge overnight to do its thing.",
+      "type": "immediate",
+      "auto_start": true,
+      "requires_confirm": true,
+      "next": [
+        "stir_well"
+      ],
+      "on_enter": [
+        {
+          "say": "In a blender, blitz the peeled bananas with the milk and vanilla until smooth, then pour over the oats in a bowl. Coarsely grate in the apples, mix well, then cover and pop into the fridge overnight to do its thing."
+        }
+      ]
+    },
+    {
+      "id": "stir_well",
+      "descr": "The next day, stir well, correct the consistency with a...",
+      "instructions": "The next day, stir well, correct the consistency with a little extra milk, if needed, then either tuck in as it is, adding a handful of your favourite seasonal fruit, unsalted nuts or seeds, or choose one of the following epic flavours (Peach Melba, Cherry Bakewell, Berry Cheesecake and Tiramis\u00f9 \u2013 each makes one tasty portion when paired with 220g of Mothership overnight oats. Fill. Your. Boots.",
+      "type": "immediate",
+      "auto_start": false,
+      "requires_confirm": false,
+      "depends_on": [
+        "mix_well"
+      ],
+      "on_enter": [
+        {
+          "say": "The next day, stir well, correct the consistency with a little extra milk, if needed, then either tuck in as it is, adding a handful of your favourite seasonal fruit, unsalted nuts or seeds, or choose one of the following epic flavours (Peach Melba, Cherry Bakewell, Berry Cheesecake and Tiramis\u00f9 \u2013 each makes one tasty portion when paired with 220g of Mothership overnight oats. Fill. Your. Boots."
+        }
+      ]
+    }
+  ],
+  "nutrition": {
+    "calories": "311 calories",
+    "carbohydrates": "57.5 g",
+    "fat": "6.1 g",
+    "fiber": "5.4 g",
+    "protein": "10.2 g"
+  }
+}
