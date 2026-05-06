@@ -26,9 +26,21 @@ export interface UseAudioCaptureOptions {
 type AudioCaptureNode = ScriptProcessorNode | AudioWorkletNode;
 
 const AUDIO_CAPTURE_PROCESSOR_NAME = 'audio-capture-processor';
+const registeredWorkletContexts = new WeakSet<AudioContext>();
 
 function isAudioWorkletNode(node: AudioCaptureNode | null): node is AudioWorkletNode {
   return typeof AudioWorkletNode !== 'undefined' && node instanceof AudioWorkletNode;
+}
+
+function isAlreadyRegisteredWorkletError(error: unknown): boolean {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+  const message = error.message || '';
+  return (
+    error.name === 'NotSupportedError' &&
+    message.includes(`AudioWorkletProcessor with name:"${AUDIO_CAPTURE_PROCESSOR_NAME}" is already registered`)
+  );
 }
 
 export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
@@ -131,12 +143,22 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
       let processor: AudioCaptureNode;
       if (preferredEngine === 'worklet') {
         try {
-          const workletBlob = new Blob([audioCaptureProcessorCode], { type: 'application/javascript' });
-          const workletBlobUrl = URL.createObjectURL(workletBlob);
-          try {
-            await audioContext.audioWorklet.addModule(workletBlobUrl);
-          } finally {
-            URL.revokeObjectURL(workletBlobUrl);
+          if (!registeredWorkletContexts.has(audioContext)) {
+            const workletBlob = new Blob([audioCaptureProcessorCode], { type: 'application/javascript' });
+            const workletBlobUrl = URL.createObjectURL(workletBlob);
+            try {
+              await audioContext.audioWorklet.addModule(workletBlobUrl);
+              registeredWorkletContexts.add(audioContext);
+            } catch (error) {
+              if (isAlreadyRegisteredWorkletError(error)) {
+                console.warn('[useAudioCapture] AudioWorklet processor already registered, reusing existing module');
+                registeredWorkletContexts.add(audioContext);
+              } else {
+                throw error;
+              }
+            } finally {
+              URL.revokeObjectURL(workletBlobUrl);
+            }
           }
           const workletNode = new AudioWorkletNode(audioContext, AUDIO_CAPTURE_PROCESSOR_NAME, {
             numberOfInputs: 1,

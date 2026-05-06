@@ -23,6 +23,7 @@ import {
   chatWithAgent,
   generateSessionId,
   clearChatSession,
+  getRecipeById,
   searchRecipes,
   type MealPlanData,
   type RecipeDetailData,
@@ -49,11 +50,13 @@ interface ChatViewProps {
   onRecipeClick: (recipe: Recipe) => void;
   onPromptClick: (prompt: string) => void;
   onClearInitialMessage: () => void;
+  onScrollStateChange?: (scrolled: boolean) => void;
 }
 
 const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
 const SESSION_ID_KEY = 'jamie-oliver-chat-session';
 const IGNORED_VOICE_TRANSCRIPTS = new Set(['[Connection restored]']);
+const JAMIE_MESSAGE_COLLAPSE_CHAR_THRESHOLD = 520;
 
 /** Max width for chat content; matches TabNav for consistent layout (NEU-470). */
 const CHAT_CONTENT_MAX_WIDTH = 600;
@@ -163,16 +166,39 @@ const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
     return recipe;
   }
 
-  // Load full recipe from local JSON files
+  // Prefer the backend recipe endpoint because it reflects the same source of
+  // truth as the 251 recipes loaded from Supabase. The local JSON bundle is
+  // only a partial fallback and misses many of the newer slugs.
+  try {
+    const response = await getRecipeById(recipe.backendId);
+    if (response.full_recipe && 'recipe' in response.full_recipe) {
+      return transformRecipeMatch(
+        {
+          recipe_id: recipe.backendId,
+          title: response.title || recipe.title,
+          similarity_score: 1,
+          combined_score: 1,
+          file_path: response.file_path || '',
+          match_explanation: '',
+          matching_chunks: [],
+        },
+        response.full_recipe as JamieOliverRecipe,
+        recipe.id - 1
+      );
+    }
+  } catch (error) {
+    console.warn(`Could not load recipe ${recipe.backendId} from API, trying local fallback`, error);
+  }
+
+  // Final fallback for older bundled recipes.
   try {
     const fullRecipe = await loadRecipeFromLocal(recipe.backendId);
     if (!fullRecipe) {
-      console.warn(`Could not load recipe ${recipe.backendId} from local files`);
+      console.warn(`Could not load recipe ${recipe.backendId} from API or local files`);
       return recipe;
     }
 
-    // Transform to get complete recipe with rawRecipePayload
-    const transformed = transformRecipeMatch(
+    return transformRecipeMatch(
       {
         recipe_id: recipe.backendId,
         title: recipe.title,
@@ -183,21 +209,62 @@ const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
         matching_chunks: [],
       },
       fullRecipe,
-      recipe.id - 1 // Use existing numeric ID
+      recipe.id - 1
     );
-
-    return transformed;
   } catch (error) {
     console.error(`Error loading full recipe for ${recipe.backendId}:`, error);
     return recipe;
   }
 };
 
+const loadRecipeForSelection = async (recipeId: string): Promise<Recipe | null> => {
+  try {
+    const response = await getRecipeById(recipeId);
+    if (response.full_recipe && 'recipe' in response.full_recipe) {
+      return transformRecipeMatch(
+        {
+          recipe_id: recipeId,
+          title: response.title || recipeId,
+          similarity_score: 1,
+          combined_score: 1,
+          file_path: response.file_path || '',
+          match_explanation: '',
+          matching_chunks: [],
+        },
+        response.full_recipe as JamieOliverRecipe,
+        0
+      );
+    }
+  } catch (error) {
+    console.warn(`Could not load recipe ${recipeId} from API, trying local fallback`, error);
+  }
+
+  const localRecipe = await loadRecipeFromLocal(recipeId);
+  if (!localRecipe) {
+    return null;
+  }
+
+  return transformRecipeMatch(
+    {
+      recipe_id: recipeId,
+      title: localRecipe.recipe?.title || recipeId,
+      similarity_score: 1,
+      combined_score: 1,
+      file_path: '',
+      match_explanation: '',
+      matching_chunks: [],
+    },
+    localRecipe,
+    0
+  );
+};
+
 export function ChatView({
   initialMessage,
   onRecipeClick,
   onPromptClick,
-  onClearInitialMessage
+  onClearInitialMessage,
+  onScrollStateChange,
 }: ChatViewProps) {
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const [inputValue, setInputValue] = useState('');
@@ -205,6 +272,7 @@ export function ChatView({
   const [thinkingStatus, setThinkingStatus] = useState<string | null>(null);
   const [displayedThinkingText, setDisplayedThinkingText] = useState('');
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [expandedMessageIds, setExpandedMessageIds] = useState<Record<string, boolean>>({});
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -453,7 +521,14 @@ export function ChatView({
     const { scrollTop, scrollHeight, clientHeight } = container;
     const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
     setShowScrollButton(!isNearBottom && scrollHeight > clientHeight);
-  }, []);
+    onScrollStateChange?.(scrollTop > 10);
+  }, [onScrollStateChange]);
+
+  useEffect(() => {
+    if (!hasMessages || isVoiceActive) {
+      onScrollStateChange?.(false);
+    }
+  }, [hasMessages, isVoiceActive, onScrollStateChange]);
 
   // Save messages to localStorage whenever they change (excluding streaming)
   useEffect(() => {
@@ -701,11 +776,17 @@ export function ChatView({
           }
           console.log('Transformed', agentRecipes.length, 'recipes for display');
 
-          // Update process card featured payload
+          // Update both the message's recipe list and the process card's
+          // featured payload so mixed-tool turns (e.g. plan_meal falling back
+          // to recipe search) can still render the carousel immediately.
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId || !msg.process) return msg;
             const featured = selectFeatured({ tool: msg.process.tool, recipes: agentRecipes });
-            return { ...msg, process: { ...msg.process, featured } };
+            return {
+              ...msg,
+              recipes: agentRecipes,
+              process: { ...msg.process, featured },
+            };
           }));
         } else if (event.type === 'meal_plan') {
           // Meal plan from plan_meal tool
@@ -887,6 +968,13 @@ export function ChatView({
     handleSendMessage(prompt);
   };
 
+  const toggleMessageExpansion = useCallback((messageId: string) => {
+    setExpandedMessageIds((prev) => ({
+      ...prev,
+      [messageId]: !prev[messageId],
+    }));
+  }, []);
+
   const renderFeaturedPayload = useCallback((payload: FeaturedPayload, options?: {
     voiceMode?: boolean;
     voiceRole?: StackRole;
@@ -911,22 +999,14 @@ export function ChatView({
           <MealPlanCard
             mealPlan={payload.mealPlan}
             onViewRecipe={async (recipeId) => {
-              const localRecipe = await loadRecipeFromLocal(recipeId);
-              if (localRecipe) {
-                const transformed = transformRecipeMatch(
-                  { recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] },
-                  localRecipe, 0
-                );
+              const transformed = await loadRecipeForSelection(recipeId);
+              if (transformed) {
                 onRecipeClick(transformed);
               }
             }}
             onCookRecipe={async (recipeId) => {
-              const localRecipe = await loadRecipeFromLocal(recipeId);
-              if (localRecipe) {
-                const transformed = transformRecipeMatch(
-                  { recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] },
-                  localRecipe, 0
-                );
+              const transformed = await loadRecipeForSelection(recipeId);
+              if (transformed) {
                 onRecipeClick(transformed);
               }
             }}
@@ -1006,6 +1086,11 @@ export function ChatView({
               const hasAnyBody =
                 !!message.content || hasRecipes || hasMealPlan || hasShopping;
               if (!hasAnyBody) return null;
+              const hasLongText =
+                !!message.content &&
+                message.content.trim().length > JAMIE_MESSAGE_COLLAPSE_CHAR_THRESHOLD;
+              const isExpanded = !!expandedMessageIds[message.id];
+              const normalizedContent = message.content.replace(/\n{3,}/g, '\n\n').trim();
 
               const cardClassName = voiceMode
                 ? 'jamie-voice-message'
@@ -1025,21 +1110,34 @@ export function ChatView({
                   </div>
 
                   {message.content && (
-                    <div className="jamie-thread-markdown prose prose-sm max-w-none">
+                    <div
+                      className={`jamie-thread-markdown prose prose-sm max-w-none ${
+                        hasLongText && !isExpanded
+                          ? 'jamie-thread-markdown--collapsed'
+                          : ''
+                      }`}
+                    >
                       <ReactMarkdown
                         components={{
-                          h1: ({ children }) => <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
-                          h2: ({ children }) => <h4 className="text-base font-bold mt-3 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
-                          h3: ({ children }) => <h5 className="text-base font-semibold mt-3 mb-1" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
-                          p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                          h1: ({ children }) => <h3 className="text-lg font-bold mt-5 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
+                          h2: ({ children }) => <h4 className="text-base font-bold mt-4 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
+                          h3: ({ children }) => <h5 className="text-base font-semibold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
+                          p: ({ children }) => (
+                            <p
+                              className="mb-4 last:mb-0"
+                              style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}
+                            >
+                              {children}
+                            </p>
+                          ),
                           strong: ({ children }) => <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>{children}</strong>,
-                          ul: ({ children }) => <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>,
-                          ol: ({ children }) => <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
-                          li: ({ children }) => <li className="mb-1">{children}</li>,
-                          hr: () => <hr className="my-3 border-black/10" />,
+                          ul: ({ children }) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
+                          li: ({ children }) => <li className="mb-1" style={{ whiteSpace: 'pre-wrap' }}>{children}</li>,
+                          hr: () => <hr className="my-4 border-black/10" />,
                         }}
                       >
-                        {message.content}
+                        {normalizedContent}
                       </ReactMarkdown>
                       {message.isStreaming && (
                         <motion.span
@@ -1051,6 +1149,16 @@ export function ChatView({
                         </motion.span>
                       )}
                     </div>
+                  )}
+
+                  {hasLongText && !message.isStreaming && (
+                    <button
+                      type="button"
+                      className="jamie-thread-card__expand"
+                      onClick={() => toggleMessageExpansion(message.id)}
+                    >
+                      {isExpanded ? 'Show less' : 'Read more'}
+                    </button>
                   )}
 
                   {hasRecipes && (
@@ -1073,16 +1181,14 @@ export function ChatView({
                       <MealPlanCard
                         mealPlan={message.mealPlan!}
                         onViewRecipe={async (recipeId) => {
-                          const localRecipe = await loadRecipeFromLocal(recipeId);
-                          if (localRecipe) {
-                            const transformed = transformRecipeMatch({ recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] }, localRecipe, 0);
+                          const transformed = await loadRecipeForSelection(recipeId);
+                          if (transformed) {
                             onRecipeClick(transformed);
                           }
                         }}
                         onCookRecipe={async (recipeId) => {
-                          const localRecipe = await loadRecipeFromLocal(recipeId);
-                          if (localRecipe) {
-                            const transformed = transformRecipeMatch({ recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] }, localRecipe, 0);
+                          const transformed = await loadRecipeForSelection(recipeId);
+                          if (transformed) {
                             onRecipeClick(transformed);
                           }
                         }}
@@ -1125,7 +1231,7 @@ export function ChatView({
         </p>
       </div>
     );
-  }, [renderFeaturedPayload, imgJamieAvatar, onRecipeClick]);
+  }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion]);
 
   return (
     <div className="relative jamie-view-shell" data-voice-active={isVoiceActive || undefined}>
