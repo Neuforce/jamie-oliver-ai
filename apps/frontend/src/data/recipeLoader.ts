@@ -160,19 +160,79 @@ function transformIngredients(ingredients: BackendRecipePayload['ingredients'] |
 }
 
 // Transform steps to instructions array
-function transformInstructions(steps: BackendRecipePayload['steps'] | undefined): string[] {
+function isCharacterSplitSteps(steps: BackendRecipePayload['steps'] | undefined): boolean {
+  if (!steps || !Array.isArray(steps) || steps.length < 50) {
+    return false;
+  }
+  const shortCount = steps.filter((step) => {
+    const text = (step.instructions || step.descr || '').trim();
+    return text.length <= 1;
+  }).length;
+  return shortCount / steps.length > 0.8;
+}
+
+function rebuildCharacterSplitSteps(
+  steps: BackendRecipePayload['steps']
+): BackendRecipePayload['steps'] {
+  const joined = steps
+    .map((step) => step.instructions || step.descr || '')
+    .join('')
+    .replace(/\s+/g, ' ')
+    .replace(/([.!?])(?=[A-Z])/g, '$1|')
+    .replace(/,(?=\s*(Meanwhile|When|Then|Next|Finally|To serve|Serve|Add|Tip|Stir|Cook|Use)\b)/g, ',|')
+    .trim();
+
+  const rawSegments = joined
+    .split('|')
+    .map((segment) => segment.trim())
+    .filter(Boolean);
+
+  const mergedSegments: string[] = [];
+  for (const segment of rawSegments) {
+    if (mergedSegments.length === 0) {
+      mergedSegments.push(segment);
+      continue;
+    }
+    if (segment.length < 48) {
+      mergedSegments[mergedSegments.length - 1] += ` ${segment}`;
+    } else {
+      mergedSegments.push(segment);
+    }
+  }
+
+  const segments = mergedSegments.length > 0 ? mergedSegments : [joined];
+  return segments.map((text, index) => {
+    const currentId = `step_${index + 1}`;
+    const nextId = index < segments.length - 1 ? `step_${index + 2}` : undefined;
+    const summary = text.length > 120 ? `${text.slice(0, 117).trimEnd()}...` : text;
+
+    return {
+      id: currentId,
+      descr: summary,
+      instructions: text,
+      type: 'immediate',
+      auto_start: index === 0,
+      requires_confirm: true,
+      depends_on: index > 0 ? [`step_${index}`] : [],
+      next: nextId ? [nextId] : [],
+    };
+  });
+}
+
+function normalizeSteps(steps: BackendRecipePayload['steps'] | undefined): BackendRecipePayload['steps'] {
   if (!steps || !Array.isArray(steps)) {
     return [];
   }
-  return steps.map((step) => step.instructions);
+  return isCharacterSplitSteps(steps) ? rebuildCharacterSplitSteps(steps) : steps;
+}
+
+function transformInstructions(steps: BackendRecipePayload['steps'] | undefined): string[] {
+  return normalizeSteps(steps).map((step) => step.instructions);
 }
 
 // Capture backend step metadata so the UI can stay in sync with the engine
 function transformBackendSteps(steps: BackendRecipePayload['steps'] | undefined): BackendRecipeStep[] {
-  if (!steps || !Array.isArray(steps)) {
-    return [];
-  }
-  return steps.map((step) => ({
+  return normalizeSteps(steps).map((step) => ({
     id: step.id,
     descr: step.descr,
     instructions: step.instructions,
@@ -394,7 +454,7 @@ export function transformRecipe(
   options?: { apiCategory?: string | null }
 ): Recipe {
   const recipe = jamieRecipe.recipe;
-  const steps = jamieRecipe.steps ?? [];
+  const steps = normalizeSteps(jamieRecipe.steps);
   const backendSteps = transformBackendSteps(steps);
   const transformUtensils = (utensils?: Array<any>): string[] => {
     if (!utensils || !Array.isArray(utensils)) return [];
@@ -418,6 +478,10 @@ export function transformRecipe(
   const category = rawExplicit
     ? formatCategoryLabel(rawExplicit)
     : extractCategory(recipe.title, jamieRecipe.ingredients);
+  const normalizedPayload: BackendRecipePayload = {
+    ...jamieRecipe,
+    steps,
+  };
 
   return {
     id: index + 1,
@@ -436,7 +500,7 @@ export function transformRecipe(
       : [],
     utensils: transformUtensils(jamieRecipe.utensils),
     backendSteps,
-    rawRecipePayload: jamieRecipe,
+    rawRecipePayload: normalizedPayload,
   };
 }
 

@@ -1,6 +1,7 @@
 import React, {
   useCallback,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -97,9 +98,11 @@ export function VoiceModeRoller({
   const [unseenIds, setUnseenIds] = useState<Set<string>>(new Set());
   const [dragDelta, setDragDelta] = useState(0);
   const [isBouncing, setIsBouncing] = useState<'top' | 'bottom' | null>(null);
+  const [isTallTopCard, setIsTallTopCard] = useState(false);
 
   const stageRef = useRef<HTMLDivElement | null>(null);
   const lastSeenTailIdRef = useRef<string | null>(null);
+  const topCardContentRef = useRef<HTMLDivElement | null>(null);
 
   const isStreamingActive = useMemo(() => {
     const last = messages[messages.length - 1];
@@ -269,6 +272,41 @@ export function VoiceModeRoller({
 
   const unseenCount = unseenIds.size;
   const showNewBadge = offset > 0 && unseenCount > 0;
+  const topVisibleId = visibleWindow[2]?.id ?? null;
+
+  const recomputeTopCardLayout = useCallback(() => {
+    const el = topCardContentRef.current;
+    if (!el || typeof window === 'undefined') {
+      setIsTallTopCard(false);
+      return;
+    }
+    const availableBeforeCompression = Math.max(320, window.innerHeight - 420);
+    setIsTallTopCard(el.scrollHeight > availableBeforeCompression);
+  }, []);
+
+  useLayoutEffect(() => {
+    recomputeTopCardLayout();
+  }, [topVisibleId, recomputeTopCardLayout]);
+
+  useEffect(() => {
+    const el = topCardContentRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') {
+      return;
+    }
+
+    const observer = new ResizeObserver(() => {
+      recomputeTopCardLayout();
+    });
+    observer.observe(el);
+
+    const handleResize = () => recomputeTopCardLayout();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [topVisibleId, recomputeTopCardLayout]);
 
   return (
     <div
@@ -276,6 +314,7 @@ export function VoiceModeRoller({
       className={'voice-roller' + (className ? ` ${className}` : '')}
       data-bounce={isBouncing ?? undefined}
       data-streaming={isStreamingActive || undefined}
+      data-tall-top={isTallTopCard || undefined}
       onWheel={handleWheel}
     >
       <AnimatePresence>
@@ -295,7 +334,7 @@ export function VoiceModeRoller({
         )}
       </AnimatePresence>
 
-      <div className="voice-roller__stack">
+      <div className="voice-roller__stack" data-tall-top={isTallTopCard || undefined}>
         {visibleWindow.map((msg, i) => {
           if (!msg) return <EmptySlot key={`empty-${i}`} />;
           const role: StackRole = i === 0 ? 'back' : i === 1 ? 'middle' : 'top';
@@ -342,7 +381,17 @@ export function VoiceModeRoller({
                   : undefined
               }
             >
-              {renderMessage(msg, role)}
+              <div
+                className="voice-roller__card-content"
+                data-role={role}
+                data-speaker={msg.type}
+                data-voice-interactive={
+                  isTop && msg.type === 'jamie' ? 'true' : undefined
+                }
+                ref={isTop ? topCardContentRef : undefined}
+              >
+                {renderMessage(msg, role)}
+              </div>
             </div>
           );
         })}

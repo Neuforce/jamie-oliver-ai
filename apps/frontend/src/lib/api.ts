@@ -222,6 +222,19 @@ export interface SearchResponse {
   took_ms: number;
 }
 
+export interface RecipeByIdResponse {
+  recipe_id: string;
+  title: string;
+  category?: string | null;
+  mood?: string | null;
+  complexity?: string | null;
+  cost?: string | null;
+  quality_score?: number | null;
+  status?: string | null;
+  file_path?: string;
+  full_recipe?: Record<string, unknown> | null;
+}
+
 export interface SearchOptions {
   category?: string;
   mood?: string;
@@ -280,6 +293,17 @@ export async function searchRecipes(
     }
     throw error;
   }
+}
+
+export async function getRecipeById(recipeId: string): Promise<RecipeByIdResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/recipes/${encodeURIComponent(recipeId)}`);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Recipe request failed: ${response.status} ${response.statusText}. ${errorText}`);
+  }
+
+  return response.json() as Promise<RecipeByIdResponse>;
 }
 
 // =============================================================================

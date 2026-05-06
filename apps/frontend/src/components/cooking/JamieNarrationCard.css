@@ -59,12 +59,19 @@
   transition: mask-image 160ms ease, -webkit-mask-image 160ms ease;
 }
 
+.jamie-narration__body[data-expanded] {
+  max-height: none;
+  overflow: visible;
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
 /*
  * When the body overflows its max-height, fade the bottom so the cut-off
  * reads as intentional (Jamie_12). Using mask-image (not a gradient
  * overlay) so the fade works regardless of parent background color.
  */
-.jamie-narration__body[data-overflowing] {
+.jamie-narration__body[data-overflowing]:not([data-expanded]) {
   -webkit-mask-image: linear-gradient(
     to bottom,
     #000 0%,
@@ -94,4 +101,16 @@
 .jamie-narration__list {
   margin: 0 0 6px 0;
   padding-left: 18px;
+}
+
+.jamie-narration__toggle {
+  align-self: flex-start;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--jamie-ink-teal, #3d6e6c);
+  cursor: pointer;
 }
