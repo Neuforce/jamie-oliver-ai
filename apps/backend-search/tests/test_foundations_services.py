@@ -34,6 +34,7 @@ class FakeEntitlementsService:
         self.entitlement = entitlement
         self.active_session = active_session
         self.owned_recipes = []
+        self.ensure_calls = []
 
     def get_recipe(self, recipe_slug_or_id):
         return {
@@ -44,6 +45,18 @@ class FakeEntitlementsService:
         }
 
     def get_recipe_offering(self, recipe_id):
+        return self.offering
+
+    def ensure_recipe_offering(self, recipe):
+        self.ensure_calls.append(recipe)
+        self.offering = {
+            "id": "off-generated",
+            "is_free": False,
+            "content_key": f"recipe:{recipe['slug']}:cook",
+            "status": "active",
+            "price_amount": 199,
+            "currency_code": "USD",
+        }
         return self.offering
 
     def get_active_entitlement(self, user_id, recipe_id):
@@ -227,6 +240,17 @@ def test_access_service_returns_owned_state_with_entitlement_and_session():
 
     assert access["accessState"] == "owned"
     assert access["activeSession"]["sessionId"] == "sess-1"
+
+
+def test_access_service_creates_missing_offering():
+    entitlements_service = FakeEntitlementsService(offering=None)
+    service = AccessService(entitlements_service=entitlements_service)
+
+    access = service.get_recipe_access("jamie-s-classic-family-lasagne", user_id="user-1")
+
+    assert access["accessState"] == "locked"
+    assert access["offering"]["contentKey"] == "recipe:jamie-s-classic-family-lasagne:cook"
+    assert len(entitlements_service.ensure_calls) == 1
 
 
 def test_purchase_sync_service_creates_purchase_and_entitlement_for_completed_purchase():
