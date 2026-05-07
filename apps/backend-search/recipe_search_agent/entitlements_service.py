@@ -22,6 +22,9 @@ class EntitlementsService:
     def get_recipe_offering(self, recipe_id: str) -> Optional[dict[str, Any]]:
         return self._repository.get_active_offering(recipe_id)
 
+    def ensure_recipe_offering(self, recipe: dict[str, Any]) -> dict[str, Any]:
+        return self._repository.ensure_recipe_offering(recipe)
+
     def get_active_entitlement(self, user_id: str, recipe_id: str) -> Optional[dict[str, Any]]:
         return self._repository.get_active_entitlement(user_id, recipe_id)
 
