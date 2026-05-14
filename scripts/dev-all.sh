@@ -240,14 +240,22 @@ mkdir -p "$PROJECT_ROOT/logs"
 "$SCRIPT_DIR/dev-backend-search.sh" > "$LOG_FILE" 2>&1 &
 BACKEND_SEARCH_PID=$!
 
+echo "   💡 Backend-search corre en tu Mac (Python/uvicorn). No verás un contenedor en Docker Desktop:"
+echo "      solo \"jamie-backend-voice\" forma parte del stack Docker de este repo."
+
 # Esperar y verificar que el servicio responda
 # La primera ejecución puede tardar varios minutos (onnxruntime, pip install -e ., ccai con build deps).
 BACKEND_SEARCH_WAIT_SECS="${BACKEND_SEARCH_WAIT_SECS:-180}"
 echo "   ⏳ Esperando que backend-search esté listo (hasta ${BACKEND_SEARCH_WAIT_SECS}s; la 1ª vez suele tardar más)..."
 echo "   📋 Log: tail -f $LOG_FILE"
 for i in $(seq 1 "$BACKEND_SEARCH_WAIT_SECS"); do
-    if curl -s http://localhost:8000/health > /dev/null 2>&1; then
-        echo -e "   ${GREEN}✅ Backend-search está corriendo${NC}"
+    RESP=$(curl -sS --max-time 3 "http://localhost:8000/health" 2>/dev/null || true)
+    # /health devuelve HTTP 200 incluso con {"status":"unhealthy"}; exigimos status exacto.
+    ST=$($PYTHON_CMD -c "import json,sys; \
+d=json.loads(sys.stdin.read() or '{}'); \
+print(d.get('status',''))" <<< "$RESP" 2>/dev/null || echo "")
+    if [ "$ST" = "healthy" ]; then
+        echo -e "   ${GREEN}✅ Backend-search está corriendo (health: healthy)${NC}"
         break
     fi
     # Verificar que el proceso aún esté corriendo
@@ -333,7 +341,7 @@ echo ""
 echo "📍 Services:"
 echo "  - Frontend:        http://localhost:3000"
 echo "  - Backend-Voice:   ws://localhost:8100/ws/voice"
-echo "  - Backend-Search:  http://localhost:8000"
+echo "  - Backend-Search:  http://localhost:8000  (uvicorn en el host — no aparece como contenedor Docker)"
 echo ""
 echo "📋 Logs:"
 echo "  - Backend-Voice:   docker-compose logs -f backend-voice"
