@@ -9,9 +9,10 @@ Combina:
 
 import json
 import logging
+import re
 from dataclasses import dataclass, asdict
 from pathlib import Path
-from typing import List, Dict, Optional, Any
+from typing import List, Dict, Optional, Any, Tuple
 
 from supabase import Client
 
@@ -157,7 +158,153 @@ class RecipeSearchAgent:
                 explanations.append(f"Costo: {filters.cost}")
         
         return " | ".join(explanations) if explanations else "Match encontrado"
-    
+
+    _LEXICAL_QUERY_STOPWORDS = frozenset(
+        {
+            "the",
+            "a",
+            "an",
+            "i",
+            "me",
+            "my",
+            "we",
+            "you",
+            "to",
+            "for",
+            "and",
+            "or",
+            "with",
+            "some",
+            "any",
+            "tell",
+            "show",
+            "give",
+            "want",
+            "need",
+            "please",
+            "about",
+            "recipe",
+            "recipes",
+            "dish",
+            "something",
+            "make",
+            "cook",
+            "like",
+            "looking",
+        }
+    )
+
+    def _local_lexical_fallback(
+        self,
+        query: str,
+        filters: SearchFilters,
+        top_k: int,
+        include_full_recipe: bool,
+    ) -> List[RecipeMatch]:
+        """
+        When Supabase hybrid search returns no rows (empty index, stale DB,
+        thresholds), rank local data/recipes/*.json by overlapping tokens /
+        substring so named dishes like 'Beef Wellington' still resolve (NEU/local dev).
+        """
+        qnorm = (query or "").strip().lower()
+        if not qnorm or not self.project_root.is_dir():
+            return []
+
+        def tokens(s: str) -> set[str]:
+            return set(re.findall(r"[a-z0-9]+", s.lower())) - self._LEXICAL_QUERY_STOPWORDS
+
+        qtok = tokens(qnorm)
+        if not qtok:
+            qtok = set(re.findall(r"[a-z0-9]{3,}", qnorm))
+
+        scored: List[Tuple[float, str, Dict[str, Any]]] = []
+        filter_cat = (filters.category or "").lower().strip() or None
+
+        for path in sorted(self.project_root.glob("*.json")):
+            try:
+                with open(path, "r", encoding="utf-8") as fh:
+                    data = json.load(fh)
+                meta = data.get("recipe") or {}
+                rid = meta.get("id") or path.stem
+                title = (meta.get("title") or path.stem).strip()
+                course = (meta.get("course") or "").strip().lower()
+            except Exception as exc:
+                logger.debug("Skip bad recipe json %s: %s", path, exc)
+                continue
+
+            if filter_cat and course and filter_cat != course:
+                continue
+
+            stem = path.stem.lower()
+            title_low = title.lower()
+            rid_low = rid.lower()
+            slugish = stem.replace("-", " ")
+            title_tokens = tokens(title_low)
+            corpus = f"{title_low} {rid_low} {stem} {slugish}"
+
+            score = 0.0
+            overlap = len(qtok & title_tokens)
+            score += overlap * 3.0
+            # Multi-word phrases (e.g. beef + wellington)
+            if overlap >= min(2, max(1, len(qtok))):
+                score += 4.0
+
+            key_phrases = sorted(qtok, key=len, reverse=True)[:8]
+            for w in key_phrases:
+                if len(w) < 4:
+                    continue
+                if w in rid_low or w in stem:
+                    score += 2.5
+                elif w in title_low:
+                    score += 2.0
+
+            if qnorm and (qnorm in title_low or qnorm in corpus or corpus in qnorm):
+                score += 8.0
+
+            if score < 5.5:
+                continue
+
+            scored.append((score, path.name, data))
+
+        scored.sort(key=lambda x: (-x[0], x[1]))
+        out: List[RecipeMatch] = []
+        seen: set[str] = set()
+
+        for rank_score, fname, data in scored:
+            meta = data.get("recipe") or {}
+            rid = meta.get("id") or Path(fname).stem
+            title = meta.get("title") or rid
+            if rid in seen:
+                continue
+            seen.add(rid)
+
+            synth = round(min(0.95, 0.55 + rank_score * 0.008), 4)
+            match_expl = (
+                "Local catalogue match — vector DB returned nothing; ranked by title/slug tokens"
+            )
+            full_payload = dict(data) if include_full_recipe else None
+
+            out.append(
+                RecipeMatch(
+                    recipe_id=rid,
+                    title=title,
+                    similarity_score=synth,
+                    combined_score=synth,
+                    category=meta.get("course"),
+                    mood=None,
+                    complexity=meta.get("difficulty"),
+                    cost=None,
+                    file_path=fname,
+                    match_explanation=match_expl,
+                    matching_chunks=[],
+                    full_recipe=full_payload,
+                )
+            )
+            if len(out) >= top_k:
+                break
+
+        return out
+
     def search(
         self,
         query: str,
@@ -181,13 +328,15 @@ class RecipeSearchAgent:
         Returns:
             Lista de RecipeMatch ordenados por relevancia (combined_score desc)
         """
+        effective_filters = filters or SearchFilters()
+
         try:
             # 1. Generar embedding del query
             logger.info(f"Searching for: {query}")
             query_embedding = self._generate_embedding(query)
             
             # 2. Preparar filtros
-            filters = filters or SearchFilters()
+            filters = effective_filters
             
             # 3. Llamar función de búsqueda híbrida en Supabase
             response = self.client.rpc(
@@ -240,8 +389,16 @@ class RecipeSearchAgent:
                     results_data = results_data[:top_k]
 
             if not results_data:
-                logger.info("No results found")
-                return []
+                logger.info(
+                    "Hybrid search returned no rows; using local lexical fallback under %s",
+                    self.project_root,
+                )
+                return self._local_lexical_fallback(
+                    query,
+                    filters,
+                    top_k,
+                    include_full_recipe,
+                )
             
             # 4. Enriquecer resultados
             results = []
@@ -290,6 +447,18 @@ class RecipeSearchAgent:
             
         except Exception as e:
             logger.error(f"Search failed: {e}", exc_info=True)
+            fb = self._local_lexical_fallback(
+                query,
+                effective_filters,
+                top_k,
+                include_full_recipe,
+            )
+            if fb:
+                logger.warning(
+                    "Returning %d lexical fallback hits after hybrid search error",
+                    len(fb),
+                )
+                return fb
             raise
 
 

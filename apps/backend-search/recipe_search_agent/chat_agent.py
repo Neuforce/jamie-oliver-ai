@@ -16,9 +16,9 @@ from ccai.core.brain.simple_brain import SimpleBrain
 from ccai.core.llm.llm_openai import OpenAILLM
 from ccai.core.llm.base import ChunkResponse, FunctionCallResponse
 from ccai.core.memory.chat_memory import SimpleChatMemory
-from ccai.core.messages.base import UserMessage
+from ccai.core.messages.base import SystemMessage, UserMessage
 
-from recipe_search_agent.prompts import JAMIE_DISCOVERY_PROMPT
+from recipe_search_agent.prompts import DISCOVERY_PROMPT_REVISION, JAMIE_DISCOVERY_PROMPT
 from recipe_search_agent.discovery_tools import (
     discovery_function_manager,
     set_search_agent,
@@ -34,6 +34,7 @@ class ChatSession:
     chat_memory: SimpleChatMemory
     created_at: datetime
     last_activity: datetime
+    prompt_revision: int = 0
 
 
 @dataclass
@@ -99,6 +100,17 @@ class DiscoveryChatAgent:
 
         logger.info(f"DiscoveryChatAgent initialized with model={model}")
 
+    def _inject_current_system_prompt(self, chat_memory: SimpleChatMemory) -> None:
+        """Replace stale system preamble so prompt edits reach long-lived websocket sessions."""
+        hist = chat_memory.history
+        if not hist:
+            chat_memory.add_system_message(content=JAMIE_DISCOVERY_PROMPT)
+            return
+        if isinstance(hist[0], SystemMessage):
+            chat_memory.history[0] = SystemMessage(content=JAMIE_DISCOVERY_PROMPT)
+            return
+        chat_memory.history.insert(0, SystemMessage(content=JAMIE_DISCOVERY_PROMPT))
+
     def _create_llm(self) -> OpenAILLM:
         """Create a new LLM instance."""
         return OpenAILLM(
@@ -121,11 +133,21 @@ class DiscoveryChatAgent:
                 chat_memory=chat_memory,
                 created_at=datetime.now(),
                 last_activity=datetime.now(),
+                prompt_revision=DISCOVERY_PROMPT_REVISION,
             )
             logger.info(f"Created new chat session: {session_id}")
         else:
-            # Update last activity
-            self._sessions[session_id].last_activity = datetime.now()
+            sess = self._sessions[session_id]
+            sess.last_activity = datetime.now()
+            if sess.prompt_revision != DISCOVERY_PROMPT_REVISION:
+                logger.info(
+                    "Upgrading discovery system prompt revision %s -> %s for session %s",
+                    sess.prompt_revision,
+                    DISCOVERY_PROMPT_REVISION,
+                    session_id,
+                )
+                self._inject_current_system_prompt(sess.chat_memory)
+                sess.prompt_revision = DISCOVERY_PROMPT_REVISION
 
         return self._sessions[session_id]
 
