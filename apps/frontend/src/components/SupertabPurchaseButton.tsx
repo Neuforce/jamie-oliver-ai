@@ -33,7 +33,7 @@ export const SupertabPurchaseButton = forwardRef<
 
   useImperativeHandle(ref, () => ({
     openPurchaseExperience: async () => {
-      const deadline = Date.now() + 4000;
+      const deadline = Date.now() + 8000;
       while (Date.now() < deadline) {
         const mounted = mountedRef.current;
         if (mounted) {

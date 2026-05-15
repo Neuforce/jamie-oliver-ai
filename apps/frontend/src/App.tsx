@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
 import { RecipeCard } from './components/RecipeCard';
 import { RecipeModal, type RecipeModalHandle } from './components/RecipeModal';
@@ -543,6 +544,15 @@ export default function App() {
       try {
         // Same SDK instance as the in-modal “Put it on my Tab” — no duplicate mount.
         if (canEmbedRecipePurchaseButton(access)) {
+          // Commit locked access before opening: otherwise RecipeModal still has stale props,
+          // the Supertab pane never mounts, and openMyTabPurchaseFlow is a silent no-op.
+          const accessKey = getRecipeAccessKey(recipe);
+          flushSync(() => {
+            setRecipeAccessMap(prev => ({ ...prev, [accessKey]: access }));
+          });
+          await new Promise<void>(resolve => {
+            requestAnimationFrame(() => resolve());
+          });
           await recipeModalRef.current?.openMyTabPurchaseFlow();
           return;
         }
