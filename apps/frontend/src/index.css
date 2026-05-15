@@ -3564,18 +3564,21 @@ body {
  *
  * The roller inside captures pointer drag (`touch-action: none`) for its
  * up/down navigation. A scrollable ancestor would intercept that gesture,
- * so we use a simple flex container that both horizontally (via
- * `.jamie-shell-width` on the inner + `justify-content`) and vertically
- * (`align-items: center`) centers the roller. Bottom padding reserves
- * room for the floating voice dock (`--jamie-voice-dock-offset`) so the
- * roller never ducks behind it.
+ * so we avoid wrapping the roller in `.jamie-scroll-area`.
+ *
+ * Vertically we pin from the top (`align-items: stretch`) instead of
+ * centering the roller: tall Jamie cards + carousel used to clash with
+ * `overflow: hidden` + vertical centering, producing clipped/overlapping
+ * stacks. Horizontal centering stays via `.jamie-shell-width` on the inner.
+ *
+ * Bottom padding reserves room for the floating voice dock.
  */
 .jamie-voice-stage {
   flex: 1;
   min-height: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   padding: 12px 0 180px;
   overflow: hidden;
   /* Prevent iOS rubber-band scroll on the body from stealing the drag. */
@@ -3601,6 +3604,8 @@ body {
   display: flex;
   flex-direction: column;
   align-self: center;
+  flex: 1;
+  min-height: 0;
   width: 100%;
   max-width: var(--jamie-shell-max);
   padding-inline: var(--jamie-shell-gutter);

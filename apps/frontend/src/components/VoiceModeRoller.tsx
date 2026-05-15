@@ -342,7 +342,9 @@ export function VoiceModeRoller({
                   : undefined
               }
             >
-              {renderMessage(msg, role)}
+              <div className="voice-roller__card-body">
+                {renderMessage(msg, role)}
+              </div>
             </div>
           );
         })}
