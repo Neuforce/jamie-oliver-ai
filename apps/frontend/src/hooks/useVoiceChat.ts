@@ -413,8 +413,8 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     pendingDoneRef.current   = false;
     pendingListenRef.current = false;
     resetActiveResponse();
+    stopAllAudio();
     if (state === 'assistant_speaking') {
-      stopAllAudio();
       sendSocketEvent('interrupt');
     } else if (state === 'processing') {
       sendSocketEvent('cancel');
