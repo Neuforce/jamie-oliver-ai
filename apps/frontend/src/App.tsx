@@ -31,6 +31,7 @@ import {
   openMyTab,
   launchRecipePaywall,
   canEmbedRecipePurchaseButton,
+  clickVisibleJamieSupertabPurchaseButton,
   type MyTabAccountSummary,
   type MyTabMessageTone,
   type RecipePurchaseResolution,
@@ -553,7 +554,15 @@ export default function App() {
           await new Promise<void>(resolve => {
             requestAnimationFrame(() => resolve());
           });
-          await recipeModalRef.current?.openMyTabPurchaseFlow();
+          // 1) Literally click whatever Supertab rendered in the panel (same as a finger on “Put it on my Tab”).
+          let clicked = clickVisibleJamieSupertabPurchaseButton();
+          if (!clicked) {
+            await new Promise<void>(r => setTimeout(r, 250));
+            clicked = clickVisibleJamieSupertabPurchaseButton();
+          }
+          if (!clicked) {
+            await recipeModalRef.current?.openMyTabPurchaseFlow();
+          }
           return;
         }
 
@@ -609,6 +618,7 @@ export default function App() {
     },
     [
       canEmbedRecipePurchaseButton,
+      clickVisibleJamieSupertabPurchaseButton,
       hydrateJamieUser,
       launchRecipePaywall,
       loadOwnedRecipes,

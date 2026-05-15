@@ -144,7 +144,10 @@ export const SupertabPurchaseButton = forwardRef<
         </div>
 
         <div className="mt-4 rounded-[22px] bg-white p-3">
-          <div ref={containerRef} />
+          <div
+            ref={containerRef}
+            data-jamie-supertab-purchase-host=""
+          />
           {isMounting && (
             <p className="text-sm text-[#6B5F81]">
               Loading Supertab purchase options...

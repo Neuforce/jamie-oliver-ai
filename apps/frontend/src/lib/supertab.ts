@@ -355,7 +355,7 @@ async function resolvePurchaseOutcome(
 
 /**
  * Mimic a real user tap on the Supertab-injected control (not the SDK `show()` shortcut).
- * Walks into one level of shadow roots—some Supertab builds render the CTA inside shadow DOM.
+ * Walks shadow roots recursively.
  */
 function tryClickPurchaseControlLikeUser(containerElement: HTMLElement): boolean {
   const selectors =
@@ -385,6 +385,21 @@ function tryClickPurchaseControlLikeUser(containerElement: HTMLElement): boolean
   }
   target.click();
   return true;
+}
+
+/**
+ * Voice: same as the user tapping “Put it on my Tab” — find the in-modal Supertab mount in the
+ * live DOM (scoped to the recipe sheet when possible) and `.click()` the real control.
+ */
+export function clickVisibleJamieSupertabPurchaseButton(): boolean {
+  const host =
+    document.querySelector<HTMLElement>(
+      '[data-supertab-pane] [data-jamie-supertab-purchase-host]',
+    ) ?? document.querySelector<HTMLElement>('[data-jamie-supertab-purchase-host]');
+  if (!host) {
+    return false;
+  }
+  return tryClickPurchaseControlLikeUser(host);
 }
 
 export async function mountRecipePurchaseButton({
