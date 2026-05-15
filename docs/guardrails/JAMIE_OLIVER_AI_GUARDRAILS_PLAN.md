@@ -1,114 +1,122 @@
-# Plan — Jamie Oliver AI: guardrails, moderación y evaluación
+# Plan — Jamie Oliver AI: guardrails, moderation, and evaluation
 
-| Campo | Valor |
+| Field | Value |
 |--------|--------|
-| **Referencia** | `JAMIE_OLIVER_AI_GUARDRAILS_PRD.md` |
-| **Ticket Linear** | [NEU-622](https://linear.app/neuforce/issue/NEU-622) |
-| **Salida** | PrePrompt v1.2, acuerdo RAG Index 3, suite de eval, gates técnicos |
+| **Reference** | `JAMIE_OLIVER_AI_GUARDRAILS_PRD.md` |
+| **Linear** | [NEU-622](https://linear.app/neuforce/issue/NEU-622) |
+| **Deliverables** | PrePrompt v1.2, RAG Index 3 agreement, eval suite, technical gates |
 
-## 1. Principios
+**Defaults until Supertab sign-off:** see PRD **§14–§15** (crisis without URLs, food-only on mixed prompts, EN-GB MVP, generic disclaimer, minimal logs, no moderation API in MVP, documented release thresholds).
 
-1. **Defensa en profundidad**: ninguna capa sustituye a las demás; PrePrompt + orquestación + (opcional) moderación + RAG gate.
-2. **Medible**: cada milestone desbloquea corridas del suite de red teaming.
-3. **Mínimo viable primero**: política en sistema + gate simple de intención antes de integrar servicios costosos.
+## 1. Principles
 
-## 2. Fases
+1. **Defense in depth**: no single layer replaces the others; PrePrompt + orchestration + (optional) moderation + RAG gate.
+2. **Measurable**: each milestone unlocks red-team suite runs.
+3. **MVP first**: system policy + simple intent gate before expensive third-party services.
+4. **Zero retrieval on block**: orchestration must ensure **no** Supabase/pgvector semantic recipe query and **no** embedding work **for the recipe-search path** when the gate marks input as guardrail violation, prohibited topic, or out-of-scope (non-recipe). Avoid wasting **DB**, **latency**, and **tokens** on traffic we already turn away.
+5. **Redirect, don’t debate**: PrePrompt copy instructs the model to avoid argument or long discussion on sensitive/prohibited subjects; one short, warm pivot to cooking.
 
-### Fase 0 — Alineación (Semana 0)
+## 2. Phases
 
-**Entregables**
+### Phase 0 — Alignment (Week 0)
 
-- Lista cerrada de categorías y ejemplos (la tabla del cliente + variantes acordadas).
-- Definición de “comportamiento esperado” por categoría (rechazo, derivación, recurso de crisis si aplica).
-- Owners: producto + ingeniería + (si existe) advisor legal/compliance.
+**Deliverables**
 
-**Criterio de salida**
+- Frozen category list and examples (client table + agreed variants).
+- Definition of **expected behavior** per category (refusal, redirection, crisis resource if applicable).
+- Owners: product + engineering + legal/compliance advisor if available.
 
-- Matriz PrePrompt vs RAG revisada y firmada para implementación.
+**Exit criteria**
 
-### Fase 1 — PrePrompt v1.2 (Semanas 1–2)
+- PrePrompt vs RAG matrix reviewed and signed off for implementation.
 
-**Trabajo**
+### Phase 1 — PrePrompt v1.2 (Weeks 1–2)
 
-- Redactar bloque de política en inglés (o idioma del modelo principal) coherente con tono “Jamie”.
-- Añadir reglas explícitas: no armas, no ilegal, no odio, no PII, no desinformación médica/conspirativa, no contenido sexual, no autolesión/TCA como instrucción, etc.
-- Regla de herramientas: **no inventar recetas** (existente) + **no usar búsqueda** si el mensaje fue clasificado como fuera de política (cuando exista clasificador).
+**Work**
 
-**Ubicación código (objetivo)**
+- Draft the policy block in English (or primary model language) consistent with Jamie’s tone.
+- **Pivot copy (provisional)**: **British** English, brief and kind; see PRD §12 (*mate*, *right*, *wheelhouse*, open question toward recipes). Replace when brand approves final copy.
+- Add explicit rules: no weapons, no illegality, no hate, no PII, no medical/conspiracy misinformation, no sexual content, no self-harm/ED instruction, etc.
+- Tool rule: **do not invent recipes** (existing) + **do not call recipe search tools** when the message is gated negative—**orchestration enforces this** even if the model misbehaves (classifier/heuristic when available).
 
-- Discovery: `apps/backend-search/recipe_search_agent/prompts.py` + ensamblado en `chat_agent.py`.
-- Voz: `apps/backend-voice/src/config/prompts.py`.
+**Code targets**
 
-**Criterio de salida**
+- Discovery: `apps/backend-search/recipe_search_agent/prompts.py` + wiring in `chat_agent.py`.
+- Voice: `apps/backend-voice/src/config/prompts.py`.
 
-- Versión etiquetada `preprompt-v1.2` en repo (tag o constante + CHANGELOG).
+**Exit criteria**
 
-### Fase 2 — Orquestación y RAG Index 3 (Semanas 2–3)
+- Version labeled `preprompt-v1.2` in repo (tag or constant + CHANGELOG).
 
-**Trabajo**
+### Phase 2 — Orchestration and RAG Index 3 (Weeks 2–3)
 
-- **Query gate** antes de `semantic_recipe_search` / tools: si mensaje = alto riesgo u off-topic duro, responder sin recuperación (o con flujo acotado).
-- Documentar **RAG Index 3**: qué tablas/chunks, políticas de ingesta, exclusiones, versionado del índice en despliegue.
-- Revisar si hace falta filtrado adicional en SQL (normalmente bajo para corpus solo-recetas; valor principal = no llamar RAG innecesariamente).
+**Work**
 
-**Criterio de salida**
+- **Query gate** placed **before** any recipe path that computes **query embeddings** or calls **semantic_recipe_search** / Supabase vector paths: if the message is high-risk, prohibited, or hard off-topic / not cooking discovery, respond from a **no-RAG** branch (short LLM reply or template only).
+- Document **RAG Index 3**: tables/chunks, ingest policy, exclusions, index version in release process.
+- Assess whether extra SQL filtering is needed (usually low for recipe-only corpus; main value is **not entering** the vector pipeline when gated).
 
-- Flujo documentado en diagrama (entrada → gate → LLM / tools → salida).
-- Checklist de despliegue: “versión de índice X compatible con gate Y”.
+**Exit criteria**
 
-### Fase 3 — Moderación opcional (Semanas 3–4, en paralelo si hay presupuesto)
+- Documented flow diagram (input → **gate** → (blocked: no-embed / no-DB) OR (allowed: LLM + tools + search) → output).
+- Deployment checklist: “index version X compatible with gate Y.”
+- Staging evidence: blocked prompts produce **no** semantic search calls (metrics or integration tests).
 
-**Trabajo**
+### Phase 3 — Optional moderation (Weeks 3–4, parallel if budget allows)
 
-- Evaluar proveedor (OpenAI moderation u otro) vs clasificador pequeño.
-- Integrar en **entrada**; valorar **salida** para pipeline de voz.
+**Work**
 
-**Criterio de salida**
+- Evaluate vendor (e.g. OpenAI moderation) vs a small classifier.
+- Integrate on **input**; assess **output** for the voice pipeline.
 
-- SLO de latencia acordado; fallbacks si el servicio fall (default: comportamiento conservador).
+**Exit criteria**
 
-### Fase 4 — Eval y red teaming (continuo desde Fase 1)
+- Agreed latency SLO; fallbacks if the service fails (default: conservative behavior).
 
-**Trabajo**
+### Phase 4 — Eval and red teaming (continuous from Phase 1)
 
-- Crear dataset versionado (YAML/JSON): prompt, categoría esperada, comportamiento esperado (refuse / redirect / crisis template).
-- Scripts o tests que envíen prompts a staging y validen criterios (puede ser aserción por keywords + revisión humana periódica).
-- Expandir con paráfrasis y ataques de “boundary pushing” de la tabla del cliente.
+**Work**
 
-**Criterio de salida**
+- Versioned dataset (YAML/JSON): prompt, expected category, expected behavior (refuse / redirect / crisis template).
+- Scripts or tests that hit staging and validate criteria (keyword asserts + periodic human review).
+- Expand with paraphrases and “boundary pushing” attacks from the client table.
+- Include assertions that gated prompts **never** trigger recipe semantic search (automated where possible).
 
-- Umbral mínimo por categoría acordado; bloqueo de release si regresión crítica.
+**Exit criteria**
+
+- Minimum per-category threshold agreed; block release on critical regressions.
+- Red-team includes **non-debate** and **cooking-only pivot** checks for prohibited categories.
 
 ## 3. Roles
 
-| Rol | Responsabilidad |
-|-----|------------------|
-| Tech lead | Arquitectura de gates, revisiones de PR |
-| Backend | `chat_agent`, API búsqueda, integración de moderación |
-| ML/Eval (si aplica) | Dataset, métricas, corridas |
-| Producto | Priorización, copy de mensajes de rechazo |
+| Role | Responsibility |
+|------|----------------|
+| Tech lead | Gate architecture, PR review |
+| Backend | `chat_agent`, search API, moderation integration |
+| ML/Eval (if any) | Dataset, metrics, runs |
+| Product | Prioritization, refusal-message copy |
 
-## 4. Dependencias técnicas
+## 4. Technical dependencies
 
-- Feature flags o entorno staging con mismo modelo que prod cuando sea posible.
-- Secretos para API de moderación si se usan.
+- Feature flags or staging with the same model as prod when possible.
+- Secrets for moderation APIs if used.
 
-## 5. Riesgos operativos y mitigación
+## 5. Operational risks and mitigation
 
-| Riesgo | Mitigación |
-|--------|------------|
-| Falsos positivos en cocina | Muestra “golden” de preguntas culinarias en eval obligatorio |
-| Latencia | Gate asíncrono solo si es viable; en caso contrario modelo pequeño o heurísticas |
-| Deriva entre discovery y voz | Misma política base; pruebas separadas en suite |
+| Risk | Mitigation |
+|------|------------|
+| False positives on cooking | Mandatory “golden” culinary questions in eval |
+| Latency | Async gate only if viable; else small model or heuristics |
+| Drift between discovery and voice | Same base policy; separate cases in suite |
 
-## 6. Checklist de aceptación (MVP)
+## 6. MVP acceptance checklist
 
-- [ ] PrePrompt v1.2 desplegado en discovery y voz (texto base alineado).
-- [ ] Gate documentado: cuándo **no** se llama RAG.
-- [ ] RAG Index 3 documentado (versión, ingesta, rollback).
-- [ ] Suite inicial de eval con categorías del cliente ejecutada en staging.
-- [ ] Linear actualizado con enlaces a PRD/plan y PRs.
+- [ ] PrePrompt v1.2 shipped in discovery and voice (aligned base text): includes **no debate** + **warm British cooking pivot** on prohibited topics (PRD §12).
+- [ ] Gate documented and implemented: when RAG / semantic recipe DB is **not** called; blocked flows do **not** run embeddings for search or hit Supabase vector search.
+- [ ] RAG Index 3 documented (version, ingest, rollback).
+- [ ] Initial eval suite with client categories run in staging; **zero** semantic recipe queries for blocked cases (verified).
+- [ ] Linear updated with links to PRD/plan and PRs.
 
 ---
 
-*Plan operativo NeuForce. Ajustar fechas con capacidad del equipo.*
+*Operational plan for NeuForce. Adjust dates to team capacity.*
