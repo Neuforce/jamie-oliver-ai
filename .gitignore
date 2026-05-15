@@ -27,3 +27,6 @@ jamie-ui-components/
 
 # Scratch / throwaway dev artifacts
 git-status.txt
+
+data/recipes/batch-import.log
+data/recipes/batch-ingest.log

@@ -85,6 +85,16 @@ class WebSocketAudioInput(AudioInputService):
                     self.logger.info(f"Control event received for session {self.session_id}: {event_type}")
                     await self.control_queue.put(event_type)
 
+                elif event_type == "focused_recipe":
+                    # Arbitrary delimiter; recipe slugs contain no '|' today.
+                    data = message.get("data") or ""
+                    slug = ""
+                    if isinstance(data, dict):
+                        slug = str(data.get("backendRecipeId") or data.get("backendId") or "").strip()
+                    elif isinstance(data, str):
+                        slug = data.strip()
+                    await self.control_queue.put(f"__focus_recipe__|{slug}")
+
         except WebSocketDisconnect:
             self.logger.warning("WebSocket disconnected")
             self.running = False

@@ -790,6 +790,7 @@ async def voice_chat_websocket(websocket: WebSocket):
     - Client sends: {"event": "audio", "data": "base64_pcm_data"}
     - Client sends: {"event": "stop"}
     - Client sends: {"event": "interrupt"} (to stop Jamie while speaking)
+    - Client sends: {"event": "focused_recipe", "data": {"backendRecipeId": "recipe-slug"}} (modal focus; empty string clears)
 
     - Server sends: {"event": "session_info", "data": {...}}
     - Server sends: {"event": "listening"}
@@ -802,6 +803,7 @@ async def voice_chat_websocket(websocket: WebSocket):
     - Server sends: {"event": "meal_plan", "data": {...}}
     - Server sends: {"event": "recipe_detail", "data": {...}}
     - Server sends: {"event": "shopping_list", "data": {...}}
+    - Server sends: {"event": "recipe_paywall_requested", "data": {"backend_recipe_id": "..."}}
     - Server sends: {"event": "done"}
     - Server sends: {"event": "interrupted", "data": {"reason": "..."}}
     - Server sends: {"event": "error", "data": "error message"}

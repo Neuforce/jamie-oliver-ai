@@ -101,6 +101,13 @@ export function hasSupertabConfig(): boolean {
   return Boolean(getClientId());
 }
 
+/** Same surface as tapping “Put it on my Tab” in RecipeModal (PurchaseButton experience). */
+export function canEmbedRecipePurchaseButton(access: RecipeAccessResponse): boolean {
+  return Boolean(
+    getClientId() && getPurchaseButtonExperienceId() && access.offering?.contentKey,
+  );
+}
+
 function formatPrice(price?: {
   amount: number;
   currency: { symbol: string; baseUnit: number; code: string };
@@ -284,7 +291,20 @@ interface MountRecipePurchaseButtonOptions {
   access: RecipeAccessResponse;
   onResolved?: (resolution: RecipePurchaseResolution) => void;
   onError?: (message: string) => void;
+  /**
+   * When false, skip syncing `initialState` on mount. Use before calling
+   * `openPurchaseExperience()` so the UX matches tapping the pane button fresh.
+   * @default true
+   */
+  syncInitialOutcome?: boolean;
 }
+
+/** Result of embedding the Supertab purchase-button SDK in a DOM node */
+export type MountedRecipePurchaseButton = {
+  destroy: () => void;
+  /** Prefer `show()` when the SDK exposes it; otherwise a delegated container click — same wiring as tapping the pane */
+  openPurchaseExperience: () => Promise<void>;
+};
 
 function normalizePriorEntitlements(priorEntitlement: unknown): Array<Record<string, unknown>> {
   if (!priorEntitlement) {
@@ -338,23 +358,31 @@ export async function mountRecipePurchaseButton({
   access,
   onResolved,
   onError,
-}: MountRecipePurchaseButtonOptions): Promise<{ destroy: () => void }> {
+  syncInitialOutcome = true,
+}: MountRecipePurchaseButtonOptions): Promise<MountedRecipePurchaseButton> {
+  const fail = (copy: string): MountedRecipePurchaseButton => {
+    onError?.(copy);
+    return {
+      destroy: () => undefined,
+      openPurchaseExperience: async () => {
+        console.warn('[supertab] openPurchaseExperience no-op:', copy);
+      },
+    };
+  };
+
   const client = await getSupertabClient();
   const experienceId = getPurchaseButtonExperienceId();
 
   if (!experienceId) {
-    onError?.('Add the Supertab purchase button experience ID to enable recipe unlocks.');
-    return { destroy: () => undefined };
+    return fail('Add the Supertab purchase button experience ID to enable recipe unlocks.');
   }
 
   if (!access.offering) {
-    onError?.('This recipe is not configured for My Tab yet. Please try again soon.');
-    return { destroy: () => undefined };
+    return fail('This recipe is not configured for My Tab yet. Please try again soon.');
   }
 
   if (!access.offering.contentKey) {
-    onError?.('This recipe is missing a Supertab content key, so the purchase button cannot load.');
-    return { destroy: () => undefined };
+    return fail('This recipe is missing a Supertab content key, so the purchase button cannot load.');
   }
 
   containerElement.innerHTML = '';
@@ -401,7 +429,17 @@ export async function mountRecipePurchaseButton({
     console.info('Supertab purchase button returned no show(); relying on embedded widget click handling.');
   }
 
-  if ('initialState' in button && button.initialState) {
+  async function openPurchaseExperience(): Promise<void> {
+    if (typeof button.show === 'function') {
+      await button.show();
+      return;
+    }
+    containerElement.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, cancelable: true, view: window }),
+    );
+  }
+
+  if (syncInitialOutcome && 'initialState' in button && button.initialState) {
     void resolvePurchaseOutcome(access, button.initialState, onResolved).catch((error) => {
       console.error('Failed to process Supertab initial purchase state:', error);
     });
@@ -412,7 +450,113 @@ export async function mountRecipePurchaseButton({
       detachShowHandler();
       button.destroy();
     },
+    openPurchaseExperience,
   };
+}
+
+const VOICE_PURCHASE_MOUNT_ABORT_MS = 7 * 60 * 1000;
+
+/**
+ * Same Supertab `createPurchaseButton` experience as the RecipeModal pane, opened without user tapping —
+ * Keeps parity with tapping “Put it on my Tab” (NEU-style voice checkout).
+ */
+export async function openRecipePurchaseViaEmbeddedButton(
+  access: RecipeAccessResponse,
+  options: {
+    onResolved?: (resolution: RecipePurchaseResolution) => void | Promise<void>;
+    onError?: (message: string) => void;
+    /** Fallback if `onResolved` never runs (checkout abandoned SDK-side) */
+    onTeardown?: () => void;
+  } = {},
+): Promise<void> {
+  if (!getClientId()) {
+    options.onError?.('Supertab is not configured on this frontend.');
+    return;
+  }
+
+  const experienceId = getPurchaseButtonExperienceId();
+  if (!experienceId) {
+    options.onError?.('Add the Supertab purchase button experience ID to enable recipe unlocks.');
+    return;
+  }
+
+  if (!access.offering?.contentKey) {
+    options.onError?.(
+      access.offering == null
+        ? 'This recipe is not configured for My Tab yet. Please try again soon.'
+        : 'This recipe is missing a Supertab content key, so the purchase button cannot load.',
+    );
+    return;
+  }
+
+  const shell = document.createElement('div');
+  shell.dataset.voiceEmbeddedPurchaseMount = '';
+  shell.setAttribute('aria-hidden', 'true');
+  shell.tabIndex = -1;
+  // Occupy real viewport geometry—some Supertab builds skip launch when the
+  // PurchaseButton host isn't on-screen / has zero visible area (1×1 clip caused
+  // voice-triggered flows to silently no-op despite show() resolving).
+  shell.style.cssText = [
+    'position:fixed',
+    'inset:0',
+    'width:100%',
+    'height:100%',
+    'margin:0',
+    'padding:0',
+    'border:none',
+    'z-index:2147483646',
+    'pointer-events:auto',
+    'background:transparent',
+  ].join(';');
+  document.body.appendChild(shell);
+
+  let toreDown = false;
+  let abortTimer = 0;
+  let mounted: MountedRecipePurchaseButton | undefined;
+
+  const teardown = (reason?: string) => {
+    if (toreDown) {
+      return;
+    }
+    toreDown = true;
+    if (abortTimer) {
+      window.clearTimeout(abortTimer);
+      abortTimer = 0;
+    }
+    if (reason) {
+      console.info('[supertab] voice purchase mount teardown:', reason);
+    }
+    mounted?.destroy();
+    shell.remove();
+    options.onTeardown?.();
+  };
+
+  try {
+    mounted = await mountRecipePurchaseButton({
+      containerElement: shell,
+      access,
+      syncInitialOutcome: false,
+      onError: options.onError,
+      onResolved: async (resolution) => {
+        try {
+          await options.onResolved?.(resolution);
+        } finally {
+          teardown('purchase resolution');
+        }
+      },
+    });
+
+    abortTimer = window.setTimeout(() => {
+      teardown('timeout');
+      options.onError?.('Checkout timed out. Use “Put it on my Tab” on this recipe.');
+    }, VOICE_PURCHASE_MOUNT_ABORT_MS);
+
+    await mounted.openPurchaseExperience();
+  } catch (error) {
+    console.error('openRecipePurchaseViaEmbeddedButton failed:', error);
+    options.onError?.('Supertab could not launch the purchase button flow.');
+    teardown('error');
+  }
 }
 
 export interface LaunchRecipePaywallResult {

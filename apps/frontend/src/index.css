@@ -4260,6 +4260,23 @@ body {
 
 .jamie-voice-dock-shell .jamie-shell-width { pointer-events: auto; }
 
+/* Portaled discovery voice dock sits above RecipeModal (z-50) — NEU-619 */
+.jamie-voice-dock-over-modal {
+  position: fixed;
+  inset: auto 0 0 0;
+  z-index: 10050;
+  padding: 12px 20px max(20px, calc(12px + env(safe-area-inset-bottom, 0px)));
+  pointer-events: none;
+}
+
+.jamie-voice-dock-over-modal .jamie-voice-dock-shell {
+  position: relative;
+  left: auto;
+  right: auto;
+  bottom: auto;
+  z-index: auto;
+}
+
 .jamie-voice-footer {
   display: flex;
   align-items: center;
@@ -5577,6 +5594,11 @@ body {
   flex-direction: column;
   gap: 18px;
   padding: 4px 0 48px;
+}
+
+.jamie-recipe-modal-body--voice-dock-reserve {
+  /* Voice dock portals above z-50 modal; reserve scroll space at bottom tabs. */
+  padding-bottom: calc(48px + max(92px, env(safe-area-inset-bottom, 0px) + 56px));
 }
 
 /* --- Header-right "Let's cook" / "Resume" / "Unlock" pill ----------------- */

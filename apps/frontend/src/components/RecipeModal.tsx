@@ -1,11 +1,11 @@
 import React from 'react';
 import { Recipe } from '../data/recipes';
-import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { SupertabPurchaseButton } from './SupertabPurchaseButton';
 import { toast } from './ui/sonner';
 import type { RecipeAccessResponse } from '../lib/api';
-import type { RecipePurchaseResolution } from '../lib/supertab';
+import type { LaunchRecipePaywallResult } from '../lib/supertab';
 import { RecipeDetailsTabs } from './RecipeDetailsTabs';
 // @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
@@ -17,6 +17,8 @@ interface RecipeModalProps {
   recipeAccess?: RecipeAccessResponse | null;
   isAccessLoading?: boolean;
   onPurchaseResolved?: (resolution: RecipePurchaseResolution) => void;
+  /** Extra bottom padding while the modal has portaled voice strip (launcher or active dock). */
+  reserveBottomForVoiceDock?: boolean;
 }
 
 /**
@@ -61,6 +63,7 @@ export function RecipeModal({
   recipeAccess,
   isAccessLoading = false,
   onPurchaseResolved,
+  reserveBottomForVoiceDock = false,
 }: RecipeModalProps) {
   const [savedSession, setSavedSession] = useState<any>(null);
 
@@ -208,7 +211,13 @@ export function RecipeModal({
           overflowY: 'auto',
         }}
       >
-        <div className="jamie-shell-width jamie-recipe-modal-body">
+        <div
+          className={
+            reserveBottomForVoiceDock
+              ? 'jamie-shell-width jamie-recipe-modal-body jamie-recipe-modal-body--voice-dock-reserve'
+              : 'jamie-shell-width jamie-recipe-modal-body'
+          }
+        >
           {/*
            * Hero image. Sits at the top of the scrollable body — one
            * generous 16:9 panel with a soft inset shadow and rounded
