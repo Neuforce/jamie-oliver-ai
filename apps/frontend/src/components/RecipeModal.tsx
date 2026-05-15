@@ -101,12 +101,16 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
 
   useImperativeHandle(ref, () => ({
     openMyTabPurchaseFlow: async () => {
-      if (!recipe || recipeAccess?.accessState !== 'locked') {
+      if (!recipe) {
         return;
       }
+      // Voice path: App already verified locked access — do not gate on stale recipeAccess props.
+      document
+        .querySelector('[data-supertab-pane]')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       await purchaseButtonRef.current?.openPurchaseExperience();
     },
-  }), [recipe, recipeAccess?.accessState]);
+  }), [recipe]);
 
   if (!recipe) return null;
 

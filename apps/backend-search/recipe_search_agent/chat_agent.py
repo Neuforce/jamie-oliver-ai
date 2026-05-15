@@ -395,7 +395,10 @@ class DiscoveryChatAgent:
                 elif "get_recipe_details" in tool_calls_seen:
                     intro = "Here are the details for that recipe."
                 elif "request_supertab_unlock" in tool_calls_seen:
-                    intro = "Opening My Tab checkout — finish the prompts on screen to unlock."
+                    intro = (
+                        "Getting My Tab checkout going — if the sheet doesn’t pop up, "
+                        "tap **Put it on my Tab** on this recipe."
+                    )
                 elif "create_shopping_list" in tool_calls_seen:
                     intro = "Here’s your shopping list."
                 else:

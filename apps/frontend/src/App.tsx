@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
 import { RecipeCard } from './components/RecipeCard';
 import { RecipeModal, type RecipeModalHandle } from './components/RecipeModal';
@@ -30,6 +31,7 @@ import {
   openMyTab,
   launchRecipePaywall,
   canEmbedRecipePurchaseButton,
+  clickVisibleJamieSupertabPurchaseButton,
   type MyTabAccountSummary,
   type MyTabMessageTone,
   type RecipePurchaseResolution,
@@ -543,7 +545,24 @@ export default function App() {
       try {
         // Same SDK instance as the in-modal “Put it on my Tab” — no duplicate mount.
         if (canEmbedRecipePurchaseButton(access)) {
-          await recipeModalRef.current?.openMyTabPurchaseFlow();
+          // Commit locked access before opening: otherwise RecipeModal still has stale props,
+          // the Supertab pane never mounts, and openMyTabPurchaseFlow is a silent no-op.
+          const accessKey = getRecipeAccessKey(recipe);
+          flushSync(() => {
+            setRecipeAccessMap(prev => ({ ...prev, [accessKey]: access }));
+          });
+          await new Promise<void>(resolve => {
+            requestAnimationFrame(() => resolve());
+          });
+          // 1) Literally click whatever Supertab rendered in the panel (same as a finger on “Put it on my Tab”).
+          let clicked = clickVisibleJamieSupertabPurchaseButton();
+          if (!clicked) {
+            await new Promise<void>(r => setTimeout(r, 250));
+            clicked = clickVisibleJamieSupertabPurchaseButton();
+          }
+          if (!clicked) {
+            await recipeModalRef.current?.openMyTabPurchaseFlow();
+          }
           return;
         }
 
@@ -599,6 +618,7 @@ export default function App() {
     },
     [
       canEmbedRecipePurchaseButton,
+      clickVisibleJamieSupertabPurchaseButton,
       hydrateJamieUser,
       launchRecipePaywall,
       loadOwnedRecipes,
