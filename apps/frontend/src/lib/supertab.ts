@@ -353,6 +353,40 @@ async function resolvePurchaseOutcome(
   });
 }
 
+/**
+ * Mimic a real user tap on the Supertab-injected control (not the SDK `show()` shortcut).
+ * Walks into one level of shadow roots—some Supertab builds render the CTA inside shadow DOM.
+ */
+function tryClickPurchaseControlLikeUser(containerElement: HTMLElement): boolean {
+  const selectors =
+    'button:not([disabled]),[role="button"]:not([aria-disabled="true"]),a[href]';
+
+  const pick = (root: Document | Element | ShadowRoot): HTMLElement | null => {
+    const el = root.querySelector<HTMLElement>(selectors);
+    if (el) {
+      return el;
+    }
+    const nodes = root.querySelectorAll('*');
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      if (n instanceof HTMLElement && n.shadowRoot) {
+        const inner = pick(n.shadowRoot);
+        if (inner) {
+          return inner;
+        }
+      }
+    }
+    return null;
+  };
+
+  const target = pick(containerElement);
+  if (!target) {
+    return false;
+  }
+  target.click();
+  return true;
+}
+
 export async function mountRecipePurchaseButton({
   containerElement,
   access,
@@ -430,6 +464,10 @@ export async function mountRecipePurchaseButton({
   }
 
   async function openPurchaseExperience(): Promise<void> {
+    // Prefer a real DOM .click() on the widget Supertab rendered — same class of event as a finger tap.
+    if (tryClickPurchaseControlLikeUser(containerElement)) {
+      return;
+    }
     if (typeof button.show === 'function') {
       await button.show();
       return;
