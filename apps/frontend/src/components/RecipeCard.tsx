@@ -111,7 +111,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
       className="overflow-hidden bg-white"
       style={{
         borderRadius: '24px',
-        boxShadow: '0 18px 36px rgba(35, 66, 82, 0.10)',
+        boxShadow: '0 14px 28px rgba(35, 66, 82, 0.08)',
         border: '1px solid rgba(255, 255, 255, 0.8)',
         width: '100%',
         ...(maxWidth ? { maxWidth: `${maxWidth}px`, margin: '0 auto' } : {}),

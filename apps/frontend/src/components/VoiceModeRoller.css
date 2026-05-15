@@ -20,7 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  touch-action: none;
+  touch-action: manipulation;
   user-select: none;
   -webkit-user-select: none;
 }
@@ -111,6 +111,11 @@
   will-change: width, transform, filter, opacity;
 }
 
+.voice-roller__card-content {
+  width: 100%;
+  min-width: 0;
+}
+
 /* Jamie speaker wraps content in a white card. */
 .voice-roller__card[data-speaker='jamie'] {
   background: rgba(255, 255, 255, 0.94);
@@ -153,9 +158,47 @@
   margin-bottom: 0;
   z-index: 3;
   cursor: grab;
+  touch-action: none;
 }
+
 .voice-roller__card[data-role='top']:active {
   cursor: grabbing;
+}
+
+.voice-roller__stack[data-tall-top='true'] {
+  min-height: 0;
+  padding-top: 6px;
+}
+
+.voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='back'],
+.voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='middle'] {
+  position: absolute;
+  left: 50%;
+  margin-bottom: 0;
+}
+
+.voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='back'] {
+  top: 0;
+  width: 76%;
+  transform: translateX(-50%) scale(0.94);
+  opacity: 0.3;
+  filter: blur(1.9px);
+}
+
+.voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='middle'] {
+  top: 36px;
+  width: 84%;
+  transform: translateX(-50%) scale(0.97);
+  opacity: 0.62;
+  filter: blur(0.85px);
+}
+
+.voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='top'] {
+  margin-top: 56px;
+}
+
+.voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='top'][data-speaker='jamie'] {
+  padding: 18px 16px 16px;
 }
 
 /*
@@ -191,6 +234,30 @@
 
   .voice-roller__card[data-speaker='jamie'] {
     padding: 20px 16px 18px;
+  }
+
+  .voice-roller__stack[data-tall-top='true'] {
+    padding-top: 2px;
+  }
+
+  .voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='back'] {
+    top: -6px;
+    width: 70%;
+    opacity: 0.22;
+  }
+
+  .voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='middle'] {
+    top: 18px;
+    width: 78%;
+    opacity: 0.5;
+  }
+
+  .voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='top'] {
+    margin-top: 34px;
+  }
+
+  .voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='top'][data-speaker='jamie'] {
+    padding: 16px 14px 14px;
   }
   /*
    * Mobile inherits the 100% / 92% / 84% rule from the base — the parent

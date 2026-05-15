@@ -78,6 +78,7 @@ export default function App() {
   const [myTabMessageTone, setMyTabMessageTone] = useState<MyTabMessageTone | undefined>(undefined);
   const [myRecipes, setMyRecipes] = useState<OwnedRecipeSummary[]>([]);
   const [isMyRecipesLoading, setIsMyRecipesLoading] = useState(false);
+  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const normalizedSearchQuery = typeof searchQuery === 'string' ? searchQuery : '';
 
   // Load recipes asynchronously in production (when recipes array is empty)
@@ -563,6 +564,10 @@ export default function App() {
   };
   const isMyRecipesView = activeView === 'my-recipes';
 
+  useEffect(() => {
+    setIsHeaderScrolled(false);
+  }, [activeView, cookingRecipe]);
+
   return (
     <div className="jamie-app-shell">
       {/* Full-screen cooking overlay takes priority */}
@@ -587,7 +592,10 @@ export default function App() {
       {!cookingRecipe && (
         <>
           {/* Persistent Tab Navigation */}
-          <header className="jamie-app-header-shell">
+          <header
+            className="jamie-app-header-shell"
+            data-scrolled={isHeaderScrolled || undefined}
+          >
             <TabNav
               activeTab={activeView}
               onTabChange={setActiveView}
@@ -618,6 +626,7 @@ export default function App() {
                     onRecipeClick={handleChatRecipeClick}
                     onPromptClick={handlePromptClick}
                     onClearInitialMessage={() => setInitialChatMessage(undefined)}
+                    onScrollStateChange={setIsHeaderScrolled}
                   />
                 </motion.div>
               ) : (
@@ -628,6 +637,9 @@ export default function App() {
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.2 }}
                   className="jamie-scroll-area"
+                  onScroll={(e) => {
+                    setIsHeaderScrolled(e.currentTarget.scrollTop > 10);
+                  }}
                 >
                   {/* Recipes View */}
                   <div className="jamie-page-shell">

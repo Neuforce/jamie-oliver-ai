@@ -270,10 +270,17 @@ function StepIcon({ icon }: { icon: ProcessStepIcon }) {
  * A single Jamie turn can carry multiple tool outputs — this decides
  * which one the process card should embed.
  *
- * Rule: use whichever output matches the tool that was called. If the
- * tool was `search_recipes` or `suggest_recipes_for_mood`, the featured
- * payload is the first recipe; the rest stay available for a carousel
- * rendered as a sibling below the card.
+ * Rule: prefer the richest explicit payload first (recipe detail / meal
+ * plan / shopping list). If none of those landed but recipe results did,
+ * fall back to the first recipe regardless of the original primary tool.
+ *
+ * That fallback matters for mixed turns like:
+ *   plan_meal -> search_recipes -> search_recipes
+ *
+ * In those turns the ProcessCard keeps the first tool (`plan_meal`) as its
+ * primary label so the step history stays deterministic, but the featured
+ * surface should still show the recipe carousel when the backend ended up
+ * returning recipe results instead of a structured meal plan.
  */
 export function selectFeatured(args: {
   tool: ToolName;
@@ -282,29 +289,7 @@ export function selectFeatured(args: {
   recipeDetail?: unknown;
   shoppingList?: unknown;
 }): FeaturedPayload | undefined {
-  const { tool } = args;
-
-  if (
-    (tool === 'search_recipes' || tool === 'suggest_recipes_for_mood') &&
-    args.recipes &&
-    args.recipes.length > 0
-  ) {
-    return {
-      kind: 'recipe',
-      recipe: args.recipes[0] as FeaturedPayload extends { kind: 'recipe' }
-        ? FeaturedPayload['recipe']
-        : never,
-    };
-  }
-  if (tool === 'plan_meal' && args.mealPlan) {
-    return {
-      kind: 'meal_plan',
-      mealPlan: args.mealPlan as FeaturedPayload extends { kind: 'meal_plan' }
-        ? FeaturedPayload['mealPlan']
-        : never,
-    };
-  }
-  if (tool === 'get_recipe_details' && args.recipeDetail) {
+  if (args.recipeDetail) {
     return {
       kind: 'recipe_detail',
       recipe: args.recipeDetail as FeaturedPayload extends {
@@ -314,13 +299,29 @@ export function selectFeatured(args: {
         : never,
     };
   }
-  if (tool === 'create_shopping_list' && args.shoppingList) {
+  if (args.mealPlan) {
+    return {
+      kind: 'meal_plan',
+      mealPlan: args.mealPlan as FeaturedPayload extends { kind: 'meal_plan' }
+        ? FeaturedPayload['mealPlan']
+        : never,
+    };
+  }
+  if (args.shoppingList) {
     return {
       kind: 'shopping_list',
       shoppingList: args.shoppingList as FeaturedPayload extends {
         kind: 'shopping_list';
       }
         ? FeaturedPayload['shoppingList']
+        : never,
+    };
+  }
+  if (args.recipes && args.recipes.length > 0) {
+    return {
+      kind: 'recipe',
+      recipe: args.recipes[0] as FeaturedPayload extends { kind: 'recipe' }
+        ? FeaturedPayload['recipe']
         : never,
     };
   }

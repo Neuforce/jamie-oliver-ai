@@ -20,6 +20,8 @@ class AccessService:
             raise ValueError(f"Recipe not found: {recipe_slug_or_id}")
 
         offering = self._entitlements.get_recipe_offering(recipe["id"])
+        if not offering:
+            offering = self._entitlements.ensure_recipe_offering(recipe)
         entitlement = self._entitlements.get_active_entitlement(user_id, recipe["id"]) if user_id else None
         active_session = self._entitlements.get_active_session(user_id, recipe["id"]) if user_id else None
 

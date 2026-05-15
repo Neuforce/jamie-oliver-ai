@@ -347,7 +347,12 @@ export async function mountRecipePurchaseButton({
     return { destroy: () => undefined };
   }
 
-  if (!access.offering?.contentKey) {
+  if (!access.offering) {
+    onError?.('This recipe is not configured for My Tab yet. Please try again soon.');
+    return { destroy: () => undefined };
+  }
+
+  if (!access.offering.contentKey) {
     onError?.('This recipe is missing a Supertab content key, so the purchase button cannot load.');
     return { destroy: () => undefined };
   }

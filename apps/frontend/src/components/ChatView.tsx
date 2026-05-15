@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown';
 import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
 import { MealPlanCard } from './MealPlanCard';
-import { RecipeQuickView } from './RecipeQuickView';
 import { ShoppingListCard } from './ShoppingListCard';
 import { ArrowUp, ArrowDown, MessageCircle, Square, MicOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -23,6 +22,7 @@ import {
   chatWithAgent,
   generateSessionId,
   clearChatSession,
+  getRecipeById,
   searchRecipes,
   type MealPlanData,
   type RecipeDetailData,
@@ -30,6 +30,11 @@ import {
 } from '../lib/api';
 import { transformRecipeMatch, transformRecipeFromSummary, loadRecipeFromLocal, type BackendRecipeSummary } from '../data/recipeTransformer';
 import type { JamieOliverRecipe } from '../data/recipeTransformer';
+import {
+  getFocusedRecipeDetail,
+  backendSummaryFromRecipeDetail,
+  userAffirmsGoToFullRecipe,
+} from '../lib/discoveryFullRecipeGate';
 
 interface Message {
   id: string;
@@ -49,11 +54,13 @@ interface ChatViewProps {
   onRecipeClick: (recipe: Recipe) => void;
   onPromptClick: (prompt: string) => void;
   onClearInitialMessage: () => void;
+  onScrollStateChange?: (scrolled: boolean) => void;
 }
 
 const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
 const SESSION_ID_KEY = 'jamie-oliver-chat-session';
 const IGNORED_VOICE_TRANSCRIPTS = new Set(['[Connection restored]']);
+const JAMIE_MESSAGE_COLLAPSE_CHAR_THRESHOLD = 520;
 
 /** Max width for chat content; matches TabNav for consistent layout (NEU-470). */
 const CHAT_CONTENT_MAX_WIDTH = 600;
@@ -163,16 +170,39 @@ const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
     return recipe;
   }
 
-  // Load full recipe from local JSON files
+  // Prefer the backend recipe endpoint because it reflects the same source of
+  // truth as the 251 recipes loaded from Supabase. The local JSON bundle is
+  // only a partial fallback and misses many of the newer slugs.
+  try {
+    const response = await getRecipeById(recipe.backendId);
+    if (response.full_recipe && 'recipe' in response.full_recipe) {
+      return transformRecipeMatch(
+        {
+          recipe_id: recipe.backendId,
+          title: response.title || recipe.title,
+          similarity_score: 1,
+          combined_score: 1,
+          file_path: response.file_path || '',
+          match_explanation: '',
+          matching_chunks: [],
+        },
+        response.full_recipe as JamieOliverRecipe,
+        recipe.id - 1
+      );
+    }
+  } catch (error) {
+    console.warn(`Could not load recipe ${recipe.backendId} from API, trying local fallback`, error);
+  }
+
+  // Final fallback for older bundled recipes.
   try {
     const fullRecipe = await loadRecipeFromLocal(recipe.backendId);
     if (!fullRecipe) {
-      console.warn(`Could not load recipe ${recipe.backendId} from local files`);
+      console.warn(`Could not load recipe ${recipe.backendId} from API or local files`);
       return recipe;
     }
 
-    // Transform to get complete recipe with rawRecipePayload
-    const transformed = transformRecipeMatch(
+    return transformRecipeMatch(
       {
         recipe_id: recipe.backendId,
         title: recipe.title,
@@ -183,21 +213,62 @@ const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
         matching_chunks: [],
       },
       fullRecipe,
-      recipe.id - 1 // Use existing numeric ID
+      recipe.id - 1
     );
-
-    return transformed;
   } catch (error) {
     console.error(`Error loading full recipe for ${recipe.backendId}:`, error);
     return recipe;
   }
 };
 
+const loadRecipeForSelection = async (recipeId: string): Promise<Recipe | null> => {
+  try {
+    const response = await getRecipeById(recipeId);
+    if (response.full_recipe && 'recipe' in response.full_recipe) {
+      return transformRecipeMatch(
+        {
+          recipe_id: recipeId,
+          title: response.title || recipeId,
+          similarity_score: 1,
+          combined_score: 1,
+          file_path: response.file_path || '',
+          match_explanation: '',
+          matching_chunks: [],
+        },
+        response.full_recipe as JamieOliverRecipe,
+        0
+      );
+    }
+  } catch (error) {
+    console.warn(`Could not load recipe ${recipeId} from API, trying local fallback`, error);
+  }
+
+  const localRecipe = await loadRecipeFromLocal(recipeId);
+  if (!localRecipe) {
+    return null;
+  }
+
+  return transformRecipeMatch(
+    {
+      recipe_id: recipeId,
+      title: localRecipe.recipe?.title || recipeId,
+      similarity_score: 1,
+      combined_score: 1,
+      file_path: '',
+      match_explanation: '',
+      matching_chunks: [],
+    },
+    localRecipe,
+    0
+  );
+};
+
 export function ChatView({
   initialMessage,
   onRecipeClick,
   onPromptClick,
-  onClearInitialMessage
+  onClearInitialMessage,
+  onScrollStateChange,
 }: ChatViewProps) {
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const [inputValue, setInputValue] = useState('');
@@ -205,13 +276,31 @@ export function ChatView({
   const [thinkingStatus, setThinkingStatus] = useState<string | null>(null);
   const [displayedThinkingText, setDisplayedThinkingText] = useState('');
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const [expandedMessageIds, setExpandedMessageIds] = useState<Record<string, boolean>>({});
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  /** Fresh messages for voice callbacks without stale closures (NEU-620). */
+  const messagesRef = useRef<Message[]>(messages);
+  messagesRef.current = messages;
+  /** Set after hook init so transcripts can invoke interrupt without reordering deps. */
+  const interruptVoiceRef = useRef<() => void>(() => {});
 
   // Shared session ID for both text and voice chat (ensures unified experience)
   const sessionId = useMemo(() => getOrCreateSessionId(), []);
+
+  const openRecipeModalFromDetail = useCallback(
+    async (detail: RecipeDetailData) => {
+      const stub = transformRecipeFromSummary(backendSummaryFromRecipeDetail(detail), 0);
+      const complete = await ensureRecipeHasPayload(stub);
+      onRecipeClick(complete);
+    },
+    [onRecipeClick],
+  );
+
+  const openRecipeModalFromDetailRef = useRef(openRecipeModalFromDetail);
+  openRecipeModalFromDetailRef.current = openRecipeModalFromDetail;
 
   // Voice mode state
   const voiceMessageRef = useRef<string | null>(null);
@@ -257,6 +346,22 @@ export function ChatView({
       }
 
       if (isFinal && normalizedText) {
+        const focusedDetail = getFocusedRecipeDetail(messagesRef.current);
+        if (focusedDetail && userAffirmsGoToFullRecipe(normalizedText)) {
+          interruptVoiceRef.current();
+          const userMessage: Message = {
+            id: Date.now().toString(),
+            type: 'user',
+            content: normalizedText,
+            timestamp: new Date(),
+          };
+          setMessages(prev => [...prev, userMessage]);
+          setIsTyping(false);
+          setThinkingStatus(null);
+          void openRecipeModalFromDetailRef.current(focusedDetail);
+          return;
+        }
+
         // Create user message from voice transcript
         const userMessage: Message = {
           id: Date.now().toString(),
@@ -399,6 +504,7 @@ export function ChatView({
       setThinkingStatus(null);
     },
   });
+  interruptVoiceRef.current = interrupt;
 
   const voiceFooterDetail = isMicMuted
     ? 'Mic muted — tap Jamie to unmute'
@@ -453,7 +559,14 @@ export function ChatView({
     const { scrollTop, scrollHeight, clientHeight } = container;
     const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
     setShowScrollButton(!isNearBottom && scrollHeight > clientHeight);
-  }, []);
+    onScrollStateChange?.(scrollTop > 10);
+  }, [onScrollStateChange]);
+
+  useEffect(() => {
+    if (!hasMessages || isVoiceActive) {
+      onScrollStateChange?.(false);
+    }
+  }, [hasMessages, isVoiceActive, onScrollStateChange]);
 
   // Save messages to localStorage whenever they change (excluding streaming)
   useEffect(() => {
@@ -572,6 +685,27 @@ export function ChatView({
   const handleSendMessage = async (messageText?: string) => {
     const text = messageText || inputValue.trim();
     if (!text) return;
+
+    const focusedDetail = getFocusedRecipeDetail(messages);
+    if (focusedDetail && userAffirmsGoToFullRecipe(text)) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+      setIsTyping(false);
+      setThinkingStatus(null);
+
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        type: 'user',
+        content: text,
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, userMessage]);
+      setInputValue('');
+      await openRecipeModalFromDetail(focusedDetail);
+      return;
+    }
 
     // Cancel any ongoing request
     if (abortControllerRef.current) {
@@ -701,11 +835,17 @@ export function ChatView({
           }
           console.log('Transformed', agentRecipes.length, 'recipes for display');
 
-          // Update process card featured payload
+          // Update both the message's recipe list and the process card's
+          // featured payload so mixed-tool turns (e.g. plan_meal falling back
+          // to recipe search) can still render the carousel immediately.
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId || !msg.process) return msg;
             const featured = selectFeatured({ tool: msg.process.tool, recipes: agentRecipes });
-            return { ...msg, process: { ...msg.process, featured } };
+            return {
+              ...msg,
+              recipes: agentRecipes,
+              process: { ...msg.process, featured },
+            };
           }));
         } else if (event.type === 'meal_plan') {
           // Meal plan from plan_meal tool
@@ -887,6 +1027,13 @@ export function ChatView({
     handleSendMessage(prompt);
   };
 
+  const toggleMessageExpansion = useCallback((messageId: string) => {
+    setExpandedMessageIds((prev) => ({
+      ...prev,
+      [messageId]: !prev[messageId],
+    }));
+  }, []);
+
   const renderFeaturedPayload = useCallback((payload: FeaturedPayload, options?: {
     voiceMode?: boolean;
     voiceRole?: StackRole;
@@ -911,22 +1058,14 @@ export function ChatView({
           <MealPlanCard
             mealPlan={payload.mealPlan}
             onViewRecipe={async (recipeId) => {
-              const localRecipe = await loadRecipeFromLocal(recipeId);
-              if (localRecipe) {
-                const transformed = transformRecipeMatch(
-                  { recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] },
-                  localRecipe, 0
-                );
+              const transformed = await loadRecipeForSelection(recipeId);
+              if (transformed) {
                 onRecipeClick(transformed);
               }
             }}
             onCookRecipe={async (recipeId) => {
-              const localRecipe = await loadRecipeFromLocal(recipeId);
-              if (localRecipe) {
-                const transformed = transformRecipeMatch(
-                  { recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] },
-                  localRecipe, 0
-                );
+              const transformed = await loadRecipeForSelection(recipeId);
+              if (transformed) {
                 onRecipeClick(transformed);
               }
             }}
@@ -952,12 +1091,22 @@ export function ChatView({
                 </p>
               </div>
             )}
+            <div style={{ padding: '0 20px 20px' }}>
+              <button
+                type="button"
+                className="jamie-recipe-modal__header-pill"
+                aria-label="View full recipe details"
+                onClick={() => void openRecipeModalFromDetail(payload.recipe)}
+              >
+                View full recipe
+              </button>
+            </div>
           </div>
         );
       default:
         return null;
     }
-  }, [onRecipeClick]);
+  }, [openRecipeModalFromDetail, onRecipeClick]);
 
   const renderMessageContent = useCallback((message: Message, options?: {
     voiceMode?: boolean;
@@ -1006,6 +1155,11 @@ export function ChatView({
               const hasAnyBody =
                 !!message.content || hasRecipes || hasMealPlan || hasShopping;
               if (!hasAnyBody) return null;
+              const hasLongText =
+                !!message.content &&
+                message.content.trim().length > JAMIE_MESSAGE_COLLAPSE_CHAR_THRESHOLD;
+              const isExpanded = !!expandedMessageIds[message.id];
+              const normalizedContent = message.content.replace(/\n{3,}/g, '\n\n').trim();
 
               const cardClassName = voiceMode
                 ? 'jamie-voice-message'
@@ -1025,21 +1179,34 @@ export function ChatView({
                   </div>
 
                   {message.content && (
-                    <div className="jamie-thread-markdown prose prose-sm max-w-none">
+                    <div
+                      className={`jamie-thread-markdown prose prose-sm max-w-none ${
+                        hasLongText && !isExpanded
+                          ? 'jamie-thread-markdown--collapsed'
+                          : ''
+                      }`}
+                    >
                       <ReactMarkdown
                         components={{
-                          h1: ({ children }) => <h3 className="text-lg font-bold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
-                          h2: ({ children }) => <h4 className="text-base font-bold mt-3 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
-                          h3: ({ children }) => <h5 className="text-base font-semibold mt-3 mb-1" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
-                          p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                          h1: ({ children }) => <h3 className="text-lg font-bold mt-5 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
+                          h2: ({ children }) => <h4 className="text-base font-bold mt-4 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
+                          h3: ({ children }) => <h5 className="text-base font-semibold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
+                          p: ({ children }) => (
+                            <p
+                              className="mb-4 last:mb-0"
+                              style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}
+                            >
+                              {children}
+                            </p>
+                          ),
                           strong: ({ children }) => <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>{children}</strong>,
-                          ul: ({ children }) => <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>,
-                          ol: ({ children }) => <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
-                          li: ({ children }) => <li className="mb-1">{children}</li>,
-                          hr: () => <hr className="my-3 border-black/10" />,
+                          ul: ({ children }) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
+                          ol: ({ children }) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
+                          li: ({ children }) => <li className="mb-1" style={{ whiteSpace: 'pre-wrap' }}>{children}</li>,
+                          hr: () => <hr className="my-4 border-black/10" />,
                         }}
                       >
-                        {message.content}
+                        {normalizedContent}
                       </ReactMarkdown>
                       {message.isStreaming && (
                         <motion.span
@@ -1051,6 +1218,16 @@ export function ChatView({
                         </motion.span>
                       )}
                     </div>
+                  )}
+
+                  {hasLongText && !message.isStreaming && (
+                    <button
+                      type="button"
+                      className="jamie-thread-card__expand"
+                      onClick={() => toggleMessageExpansion(message.id)}
+                    >
+                      {isExpanded ? 'Show less' : 'Read more'}
+                    </button>
                   )}
 
                   {hasRecipes && (
@@ -1073,16 +1250,14 @@ export function ChatView({
                       <MealPlanCard
                         mealPlan={message.mealPlan!}
                         onViewRecipe={async (recipeId) => {
-                          const localRecipe = await loadRecipeFromLocal(recipeId);
-                          if (localRecipe) {
-                            const transformed = transformRecipeMatch({ recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] }, localRecipe, 0);
+                          const transformed = await loadRecipeForSelection(recipeId);
+                          if (transformed) {
                             onRecipeClick(transformed);
                           }
                         }}
                         onCookRecipe={async (recipeId) => {
-                          const localRecipe = await loadRecipeFromLocal(recipeId);
-                          if (localRecipe) {
-                            const transformed = transformRecipeMatch({ recipe_id: recipeId, title: localRecipe.recipe?.title || recipeId, similarity_score: 1, combined_score: 1, file_path: '', match_explanation: '', matching_chunks: [] }, localRecipe, 0);
+                          const transformed = await loadRecipeForSelection(recipeId);
+                          if (transformed) {
                             onRecipeClick(transformed);
                           }
                         }}
@@ -1125,7 +1300,7 @@ export function ChatView({
         </p>
       </div>
     );
-  }, [renderFeaturedPayload, imgJamieAvatar, onRecipeClick]);
+  }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion]);
 
   return (
     <div className="relative jamie-view-shell" data-voice-active={isVoiceActive || undefined}>
@@ -1246,19 +1421,40 @@ export function ChatView({
         )}
       </AnimatePresence>
 
-      {/* NEU-467: Banner when voice was paused because user left the app */}
+      {/* Voice paused (tab/app background): floating notice — not a chat message */}
       {isPausedByVisibility && (
-        <div className="flex items-center justify-between gap-3 px-5 py-2 bg-amber-500/10 border-t border-amber-500/20" style={{ flexShrink: 0 }}>
-          <p className="text-sm text-amber-800 dark:text-amber-200">
-            Voice paused because you left the app. Tap the voice button or Continue to talk to Jamie again.
-          </p>
-          <button
-            type="button"
-            onClick={resumeFromVisibility}
-            className="shrink-0 px-3 py-1.5 text-sm font-medium rounded-full border border-amber-500/50 text-amber-700 hover:bg-amber-500/20 transition-colors"
+        <div
+          className="jamie-shell-width mx-auto px-5 pb-3 pt-1"
+          style={{ flexShrink: 0 }}
+          role="status"
+          aria-live="polite"
+        >
+          <div
+            className="flex flex-wrap items-center justify-between gap-3 border border-[rgba(50,113,121,0.28)] bg-[rgba(163,227,216,0.44)] px-4 py-3 dark:border-teal-400/22 dark:bg-[#2a3f3d]"
+            style={{
+              borderRadius: 'var(--jamie-radius-xl)',
+              boxShadow: 'var(--jamie-shadow-soft)',
+            }}
           >
-            Continue
-          </button>
+            <p
+              className="min-w-[min(100%,220px)] flex-1 text-sm leading-snug text-[#1a3634] dark:text-white/90"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Voice mode paused. Tap to continue or use the voice button.
+            </p>
+            <button
+              type="button"
+              onClick={resumeFromVisibility}
+              className="inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-full px-6 py-2.5 text-sm font-semibold leading-none tracking-tight text-white transition-opacity hover:opacity-90"
+              style={{
+                fontFamily: 'var(--font-display)',
+                backgroundColor: 'var(--jamie-primary-dark, #327179)',
+                boxShadow: '0 2px 10px rgba(50, 113, 121, 0.35)',
+              }}
+            >
+              Continue
+            </button>
+          </div>
         </div>
       )}
 
@@ -1392,14 +1588,6 @@ export function ChatView({
                 }}
               >
                 Tap to talk to Jamie
-              </p>
-            )}
-            {isPausedByVisibility && (
-              <p
-                className="text-center mt-2 text-xs text-amber-700 dark:text-amber-300"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                Voice paused — tap to resume talking to Jamie
               </p>
             )}
           </div>

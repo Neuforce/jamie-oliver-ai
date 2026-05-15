@@ -288,6 +288,20 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     }, new Map<string, number>());
   }, [recipe]);
 
+  const stepMetaById = useMemo(() => {
+    if (!recipe?.backendSteps?.length) {
+      return {} as Record<string, { number?: number; title?: string }>;
+    }
+
+    return recipe.backendSteps.reduce<Record<string, { number?: number; title?: string }>>((acc, step, index) => {
+      acc[step.id] = {
+        number: index + 1,
+        title: step.descr || step.instructions,
+      };
+      return acc;
+    }, {});
+  }, [recipe]);
+
   // Helper to check if a step index has an active timer running
   const stepHasActiveTimer = useCallback((stepIndex: number): boolean => {
     if (!recipe?.backendSteps?.length || !activeTimers.length) return false;
@@ -1003,6 +1017,10 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
   const cancelBackendTimer = async (timerId: string) => {
     if (!sessionInfo?.session_id) {
       console.warn('Cannot cancel timer: missing session');
+      toast.error('Could not cancel timer', {
+        description: 'Cooking session is missing. Please reopen the recipe.',
+        duration: 3000,
+      });
       return false;
     }
 
@@ -1021,13 +1039,34 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
 
       if (response.ok) {
         console.log(`⏰ Cancelled timer ${timerId}`);
+        setActiveTimers((prev) => prev.filter((timer) => timer.id !== timerId));
+        toast.success('Timer cancelled', {
+          duration: 2200,
+        });
         return true;
       } else {
-        console.warn(`⚠️ Failed to cancel timer:`, response.status);
+        let detail = `Server returned ${response.status}`;
+        try {
+          const errorData = await response.json();
+          if (errorData?.detail) {
+            detail = errorData.detail;
+          }
+        } catch {
+          // Leave the fallback status detail above.
+        }
+        console.warn(`⚠️ Failed to cancel timer:`, response.status, detail);
+        toast.error('Could not cancel timer', {
+          description: detail,
+          duration: 3200,
+        });
         return false;
       }
     } catch (error) {
       console.error('Error cancelling timer:', error);
+      toast.error('Timer cancel failed', {
+        description: 'Could not connect to the cooking backend.',
+        duration: 3200,
+      });
       return false;
     }
   };
@@ -1208,6 +1247,15 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
               <ArrowLeft size={20} />
             </button>
           </div>
+          <div className="jamie-cook-header__center">
+            <img
+              src={jamieLogo}
+              alt="Jamie Oliver"
+              className="jamie-cook-header__logo"
+              draggable={false}
+            />
+          </div>
+          <div className="jamie-cook-header__side jamie-cook-header__side--end" aria-hidden="true" />
         </div>
       </header>
 
@@ -1233,6 +1281,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
             <div style={{ paddingTop: '16px' }}>
               <TimerPanel
                 timers={activeTimers}
+                stepMetaById={stepMetaById}
                 onTimerComplete={(timer) => {
                   toast.info('Timer Complete!', {
                     description: `${timer.label} is done!`,
@@ -1240,7 +1289,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                   });
                 }}
                 onTimerCancel={(timerId) => {
-                  cancelBackendTimer(timerId);
+                  void cancelBackendTimer(timerId);
                 }}
                 onTimerSelect={(timer) => {
                   if (timer.step_id && recipe) {

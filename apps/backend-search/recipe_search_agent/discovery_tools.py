@@ -12,6 +12,26 @@ from ccai.core.function_manager.function_manager import FunctionManager
 
 logger = logging.getLogger(__name__)
 
+# LLM often pluralises or paraphrases course; Supabase filter expects singular slugs.
+_COURSE_ALIASES: dict[str, str] = {
+    "desserts": "dessert",
+    "sweets": "dessert",
+    "sweet": "dessert",
+    "mains": "main",
+    "entrees": "main",
+    "entree": "main",
+    "starters": "appetizer",
+    "starter": "appetizer",
+}
+
+
+def _canonical_course(course: str) -> str:
+    key = (course or "").strip().lower()
+    if not key:
+        return ""
+    return _COURSE_ALIASES.get(key, key)
+
+
 # Create a function manager for discovery tools
 discovery_function_manager = FunctionManager()
 
@@ -60,7 +80,7 @@ def search_recipes(
     Args:
         query: Natural language search query describing what the user wants to cook
         course: Filter by course type (main, dessert, breakfast, soup, salad, side, appetizer). Leave empty for all.
-        cuisine: Filter by cuisine type (italian, mexican, japanese, british, etc). Leave empty for all.
+        cuisine: Filter by cuisine only when the user clearly names one (leave empty unless they say italian, japanese, etc.). Omit for named dishes ("Beef Wellington") or generic requests.
         max_results: Maximum number of recipes to return (default 5)
     
     Returns:
@@ -68,27 +88,61 @@ def search_recipes(
     """
     import json
     from recipe_search_agent.search import SearchFilters
-    
+
     agent = get_search_agent()
-    
-    # Build filters - course maps to category in the search system
-    filters = SearchFilters(
-        category=course if course else None,
+
+    course_key = _canonical_course(course)
+    filters_with_course = SearchFilters(
+        category=course_key if course_key else None,
     )
-    
-    # Build enhanced query if cuisine is specified
-    search_query = query
+
+    search_query = query.strip() if query else ""
     if cuisine:
-        search_query = f"{cuisine} {query}"
-    
-    results = agent.search(
-        query=search_query,
-        filters=filters,
-        top_k=max_results,
-        include_full_recipe=True,
-        include_chunks=False,
-        similarity_threshold=0.3,
-    )
+        search_query = f"{cuisine.strip()} {search_query}".strip()
+
+    def run_search(
+        filters_obj: SearchFilters,
+        *,
+        q: str,
+        threshold: float,
+    ):
+        return agent.search(
+            query=q,
+            filters=filters_obj,
+            top_k=max_results,
+            include_full_recipe=True,
+            include_chunks=False,
+            similarity_threshold=threshold,
+        )
+
+    # 1) Primary: model-requested course + default threshold
+    results = run_search(filters_with_course, q=search_query, threshold=0.3)
+
+    # 2) Over-fitted category (wrong plural, schema drift) — drop course filter
+    if not results and filters_with_course.category is not None:
+        logger.warning(
+            "search_recipes: 0 hits with category=%r query=%r — retrying without category",
+            filters_with_course.category,
+            search_query[:120],
+        )
+        results = run_search(SearchFilters(), q=search_query, threshold=0.3)
+
+    # 3) Still empty — relax similarity (vector + filter edge cases)
+    if not results:
+        logger.warning(
+            "search_recipes: 0 hits after category relax — retry threshold=0.14 query=%r",
+            search_query[:120],
+        )
+        results = run_search(SearchFilters(), q=search_query, threshold=0.14)
+
+    # 4) Last resort — repeat user intent with explicit course token in the query for embedding
+    if not results and course_key:
+        boosted = f"{course_key} sweet treat {query}".strip() if course_key == "dessert" else f"{course_key} {query}".strip()
+        logger.warning(
+            "search_recipes: 0 hits — final boost query=%r",
+            boosted[:120],
+        )
+        results = run_search(SearchFilters(), q=boosted, threshold=0.12)
     
     def _matches_cuisine(match, cuisine_value: str) -> bool:
         if not cuisine_value:
@@ -107,13 +161,25 @@ def search_recipes(
         title = (match.title or "").lower()
         description = ""
         ingredients_text = ""
+        recipe_cuisine = ""
+        tags_blob = ""
         if match.full_recipe:
             recipe = match.full_recipe.get("recipe", {})
             description = (recipe.get("description") or "").lower()
+            recipe_cuisine = (recipe.get("cuisine") or recipe.get("cuisine_type") or "").lower()
+            raw_tags = recipe.get("tags")
+            if isinstance(raw_tags, list):
+                tags_blob = " ".join(str(t).lower() for t in raw_tags)
             ingredients = match.full_recipe.get("ingredients", [])
             ingredients_text = " ".join((i.get("name", "") for i in ingredients)).lower()
 
-        haystack = " ".join([title, description, ingredients_text])
+        haystack = " ".join([
+            title,
+            description,
+            ingredients_text,
+            recipe_cuisine,
+            tags_blob,
+        ])
         return any(term in haystack for term in cuisine_terms)
 
     if cuisine:
@@ -121,8 +187,14 @@ def search_recipes(
         if filtered_results:
             results = filtered_results
         else:
-            logger.info(f"No results matched cuisine='{cuisine}'. Returning no results.")
-            results = []
+            # Model often passes coarse cuisine guesses; brittle keyword filter then
+            # wipes valid Supabase hits (e.g. British Beef Wellington matches no token
+            # "shepherd"/"pie" in title/description). Prefer showing semantic results.
+            logger.warning(
+                "Cuisine filter %r eliminated all %d search hits — returning unfiltered semantic results.",
+                cuisine,
+                len(results),
+            )
 
     if not results:
         return json.dumps({
