@@ -1,21 +1,28 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import type { RecipeAccessResponse } from '../lib/api';
 import {
   hasSupertabConfig,
   mountRecipePurchaseButton,
+  type MountedRecipePurchaseButton,
   type RecipePurchaseResolution,
 } from '../lib/supertab';
+
+export type SupertabPurchaseButtonHandle = {
+  /** Same as tapping the in-panel widget: opens Supertab checkout without a second mount. */
+  openPurchaseExperience: () => Promise<void>;
+};
 
 interface SupertabPurchaseButtonProps {
   access: RecipeAccessResponse;
   onResolved?: (resolution: RecipePurchaseResolution) => void;
 }
 
-export function SupertabPurchaseButton({
-  access,
-  onResolved,
-}: SupertabPurchaseButtonProps) {
+export const SupertabPurchaseButton = forwardRef<
+  SupertabPurchaseButtonHandle,
+  SupertabPurchaseButtonProps
+>(function SupertabPurchaseButton({ access, onResolved }, ref) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const mountedRef = useRef<MountedRecipePurchaseButton | null>(null);
   const onResolvedRef = useRef<typeof onResolved>(onResolved);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isMounting, setIsMounting] = useState(true);
@@ -23,6 +30,21 @@ export function SupertabPurchaseButton({
   useEffect(() => {
     onResolvedRef.current = onResolved;
   }, [onResolved]);
+
+  useImperativeHandle(ref, () => ({
+    openPurchaseExperience: async () => {
+      const deadline = Date.now() + 4000;
+      while (Date.now() < deadline) {
+        const mounted = mountedRef.current;
+        if (mounted) {
+          await mounted.openPurchaseExperience();
+          return;
+        }
+        await new Promise((r) => setTimeout(r, 80));
+      }
+      console.warn('[SupertabPurchaseButton] SDK not ready for programmatic open');
+    },
+  }), []);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -36,12 +58,14 @@ export function SupertabPurchaseButton({
     if (!hasSupertabConfig()) {
       setStatusMessage('Add your Supertab client ID to load the official purchase button.');
       setIsMounting(false);
+      mountedRef.current = null;
       return;
     }
 
     setStatusMessage(null);
     setIsMounting(true);
     container.replaceChildren();
+    mountedRef.current = null;
 
     void mountRecipePurchaseButton({
       containerElement: container,
@@ -75,21 +99,28 @@ export function SupertabPurchaseButton({
       if (isCancelled) {
         result.destroy();
         container.replaceChildren();
+        mountedRef.current = null;
         return;
       }
 
-      destroy = result.destroy;
+      mountedRef.current = result;
+      destroy = () => {
+        mountedRef.current = null;
+        result.destroy();
+      };
       setIsMounting(false);
     }).catch((error) => {
       console.error('Failed to mount Supertab purchase button:', error);
       if (!isCancelled) {
         setStatusMessage('We could not load the Supertab purchase button right now.');
         setIsMounting(false);
+        mountedRef.current = null;
       }
     });
 
     return () => {
       isCancelled = true;
+      mountedRef.current = null;
       destroy();
       container.replaceChildren();
     };
@@ -129,4 +160,5 @@ export function SupertabPurchaseButton({
       )}
     </div>
   );
-}
+});
+SupertabPurchaseButton.displayName = 'SupertabPurchaseButton';

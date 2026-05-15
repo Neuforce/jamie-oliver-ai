@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
 import { RecipeCard } from './components/RecipeCard';
-import { RecipeModal } from './components/RecipeModal';
+import { RecipeModal, type RecipeModalHandle } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
 import { ChatView, clearChatHistory } from './components/ChatView';
 import { TabNav, TabView, type MyTabCardData } from './components/TabNav';
@@ -29,7 +29,6 @@ import {
   getStoredJamieAccessUserId,
   openMyTab,
   launchRecipePaywall,
-  openRecipePurchaseViaEmbeddedButton,
   canEmbedRecipePurchaseButton,
   type MyTabAccountSummary,
   type MyTabMessageTone,
@@ -84,6 +83,7 @@ export default function App() {
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const normalizedSearchQuery = typeof searchQuery === 'string' ? searchQuery : '';
   const [recipeModalVoiceDockOverlap, setRecipeModalVoiceDockOverlap] = useState(false);
+  const recipeModalRef = useRef<RecipeModalHandle>(null);
   const voiceRecipeUnlockInFlightRef = useRef(false);
   /** Keeps ChatView (and `/ws/chat-voice`) alive when switching tabs with voice or an open recipe sheet. */
   const [discoveryVoiceSessionActive, setDiscoveryVoiceSessionActive] = useState(false);
@@ -541,16 +541,9 @@ export default function App() {
 
       voiceRecipeUnlockInFlightRef.current = true;
       try {
-        // Prod parity: Unlock / My Tab uses the PurchaseButton SDK path in the modal; voice matches it when configured.
+        // Same SDK instance as the in-modal “Put it on my Tab” — no duplicate mount.
         if (canEmbedRecipePurchaseButton(access)) {
-          await openRecipePurchaseViaEmbeddedButton(access, {
-            onResolved: (resolution) => {
-              void handleRecipePurchaseResolved(recipe, resolution);
-            },
-            onError: (message) => {
-              toast.error('Could not open My Tab', { description: message });
-            },
-          });
+          await recipeModalRef.current?.openMyTabPurchaseFlow();
           return;
         }
 
@@ -606,7 +599,6 @@ export default function App() {
     },
     [
       canEmbedRecipePurchaseButton,
-      handleRecipePurchaseResolved,
       hydrateJamieUser,
       launchRecipePaywall,
       loadOwnedRecipes,
@@ -1263,6 +1255,7 @@ export default function App() {
       {/* Recipe Modal */}
       {selectedRecipe && (
         <RecipeModal
+          ref={recipeModalRef}
           recipe={selectedRecipe}
           onClose={() => setSelectedRecipe(null)}
           onCookWithJamie={handleCookWithJamie}

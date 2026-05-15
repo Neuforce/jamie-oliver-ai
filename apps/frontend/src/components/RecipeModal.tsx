@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Recipe } from '../data/recipes';
 import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { SupertabPurchaseButton } from './SupertabPurchaseButton';
+import { SupertabPurchaseButton, type SupertabPurchaseButtonHandle } from './SupertabPurchaseButton';
 import { toast } from './ui/sonner';
 import type { RecipeAccessResponse } from '../lib/api';
-import type { LaunchRecipePaywallResult } from '../lib/supertab';
+import type { RecipePurchaseResolution } from '../lib/supertab';
 import { RecipeDetailsTabs } from './RecipeDetailsTabs';
 // @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
@@ -20,6 +19,11 @@ interface RecipeModalProps {
   /** Extra bottom padding while the modal has portaled voice strip (launcher or active dock). */
   reserveBottomForVoiceDock?: boolean;
 }
+
+export type RecipeModalHandle = {
+  /** Opens the same Supertab checkout as tapping "Put it on my Tab" in this modal — no duplicate mount. */
+  openMyTabPurchaseFlow: () => Promise<void>;
+};
 
 /**
  * RecipeModal — pre-cook recipe detail surface.
@@ -56,7 +60,8 @@ interface RecipeModalProps {
  *     purchase widget sits directly below the title so the commerce
  *     flow stays explicit
  */
-export function RecipeModal({
+export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(function RecipeModal(
+  {
   recipe,
   onClose,
   onCookWithJamie,
@@ -64,8 +69,11 @@ export function RecipeModal({
   isAccessLoading = false,
   onPurchaseResolved,
   reserveBottomForVoiceDock = false,
-}: RecipeModalProps) {
+  },
+  ref,
+) {
   const [savedSession, setSavedSession] = useState<any>(null);
+  const purchaseButtonRef = useRef<SupertabPurchaseButtonHandle | null>(null);
 
   useEffect(() => {
     if (!recipe) {
@@ -90,6 +98,15 @@ export function RecipeModal({
       setSavedSession(null);
     }
   }, [recipe]);
+
+  useImperativeHandle(ref, () => ({
+    openMyTabPurchaseFlow: async () => {
+      if (!recipe || recipeAccess?.accessState !== 'locked') {
+        return;
+      }
+      await purchaseButtonRef.current?.openPurchaseExperience();
+    },
+  }), [recipe, recipeAccess?.accessState]);
 
   if (!recipe) return null;
 
@@ -357,6 +374,7 @@ export function RecipeModal({
               data-supertab-pane="true"
             >
               <SupertabPurchaseButton
+                ref={purchaseButtonRef}
                 access={recipeAccess}
                 onResolved={onPurchaseResolved}
               />
@@ -376,5 +394,6 @@ export function RecipeModal({
         </div>
       </div>
     </div>
-  );
-}
+    );
+});
+RecipeModal.displayName = 'RecipeModal';
