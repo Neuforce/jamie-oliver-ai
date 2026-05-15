@@ -234,7 +234,7 @@ class RecipeEngine:
         # Cancel any active timers/reminders
         self._timer_manager.cancel_reminders(step_id)
         if active_timer:
-            self._timer_manager.cancel_timer(step_id, emit_event=True)
+            self._timer_manager.cancel_timer(active_timer.id, emit_event=True)
         
         await self._complete_step(step)
         return {"status": "completed", "step_id": step_id}

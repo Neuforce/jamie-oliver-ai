@@ -57,6 +57,8 @@ export interface UseVoiceChatOptions {
   onRecipeDetail?: (data: any) => void;
   /** Callback when shopping list is received */
   onShoppingList?: (data: any) => void;
+  /** Server asks client to open My Tab checkout for focused recipe (NEU-619) */
+  onRecipePaywallRequested?: (backendRecipeId: string) => void;
   /** Callback when response is complete */
   onDone?: () => void;
   /** Callback on error */
@@ -76,6 +78,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     onShoppingList,
     onDone,
     onError,
+    onRecipePaywallRequested,
     sampleRate = 16000,
   } = options;
 
@@ -223,6 +226,15 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         callbacks.onShoppingList?.(data);
         break;
 
+      case 'recipe_paywall_requested': {
+        const bid =
+          typeof data?.backend_recipe_id === 'string'
+            ? data.backend_recipe_id.trim()
+            : '';
+        callbacks.onRecipePaywallRequested?.(bid);
+        break;
+      }
+
       case 'tool_call':
         console.log('🔧 Tool called:', data?.name);
         break;
@@ -354,6 +366,15 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     }
   }, [sessionId, getWebSocketUrl, sampleRate, startCapture, stopCapture, handleMessage, initAudioContext, onError]);
 
+  /** Tell the discovery voice backend which recipe sheet is focused (modal). */
+  const notifyFocusedRecipe = useCallback(
+    (backendRecipeId: string | null | undefined) => {
+      const trimmed = backendRecipeId?.trim() ?? '';
+      sendSocketEvent('focused_recipe', { backendRecipeId: trimmed });
+    },
+    [sendSocketEvent],
+  );
+
   const disconnect = useCallback(() => {
     isVoiceModeActiveRef.current = false;
     pendingDoneRef.current   = false;
@@ -392,8 +413,8 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     pendingDoneRef.current   = false;
     pendingListenRef.current = false;
     resetActiveResponse();
+    stopAllAudio();
     if (state === 'assistant_speaking') {
-      stopAllAudio();
       sendSocketEvent('interrupt');
     } else if (state === 'processing') {
       sendSocketEvent('cancel');
@@ -466,6 +487,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     cancel,
     setMicMuted,
     resumeFromVisibility,
+    notifyFocusedRecipe,
 
     isListening:  state === 'listening',
     isProcessing: state === 'processing',

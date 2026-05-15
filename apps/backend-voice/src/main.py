@@ -335,7 +335,7 @@ async def cancel_timer_api(session_id: str, timer_id: str):
     logger.info(f"Timer cancel requested: '{timer_id}' ({label})")
 
     try:
-        result = await engine._timer_manager.cancel_timer(timer_id, emit_event=True)
+        result = engine._timer_manager.cancel_timer(timer_id, emit_event=True)
         if not result:
             raise HTTPException(status_code=400, detail="Failed to cancel timer")
     except Exception as exc:

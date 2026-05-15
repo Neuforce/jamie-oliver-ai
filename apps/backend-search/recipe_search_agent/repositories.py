@@ -72,6 +72,11 @@ class IdentityRepository:
 class MonetizationRepository:
     """Persistence operations for recipe offerings, entitlements, and sessions."""
 
+    _FREE_RECIPE_SLUGS = {
+        "fluffy-pancakes",
+        "fresh-tomato-soup",
+    }
+
     def __init__(self, client: Client | None = None):
         self._client = client or create_service_role_client()
 
@@ -83,6 +88,13 @@ class MonetizationRepository:
             response = query.eq("slug", recipe_slug_or_id).limit(1).execute()
         return first_row(response)
 
+    def list_recipes(self, *, status: Optional[str] = None) -> list[dict[str, Any]]:
+        query = self._client.table("recipes").select("id, slug, status, metadata")
+        if status:
+            query = query.eq("status", status)
+        response = query.execute()
+        return getattr(response, "data", None) or []
+
     def get_active_offering(self, recipe_id: str) -> Optional[dict[str, Any]]:
         response = (
             self._client.table("recipe_offerings")
@@ -93,6 +105,68 @@ class MonetizationRepository:
             .execute()
         )
         return first_row(response)
+
+    def get_offering(self, recipe_id: str) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("recipe_offerings")
+            .select("*")
+            .eq("recipe_id", recipe_id)
+            .limit(1)
+            .execute()
+        )
+        return first_row(response)
+
+    def ensure_recipe_offering(self, recipe: dict[str, Any]) -> dict[str, Any]:
+        slug = recipe["slug"]
+        is_free = slug in self._FREE_RECIPE_SLUGS
+        desired_metadata = {
+            "provider": "supertab",
+            "recipeSlug": slug,
+            "unlockType": "cooking_session",
+        }
+
+        existing = self.get_offering(recipe["id"])
+        if existing:
+            existing_metadata = existing.get("metadata") if isinstance(existing.get("metadata"), dict) else {}
+            merged_metadata = {**existing_metadata, **desired_metadata}
+            updates: dict[str, Any] = {}
+            if existing.get("status") != "active":
+                updates["status"] = "active"
+            if existing.get("is_free") != is_free:
+                updates["is_free"] = is_free
+            desired_content_key = f"recipe:{slug}:cook"
+            if existing.get("content_key") != desired_content_key:
+                updates["content_key"] = desired_content_key
+            desired_price = 0 if is_free else 199
+            if existing.get("price_amount") != desired_price:
+                updates["price_amount"] = desired_price
+            if existing.get("currency_code") != "USD":
+                updates["currency_code"] = "USD"
+            if existing_metadata != merged_metadata:
+                updates["metadata"] = merged_metadata
+
+            if updates:
+                response = (
+                    self._client.table("recipe_offerings")
+                    .update(updates)
+                    .eq("id", existing["id"])
+                    .execute()
+                )
+                return first_row(response) or {**existing, **updates}
+
+            return existing
+
+        payload = {
+            "recipe_id": recipe["id"],
+            "is_free": is_free,
+            "content_key": f"recipe:{slug}:cook",
+            "status": "active",
+            "currency_code": "USD",
+            "price_amount": 0 if is_free else 199,
+            "metadata": desired_metadata,
+        }
+        response = self._client.table("recipe_offerings").insert(payload).execute()
+        return first_row(response) or payload
 
     def get_active_entitlement(self, user_id: str, recipe_id: str) -> Optional[dict[str, Any]]:
         response = (

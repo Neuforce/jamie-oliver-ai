@@ -101,6 +101,13 @@ export function hasSupertabConfig(): boolean {
   return Boolean(getClientId());
 }
 
+/** True when the in-modal Purchase Button can mount (same config as tapping “Put it on my Tab”). */
+export function canEmbedRecipePurchaseButton(access: RecipeAccessResponse): boolean {
+  return Boolean(
+    getClientId() && getPurchaseButtonExperienceId() && access.offering?.contentKey,
+  );
+}
+
 function formatPrice(price?: {
   amount: number;
   currency: { symbol: string; baseUnit: number; code: string };
@@ -284,7 +291,20 @@ interface MountRecipePurchaseButtonOptions {
   access: RecipeAccessResponse;
   onResolved?: (resolution: RecipePurchaseResolution) => void;
   onError?: (message: string) => void;
+  /**
+   * When false, skip syncing `initialState` on mount. Use before calling
+   * `openPurchaseExperience()` so the UX matches tapping the pane button fresh.
+   * @default true
+   */
+  syncInitialOutcome?: boolean;
 }
+
+/** Result of embedding the Supertab purchase-button SDK in a DOM node */
+export type MountedRecipePurchaseButton = {
+  destroy: () => void;
+  /** Prefer `show()` when the SDK exposes it; otherwise a delegated container click — same wiring as tapping the pane */
+  openPurchaseExperience: () => Promise<void>;
+};
 
 function normalizePriorEntitlements(priorEntitlement: unknown): Array<Record<string, unknown>> {
   if (!priorEntitlement) {
@@ -333,23 +353,85 @@ async function resolvePurchaseOutcome(
   });
 }
 
+/**
+ * Mimic a real user tap on the Supertab-injected control (not the SDK `show()` shortcut).
+ * Walks shadow roots recursively.
+ */
+function tryClickPurchaseControlLikeUser(containerElement: HTMLElement): boolean {
+  const selectors =
+    'button:not([disabled]),[role="button"]:not([aria-disabled="true"]),a[href]';
+
+  const pick = (root: Document | Element | ShadowRoot): HTMLElement | null => {
+    const el = root.querySelector<HTMLElement>(selectors);
+    if (el) {
+      return el;
+    }
+    const nodes = root.querySelectorAll('*');
+    for (let i = 0; i < nodes.length; i++) {
+      const n = nodes[i];
+      if (n instanceof HTMLElement && n.shadowRoot) {
+        const inner = pick(n.shadowRoot);
+        if (inner) {
+          return inner;
+        }
+      }
+    }
+    return null;
+  };
+
+  const target = pick(containerElement);
+  if (!target) {
+    return false;
+  }
+  target.click();
+  return true;
+}
+
+/**
+ * Voice: same as the user tapping “Put it on my Tab” — find the in-modal Supertab mount in the
+ * live DOM (scoped to the recipe sheet when possible) and `.click()` the real control.
+ */
+export function clickVisibleJamieSupertabPurchaseButton(): boolean {
+  const host =
+    document.querySelector<HTMLElement>(
+      '[data-supertab-pane] [data-jamie-supertab-purchase-host]',
+    ) ?? document.querySelector<HTMLElement>('[data-jamie-supertab-purchase-host]');
+  if (!host) {
+    return false;
+  }
+  return tryClickPurchaseControlLikeUser(host);
+}
+
 export async function mountRecipePurchaseButton({
   containerElement,
   access,
   onResolved,
   onError,
-}: MountRecipePurchaseButtonOptions): Promise<{ destroy: () => void }> {
+  syncInitialOutcome = true,
+}: MountRecipePurchaseButtonOptions): Promise<MountedRecipePurchaseButton> {
+  const fail = (copy: string): MountedRecipePurchaseButton => {
+    onError?.(copy);
+    return {
+      destroy: () => undefined,
+      openPurchaseExperience: async () => {
+        console.warn('[supertab] openPurchaseExperience no-op:', copy);
+      },
+    };
+  };
+
   const client = await getSupertabClient();
   const experienceId = getPurchaseButtonExperienceId();
 
   if (!experienceId) {
-    onError?.('Add the Supertab purchase button experience ID to enable recipe unlocks.');
-    return { destroy: () => undefined };
+    return fail('Add the Supertab purchase button experience ID to enable recipe unlocks.');
   }
 
-  if (!access.offering?.contentKey) {
-    onError?.('This recipe is missing a Supertab content key, so the purchase button cannot load.');
-    return { destroy: () => undefined };
+  if (!access.offering) {
+    return fail('This recipe is not configured for My Tab yet. Please try again soon.');
+  }
+
+  if (!access.offering.contentKey) {
+    return fail('This recipe is missing a Supertab content key, so the purchase button cannot load.');
   }
 
   containerElement.innerHTML = '';
@@ -396,7 +478,21 @@ export async function mountRecipePurchaseButton({
     console.info('Supertab purchase button returned no show(); relying on embedded widget click handling.');
   }
 
-  if ('initialState' in button && button.initialState) {
+  async function openPurchaseExperience(): Promise<void> {
+    // Prefer a real DOM .click() on the widget Supertab rendered — same class of event as a finger tap.
+    if (tryClickPurchaseControlLikeUser(containerElement)) {
+      return;
+    }
+    if (typeof button.show === 'function') {
+      await button.show();
+      return;
+    }
+    containerElement.dispatchEvent(
+      new MouseEvent('click', { bubbles: true, cancelable: true, view: window }),
+    );
+  }
+
+  if (syncInitialOutcome && 'initialState' in button && button.initialState) {
     void resolvePurchaseOutcome(access, button.initialState, onResolved).catch((error) => {
       console.error('Failed to process Supertab initial purchase state:', error);
     });
@@ -407,6 +503,7 @@ export async function mountRecipePurchaseButton({
       detachShowHandler();
       button.destroy();
     },
+    openPurchaseExperience,
   };
 }
 

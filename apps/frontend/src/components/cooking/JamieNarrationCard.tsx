@@ -33,6 +33,7 @@ export function JamieNarrationCard({
 }: JamieNarrationCardProps) {
   const bodyRef = useRef<HTMLDivElement | null>(null);
   const [overflowing, setOverflowing] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   /*
    * The bottom fade mask is only applied when the body actually
@@ -47,6 +48,10 @@ export function JamieNarrationCard({
 
   useLayoutEffect(() => {
     recomputeOverflow();
+  }, [text, expanded]);
+
+  useEffect(() => {
+    setExpanded(false);
   }, [text]);
 
   useEffect(() => {
@@ -66,6 +71,7 @@ export function JamieNarrationCard({
         ref={bodyRef}
         className="jamie-narration__body"
         data-overflowing={overflowing || undefined}
+        data-expanded={expanded || undefined}
       >
         <ReactMarkdown
           components={{
@@ -82,6 +88,17 @@ export function JamieNarrationCard({
           {text}
         </ReactMarkdown>
       </div>
+
+      {overflowing && (
+        <button
+          type="button"
+          className="jamie-narration__toggle"
+          onClick={() => setExpanded((prev) => !prev)}
+          aria-expanded={expanded}
+        >
+          {expanded ? 'Show less' : 'Read full step'}
+        </button>
+      )}
     </div>
   );
 }

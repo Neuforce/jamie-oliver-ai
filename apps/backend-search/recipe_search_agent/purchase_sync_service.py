@@ -33,7 +33,7 @@ class PurchaseSyncService:
 
         offering = self._repository.get_active_offering(recipe["id"])
         if not offering:
-            raise ValueError(f"No active offering found for recipe: {recipe_slug_or_id}")
+            offering = self._repository.ensure_recipe_offering(recipe)
 
         synced_purchase = None
         if purchase and purchase.get("id"):

@@ -1,7 +1,8 @@
-import React, { useState, useMemo, useEffect, useCallback } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
 import { RecipeCard } from './components/RecipeCard';
-import { RecipeModal } from './components/RecipeModal';
+import { RecipeModal, type RecipeModalHandle } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
 import { ChatView, clearChatHistory } from './components/ChatView';
 import { TabNav, TabView, type MyTabCardData } from './components/TabNav';
@@ -28,6 +29,9 @@ import {
   loadMyTabSnapshot,
   getStoredJamieAccessUserId,
   openMyTab,
+  launchRecipePaywall,
+  canEmbedRecipePurchaseButton,
+  clickVisibleJamieSupertabPurchaseButton,
   type MyTabAccountSummary,
   type MyTabMessageTone,
   type RecipePurchaseResolution,
@@ -78,7 +82,13 @@ export default function App() {
   const [myTabMessageTone, setMyTabMessageTone] = useState<MyTabMessageTone | undefined>(undefined);
   const [myRecipes, setMyRecipes] = useState<OwnedRecipeSummary[]>([]);
   const [isMyRecipesLoading, setIsMyRecipesLoading] = useState(false);
+  const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const normalizedSearchQuery = typeof searchQuery === 'string' ? searchQuery : '';
+  const [recipeModalVoiceDockOverlap, setRecipeModalVoiceDockOverlap] = useState(false);
+  const recipeModalRef = useRef<RecipeModalHandle>(null);
+  const voiceRecipeUnlockInFlightRef = useRef(false);
+  /** Keeps ChatView (and `/ws/chat-voice`) alive when switching tabs with voice or an open recipe sheet. */
+  const [discoveryVoiceSessionActive, setDiscoveryVoiceSessionActive] = useState(false);
 
   // Load recipes asynchronously in production (when recipes array is empty)
   useEffect(() => {
@@ -500,7 +510,125 @@ export default function App() {
       });
       startCookingOverlay(recipe);
     }
-  }, [getRecipeAccessKey, hydrateJamieUser, loadOwnedRecipes, startCookingOverlay]);
+
+    await loadRecipeAccess(recipe, { force: true });
+  }, [getRecipeAccessKey, hydrateJamieUser, loadOwnedRecipes, loadRecipeAccess, startCookingOverlay]);
+
+  const handleVoiceRecipePaywallRequested = useCallback(
+    async (backendId: string) => {
+      const bid = (backendId || '').trim();
+      if (!bid || voiceRecipeUnlockInFlightRef.current) {
+        return;
+      }
+      const recipe = selectedRecipe;
+      if (!recipe?.backendId || recipe.backendId !== bid) {
+        toast.error('Checkout did not match this recipe', {
+          description: 'Close the modal and open the recipe again, or tap Unlock on screen.',
+        });
+        return;
+      }
+
+      let access =
+        recipeAccessMap[getRecipeAccessKey(recipe)] ??
+        (await loadRecipeAccess(recipe));
+      if (!access) {
+        toast.error('Could not check recipe access', {
+          description: 'Please try opening checkout from the Unlock button.',
+        });
+        return;
+      }
+      if (access.accessState !== 'locked') {
+        return;
+      }
+
+      voiceRecipeUnlockInFlightRef.current = true;
+      try {
+        // Same SDK instance as the in-modal “Put it on my Tab” — no duplicate mount.
+        if (canEmbedRecipePurchaseButton(access)) {
+          // Commit locked access before opening: otherwise RecipeModal still has stale props,
+          // the Supertab pane never mounts, and openMyTabPurchaseFlow is a silent no-op.
+          const accessKey = getRecipeAccessKey(recipe);
+          flushSync(() => {
+            setRecipeAccessMap(prev => ({ ...prev, [accessKey]: access }));
+          });
+          await new Promise<void>(resolve => {
+            requestAnimationFrame(() => resolve());
+          });
+          // 1) Literally click whatever Supertab rendered in the panel (same as a finger on “Put it on my Tab”).
+          let clicked = clickVisibleJamieSupertabPurchaseButton();
+          if (!clicked) {
+            await new Promise<void>(r => setTimeout(r, 250));
+            clicked = clickVisibleJamieSupertabPurchaseButton();
+          }
+          if (!clicked) {
+            await recipeModalRef.current?.openMyTabPurchaseFlow();
+          }
+          return;
+        }
+
+        const paywallResult = await launchRecipePaywall(access);
+
+        if (paywallResult.status === 'unavailable') {
+          toast.error('Could not open My Tab', {
+            description: 'Set the purchase-button or paywall experience ID for Supertab.',
+          });
+          return;
+        }
+
+        const snapshot = await loadMyTabSnapshot();
+        setMyTabStatus(snapshot.status);
+        setMyTabAccount(snapshot.account ?? null);
+        setMyTabSite(snapshot.site ?? null);
+        setMyTabMessage(snapshot.message ?? null);
+        setMyTabMessageTone(snapshot.messageTone);
+        await hydrateJamieUser(snapshot.userId);
+        await loadOwnedRecipes(snapshot.userId);
+
+        const refreshedAccess = paywallResult.refreshedAccess;
+        if (refreshedAccess) {
+          setRecipeAccessMap(prev => ({
+            ...prev,
+            [getRecipeAccessKey(recipe)]: refreshedAccess,
+          }));
+        }
+
+        const purchaseCompleted = paywallResult.status === 'completed';
+        const alreadyOwned = paywallResult.status === 'prior-entitlement';
+
+        if (
+          refreshedAccess
+          && (refreshedAccess.accessState === 'owned' || refreshedAccess.accessState === 'free')
+          && (purchaseCompleted || alreadyOwned)
+        ) {
+          toast.success('Recipe unlocked', {
+            description: 'Jamie is ready to start cooking with you.',
+          });
+          startCookingOverlay(recipe);
+        }
+
+        await loadRecipeAccess(recipe, { force: true });
+      } catch (error) {
+        console.error('Voice-triggered paywall failed:', error);
+        toast.error('Could not open My Tab', {
+          description: 'Please try again or use Unlock on screen.',
+        });
+      } finally {
+        voiceRecipeUnlockInFlightRef.current = false;
+      }
+    },
+    [
+      canEmbedRecipePurchaseButton,
+      clickVisibleJamieSupertabPurchaseButton,
+      hydrateJamieUser,
+      launchRecipePaywall,
+      loadOwnedRecipes,
+      loadRecipeAccess,
+      recipeAccessMap,
+      selectedRecipe,
+      getRecipeAccessKey,
+      startCookingOverlay,
+    ],
+  );
 
   useEffect(() => {
     if (selectedRecipe) {
@@ -563,6 +691,16 @@ export default function App() {
   };
   const isMyRecipesView = activeView === 'my-recipes';
 
+  const showDiscoverChatChrome = activeView === 'chat';
+  const retainDiscoveryChatMount =
+    showDiscoverChatChrome ||
+    Boolean(selectedRecipe) ||
+    discoveryVoiceSessionActive;
+
+  useEffect(() => {
+    setIsHeaderScrolled(false);
+  }, [activeView, cookingRecipe]);
+
   return (
     <div className="jamie-app-shell">
       {/* Full-screen cooking overlay takes priority */}
@@ -587,7 +725,10 @@ export default function App() {
       {!cookingRecipe && (
         <>
           {/* Persistent Tab Navigation */}
-          <header className="jamie-app-header-shell">
+          <header
+            className="jamie-app-header-shell"
+            data-scrolled={isHeaderScrolled || undefined}
+          >
             <TabNav
               activeTab={activeView}
               onTabChange={setActiveView}
@@ -600,34 +741,45 @@ export default function App() {
             />
           </header>
 
-          {/* Tab Content - Full remaining height */}
-          <main className="jamie-view-shell">
+          {/* Tab Content — ChatView can stay mounted (hidden) so discovery voice survives tab + RecipeModal */}
+          <main className="jamie-view-shell relative flex flex-1 min-h-0 flex-col overflow-hidden">
+            {retainDiscoveryChatMount && (
+              <div
+                className={
+                  showDiscoverChatChrome
+                    ? 'jamie-view-shell relative z-[1] flex min-h-0 flex-1 flex-col'
+                    : 'pointer-events-none absolute inset-0 z-0 overflow-hidden [visibility:hidden]'
+                }
+                aria-hidden={!showDiscoverChatChrome}
+              >
+                <ChatView
+                  key={chatKey}
+                  initialMessage={initialChatMessage}
+                  onRecipeClick={handleChatRecipeClick}
+                  onPromptClick={handlePromptClick}
+                  onClearInitialMessage={() => setInitialChatMessage(undefined)}
+                  onScrollStateChange={showDiscoverChatChrome ? setIsHeaderScrolled : undefined}
+                  recipeModalOpen={Boolean(selectedRecipe)}
+                  focusedRecipeBackendId={selectedRecipe?.backendId ?? null}
+                  onRecipeModalVoiceDockOverlapChange={setRecipeModalVoiceDockOverlap}
+                  onVoiceRecipePaywallRequested={handleVoiceRecipePaywallRequested}
+                  onDiscoveryVoiceSessionChange={setDiscoveryVoiceSessionActive}
+                />
+              </div>
+            )}
+
             <AnimatePresence mode="wait">
-              {activeView === 'chat' ? (
-                <motion.div
-                  key={`chat-${chatKey}`}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.2 }}
-                  className="jamie-view-shell"
-                >
-                  <ChatView
-                    key={chatKey}
-                    initialMessage={initialChatMessage}
-                    onRecipeClick={handleChatRecipeClick}
-                    onPromptClick={handlePromptClick}
-                    onClearInitialMessage={() => setInitialChatMessage(undefined)}
-                  />
-                </motion.div>
-              ) : (
+              {!showDiscoverChatChrome ? (
                 <motion.div
                   key={activeView}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                   transition={{ duration: 0.2 }}
-                  className="jamie-scroll-area"
+                  className="jamie-scroll-area relative z-[1] flex flex-1 min-h-0 flex-col"
+                  onScroll={(e) => {
+                    setIsHeaderScrolled(e.currentTarget.scrollTop > 10);
+                  }}
                 >
                   {/* Recipes View */}
                   <div className="jamie-page-shell">
@@ -1114,7 +1266,7 @@ export default function App() {
                     </div>
                   </div>
                 </motion.div>
-              )}
+              ) : null}
             </AnimatePresence>
           </main>
         </>
@@ -1123,12 +1275,14 @@ export default function App() {
       {/* Recipe Modal */}
       {selectedRecipe && (
         <RecipeModal
+          ref={recipeModalRef}
           recipe={selectedRecipe}
           onClose={() => setSelectedRecipe(null)}
           onCookWithJamie={handleCookWithJamie}
           recipeAccess={selectedRecipeAccess}
           isAccessLoading={isSelectedRecipeAccessLoading}
           onPurchaseResolved={(resolution) => handleRecipePurchaseResolved(selectedRecipe, resolution)}
+          reserveBottomForVoiceDock={recipeModalVoiceDockOverlap}
         />
       )}
 

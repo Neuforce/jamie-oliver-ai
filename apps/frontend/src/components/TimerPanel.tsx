@@ -17,6 +17,7 @@ interface TimerPanelProps {
   onTimerComplete?: (timer: ActiveTimer) => void;
   onTimerCancel?: (timerId: string) => void;
   onTimerSelect?: (timer: ActiveTimer) => void;
+  stepMetaById?: Record<string, { number?: number; title?: string }>;
   className?: string;
 }
 
@@ -26,6 +27,26 @@ function formatTime(seconds: number): string {
   const m = Math.floor((seconds % 3600) / 60);
   const s = seconds % 60;
   return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+function formatCompactTime(seconds: number): string {
+  if (seconds <= 0) return 'Done';
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  if (h > 0) {
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  }
+  return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
+
+function prettifyStepId(stepId: string | null | undefined): string {
+  if (!stepId) return 'Current step';
+  return stepId
+    .split(/[-_]+/)
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
 }
 
 function getProgressPercent(timer: ActiveTimer): number {
@@ -46,6 +67,7 @@ export function TimerPanel({
   onTimerComplete,
   onTimerCancel,
   onTimerSelect,
+  stepMetaById,
   className = ''
 }: TimerPanelProps) {
   const [isExpanded, setIsExpanded] = useState(true);
@@ -93,7 +115,7 @@ export function TimerPanel({
   
   return (
     <motion.div
-      className={`bg-slate-900/95 backdrop-blur-sm border border-slate-700/50 rounded-lg overflow-hidden shadow-xl ${className}`}
+      className={`jamie-timer-panel ${className}`}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -101,23 +123,44 @@ export function TimerPanel({
       {/* Header */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center justify-between px-4 py-3 bg-slate-800/50 hover:bg-slate-700/50 transition-colors"
+        className="jamie-timer-panel__toggle"
       >
-        <div className="flex items-center gap-2">
-          <Timer className="w-5 h-5 text-amber-500" />
-          <span className="font-medium text-slate-100">
-            Active Timers ({localTimers.length})
-          </span>
+        <div className="jamie-timer-panel__title-row">
+          <Timer className="jamie-timer-panel__title-icon" />
+          <div className="jamie-timer-panel__header-copy">
+            <span className="jamie-timer-panel__title">Active Timers</span>
+            <div className="jamie-timer-panel__pills">
+              {sortedTimers.slice(0, 3).map((timer) => {
+                const stepMeta = timer.step_id ? stepMetaById?.[timer.step_id] : undefined;
+                const timerPillLabel = stepMeta?.number
+                  ? `Step ${stepMeta.number}`
+                  : prettifyStepId(timer.step_id || timer.label);
+                return (
+                  <span key={timer.id} className="jamie-timer-panel__pill">
+                    <span className="jamie-timer-panel__pill-label">{timerPillLabel}</span>
+                    <strong className="jamie-timer-panel__pill-time">
+                      {formatCompactTime(timer.remaining_secs || 0)}
+                    </strong>
+                  </span>
+                );
+              })}
+              {sortedTimers.length > 3 && (
+                <span className="jamie-timer-panel__pill jamie-timer-panel__pill--more">
+                  +{sortedTimers.length - 3}
+                </span>
+              )}
+            </div>
+          </div>
           {urgentCount > 0 && (
-            <span className="px-2 py-0.5 text-xs font-bold bg-red-500/20 text-red-400 rounded-full animate-pulse">
+            <span className="jamie-timer-panel__urgent">
               {urgentCount} urgent
             </span>
           )}
         </div>
         {isExpanded ? (
-          <ChevronUp className="w-5 h-5 text-slate-400" />
+          <ChevronUp className="jamie-timer-panel__chevron" />
         ) : (
-          <ChevronDown className="w-5 h-5 text-slate-400" />
+          <ChevronDown className="jamie-timer-panel__chevron" />
         )}
       </button>
       
@@ -129,13 +172,14 @@ export function TimerPanel({
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="overflow-hidden"
+            className="jamie-timer-panel__body"
           >
-            <div className="divide-y divide-slate-700/50">
+            <div className="jamie-timer-panel__list">
               {sortedTimers.map((timer) => (
                 <TimerItem
                   key={timer.id}
                   timer={timer}
+                  stepMeta={timer.step_id ? stepMetaById?.[timer.step_id] : undefined}
                   onCancel={() => onTimerCancel?.(timer.id)}
                   onSelect={() => onTimerSelect?.(timer)}
                 />
@@ -150,39 +194,44 @@ export function TimerPanel({
 
 interface TimerItemProps {
   timer: ActiveTimer;
+  stepMeta?: { number?: number; title?: string };
   onCancel?: () => void;
   onSelect?: () => void;
 }
 
-function TimerItem({ timer, onCancel, onSelect }: TimerItemProps) {
+function TimerItem({ timer, stepMeta, onCancel, onSelect }: TimerItemProps) {
   const remaining = timer.remaining_secs || 0;
   const isComplete = remaining <= 0;
   const isUrgent = remaining <= 30 && remaining > 0;
   const colorClass = getTimerColor(timer);
   const progress = getProgressPercent(timer);
+  const primaryLabel = timer.label || stepMeta?.title || prettifyStepId(timer.step_id);
+  const secondaryLabel = stepMeta?.number
+    ? `Step ${stepMeta.number}`
+    : prettifyStepId(timer.step_id);
   
   return (
     <motion.div
-      className={`relative px-4 py-3 hover:bg-slate-800/30 transition-colors cursor-pointer ${
+      className={`jamie-timer-panel__item ${
         isUrgent ? 'animate-pulse' : ''
       }`}
       onClick={onSelect}
       layout
     >
       {/* Progress bar background */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      <div className="jamie-timer-panel__progress">
         <div
-          className={`h-full transition-all duration-1000 ${
-            isComplete ? 'bg-emerald-500/10' : 'bg-amber-500/5'
+          className={`jamie-timer-panel__progress-fill ${
+            isComplete ? 'jamie-timer-panel__progress-fill--done' : ''
           }`}
           style={{ width: `${progress}%` }}
         />
       </div>
       
-      <div className="relative flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3 flex-1 min-w-0">
+      <div className="jamie-timer-panel__item-row">
+        <div className="jamie-timer-panel__item-copy-wrap">
           {/* Timer icon with color indicator */}
-          <div className={`p-2 rounded-full ${colorClass}`}>
+          <div className={`jamie-timer-panel__item-icon ${colorClass}`}>
             {isComplete ? (
               <Bell className="w-4 h-4" />
             ) : (
@@ -191,25 +240,25 @@ function TimerItem({ timer, onCancel, onSelect }: TimerItemProps) {
           </div>
           
           {/* Timer info */}
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-200 truncate">
-              {timer.label}
+          <div className="jamie-timer-panel__item-copy">
+            <p className="jamie-timer-panel__item-title">
+              {primaryLabel}
             </p>
-            {timer.step_id && (
-              <p className="text-xs text-slate-500 truncate">
-                Step: {timer.step_id}
+            {(timer.step_id || stepMeta?.number) && (
+              <p className="jamie-timer-panel__item-subtitle">
+                {secondaryLabel}
               </p>
             )}
           </div>
         </div>
         
         {/* Time remaining */}
-        <div className="flex items-center gap-2">
-          <span className={`text-lg font-mono font-bold ${
-            isComplete ? 'text-emerald-400' :
-            isUrgent ? 'text-red-400' :
-            remaining <= 60 ? 'text-orange-400' :
-            'text-slate-200'
+        <div className="jamie-timer-panel__item-actions">
+          <span className={`jamie-timer-panel__time ${
+            isComplete ? 'jamie-timer-panel__time--done' :
+            isUrgent ? 'jamie-timer-panel__time--urgent' :
+            remaining <= 60 ? 'jamie-timer-panel__time--warn' :
+            ''
           }`}>
             {isComplete ? 'Done!' : formatTime(remaining)}
           </span>
@@ -219,7 +268,7 @@ function TimerItem({ timer, onCancel, onSelect }: TimerItemProps) {
             <Button
               variant="ghost"
               size="icon"
-              className="h-7 w-7 text-slate-500 hover:text-red-400 hover:bg-red-500/10"
+              className="jamie-timer-panel__cancel"
               onClick={(e) => {
                 e.stopPropagation();
                 onCancel();
@@ -231,8 +280,8 @@ function TimerItem({ timer, onCancel, onSelect }: TimerItemProps) {
           
           {/* Complete indicator */}
           {isComplete && (
-            <div className="p-1 rounded-full bg-emerald-500/20">
-              <Check className="w-4 h-4 text-emerald-400" />
+            <div className="jamie-timer-panel__done">
+              <Check className="w-4 h-4" />
             </div>
           )}
         </div>

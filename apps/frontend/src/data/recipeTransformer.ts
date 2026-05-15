@@ -139,8 +139,82 @@ function transformIngredients(ingredients: JamieOliverRecipe['ingredients']): st
 }
 
 // Transform steps to instructions array
+function isCharacterSplitSteps(steps: JamieOliverRecipe['steps']): boolean {
+  if (!Array.isArray(steps) || steps.length < 50) {
+    return false;
+  }
+  const shortCount = steps.filter((step) => {
+    const text = (step.instructions || step.descr || '').trim();
+    return text.length <= 1;
+  }).length;
+  return shortCount / steps.length > 0.8;
+}
+
+function rebuildCharacterSplitSteps(steps: JamieOliverRecipe['steps']): JamieOliverRecipe['steps'] {
+  const joined = steps
+    .map((step) => step.instructions || step.descr || '')
+    .join('')
+    .replace(/\s+/g, ' ')
+    .replace(/([.!?])(?=[A-Z])/g, '$1|')
+    .replace(/,(?=\s*(Meanwhile|When|Then|Next|Finally|To serve|Serve|Add|Tip|Stir|Cook|Use)\b)/g, ',|')
+    .trim();
+
+  const rawSegments = joined
+    .split('|')
+    .map((segment) => segment.trim())
+    .filter(Boolean);
+
+  const mergedSegments: string[] = [];
+  for (const segment of rawSegments) {
+    if (mergedSegments.length === 0) {
+      mergedSegments.push(segment);
+      continue;
+    }
+    if (segment.length < 48) {
+      mergedSegments[mergedSegments.length - 1] += ` ${segment}`;
+    } else {
+      mergedSegments.push(segment);
+    }
+  }
+
+  const segments = mergedSegments.length > 0 ? mergedSegments : [joined];
+  return segments.map((text, index) => {
+    const currentId = `step_${index + 1}`;
+    const nextId = index < segments.length - 1 ? `step_${index + 2}` : undefined;
+    const summary = text.length > 120 ? `${text.slice(0, 117).trimEnd()}...` : text;
+
+    return {
+      id: currentId,
+      descr: summary,
+      instructions: text,
+      type: 'immediate',
+      auto_start: index === 0,
+      requires_confirm: true,
+      depends_on: index > 0 ? [`step_${index}`] : [],
+      next: nextId ? [nextId] : [],
+    };
+  });
+}
+
+function normalizeSteps(steps: JamieOliverRecipe['steps']): JamieOliverRecipe['steps'] {
+  return isCharacterSplitSteps(steps) ? rebuildCharacterSplitSteps(steps) : steps;
+}
+
 function transformInstructions(steps: JamieOliverRecipe['steps']): string[] {
-  return steps.map(step => step.instructions);
+  return normalizeSteps(steps).map(step => step.instructions);
+}
+
+function transformBackendSteps(steps: JamieOliverRecipe['steps']) {
+  return normalizeSteps(steps).map((step) => ({
+    id: step.id,
+    descr: step.descr,
+    instructions: step.instructions,
+    type: step.type || 'immediate',
+    autoStart: step.auto_start ?? true,
+    requiresConfirm: step.requires_confirm ?? false,
+    dependsOn: step.depends_on || [],
+    next: step.next || [],
+  }));
 }
 
 // Extract category from title or use default
@@ -178,29 +252,35 @@ export function transformRecipeMatch(
   index?: number
 ): Recipe {
   const recipe = fullRecipe.recipe;
+  const normalizedSteps = normalizeSteps(fullRecipe.steps);
 
   // Generate numeric ID from recipe_id if index not provided
   const numericId = index !== undefined
     ? index + 1
     : match.recipe_id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % 10000;
+  const normalizedPayload: JamieOliverRecipe = {
+    ...fullRecipe,
+    steps: normalizedSteps,
+  };
 
   return {
     id: numericId,
     backendId: match.recipe_id, // Include backend ID (slug) for WebSocket
     title: match.title || recipe.title,
-    description: recipe.description || fullRecipe.steps[0]?.descr || recipe.title,
+    description: recipe.description || normalizedSteps[0]?.descr || recipe.title,
     category: extractCategory(recipe.title),
     difficulty: mapDifficulty(recipe.difficulty),
     time: parseDuration(recipe.estimated_total),
     servings: recipe.servings,
     image: getImagePath(match.recipe_id),
     ingredients: transformIngredients(fullRecipe.ingredients),
-    instructions: transformInstructions(fullRecipe.steps),
+    instructions: normalizedSteps.map(step => step.instructions),
     tips: fullRecipe.notes?.text
       ? fullRecipe.notes.text.split('\n').filter(line => line.trim().length > 0)
       : [],
     utensils: transformUtensils(fullRecipe.utensils),
-    rawRecipePayload: fullRecipe, // Include full recipe payload for voice backend
+    backendSteps: transformBackendSteps(normalizedSteps),
+    rawRecipePayload: normalizedPayload, // Include full recipe payload for voice backend
   };
 }
 

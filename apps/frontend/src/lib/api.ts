@@ -222,6 +222,19 @@ export interface SearchResponse {
   took_ms: number;
 }
 
+export interface RecipeByIdResponse {
+  recipe_id: string;
+  title: string;
+  category?: string | null;
+  mood?: string | null;
+  complexity?: string | null;
+  cost?: string | null;
+  quality_score?: number | null;
+  status?: string | null;
+  file_path?: string;
+  full_recipe?: Record<string, unknown> | null;
+}
+
 export interface SearchOptions {
   category?: string;
   mood?: string;
@@ -280,6 +293,17 @@ export async function searchRecipes(
     }
     throw error;
   }
+}
+
+export async function getRecipeById(recipeId: string): Promise<RecipeByIdResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/recipes/${encodeURIComponent(recipeId)}`);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Recipe request failed: ${response.status} ${response.statusText}. ${errorText}`);
+  }
+
+  return response.json() as Promise<RecipeByIdResponse>;
 }
 
 // =============================================================================
@@ -458,9 +482,10 @@ export async function getRecipeAccess(recipeId: string, userId?: string): Promis
   }
 
   const data: RecipeAccessResponse = await response.json();
-  // Vite dev only: unlock cooking without Supertab when API still returns locked (e.g. staging API).
-  // Production builds have import.meta.env.DEV === false — no env var required in prod.
-  if (import.meta.env.DEV && data.accessState === 'locked') {
+  // Dev only (default): treat locked as free for easy local cooking unless VITE_RECIPE_ACCESS_STRICT=true.
+  const strictRecipeAccess =
+    String(import.meta.env.VITE_RECIPE_ACCESS_STRICT || '').toLowerCase() === 'true';
+  if (import.meta.env.DEV && !strictRecipeAccess && data.accessState === 'locked') {
     return { ...data, accessState: 'free' };
   }
   return data;

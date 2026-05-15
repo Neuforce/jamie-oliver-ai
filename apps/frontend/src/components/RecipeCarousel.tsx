@@ -160,7 +160,9 @@ export function RecipeCarousel({
       )}
 
       {/* Carousel Content */}
-      <div className="overflow-hidden">
+      <div
+        className={singleSlide ? 'overflow-visible px-2 pb-3' : 'overflow-hidden'}
+      >
         {singleSlide ? (
           <div
             className="relative mx-auto w-full"

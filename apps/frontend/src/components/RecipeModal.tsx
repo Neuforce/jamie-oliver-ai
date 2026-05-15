@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Recipe } from '../data/recipes';
-import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { SupertabPurchaseButton } from './SupertabPurchaseButton';
+import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play } from 'lucide-react';
+import { SupertabPurchaseButton, type SupertabPurchaseButtonHandle } from './SupertabPurchaseButton';
 import { toast } from './ui/sonner';
 import type { RecipeAccessResponse } from '../lib/api';
 import type { RecipePurchaseResolution } from '../lib/supertab';
@@ -17,7 +16,14 @@ interface RecipeModalProps {
   recipeAccess?: RecipeAccessResponse | null;
   isAccessLoading?: boolean;
   onPurchaseResolved?: (resolution: RecipePurchaseResolution) => void;
+  /** Extra bottom padding while the modal has portaled voice strip (launcher or active dock). */
+  reserveBottomForVoiceDock?: boolean;
 }
+
+export type RecipeModalHandle = {
+  /** Opens the same Supertab checkout as tapping "Put it on my Tab" in this modal — no duplicate mount. */
+  openMyTabPurchaseFlow: () => Promise<void>;
+};
 
 /**
  * RecipeModal — pre-cook recipe detail surface.
@@ -54,15 +60,20 @@ interface RecipeModalProps {
  *     purchase widget sits directly below the title so the commerce
  *     flow stays explicit
  */
-export function RecipeModal({
+export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(function RecipeModal(
+  {
   recipe,
   onClose,
   onCookWithJamie,
   recipeAccess,
   isAccessLoading = false,
   onPurchaseResolved,
-}: RecipeModalProps) {
+  reserveBottomForVoiceDock = false,
+  },
+  ref,
+) {
   const [savedSession, setSavedSession] = useState<any>(null);
+  const purchaseButtonRef = useRef<SupertabPurchaseButtonHandle | null>(null);
 
   useEffect(() => {
     if (!recipe) {
@@ -87,6 +98,19 @@ export function RecipeModal({
       setSavedSession(null);
     }
   }, [recipe]);
+
+  useImperativeHandle(ref, () => ({
+    openMyTabPurchaseFlow: async () => {
+      if (!recipe) {
+        return;
+      }
+      // Voice path: App already verified locked access — do not gate on stale recipeAccess props.
+      document
+        .querySelector('[data-supertab-pane]')
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      await purchaseButtonRef.current?.openPurchaseExperience();
+    },
+  }), [recipe]);
 
   if (!recipe) return null;
 
@@ -208,7 +232,13 @@ export function RecipeModal({
           overflowY: 'auto',
         }}
       >
-        <div className="jamie-shell-width jamie-recipe-modal-body">
+        <div
+          className={
+            reserveBottomForVoiceDock
+              ? 'jamie-shell-width jamie-recipe-modal-body jamie-recipe-modal-body--voice-dock-reserve'
+              : 'jamie-shell-width jamie-recipe-modal-body'
+          }
+        >
           {/*
            * Hero image. Sits at the top of the scrollable body — one
            * generous 16:9 panel with a soft inset shadow and rounded
@@ -348,6 +378,7 @@ export function RecipeModal({
               data-supertab-pane="true"
             >
               <SupertabPurchaseButton
+                ref={purchaseButtonRef}
                 access={recipeAccess}
                 onResolved={onPurchaseResolved}
               />
@@ -367,5 +398,6 @@ export function RecipeModal({
         </div>
       </div>
     </div>
-  );
-}
+    );
+});
+RecipeModal.displayName = 'RecipeModal';
