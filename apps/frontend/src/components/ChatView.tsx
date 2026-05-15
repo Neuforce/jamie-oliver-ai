@@ -3,7 +3,6 @@ import ReactMarkdown from 'react-markdown';
 import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
 import { MealPlanCard } from './MealPlanCard';
-import { RecipeQuickView } from './RecipeQuickView';
 import { ShoppingListCard } from './ShoppingListCard';
 import { ArrowUp, ArrowDown, MessageCircle, Square, MicOff } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -31,6 +30,11 @@ import {
 } from '../lib/api';
 import { transformRecipeMatch, transformRecipeFromSummary, loadRecipeFromLocal, type BackendRecipeSummary } from '../data/recipeTransformer';
 import type { JamieOliverRecipe } from '../data/recipeTransformer';
+import {
+  getFocusedRecipeDetail,
+  backendSummaryFromRecipeDetail,
+  userAffirmsGoToFullRecipe,
+} from '../lib/discoveryFullRecipeGate';
 
 interface Message {
   id: string;
@@ -277,9 +281,26 @@ export function ChatView({
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+  /** Fresh messages for voice callbacks without stale closures (NEU-620). */
+  const messagesRef = useRef<Message[]>(messages);
+  messagesRef.current = messages;
+  /** Set after hook init so transcripts can invoke interrupt without reordering deps. */
+  const interruptVoiceRef = useRef<() => void>(() => {});
 
   // Shared session ID for both text and voice chat (ensures unified experience)
   const sessionId = useMemo(() => getOrCreateSessionId(), []);
+
+  const openRecipeModalFromDetail = useCallback(
+    async (detail: RecipeDetailData) => {
+      const stub = transformRecipeFromSummary(backendSummaryFromRecipeDetail(detail), 0);
+      const complete = await ensureRecipeHasPayload(stub);
+      onRecipeClick(complete);
+    },
+    [onRecipeClick],
+  );
+
+  const openRecipeModalFromDetailRef = useRef(openRecipeModalFromDetail);
+  openRecipeModalFromDetailRef.current = openRecipeModalFromDetail;
 
   // Voice mode state
   const voiceMessageRef = useRef<string | null>(null);
@@ -325,6 +346,22 @@ export function ChatView({
       }
 
       if (isFinal && normalizedText) {
+        const focusedDetail = getFocusedRecipeDetail(messagesRef.current);
+        if (focusedDetail && userAffirmsGoToFullRecipe(normalizedText)) {
+          interruptVoiceRef.current();
+          const userMessage: Message = {
+            id: Date.now().toString(),
+            type: 'user',
+            content: normalizedText,
+            timestamp: new Date(),
+          };
+          setMessages(prev => [...prev, userMessage]);
+          setIsTyping(false);
+          setThinkingStatus(null);
+          void openRecipeModalFromDetailRef.current(focusedDetail);
+          return;
+        }
+
         // Create user message from voice transcript
         const userMessage: Message = {
           id: Date.now().toString(),
@@ -467,6 +504,7 @@ export function ChatView({
       setThinkingStatus(null);
     },
   });
+  interruptVoiceRef.current = interrupt;
 
   const voiceFooterDetail = isMicMuted
     ? 'Mic muted — tap Jamie to unmute'
@@ -647,6 +685,27 @@ export function ChatView({
   const handleSendMessage = async (messageText?: string) => {
     const text = messageText || inputValue.trim();
     if (!text) return;
+
+    const focusedDetail = getFocusedRecipeDetail(messages);
+    if (focusedDetail && userAffirmsGoToFullRecipe(text)) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+        abortControllerRef.current = null;
+      }
+      setIsTyping(false);
+      setThinkingStatus(null);
+
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        type: 'user',
+        content: text,
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, userMessage]);
+      setInputValue('');
+      await openRecipeModalFromDetail(focusedDetail);
+      return;
+    }
 
     // Cancel any ongoing request
     if (abortControllerRef.current) {
@@ -1032,12 +1091,22 @@ export function ChatView({
                 </p>
               </div>
             )}
+            <div style={{ padding: '0 20px 20px' }}>
+              <button
+                type="button"
+                className="jamie-recipe-modal__header-pill"
+                aria-label="View full recipe details"
+                onClick={() => void openRecipeModalFromDetail(payload.recipe)}
+              >
+                View full recipe
+              </button>
+            </div>
           </div>
         );
       default:
         return null;
     }
-  }, [onRecipeClick]);
+  }, [openRecipeModalFromDetail, onRecipeClick]);
 
   const renderMessageContent = useCallback((message: Message, options?: {
     voiceMode?: boolean;
@@ -1352,19 +1421,40 @@ export function ChatView({
         )}
       </AnimatePresence>
 
-      {/* NEU-467: Banner when voice was paused because user left the app */}
+      {/* Voice paused (tab/app background): floating notice — not a chat message */}
       {isPausedByVisibility && (
-        <div className="flex items-center justify-between gap-3 px-5 py-2 bg-amber-500/10 border-t border-amber-500/20" style={{ flexShrink: 0 }}>
-          <p className="text-sm text-amber-800 dark:text-amber-200">
-            Voice paused because you left the app. Tap the voice button or Continue to talk to Jamie again.
-          </p>
-          <button
-            type="button"
-            onClick={resumeFromVisibility}
-            className="shrink-0 px-3 py-1.5 text-sm font-medium rounded-full border border-amber-500/50 text-amber-700 hover:bg-amber-500/20 transition-colors"
+        <div
+          className="jamie-shell-width mx-auto px-5 pb-3 pt-1"
+          style={{ flexShrink: 0 }}
+          role="status"
+          aria-live="polite"
+        >
+          <div
+            className="flex flex-wrap items-center justify-between gap-3 border border-[rgba(50,113,121,0.28)] bg-[rgba(163,227,216,0.44)] px-4 py-3 dark:border-teal-400/22 dark:bg-[#2a3f3d]"
+            style={{
+              borderRadius: 'var(--jamie-radius-xl)',
+              boxShadow: 'var(--jamie-shadow-soft)',
+            }}
           >
-            Continue
-          </button>
+            <p
+              className="min-w-[min(100%,220px)] flex-1 text-sm leading-snug text-[#1a3634] dark:text-white/90"
+              style={{ fontFamily: 'var(--font-display)' }}
+            >
+              Voice mode paused. Tap to continue or use the voice button.
+            </p>
+            <button
+              type="button"
+              onClick={resumeFromVisibility}
+              className="inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-full px-6 py-2.5 text-sm font-semibold leading-none tracking-tight text-white transition-opacity hover:opacity-90"
+              style={{
+                fontFamily: 'var(--font-display)',
+                backgroundColor: 'var(--jamie-primary-dark, #327179)',
+                boxShadow: '0 2px 10px rgba(50, 113, 121, 0.35)',
+              }}
+            >
+              Continue
+            </button>
+          </div>
         </div>
       )}
 
@@ -1498,14 +1588,6 @@ export function ChatView({
                 }}
               >
                 Tap to talk to Jamie
-              </p>
-            )}
-            {isPausedByVisibility && (
-              <p
-                className="text-center mt-2 text-xs text-amber-700 dark:text-amber-300"
-                style={{ fontFamily: 'var(--font-display)' }}
-              >
-                Voice paused — tap to resume talking to Jamie
               </p>
             )}
           </div>
