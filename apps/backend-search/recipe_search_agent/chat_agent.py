@@ -356,6 +356,24 @@ class DiscoveryChatAgent:
                                 logger.info(f"Emitted shopping_list with {result.get('total_items')} items")
                                 tool_results_emitted = True
 
+                            elif func_name == 'request_supertab_unlock':
+                                rid_meta = (
+                                    result.get("recipe_backend_id")
+                                    if isinstance(result, dict)
+                                    else None
+                                )
+                                if isinstance(rid_meta, str) and rid_meta.strip():
+                                    rid_meta = rid_meta.strip()
+                                    yield ChatEvent(
+                                        type="recipe_paywall_requested",
+                                        content="",
+                                        metadata={
+                                            "backend_recipe_id": rid_meta,
+                                        },
+                                    )
+                                    logger.info(f"Emitted recipe_paywall_requested for {rid_meta}")
+                                    tool_results_emitted = True
+
                         except (json.JSONDecodeError, KeyError) as e:
                             logger.warning(f"Failed to parse tool result for {func_name}: {e}")
 
@@ -376,6 +394,8 @@ class DiscoveryChatAgent:
                     intro = "Here’s a meal plan I put together for you."
                 elif "get_recipe_details" in tool_calls_seen:
                     intro = "Here are the details for that recipe."
+                elif "request_supertab_unlock" in tool_calls_seen:
+                    intro = "Opening My Tab checkout — finish the prompts on screen to unlock."
                 elif "create_shopping_list" in tool_calls_seen:
                     intro = "Here’s your shopping list."
                 else:

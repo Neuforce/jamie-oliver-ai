@@ -173,6 +173,8 @@ class DiscoveryVoiceHandler:
         self.chat_agent     = chat_agent
         self.config         = config
         self.session_id     = session_id or f"voice_{id(self)}"
+        # Backend slug for focused recipe modal; set via WS `focused_recipe` event.
+        self._focused_backend_recipe_id: Optional[str] = None
 
         # ── queues (mirrors SimpleVoiceAssistant) ──────────────────────────
         self._brain_queue: asyncio.Queue[str] = asyncio.Queue()
@@ -377,7 +379,15 @@ class DiscoveryVoiceHandler:
         while self._is_running:
             try:
                 event_type = await asyncio.wait_for(self.control_queue.get(), timeout=0.5)
-                if event_type in ("interrupt", "cancel"):
+                if isinstance(event_type, str) and event_type.startswith("__focus_recipe__|"):
+                    slug = event_type.split("|", 1)[1].strip()
+                    self._focused_backend_recipe_id = slug or None
+                    logger.info(
+                        "Focused recipe updated [%s]: %s",
+                        self.session_id,
+                        self._focused_backend_recipe_id,
+                    )
+                elif event_type in ("interrupt", "cancel"):
                     logger.info("Client control event [%s]: %s", self.session_id, event_type)
                     await self.interrupt(reason=event_type)
                 self.control_queue.task_done()
@@ -402,6 +412,17 @@ class DiscoveryVoiceHandler:
                 self.brain_processing = True
                 self.interrupt_requested.clear()
 
+                transcript_for_agent = transcription
+                if self._focused_backend_recipe_id:
+                    bid = self._focused_backend_recipe_id
+                    transcript_for_agent = (
+                        f"{transcription}\n\n"
+                        "[Context for tools only: The full recipe sheet is focused on backend recipe "
+                        f"id `{bid}`. When the user clearly asks to unlock, purchase, pay, put something "
+                        "on My Tab, open checkout, or buy this recipe for money, call `request_supertab_unlock` "
+                        f"with recipe_backend_id exactly `{bid}`.]"
+                    )
+
                 # Generate a per-turn response ID so the frontend can correlate
                 # processing / text_chunk / audio / done events to a single turn.
                 rid = self._next_response_id()
@@ -409,7 +430,7 @@ class DiscoveryVoiceHandler:
                 await self._send("processing", response_id=rid)
 
                 try:
-                    await self._brain_process_internal(transcription)
+                    await self._brain_process_internal(transcript_for_agent)
                 except asyncio.CancelledError:
                     raise
                 except Exception as exc:
@@ -473,7 +494,7 @@ class DiscoveryVoiceHandler:
                 elif event.type == "tool_call":
                     logger.info("Tool called: %s", event.content)
 
-                elif event.type in ("recipes", "meal_plan", "recipe_detail", "shopping_list"):
+                elif event.type in ("recipes", "meal_plan", "recipe_detail", "shopping_list", "recipe_paywall_requested"):
                     await self._send(event.type, event.metadata)
 
                 elif event.type == "error":

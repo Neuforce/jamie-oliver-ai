@@ -475,6 +475,36 @@ def plan_meal(
     return json.dumps(meal_plan, indent=2)
 
 
+def request_supertab_unlock(recipe_backend_id: str) -> str:
+    """
+    Request opening the Supertab / My Tab paywall on the client's focused recipe sheet.
+
+    Use ONLY after the user clearly asks to unlock, purchase, pay, put something
+    \"on My Tab\", or checkout for a locked recipe whose **backend slug** matches
+    the recipe currently shown in their full-recipe modal. The client decides
+    whether to open checkout; tool output never proves purchase or entitlement — do
+    not tell the user they already own the recipe unless they stated that themselves.
+
+    Args:
+        recipe_backend_id: Supabase/backend recipe slug (same id as discovery tools).
+
+    Returns:
+        JSON confirming the backend id echoed for bookkeeping.
+    """
+    import json
+
+    rid = (recipe_backend_id or "").strip()
+    if not rid:
+        return json.dumps({"ok": False, "error": "missing_recipe_backend_id"})
+    return json.dumps(
+        {
+            "ok": True,
+            "recipe_backend_id": rid,
+            "hint": "Client may open Supertab paywall when modal is locked and ids match.",
+        }
+    )
+
+
 def create_shopping_list(recipe_ids_csv: str) -> str:
     """
     Generate a consolidated shopping list from selected recipes.
@@ -558,5 +588,6 @@ discovery_function_manager.register_function(get_recipe_details)
 discovery_function_manager.register_function(suggest_recipes_for_mood)
 discovery_function_manager.register_function(plan_meal)
 discovery_function_manager.register_function(create_shopping_list)
+discovery_function_manager.register_function(request_supertab_unlock)
 
 logger.info(f"Registered {len(discovery_function_manager.registered_functions)} discovery tools")

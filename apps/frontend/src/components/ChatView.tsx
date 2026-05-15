@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { createPortal } from 'react-dom';
 import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
 import { MealPlanCard } from './MealPlanCard';
@@ -55,6 +56,14 @@ interface ChatViewProps {
   onPromptClick: (prompt: string) => void;
   onClearInitialMessage: () => void;
   onScrollStateChange?: (scrolled: boolean) => void;
+  /** True when App has a recipe sheet (modal) open — voice dock portals above it. */
+  recipeModalOpen?: boolean;
+  focusedRecipeBackendId?: string | null;
+  /** True while RecipeModal is open — bottom padding for portaled launcher or voice dock. */
+  onRecipeModalVoiceDockOverlapChange?: (overlap: boolean) => void;
+  onVoiceRecipePaywallRequested?: (backendRecipeId: string) => void;
+  /** Notifies parent when discovery voice mode is connected (keeps ChatView mounted across tabs). */
+  onDiscoveryVoiceSessionChange?: (active: boolean) => void;
 }
 
 const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
@@ -269,6 +278,11 @@ export function ChatView({
   onPromptClick,
   onClearInitialMessage,
   onScrollStateChange,
+  recipeModalOpen = false,
+  focusedRecipeBackendId = null,
+  onRecipeModalVoiceDockOverlapChange,
+  onVoiceRecipePaywallRequested,
+  onDiscoveryVoiceSessionChange,
 }: ChatViewProps) {
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const [inputValue, setInputValue] = useState('');
@@ -334,6 +348,7 @@ export function ChatView({
     isPausedByVisibility,
     resumeFromVisibility,
     setMicMuted,
+    notifyFocusedRecipe,
   } = useVoiceChat({
     sessionId,  // Share session ID between voice and text chat
     onTranscript: (text, isFinal) => {
@@ -465,6 +480,9 @@ export function ChatView({
         ));
       }
     },
+    onRecipePaywallRequested: (bid) => {
+      if (bid) onVoiceRecipePaywallRequested?.(bid);
+    },
     onDone: () => {
       // Finalize the voice message
       if (voiceMessageIdRef.current) {
@@ -505,6 +523,33 @@ export function ChatView({
     },
   });
   interruptVoiceRef.current = interrupt;
+
+  useEffect(() => {
+    // Reserve RecipeModal scroll space whenever the sheet is open — launcher strip or active dock.
+    onRecipeModalVoiceDockOverlapChange?.(Boolean(recipeModalOpen));
+  }, [recipeModalOpen, onRecipeModalVoiceDockOverlapChange]);
+
+  useEffect(() => {
+    onDiscoveryVoiceSessionChange?.(isVoiceActive);
+  }, [isVoiceActive, onDiscoveryVoiceSessionChange]);
+
+  useEffect(() => {
+    return () => {
+      onDiscoveryVoiceSessionChange?.(false);
+    };
+  }, [onDiscoveryVoiceSessionChange]);
+
+  useEffect(() => {
+    if (!isVoiceConnected) return;
+    notifyFocusedRecipe(
+      recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : null,
+    );
+  }, [
+    isVoiceConnected,
+    recipeModalOpen,
+    focusedRecipeBackendId,
+    notifyFocusedRecipe,
+  ]);
 
   const voiceFooterDetail = isMicMuted
     ? 'Mic muted — tap Jamie to unmute'
@@ -1458,9 +1503,9 @@ export function ChatView({
         </div>
       )}
 
-      {/* Voice Mode Footer */}
+      {/* Voice Mode Footer — portaled above fullscreen RecipeModal when open (NEU-619) */}
       <AnimatePresence>
-        {isVoiceActive && (
+        {isVoiceActive && !recipeModalOpen && (
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -1501,6 +1546,89 @@ export function ChatView({
           </motion.div>
         )}
       </AnimatePresence>
+      {recipeModalOpen
+        ? createPortal(
+            <div
+              className="jamie-voice-dock-over-modal"
+              role="region"
+              aria-label="Jamie recipe voice assistant"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {isVoiceActive ? (
+                  <motion.div
+                    key="recipe-modal-voice-active"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 16 }}
+                    className="jamie-voice-dock-shell"
+                  >
+                    <div className="jamie-shell-width">
+                      <VoiceFooter
+                        avatarSrc={imgJamieAvatar}
+                        avatarState={avatarState}
+                        isMicMuted={isMicMuted}
+                        onToggleMute={toggleMicMute}
+                        onStop={isProcessing || isSpeaking ? cancelVoice : disconnectVoice}
+                        stopLabel={
+                          isProcessing || isSpeaking
+                            ? 'Stop Jamie'
+                            : 'End voice conversation'
+                        }
+                        stopDetail={voiceFooterDetail}
+                        stopVariant="icon"
+                      />
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="recipe-modal-voice-launcher"
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 16 }}
+                    className="jamie-voice-dock-shell"
+                  >
+                    <div className="jamie-shell-width">
+                      <div className="jamie-voice-footer-row jamie-recipe-modal-voice-launcher">
+                        <span className="jamie-voice-ghost-button" aria-hidden="true" />
+                        <div className="min-w-0 flex-1 px-1">
+                          <p
+                            className="truncate text-[15px] font-semibold leading-snug tracking-tight"
+                            style={{
+                              fontFamily: 'var(--font-display)',
+                              color: 'var(--jamie-text-body, #324652)',
+                            }}
+                          >
+                            Talk to Jamie
+                          </p>
+                          <p
+                            className="mt-0.5 text-xs leading-snug"
+                            style={{
+                              fontFamily: 'var(--font-display)',
+                              color: 'var(--text-tertiary)',
+                            }}
+                          >
+                            Uses this chat session. Mic permission required.
+                          </p>
+                        </div>
+                        <VoiceModeButton
+                          isActive={isPausedByVisibility}
+                          isConnecting={voiceState === 'connecting'}
+                          onClick={
+                            isPausedByVisibility ? resumeFromVisibility : () => void toggleVoiceMode()
+                          }
+                          disabled={
+                            isTyping && !isVoiceActive && !isPausedByVisibility
+                          }
+                        />
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>,
+            document.body,
+          )
+        : null}
 
       {/* Stop Generation Button - Shows when text is streaming */}
       <AnimatePresence>

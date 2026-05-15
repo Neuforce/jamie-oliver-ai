@@ -29,5 +29,6 @@ export VITE_WS_URL="${VITE_WS_URL:-ws://localhost:8100/ws/voice}"
 
 echo "🔧 Using VITE_API_BASE_URL=${VITE_API_BASE_URL}"
 echo "🔧 Using VITE_WS_URL=${VITE_WS_URL}"
+echo "🔧 Using VITE_RECIPE_ACCESS_STRICT=${VITE_RECIPE_ACCESS_STRICT:-(unset → dev bypass stays on)}"
 
 npm run dev

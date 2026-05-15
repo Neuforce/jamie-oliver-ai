@@ -8,6 +8,8 @@ interface ImportMetaEnv {
   readonly VITE_SUPERTAB_CLIENT_ID?: string;
   readonly VITE_SUPERTAB_PAYWALL_EXPERIENCE_ID?: string;
   readonly VITE_SUPERTAB_PURCHASE_BUTTON_EXPERIENCE_ID?: string;
+  /** When "true", dev skips the client remap of locked → free so Unlock/paywall match production. */
+  readonly VITE_RECIPE_ACCESS_STRICT?: string;
 }
 
 // Support for figma:asset imports
