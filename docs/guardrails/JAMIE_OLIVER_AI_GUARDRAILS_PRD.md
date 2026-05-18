@@ -7,10 +7,11 @@
 | **Status** | Draft for client sign-off |
 | **Linear** | [NEU-622](https://linear.app/neuforce/issue/NEU-622) |
 | **Related** | Red teaming, content moderation, AI guardrails (per client brief) |
+| **Query gate (agreed)** | **NeuGate** (`POST /v1/evaluate`) + inline fallback in `backend-search` |
 
 ## 1. Summary
 
-Define and implement **explicit policies** and **technical layers** so the assistant stays within the culinary domain, refuses harmful or out-of-policy requests, and **does not trigger recipe RAG retrieval** when inappropriate. **Product guarantees:** no wasted **semantic DB / embedding-for-search** work on gated traffic; **no** debate on prohibited topics—only a **brief, warm** pivot to cooking (see §12). The work includes versioning **PrePrompt v1.2**, aligning index governance with **RAG Index 3**, and a reproducible **evaluation architecture** (red teaming with the agreed prompt set).
+Define and implement **explicit policies** and **technical layers** so the assistant stays within the culinary domain, refuses harmful or out-of-policy requests, and **does not trigger recipe RAG retrieval** when inappropriate. **Product guarantees:** no wasted **semantic DB / embedding-for-search** work on gated traffic; **no** debate on prohibited topics—only a **brief, warm** pivot to cooking (see §12). The work includes versioning **PrePrompt v1.2**, a **query gate** via **NeuGate** (with inline fallback), aligning index governance with **RAG Index 3**, and a reproducible **evaluation architecture** (red teaming with the agreed prompt set).
 
 ## 2. Context and problem
 
@@ -62,14 +63,15 @@ Today, safer behavior is largely **implicit**: system prompts focused on cooking
 | FR-1 | For out-of-policy requests, the assistant must **not** provide harmful instructions or sensitive data (addresses, hacking, etc.). | Must |
 | FR-2 | PrePrompt v1.2 must include **culinary scope**, explicit boundaries, and **off-topic** handling with a short, consistent message. | Must |
 | FR-2b | On prohibited/sensitive topics, **do not debate** or engage in extended discussion; use a **subtle, kind** redirect to cooking-only help (§3.1, §12). | Must |
-| FR-3 | Orchestration: when the gate fires (high-risk, prohibited, or hard off-topic / non-recipe per policy), **short-circuit** before retrieval: **no** semantic recipe search to Supabase/pgvector, **no** embedding computation **for that search path**, and **no** recipe-search tool invocations; minimal or templated reply unless policy explicitly says otherwise. | Must |
+| FR-3 | Orchestration: when the gate fires (high-risk, prohibited, or hard off-topic / non-recipe per policy), **short-circuit** before retrieval: **no** semantic recipe search to Supabase/pgvector (`hybrid_recipe_search` in code), **no** embedding computation **for that search path**, and **no** recipe-search tool invocations; reply from NeuGate `cached_response` (rotated pivot) or equivalent fallback. See **§16**. | Must |
+| FR-3b | **Tool guard**: if the session is gate-blocked, recipe search tools must not call `RecipeSearchAgent.search()` even if the LLM invokes them. | Must |
 | FR-4 | RAG Index 3: document and apply **ingest** rules (approved culinary sources only). The **query gate** must run **before** any recipe retrieval so blocked requests never hit the vector pipeline. | Should |
 | FR-5 | Voice mode: consider **output moderation** before TTS if the channel is high risk. | Should |
 | FR-6 | Auditable logging (no unnecessary PII): detected category, prompt version, index version, eval outcome (staging environments). | Could |
 
 ## 7. Non-functional requirements
 
-- **Latency**: input gate must not harm benign search UX; set a specific target in the plan (e.g. p95 +X ms).
+- **Latency**: NeuGate `POST /v1/evaluate` target **p95 ≤ ~800 ms** (tune in staging); on timeout/error use inline fallback without failing the request.
 - **Maintainability**: versioned prompts and index; changes to PrePrompt v1.2 or Index 3 trigger the eval suite run.
 - **Privacy**: moderation logs minimized to need-to-know and retention per policy.
 
@@ -85,6 +87,7 @@ Today, safer behavior is largely **implicit**: system prompts focused on cooking
 
 - **PrePrompt v1.2**: model policy, refusals, tone, tool boundaries, crisis handling when appropriate; **no debate** on prohibited themes—brief redirect to cooking.
 - **RAG Index 3 / orchestration**: corpus quality and scope; **gate** runs before retrieval so blocked traffic never hits vector search; avoid enriching context when intent is out-of-domain or high risk.
+- **NeuGate** (`neuForce/neuGate`): project config `jamie-oliver-ai` — categories, classifier, rotated pivot templates (§12); consumed by discovery via `POST /v1/evaluate`.
 
 The client’s detailed table (per-category checkmarks) is the source of truth for **which layer owns** each row in architecture review.
 
@@ -97,8 +100,10 @@ The client’s detailed table (per-category checkmarks) is the source of truth f
 ## 11. Dependencies
 
 - Linear ticket [NEU-622](https://linear.app/neuforce/issue/NEU-622).
-- Access to a moderation model/API if adopted (or a decision to use heuristics + a small LLM).
-- Staging environment with flags to enable gates without impacting production.
+- **NeuGate** deployed (or local) with `config/projects/jamie-oliver-ai.json`; `NEUGATE_API_KEY`; integration guide: `neuGate/docs/INTEGRATION.md`.
+- Jamie Oliver `backend-search`: env `NEUGATE_URL`, `NEUGATE_PROJECT_ID`, `GUARDRAILS_GATE_ENABLED`.
+- Access to a moderation model/API if adopted in a later phase (MVP uses NeuGate + PrePrompt + eval per §14.7).
+- Staging environment with gates enabled without impacting production.
 
 ## 12. Provisional copy: British pivot (Jamie)
 
@@ -119,8 +124,9 @@ Until brand/legal approval, **impasse** wording must be **British English**, **s
 
 ## 13. Related documentation
 
-- Implementation plan: `JAMIE_OLIVER_AI_GUARDRAILS_PLAN.md` (same directory / copy at `neuForce/` root).
-- Current code references: prompts in `apps/backend-search/recipe_search_agent/prompts.py`, `apps/backend-voice/src/config/prompts.py`; chat and search agent in `apps/backend-search/`.
+- Implementation plan: `JAMIE_OLIVER_AI_GUARDRAILS_PLAN.md` (same directory / copy at `neuForce/` root and `jamie-oliver-ai/docs/guardrails/`).
+- NeuGate: `neuGate/README.md`, `neuGate/docs/INTEGRATION.md`, `neuGate/config/schema/neugate-schema.json`.
+- Current code references: `apps/backend-search/recipe_search_agent/prompts.py`, `chat_agent.py`, `discovery_tools.py`, `search.py` (`hybrid_recipe_search`); `apps/backend-voice/src/config/prompts.py`; planned `recipe_search_agent/guardrails/`.
 
 ## 14. Default values (Supertab intermediary — until explicit sign-off)
 
@@ -134,7 +140,8 @@ These unblock **implementation and staging** without waiting on every decision. 
 | **4. Release threshold** | See **§15** (market pattern + NeuForce operational default). |
 | **5. Legal / UI** | **Generic** provisional disclaimer: assistant limitations, may be wrong, **not** a substitute for professional or emergency advice—replace when legal supplies final copy. |
 | **6. Data / logs** | In production: **metadata only** (e.g. gate category, prompt version, correlation id); **do not** store message body unless explicitly required; **short** retention until formal policy. |
-| **7. Third-party moderation** | **MVP without external API**: gate + PrePrompt + eval; optional API in a later phase if red team demands it. |
+| **7. Third-party moderation** | **MVP without external API**: NeuGate gate + PrePrompt + eval; optional vendor API in a later phase if red team demands it. |
+| **8. Query gate service** | **NeuGate** primary; **inline fallback** in `backend-search` if NeuGate unavailable (conservative; staging red-team must use live NeuGate). |
 
 ## 15. Release threshold and “market standard”
 
@@ -151,6 +158,48 @@ There is **no single published percentage** (e.g. “97% is the industry standar
 - **Legitimate cooking** (golden set): **≥98%** not blocked by gate (target; tune with real data).
 
 §15 is **criteria documentation**; concrete tooling (scripts, dashboards) follows the technical plan.
+
+## 16. Technical implementation — NeuGate and discovery
+
+### 16.1 Architecture (agreed)
+
+```text
+User → backend-search DiscoveryChatAgent
+         → guardrails.evaluate_message()
+              → NeuGate POST /v1/evaluate (project_id: jamie-oliver-ai)
+              → on failure/timeout: inline_fallback
+         → short_circuit: stream pivot, return (no SimpleBrain)
+         → proceed: SimpleBrain + tools (search only if not gate_blocked)
+```
+
+### 16.2 NeuGate project config
+
+File: `neuGate/config/projects/jamie-oliver-ai.json`
+
+- `categories.critical_blocks`: e.g. `self_harm`, `illegal`, `weapons`, `hate`, `pii_leak`, `sexual`, `misinformation`, `eating_disorder` (finalize against client matrix).
+- `categories.soft_blocks`: e.g. `off_topic`, `manipulation`, `competitors`.
+- `persona_pivot.templates`: PRD §12 (British, rotation).
+
+Red-team batch: `POST /v1/test-runner` with dataset in request body (no prompts stored server-side).
+
+### 16.3 Jamie Oliver backend (`backend-search`)
+
+| Component | Path / env |
+|-----------|------------|
+| Gate module | `recipe_search_agent/guardrails/` (`neugate_client.py`, `gate.py`, `inline_fallback.py`) |
+| Orchestration | `chat_agent.py` — evaluate **before** `SimpleBrain.process()` |
+| Tool guard | `discovery_tools.py` — skip embed/search when session `gate_blocked` |
+| PrePrompt | `prompts.py` — `PREPROMPT_VERSION = "preprompt-v1.2"`, `GUARDRAILS_POLICY_BLOCK` |
+| Flag | `GUARDRAILS_GATE_ENABLED` |
+| Eval | `tests/guardrails/dataset.yaml`, pytest |
+
+### 16.4 First delivery (PR1)
+
+Ship in one PR (both repos as needed): NeuGate config + discovery wiring + PrePrompt v1.2 (discovery only) + minimal eval proving **zero** embedding/search on blocked prompts. Voice PrePrompt alignment is **PR2** (see plan §2 delivery sequence).
+
+### 16.5 Logging (FR-6)
+
+When gate fires, log metadata only: `gate_category`, `gate_source` (`neugate` | `inline`), `preprompt_version`, `correlation_id` — not user message body in production.
 
 ---
 

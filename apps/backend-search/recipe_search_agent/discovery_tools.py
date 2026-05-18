@@ -87,7 +87,17 @@ def search_recipes(
         JSON string with matching recipes including title, description, and key details
     """
     import json
+    from recipe_search_agent.guardrails import is_gate_blocked
     from recipe_search_agent.search import SearchFilters
+
+    if is_gate_blocked():
+        return json.dumps(
+            {
+                "recipes": [],
+                "guardrail_blocked": True,
+                "message": "Recipe search skipped — message blocked by safety gate.",
+            }
+        )
 
     agent = get_search_agent()
 
