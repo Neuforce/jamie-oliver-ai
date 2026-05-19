@@ -1,61 +1,61 @@
-# 🔍 Recipe Search API - Guía de Uso
+# Recipe Search API — usage guide
 
-## 📋 Descripción
+## Description
 
-API REST para búsqueda semántica de recetas usando embeddings + filtros + full-text search.
+REST API for semantic recipe search using embeddings, structured filters, and full-text search on ingredients.
 
 ---
 
-## 🚀 Inicio Rápido
+## Quick start
 
-### **1. Instalar Dependencias**
+### 1. Install dependencies
 
 ```bash
 pip install fastapi uvicorn supabase fastembed python-dotenv
 ```
 
-### **2. Configurar Variables de Entorno**
+### 2. Environment variables
 
-Asegúrate de tener estas variables en tu `.env`:
+Add these to `.env`:
 
 ```bash
-SUPABASE_URL=https://tu-proyecto.supabase.co
+SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
 ```
 
-### **3. Aplicar Funciones SQL en Supabase**
+### 3. Apply SQL functions in Supabase
 
-Ejecuta estos archivos SQL en el SQL Editor de Supabase:
+Run these in the Supabase SQL editor:
 
-1. `db/search_function.sql` - Función de búsqueda híbrida
-2. `db/match_chunks_function.sql` - Función para chunks relevantes
+1. `db/search_function.sql` — hybrid search function  
+2. `db/match_chunks_function.sql` — relevant chunks helper  
 
-### **4. Iniciar el Servidor**
+### 4. Start the server
 
 ```bash
 ./scripts/start_api.sh
 ```
 
-O manualmente:
+Or manually:
 
 ```bash
 python -m uvicorn recipe_search_agent.api:app --reload
 ```
 
-El servidor estará disponible en:
-- API: `http://localhost:8000`
-- Docs interactiva: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+Then open:
+- API: `http://localhost:8000`  
+- Swagger: `http://localhost:8000/docs`  
+- ReDoc: `http://localhost:8000/redoc`  
 
 ---
 
-## 📡 Endpoints
+## Endpoints
 
-### **1. POST `/api/v1/recipes/search`**
+### 1. `POST /api/v1/recipes/search`
 
-Búsqueda semántica de recetas.
+Semantic recipe search.
 
-#### **Request:**
+#### Request
 
 ```json
 {
@@ -68,7 +68,7 @@ Búsqueda semántica de recetas.
 }
 ```
 
-#### **Response:**
+#### Response
 
 ```json
 {
@@ -86,7 +86,7 @@ Búsqueda semántica de recetas.
       "combined_score": 0.89,
       "category": "dinner",
       "complexity": "easy",
-      "match_explanation": "Alta similitud semántica (0.87) | Dificultad: easy",
+      "match_explanation": "High semantic similarity (0.87) | Difficulty: easy",
       "matching_chunks": [
         {
           "chunk_text": "Quick vegetarian pasta with fresh vegetables...",
@@ -101,90 +101,45 @@ Búsqueda semántica de recetas.
 }
 ```
 
-#### **Parámetros:**
+#### Parameters
 
-| Campo | Tipo | Requerido | Descripción |
-|-------|------|-----------|-------------|
-| `query` | string | ✅ | Query en lenguaje natural |
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `query` | string | ✅ | Natural-language query |
 | `category` | string | ❌ | breakfast, lunch, dinner, dessert |
 | `mood` | string | ❌ | comfort, light, festive, etc. |
 | `complexity` | string | ❌ | easy, medium, hard |
 | `cost` | string | ❌ | budget, moderate, premium |
-| `ingredients_query` | string | ❌ | Búsqueda FTS en ingredientes |
-| `top_k` | int | ❌ | Número de resultados (1-50, default: 10) |
-| `include_full_recipe` | bool | ❌ | Incluir JSON completo (default: false) |
-| `include_chunks` | bool | ❌ | Incluir chunks relevantes (default: true) |
+| `ingredients_query` | string | ❌ | FTS over ingredients |
+| `top_k` | int | ❌ | Result count (1–50, default 10) |
+| `include_full_recipe` | bool | ❌ | Include full JSON (default false) |
+| `include_chunks` | bool | ❌ | Include matching chunks (default true) |
 
 ---
 
-### **2. GET `/api/v1/recipes/{recipe_id}`**
+### 2. `GET /api/v1/recipes/{recipe_id}`
 
-Obtener receta completa por ID.
-
-#### **Request:**
+Fetch one recipe by ID.
 
 ```bash
 GET /api/v1/recipes/christmas-salad-jamie-oliver-recipes?include_chunks=true
 ```
 
-#### **Response:**
-
-```json
-{
-  "recipe_id": "christmas-salad-jamie-oliver-recipes",
-  "title": "Christmas Salad",
-  "category": "lunch",
-  "mood": "festive",
-  "complexity": "easy",
-  "file_path": "data/recipes_json/christmas-salad-jamie-oliver-recipes.json",
-  "full_recipe": {
-    "recipe": {...},
-    "ingredients": [...],
-    "steps": [...],
-    ...
-  },
-  "chunks": [...]
-}
-```
-
 ---
 
-### **3. GET `/api/v1/recipes`**
+### 3. `GET /api/v1/recipes`
 
-Listar recetas con filtros opcionales.
-
-#### **Request:**
+List recipes with optional filters.
 
 ```bash
 GET /api/v1/recipes?category=dessert&complexity=easy&limit=10
 ```
 
-#### **Response:**
-
-```json
-{
-  "recipes": [
-    {
-      "id": "chocolate-cake",
-      "title": "Easy Chocolate Cake",
-      "category": "dessert",
-      "complexity": "easy",
-      ...
-    }
-  ],
-  "total": 10,
-  "limit": 10,
-  "offset": 0
-}
-```
-
 ---
 
-### **4. GET `/health`**
+### 4. `GET /health`
 
-Health check del servicio.
-
-#### **Response:**
+Service health.
 
 ```json
 {
@@ -196,9 +151,9 @@ Health check del servicio.
 
 ---
 
-## 🧪 Ejemplos de Uso
+## Usage examples
 
-### **Búsqueda Simple (Python)**
+### Simple search (Python)
 
 ```python
 import requests
@@ -213,7 +168,7 @@ for recipe in results["results"]:
     print(f"{recipe['title']} (score: {recipe['combined_score']:.2f})")
 ```
 
-### **Búsqueda con Filtros (cURL)**
+### Filters (cURL)
 
 ```bash
 curl -X POST "http://localhost:8000/api/v1/recipes/search" \
@@ -226,7 +181,7 @@ curl -X POST "http://localhost:8000/api/v1/recipes/search" \
   }'
 ```
 
-### **Búsqueda por Ingredientes (JavaScript)**
+### Ingredients (JavaScript)
 
 ```javascript
 fetch('http://localhost:8000/api/v1/recipes/search', {
@@ -244,53 +199,50 @@ fetch('http://localhost:8000/api/v1/recipes/search', {
 
 ---
 
-## 🧪 Testing
+## Testing
 
-### **1. Ejecutar Tests Automáticos**
+### Automated tests
 
 ```bash
 python tests/test_search_agent.py
 ```
 
-Este script ejecuta:
-- ✅ Búsqueda básica sin filtros
-- ✅ Búsqueda con filtros (category, mood, complexity)
-- ✅ Búsqueda por ingredientes
-- ✅ Búsqueda detallada con chunks y JSON completo
+Covers:
+- Basic search (no filters)  
+- Filters (category, mood, complexity)  
+- Ingredient search  
+- Detailed response with chunks + full JSON  
 
-### **2. Probar API Interactivamente**
+### Interactive
 
-Abre `http://localhost:8000/docs` en tu navegador para usar la interfaz Swagger UI interactiva.
+Open `http://localhost:8000/docs` for Swagger.
 
 ---
 
-## 📊 Algoritmo de Ranking
-
-El score combinado se calcula como:
+## Ranking
 
 ```
 combined_score = (similarity_score * 0.8) + (ingredient_rank * 0.2)
 ```
 
-Donde:
-- **`similarity_score`**: Similitud coseno entre el query y los chunks (0-1)
-- **`ingredient_rank`**: Ranking de full-text search en ingredientes (0-1, normalizado)
+- **`similarity_score`**: Cosine similarity vs chunks (0–1)  
+- **`ingredient_rank`**: FTS on ingredients (0–1, normalized)  
 
-Los pesos son configurables en `db/search_function.sql`.
+Weights are configurable in `db/search_function.sql`.
 
 ---
 
-## 🎯 Casos de Uso
+## Example queries
 
-### **1. Búsqueda Natural**
+### Natural language
 
 ```json
 {"query": "I want something quick and healthy for breakfast"}
 ```
 
-→ Encuentra recetas de desayuno rápidas y saludables
+Finds quick, healthy breakfast-style recipes.
 
-### **2. Filtros Específicos**
+### Specific filters
 
 ```json
 {
@@ -301,9 +253,9 @@ Los pesos son configurables en `db/search_function.sql`.
 }
 ```
 
-→ Solo pastas para cena, fáciles y económicas
+Dinner pasta that is easy and budget-friendly.
 
-### **3. Búsqueda por Ingredientes**
+### Ingredients
 
 ```json
 {
@@ -312,9 +264,9 @@ Los pesos son configurables en `db/search_function.sql`.
 }
 ```
 
-→ Recetas italianas que usen esos ingredientes
+Italian recipes leaning on those ingredients.
 
-### **4. Combinado**
+### Combined
 
 ```json
 {
@@ -325,36 +277,32 @@ Los pesos son configurables en `db/search_function.sql`.
 }
 ```
 
-→ Postres festivos para navidad de dificultad media
-
 ---
 
-## 🔧 Configuración Avanzada
+## Advanced configuration
 
-### **Ajustar Pesos del Score**
+### Score weights
 
-Edita `db/search_function.sql`:
+Edit `db/search_function.sql`:
 
 ```sql
--- Priorizar vector similarity (más semántico)
+-- Emphasize vector similarity
 (similarity_score * 0.9 + ingredient_rank * 0.1) AS combined_score
 
--- Priorizar ingredientes (más literal)
+-- Balance with ingredients
 (similarity_score * 0.5 + ingredient_rank * 0.5) AS combined_score
 ```
 
-### **Ajustar Threshold de Similitud**
-
-En tu request:
+### Similarity threshold
 
 ```json
 {
   "query": "pasta",
-  "similarity_threshold": 0.5  // Solo resultados con >50% similitud
+  "similarity_threshold": 0.5
 }
 ```
 
-O en el código Python (`search.py`):
+Or in Python (`search.py`):
 
 ```python
 agent.search(query="pasta", similarity_threshold=0.5)
@@ -362,16 +310,16 @@ agent.search(query="pasta", similarity_threshold=0.5)
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
-### **Opción 1: Railway/Render**
+### Railway / Render
 
-1. Sube el código a GitHub
-2. Conecta Railway/Render
-3. Configura variables de entorno
-4. Deploy automático
+1. Push to GitHub  
+2. Connect Railway/Render  
+3. Set env vars  
+4. Deploy  
 
-### **Opción 2: Docker**
+### Docker
 
 ```dockerfile
 FROM python:3.13-slim
@@ -389,9 +337,9 @@ docker build -t recipe-search-api .
 docker run -p 8000:8000 --env-file .env recipe-search-api
 ```
 
-### **Opción 3: Vercel (Serverless)**
+### Vercel (serverless)
 
-Crea `vercel.json`:
+See `vercel.json` in the deployable package and `docs/deployment/DEPLOYMENT.md`.
 
 ```json
 {
@@ -406,10 +354,9 @@ Crea `vercel.json`:
 
 ---
 
-## 📚 Referencias
+## References
 
-- [FastAPI Documentation](https://fastapi.tiangolo.com/)
-- [Supabase Python Client](https://supabase.com/docs/reference/python)
-- [FastEmbed](https://github.com/qdrant/fastembed)
-- [OpenAPI Docs](http://localhost:8000/docs)
-
+- [FastAPI](https://fastapi.tiangolo.com/)  
+- [Supabase Python](https://supabase.com/docs/reference/python)  
+- [FastEmbed](https://github.com/qdrant/fastembed)  
+- Local OpenAPI: http://localhost:8000/docs  

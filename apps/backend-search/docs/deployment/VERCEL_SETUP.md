@@ -1,92 +1,75 @@
-# Guía Visual: Configurar Root Directory en Vercel
+# Visual guide: set Root Directory on Vercel
 
-## Paso a Paso en Vercel Dashboard
+## Step by step in the Vercel dashboard
 
-### 1. Crear Nuevo Proyecto
+### 1. Create a new project
 
-1. Ve a https://vercel.com/new
-2. Selecciona "Import Git Repository"
-3. Elige tu repositorio de GitHub
+1. Open https://vercel.com/new
+2. Choose **Import Git Repository**
+3. Pick your GitHub repo
 
-### 2. Configurar Root Directory
+### 2. Configure Root Directory
 
-**IMPORTANTE**: Después de seleccionar el repositorio, verás una pantalla de configuración. Aquí es donde configuras el Root Directory:
+**Important:** After picking the repo, you land on project settings. This is where you set **Root Directory**:
 
-#### Opción A: Si ves un campo "Root Directory"
-1. Busca el campo **"Root Directory"** o **"Configure Project"**
-2. Haz clic en **"Edit"** o **"Configure"** (puede estar al lado del nombre del proyecto)
-3. En el campo que aparece, escribe o selecciona: `jo-sem-search`
-4. Haz clic en **"Continue"** o **"Deploy"**
+#### Option A: You see a “Root Directory” field
+1. Find **Root Directory** or **Configure Project**
+2. Click **Edit** or **Configure**
+3. Enter or select: `jo-sem-search`
+4. Click **Continue** or **Deploy**
 
-#### Opción B: Si no ves el campo inmediatamente
-1. Después de importar el repositorio, verás una pantalla con:
-   - Project Name
-   - Framework Preset
-   - Root Directory ← **AQUÍ**
-2. Haz clic en **"Root Directory"** o en el botón **"Edit"** al lado
-3. Selecciona `jo-sem-search` del dropdown o escríbelo
-4. Haz clic en **"Continue"**
+#### Option B: The field is not obvious at first
+1. After import you should see Project Name, Framework Preset, **Root Directory**
+2. Click **Root Directory** or **Edit** next to it
+3. Choose `jo-sem-search` from the list or type it
+4. Click **Continue**
 
-### 3. Configurar Variables de Entorno
+### 3. Environment variables
 
-Después de configurar el Root Directory, antes de hacer Deploy:
+Before the first deploy:
 
-1. Haz clic en **"Environment Variables"** o **"Add Environment Variable"**
-2. Agrega:
+1. Open **Environment Variables** / **Add Environment Variable**
+2. Add:
    ```
-   SUPABASE_URL = https://tu-proyecto.supabase.co
-   SUPABASE_SERVICE_ROLE_KEY = tu-service-role-key
+   SUPABASE_URL = https://your-project.supabase.co
+   SUPABASE_SERVICE_ROLE_KEY = your-service-role-key
    PYTHON_VERSION = 3.11
    ```
-3. Selecciona los ambientes: Production, Preview, Development
+3. Apply to Production, Preview, and Development as needed
 
 ### 4. Deploy
 
-1. Haz clic en **"Deploy"**
-2. Espera a que termine el build
-3. Verifica que la URL funcione: `https://tu-proyecto.vercel.app/health`
+1. Click **Deploy**
+2. Wait for the build
+3. Check `https://your-project.vercel.app/health`
 
-## Si Ya Tienes el Proyecto Creado
+## Project already exists with wrong root
 
-Si ya creaste el proyecto pero con el root directory incorrecto:
+1. Open the project → **Settings** → **General**
+2. Find **Root Directory**
+3. **Edit** → set to `jo-sem-search`
+4. Save — this triggers a new deployment
 
-1. Ve a tu proyecto en Vercel Dashboard
-2. Ve a **Settings** → **General**
-3. Busca la sección **"Root Directory"**
-4. Haz clic en **"Edit"**
-5. Cambia a `jo-sem-search`
-6. Guarda los cambios
-7. Esto disparará un nuevo deployment
+## Verify it worked
 
-## Verificar que Funcionó
-
-Después del deploy, verifica:
-
-1. **Health Check**: `https://tu-proyecto.vercel.app/health`
-   - Debería retornar: `{"status": "healthy", ...}`
-
-2. **API Docs**: `https://tu-proyecto.vercel.app/docs`
-   - Debería mostrar la documentación de Swagger
-
-3. **Logs en Vercel**:
-   - Ve a tu proyecto → **Deployments** → Click en el último deployment → **Logs**
-   - Deberías ver que detectó Python y las dependencias
+1. **Health:** `https://your-project.vercel.app/health` → `{"status": "healthy", ...}`
+2. **Docs:** `https://your-project.vercel.app/docs` → Swagger
+3. **Logs:** Project → **Deployments** → latest → **Logs** — Python + deps detected
 
 ## Troubleshooting
 
-### "Root Directory" no aparece
-- Asegúrate de estar en la pantalla de configuración **antes** de hacer el primer deploy
-- Si ya hiciste deploy, ve a Settings → General → Root Directory
+### No “Root Directory” field
+- Use the pre-deploy configure screen, or **Settings** → **General** → Root Directory
 
-### Error: "No vercel.json found"
-- Verifica que el archivo `vercel.json` esté en `jo-sem-search/vercel.json`
-- Verifica que el Root Directory esté configurado correctamente
+### “No vercel.json found”
+- Ensure `vercel.json` lives at `jo-sem-search/vercel.json`
+- Confirm Root Directory points at `jo-sem-search`
 
-### Error: "No api/index.py found"
-- Verifica que el archivo `api/index.py` esté en `jo-sem-search/api/index.py`
-- Verifica que el Root Directory esté configurado correctamente
+### “No api/index.py found”
+- Ensure `api/index.py` is at `jo-sem-search/api/index.py`
+- Confirm Root Directory
 
-### Build falla
-- Revisa los logs en Vercel
-- Verifica que `requirements.txt` tenga todas las dependencias
-- Verifica que las variables de entorno estén configuradas
+### Build fails
+- Read deployment logs
+- Check `requirements.txt`
+- Confirm env vars are set

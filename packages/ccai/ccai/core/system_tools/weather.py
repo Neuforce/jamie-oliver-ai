@@ -4,12 +4,12 @@ from ccai.core import context_variables
 
 async def get_weather(city: str) -> str:
     """
-    Obtiene el clima actual para una ciudad específica.
+    Return (stub) current weather for a given city.
 
-    :param city: Ciudad para la que se desea obtener el clima.
-    :return: Información del clima.
+    :param city: City name.
+    :return: Weather description string.
     """
     #read dummy var from context variables
     dummy_var = context_variables.get("dummy_var")
 
-    return f"El clima en {city} para es soleado con una temperatura de 25 grados."
+    return f"The weather in {city} is sunny with a temperature of 25 degrees."

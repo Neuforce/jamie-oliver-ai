@@ -1,49 +1,49 @@
-# 🎯 Similarity Threshold - Control de Umbral de Similitud
+# Similarity threshold — controlling match quality
 
-## ¿Qué es `similarity_threshold`?
+## What is `similarity_threshold`?
 
-El **umbral de similitud** es el score mínimo que debe tener un resultado para ser incluido en la respuesta.
+The **similarity threshold** is the minimum score a hit must have to be included in the response.
 
 ```
-similarity_threshold = N  (donde 0 < N ≤ 1)
+similarity_threshold = N  (where 0 < N ≤ 1)
 
-Solo retorna recetas con: similarity_score >= N
+Only recipes with: similarity_score >= N
 ```
 
 ---
 
-## 📊 **Valores y Su Significado**
+## Values and meaning
 
-| Threshold | Descripción | Cuándo Usar |
+| Threshold | Description | When to use |
 |-----------|-------------|-------------|
-| `0.1-0.2` | Muy permisivo | Exploración amplia, "muéstrame cualquier cosa relacionada" |
-| **`0.3`** | **Default - Balanceado** | Uso general, buenos resultados |
-| `0.4-0.5` | Moderadamente estricto | Mejores matches, menos ruido |
-| `0.6-0.7` | Estricto | Solo resultados muy relevantes |
-| `0.8-0.9` | Muy estricto | Solo matches casi exactos |
-| `0.95+` | Extremadamente estricto | Prácticamente idénticos |
+| `0.1-0.2` | Very permissive | Broad exploration, “show me anything related” |
+| **`0.3`** | **Default — balanced** | General use, solid results |
+| `0.4-0.5` | Moderately strict | Better matches, less noise |
+| `0.6-0.7` | Strict | Only highly relevant results |
+| `0.8-0.9` | Very strict | Near-exact matches only |
+| `0.95+` | Extremely strict | Near-identical text |
 
 ---
 
-## 📝 **Ejemplos de Payloads**
+## Payload examples
 
-### **Ejemplo 1: Default (threshold = 0.3)**
+### Example 1: Default (threshold = 0.3)
 
 ```json
 {
   "query": "quick pasta",
   "top_k": 10
-  // similarity_threshold no especificado, usa default = 0.3
+  // similarity_threshold omitted → default 0.3
 }
 ```
 
-**Comportamiento:**
-- Retorna recetas con `similarity_score >= 0.3`
-- Balance entre cantidad y calidad
+**Behavior:**
+- Returns recipes with `similarity_score >= 0.3`
+- Balance of count vs. quality
 
 ---
 
-### **Ejemplo 2: Threshold Bajo (más resultados)**
+### Example 2: Low threshold (more results)
 
 ```json
 {
@@ -53,14 +53,14 @@ Solo retorna recetas con: similarity_score >= N
 }
 ```
 
-**Comportamiento:**
-- Retorna recetas con `similarity_score >= 0.2`
-- **Más resultados**, pero menos precisos
-- Útil para exploración
+**Behavior:**
+- Returns recipes with `similarity_score >= 0.2`
+- **More results**, less precision
+- Good for exploration
 
 ---
 
-### **Ejemplo 3: Threshold Alto (solo mejores matches)**
+### Example 3: High threshold (top matches only)
 
 ```json
 {
@@ -70,14 +70,14 @@ Solo retorna recetas con: similarity_score >= N
 }
 ```
 
-**Comportamiento:**
-- Solo recetas con `similarity_score >= 0.7`
-- **Menos resultados**, pero muy precisos
-- Útil para búsquedas específicas
+**Behavior:**
+- Only recipes with `similarity_score >= 0.7`
+- **Fewer results**, very precise
+- Good for specific searches
 
 ---
 
-### **Ejemplo 4: Threshold Muy Alto (casi exacto)**
+### Example 4: Very high threshold (near exact)
 
 ```json
 {
@@ -87,57 +87,57 @@ Solo retorna recetas con: similarity_score >= N
 }
 ```
 
-**Comportamiento:**
-- Solo recetas con `similarity_score >= 0.85`
-- **Muy pocos resultados** (o ninguno si no hay matches exactos)
-- Útil para verificar si existe una receta específica
+**Behavior:**
+- Only recipes with `similarity_score >= 0.85`
+- **Very few results** (or none)
+- Good to check if a specific recipe exists
 
 ---
 
-## 🔍 **Cómo Funciona Internamente**
+## How it works internally
 
 ```sql
--- En la función SQL hybrid_recipe_search()
+-- In hybrid_recipe_search()
 
-WHERE 
+WHERE
   (1 - (c.embedding <=> query_embedding))::FLOAT > similarity_threshold
-  
--- Si similarity_threshold = 0.7:
--- Solo vectores con distancia coseno < 0.3 (similitud > 0.7)
+
+-- If similarity_threshold = 0.7:
+-- Only vectors with cosine distance < 0.3 (similarity > 0.7)
 ```
 
-**Flujo:**
+**Flow:**
 ```
-1. Calcula similitud con todas las recetas
-2. FILTRA: solo las que cumplen similarity_score >= threshold
-3. Ordena por score (mayor a menor)
-4. Retorna top K de las filtradas
+1. Compute similarity for all candidate recipes
+2. FILTER: keep only similarity_score >= threshold
+3. Sort by score (high → low)
+4. Return top K of the filtered set
 ```
 
 ---
 
-## 📊 **Visualización**
+## Visualization
 
 ```
-Todas las recetas con sus scores:
+All recipes with scores:
 
-1. TOMATO & MUSSEL PASTA     → 0.850  ✅ threshold >= 0.7
-2. Smoked Salmon Pasta        → 0.750  ✅ threshold >= 0.7
-3. Happy fish pie             → 0.680  ❌ threshold < 0.7
-4. Christmas salad            → 0.590  ❌ threshold < 0.7
-5. Somali Beef Stew           → 0.450  ❌ threshold < 0.7
+1. TOMATO & MUSSEL PASTA     → 0.850  ✅ passes 0.7
+2. Smoked Salmon Pasta        → 0.750  ✅ passes 0.7
+3. Happy fish pie             → 0.680  ❌ below 0.7
+4. Christmas salad            → 0.590  ❌ below 0.7
+5. Somali Beef Stew           → 0.450  ❌ below 0.7
 ...
 
-Con threshold = 0.7 y top_k = 5:
-→ Solo retorna recetas 1 y 2 (total: 2)
-  Aunque pediste top_k=5, solo 2 cumplen el umbral
+With threshold = 0.7 and top_k = 5:
+→ Only recipes 1 and 2 return (2 total)
+  Even though top_k=5, only 2 pass the threshold
 ```
 
 ---
 
-## 🎯 **Casos de Uso Reales**
+## Real-world cases
 
-### **Caso 1: Búsqueda General (threshold bajo)**
+### Case 1: General search (low threshold)
 
 ```json
 {
@@ -147,12 +147,12 @@ Con threshold = 0.7 y top_k = 5:
 }
 ```
 
-**Objetivo:** Explorar muchas opciones
-**Resultado:** ~15-20 recetas variadas
+**Goal:** Explore many options  
+**Result:** ~15–20 varied recipes
 
 ---
 
-### **Caso 2: Búsqueda Específica (threshold medio)**
+### Case 2: Specific search (medium threshold)
 
 ```json
 {
@@ -162,12 +162,12 @@ Con threshold = 0.7 y top_k = 5:
 }
 ```
 
-**Objetivo:** Resultados relevantes
-**Resultado:** ~3-5 recetas relevantes
+**Goal:** Relevant hits  
+**Result:** ~3–5 relevant recipes
 
 ---
 
-### **Caso 3: Verificación Exacta (threshold alto)**
+### Case 3: Exact check (high threshold)
 
 ```json
 {
@@ -177,42 +177,42 @@ Con threshold = 0.7 y top_k = 5:
 }
 ```
 
-**Objetivo:** ¿Existe exactamente esta receta?
-**Resultado:** 0-1 recetas (solo si hay match casi exacto)
+**Goal:** Does this exact recipe exist?  
+**Result:** 0–1 recipes (only on near-exact match)
 
 ---
 
-### **Caso 4: Autocompletado (threshold medio-alto)**
+### Case 4: Autocomplete (medium–high)
 
 ```json
 {
-  "query": "chri",  // Usuario está escribiendo
+  "query": "chri",  // user is typing
   "top_k": 5,
   "similarity_threshold": 0.6
 }
 ```
 
-**Objetivo:** Sugerencias mientras escribe
-**Resultado:** Solo recetas bastante relacionadas
+**Goal:** Suggestions while typing  
+**Result:** Only fairly related recipes
 
 ---
 
-## ⚡ **Impacto en Performance**
+## Performance impact
 
 ```python
-# Performance NO cambia significativamente
+# Performance barely changes
 
-threshold = 0.1  → ~250ms (retorna ~50 recetas)
-threshold = 0.5  → ~245ms (retorna ~10 recetas)
-threshold = 0.9  → ~240ms (retorna ~1 receta)
+threshold = 0.1  → ~250ms (~50 recipes)
+threshold = 0.5  → ~245ms (~10 recipes)
+threshold = 0.9  → ~240ms (~1 recipe)
 
-# El cálculo de similitud es el mismo
-# Solo cambia cuántas se filtran y retornan
+# Similarity is computed the same way
+# Only the filter changes how many rows return
 ```
 
 ---
 
-## 🧪 **Experimento: Diferentes Thresholds**
+## Experiment: different thresholds
 
 ```python
 import requests
@@ -229,79 +229,70 @@ for threshold in thresholds:
             "similarity_threshold": threshold
         }
     )
-    
+
     data = response.json()
     print(f"\nThreshold {threshold}:")
-    print(f"  Resultados: {data['total']}")
-    
+    print(f"  Results: {data['total']}")
+
     if data['results']:
         top = data['results'][0]
         print(f"  Top score: {top['similarity_score']:.3f}")
         print(f"  Top: {top['title']}")
 
-# Output esperado:
+# Expected output:
 # Threshold 0.2:
-#   Resultados: 15
+#   Results: 15
 #   Top score: 0.707
 #   Top: TOMATO & MUSSEL PASTA
 #
 # Threshold 0.4:
-#   Resultados: 8
-#   Top score: 0.707
-#   Top: TOMATO & MUSSEL PASTA
-#
-# Threshold 0.6:
-#   Resultados: 2
-#   Top score: 0.707
-#   Top: TOMATO & MUSSEL PASTA
-#
-# Threshold 0.8:
-#   Resultados: 0
+#   Results: 8
+#   ...
 ```
 
 ---
 
-## 💡 **Recomendaciones**
+## Recommendations
 
-### **Para UI General:**
+### General UI
 ```json
 {
   "query": user_query,
   "top_k": 10,
-  "similarity_threshold": 0.3  // Default, funciona bien
+  "similarity_threshold": 0.3
 }
 ```
 
-### **Para Búsqueda Avanzada:**
+### Power search
 ```json
 {
   "query": user_query,
   "top_k": 20,
-  "similarity_threshold": user_selectable_threshold  // Slider 0.2-0.8
+  "similarity_threshold": user_selectable_threshold
 }
 ```
 
-### **Para Autocompletado:**
+### Autocomplete
 ```json
 {
   "query": partial_query,
   "top_k": 5,
-  "similarity_threshold": 0.5  // Solo resultados buenos
+  "similarity_threshold": 0.5
 }
 ```
 
-### **Para Verificación:**
+### Verification
 ```json
 {
   "query": exact_title,
   "top_k": 1,
-  "similarity_threshold": 0.85  // Casi exacto
+  "similarity_threshold": 0.85
 }
 ```
 
 ---
 
-## 🔄 **Combinación con Filtros**
+## Combining with filters
 
 ```json
 {
@@ -313,17 +304,17 @@ for threshold in thresholds:
 }
 ```
 
-**Comportamiento:**
-1. Filtra por category = "dinner" y complexity = "easy"
-2. Calcula similitud solo con las recetas filtradas
-3. Retorna las que tienen similarity >= 0.5
-4. Limita a top 5
+**Behavior:**
+1. Filter `category = "dinner"` and `complexity = "easy"`
+2. Compute similarity only on filtered recipes
+3. Keep those with similarity >= 0.5
+4. Cap at top 5
 
-**Resultado:** Pocas recetas pero MUY relevantes
+**Result:** Few recipes, highly on-target
 
 ---
 
-## ⚠️ **Cuidado con Thresholds Muy Altos**
+## Very high thresholds
 
 ```json
 {
@@ -333,50 +324,46 @@ for threshold in thresholds:
 }
 ```
 
-**Problema:** Puede retornar 0 resultados!
+**Issue:** You may get **zero** results.
 
-**Solución:** Implementa fallback:
+**Fix:** use a fallback:
 
 ```python
 def search_with_fallback(query, threshold=0.7, fallback_threshold=0.4):
-    # Intenta con threshold alto
     results = search(query, similarity_threshold=threshold)
-    
-    if len(results) < 3:  # Muy pocos resultados
-        # Intenta con threshold más bajo
+
+    if len(results) < 3:
         results = search(query, similarity_threshold=fallback_threshold)
-    
+
     return results
 ```
 
 ---
 
-## 📝 **Resumen**
+## Summary
 
 ```
-similarity_threshold = Filtro de calidad
+similarity_threshold = quality gate
 
-• Default: 0.3 (balanceado)
-• Rango: 0.0 - 1.0
-• Bajo (0.1-0.3): Más resultados, menos precisión
-• Medio (0.4-0.6): Balance cantidad/calidad
-• Alto (0.7-0.9): Pocos resultados, muy precisos
-• Muy alto (0.95+): Casi exactos (puede retornar 0)
+• Default: 0.3 (balanced)
+• Range: 0.0–1.0
+• Low (0.1–0.3): more results, lower precision
+• Mid (0.4–0.6): balance
+• High (0.7–0.9): few results, high precision
+• Very high (0.95+): near duplicates (may return 0)
 
-Combina con top_k:
-  • threshold = filtro de CALIDAD
-  • top_k = límite de CANTIDAD
+With top_k:
+  • threshold = QUALITY filter
+  • top_k = COUNT cap
 ```
 
 ---
 
-## 🚀 **Probarlo**
+## Try it
 
 ```bash
-# Inicia la API
 ./scripts/start_api.sh
 
-# En Python
 python -c "
 import requests
 response = requests.post(
@@ -384,15 +371,13 @@ response = requests.post(
     json={
         'query': 'pasta',
         'top_k': 10,
-        'similarity_threshold': 0.6  # ← AQUÍ
+        'similarity_threshold': 0.6
     }
 )
-print(response.json()['total'], 'resultados')
+print(response.json()['total'], 'results')
 "
 
-# O en Swagger UI
 open http://localhost:8000/docs
 ```
 
-¡Ahora tienes control total sobre la calidad de los resultados! 🎯
-
+You now control how strict semantic matching is.

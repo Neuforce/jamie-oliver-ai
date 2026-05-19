@@ -1,77 +1,85 @@
-# Scripts de Desarrollo
+# Development scripts
 
-Scripts helper para facilitar el desarrollo local del monorepo.
+Helper scripts for local development in the monorepo.
 
-## Scripts Disponibles
+## Available scripts
 
 ### `setup.sh`
-Setup inicial del monorepo. Instala todas las dependencias.
+
+Initial monorepo setup. Installs all dependencies.
 
 ```bash
 ./scripts/setup.sh
 ```
 
-**Qué hace:**
-- Instala dependencias npm del frontend
-- Crea virtual environments para backends Python
-- Instala dependencias Python (Poetry o pip)
-- Configura el paquete ccai
-- Hace los scripts ejecutables
+**What it does:**
+
+- Installs frontend npm dependencies
+- Creates Python virtual environments for backends
+- Installs Python dependencies (Poetry or pip)
+- Configures the `ccai` package
+- Makes shell scripts executable
 
 ---
 
 ### `logs.sh`
-Ver logs de los servicios en desarrollo.
+
+View development service logs.
 
 ```bash
-# Ver logs de todos los servicios
+# All services
 ./scripts/logs.sh all
 
-# Ver logs de un servicio específico
+# Single service
 ./scripts/logs.sh voice        # Backend-voice (Docker)
 ./scripts/logs.sh search       # Backend-search
 ./scripts/logs.sh frontend     # Frontend
 
-# Seguir logs en tiempo real
-./scripts/logs.sh voice -f     # Backend-voice con -f (follow)
-./scripts/logs.sh search -f    # Backend-search con -f
-./scripts/logs.sh frontend -f  # Frontend con -f
+# Follow logs in real time
+./scripts/logs.sh voice -f     # Backend-voice with follow
+./scripts/logs.sh search -f    # Backend-search with follow
+./scripts/logs.sh frontend -f   # Frontend with follow
 
-# Ayuda
+# Help
 ./scripts/logs.sh help
 ```
 
-**Notas:**
-- Los logs de `backend-search` y `frontend` se guardan en `logs/backend-search.log` y `logs/frontend.log`
-- Los logs de `backend-voice` se obtienen directamente de Docker Compose
-- Usa `-f` o `--follow` para seguir logs en tiempo real
+**Notes:**
+
+- `backend-search` and `frontend` logs go to `logs/backend-search.log` and `logs/frontend.log`
+- `backend-voice` logs come from Docker Compose directly
+- Use `-f` or `--follow` to tail logs live
 
 ---
 
 ### `dev-all.sh`
-Inicia todos los servicios en modo desarrollo.
+
+Starts every service in development mode.
 
 ```bash
 ./scripts/dev-all.sh
 ```
 
-**Qué inicia:**
-- Frontend en `http://localhost:3000`
-- Backend-Voice (Docker) en `ws://localhost:8100/ws/voice`
-- Backend-Search en `http://localhost:8000`
+**What it starts:**
 
-**Nota:** Presiona `Ctrl+C` para detener todos los servicios.
+- Frontend at `http://localhost:3000`
+- Backend-Voice (Docker) at `ws://localhost:8100/ws/voice`
+- Backend-Search at `http://localhost:8000`
+
+**Note:** Press `Ctrl+C` to stop all services.
 
 ---
 
 ### `dev-frontend.sh`
-Inicia solo el frontend.
+
+Starts the frontend only.
 
 ```bash
 ./scripts/dev-frontend.sh
 ```
 
-Equivalente a:
+Equivalent to:
+
 ```bash
 cd apps/frontend && npm run dev
 ```
@@ -79,36 +87,42 @@ cd apps/frontend && npm run dev
 ---
 
 ### `dev-backend-voice.sh`
-Inicia solo el backend-voice usando Docker Compose.
+
+Starts backend-voice only via Docker Compose.
 
 ```bash
 ./scripts/dev-backend-voice.sh
 ```
 
-Equivalente a:
+Equivalent to:
+
 ```bash
 cd infrastructure && docker-compose up backend-voice
 ```
 
-**Requisitos:**
-- Docker Desktop corriendo
-- Variables de entorno configuradas en `infrastructure/docker-compose.yml`
+**Requirements:**
+
+- Docker Desktop running
+- Environment variables configured in `infrastructure/docker-compose.yml`
 
 ---
 
 ### `dev-backend-search.sh`
-Inicia solo el backend-search.
+
+Starts backend-search only.
 
 ```bash
 ./scripts/dev-backend-search.sh
 ```
 
-**Qué hace:**
-- Crea virtual environment si no existe
-- Instala dependencias si es necesario
-- Inicia servidor FastAPI con hot-reload
+**What it does:**
 
-Equivalente a:
+- Creates a virtual environment if missing
+- Installs dependencies if needed
+- Starts the FastAPI server with hot reload
+
+Equivalent to:
+
 ```bash
 cd apps/backend-search
 source .venv/bin/activate
@@ -118,18 +132,21 @@ python -m uvicorn recipe_search_agent.api:app --reload
 ---
 
 ### `publish_now.py`
-Publica todas las recetas en draft a published status.
+
+Publishes all recipes from draft to published status.
 
 ```bash
 python scripts/publish_now.py
 ```
 
-**Qué hace:**
-- Conecta a Supabase usando credenciales de `apps/backend-search/.env`
-- Actualiza todas las recetas con `status != 'published'` a `published`
-- Muestra resumen de recetas por status
+**What it does:**
 
-**Alternativa vía API:**
+- Connects to Supabase using credentials from `apps/backend-search/.env`
+- Updates every recipe with `status != 'published'` to `published`
+- Prints a summary by status
+
+**Alternative via API:**
+
 ```bash
 curl -X POST http://localhost:8000/api/v1/recipes/publish-all
 ```
@@ -137,9 +154,10 @@ curl -X POST http://localhost:8000/api/v1/recipes/publish-all
 ---
 
 ### `linear.sh`
+
 Linear integration: list issues by state, create issues, and get issue details.
 
-**Setup:** copy `scripts/.env.example` to `scripts/.env` and add your Linear API key (Settings → API). Do not use a "Bearer " prefix.
+**Setup:** copy `scripts/.env.example` to `scripts/.env` and add your Linear API key (Settings → API). Do not use a `Bearer ` prefix.
 
 ```bash
 # List issues (all non-completed/non-canceled)
@@ -159,45 +177,49 @@ Linear integration: list issues by state, create issues, and get issue details.
 ---
 
 ### `session_cleanup.sh`
-Script para hacer commit de cambios de sesión con mensajes apropiados.
+
+Script to commit session changes with appropriate messages.
 
 ```bash
 ./scripts/session_cleanup.sh
 ```
 
-**Qué hace:**
-- Agrupa cambios en commits lógicos
-- Usa conventional commits format
-- Muestra resumen de commits realizados
+**What it does:**
+
+- Groups changes into logical commits
+- Uses conventional commits format
+- Shows a summary of commits created
 
 ---
 
-## Uso Recomendado
+## Recommended usage
 
-### Primera vez
+### First-time setup
+
 ```bash
-# 1. Setup inicial
+# 1. Initial setup
 ./scripts/setup.sh
 
-# 2. Configurar variables de entorno
-# Edita apps/frontend/.env
-# Edita apps/backend-voice/.env
-# Edita apps/backend-search/.env
+# 2. Configure environment variables
+# Edit apps/frontend/.env
+# Edit apps/backend-voice/.env
+# Edit apps/backend-search/.env
 
-# 3. Iniciar todos los servicios
+# 3. Start all services
 ./scripts/dev-all.sh
 ```
 
-### Desarrollo diario
+### Daily development
+
 ```bash
-# Opción 1: Todos los servicios
+# Option A: All services
 ./scripts/dev-all.sh
 
-# Opción 2: Solo el servicio que estás desarrollando
+# Option B: Only what you need
 ./scripts/dev-frontend.sh
-# o
+# or
 ./scripts/dev-backend-voice.sh
-# o
+# or
 ./scripts/dev-backend-search.sh
 ```
 
@@ -205,30 +227,34 @@ Script para hacer commit de cambios de sesión con mensajes apropiados.
 
 ## Troubleshooting
 
-### Scripts no son ejecutables
+### Scripts not executable
+
 ```bash
 chmod +x scripts/*.sh
 ```
 
-### Docker no está corriendo
+### Docker not running
+
 ```bash
-# macOS: Abre Docker Desktop
+# macOS: open Docker Desktop
 # Linux: sudo systemctl start docker
 ```
 
-### Virtual environment no se crea
+### Virtual environment not created
+
 ```bash
-# Verifica que Python 3.11+ esté instalado
+# Ensure Python 3.11+ is installed
 python3 --version
 
-# Crea manualmente
+# Create manually
 cd apps/backend-search
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -e .
 ```
 
-### Dependencias no se instalan
+### Dependencies fail to install
+
 ```bash
 # Frontend
 cd apps/frontend && rm -rf node_modules && npm install
@@ -243,8 +269,8 @@ pip install -e .
 
 ---
 
-## Notas
+## Notes
 
-- Los scripts asumen que se ejecutan desde la raíz del monorepo
-- Los scripts usan rutas relativas, así que asegúrate de estar en el directorio correcto
-- `dev-all.sh` puede requerir permisos para ejecutar múltiples procesos en background
+- Scripts assume you run them from the monorepo root
+- Scripts use relative paths — run from the correct directory
+- `dev-all.sh` may need permission to spawn multiple background processes

@@ -112,8 +112,8 @@ def infer_step_on_enter(
     step: dict[str, Any],
 ) -> list[dict[str, str]]:
     """
-    Infiere el mensaje on_enter para un step usando LLM o heurísticas.
-    
+    Infer the on_enter message for a step using the LLM or heuristics.
+
     Args:
         cfg: Configuration with Ollama settings
         step: Step dictionary with at least 'descr' or 'instructions'
@@ -231,8 +231,8 @@ def add_on_enter_to_steps(
     steps: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
     """
-    Agrega on_enter a todos los steps que no lo tengan.
-    
+    Add on_enter to every step that does not already have it.
+
     Args:
         cfg: Configuration with Ollama settings
         steps: List of step dictionaries

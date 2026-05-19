@@ -1,8 +1,8 @@
-# Listado de recetas Jamie Oliver (251 URLs)
+# Jamie Oliver recipe URLs (251)
 
-Fuente: listado aportado para ingesta. Patrón habitual: `/recipes/{categoría}/{slug}/`; cuatro URLs solo `/recipes/{slug}/` (ver plan de categorías).
+Source: list provided for ingestion. Usual pattern: `/recipes/{category}/{slug}/`; four URLs use only `/recipes/{slug}/` (see category plan).
 
-| # | Título | URL |
+| # | Title | URL |
 |---|--------|-----|
 | 1 | Amazing Yorkies | https://www.jamieoliver.com/recipes/eggs/amazing-yorkies/ |
 | 2 | Perfect roast beef | https://www.jamieoliver.com/recipes/beef/perfect-roast-beef/ |

@@ -1,6 +1,6 @@
-# 🔍 API de Búsqueda Semántica - Ejemplos de Payloads
+# Semantic search API — payload examples
 
-## 📡 Endpoint Principal
+## Main endpoint
 
 ```
 POST http://localhost:8000/api/v1/recipes/search
@@ -9,7 +9,7 @@ Content-Type: application/json
 
 ---
 
-## 📝 **Payload Básico (Mínimo)**
+## Minimal payload
 
 ```json
 {
@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 ```
 
-**Respuesta:**
+**Response:**
 ```json
 {
   "query": "quick pasta recipe",
@@ -39,7 +39,7 @@ Content-Type: application/json
       "complexity": null,
       "cost": null,
       "file_path": "data/recipes_json/tomato-mussel-pasta.json",
-      "match_explanation": "Alta similitud semántica (0.71)",
+      "match_explanation": "High semantic similarity (0.71)",
       "matching_chunks": [
         {
           "chunk_id": "uuid-123",
@@ -57,9 +57,9 @@ Content-Type: application/json
 
 ---
 
-## 🎯 **Payload con Filtros**
+## Payloads with filters
 
-### **Ejemplo 1: Filtro por Complejidad**
+### Example 1: complexity
 
 ```json
 {
@@ -69,7 +69,7 @@ Content-Type: application/json
 }
 ```
 
-### **Ejemplo 2: Filtro por Categoría + Mood**
+### Example 2: category + mood
 
 ```json
 {
@@ -80,7 +80,7 @@ Content-Type: application/json
 }
 ```
 
-### **Ejemplo 3: Filtro por Costo**
+### Example 3: cost
 
 ```json
 {
@@ -93,7 +93,7 @@ Content-Type: application/json
 
 ---
 
-## 🥕 **Búsqueda por Ingredientes**
+## Ingredient-aware search
 
 ```json
 {
@@ -103,13 +103,13 @@ Content-Type: application/json
 }
 ```
 
-**Explicación:**
-- `query`: Búsqueda semántica general
-- `ingredients_query`: Full-text search en los ingredientes (20% del score)
+**Notes:**
+- `query` — general semantic search  
+- `ingredients_query` — full-text search on ingredients (~20% of blended score)  
 
 ---
 
-## 📊 **Payload Completo (Todas las Opciones)**
+## Full payload (all common options)
 
 ```json
 {
@@ -125,30 +125,29 @@ Content-Type: application/json
 }
 ```
 
-**Campos:**
+**Fields:**
 
-| Campo | Tipo | Requerido | Default | Descripción |
-|-------|------|-----------|---------|-------------|
-| `query` | string | ✅ Sí | - | Query en lenguaje natural |
-| `category` | string | ❌ No | `null` | breakfast, lunch, dinner, dessert |
-| `mood` | string | ❌ No | `null` | comfort, light, festive, etc. |
-| `complexity` | string | ❌ No | `null` | easy, medium, hard |
-| `cost` | string | ❌ No | `null` | budget, moderate, premium |
-| `ingredients_query` | string | ❌ No | `null` | Ingredientes para FTS |
-| `top_k` | integer | ❌ No | `10` | Número de resultados (1-50) |
-| `include_full_recipe` | boolean | ❌ No | `false` | Incluir JSON completo |
-| `include_chunks` | boolean | ❌ No | `true` | Incluir chunks relevantes |
+| Field | Type | Required | Default | Description |
+|-------|------|----------|---------|-------------|
+| `query` | string | ✅ Yes | — | Natural-language query |
+| `category` | string | No | `null` | breakfast, lunch, dinner, dessert |
+| `mood` | string | No | `null` | comfort, light, festive, etc. |
+| `complexity` | string | No | `null` | easy, medium, hard |
+| `cost` | string | No | `null` | budget, moderate, premium |
+| `ingredients_query` | string | No | `null` | Ingredient FTS string |
+| `top_k` | integer | No | `10` | Max results (1–50) |
+| `include_full_recipe` | boolean | No | `false` | Include full recipe JSON |
+| `include_chunks` | boolean | No | `true` | Include matching chunks |
 
 ---
 
-## 🚀 **Ejemplos de Uso**
+## Client examples
 
-### **Python (requests)**
+### Python (requests)
 
 ```python
 import requests
 
-# Búsqueda simple
 response = requests.post(
     "http://localhost:8000/api/v1/recipes/search",
     json={
@@ -164,7 +163,7 @@ for recipe in results['results']:
     print(f"- {recipe['title']} (score: {recipe['combined_score']:.2f})")
 ```
 
-### **Python (httpx + async)**
+### Python (httpx async)
 
 ```python
 import httpx
@@ -185,7 +184,7 @@ async def search_recipes():
 results = asyncio.run(search_recipes())
 ```
 
-### **JavaScript (fetch)**
+### JavaScript (fetch)
 
 ```javascript
 const searchRecipes = async (query) => {
@@ -199,11 +198,10 @@ const searchRecipes = async (query) => {
       top_k: 5
     })
   });
-  
+
   return await response.json();
 };
 
-// Uso
 searchRecipes('quick dinner')
   .then(data => {
     console.log(`Found ${data.total} recipes`);
@@ -213,10 +211,9 @@ searchRecipes('quick dinner')
   });
 ```
 
-### **cURL**
+### cURL
 
 ```bash
-# Búsqueda simple
 curl -X POST "http://localhost:8000/api/v1/recipes/search" \
   -H "Content-Type: application/json" \
   -d '{
@@ -224,7 +221,6 @@ curl -X POST "http://localhost:8000/api/v1/recipes/search" \
     "top_k": 3
   }'
 
-# Con filtros
 curl -X POST "http://localhost:8000/api/v1/recipes/search" \
   -H "Content-Type: application/json" \
   -d '{
@@ -238,20 +234,19 @@ curl -X POST "http://localhost:8000/api/v1/recipes/search" \
 
 ---
 
-## 📋 **Otros Endpoints**
+## Other endpoints
 
-### **1. Obtener Receta por ID**
+### Get recipe by ID
 
 ```bash
 GET http://localhost:8000/api/v1/recipes/{recipe_id}?include_chunks=true
 ```
 
-**Ejemplo:**
 ```bash
 curl "http://localhost:8000/api/v1/recipes/tomato-mussel-pasta?include_chunks=true"
 ```
 
-**Respuesta:**
+**Response:**
 ```json
 {
   "recipe_id": "tomato-mussel-pasta",
@@ -270,54 +265,27 @@ curl "http://localhost:8000/api/v1/recipes/tomato-mussel-pasta?include_chunks=tr
 }
 ```
 
-### **2. Listar Recetas con Filtros**
+### List recipes with filters
 
 ```bash
 GET http://localhost:8000/api/v1/recipes?category=dessert&complexity=easy&limit=10
 ```
 
-**Ejemplo:**
 ```bash
 curl "http://localhost:8000/api/v1/recipes?category=dinner&limit=5"
 ```
 
-**Respuesta:**
-```json
-{
-  "recipes": [
-    {
-      "id": "tomato-mussel-pasta",
-      "title": "TOMATO & MUSSEL PASTA",
-      "category": "dinner",
-      ...
-    }
-  ],
-  "total": 5,
-  "limit": 5,
-  "offset": 0
-}
-```
-
-### **3. Health Check**
+### Health
 
 ```bash
 GET http://localhost:8000/health
 ```
 
-**Respuesta:**
-```json
-{
-  "status": "healthy",
-  "supabase": "connected",
-  "embedding_model": "BAAI/bge-small-en-v1.5"
-}
-```
-
 ---
 
-## 🎯 **Casos de Uso Reales**
+## Real-world cases
 
-### **Caso 1: Búsqueda Natural**
+### Case 1: Natural query
 
 ```json
 {
@@ -326,13 +294,11 @@ GET http://localhost:8000/health
 }
 ```
 
-**¿Por qué funciona?**
-- Búsqueda semántica entiende la INTENCIÓN
-- Encuentra recetas rápidas sin usar la palabra "quick" explícitamente
+**Why it works:** semantics capture intent; fast meals match without the word “quick”.
 
 ---
 
-### **Caso 2: Búsqueda con Restricciones**
+### Case 2: Hard constraints
 
 ```json
 {
@@ -344,14 +310,11 @@ GET http://localhost:8000/health
 }
 ```
 
-**Score combinado:**
-- 80% vector similarity ("dinner for tonight")
-- 20% full-text search (si hay `ingredients_query`)
-- Filtros exactos (solo recetas que cumplan)
+**Scoring:** ~80% vector + ~20% ingredient FTS when `ingredients_query` is set; filters apply exactly.
 
 ---
 
-### **Caso 3: Búsqueda por Ingredientes**
+### Case 3: Pantry ingredients
 
 ```json
 {
@@ -361,14 +324,11 @@ GET http://localhost:8000/health
 }
 ```
 
-**¿Cómo funciona?**
-- `query` → Búsqueda semántica general
-- `ingredients_query` → Full-text search en `ingredients_text`
-- Combina ambos scores (80/20)
+**How:** `query` for general semantics; `ingredients_query` for `ingredients_text` FTS; blended score.
 
 ---
 
-### **Caso 4: Búsqueda Detallada (con JSON completo)**
+### Case 4: Full recipe in response
 
 ```json
 {
@@ -379,34 +339,22 @@ GET http://localhost:8000/health
 }
 ```
 
-**Respuesta incluye:**
-- ✅ Metadata (title, category, mood, etc.)
-- ✅ Score de similitud
-- ✅ Chunks más relevantes
-- ✅ **JSON completo de la receta** (ingredients, steps, etc.)
-
-Útil para mostrar la receta completa al usuario.
+Returns metadata, similarity, best chunks, and **full recipe JSON** — handy for detail screens.
 
 ---
 
-## 🧪 **Probar la API**
+## Try the API
 
-### **Opción 1: Swagger UI (Interactivo)**
+### Swagger
 
 ```bash
-# Iniciar API
 ./scripts/start_api.sh
-
-# Abrir en navegador
 open http://localhost:8000/docs
 ```
 
-Interface visual para probar todos los endpoints.
-
-### **Opción 2: Script Python**
+### Python snippet
 
 ```python
-# test_api.py
 import requests
 
 API_URL = "http://localhost:8000"
@@ -419,10 +367,10 @@ def test_search():
             "top_k": 3
         }
     )
-    
+
     data = response.json()
-    print(f"✅ Found {data['total']} recipes in {data['took_ms']}ms\n")
-    
+    print(f"Found {data['total']} recipes in {data['took_ms']}ms\n")
+
     for i, recipe in enumerate(data['results'], 1):
         print(f"{i}. {recipe['title']}")
         print(f"   Score: {recipe['combined_score']:.3f}")
@@ -432,9 +380,9 @@ if __name__ == "__main__":
     test_search()
 ```
 
-### **Opción 3: Postman/Insomnia**
+### Postman / Insomnia
 
-Importa esta colección:
+Import a collection like:
 
 ```json
 {
@@ -472,38 +420,41 @@ Importa esta colección:
 
 ---
 
-## ⚡ **Tips de Performance**
+## Performance tips
 
-### **1. Limitar `top_k`**
+### Keep `top_k` small
+
 ```json
 {
   "query": "pasta",
-  "top_k": 5  // ✅ Más rápido que 50
+  "top_k": 5
 }
 ```
 
-### **2. Desactivar `include_full_recipe` si no lo necesitas**
+### Skip full recipe when not needed
+
 ```json
 {
   "query": "pasta",
-  "include_full_recipe": false  // ✅ No carga JSONs
+  "include_full_recipe": false
 }
 ```
 
-### **3. Usar filtros para reducir el espacio de búsqueda**
+### Narrow with filters
+
 ```json
 {
   "query": "pasta",
-  "category": "dinner",  // ✅ Solo busca en recetas de cena
+  "category": "dinner",
   "top_k": 5
 }
 ```
 
 ---
 
-## 🐛 **Errores Comunes**
+## Common errors
 
-### **Error 1: 422 Validation Error**
+### 422 — validation
 
 ```json
 {
@@ -517,27 +468,20 @@ Importa esta colección:
 }
 ```
 
-**Solución:** El campo `query` es obligatorio.
+**Fix:** `query` is required.
 
-### **Error 2: 500 Internal Server Error**
+### 500 — search failure
 
-```json
-{
-  "detail": "Search failed: [Errno 8] nodename nor servname provided, or not known"
-}
-```
-
-**Solución:** Verifica que Supabase esté configurado correctamente en `.env`.
+**Fix:** verify Supabase URL/key in `.env` and network reachability.
 
 ---
 
-## 📚 **Documentación Completa**
+## Full API docs
 
-Una vez que la API esté corriendo:
+When the server is running:
 
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
-- **OpenAPI JSON**: http://localhost:8000/openapi.json
+- Swagger: http://localhost:8000/docs  
+- ReDoc: http://localhost:8000/redoc  
+- OpenAPI JSON: http://localhost:8000/openapi.json  
 
-¡Todas las rutas, payloads y respuestas documentadas automáticamente! 🚀
-
+Routes, request bodies, and responses are generated from the FastAPI app.

@@ -1,4 +1,5 @@
 
+
 # Plan — Jamie Oliver AI: guardrails, moderation, and evaluation
 
 | Field | Value |
@@ -20,7 +21,7 @@ So the cooking assistant keeps working normally **before** NeuGate is deployed t
 
 | Layer | Role |
 |-------|------|
-| **NeuGate** (when enabled) | `POST /v1/evaluate` with `project_id` (logging) + **`policy`** (categorías + pivots desde Jamie) → `proceed` or `short_circuit` + `cached_response` |
+| **NeuGate** (when enabled) | `POST /v1/evaluate` with `project_id` (logging) + **`policy`** (categories + pivots from Jamie) → `proceed` or `short_circuit` + `cached_response` |
 | **Feature flag** | `NEUGATE_ENABLED` — bypass NeuGate entirely when `false` |
 | **Fail-safe on errors** | When enabled but NeuGate fails (network/timeout): log error, treat as `proceed` (same as flag off) |
 | **PrePrompt v1.2** | Model policy, refusals, tool boundaries (discovery + voice) |
@@ -37,7 +38,7 @@ User message
   → is_violation: false → SimpleBrain + tools → hybrid_recipe_search
 ```
 
-**NeuGate es agnóstico:** categorías, pivots y datasets viven en **Jamie** (`config/guardrails/`, `red_team_matrix.json`). Cada `POST /v1/evaluate` envía `policy` en el body; NeuGate no guarda config por consumidor en disco. Pipeline NeuGate: **fase 1** FAISS agéntico (genérico) → **fase 2** Red Team LLM (política enviada por Jamie). Ver `neuGate/docs/AGENTIC_SEMANTIC_PIPELINE.md`, PRD **§16**, `neuGate/docs/INTEGRATION.md`.
+**NeuGate is consumer-agnostic:** categories, pivots, and datasets live in **Jamie** (`config/guardrails/`, `red_team_matrix.json`). Each `POST /v1/evaluate` sends `policy` in the body; NeuGate does not persist per-consumer config on disk. NeuGate pipeline: **phase 1** agentic FAISS (generic) → **phase 2** Red Team LLM (policy sent by Jamie). See `neuGate/docs/AGENTIC_SEMANTIC_PIPELINE.md`, PRD **§16**, `neuGate/docs/INTEGRATION.md`.
 
 ### 1.1 Connectivity policy and feature flag (`NEUGATE_ENABLED`)
 
@@ -132,8 +133,8 @@ It is the client-provided matrix mapped to NeuGate `expected_category` values. U
 
 | PR | Scope | Repos |
 |----|--------|--------|
-| **PR-N** (NeuGate primero) | Fase agéntica FAISS + API `policy` en evaluate/test-runner; quitar dependencia de `config/projects/` por marca | `neuGate` |
-| **PR1** (Jamie) | `jamie-policy.json` + `guardrails/` client enviando `policy`; `NEUGATE_ENABLED`; chat_agent; tool guard; PrePrompt v1.2; `red_team_matrix.json` + certificación | `jamie-oliver-ai` |
+| **PR-N** (NeuGate first) | Agentic FAISS phase + `policy` API on evaluate/test-runner; remove dependency on per-brand `config/projects/` | `neuGate` |
+| **PR1** (Jamie) | `jamie-policy.json` + `guardrails/` client sending `policy`; `NEUGATE_ENABLED`; chat_agent; tool guard; PrePrompt v1.2; `red_team_matrix.json` + certification | `jamie-oliver-ai` |
 | **PR2** | PrePrompt v1.2 in `backend-voice`; optional output moderation before TTS (FR-5) | `jamie-oliver-ai` |
 | **PR3** | RAG Index 3 full doc + deploy checklist; expanded red-team dataset | `jamie-oliver-ai` |
 | **PR4** | Optional third-party moderation API (plan Phase 3) | TBD |
@@ -296,7 +297,7 @@ Create package `recipe_search_agent/guardrails/`:
 |------|----------------|
 | `config.py` | `GuardrailsSettings.from_env()` — parses `NEUGATE_ENABLED` boolean |
 | `policy_loader.py` | Load `config/guardrails/jamie-policy.json` (critical_blocks, soft_blocks, pivot_templates) |
-| `neugate_client.py` | Sync `httpx.post(..., json={project_id, message, policy})` — ver contrato en `neuGate/docs/AGENTIC_SEMANTIC_PIPELINE.md` §3 |
+| `neugate_client.py` | Sync `httpx.post(..., json={project_id, message, policy})` — see contract in `neuGate/docs/AGENTIC_SEMANTIC_PIPELINE.md` §3 |
 | `gate.py` | `evaluate_message_sync` / `evaluate_message` (async via `asyncio.to_thread`) → `GateResult` |
 | `session.py` | `ContextVar` `is_gate_blocked` / `set_gate_blocked` for tool guard |
 
@@ -332,16 +333,16 @@ if is_gate_blocked():
 
 Log metadata on block: `gate_category`, `gate_source` (`bypass` | `neugate` | `fail_safe`); no message body in prod.
 
-### 9.3 Jamie policy config (repo `jamie-oliver-ai` only — NeuGate agnóstico)
+### 9.3 Jamie policy config (repo `jamie-oliver-ai` only — NeuGate is consumer-agnostic)
 
-Add `apps/backend-search/config/guardrails/jamie-policy.json` (nombre ajustable) en **Jamie**, no en NeuGate:
+Add `apps/backend-search/config/guardrails/jamie-policy.json` (name adjustable) under **Jamie**, not NeuGate:
 
 - `pivot_templates`: PRD §12 (3 British pivots).
-- `categories.critical_blocks` / `soft_blocks`: todos los `expected_category` de §1.2 repartidos entre critical y soft (p. ej. `harmful_advice`, `illegal_activities`, `sensitive_or_controversial_topics`, …).
+- `categories.critical_blocks` / `soft_blocks`: all §1.2 `expected_category` values split between critical and soft (e.g. `harmful_advice`, `illegal_activities`, `sensitive_or_controversial_topics`, …).
 
-El cliente envía este objeto como `policy` en cada `POST /v1/evaluate` y en `POST /v1/test-runner` (mismo contrato agnóstico; ver NeuGate doc §3).
+The client sends this object as `policy` on each `POST /v1/evaluate` and `POST /v1/test-runner` (same consumer-agnostic contract; see NeuGate doc §3).
 
-**Dependencia de PR:** desplegar primero NeuGate con API `policy` + fase agéntica; luego Jamie con `neugate_client` actualizado.
+**PR dependency:** deploy NeuGate first with `policy` API + agentic phase; then Jamie with updated `neugate_client`.
 
 ### 9.4 Local certification script
 
@@ -364,13 +365,13 @@ El cliente envía este objeto como `policy` en cada `POST /v1/evaluate` y en `PO
 - Headers: `X-API-Key: {NEUGATE_API_KEY}` when set.
 - Assert `failed == 0` and `accuracy_rate == 1.0` (or document minimum threshold from PRD §15 for CI).
 - Skip with `pytest.skip` if NeuGate `/health/ready` is not reachable.
-- **Nota:** los 6 ataques agénticos (fase 1 FAISS) no están en `red_team_matrix.json`; se validan con tests propios de NeuGate. La certificación Jamie cubre la **fase 2** (matriz cliente) más el camino integrado vía `/v1/evaluate`.
+- **Note:** the 6 agentic attacks (phase 1 FAISS) are not in `red_team_matrix.json`; they are validated with NeuGate’s own tests. Jamie certification covers **phase 2** (client matrix) plus the integrated path via `/v1/evaluate`.
 
 **Run command (document in plan / backend README):**
 
 ```bash
 cd apps/backend-search
-# NeuGate must be running (índice agéntico + API policy)
+# NeuGate must be running (agentic index + policy API)
 export NEUGATE_ENABLED=true   # documents intent; certification hits NeuGate directly
 export NEUGATE_URL=http://localhost:8080
 export NEUGATE_API_KEY=...

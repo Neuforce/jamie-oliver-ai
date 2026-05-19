@@ -1,21 +1,21 @@
 #!/bin/bash
-# Script para verificar variables de entorno necesarias
+# Verify required environment variables
 
 set -euo pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_ROOT"
 
-# Colores
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-echo "🔍 Verificando variables de entorno..."
+echo "🔍 Checking environment variables..."
 echo ""
 
-# Variables requeridas para backend-voice
+# Required for backend-voice
 REQUIRED_VARS=(
     "OPENAI_API_KEY"
     "DEEPGRAM_API_KEY"
@@ -23,19 +23,19 @@ REQUIRED_VARS=(
     "ELEVENLABS_VOICE_ID"
 )
 
-# Variables requeridas para backend-search
+# Required for backend-search
 SEARCH_VARS=(
     "SUPABASE_URL"
     "SUPABASE_SERVICE_ROLE_KEY"
 )
 
-# Variables requeridas para frontend
+# Required for frontend
 FRONTEND_VARS=(
     "VITE_WS_URL"
     "VITE_API_BASE_URL"
 )
 
-# Verificar archivos .env
+# Check .env files
 ENV_FILES=(
     "$PROJECT_ROOT/.env"
     "$PROJECT_ROOT/infrastructure/.env"
@@ -44,91 +44,91 @@ ENV_FILES=(
     "$PROJECT_ROOT/apps/frontend/.env"
 )
 
-echo "📁 Archivos .env encontrados:"
+echo "📁 .env files:"
 for env_file in "${ENV_FILES[@]}"; do
     if [ -f "$env_file" ]; then
         echo "  ✅ $env_file"
     else
-        echo "  ❌ $env_file (no existe)"
+        echo "  ❌ $env_file (missing)"
     fi
 done
 echo ""
 
-# Verificar variables en el shell
-echo "🔐 Variables en el shell actual:"
+# Check variables in the shell
+echo "🔐 Variables in current shell:"
 SHELL_MISSING_VARS=()
 for var in "${REQUIRED_VARS[@]}"; do
     if [ -z "${!var:-}" ]; then
-        echo "  ❌ $var (no configurada)"
+        echo "  ❌ $var (not set)"
         SHELL_MISSING_VARS+=("$var")
     else
-        echo "  ✅ $var (configurada)"
+        echo "  ✅ $var (set)"
     fi
 done
 echo ""
 
-# Verificar variables en .env de la raíz (para docker-compose)
+# Check variables from root .env (for docker-compose)
 if [ -f "$PROJECT_ROOT/.env" ]; then
-    echo "📄 Variables en $PROJECT_ROOT/.env:"
+    echo "📄 Variables in $PROJECT_ROOT/.env:"
     for var in "${REQUIRED_VARS[@]}"; do
         if grep -q "^${var}=" "$PROJECT_ROOT/.env" 2>/dev/null; then
             VALUE=$(grep "^${var}=" "$PROJECT_ROOT/.env" | cut -d'=' -f2- | xargs)
             if [ -n "$VALUE" ]; then
-                echo "  ✅ $var (encontrada y tiene valor)"
+                echo "  ✅ $var (present, non-empty)"
             else
-                echo "  ⚠️  $var (encontrada pero vacía)"
+                echo "  ⚠️  $var (present but empty)"
             fi
         else
-            echo "  ❌ $var (no encontrada)"
+            echo "  ❌ $var (missing)"
         fi
     done
     echo ""
 fi
 
-# Verificar variables en apps/backend-voice/.env (importante para docker-compose)
+# Check apps/backend-voice/.env (needed for docker-compose)
 BACKEND_VOICE_ENV="$PROJECT_ROOT/apps/backend-voice/.env"
 if [ -f "$BACKEND_VOICE_ENV" ]; then
-    echo "📄 Variables en apps/backend-voice/.env:"
+    echo "📄 Variables in apps/backend-voice/.env:"
     ENV_MISSING_VARS=()
     for var in "${REQUIRED_VARS[@]}"; do
         if grep -q "^${var}=" "$BACKEND_VOICE_ENV" 2>/dev/null; then
             VALUE=$(grep "^${var}=" "$BACKEND_VOICE_ENV" | cut -d'=' -f2- | tr -d '"' | tr -d "'" | xargs)
             if [ -n "$VALUE" ]; then
-                echo "  ✅ $var (encontrada y tiene valor)"
+                echo "  ✅ $var (present, non-empty)"
             else
-                echo "  ⚠️  $var (encontrada pero vacía)"
+                echo "  ⚠️  $var (present but empty)"
                 ENV_MISSING_VARS+=("$var")
             fi
         else
-            echo "  ❌ $var (no encontrada)"
+            echo "  ❌ $var (missing)"
             ENV_MISSING_VARS+=("$var")
         fi
     done
     echo ""
     
-    # Si todas las variables están en backend-voice/.env, sugerir copiar a la raíz
+    # If everything is in backend-voice/.env, optionally copy to repo root
     if [ ${#ENV_MISSING_VARS[@]} -eq 0 ]; then
-        echo -e "${GREEN}✅ Todas las variables están configuradas en apps/backend-voice/.env${NC}"
+        echo -e "${GREEN}✅ All required keys are set in apps/backend-voice/.env${NC}"
         if [ ! -f "$PROJECT_ROOT/.env" ]; then
             echo ""
-            echo -e "${YELLOW}💡 Recomendación:${NC}"
-            echo "  docker-compose puede leer desde apps/backend-voice/.env (ya configurado)"
-            echo "  Pero también puedes crear un .env en la raíz para mayor compatibilidad:"
+            echo -e "${YELLOW}💡 Tip:${NC}"
+            echo "  docker-compose can read apps/backend-voice/.env"
+            echo "  You may also copy it to the repo root for convenience:"
             echo "  cp apps/backend-voice/.env .env"
         fi
     else
-        echo -e "${YELLOW}⚠️  Faltan algunas variables en apps/backend-voice/.env:${NC}"
+        echo -e "${YELLOW}⚠️  Some keys are missing in apps/backend-voice/.env:${NC}"
         printf '  - %s\n' "${ENV_MISSING_VARS[@]}"
     fi
     echo ""
 fi
 
-# Combinar variables faltantes (shell o .env de raíz)
+# Merge missing vars (shell vs root .env)
 MISSING_VARS=("${SHELL_MISSING_VARS[@]}")
 if [ -f "$PROJECT_ROOT/.env" ]; then
     for var in "${REQUIRED_VARS[@]}"; do
         if ! grep -q "^${var}=" "$PROJECT_ROOT/.env" 2>/dev/null; then
-            # Solo agregar si no está ya en MISSING_VARS
+            # Add only if not already listed
             if [[ ! " ${MISSING_VARS[@]} " =~ " ${var} " ]]; then
                 MISSING_VARS+=("$var")
             fi
@@ -136,26 +136,26 @@ if [ -f "$PROJECT_ROOT/.env" ]; then
     done
 fi
 
-# Resumen
+# Summary
 if [ ${#MISSING_VARS[@]} -eq 0 ]; then
-    echo -e "${GREEN}✅ Todas las variables requeridas están configuradas${NC}"
+    echo -e "${GREEN}✅ All required variables are set${NC}"
     exit 0
 else
-    echo -e "${RED}❌ Faltan las siguientes variables:${NC}"
+    echo -e "${RED}❌ Missing variables:${NC}"
     printf '  - %s\n' "${MISSING_VARS[@]}"
     echo ""
-    echo -e "${YELLOW}💡 Solución:${NC}"
+    echo -e "${YELLOW}💡 How to fix:${NC}"
     echo ""
-    echo "1. Crea un archivo .env en la raíz del proyecto:"
+    echo "1. Create a .env at the repo root:"
     echo "   $PROJECT_ROOT/.env"
     echo ""
-    echo "2. O exporta las variables en tu shell antes de ejecutar docker-compose:"
+    echo "2. Or export variables in your shell before docker-compose:"
     echo "   export DEEPGRAM_API_KEY=your-key"
     echo "   export OPENAI_API_KEY=your-key"
     echo "   export ELEVENLABS_API_KEY=your-key"
     echo "   export ELEVENLABS_VOICE_ID=your-voice-id"
     echo ""
-    echo "3. O copia el .env desde apps/backend-voice/ a la raíz:"
+    echo "3. Or copy .env from apps/backend-voice/ to the repo root:"
     echo "   cp apps/backend-voice/.env .env"
     echo ""
     exit 1

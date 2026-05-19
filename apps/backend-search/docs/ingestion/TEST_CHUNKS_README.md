@@ -1,80 +1,77 @@
-# Test Chunks - Script de Visualización
+# Test chunks — visualization script
 
-Script para visualizar los chunks inteligentes generados por Llama a partir de PDFs de recetas, sin guardarlos en la base de datos.
+Inspect Llama-generated “intelligent” chunks from recipe PDFs **without** writing to the database.
 
-## Requisitos Previos
+## Prerequisites
 
-1. **Ollama instalado y corriendo**
+1. **Ollama running**
    ```bash
-   # Verificar si Ollama está corriendo
    curl http://localhost:11434/api/tags
-   
-   # Si no está corriendo, iniciarlo
+
+   # If not running:
    ollama serve
    ```
 
-2. **Modelo Llama3.1 instalado**
+2. **Llama 3.1 pulled**
    ```bash
    ollama pull llama3.1
    ```
 
-3. **Entorno virtual activado con dependencias instaladas**
+3. **Virtualenv with deps**
    ```bash
    cd jamie-oliver-ai
    source .venv/bin/activate
    ```
 
-4. **Paciencia** ⏱️
-   - El procesamiento con Llama puede tardar **2-5 minutos** por PDF
-   - Ollama está configurado con timeout de 5 minutos
-   - El primer request después de iniciar Ollama puede ser más lento
+4. **Patience**
+   - Llama may take **2–5 minutes** per PDF  
+   - Client timeout is 5 minutes  
+   - First call after `ollama serve` can be slower  
 
-## Uso
+## Usage
 
-### Procesar PDF por defecto (happy-fish-pie.pdf)
+### Default PDF (`happy-fish-pie.pdf`)
 ```bash
 python tests/test_chunks.py
 ```
 
-### Procesar un PDF específico
+### Specific PDF
 ```bash
 python tests/test_chunks.py --pdf data/processed_pdfs/beef-quince-stew-beef-recipes-jamie-oliver.pdf
 ```
 
-### Usar un modelo diferente
+### Different model
 ```bash
 python tests/test_chunks.py --model llama3.2
 ```
 
-### Ver logs detallados
+### Verbose logs
 ```bash
 python tests/test_chunks.py --verbose
 ```
 
-### Ver ayuda completa
+### Help
 ```bash
 python tests/test_chunks.py --help
 ```
 
-## Salida del Script
+## Script output
 
-El script muestra:
+1. **Pipeline steps** with progress markers  
+2. **Per chunk:**
+   - Index (e.g. Chunk 1/5)  
+   - Search intent  
+   - Character count  
+   - SHA256 prefix  
+   - LLM analysis JSON  
+   - Full chunk text (wrapped ~80 cols)  
 
-1. **Proceso de extracción**: Pasos del pipeline con indicadores de progreso
-2. **Chunks individuales**: Cada chunk con:
-   - Número de chunk (ej: Chunk 1/5)
-   - Search intent (intención de búsqueda)
-   - Tamaño en caracteres
-   - Hash SHA256 (primeros 16 caracteres)
-   - LLM Analysis (metadata generada por Llama)
-   - Texto completo del chunk (formateado a 80 caracteres por línea)
+3. **Aggregate stats:**
+   - Total chunks  
+   - Avg / min / max size  
+   - Distinct search intents  
 
-3. **Estadísticas agregadas**:
-   - Total de chunks generados
-   - Tamaño promedio/mínimo/máximo
-   - Lista de search intents únicos
-
-## Ejemplo de Salida
+## Sample output
 
 ```
 ============================================================
@@ -110,7 +107,7 @@ Text:
   and salmon in a creamy sauce, topped with golden mashed potatoes.
   Perfect for weeknight dinners.
 
-[... más chunks ...]
+[... more chunks ...]
 
 ============================================================
 STATISTICS
@@ -128,71 +125,55 @@ Search Intents (5):
   5. creamy baked fish dishes
 ```
 
-## Características
+## Features
 
-- ✅ **Sin persistencia**: No guarda en Supabase (usa `no_db=True`)
-- ✅ **Formato legible**: Colores ANSI para terminal
-- ✅ **Estadísticas útiles**: Métricas agregadas de los chunks
-- ✅ **Flexible**: Acepta cualquier PDF de receta
-- ✅ **Verbose mode**: Para debugging con `--verbose`
+- ✅ **No DB writes** (`no_db=True`)  
+- ✅ **Readable terminal output** (ANSI colors)  
+- ✅ **Useful stats**  
+- ✅ **Any recipe PDF** PyMuPDF can open  
+- ✅ **`--verbose`** for debugging  
 
-## Notas
+## Notes
 
-- El script usa el pipeline completo de Llama pero NO guarda los chunks en la base de datos
-- Los chunks se generan en memoria y se muestran en pantalla solamente
-- Ideal para validar cómo Llama está interpretando y chunkeando las recetas
-- Los PDFs deben estar en formato compatible con PyMuPDF
+- Runs the full Llama pipeline; chunks exist only in memory / stdout  
+- Good for validating parsing and chunking  
+- PDFs must be readable by the extraction stack  
 
 ## Troubleshooting
 
-### Error: "Ollama not running" o "timed out"
+### “Ollama not running” / timeout
 ```bash
-# 1. Verificar que Ollama está corriendo
 ps aux | grep ollama
-
-# 2. Si no está corriendo, iniciarlo
 ollama serve
-
-# 3. Verificar que responde
 curl http://localhost:11434/api/tags
 
-# 4. Si está muy lento, reiniciar Ollama
+# If stuck, restart
 pkill ollama
 ollama serve
 ```
 
-**Nota sobre timeouts**: Si Ollama está tardando mucho:
-- Verificar uso de CPU/memoria (Llama usa mucha RAM)
-- Probar con un PDF más pequeño primero (ej: `tomato-mussel-pasta.pdf`)
-- Aumentar el timeout en `recipe_pdf_agent_llama/ollama_client.py` (actualmente 300s)
-- Considerar usar un modelo más pequeño como `llama3.2`
+**Timeouts:** check CPU/RAM; try a smaller PDF (e.g. `tomato-mussel-pasta.pdf`); raise timeout in `recipe_pdf_agent_llama/ollama_client.py` (default 300s); try `llama3.2`.
 
-### Error: "Model llama3.1 not found"
+### “Model llama3.1 not found”
 ```bash
-# Descargar el modelo
 ollama pull llama3.1
-
-# O usar un modelo más pequeño/rápido
+# or
 ollama pull llama3.2
-python tests/test_chunks.py --model llama3.2 --pdf [tu_pdf]
+python tests/test_chunks.py --model llama3.2 --pdf path/to/file.pdf
 ```
 
-### Error: "PDF file not found"
+### “PDF file not found”
 ```bash
-# Verificar que el PDF existe
 ls -la data/processed_pdfs/
 ```
 
-### Error: "ModuleNotFoundError"
+### `ModuleNotFoundError`
 ```bash
-# Asegurarse de que el venv está activado
 source .venv/bin/activate
 ```
 
-### El script se "congela" en Step 2
-Esto es **normal** - Llama está procesando el texto. Puede tardar 2-5 minutos.
-Para ver progreso, ejecutar con `--verbose`:
+### Hangs on Step 2
+Expected — Llama is working; allow 2–5 minutes. Use `--verbose`:
 ```bash
-python tests/test_chunks.py --pdf [tu_pdf] --verbose
+python tests/test_chunks.py --pdf path/to/file.pdf --verbose
 ```
-

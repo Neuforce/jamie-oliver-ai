@@ -24,20 +24,20 @@ This guide explains how to deploy the FastAPI backend (`jo-sem-search`) on Verce
      - Click "Continue"
    - Vercel will detect `vercel.json` and `api/index.py`
 
-3. **Set Environment Variables** (antes de hacer Deploy):
-   - Haz clic en **"Environment Variables"** o **"Add Environment Variable"**
-   - Agrega:
+3. **Set environment variables** (before deploying):
+   - Click **Environment Variables** / **Add Environment Variable**
+   - Add:
      ```
      SUPABASE_URL = https://your-project.supabase.co
      SUPABASE_SERVICE_ROLE_KEY = your-service-role-key
      PYTHON_VERSION = 3.11
      ```
-   - Selecciona los ambientes: Production, Preview, Development
+   - Select environments: Production, Preview, Development
 
 4. **Deploy**:
-   - Haz clic en **"Deploy"**
-   - O push a `main` branch (auto-deploy si está configurado)
-   - O usa `vercel` command para deploy manual
+   - Click **Deploy**
+   - Or push to `main` (if auto-deploy is enabled)
+   - Or run `vercel` for a manual deploy
 
 ## Project Structure
 

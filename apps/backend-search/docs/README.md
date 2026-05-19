@@ -1,41 +1,41 @@
-# Documentación - Backend Search
+# Backend Search documentation
 
-Documentación completa del backend-search organizada por categorías.
+Backend-search documentation grouped by topic.
 
-## Estructura
+## Layout
 
 ### 📡 [API](./api/)
-Documentación sobre el uso de la API de búsqueda:
-- `api_examples.md` - Ejemplos de uso de la API
-- `SEARCH_API_USAGE.md` - Guía de uso de la API de búsqueda
+Search API usage:
+- `api_examples.md` — API request/response examples
+- `SEARCH_API_USAGE.md` — API usage guide
 
 ### 🚀 [Deployment](./deployment/)
-Guías de despliegue y configuración:
-- `DEPLOYMENT.md` - Guía general de despliegue
-- `VERCEL_SETUP.md` - Configuración en Vercel
-- `GITHUB_ACTIONS.md` - Configuración de CI/CD con GitHub Actions
-- `RECIPE_CRON.md` - Configuración de cron jobs para recetas
+Deploy and configure:
+- `DEPLOYMENT.md` — General deployment guide
+- `VERCEL_SETUP.md` — Vercel configuration
+- `GITHUB_ACTIONS.md` — CI/CD with GitHub Actions
+- `RECIPE_CRON.md` — Recipe cron jobs
 
 ### 📥 [Ingestion](./ingestion/)
-Documentación sobre el proceso de ingesta de recetas:
-- `INGESTION.md` - Guía general de ingesta
-- `CHUNKING_SEMANTIC.md` - Documentación sobre chunking semántico
-- `PDF_Recipe_Agent.md` - Documentación del agente de PDFs
-- `PDF_Recipe_Agent_Llama.md` - Documentación del agente de PDFs con Llama
-- `TEST_CHUNKS_README.md` - Guía de testing de chunks
+Recipe ingestion:
+- `INGESTION.md` — Ingestion overview
+- `CHUNKING_SEMANTIC.md` — Semantic chunking
+- `PDF_Recipe_Agent.md` — PDF agent
+- `PDF_Recipe_Agent_Llama.md` — PDF agent with Llama
+- `TEST_CHUNKS_README.md` — Chunk testing guide
 
 ### 🎨 [Design](./design/)
-Documentación de diseño y arquitectura:
-- `SEARCH_AGENT_DESIGN.md` - Diseño del agente de búsqueda
+Architecture and design:
+- `SEARCH_AGENT_DESIGN.md` — Search agent design
 
 ### ⚡ [Performance](./performance/)
-Notas sobre rendimiento y optimización:
-- `OLLAMA_PERFORMANCE_NOTES.md` - Notas sobre rendimiento de Ollama
+Performance notes:
+- `OLLAMA_PERFORMANCE_NOTES.md` — Ollama performance
 
 ### 📚 [Examples](./examples/)
-Ejemplos y casos de uso:
-- `threshold_examples.md` - Ejemplos de thresholds y configuración
+Examples:
+- `threshold_examples.md` — Similarity threshold examples
 
-## Documentación Principal
+## Project overview
 
-Para información general del proyecto, ver [README.md](../README.md) en la raíz del proyecto.
+For the main project README, see [README.md](../README.md) at the backend-search root.

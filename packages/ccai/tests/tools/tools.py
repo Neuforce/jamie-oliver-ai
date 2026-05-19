@@ -34,12 +34,12 @@ import asyncio
 #     ciudad: str,
 # ) -> str:
 #     """
-#     Obtiene el clima actual para una ciudad específica.
+#     Return (stub) current weather for a city.
 
-#     :param ciudad: Ciudad para la que se desea obtener el clima.
-#     :return: Información del clima.
+#     :param ciudad: City name.
+#     :return: Weather description string.
 #     """
-#     return f"El clima en {ciudad} para es soleado con una temperatura de 25 grados."
+#     return f"The weather in {ciudad} is sunny with a temperature of 25 degrees."
 
 
 # @register_function(function_manager)
@@ -47,12 +47,12 @@ import asyncio
 #     ciudad: str,
 # ) -> str:
 #     """
-#     Obtiene el numero de habitantes de una ciudad específica.
+#     Return (stub) population for a city.
 
-#     :param ciudad: Ciudad para la que se desea obtener la población
-#     :return: Información de la población.
+#     :param ciudad: City name.
+#     :return: Population description string.
 #     """
-#     return f"La población de {ciudad} es de 3 millones de habitantes."
+#     return f"The population of {ciudad} is about 3 million."
 
 
 LOCAL_TZ = ZoneInfo("America/Vancouver")  # Victoria, BC
@@ -65,17 +65,17 @@ async def get_available_time_slots(
     meeting_type: str = "15 minutes meeting"
 ) -> str:
     """
-    Retrieves up-to-date free slots from Calendly for a given Event Type.
+    Retrieves up-to-date free slots from Calendly for a given event type.
 
-    :param start_date: Fecha inicio (YYYY-MM-DD, inclusive, >= hoy).
-    :param end_date:   Fecha fin    (YYYY-MM-DD, inclusive, > start_date).
-    :param meeting_type: Alias humano del tipo de reunión
+    :param start_date: Start date (YYYY-MM-DD, inclusive, >= today).
+    :param end_date: End date (YYYY-MM-DD, inclusive, > start_date).
+    :param meeting_type: Human-readable event type alias
                          Literal["15 minutes meeting","30 Minute Meeting"].
 
-    :raises ValueError: Formato de fecha inválido, rango >30 días
-                        o meeting_type desconocido.
-    :raises ConnectionError: Problemas de red o autenticación con Calendly.
-    :return: Cadena con los 10 primeros horarios libres o mensaje de error.
+    :raises ValueError: Invalid date format, range >30 days,
+                        or unknown meeting_type.
+    :raises ConnectionError: Network or Calendly authentication issues.
+    :return: String with the first 10 free slots or an error message.
     """
     import os, asyncio, aiohttp
     from datetime import datetime, timedelta
@@ -85,7 +85,7 @@ async def get_available_time_slots(
         start_dt = datetime.strptime(start_date, "%Y-%m-%d").replace(tzinfo=LOCAL_TZ)
         end_dt   = datetime.strptime(end_date,   "%Y-%m-%d").replace(tzinfo=LOCAL_TZ)
     except ValueError:
-        raise ValueError("Use YYYY-MM-DD para start_date y end_date")
+        raise ValueError("Use YYYY-MM-DD for start_date and end_date")
 
 
     # 1. “Start today ⇒ now + 5 min” rule (still in local zone)
@@ -97,15 +97,15 @@ async def get_available_time_slots(
     logger.info(f"debuggeo end_dt {end_dt}")
 
     if end_dt <= start_dt:
-        raise ValueError("end_date debe ser posterior a start_date")
+        raise ValueError("end_date must be after start_date")
     if (end_dt - start_dt).days > 30:
-        raise ValueError("Rango máximo admitido: 30 días")
+        raise ValueError("Maximum allowed range is 30 days")
     if start_dt.date() < datetime.utcnow().date():
-        raise ValueError("start_date no puede estar en el pasado")
+        raise ValueError("start_date cannot be in the past")
 
     token = os.getenv("CALENDLY_ACCESS_TOKEN")
     if not token:
-        raise ConnectionError("Variable CALENDLY_ACCESS_TOKEN no definida")
+        raise ConnectionError("CALENDLY_ACCESS_TOKEN is not set")
 
     headers = {"Authorization": f"Bearer {token}"}
 
@@ -116,7 +116,7 @@ async def get_available_time_slots(
             if r.status != 200:
                 error = await r.text()
                 logger.info(f"debuggeo event_types fallo {r.status} {error}")
-                raise ConnectionError(f"event_types fallo {r.status} {error}")
+                raise ConnectionError(f"event_types failed {r.status} {error}")
             data = await r.json()
 
         
@@ -127,7 +127,10 @@ async def get_available_time_slots(
                 break
 
         if not event_type_uri:
-            raise ValueError(f"meeting_type '{meeting_type}' no encontrado. Los tipos disponibles son: {', '.join([et['name'] for et in data['collection']])}")
+            raise ValueError(
+                f"meeting_type '{meeting_type}' not found. Available types: "
+                f"{', '.join([et['name'] for et in data['collection']])}"
+            )
 
 
         # ---------- 2. Loop over ≤7-day slices ----------
@@ -147,7 +150,7 @@ async def get_available_time_slots(
                 if r.status != 200:
                     error = await r.text()
                     logger.info(f"debuggeo available_times fallo {r.status} {error}")
-                    raise ConnectionError(f"available_times fallo {r.status}")
+                    raise ConnectionError(f"available_times failed {r.status}")
                 times = await r.json()
 
             for item in times.get("collection", []):
@@ -156,8 +159,10 @@ async def get_available_time_slots(
 
     # ---------- 3. Format & return ----------
     if not slots:
-        return ("No hay disponibilidad entre "
-                f"{start_dt:%d/%m/%Y} y {end_dt:%d/%m/%Y}.")
+        return (
+            "No availability between "
+            f"{start_dt:%m/%d/%Y} and {end_dt:%m/%d/%Y}."
+        )
 
     # Sort, dedupe, limit
     unique_slots = sorted(set(slots))
@@ -168,8 +173,8 @@ async def get_available_time_slots(
     ][:10]
 
     extra = len(unique_slots) - len(readable)
-    tail  = f" ({extra} más…)" if extra else ""
-    return "Horarios libres: " + ", ".join(readable) + tail
+    tail  = f" ({extra} more…)" if extra else ""
+    return "Available times: " + ", ".join(readable) + tail
 
 
 
@@ -185,44 +190,44 @@ async def notify_meeting_request(
     details: str = None
 ) -> str:
     """
-    Envía una alerta a con la solicitud de reunión a las personas indicadas.
+    Send an email alert with the meeting request to the configured recipients.
 
-    :param requester_name: Nombre de quien solicita la reunión.
-    :param requester_email: Correo del solicitante.
-    :param meeting_topic: Tema o tipo de reunión (texto libre).
-    :param preferred_slot_local: Fecha-hora preferida **en zona America/Vancouver**
-                                 formato 'YYYY-MM-DD HH:MM'.
-    :param details: Información adicional opcional proporcionada por el solicitante.
+    :param requester_name: Name of the person requesting the meeting.
+    :param requester_email: Requester email address.
+    :param meeting_topic: Meeting topic or type (free text).
+    :param preferred_slot_local: Preferred local date-time in **America/Vancouver**
+                                 as 'YYYY-MM-DD HH:MM'.
+    :param details: Optional notes from the requester.
 
-    :return: Cadena indicando éxito o razón de fallo.
+    :return: Success message or raises on failure.
     """
     api_key = os.getenv("MAILJET_API_KEY")
     api_secret = os.getenv("MAILJET_SECRET")
     if not api_key or not api_secret:
-        raise ConnectionError("MAILJET_API_KEY/MAILJET_SECRET no configuradas")
+        raise ConnectionError("MAILJET_API_KEY/MAILJET_SECRET are not configured")
 
     # 1· Build the Mailjet payload ------------------------------------------------
     msg_datetime = datetime.now(ZoneInfo("America/Vancouver")).strftime("%Y-%m-%d %H:%M")
     html = f"""
-    <h3>Nueva solicitud de reunión</h3>
-    <p><strong>Solicitante:</strong> {requester_name} ({requester_email})</p>
-    <p><strong>Tema:</strong> {meeting_topic}</p>
-    <p><strong>Horario preferido:</strong> {preferred_slot_local} (America/Vancouver)</p>
-    <p><strong>Detalles adicionales:</strong><br/>{details or '–'}</p>
+    <h3>New meeting request</h3>
+    <p><strong>Requester:</strong> {requester_name} ({requester_email})</p>
+    <p><strong>Topic:</strong> {meeting_topic}</p>
+    <p><strong>Preferred time:</strong> {preferred_slot_local} (America/Vancouver)</p>
+    <p><strong>Additional details:</strong><br/>{details or '–'}</p>
     <hr>
-    <em>Enviado automáticamente el {msg_datetime}</em>
+    <em>Sent automatically on {msg_datetime}</em>
     """
 
     data = {
         "Messages": [{
             "From": {"Email": "santiago.m@open-works.co", "Name": "Santi (bot)"},
             "To":   [{"Email": ALEXIS_EMAIL, "Name": ALEXIS_NAME}],
-            "Subject": f"Solicitud de reunión: {meeting_topic}",
+            "Subject": f"Meeting request: {meeting_topic}",
             "TextPart": (
-                f"Solicitante: {requester_name} ({requester_email})\n"
-                f"Tema: {meeting_topic}\n"
-                f"Horario preferido: {preferred_slot_local} (America/Vancouver)\n"
-                f"Detalles: {details or '–'}"
+                f"Requester: {requester_name} ({requester_email})\n"
+                f"Topic: {meeting_topic}\n"
+                f"Preferred time: {preferred_slot_local} (America/Vancouver)\n"
+                f"Details: {details or '–'}"
             ),
             "HTMLPart": html
         }]
@@ -238,7 +243,7 @@ async def notify_meeting_request(
 
     if response.status_code == 200:
         logger.info("Mailjet message sent OK: %s", response.json())
-        return "Notificación enviada correctamente a Alexis."
+        return "Notification sent successfully to Alexis."
     else:
         logger.error("Mailjet error %s: %s", response.status_code, response.text)
         raise ConnectionError(f"Mailjet error {response.status_code}: {response.text}")
