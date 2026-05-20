@@ -28,6 +28,7 @@ export interface MyTabCardData {
 export interface TabNavProps {
   activeTab: TabView;
   onTabChange: (tab: TabView) => void;
+  onLogoClick?: () => void;
   onCloseChat?: () => void;
   myTabCard?: MyTabCardData;
   onOpenMyTab?: () => void;
@@ -48,6 +49,7 @@ export interface TabNavProps {
 export function TabNav({
   activeTab,
   onTabChange,
+  onLogoClick,
   onCloseChat,
   myTabCard,
   onOpenMyTab,
@@ -63,6 +65,7 @@ export function TabNav({
         activeTab={activeTab}
         onOpenMenu={() => setIsMenuOpen(true)}
         onTabChange={onTabChange}
+        onLogoClick={onLogoClick}
       />
       <AppMenu
         open={isMenuOpen}

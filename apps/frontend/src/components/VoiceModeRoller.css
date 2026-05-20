@@ -161,7 +161,7 @@
   margin-bottom: 0;
   z-index: 3;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .voice-roller__card[data-role='top']:active {
