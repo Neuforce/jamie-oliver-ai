@@ -13,6 +13,8 @@ elif command -v python3.12 >/dev/null 2>&1; then
 else
   PY=(python3)
 fi
+# DiscoveryChatAgent tests import ccai (monorepo package; not a backend-search wheel dep).
+"${PY[@]}" -m pip install -q -e "${ROOT}/packages/ccai"
 "${PY[@]}" -m pytest \
   tests/test_guardrails_gate.py \
   tests/test_guardrails_inline_fallback.py \
