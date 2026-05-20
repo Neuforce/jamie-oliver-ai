@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Script para actualizar las recetas JSON existentes con tags, course, y cuisine.
+Update existing recipe JSON files with tags, course, and cuisine.
 
-Lee los JSONs de data/recipes/ (monorepo root) y agrega los campos inferidos.
+Reads JSON files from data/recipes/ (monorepo root) and adds inferred fields.
 """
 
 import json
@@ -18,8 +18,8 @@ logger = logging.getLogger(__name__)
 
 def infer_recipe_metadata_simple(joav0_doc: dict[str, Any]) -> dict[str, Any]:
     """
-    Versión simplificada de infer_recipe_metadata que solo usa heurísticas.
-    No requiere LLM ni dependencias externas.
+    Simplified version of infer_recipe_metadata using heuristics only.
+    Does not require an LLM or external dependencies.
     """
     recipe_meta = joav0_doc.get("recipe", {})
     title = recipe_meta.get("title", "")
@@ -111,8 +111,8 @@ def infer_recipe_metadata_simple(joav0_doc: dict[str, Any]) -> dict[str, Any]:
 
 def infer_step_on_enter_simple(step: dict[str, Any]) -> list[dict[str, str]]:
     """
-    Versión simplificada de infer_step_on_enter que solo usa heurísticas.
-    No requiere LLM ni dependencias externas.
+    Simplified version of infer_step_on_enter using heuristics only.
+    Does not require an LLM or external dependencies.
     """
     descr = step.get("descr", "")
     instructions = step.get("instructions", "")
@@ -183,31 +183,31 @@ def infer_step_on_enter_simple(step: dict[str, Any]) -> list[dict[str, str]]:
 
 def update_recipe_metadata(json_path: Path, cfg: Any, dry_run: bool = False) -> bool:
     """
-    Actualiza un archivo JSON de receta con tags, course, y cuisine.
-    
+    Update a recipe JSON file with tags, course, and cuisine.
+
     Args:
-        json_path: Ruta al archivo JSON
-        cfg: Configuración del agente
-        dry_run: Si True, solo muestra lo que haría sin guardar
-    
+        json_path: Path to the JSON file
+        cfg: Agent configuration (unused in this script)
+        dry_run: If True, only log changes without saving
+
     Returns:
-        True si fue exitoso, False si hubo error
+        True on success, False on error
     """
     try:
-        # Leer JSON
+        # Read JSON
         with json_path.open("r", encoding="utf-8") as f:
             recipe_doc = json.load(f)
         
         recipe_id = recipe_doc.get("recipe", {}).get("id", json_path.stem)
         title = recipe_doc.get("recipe", {}).get("title", recipe_id)
         
-        # Verificar si ya tiene los campos de metadata
+        # Check if metadata fields are already present
         recipe_meta = recipe_doc.get("recipe", {})
         has_tags = "tags" in recipe_meta and recipe_meta.get("tags")
         has_course = "course" in recipe_meta and recipe_meta.get("course")
         has_cuisine = "cuisine" in recipe_meta and recipe_meta.get("cuisine")
         
-        # Verificar si los steps tienen on_enter
+        # Check whether steps have on_enter
         steps = recipe_doc.get("steps", [])
         steps_need_on_enter = sum(1 for step in steps if "on_enter" not in step or not step.get("on_enter"))
         
@@ -217,15 +217,15 @@ def update_recipe_metadata(json_path: Path, cfg: Any, dry_run: bool = False) -> 
         
         logger.info(f"📝 Processing: {title} ({recipe_id})")
         
-        # Inferir metadata
+        # Infer metadata
         try:
             metadata = infer_recipe_metadata_simple(joav0_doc=recipe_doc)
             
-            # Actualizar recipe object
+            # Update recipe object
             if "recipe" not in recipe_doc:
                 recipe_doc["recipe"] = {}
             
-            # Solo actualizar campos que no existen o están vacíos
+            # Only update missing or empty fields
             if not has_tags:
                 recipe_doc["recipe"]["tags"] = metadata.get("tags", [])
             if not has_course and metadata.get("course"):
@@ -252,7 +252,7 @@ def update_recipe_metadata(json_path: Path, cfg: Any, dry_run: bool = False) -> 
                 logger.info(f"  ✅ Cuisine: {recipe_doc['recipe'].get('cuisine', 'N/A')}")
             
             if not dry_run:
-                # Guardar JSON actualizado
+                # Save updated JSON
                 with json_path.open("w", encoding="utf-8") as f:
                     json.dump(recipe_doc, f, ensure_ascii=False, indent=2)
                 logger.info(f"  💾 Saved: {json_path.name}")

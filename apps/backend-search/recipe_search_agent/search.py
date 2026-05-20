@@ -1,10 +1,10 @@
 """
-Recipe Search Agent - Búsqueda híbrida de recetas.
+Recipe Search Agent - hybrid recipe search.
 
-Combina:
-- Vector similarity (embeddings semánticos)
-- Filtros exactos (category, mood, complexity, cost)
-- Full-text search (ingredientes)
+Combines:
+- Vector similarity (semantic embeddings)
+- Exact filters (category, mood, complexity, cost)
+- Full-text search (ingredients)
 """
 
 import json
@@ -21,18 +21,18 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SearchFilters:
-    """Filtros opcionales para la búsqueda."""
+    """Optional search filters."""
     
     category: Optional[str] = None  # breakfast, lunch, dinner, dessert
     mood: Optional[str] = None      # comfort, light, festive
     complexity: Optional[str] = None  # easy, medium, hard
     cost: Optional[str] = None       # budget, moderate, premium
-    ingredients_query: Optional[str] = None  # "tomato basil" para FTS
+    ingredients_query: Optional[str] = None  # "tomato basil" for FTS
 
 
 @dataclass
 class RecipeMatch:
-    """Resultado de búsqueda con score y contexto."""
+    """Search result with score and context."""
     
     recipe_id: str
     title: str
@@ -54,9 +54,9 @@ class RecipeMatch:
 
 class RecipeSearchAgent:
     """
-    Agente de búsqueda semántica de recetas.
-    
-    Usa embeddings + filtros + FTS para encontrar las recetas más relevantes.
+    Semantic recipe search agent.
+
+    Uses embeddings + filters + FTS to find the most relevant recipes.
     """
     
     def __init__(
@@ -67,23 +67,23 @@ class RecipeSearchAgent:
     ):
         """
         Args:
-            supabase_client: Cliente de Supabase ya autenticado
-            embedding_model: Modelo de embeddings (debe coincidir con el usado en ingestion)
-            project_root: Ruta raíz del proyecto (para cargar JSONs de recetas)
+            supabase_client: Authenticated Supabase client
+            embedding_model: Embedding model (must match ingestion)
+            project_root: Project root path (to load recipe JSON files)
         """
         self.client = supabase_client
         self.embedding_model = embedding_model
         # Point to monorepo root data/recipes/ directory
         if project_root:
-            # Si se pasa project_root, debe ser la raíz del monorepo
+            # When project_root is passed, it must be the monorepo root
             self.project_root = Path(project_root) / "data" / "recipes"
         else:
-            # Fallback: calcular desde la ubicación de este archivo
+            # Fallback: derive from this file location
             # Desde search.py: parents[0] = recipe_search_agent/, parents[1] = apps/backend-search/, parents[2] = apps/, parents[3] = jamie-oliver-ai/
             self.project_root = Path(__file__).resolve().parents[3] / "data" / "recipes"
         
     def _generate_embedding(self, text: str) -> List[float]:
-        """Genera embedding para un texto."""
+        """Generate an embedding for text."""
         from fastembed import TextEmbedding
         
         model = TextEmbedding(model_name=self.embedding_model)
@@ -91,13 +91,13 @@ class RecipeSearchAgent:
         return embeddings[0].tolist()
     
     def _load_recipe_json(self, file_path: str) -> Optional[Dict[str, Any]]:
-        """Carga el JSON completo de una receta desde file_path."""
+        """Load full recipe JSON from file_path."""
         try:
-            # file_path puede ser relativo (ej: "pesto-pasta.json") o absoluto
+            # file_path may be relative (e.g. "pesto-pasta.json") or absolute
             if Path(file_path).is_absolute():
                 json_file = Path(file_path)
             else:
-                # Si es relativo, buscar en project_root (data/recipes/)
+                # If relative, resolve under project_root (data/recipes/)
                 json_file = self.project_root / file_path
             if not json_file.exists():
                 logger.warning(f"Recipe JSON not found: {json_file}")
@@ -268,7 +268,7 @@ class RecipeSearchAgent:
         return scored[:top_k]
     
     def _get_matching_chunks(self, recipe_id: str, query_embedding: List[float], top_k: int = 3) -> List[Dict[str, Any]]:
-        """Obtiene los chunks más relevantes para una receta."""
+        """Get the most relevant chunks for a recipe."""
         try:
             response = self.client.rpc(
                 "match_recipe_chunks",
@@ -291,31 +291,31 @@ class RecipeSearchAgent:
         ingredient_rank: float,
         filters: Optional[SearchFilters] = None
     ) -> str:
-        """Genera explicación de por qué la receta coincide."""
+        """Generate an explanation for why the recipe matched."""
         explanations = []
         
-        # Score de similitud semántica
+        # Semantic similarity score
         if similarity_score > 0.7:
-            explanations.append(f"Alta similitud semántica ({similarity_score:.2f})")
+            explanations.append(f"High semantic similarity ({similarity_score:.2f})")
         elif similarity_score > 0.5:
-            explanations.append(f"Buena similitud semántica ({similarity_score:.2f})")
+            explanations.append(f"Good semantic similarity ({similarity_score:.2f})")
         
-        # Match de ingredientes
+        # Ingredient match
         if ingredient_rank > 0:
-            explanations.append("Ingredientes relevantes")
+            explanations.append("Relevant ingredients")
         
-        # Filtros aplicados
+        # Applied filters
         if filters:
             if filters.category and recipe.get("category") == filters.category:
-                explanations.append(f"Categoría: {filters.category}")
+                explanations.append(f"Category: {filters.category}")
             if filters.mood and recipe.get("mood") == filters.mood:
                 explanations.append(f"Mood: {filters.mood}")
             if filters.complexity and recipe.get("complexity") == filters.complexity:
-                explanations.append(f"Dificultad: {filters.complexity}")
+                explanations.append(f"Complexity: {filters.complexity}")
             if filters.cost and recipe.get("cost") == filters.cost:
-                explanations.append(f"Costo: {filters.cost}")
+                explanations.append(f"Cost: {filters.cost}")
         
-        return " | ".join(explanations) if explanations else "Match encontrado"
+        return " | ".join(explanations) if explanations else "Match found"
 
     _LEXICAL_QUERY_STOPWORDS = frozenset(
         {
@@ -473,30 +473,30 @@ class RecipeSearchAgent:
         similarity_threshold: float = 0.3,
     ) -> List[RecipeMatch]:
         """
-        Búsqueda híbrida de recetas.
+        Hybrid recipe search.
         
         Args:
-            query: Query en lenguaje natural (ej: "quick vegetarian pasta")
-            filters: Filtros opcionales (category, mood, etc.)
-            top_k: Número de resultados a retornar
-            include_full_recipe: Si True, carga el JSON completo de cada receta
-            include_chunks: Si True, incluye los chunks más relevantes de cada receta
-            similarity_threshold: Umbral mínimo de similitud (0-1)
+            query: Natural-language query (e.g. "quick vegetarian pasta")
+            filters: Optional filters (category, mood, etc.)
+            top_k: Number of results to return
+            include_full_recipe: If True, load full JSON for each recipe
+            include_chunks: If True, include the most relevant chunks per recipe
+            similarity_threshold: Minimum similarity threshold (0-1)
             
         Returns:
-            Lista de RecipeMatch ordenados por relevancia (combined_score desc)
+            List of RecipeMatch sorted by relevance (combined_score desc)
         """
         effective_filters = filters or SearchFilters()
 
         try:
-            # 1. Generar embedding del query
+            # 1. Generate query embedding
             logger.info(f"Searching for: {query}")
             query_embedding = self._generate_embedding(query)
             
-            # 2. Preparar filtros
+            # 2. Prepare filters
             filters = effective_filters
             
-            # 3. Llamar función de búsqueda híbrida en Supabase
+            # 3. Call hybrid search RPC in Supabase
             try:
                 response = self.client.rpc(
                     "hybrid_recipe_search",
@@ -580,10 +580,10 @@ class RecipeSearchAgent:
                     include_full_recipe,
                 )
             
-            # 4. Enriquecer resultados
+            # 4. Enrich results
             results = []
             for row in results_data:
-                # Obtener chunks relevantes
+                # Fetch relevant chunks
                 matching_chunks = []
                 if include_chunks:
                     matching_chunks = self._get_matching_chunks(
@@ -592,12 +592,12 @@ class RecipeSearchAgent:
                         top_k=3
                     )
                 
-                # Cargar JSON completo
+                # Load full JSON
                 full_recipe = None
                 if include_full_recipe:
                     full_recipe = self._load_recipe_json(row["file_path"])
                 
-                # Generar explicación
+                # Build match explanation
                 match_explanation = self._generate_match_explanation(
                     recipe=row,
                     similarity_score=row["similarity_score"],
@@ -605,7 +605,7 @@ class RecipeSearchAgent:
                     filters=filters
                 )
                 
-                # Crear RecipeMatch
+                # Build RecipeMatch
                 match = RecipeMatch(
                     recipe_id=row["recipe_id"],
                     title=row["title"],

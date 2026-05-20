@@ -1,23 +1,20 @@
-# Recipe Cron (GitHub Actions)
+# Recipe cron (GitHub Actions)
 
-## Flujo
-- Fuente de PDFs: `data/recipes` en el repo.
-- Procesado: `python -m recipe_pdf_agent_llama.cli run data/recipes`.
-- Salida: upsert a Supabase (tablas configuradas en el código).
+## Flow
+- PDF source: `data/recipes` in the repo.
+- Processing: `python -m recipe_pdf_agent_llama.cli run data/recipes`.
+- Output: upsert to Supabase (tables configured in code).
 
-## Secrets requeridos (GitHub)
+## Required GitHub secrets
 - `SUPABASE_URL`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- (Opcional) `OLLAMA_URL` si usas un endpoint LLM remoto en vez de Ollama local.
+- (Optional) `OLLAMA_URL` if you use a remote LLM instead of local Ollama.
 
-## Limitación
-GitHub Actions no dispone de Ollama local. Para que el cron funcione:
-- Usa un LLM remoto (adaptar cliente/vars a tu proveedor), **o**
-- Ejecuta el cron en otra infraestructura que tenga Ollama disponible.
+## Limitation
+GitHub Actions runners do not ship with local Ollama. For this cron to work end-to-end:
+- Use a remote LLM (adjust client / env for your provider), **or**
+- Run the job on infra where Ollama is available.
 
-## Desencadenar
-- Automático: cada 30 minutos (config en `.github/workflows/recipe-cron.yml`).
-- Manual: desde Actions > recipe-cron > Run workflow.
-
-
-
+## Triggers
+- Automatic: every 30 minutes (see `.github/workflows/recipe-cron.yml`).
+- Manual: Actions → recipe-cron → Run workflow.

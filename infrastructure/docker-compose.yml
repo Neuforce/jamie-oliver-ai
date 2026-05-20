@@ -8,8 +8,8 @@ services:
     container_name: jamie-backend-voice
     ports:
       - "8100:8100"
-    # Cargar variables de entorno desde apps/backend-voice/.env
-    # También se pueden pasar desde el shell o desde .env en la raíz
+    # Load environment variables from apps/backend-voice/.env
+    # You can also pass them from the shell or from a root .env file
     env_file:
       - ../apps/backend-voice/.env
     environment:

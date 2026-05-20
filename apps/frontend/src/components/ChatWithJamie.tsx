@@ -317,7 +317,7 @@ export function ChatWithJamie({ onClose, onRecipeClick, initialMessage, onRecipe
         include_full_recipe: true,
         top_k: 10,
         include_chunks: false,
-        similarity_threshold: 0.7, // Umbral mínimo de similitud (0.0-1.0). Solo retorna resultados con score >= threshold
+        similarity_threshold: 0.7, // Minimum similarity (0.0–1.0); only returns results with score >= threshold
       });
 
       setThinkingStatus(null);

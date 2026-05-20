@@ -1,14 +1,13 @@
 # Demos
 
-Este directorio contiene scripts de demostración del backend-search.
+Demo scripts for backend-search.
 
-## Archivos
+## Files
 
-- **`demo_semantic_search.py`**: Demo interactivo de búsqueda semántica de recetas
+- **`demo_semantic_search.py`**: Semantic recipe search demo (Supabase + agent)
 
-## Ejecutar Demos
+## Run
 
 ```bash
-# Demo de búsqueda semántica
 python demos/demo_semantic_search.py
 ```

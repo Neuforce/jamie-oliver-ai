@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script para iniciar el backend-search en modo desarrollo
+# Start backend-search in development mode
 
 set -e
 
@@ -27,9 +27,9 @@ PYTHON_MAJOR=$($PYTHON_CMD -c "import sys; print(sys.version_info.major)" 2>/dev
 PYTHON_MINOR=$($PYTHON_CMD -c "import sys; print(sys.version_info.minor)" 2>/dev/null)
 
 if [ "$PYTHON_MAJOR" -eq 3 -a "$PYTHON_MINOR" -ge 14 ]; then
-    echo "⚠️  Advertencia: Python 3.14+ no es compatible con onnxruntime"
-    echo "   Por favor usa Python 3.11 o 3.12"
-    echo "   Versión detectada: $PYTHON_VERSION"
+    echo "⚠️  Warning: Python 3.14+ is not compatible with onnxruntime"
+    echo "   Use Python 3.11 or 3.12"
+    echo "   Detected: $PYTHON_VERSION"
     exit 1
 fi
 
@@ -43,18 +43,18 @@ fi
 if [ -d ".venv" ]; then
     source .venv/bin/activate
     VENV_PYTHON="$(pwd)/.venv/bin/python"
-    # Verificar versión en el venv
+    # Check Python version inside the venv
     VENV_PYTHON_VERSION=$(python --version 2>&1)
     VENV_PYTHON_MAJOR=$(python -c "import sys; print(sys.version_info.major)" 2>/dev/null || echo "0")
     VENV_PYTHON_MINOR=$(python -c "import sys; print(sys.version_info.minor)" 2>/dev/null || echo "0")
 
-    # Si el venv usa Python incompatible, recrearlo
+    # Recreate venv if Python version is incompatible
     if [ "$VENV_PYTHON_MAJOR" -eq 3 ] && ([ "$VENV_PYTHON_MINOR" -ge 14 ] || [ "$VENV_PYTHON_MINOR" -lt 10 ]); then
-        echo "⚠️  Virtual environment usa Python incompatible ($VENV_PYTHON_VERSION). Recreando..."
+        echo "⚠️  Virtual environment uses incompatible Python ($VENV_PYTHON_VERSION). Recreating..."
         rm -rf .venv
         $PYTHON_CMD -m venv .venv
         source .venv/bin/activate
-        echo "✅ Virtual environment recreado"
+        echo "✅ Virtual environment recreated"
     fi
 elif [ -d "venv" ]; then
     source venv/bin/activate
@@ -77,7 +77,7 @@ if [ ! -f ".deps-installed" ] || ! python -c "import uvicorn" 2>/dev/null || ! p
     # Install ccai package (required for chat agent)
     # Note: pyaudio is optional and may fail on macOS, but backend-search doesn't need it
     # First-time "pip install -e ccai" can take several minutes (build isolation / deps).
-    echo "   Installing ccai package (puede tardar varios minutos la primera vez)..."
+    echo "   Installing ccai package (first run can take several minutes)..."
     cd ../../packages/ccai
 
     # Try to install portaudio first (required for pyaudio on macOS)

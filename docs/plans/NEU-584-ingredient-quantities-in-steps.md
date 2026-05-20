@@ -1,65 +1,65 @@
 ---
-title: Cantidades de ingredientes en los pasos (NEU-584)
+title: Ingredient quantities in steps (NEU-584)
 linear: NEU-584
 repo: jamie-oliver-ai
-overview: Enriquecer el texto de voz/UI (`on_enter.say`) con cantidades tomadas de la lista estructurada de ingredientes del mismo JSON, de modo que el usuario no tenga que volver a la lista (p. ej. "Crack in 1 egg" en lugar de solo "egg").
+overview: Enrich voice/UI text (`on_enter.say`) with quantities from the structured ingredient list in the same JSON so the user does not have to jump back to the list (e.g. “Crack in 1 egg” instead of only “egg”).
 todos:
   - id: extend-recipe-ingredients
-    content: Añadir `ingredients` a `Recipe` y cargarlos en `Recipe.from_dict`
+    content: Add `ingredients` to `Recipe` and load them in `Recipe.from_dict`
   - id: implement-enrichment
-    content: Crear `enrich_say_with_ingredients` + `format_ingredient_phrase` con tests (banana-bread + caso edge)
+    content: Add `enrich_say_with_ingredients` + `format_ingredient_phrase` with tests (banana-bread + edge case)
   - id: wire-engine-main
-    content: Usar enriquecimiento en `RecipeEngine` (MESSAGE) y `_get_first_step_say_text` en main.py
+    content: Use enrichment in `RecipeEngine` (MESSAGE) and `_get_first_step_say_text` in main.py
   - id: prompt-nudge
-    content: "Opcional: una línea en `prompts.py` para parafraseo con cantidades"
+    content: "Optional: one line in `prompts.py` for paraphrasing with quantities"
 ---
 
-# Plan: cantidades de ingredientes en los pasos (NEU-584)
+# Plan: ingredient quantities in steps (NEU-584)
 
-## Contexto técnico (estado actual)
+## Technical context (current state)
 
-- Cada receta en [`apps/frontend/public/recipes-json/*.json`](../../apps/frontend/public/recipes-json/) tiene `ingredients` (objetos con `name`, `quantity`, `unit`) y `steps[].on_enter[].say` (guion TTS).
-- Al arrancar un paso, [`RecipeEngine.start_step`](../../apps/backend-voice/src/recipe_engine/engine.py) emite `EventType.MESSAGE` con `action["say"]` tal cual; el frontend recibe `recipe_message` ([`event_handler.py`](../../apps/backend-voice/src/services/event_handler.py)).
-- El modelo [`Recipe`](../../apps/backend-voice/src/recipe_engine/models.py) **no** carga hoy los `ingredients` del payload; solo metadatos + pasos.
-- El agente ya puede listar cantidades con `get_ingredients()` ([`recipe_context_tools.py`](../../apps/backend-voice/src/tools/recipe_context_tools.py)), pero eso no cambia el guion automático del paso.
+- Each recipe in [`apps/frontend/public/recipes-json/*.json`](../../apps/frontend/public/recipes-json/) has `ingredients` (objects with `name`, `quantity`, `unit`) and `steps[].on_enter[].say` (TTS script).
+- When a step starts, [`RecipeEngine.start_step`](../../apps/backend-voice/src/recipe_engine/engine.py) emits `EventType.MESSAGE` with `action["say"]` unchanged; the frontend receives `recipe_message` ([`event_handler.py`](../../apps/backend-voice/src/services/event_handler.py)).
+- The [`Recipe`](../../apps/backend-voice/src/recipe_engine/models.py) model does **not** yet load `ingredients` from the payload—only metadata + steps.
+- The agent can already list quantities via `get_ingredients()` ([`recipe_context_tools.py`](../../apps/backend-voice/src/tools/recipe_context_tools.py)), but that does not change the automatic per-step script.
 
-## Enfoque recomendado: enriquecimiento en runtime (backend-voice)
+## Recommended approach: runtime enrichment (backend-voice)
 
-**Objetivo:** una sola función que, dado `say` + lista de ingredientes del payload, devuelva un texto con cantidades donde el guion menciona el ingrediente sin número.
+**Goal:** one function that, given `say` + the payload’s ingredient list, returns text with quantities where the script names an ingredient without a number.
 
-**Por qué aquí y no solo editar JSON a mano:** cualquier receta nueva o actualizada se beneficia sin reescribir 50+ archivos; se puede afinar la heurística en un solo sitio.
+**Why here instead of hand-editing JSON:** every new or updated recipe benefits without rewriting 50+ files; heuristics live in one place.
 
-### 1. Cargar ingredientes en el modelo de receta
+### 1. Load ingredients on the recipe model
 
-- Extender [`Recipe`](../../apps/backend-voice/src/recipe_engine/models.py) con algo como `ingredients: List[Dict[str, Any]] = field(default_factory=list)` y rellenarlo en `Recipe.from_dict` desde `data.get("ingredients", [])`.
-- Verificar que [`Recipe.from_dict(payload)`](../../apps/backend-voice/src/tools/recipe_tools.py) (y tests) sigan funcionando con payloads que no traen `ingredients` (lista vacía).
+- Extend [`Recipe`](../../apps/backend-voice/src/recipe_engine/models.py) with e.g. `ingredients: List[Dict[str, Any]] = field(default_factory=list)` and populate it in `Recipe.from_dict` from `data.get("ingredients", [])`.
+- Ensure [`Recipe.from_dict(payload)`](../../apps/backend-voice/src/tools/recipe_tools.py) (and tests) still work when `ingredients` is missing (empty list).
 
-### 2. Módulo de enriquecimiento + pruebas
+### 2. Enrichment module + tests
 
-- Nuevo módulo p. ej. [`apps/backend-voice/src/recipe_engine/ingredient_say_enrichment.py`](../../apps/backend-voice/src/recipe_engine/ingredient_say_enrichment.py) (o `src/utils/`) con:
-  - **`format_ingredient_phrase(ing)`**: misma lógica de legibilidad que ya usa `get_ingredients` (cantidad + unidad + nombre), para construir frases cortas ("150 g sugar", "1 egg", "3 ripe bananas").
-  - **`enrich_say_with_ingredients(say: str, ingredients: list) -> str`**: para cada ingrediente, detectar menciones del **nombre base** en `say` (límites de palabra, evitar falsos positivos tipo "egg" en palabras compuestas si aplica) y, si la frase ya no lleva cantidad cerca, sustituir o anteponer la forma con cantidad.
-- **Tests unitarios** en [`apps/backend-voice/tests/`](../../apps/backend-voice/tests/) usando un trozo real de [`banana-bread.json`](../../apps/frontend/public/recipes-json/banana-bread.json) (paso `stir_sugar_egg_vanilla`: de "sugar, egg, and vanilla" a algo que incluya cantidades coherentes con el JSON).
+- New module e.g. [`apps/backend-voice/src/recipe_engine/ingredient_say_enrichment.py`](../../apps/backend-voice/src/recipe_engine/ingredient_say_enrichment.py) (or `src/utils/`) with:
+  - **`format_ingredient_phrase(ing)`**: same readability rules as `get_ingredients` (qty + unit + name) for short phrases (“150 g sugar”, “1 egg”, “3 ripe bananas”).
+  - **`enrich_say_with_ingredients(say: str, ingredients: list) -> str`**: for each ingredient, detect **base name** mentions in `say` (word boundaries; avoid false positives like “egg” inside compounds if needed) and, if there is no quantity nearby, substitute or prefix the quantified form.
+- **Unit tests** under [`apps/backend-voice/tests/`](../../apps/backend-voice/tests/) using a slice of [`banana-bread.json`](../../apps/frontend/public/recipes-json/banana-bread.json) (step `stir_sugar_egg_vanilla`: from “sugar, egg, and vanilla” to text that includes quantities consistent with the JSON).
 
-### 3. Aplicar en el motor (fuente de verdad del audio/UI)
+### 3. Apply in the engine (source of truth for audio/UI)
 
-- En [`engine.py`](../../apps/backend-voice/src/recipe_engine/engine.py), antes de emitir `MESSAGE`, sustituir `action["say"]` por `enrich_say_with_ingredients(say, self.recipe.ingredients)` (si hay ingredientes).
+- In [`engine.py`](../../apps/backend-voice/src/recipe_engine/engine.py), before emitting `MESSAGE`, replace `action["say"]` with `enrich_say_with_ingredients(say, self.recipe.ingredients)` when ingredients exist.
 
-### 4. Primer paso / intro en `main.py`
+### 4. First step / intro in `main.py`
 
-- [`_get_first_step_say_text`](../../apps/backend-voice/src/main.py) usa el mismo `on_enter.say`: aplicar el mismo enriquecimiento pasando `recipe_payload.get("ingredients", [])` para que la primera instrucción sea consistente.
+- [`_get_first_step_say_text`](../../apps/backend-voice/src/main.py) uses the same `on_enter.say`: apply the same enrichment with `recipe_payload.get("ingredients", [])` so the first cue stays consistent.
 
-### 5. Ajuste opcional del system prompt
+### 5. Optional system prompt tweak
 
-- Una línea en [`prompts.py`](../../apps/backend-voice/src/config/prompts.py): cuando el modelo **parafrasee** un paso (no lea literal el `recipe_message`), debe **priorizar cantidades** alineadas con `get_ingredients` / datos de la receta. Evita desalineación si el LLM habla por su cuenta.
+- One line in [`prompts.py`](../../apps/backend-voice/src/config/prompts.py): when the model **paraphrases** a step (instead of reading `recipe_message` literally), it should **prioritize quantities** aligned with `get_ingredients` / recipe data—reduces drift when the LLM improvises.
 
-## Qué queda fuera del MVP (explícito)
+## Explicitly out of MVP
 
-- **Mapeo explícito paso→ingredientes** (`ingredient_ids` por step): más preciso para recetas complejas, pero implica cambio de esquema y más trabajo de autoría; reservar si las heurísticas fallan en casos reales.
-- **Re-escritura masiva de JSON**: opcional como mejora de calidad editorial después, no requisito para el comportamiento automático.
+- **Explicit step→ingredient mapping** (`ingredient_ids` per step): more precise for complex recipes but needs schema + authoring work; consider if heuristics fail in production.
+- **Bulk JSON rewrite:** optional editorial follow-up, not required for automatic behavior.
 
-## Criterios de aceptación
+## Acceptance criteria
 
-- Al iniciar un paso cuyo `say` menciona ingredientes también listados con cantidad, el texto emitido en `recipe_message` incluye esas cantidades de forma natural (validado con al menos banana bread + un segundo ejemplo en tests).
-- Recetas sin `ingredients` o con lista vacía: comportamiento idéntico al actual (sin errores).
-- Tests de regresión del motor / `Recipe.from_dict` pasan.
+- For a step whose `say` mentions ingredients that also appear with quantities in the list, the `recipe_message` text includes those quantities naturally (validated with at least banana bread + a second example in tests).
+- Recipes with missing or empty `ingredients`: same behavior as today (no errors).
+- Engine / `Recipe.from_dict` regression tests pass.

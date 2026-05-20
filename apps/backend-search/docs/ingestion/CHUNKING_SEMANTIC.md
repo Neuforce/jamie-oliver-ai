@@ -1,8 +1,8 @@
-# Chunking Semántico Inteligente Multi-Vista
+# Multi-view semantic chunking
 
-Sistema híbrido de generación de chunks para búsqueda semántica de recetas, optimizado para múltiples tipos de queries.
+Hybrid chunk generation for recipe semantic search, tuned for many query styles.
 
-## Arquitectura
+## Architecture
 
 ```
 JOAv0 Document → Semantic Analyzer → Multi-View Generator → Base Chunks
@@ -12,113 +12,92 @@ JOAv0 Document → Semantic Analyzer → Multi-View Generator → Base Chunks
                                                     [Optional] LLM Classifier → Enriched Chunks
 ```
 
-## Fases Implementadas
+## Implemented phases
 
-### ✅ Fase 1: Multi-View Generator (Activa por defecto)
+### Phase 1: Multi-view generator (on by default)
 
-Genera chunks desde múltiples perspectivas semánticas:
+Chunks from several semantic angles:
 
-**Vistas generadas:**
-1. **Metadata**: Título + dificultad + tiempo + porciones
-2. **Ingredientes**: 
-   - Todos los principales
-   - Individuales (top 5)
-   - Hero ingredient
-3. **Tiempo**: Exacto y por bucket (quick, under 30min, etc.)
-4. **Dificultad**: Easy, Not Too Tricky, etc.
-5. **Técnicas**: bake, grill, no-cook, chop, etc.
-6. **Ocasiones**: christmas, party, weeknight, bbq, etc.
-7. **Moods**: quick, fresh, comfort, light, festive, etc.
-8. **Dietary**: vegetarian, vegan, gluten-free, etc.
-9. **Natural Language**: Combinaciones inteligentes
+**Views:**
+1. **Metadata** — title + difficulty + time + servings  
+2. **Ingredients** — all main; top 5 singles; hero ingredient  
+3. **Time** — exact + bucket (quick, under 30 min, …)  
+4. **Difficulty** — Easy, Not Too Tricky, …  
+5. **Techniques** — bake, grill, no-cook, chop, …  
+6. **Occasions** — christmas, party, weeknight, bbq, …  
+7. **Moods** — quick, fresh, comfort, light, festive, …  
+8. **Dietary** — vegetarian, vegan, gluten-free, …  
+9. **Natural language** — blended phrases  
 
-**Resultado:**
-- 15-25 chunks por receta
-- Generación instantánea (<0.01s)
-- Sin dependencias de LLM o embeddings
+**Result:** ~15–25 chunks per recipe, &lt;0.01s, no LLM/embeddings required.
 
-### ✅ Fase 2: Semantic Density (Opcional, desactivada)
+### Phase 2: Semantic density (optional, off)
 
-Optimiza tamaño de chunks basándose en similitud semántica:
-- Usa embeddings (fastembed) para calcular similitud
-- Agrupa chunks muy similares (>85% similarity)
-- Tamaño variable según densidad semántica
+Merge near-duplicate chunks using embedding similarity:
+- Uses fastembed similarity  
+- Merges very similar chunks (&gt;85%)  
+- Variable chunk size by semantic density  
 
-**Para activar:**
-```python
-# En .env o config
+**Enable:**
+```bash
 RECIPE_LLAMA_ENABLE_DENSITY=true
 RECIPE_LLAMA_DENSITY_THRESHOLD=0.85
 ```
 
-**Resultado:**
-- Reduce chunks redundantes (ej: 22 → 15 chunks)
-- Chunks más densos y significativos
-- Añade ~0.5s de procesamiento
+**Effect:** fewer redundant chunks (e.g. 22 → 15), ~+0.5s.
 
-### ✅ Fase 3: LLM Light Enrichment (Opcional, desactivada)
+### Phase 3: LLM light enrichment (optional, off)
 
-Enriquece chunks con clasificación LLM:
-- Timeout corto (10s por chunk)
-- Solo clasificación, NO generación
-- Añade metadata rica
+LLM classification (not generation) per chunk:
+- Short timeout (~10s/chunk)  
+- Richer tags  
 
-**Para activar:**
-```python
-# En .env o config
+**Enable:**
+```bash
 RECIPE_LLAMA_ENABLE_LLM_ENRICHMENT=true
 RECIPE_LLAMA_ENRICHMENT_MODEL=llama3.1
 RECIPE_LLAMA_ENRICHMENT_TIMEOUT=10
 ```
 
-**Metadata añadida:**
-- `dietary_tags`: ["vegetarian", "vegan", "gluten-free"]
-- `cuisine`: "italian", "asian", "international"
-- `meal_type`: ["lunch", "dinner", "side"]
-- `season`: "winter", "summer", "spring", "fall"
-- `occasion`: ["christmas", "party", "weeknight"]
-- `techniques`: ["bake", "grill", "no-cook"]
+**Extra fields:** `dietary_tags`, `cuisine`, `meal_type`, `season`, `occasion`, `techniques`.
 
-**Resultado:**
-- Metadata más precisa y rica
-- Añade ~2-5min para 22 chunks (con llama3.1)
+**Cost:** ~2–5 min for ~22 chunks on llama3.1.
 
-## Tipos de Chunks Generados
+## Chunk types
 
-| Vista | Ejemplo | Query Match |
-|-------|---------|-------------|
-| Metadata | "Christmas salad - Not Too Tricky - PT20M - 8 servings" | "ensalada fácil de 20 minutos" |
-| Ingredient (all) | "Christmas salad with walnuts, pear, apple, chicory" | "ensalada con nueces y pera" |
-| Ingredient (single) | "walnuts in Christmas salad" | "recetas con nueces" |
-| Ingredient (hero) | "Walnuts salad" | "ensalada de nueces" |
-| Time (exact) | "20-minute Christmas salad" | "receta de 20 minutos" |
-| Time (bucket) | "quick 20-minute Christmas salad" | "receta rápida" |
-| Difficulty | "not too tricky Christmas salad" | "receta fácil" |
-| Technique | "no-cook Christmas salad" | "sin cocción" |
-| Occasion | "christmas Christmas salad" | "ensalada de navidad" |
-| Mood | "fresh Christmas salad" | "comida fresca" |
-| Dietary | "vegetarian Christmas salad" | "recetas vegetarianas" |
-| Natural | "quick festive with walnuts" | "rápida festiva con nueces" |
+| View | Example chunk text | Example user query |
+|------|-------------------|--------------------|
+| Metadata | "Christmas salad - Not Too Tricky - PT20M - 8 servings" | "easy 20 minute salad" |
+| Ingredient (all) | "Christmas salad with walnuts, pear, apple, chicory" | "salad with walnuts and pear" |
+| Ingredient (single) | "walnuts in Christmas salad" | "recipes with walnuts" |
+| Ingredient (hero) | "Walnuts salad" | "walnut salad" |
+| Time (exact) | "20-minute Christmas salad" | "20 minute recipe" |
+| Time (bucket) | "quick 20-minute Christmas salad" | "quick recipe" |
+| Difficulty | "not too tricky Christmas salad" | "easy recipe" |
+| Technique | "no-cook Christmas salad" | "no cook" |
+| Occasion | "christmas Christmas salad" | "christmas salad" |
+| Mood | "fresh Christmas salad" | "fresh food" |
+| Dietary | "vegetarian Christmas salad" | "vegetarian recipes" |
+| Natural | "quick festive with walnuts" | "quick festive with walnuts" |
 
-## Configuración
+## Configuration
 
-### Variables de Entorno
+### Environment
 
 ```bash
-# Fase 1: Multi-View (siempre activa)
-# No requiere configuración
+# Phase 1: always on — no flags
 
-# Fase 2: Density Optimization
-RECIPE_LLAMA_ENABLE_DENSITY=false  # true para activar
-RECIPE_LLAMA_DENSITY_THRESHOLD=0.85  # 0.0-1.0
+# Phase 2
+RECIPE_LLAMA_ENABLE_DENSITY=false
+RECIPE_LLAMA_DENSITY_THRESHOLD=0.85
 
-# Fase 3: LLM Enrichment
-RECIPE_LLAMA_ENABLE_LLM_ENRICHMENT=false  # true para activar
+# Phase 3
+RECIPE_LLAMA_ENABLE_LLM_ENRICHMENT=false
 RECIPE_LLAMA_ENRICHMENT_MODEL=llama3.1
-RECIPE_LLAMA_ENRICHMENT_TIMEOUT=10  # segundos por chunk
+RECIPE_LLAMA_ENRICHMENT_TIMEOUT=10
 ```
 
-### En Código
+### In code
 
 ```python
 from recipe_pdf_agent_llama.config import LlamaAgentConfig
@@ -132,9 +111,9 @@ cfg = LlamaAgentConfig(
 )
 ```
 
-## Uso
+## Usage
 
-### Básico (solo Multi-View)
+### Basic (multi-view only)
 
 ```python
 from recipe_pdf_agent_llama.chunker import build_intelligent_chunks
@@ -142,97 +121,66 @@ from recipe_pdf_agent_llama.chunker import build_intelligent_chunks
 chunks = build_intelligent_chunks(
     cfg=cfg,
     recipe_id="christmas-salad",
-    clean_text="",  # No usado
+    clean_text="",  # unused
     joav0_doc=joav0_doc,
 )
-
-# Resultado: 15-25 chunks en <0.01s
+# ~15–25 chunks in <0.01s
 ```
 
-### Con Density Optimization
+### With density
 
 ```python
 cfg.enable_density_optimization = True
-
-chunks = build_intelligent_chunks(
-    cfg=cfg,
-    recipe_id="christmas-salad",
-    clean_text="",
-    joav0_doc=joav0_doc,
-)
-
-# Resultado: 12-18 chunks en ~0.5s
+chunks = build_intelligent_chunks(...)
+# ~12–18 chunks in ~0.5s
 ```
 
-### Con LLM Enrichment
+### With LLM enrichment
 
 ```python
 cfg.enable_llm_enrichment = True
-
-chunks = build_intelligent_chunks(
-    cfg=cfg,
-    recipe_id="christmas-salad",
-    clean_text="",
-    joav0_doc=joav0_doc,
-)
-
-# Resultado: chunks con metadata rica en ~2-5min
+chunks = build_intelligent_chunks(...)
+# richer metadata, ~2–5 min
 ```
 
-## Testing
+## Tests
 
 ```bash
-# Test básico
 python tests/test_chunker.py
-
-# Ver chunks generados
 python tests/test_chunker.py | grep "Chunk"
-
-# Con modelo específico
 python tests/test_chunker.py --model llama3.1
 ```
 
 ## Performance
 
-| Configuración | Chunks | Tiempo | Calidad |
-|--------------|--------|--------|---------|
-| Solo Multi-View | 22 | <0.01s | ⭐⭐⭐⭐ |
-| + Density | 15 | ~0.5s | ⭐⭐⭐⭐⭐ |
-| + LLM Enrich | 15 | ~3min | ⭐⭐⭐⭐⭐ |
+| Setup | Chunks | Time | Quality |
+|-------|--------|------|---------|
+| Multi-view only | 22 | <0.01s | ⭐⭐⭐⭐ |
+| + density | 15 | ~0.5s | ⭐⭐⭐⭐⭐ |
+| + LLM enrich | 15 | ~3 min | ⭐⭐⭐⭐⭐ |
 
-## Archivos del Sistema
+## Files
 
 ```
 recipe_pdf_agent_llama/
-├── chunker.py                  # Orchestrator principal
-├── chunker_semantic.py         # Analizador semántico
-├── chunker_multiview.py        # Generador multi-vista
-├── chunker_deterministic.py    # Wrapper simplificado
-├── chunker_density.py          # Optimizador por densidad
-└── chunker_enrich.py           # Enriquecedor LLM
+├── chunker.py                  # orchestrator
+├── chunker_semantic.py         # semantic analyzer
+├── chunker_multiview.py        # multi-view generator
+├── chunker_deterministic.py    # thin wrapper
+├── chunker_density.py          # density merge
+└── chunker_enrich.py           # LLM enrichment
 ```
 
-## Ventajas
+## Why use it
 
-1. **Mejor Recall**: Múltiples vistas → más formas de encontrar recetas
-2. **Queries Naturales**: Optimizado para lenguaje natural
-3. **Flexible**: Activa solo las fases que necesites
-4. **Rápido**: Multi-view es instantáneo
-5. **Escalable**: Sin timeouts, sin bloqueos
+1. **Recall** — many phrasings hit the index  
+2. **Natural queries** — aligned with how people search  
+3. **Toggle cost** — enable only phases you need  
+4. **Fast default** — multi-view is instant  
+5. **Scalable** — no blocking LLM in the default path  
 
-## Recomendaciones
+## Recommendations
 
-### Para Desarrollo/Testing
-- Solo Fase 1 (Multi-View)
-- Más rápido, sin dependencias extras
-
-### Para Producción sin LLM
-- Fase 1 + Fase 2 (Multi-View + Density)
-- Chunks optimizados, aún rápido (~0.5s)
-
-### Para Máxima Calidad
-- Fase 1 + Fase 2 + Fase 3 (Completo)
-- Metadata muy rica, pero más lento (~3min por receta)
-- Recomendable ejecutar offline/batch
-
-
+- **Dev / test:** phase 1 only  
+- **Prod without LLM:** phases 1 + 2 (~0.5s)  
+- **Max quality:** all phases — run offline/batch (~3 min/recipe)  

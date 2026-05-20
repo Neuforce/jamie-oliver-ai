@@ -1,51 +1,49 @@
 #!/usr/bin/env python3
 """
-Explicación: ¿Cómo captura el sistema la INTENCIÓN del usuario?
+How does the system capture user INTENT?
 
-Respuesta corta: NO la mide explícitamente. Es una propiedad EMERGENTE
-del entrenamiento del modelo de embeddings en millones de textos.
+Short answer: it does not measure intent explicitly. Intent EMERGES from
+embedding model training on millions of texts.
 """
 
 import numpy as np
 from fastembed import TextEmbedding
 
-print("="*80)
-print("¿Cómo Captura el Sistema la INTENCIÓN del Usuario?")
-print("="*80)
+print("=" * 80)
+print("How Does the System Capture User INTENT?")
+print("=" * 80)
 
-# Cargar el modelo de embeddings
 model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
 
 # ============================================================================
-# PARTE 1: El modelo NO tiene lógica explícita de "intención"
+# PART 1: No explicit "intent" logic
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 1: El Modelo NO Tiene Lógica Explícita de 'Intención'")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 1: The Model Has No Explicit 'Intent' Rules")
+print("=" * 80)
 
 print("""
-❌ El modelo NO hace esto:
+❌ The model does NOT do:
    if "hungry" in query and "NOW" in query:
        intention = "quick_meal"
-   
-❌ NO tiene reglas if/else para detectar intenciones
 
-✅ En cambio, el modelo fue ENTRENADO en millones de textos donde:
-   • Vio "I'm hungry" junto a "quick", "fast", "easy"
-   • Vio "impress guests" junto a "elegant", "sophisticated", "special"
-   • Vio "comfort food" junto a "warm", "hearty", "cozy"
-   
-   Y aprendió a colocar estos conceptos CERCA en el espacio vectorial.
+❌ No if/else intent templates
+
+✅ Instead it was trained on millions of texts where:
+   • "I'm hungry" co-occurred with "quick", "fast", "easy"
+   • "impress guests" co-occurred with "elegant", "sophisticated", "special"
+   • "comfort food" co-occurred with "warm", "hearty", "cozy"
+
+   …and learned to place those concepts NEAR each other in vector space.
 """)
 
 # ============================================================================
-# PARTE 2: Demostración - Queries con misma INTENCIÓN = Vectores similares
+# PART 2: Same intent → similar vectors
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 2: Queries con Misma INTENCIÓN → Vectores Similares")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 2: Same Intent → Similar Vectors")
+print("=" * 80)
 
-# Grupo 1: Intención = "Quiero algo rápido"
 quick_queries = [
     "I'm hungry and need something NOW",
     "quick recipe",
@@ -54,7 +52,6 @@ quick_queries = [
     "I don't have much time",
 ]
 
-# Grupo 2: Intención = "Quiero impresionar"
 impress_queries = [
     "I want to impress my dinner guests",
     "elegant recipe for special occasion",
@@ -63,238 +60,234 @@ impress_queries = [
     "gourmet meal",
 ]
 
+
 def get_embedding(text):
     return list(model.embed([text]))[0]
+
 
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-print("\n🔍 Grupo 1: Intención 'RÁPIDO/URGENTE'\n")
+
+print("\n🔍 Group 1: 'FAST / URGENT' intent\n")
 quick_embeddings = [get_embedding(q) for q in quick_queries]
 
-print("Similitud entre queries del MISMO grupo (misma intención):\n")
+print("Similarity within the SAME group (same intent):\n")
 for i, q1 in enumerate(quick_queries[:3]):
-    for j, q2 in enumerate(quick_queries[i+1:4], i+1):
+    for j, q2 in enumerate(quick_queries[i + 1 : 4], i + 1):
         sim = cosine_similarity(quick_embeddings[i], quick_embeddings[j])
         print(f"  '{q1[:40]}...'")
         print(f"  '{q2[:40]}...'")
-        print(f"  → Similitud: {sim:.3f}\n")
+        print(f"  → Similarity: {sim:.3f}\n")
 
-print("\n🔍 Grupo 2: Intención 'IMPRESIONAR/SOFISTICADO'\n")
+print("\n🔍 Group 2: 'IMPRESS / FANCY' intent\n")
 impress_embeddings = [get_embedding(q) for q in impress_queries]
 
-print("Similitud entre queries del MISMO grupo (misma intención):\n")
+print("Similarity within the SAME group (same intent):\n")
 for i, q1 in enumerate(impress_queries[:3]):
-    for j, q2 in enumerate(impress_queries[i+1:4], i+1):
+    for j, q2 in enumerate(impress_queries[i + 1 : 4], i + 1):
         sim = cosine_similarity(impress_embeddings[i], impress_embeddings[j])
         print(f"  '{q1[:40]}...'")
         print(f"  '{q2[:40]}...'")
-        print(f"  → Similitud: {sim:.3f}\n")
+        print(f"  → Similarity: {sim:.3f}\n")
 
-print("\n📊 Comparación ENTRE grupos (intenciones diferentes):\n")
+print("\n📊 ACROSS groups (different intents):\n")
 sim_cross = cosine_similarity(quick_embeddings[0], impress_embeddings[0])
 print(f"  '{quick_queries[0]}'")
-print(f"  vs")
+print("  vs")
 print(f"  '{impress_queries[0]}'")
-print(f"  → Similitud: {sim_cross:.3f}")
-print(f"\n  💡 Similitud MENOR porque tienen INTENCIONES diferentes")
+print(f"  → Similarity: {sim_cross:.3f}")
+print("\n  💡 LOWER because intents differ")
 
 # ============================================================================
-# PARTE 3: ¿Cómo aprende el modelo estas relaciones?
+# PART 3: How the model learns these links
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 3: ¿Cómo Aprendió el Modelo Estas Relaciones?")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 3: How Did the Model Learn These Links?")
+print("=" * 80)
 
 print("""
-🧠 ENTRENAMIENTO DEL MODELO (BAAI/bge-small-en-v1.5):
+🧠 TRAINING (BAAI/bge-small-en-v1.5):
 
-1️⃣  CORPUS DE ENTRENAMIENTO (millones de documentos):
-   • Artículos de cocina: "quick dinner recipes for busy weeknights"
-   • Reseñas: "I was hungry and needed something fast"
+1️⃣  CORPUS (millions of documents):
+   • Cooking articles: "quick dinner recipes for busy weeknights"
+   • Reviews: "I was hungry and needed something fast"
    • Blogs: "impress your guests with this elegant dish"
-   • Recetas: "sophisticated gourmet meal for special occasions"
+   • Recipes: "sophisticated gourmet meal for similar occasions"
 
-2️⃣  OBJETIVO DEL ENTRENAMIENTO:
-   • Textos que aparecen en CONTEXTOS SIMILARES → vectores cercanos
-   • Textos que aparecen en CONTEXTOS DIFERENTES → vectores lejanos
-   
-   Ejemplo de contexto:
-   - "I'm [MASK]" → "hungry", "starving", "famished" (similares)
-   - "Quick [MASK]" → "recipe", "meal", "dish" (similares)
+2️⃣  OBJECTIVE:
+   • Texts in SIMILAR contexts → nearby vectors
+   • Texts in DIFFERENT contexts → farther vectors
 
-3️⃣  RESULTADO:
-   El modelo aprendió que:
-   • "hungry" + "NOW" + "quick" → comparten contextos similares
-   • "impress" + "guests" + "elegant" → comparten contextos similares
-   • Estos dos grupos NO comparten contextos → vectores lejanos
+   Example cloze:
+   - "I'm [MASK]" → "hungry", "starving", "famished" (similar)
+   - "Quick [MASK]" → "recipe", "meal", "dish" (similar)
 
-4️⃣  NO HAY LÓGICA EXPLÍCITA:
-   ❌ No hay reglas: if "hungry" then intention="quick"
-   ✅ Solo matemáticas: vectores cercanos = significado similar
-   
-💡 La "intención" emerge naturalmente de patrones aprendidos en millones de textos.
+3️⃣  RESULT:
+   The model learns:
+   • "hungry" + "NOW" + "quick" share context
+   • "impress" + "guests" + "elegant" share another context
+   • Those two bundles rarely overlap → farther apart
+
+4️⃣  NO EXPLICIT RULES:
+   ❌ No: if "hungry" then intent="quick"
+   ✅ Only math: nearby vectors = similar meaning
+
+💡 "Intent" emerges from patterns in massive text.
 """)
 
 # ============================================================================
-# PARTE 4: Visualización del Espacio Vectorial (Simplificado)
+# PART 4: Simplified visualization
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 4: Visualización del Espacio Vectorial (384D → 2D)")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 4: Vector Space Picture (384D → 2D sketch)")
+print("=" * 80)
 
 print("""
-📐 Espacio Vectorial Real: 384 dimensiones
-   Imposible de visualizar directamente
+📐 Real space: 384 dimensions (not drawable)
 
-📊 Proyección simplificada a 2D (solo para ilustrar):
-   
+📊 2D cartoon (illustration only):
+
    "impress guests" ●────────────────────────● "elegant meal"
                     │                         │
-                    │  Región: SOFISTICADO   │
+                    │  Region: FANCY          │
                     │                         │
                     ●─────────────────────────●
-                    
-                    
-                    
+
+
+
    "quick recipe"   ●────────────────────────● "fast meal"
                     │                         │
-                    │  Región: RÁPIDO        │
+                    │  Region: FAST          │
                     │                         │
    "I'm hungry NOW" ●─────────────────────────●
-   
-   
-💡 En el espacio real de 384D:
-   • Queries con misma intención están CERCA (distancia coseno pequeña)
-   • Queries con intenciones diferentes están LEJOS
-   • La búsqueda encuentra el vector más CERCANO al query
+
+
+💡 In real 384D:
+   • Same-intent queries are CLOSE (small cosine distance)
+   • Different intents are FAR
+   • Search returns vectors NEAREST the query
 """)
 
 # ============================================================================
-# PARTE 5: ¿Qué pasa en la búsqueda?
+# PART 5: What search does
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 5: ¿Qué Pasa Cuando Haces una Búsqueda?")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 5: What Happens When You Search?")
+print("=" * 80)
 
 print("""
-PASO A PASO:
+STEP BY STEP:
 
-1️⃣  Usuario escribe: "I'm hungry and need something NOW"
+1️⃣  User: "I'm hungry and need something NOW"
     ↓
-    
-2️⃣  Sistema genera embedding (vector de 384 números):
+
+2️⃣  System builds a 384-D embedding:
     query_vector = [-0.109, -0.018, 0.017, ..., 0.003]
     ↓
-    
-3️⃣  Sistema calcula distancia coseno con TODOS los chunks en la BD:
-    
+
+3️⃣  Cosine similarity vs ALL chunks in the DB:
+
     "TOMATO & MUSSEL PASTA - Quick 20min recipe"
     recipe_vector = [-0.105, -0.021, 0.019, ..., 0.005]
-    similarity = cosine_distance(query_vector, recipe_vector)
-    → 0.703 (¡cercano!)
-    
+    similarity = cosine(query_vector, recipe_vector)
+    → 0.703 (close!)
+
     "Christmas Pudding - Traditional 3-hour recipe"
     recipe_vector = [0.089, 0.112, -0.034, ..., -0.022]
-    similarity = cosine_distance(query_vector, recipe_vector)
-    → 0.412 (lejano)
-    
+    similarity = cosine(query_vector, recipe_vector)
+    → 0.412 (farther)
     ↓
-    
-4️⃣  Sistema ordena por similitud (más cercano primero):
-    1. TOMATO & MUSSEL PASTA (0.703) ← Intención: rápido
-    2. Quick Fish Pie (0.655) ← Intención: rápido
-    3. ... otras recetas rápidas
-    
-    ↓
-    
-5️⃣  Usuario recibe recetas que coinciden con su INTENCIÓN
-    (aunque no usó palabras exactas como "quick" o "fast")
 
-💡 El sistema NO "detecta" intención explícitamente.
-   Solo encuentra vectores CERCANOS, y estos vectores están cercanos
-   porque el modelo aprendió esos patrones en el entrenamiento.
+4️⃣  Sort by similarity (closest first):
+    1. TOMATO & MUSSEL PASTA (0.703) ← fast intent
+    2. Quick Fish Pie (0.655) ← fast intent
+    3. … other quick recipes
+    ↓
+
+5️⃣  User gets recipes matching intent
+    even without saying "quick" or "fast"
+
+💡 The system does not "detect intent" as a label.
+   It finds NEARBY vectors — near because training aligned them.
 """)
 
 # ============================================================================
-# PARTE 6: Comparación con Query Explícito
+# PART 6: Explicit vs implicit wording
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 6: Comparación - Explícito vs Implícito")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 6: Explicit vs Implicit Wording")
+print("=" * 80)
 
 queries_comparison = [
-    ("quick pasta", "Query EXPLÍCITO (tiene keyword)"),
-    ("I need something fast", "Intención IMPLÍCITA (sin keyword 'quick')"),
-    ("I'm starving", "Intención IMPLÍCITA (sin keywords de velocidad)"),
+    ("quick pasta", "EXPLICIT (has keyword)"),
+    ("I need something fast", "IMPLICIT (no word 'quick')"),
+    ("I'm starving", "IMPLICIT (no speed keywords)"),
 ]
 
-print("\nComparando embeddings:\n")
+print("\nComparing embeddings:\n")
 embeddings_comp = [get_embedding(q[0]) for q in queries_comparison]
 
 for i, (q1, desc1) in enumerate(queries_comparison):
-    for j, (q2, desc2) in enumerate(queries_comparison[i+1:], i+1):
+    for j, (q2, desc2) in enumerate(queries_comparison[i + 1 :], i + 1):
         sim = cosine_similarity(embeddings_comp[i], embeddings_comp[j])
         print(f"  '{q1}' ({desc1})")
-        print(f"  vs")
+        print("  vs")
         print(f"  '{q2}' ({desc2})")
-        print(f"  → Similitud: {sim:.3f}")
+        print(f"  → Similarity: {sim:.3f}")
         print()
 
 print("""
-💡 Observa:
-   • "quick pasta" y "I need something fast" → similitud ALTA
-   • Aunque NO usan las mismas palabras
-   • El modelo aprendió que ambos expresan la misma INTENCIÓN
-   • Sin lógica explícita, solo matemáticas de vectores
+💡 Notice:
+   • "quick pasta" and "I need something fast" → HIGH similarity
+   • Different words, SAME rough intent
+   • Learned alignment — not hand rules
 """)
 
 # ============================================================================
-# RESUMEN FINAL
+# FINAL SUMMARY
 # ============================================================================
-print("\n" + "="*80)
-print("📝 RESUMEN: ¿Cómo Captura Intención Sin Medirla?")
-print("="*80)
+print("\n" + "=" * 80)
+print("📝 SUMMARY: Intent Without Measuring It")
+print("=" * 80)
 
 print("""
-✅ NO HAY LÓGICA DE "DETECCIÓN DE INTENCIÓN":
-   • Sin reglas if/else
-   • Sin clasificadores de intención
-   • Sin análisis sintáctico
+✅ NO dedicated "intent detection" layer:
+   • No if/else rules
+   • No intent classifier head
+   • No syntactic intent parse
 
-✅ ES GEOMETRÍA EN ESPACIO VECTORIAL:
-   • Cada texto → vector de 384 números
-   • Textos similares en SIGNIFICADO → vectores CERCANOS
-   • Similitud = distancia coseno entre vectores
-   
-✅ APRENDIDO DURANTE ENTRENAMIENTO:
-   • Modelo vio millones de textos
-   • Aprendió que "hungry NOW" y "quick recipe" aparecen en contextos similares
-   • Los colocó cerca en el espacio vectorial
-   • La "intención" emerge de estos patrones
+✅ GEOMETRY in vector space:
+   • Each text → 384 numbers
+   • Same MEANING → nearby vectors
+   • Similarity = cosine distance
 
-✅ EN LA BÚSQUEDA:
+✅ LEARNED at training:
+   • Saw millions of texts
+   • "hungry NOW" and "quick recipe" co-occur → placed nearby
+   • Intent is an emergent pattern
+
+✅ AT QUERY TIME:
    1. Query → vector
-   2. Calcular distancia a todos los chunks
-   3. Ordenar por cercanía
-   4. Retornar los más cercanos
-   
-   ¡Eso es todo! Sin magia, solo álgebra lineal.
+   2. Distance to every chunk
+   3. Sort by closeness
+   4. Return top matches
 
-🎯 ANALOGÍA:
-   Es como el GPS: no "entiende" qué es una ciudad,
-   pero sabe que París y Lyon están cerca en el mapa (espacio 2D).
-   
-   Embeddings: "I'm hungry NOW" y "quick recipe" están cerca
-   en el mapa semántico (espacio 384D).
+   That's it — linear algebra, not magic.
 
-🚀 POR ESO FUNCIONA TAN BIEN:
-   • No necesitas pensar en todas las posibles formas de expresar una intención
-   • El modelo YA aprendió esas relaciones de millones de textos
-   • Solo busca "vecinos cercanos" en el espacio vectorial
+🎯 ANALOGY:
+   GPS does not "understand cities",
+   but Paris and Lyon are close on a 2D map.
+
+   Embeddings: "I'm hungry NOW" and "quick recipe" are neighbors
+   on a 384D semantic map.
+
+🚀 WHY IT WORKS:
+   • You do not enumerate every phrasing
+   • The model already learned relations from data
+   • Search = nearest neighbors
 """)
 
-print("\n" + "="*80)
-print("✅ Explicación completada!")
-print("="*80)
-
+print("\n" + "=" * 80)
+print("✅ Explanation complete!")
+print("=" * 80)

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script para iniciar la API de búsqueda de recetas
+# Start the recipe search API
 
 set -e
 

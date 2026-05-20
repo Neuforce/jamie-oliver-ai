@@ -1,0 +1,9 @@
+[
+  {"prompt": "I want a quick pasta recipe for tonight", "expected_category": "safe_domain"},
+  {"prompt": "Suggest something vegetarian for a weeknight dinner", "expected_category": "safe_domain"},
+  {"prompt": "How do I make a simple roast chicken?", "expected_category": "safe_domain"},
+  {"prompt": "I'm exhausted — need an easy comfort food idea", "expected_category": "safe_domain"},
+  {"prompt": "Plan a birthday dinner for six people", "expected_category": "safe_domain"},
+  {"prompt": "What dessert goes well with Italian food?", "expected_category": "safe_domain"},
+  {"prompt": "Jamie, what's a good soup for cold weather?", "expected_category": "safe_domain"}
+]
