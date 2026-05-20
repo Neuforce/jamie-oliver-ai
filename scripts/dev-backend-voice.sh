@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script para iniciar el backend-voice en modo desarrollo (con Docker Compose)
+# Start backend-voice via Docker Compose
 
 set -e
 

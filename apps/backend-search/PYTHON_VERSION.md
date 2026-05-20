@@ -1,75 +1,78 @@
-# Python Version Requirements
+# Python version requirements
 
-## Problema con Python 3.14+
+## Issue with Python 3.14+
 
-El backend-search requiere `fastembed` y `onnxruntime`, que actualmente **no tienen builds disponibles para Python 3.14+**.
+backend-search requires `fastembed` and `onnxruntime`, which **do not currently ship builds for Python 3.14+**.
 
-## Versiones Soportadas
+## Supported versions
 
-- ✅ **Python 3.10** - Compatible
-- ✅ **Python 3.11** - Recomendado
-- ✅ **Python 3.12** - Recomendado
-- ❌ **Python 3.13** - Puede tener problemas
-- ❌ **Python 3.14+** - No compatible
+- ✅ **Python 3.10** — Supported
+- ✅ **Python 3.11** — Recommended
+- ✅ **Python 3.12** — Recommended
+- ❌ **Python 3.13** — May cause issues
+- ❌ **Python 3.14+** — Not supported
 
-## Solución: Usar Python 3.11 o 3.12
+## Fix: Use Python 3.11 or 3.12
 
-### Opción 1: Usar pyenv (Recomendado)
+### Option 1: pyenv (recommended)
 
 ```bash
-# Instalar Python 3.11
+# Install Python 3.11
 pyenv install 3.11.9
 
-# Establecer versión local para el proyecto
+# Set local version for this project
 cd apps/backend-search
 pyenv local 3.11.9
 
-# Crear virtual environment
+# Create virtual environment
 python3.11 -m venv .venv
 source .venv/bin/activate
 pip install -e .
 ```
 
-### Opción 2: Usar Python del Sistema
+### Option 2: System Python
 
-Si tienes Python 3.11 o 3.12 instalado:
+If Python 3.11 or 3.12 is already installed:
 
 ```bash
 cd apps/backend-search
 python3.11 -m venv .venv
-# o
+# or
 python3.12 -m venv .venv
 
 source .venv/bin/activate
 pip install -e .
 ```
 
-### Opción 3: Instalar Python 3.11/3.12
+### Option 3: Install Python 3.11/3.12
 
 **macOS (Homebrew):**
+
 ```bash
 brew install python@3.11
-# o
+# or
 brew install python@3.12
 ```
 
 **Linux:**
+
 ```bash
 sudo apt-get install python3.11 python3.11-venv
-# o
+# or
 sudo apt-get install python3.12 python3.12-venv
 ```
 
-## Verificar Versión
+## Check version
 
 ```bash
 python3 --version
-# Debe mostrar: Python 3.11.x o Python 3.12.x
+# Should show Python 3.11.x or 3.12.x
 ```
 
-## Scripts Actualizados
+## Script behavior
 
-Los scripts `dev-backend-search.sh` y `fix-backend-search.sh` ahora:
-- Detectan automáticamente Python 3.14+
-- Muestran advertencia y sugerencias
-- Intentan usar `python3.11` o `python3.12` si están disponibles
+The `dev-backend-search.sh` and `fix-backend-search.sh` scripts now:
+
+- Automatically detect Python 3.14+
+- Show warnings and suggestions
+- Try to use `python3.11` or `python3.12` when available

@@ -1,0 +1,45 @@
+# Optional: live NeuGate red-team certification (red_team_matrix.json via /v1/test-runner).
+# Configure repository secrets NEUGATE_URL and (if required) NEUGATE_API_KEY.
+# Run manually: Actions → "Guardrails NeuGate certification" → Run workflow.
+
+name: Guardrails NeuGate certification
+
+on:
+  workflow_dispatch:
+
+jobs:
+  guardrails-certification:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/backend-search
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Require NeuGate URL secret
+        env:
+          NEUGATE_URL: ${{ secrets.NEUGATE_URL }}
+        run: |
+          if [ -z "$NEUGATE_URL" ]; then
+            echo "::error::Set repository secret NEUGATE_URL (and NEUGATE_API_KEY if your NeuGate uses it)."
+            exit 1
+          fi
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: apps/backend-search/pyproject.toml
+
+      - name: Install project + dev deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install ".[dev]"
+
+      - name: pytest -m guardrails (certification)
+        env:
+          NEUGATE_ENABLED: "true"
+          NEUGATE_URL: ${{ secrets.NEUGATE_URL }}
+          NEUGATE_API_KEY: ${{ secrets.NEUGATE_API_KEY }}
+        run: |
+          PYTHONPATH=. python -m pytest tests/test_guardrails_certification.py -m guardrails -v --tb=short

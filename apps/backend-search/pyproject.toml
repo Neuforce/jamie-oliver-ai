@@ -48,4 +48,9 @@ dev-dependencies = [
   "pytest>=8.0.0",
 ]
 
+[tool.pytest.ini_options]
+markers = [
+  "guardrails: integration tests against live NeuGate (optional)",
+]
+
 

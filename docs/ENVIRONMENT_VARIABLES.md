@@ -1,142 +1,144 @@
-# Variables de Entorno - Jamie Oliver AI Monorepo
+# Environment variables — Jamie Oliver AI monorepo
 
-Este documento lista todas las variables de entorno necesarias para cada aplicación del monorepo.
+This document lists all environment variables required for each application in the monorepo.
 
-## 📋 Resumen Rápido
+## 📋 Quick reference
 
-| App | Variables Requeridas | Variables Opcionales |
+| App | Required variables | Optional variables |
 |-----|---------------------|---------------------|
 | **Frontend** | `VITE_WS_URL`, `VITE_API_BASE_URL` | `VITE_AUDIO_CAPTURE_ENGINE`, `VITE_VOICE_BARGE_IN_ENABLED` |
 | **Backend-Voice** | `OPENAI_API_KEY`, `DEEPGRAM_API_KEY`, `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID` | `ELEVENLABS_MODEL_ID`, `HOST`, `PORT`, `ENVIRONMENT`, `CORS_ORIGINS`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
-| **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `SUPERTAB_*`, `RECIPE_*` (varias), `DEEPGRAM_API_KEY`, `ELEVENLABS_*` (Voice Chat) |
+| **Backend-Search** | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | `PYTHON_VERSION`, `SUPERTAB_*`, `RECIPE_*` (several), `DEEPGRAM_API_KEY`, `ELEVENLABS_*` (Voice Chat) |
 
 ---
 
 ## 🎨 Frontend (`apps/frontend/`)
 
-### Variables Requeridas
+### Required variables
 
 ```bash
-# WebSocket URL para backend-voice
+# WebSocket URL for backend-voice
 VITE_WS_URL=ws://localhost:8100/ws/voice
-# Producción: wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice
+# Production: wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice
 
-# API Base URL para backend-search
+# Base API URL for backend-search
 VITE_API_BASE_URL=http://localhost:8000
-# Producción: https://your-backend-search-url.vercel.app
+# Production: https://your-backend-search-url.vercel.app
 
-# Estrategia de captura de audio en frontend
-# auto = AudioWorklet si está disponible, con fallback automático
-# worklet = fuerza AudioWorklet y cae a legacy si el navegador no lo soporta
-# legacy = usa ScriptProcessorNode temporalmente
+# Microphone capture strategy on the frontend
+# auto = AudioWorklet when available, with automatic fallback
+# worklet = force AudioWorklet and fall back to legacy if the browser does not support it
+# legacy = use ScriptProcessorNode temporarily
 VITE_AUDIO_CAPTURE_ENGINE=auto
 
-# Rollout del barge-in por voz
+# Voice barge-in rollout
 VITE_VOICE_BARGE_IN_ENABLED=true
 ```
 
-### Descripción
+### Description
 
-- **`VITE_WS_URL`**: URL del WebSocket del backend-voice para comunicación de voz durante el modo de cocción.
-- **`VITE_API_BASE_URL`**: URL base del backend-search para búsqueda semántica de recetas.
-- **`VITE_AUDIO_CAPTURE_ENGINE`**: Controla el rollout del capture engine de micrófono en frontend. `auto` intenta `AudioWorklet` y hace fallback a `ScriptProcessorNode`.
-- **`VITE_VOICE_BARGE_IN_ENABLED`**: Activa el nuevo flujo de barge-in con captura continua e interrupción por voz. Si se desactiva, la app vuelve al comportamiento conservador de no enviar audio mientras Jamie está ocupado.
+- **`VITE_WS_URL`**: WebSocket URL for backend-voice for voice communication during cooking mode.
+- **`VITE_API_BASE_URL`**: Base URL for backend-search for semantic recipe search.
+- **`VITE_AUDIO_CAPTURE_ENGINE`**: Controls microphone capture engine rollout on the frontend. `auto` tries `AudioWorklet` and falls back to `ScriptProcessorNode`.
+- **`VITE_VOICE_BARGE_IN_ENABLED`**: Enables the new barge-in flow with continuous capture and voice interruption. If disabled, the app falls back to the conservative behavior of not sending audio while Jamie is busy.
 
-En **`vite dev`**, las recetas con paywall se pueden abrir para cocinar sin Supertab: el cliente normaliza `locked` → `free` (ver sección Backend-Search / desarrollo local). No requiere variables extra en builds de producción.
+In **`vite dev`**, paywalled recipes can be opened for cooking without Supertab: the client normalizes `locked` → `free` (see Backend-Search / local development section). Production builds need no extra variables for this.
 
-### Archivo
+### File
+
 - `.env.example`: `apps/frontend/.env.example`
 
 ---
 
 ## 🎤 Backend-Voice (`apps/backend-voice/`)
 
-### Variables Requeridas
+### Required variables
 
 ```bash
-# OpenAI API Key (para LLM)
+# OpenAI API Key (LLM)
 OPENAI_API_KEY=sk-your-openai-api-key
 
-# Deepgram API Key (para Speech-to-Text)
+# Deepgram API Key (Speech-to-Text)
 DEEPGRAM_API_KEY=your-deepgram-api-key
 
-# ElevenLabs API Key (para Text-to-Speech)
+# ElevenLabs API Key (Text-to-Speech)
 ELEVENLABS_API_KEY=your-elevenlabs-api-key
 
-# ElevenLabs Voice ID (para selección de voz)
+# ElevenLabs Voice ID (voice selection)
 ELEVENLABS_VOICE_ID=vinj1qyMFj0KgswzTjUi
 
-# ElevenLabs model ID (para seleccionar el modelo de síntesis)
+# ElevenLabs model ID (synthesis model selection)
 ELEVENLABS_MODEL_ID=eleven_multilingual_v2
 ```
 
-### Variables Opcionales
+### Optional variables
 
 ```bash
-# Configuración del servidor
+# Server configuration
 HOST=0.0.0.0                    # Default: 0.0.0.0
 PORT=8100                       # Default: 8100
 ENVIRONMENT=development         # development, staging, production
 
-# CORS Origins (lista separada por comas)
+# CORS origins (comma-separated list)
 CORS_ORIGINS=http://localhost:3000,http://localhost:3100,https://your-frontend.vercel.app
 
-# Persistencia de sesiones de cooking (opcional, pero necesaria para sesiones durables)
+# Cooking session persistence (optional, but needed for durable sessions)
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 
-# Turn-taking de Deepgram (opcional, recomendado para tuning de voz)
+# Deepgram turn-taking (optional; recommended for voice tuning)
 STT_LANGUAGE=en-US
 STT_INTERIM_RESULTS=true
 STT_UTTERANCE_END_MS=1000
 STT_ENDPOINTING_MS=200
 ```
 
-### Descripción
+### Description
 
-- **`OPENAI_API_KEY`**: Clave API de OpenAI para el modelo de lenguaje (GPT-4).
-- **`DEEPGRAM_API_KEY`**: Clave API de Deepgram para convertir audio a texto.
-- **`STT_LANGUAGE`**: Idioma usado por Deepgram para el reconocimiento en tiempo real.
-- **`STT_INTERIM_RESULTS`**: Activa resultados parciales para mejorar el turn-taking y la detección de interrupciones.
-- **`STT_UTTERANCE_END_MS`**: Tiempo para que Deepgram emita `UtteranceEnd` y cierre una intervención del usuario.
-- **`STT_ENDPOINTING_MS`**: Milisegundos de silencio antes de finalizar una frase. Afecta directamente qué tan agresivo o paciente es el turn-taking.
-- **`ELEVENLABS_API_KEY`**: Clave API de ElevenLabs para convertir texto a audio.
-- **`ELEVENLABS_VOICE_ID`**: ID de la voz en ElevenLabs. El valor esperado actualmente es `vinj1qyMFj0KgswzTjUi`.
-- **`ELEVENLABS_MODEL_ID`**: Modelo de ElevenLabs para TTS. El valor esperado actualmente es `eleven_multilingual_v2`.
-- **`SUPABASE_URL`**: URL de Supabase utilizada para persistir snapshots de sesiones de cooking.
-- **`SUPABASE_SERVICE_ROLE_KEY`**: Clave con acceso backend para crear y recuperar sesiones persistidas.
+- **`OPENAI_API_KEY`**: OpenAI API key for the language model (GPT-4).
+- **`DEEPGRAM_API_KEY`**: Deepgram API key for speech-to-text.
+- **`STT_LANGUAGE`**: Language Deepgram uses for real-time recognition.
+- **`STT_INTERIM_RESULTS`**: Enables partial results to improve turn-taking and interruption detection.
+- **`STT_UTTERANCE_END_MS`**: Time after which Deepgram emits `UtteranceEnd` and ends a user turn.
+- **`STT_ENDPOINTING_MS`**: Milliseconds of silence before finalizing an utterance. Directly affects how aggressive or patient turn-taking is.
+- **`ELEVENLABS_API_KEY`**: ElevenLabs API key for text-to-speech.
+- **`ELEVENLABS_VOICE_ID`**: Voice ID in ElevenLabs. The expected value today is `vinj1qyMFj0KgswzTjUi`.
+- **`ELEVENLABS_MODEL_ID`**: ElevenLabs TTS model. The expected value today is `eleven_multilingual_v2`.
+- **`SUPABASE_URL`**: Supabase URL used to persist cooking session snapshots.
+- **`SUPABASE_SERVICE_ROLE_KEY`**: Backend key to create and retrieve persisted sessions.
 
-### Archivo
+### File
+
 - `.env.example`: `apps/backend-voice/.env.example`
 
 ---
 
 ## 🔍 Backend-Search (`apps/backend-search/`)
 
-### Variables Requeridas
+### Required variables
 
 ```bash
 # Supabase Configuration
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 
-# Python Version (para Vercel)
+# Python Version (Vercel)
 PYTHON_VERSION=3.11
 ```
 
-### Desarrollo local: bypass del paywall (Supertab)
+### Local development: paywall bypass (Supertab)
 
-Sin configurar nada en producción:
+Nothing extra required in production:
 
-- **Frontend (`vite dev`)**: si el API aún devuelve `accessState: locked`, el cliente trata la receta como `free` solo cuando `import.meta.env.DEV` es verdadero (no aplica al build de producción).
-- **Backend-search**: con `ENVIRONMENT=development` (o `dev` / `local`) o `VERCEL_ENV=development`, el endpoint `/api/v1/recipes/{id}/access` convierte respuestas `locked` en `free` para poder probar el modo cooking. Con `ENVIRONMENT=production` o `VERCEL_ENV=production` **nunca** se aplica este bypass.
+- **Frontend (`vite dev`)**: if the API still returns `accessState: locked`, the client treats the recipe as `free` only when `import.meta.env.DEV` is true (does not apply to production builds).
+- **Backend-search**: with `ENVIRONMENT=development` (or `dev` / `local`) or `VERCEL_ENV=development`, the `/api/v1/recipes/{id}/access` endpoint maps `locked` responses to `free` so you can test cooking mode. With `ENVIRONMENT=production` or `VERCEL_ENV=production`, this bypass is **never** applied.
 
 ```bash
-# Solo en máquina local o preview de desarrollo (opcional)
+# Local machine or development preview only (optional)
 ENVIRONMENT=development
 ```
 
-### Variables Opcionales - Recipe PDF Agent
+### Optional variables — Recipe PDF Agent
 
 ```bash
 # Logging
@@ -146,16 +148,16 @@ RECIPE_PDF_LOG_LEVEL=INFO       # DEBUG, INFO, WARNING, ERROR
 RECIPE_PDF_SUPABASE_TABLE=recipe_index
 ```
 
-### Variables Opcionales - Supertab Foundations
+### Optional variables — Supertab Foundations
 
 ```bash
-# IDs/configuración de Supertab para monetización de recipes
+# Supertab IDs/config for recipe monetization
 SUPERTAB_CLIENT_ID=test_client.your-client-id
 SUPERTAB_PAYWALL_EXPERIENCE_ID=experience.your-paywall-id
 SUPERTAB_PURCHASE_BUTTON_EXPERIENCE_ID=experience.your-button-id
 ```
 
-### Variables Opcionales - Voice Chat (WebSocket)
+### Optional variables — Voice Chat (WebSocket)
 
 ```bash
 # Deepgram (Speech-to-Text)
@@ -175,27 +177,27 @@ STT_UTTERANCE_END_MS=1000
 STT_ENDPOINTING_MS=250
 ```
 
-### Variables Opcionales - Recipe PDF Agent Llama
+### Optional variables — Recipe PDF Agent Llama
 
 ```bash
-# Ollama Configuration (para procesamiento de PDFs con LLM)
+# Ollama Configuration (PDF processing with LLM)
 RECIPE_LLAMA_OLLAMA_URL=http://localhost:11434
 RECIPE_LLAMA_MODEL=llama3.1
 
-# Supabase Table para chunks inteligentes
+# Supabase table for intelligent chunks
 RECIPE_LLAMA_SUPABASE_TABLE=intelligent_recipe_chunks
 
-# LangChain Parser (opcional)
+# LangChain Parser (optional)
 RECIPE_LLAMA_USE_LANGCHAIN=false
 RECIPE_LLAMA_LANGCHAIN_MODEL=llama3.1
 RECIPE_LLAMA_LANGCHAIN_NUM_CTX=4096
 RECIPE_LLAMA_LANGCHAIN_TEMPERATURE=0.0
 
-# Chunking Optimization (opcional)
+# Chunking Optimization (optional)
 RECIPE_LLAMA_ENABLE_DENSITY=false
 RECIPE_LLAMA_DENSITY_THRESHOLD=0.85
 
-# LLM Enrichment (opcional)
+# LLM Enrichment (optional)
 RECIPE_LLAMA_ENABLE_LLM_ENRICHMENT=false
 RECIPE_LLAMA_ENRICHMENT_MODEL=llama3.1
 RECIPE_LLAMA_ENRICHMENT_TIMEOUT=10
@@ -204,22 +206,23 @@ RECIPE_LLAMA_ENRICHMENT_TIMEOUT=10
 RECIPE_LLAMA_LOG_LEVEL=INFO
 ```
 
-### Descripción
+### Description
 
-- **`SUPABASE_URL`**: URL de tu proyecto Supabase.
-- **`SUPABASE_SERVICE_ROLE_KEY`**: Service Role Key de Supabase (⚠️ mantener secreto, nunca commitear a Git).
-- **`PYTHON_VERSION`**: Versión de Python para Vercel (3.11 recomendado).
+- **`SUPABASE_URL`**: Your Supabase project URL.
+- **`SUPABASE_SERVICE_ROLE_KEY`**: Supabase service role key (⚠️ keep secret; never commit to Git).
+- **`PYTHON_VERSION`**: Python version for Vercel (3.11 recommended).
 
-Las variables `RECIPE_LLAMA_*` son opcionales y solo necesarias si usas el agente de PDFs con Ollama para procesar recetas.
+The `RECIPE_LLAMA_*` variables are optional and only needed if you use the PDF agent with Ollama to process recipes.
 
-### Archivo
+### File
+
 - `.env.example`: `apps/backend-search/.env.example`
 
 ---
 
-## 🚀 Configuración por Ambiente
+## 🚀 Environment-specific configuration
 
-### Desarrollo Local
+### Local development
 
 **Frontend:**
 ```bash
@@ -240,7 +243,7 @@ RECIPE_LLAMA_OLLAMA_URL=http://localhost:11434
 RECIPE_LLAMA_MODEL=llama3.1
 ```
 
-### Producción
+### Production
 
 **Frontend (Vercel):**
 ```bash
@@ -258,14 +261,14 @@ PORT=8100
 **Backend-Search (Vercel):**
 ```bash
 PYTHON_VERSION=3.11
-# Las demás variables se configuran en Vercel Dashboard
+# Remaining variables are configured in the Vercel Dashboard
 ```
 
 ---
 
-## 📝 Cómo Configurar
+## 📝 How to configure
 
-### 1. Copiar archivos .env.example
+### 1. Copy `.env.example` files
 
 ```bash
 # Frontend
@@ -281,35 +284,35 @@ cd ../backend-search
 cp .env.example .env
 ```
 
-### 2. Llenar valores
+### 2. Fill in values
 
-Edita cada archivo `.env` y completa los valores requeridos.
+Edit each `.env` file and complete the required values.
 
-### 3. Verificar
+### 3. Verify
 
 ```bash
-# Frontend - verifica que las variables se carguen
+# Frontend — confirm variables load
 cd apps/frontend
 npm run dev
-# Revisa la consola del navegador
+# Check the browser console
 
-# Backend-Voice - verifica configuración
+# Backend-Voice — verify configuration
 cd ../backend-voice
 python -c "from src.config.settings import settings; print(settings.validate())"
-# Debe imprimir True si todas las keys están configuradas
+# Should print True if all keys are set
 
-# Backend-Search - verifica Supabase
+# Backend-Search — verify Supabase
 cd ../backend-search
 python -c "import os; from dotenv import load_dotenv; load_dotenv(); print('SUPABASE_URL:', os.getenv('SUPABASE_URL')[:20] + '...' if os.getenv('SUPABASE_URL') else 'NOT SET')"
 ```
 
 ---
 
-## 🔒 Seguridad
+## 🔒 Security
 
-### ⚠️ Nunca commitees archivos `.env` a Git
+### ⚠️ Never commit `.env` files to Git
 
-Asegúrate de que `.env` esté en `.gitignore`:
+Ensure `.env` is listed in `.gitignore`:
 
 ```bash
 # .gitignore
@@ -318,22 +321,23 @@ Asegúrate de que `.env` esté en `.gitignore`:
 .env.*.local
 ```
 
-### ✅ Usa `.env.example` como template
+### ✅ Use `.env.example` as a template
 
-Los archivos `.env.example` son seguros para commitear porque no contienen valores reales.
+`.env.example` files are safe to commit because they do not contain real secrets.
 
-### 🔐 Variables Sensibles
+### 🔐 Sensitive variables
 
-Las siguientes variables **NUNCA** deben ser commitadas:
+The following variables must **never** be committed:
+
 - `OPENAI_API_KEY`
 - `DEEPGRAM_API_KEY`
 - `ELEVENLABS_API_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
-- Cualquier otra clave API o token
+- Any other API keys or tokens
 
 ---
 
-## 📚 Referencias
+## 📚 References
 
 - [Vite Environment Variables](https://vitejs.dev/guide/env-and-mode.html)
 - [Python-dotenv](https://pypi.org/project/python-dotenv/)

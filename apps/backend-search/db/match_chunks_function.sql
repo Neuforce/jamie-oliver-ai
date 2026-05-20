@@ -1,7 +1,7 @@
--- 1. Eliminar TODAS las versiones existentes de la función
+-- 1. Drop all existing versions of the function
 DROP FUNCTION IF EXISTS match_recipe_chunks CASCADE;
 
--- 2. Crear la función con el tipo correcto
+-- 2. Create the function with the correct signature
 CREATE OR REPLACE FUNCTION match_recipe_chunks(
     query_embedding VECTOR(384),
     recipe_id_filter TEXT,
@@ -33,4 +33,4 @@ BEGIN
 END;
 $$;
 
-COMMENT ON FUNCTION match_recipe_chunks IS 'Obtiene los chunks más relevantes de una receta específica para un query embedding dado';
+COMMENT ON FUNCTION match_recipe_chunks IS 'Returns the most relevant chunks for a given recipe and query embedding';

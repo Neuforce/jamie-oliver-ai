@@ -1,7 +1,7 @@
 """
 FastAPI application for Recipe Search API.
 
-Expone endpoints REST para búsqueda semántica de recetas.
+Exposes REST endpoints for semantic recipe search.
 """
 
 import os
@@ -9,10 +9,11 @@ import time
 import json
 import logging
 import asyncio
+import uuid
 from typing import List, Optional
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, Query, Header, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
@@ -23,12 +24,13 @@ from recipe_search_agent.search import RecipeSearchAgent, SearchFilters, RecipeM
 from recipe_search_agent.identity_service import IdentityService
 from recipe_search_agent.access_service import AccessService
 from recipe_search_agent.purchase_sync_service import PurchaseSyncService
+from recipe_search_agent.guardrails import evaluate_message_sync
 
-# Configurar logging
+# Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Helpers para subir de forma segura en entornos como Railway
+# Helpers to walk up paths safely in environments like Railway
 def _safe_parent(path: Path, levels: int) -> Path:
     current = path
     for _ in range(levels):
@@ -47,9 +49,9 @@ load_dotenv(service_root / ".env")
 
 def _find_monorepo_root(start: Path) -> Path:
     """
-    Intentar ubicar la raíz del monorepo (donde viven apps/ y data/).
-    En Railway solo se despliega apps/backend-search, así que debemos
-    tener un fallback si no encontramos los directorios esperados.
+    Locate the monorepo root (where apps/ and data/ live).
+    On Railway only apps/backend-search is deployed, so we need a fallback
+    when the expected directories are missing.
     """
     current = start
     for _ in range(5):
@@ -58,40 +60,40 @@ def _find_monorepo_root(start: Path) -> Path:
         if current.parent == current:
             break
         current = current.parent
-    # Fallback: usar la raíz del servicio para que al menos no explote
+    # Fallback: service root so startup does not fail
     return _safe_parent(start, 1)
 
 
-# project_root para recetas: raíz del monorepo (jamie-oliver-ai/) o fallback
+# project_root for recipes: monorepo root (jamie-oliver-ai/) or fallback
 project_root = _find_monorepo_root(current_file)
 
-# Crear app FastAPI
+# FastAPI app
 app = FastAPI(
     title="Recipe Search API",
-    description="API de búsqueda semántica para recetas de Jamie Oliver",
+    description="Semantic search API for Jamie Oliver recipes",
     version="1.0.0",
 )
 
-# Configurar CORS
+# Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # En producción, especificar dominios permitidos
+    allow_origins=["*"],  # In production, restrict allowed origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Cliente de Supabase (singleton)
+# Supabase client (singleton)
 _supabase_client = None
 _search_agent = None
 
 
 def get_search_agent() -> RecipeSearchAgent:
-    """Obtener instancia singleton del agente de búsqueda."""
+    """Get or create the search agent singleton."""
     global _supabase_client, _search_agent
 
     if _search_agent is None:
-        # Crear cliente de Supabase
+        # Create Supabase client
         supabase_url = os.getenv("SUPABASE_URL")
         supabase_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 
@@ -109,24 +111,24 @@ def get_search_agent() -> RecipeSearchAgent:
     return _search_agent
 
 
-# Modelos Pydantic para request/response
+# Pydantic request/response models
 class SearchRequest(BaseModel):
-    """Request para búsqueda de recetas."""
+    """Recipe search request."""
 
-    query: str = Field(..., description="Query en lenguaje natural", example="quick vegetarian pasta")
-    category: Optional[str] = Field(None, description="Filtro por categoría", example="dinner")
-    mood: Optional[str] = Field(None, description="Filtro por mood", example="comfort")
-    complexity: Optional[str] = Field(None, description="Filtro por dificultad", example="easy")
-    cost: Optional[str] = Field(None, description="Filtro por costo", example="budget")
-    ingredients_query: Optional[str] = Field(None, description="Búsqueda en ingredientes", example="tomato basil")
-    top_k: int = Field(10, ge=1, le=50, description="Número de resultados a retornar")
-    similarity_threshold: float = Field(0.3, ge=0.0, le=1.0, description="Umbral mínimo de similitud (0.0-1.0). Solo retorna resultados con score >= threshold")
-    include_full_recipe: bool = Field(False, description="Incluir JSON completo de la receta")
-    include_chunks: bool = Field(True, description="Incluir chunks relevantes")
+    query: str = Field(..., description="Natural-language query", example="quick vegetarian pasta")
+    category: Optional[str] = Field(None, description="Category filter", example="dinner")
+    mood: Optional[str] = Field(None, description="Mood filter", example="comfort")
+    complexity: Optional[str] = Field(None, description="Complexity filter", example="easy")
+    cost: Optional[str] = Field(None, description="Cost filter", example="budget")
+    ingredients_query: Optional[str] = Field(None, description="Ingredient full-text search", example="tomato basil")
+    top_k: int = Field(10, ge=1, le=50, description="Number of results to return")
+    similarity_threshold: float = Field(0.3, ge=0.0, le=1.0, description="Minimum similarity (0.0-1.0). Only returns results with score >= threshold")
+    include_full_recipe: bool = Field(False, description="Include full recipe JSON")
+    include_chunks: bool = Field(True, description="Include relevant chunks")
 
 
 class RecipeMatchResponse(BaseModel):
-    """Respuesta para un match de receta."""
+    """Single recipe match response."""
 
     recipe_id: str
     title: str
@@ -143,13 +145,15 @@ class RecipeMatchResponse(BaseModel):
 
 
 class SearchResponse(BaseModel):
-    """Respuesta de búsqueda."""
+    """Search response."""
 
     query: str
     filters_applied: dict
     results: List[RecipeMatchResponse]
     total: int
     took_ms: float
+    guardrail_blocked: bool = Field(False, description="True when semantic search was skipped by guardrails")
+    guardrail_category: Optional[str] = Field(None, description="Guardrail category when blocked")
 
 
 # Chat Agent Models
@@ -399,16 +403,19 @@ async def sync_supertab_purchase(request: SupertabPurchaseSyncRequest):
 
 
 @app.post("/api/v1/recipes/search", response_model=SearchResponse)
-async def search_recipes(request: SearchRequest):
+async def search_recipes(
+    request: SearchRequest,
+    x_correlation_id: Optional[str] = Header(None, alias="X-Correlation-ID"),
+):
     """
-    Búsqueda semántica de recetas.
+    Semantic recipe search.
 
-    Combina:
-    - Vector similarity (embeddings semánticos)
-    - Filtros exactos (category, mood, complexity, cost)
-    - Full-text search en ingredientes
+    Combines:
+    - Vector similarity (semantic embeddings)
+    - Exact filters (category, mood, complexity, cost)
+    - Full-text search on ingredients
 
-    Ejemplo:
+    Example:
     ```json
     {
         "query": "quick vegetarian pasta under 30 minutes",
@@ -419,8 +426,27 @@ async def search_recipes(request: SearchRequest):
     """
     try:
         start_time = time.time()
+        cid = x_correlation_id or str(uuid.uuid4())
 
-        # Crear filtros
+        gate = evaluate_message_sync(request.query.strip() or "", correlation_id=cid)
+        if gate.blocked:
+            return SearchResponse(
+                query=request.query,
+                filters_applied={
+                    "category": request.category,
+                    "mood": request.mood,
+                    "complexity": request.complexity,
+                    "cost": request.cost,
+                    "ingredients_query": request.ingredients_query,
+                },
+                results=[],
+                total=0,
+                took_ms=round((time.time() - start_time) * 1000, 2),
+                guardrail_blocked=True,
+                guardrail_category=gate.category,
+            )
+
+        # Build filters
         filters = SearchFilters(
             category=request.category,
             mood=request.mood,
@@ -429,7 +455,7 @@ async def search_recipes(request: SearchRequest):
             ingredients_query=request.ingredients_query,
         )
 
-        # Buscar
+        # Search
         agent = get_search_agent()
         results = agent.search(
             query=request.query,
@@ -442,7 +468,7 @@ async def search_recipes(request: SearchRequest):
 
         elapsed_ms = (time.time() - start_time) * 1000
 
-        # Convertir a response models
+        # Map to response models
         response_results = [
             RecipeMatchResponse(**match.to_dict())
             for match in results
@@ -470,11 +496,11 @@ async def search_recipes(request: SearchRequest):
 @app.get("/api/v1/recipes/{recipe_id}")
 async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
     """
-    Obtener receta completa por ID (slug).
+    Get full recipe by ID (slug).
 
     Args:
-        recipe_id: Slug de la receta (ej: "christmas-salad-jamie-oliver-recipes")
-        include_chunks: Si True, incluye todos los chunks de la receta
+        recipe_id: Recipe slug (e.g. "christmas-salad-jamie-oliver-recipes")
+        include_chunks: If True, include all recipe chunks
     """
     try:
         agent = get_search_agent()
@@ -516,7 +542,7 @@ async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
                 "full_recipe": full_recipe,
             }
 
-        # Incluir chunks si se solicita
+        # Include chunks when requested
         if include_chunks:
             chunks_response = agent.client.table("intelligent_recipe_chunks") \
                 .select("*") \
@@ -544,18 +570,18 @@ async def list_recipes(
     offset: int = Query(0, ge=0)
 ):
     """
-    Listar recetas con filtros opcionales.
+    List recipes with optional filters.
 
     Fetches from the `recipes` table (source of truth) with fallback to `recipe_index`.
 
     Args:
-        category: Filtro por categoría
-        mood: Filtro por mood
-        complexity: Filtro por complejidad
+        category: Category filter
+        mood: Mood filter
+        complexity: Complexity filter
         status: Filter by recipe status (draft, published, archived)
         include_full: Include full recipe_json in response (default: False for performance)
-        limit: Número de resultados (max 500)
-        offset: Offset para paginación
+        limit: Number of results (max 500)
+        offset: Pagination offset
     """
     try:
         agent = get_search_agent()

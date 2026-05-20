@@ -1,33 +1,34 @@
-# Guía de Desarrollo Local - Jamie Oliver AI Monorepo
+# Local development guide — Jamie Oliver AI monorepo
 
-Esta guía explica cómo configurar y ejecutar el monorepo en tu máquina local.
+This guide explains how to configure and run the monorepo on your machine.
 
-## Prerrequisitos
+## Prerequisites
 
-- **Node.js** 18+ y npm
+- **Node.js** 18+ and npm
 - **Python** 3.11+
-- **Docker** y Docker Compose (para backend-voice)
-- **Poetry** (opcional, para gestión de dependencias Python)
-- **Ollama** (opcional, para ingestion de PDFs con LLM)
+- **Docker** and Docker Compose (for backend-voice)
+- **Poetry** (optional, for Python dependency management)
+- **Ollama** (optional, for PDF ingestion with LLM)
 
-## Setup Inicial
+## Initial setup
 
-### 1. Clonar y Configurar
+### 1. Clone and configure
 
 ```bash
 cd jamie-oliver-ai
 ./scripts/setup.sh
 ```
 
-Este script:
-- Instala dependencias del frontend (npm)
-- Crea virtual environments para backends
-- Instala dependencias Python
-- Configura el paquete ccai
+This script:
 
-### 2. Variables de Entorno
+- Installs frontend dependencies (npm)
+- Creates virtual environments for backends
+- Installs Python dependencies
+- Configures the `ccai` package
 
-Crea archivos `.env` en cada app:
+### 2. Environment variables
+
+Create `.env` files for each app:
 
 **`apps/frontend/.env`:**
 ```bash
@@ -68,43 +69,44 @@ STT_UTTERANCE_END_MS=1000
 STT_ENDPOINTING_MS=250
 ```
 
-## Ejecutar Servicios
+## Running services
 
-### Opción 1: Todos los Servicios (Recomendado)
+### Option 1: All services (recommended)
 
 ```bash
 ./scripts/dev-all.sh
 ```
 
-Inicia:
-- Frontend en `http://localhost:3000`
-- Backend-Voice en `ws://localhost:8100/ws/voice`
-- Backend-Search en `http://localhost:8000`
+Starts:
 
-### Opción 2: Servicios Individuales
+- Frontend at `http://localhost:3000`
+- Backend-Voice at `ws://localhost:8100/ws/voice`
+- Backend-Search at `http://localhost:8000`
+
+### Option 2: Individual services
 
 **Frontend:**
 ```bash
 ./scripts/dev-frontend.sh
-# o
+# or
 cd apps/frontend && npm run dev
 ```
 
 **Backend-Voice (Docker):**
 ```bash
 ./scripts/dev-backend-voice.sh
-# o
+# or
 cd infrastructure && docker-compose up backend-voice
 ```
 
 **Backend-Search:**
 ```bash
 ./scripts/dev-backend-search.sh
-# o
+# or
 cd apps/backend-search && python -m uvicorn recipe_search_agent.api:app --reload
 ```
 
-## Estructura de Directorios
+## Directory layout
 
 ```
 jamie-oliver-ai/
@@ -115,45 +117,45 @@ jamie-oliver-ai/
 ├── packages/
 │   └── ccai/              # Voice assistant library
 ├── data/
-│   ├── recipes/           # 55 recetas JSON (usado por todos)
-│   ├── recipes_pdf_input/ # PDFs para ingestion
-│   ├── error/             # JSONs con errores
-│   └── processed_pdf/      # PDFs procesados
+│   ├── recipes/           # 55 recipe JSON files (shared)
+│   ├── recipes_pdf_input/ # PDFs for ingestion
+│   ├── error/             # JSON files with errors
+│   └── processed_pdf/      # Processed PDFs
 ├── infrastructure/
-│   └── docker-compose.yml # Docker Compose para desarrollo
+│   └── docker-compose.yml # Docker Compose for development
 └── scripts/
-    ├── setup.sh           # Setup inicial
-    ├── dev-all.sh         # Iniciar todos los servicios
-    ├── dev-frontend.sh    # Solo frontend
-    ├── dev-backend-voice.sh # Solo backend-voice
-    └── dev-backend-search.sh # Solo backend-search
+    ├── setup.sh           # Initial setup
+    ├── dev-all.sh         # Start all services
+    ├── dev-frontend.sh    # Frontend only
+    ├── dev-backend-voice.sh # backend-voice only
+    └── dev-backend-search.sh # backend-search only
 ```
 
-## Flujo de Trabajo
+## Workflow
 
-### 1. Desarrollo Frontend
+### 1. Frontend development
 
 ```bash
 cd apps/frontend
 npm run dev
 ```
 
-- Hot reload automático
-- Recetas cargadas desde `data/recipes/`
-- Conecta a backends locales
+- Hot reload enabled
+- Recipes loaded from `data/recipes/`
+- Connects to local backends
 
-### 2. Desarrollo Backend-Voice
+### 2. Backend-Voice development
 
 ```bash
 cd infrastructure
 docker-compose up backend-voice
 ```
 
-- Hot reload con `--reload` flag
-- Recetas cargadas desde `data/recipes/`
-- WebSocket en `ws://localhost:8100/ws/voice`
+- Hot reload with `--reload`
+- Recipes loaded from `data/recipes/`
+- WebSocket at `ws://localhost:8100/ws/voice`
 
-### 3. Desarrollo Backend-Search
+### 3. Backend-Search development
 
 ```bash
 cd apps/backend-search
@@ -161,22 +163,22 @@ source .venv/bin/activate
 python -m uvicorn recipe_search_agent.api:app --reload
 ```
 
-- Hot reload automático
-- API en `http://localhost:8000`
-- Documentación en `http://localhost:8000/docs`
+- Hot reload enabled
+- API at `http://localhost:8000`
+- Docs at `http://localhost:8000/docs`
 
-### 4. Ingestion de PDFs
+### 4. PDF ingestion
 
 ```bash
 cd apps/backend-search
 
-# Colocar PDFs en data/recipes_pdf_input/
+# Place PDFs in data/recipes_pdf_input/
 cp /path/to/recipe.pdf ../../data/recipes_pdf_input/
 
-# Procesar con Llama
+# Process with Llama
 python -m recipe_pdf_agent_llama.cli run ../../data/recipes_pdf_input
 
-# Los JSONs resultantes estarán en data/recipes/
+# Result JSON files will be under data/recipes/
 ```
 
 ## Testing
@@ -184,57 +186,61 @@ python -m recipe_pdf_agent_llama.cli run ../../data/recipes_pdf_input
 ### Frontend
 ```bash
 cd apps/frontend
-npm test  # Si hay tests configurados
+npm test  # If tests are configured
 ```
 
 ### Backend-Voice
 ```bash
 cd apps/backend-voice
-pytest  # o poetry run pytest
+pytest  # or poetry run pytest
 ```
 
 ### Backend-Search
 ```bash
 cd apps/backend-search
-pytest  # o poetry run pytest
+pytest  # or poetry run pytest
 ```
 
 ## Troubleshooting
 
-### Frontend no encuentra recetas
-- Verifica que `data/recipes/` tenga archivos JSON
-- Verifica rutas en `apps/frontend/src/data/recipeLoader.ts` (debe ser `../../../data/recipes/`)
+### Frontend cannot find recipes
 
-### Backend-Voice no carga recetas
-- Verifica que Docker tenga acceso a `data/recipes/` (volumen montado)
+- Ensure `data/recipes/` contains JSON files
+- Check paths in `apps/frontend/src/data/recipeLoader.ts` (should be `../../../data/recipes/`)
 
-### Backend-Search no encuentra recetas
-- Verifica que `project_root` en `search.py` apunte a `data/recipes/`
-- Verifica que las rutas relativas funcionen desde `apps/backend-search/`
+### Backend-Voice does not load recipes
 
-### Docker Compose no inicia
-- Verifica que Docker Desktop esté corriendo
-- Verifica variables de entorno en `infrastructure/docker-compose.yml`
-- Revisa logs: `docker-compose logs backend-voice`
+- Ensure Docker can access `data/recipes/` (mounted volume)
 
-## Comandos Útiles
+### Backend-Search cannot find recipes
+
+- Ensure `project_root` in `search.py` points to `data/recipes/`
+- Check relative paths from `apps/backend-search/`
+
+### Docker Compose does not start
+
+- Ensure Docker Desktop is running
+- Check environment variables in `infrastructure/docker-compose.yml`
+- Inspect logs: `docker-compose logs backend-voice`
+
+## Useful commands
 
 ```bash
-# Ver logs de Docker Compose
+# Docker Compose logs
 cd infrastructure && docker-compose logs -f backend-voice
 
-# Reconstruir imagen Docker
+# Rebuild Docker image
 cd infrastructure && docker-compose build --no-cache backend-voice
 
-# Limpiar y reinstalar dependencias frontend
+# Clean and reinstall frontend dependencies
 cd apps/frontend && rm -rf node_modules && npm install
 
-# Limpiar virtual environment backend-search
+# Clean backend-search virtual environment
 cd apps/backend-search && rm -rf .venv && python3 -m venv .venv && source .venv/bin/activate && pip install -e .
 ```
 
-## Próximos Pasos
+## Next steps
 
-- Ver `docs/DEPLOYMENT.md` para despliegue en producción
-- Ver `docs/INGESTION.md` para guía de ingestion de PDFs
-- Ver `README.md` para overview del proyecto
+- See `docs/DEPLOYMENT.md` for production deployment
+- See `docs/INGESTION.md` for PDF ingestion guidance
+- See `README.md` for a project overview

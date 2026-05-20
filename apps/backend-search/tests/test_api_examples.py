@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Script de prueba para la API de búsqueda semántica.
-Muestra ejemplos prácticos de diferentes payloads.
+Exercise script for the semantic search API.
+Shows practical examples of different request payloads.
 """
 
 import requests
@@ -17,13 +17,13 @@ def print_separator(title=""):
         print("="*80)
 
 def test_basic_search():
-    print_separator("EJEMPLO 1: Búsqueda Básica (payload mínimo)")
+    print_separator("EXAMPLE 1: Basic search (minimal payload)")
     
     payload = {
         "query": "quick pasta recipe"
     }
     
-    print("\n📤 Payload:")
+    print("\n📤 Request body:")
     print(json.dumps(payload, indent=2))
     
     start = time.time()
@@ -33,19 +33,19 @@ def test_basic_search():
     if response.status_code == 200:
         data = response.json()
         print(f"\n✅ Response (HTTP 200 OK) - {elapsed:.0f}ms")
-        print(f"\nEncontradas: {data['total']} recetas")
-        print(f"Tiempo: {data['took_ms']:.1f}ms\n")
+        print(f"\nFound: {data['total']} recipes")
+        print(f"Time: {data['took_ms']:.1f}ms\n")
         
         for i, recipe in enumerate(data['results'][:3], 1):
             print(f"{i}. {recipe['title']}")
             print(f"   Score: {recipe['combined_score']:.3f}")
-            print(f"   Explicación: {recipe['match_explanation']}")
+            print(f"   Explanation: {recipe['match_explanation']}")
     else:
         print(f"\n❌ Error: {response.status_code}")
         print(response.text)
 
 def test_with_filters():
-    print_separator("EJEMPLO 2: Búsqueda con Filtros")
+    print_separator("EXAMPLE 2: Search with filters")
     
     payload = {
         "query": "something special",
@@ -54,7 +54,7 @@ def test_with_filters():
         "top_k": 3
     }
     
-    print("\n📤 Payload:")
+    print("\n📤 Request body:")
     print(json.dumps(payload, indent=2))
     
     response = requests.post(f"{API_URL}/api/v1/recipes/search", json=payload)
@@ -62,12 +62,12 @@ def test_with_filters():
     if response.status_code == 200:
         data = response.json()
         print(f"\n✅ Response (HTTP 200 OK)")
-        print(f"\nFiltros aplicados:")
+        print(f"\nFilters applied:")
         for key, value in data['filters_applied'].items():
             if value:
                 print(f"  • {key}: {value}")
         
-        print(f"\nResultados: {data['total']}\n")
+        print(f"\nResults: {data['total']}\n")
         for i, recipe in enumerate(data['results'], 1):
             print(f"{i}. {recipe['title']} (score: {recipe['combined_score']:.3f})")
     else:
@@ -75,7 +75,7 @@ def test_with_filters():
         print(response.text)
 
 def test_ingredients_search():
-    print_separator("EJEMPLO 3: Búsqueda por Ingredientes")
+    print_separator("EXAMPLE 3: Ingredient search")
     
     payload = {
         "query": "italian recipe",
@@ -83,7 +83,7 @@ def test_ingredients_search():
         "top_k": 5
     }
     
-    print("\n📤 Payload:")
+    print("\n📤 Request body:")
     print(json.dumps(payload, indent=2))
     
     response = requests.post(f"{API_URL}/api/v1/recipes/search", json=payload)
@@ -91,7 +91,7 @@ def test_ingredients_search():
     if response.status_code == 200:
         data = response.json()
         print(f"\n✅ Response (HTTP 200 OK)")
-        print(f"\nEncontradas: {data['total']} recetas\n")
+        print(f"\nFound: {data['total']} recipes\n")
         
         for i, recipe in enumerate(data['results'], 1):
             print(f"{i}. {recipe['title']}")
@@ -102,7 +102,7 @@ def test_ingredients_search():
         print(response.text)
 
 def test_full_recipe():
-    print_separator("EJEMPLO 4: Búsqueda con Receta Completa")
+    print_separator("EXAMPLE 4: Search with full recipe payload")
     
     payload = {
         "query": "christmas salad",
@@ -111,7 +111,7 @@ def test_full_recipe():
         "top_k": 1
     }
     
-    print("\n📤 Payload:")
+    print("\n📤 Request body:")
     print(json.dumps(payload, indent=2))
     
     response = requests.post(f"{API_URL}/api/v1/recipes/search", json=payload)
@@ -122,26 +122,26 @@ def test_full_recipe():
         
         if data['results']:
             recipe = data['results'][0]
-            print(f"\nReceta: {recipe['title']}")
+            print(f"\nRecipe: {recipe['title']}")
             print(f"Score: {recipe['combined_score']:.3f}")
             
             if recipe['full_recipe']:
-                print(f"\n📝 Datos incluidos:")
-                print(f"  • Ingredientes: {len(recipe['full_recipe'].get('ingredients', []))}")
-                print(f"  • Pasos: {len(recipe['full_recipe'].get('steps', []))}")
-                print(f"  • Chunks relevantes: {len(recipe['matching_chunks'])}")
+                print(f"\n📝 Included data:")
+                print(f"  • Ingredients: {len(recipe['full_recipe'].get('ingredients', []))}")
+                print(f"  • Steps: {len(recipe['full_recipe'].get('steps', []))}")
+                print(f"  • Matching chunks: {len(recipe['matching_chunks'])}")
                 
-                # Mostrar primer ingrediente
+                # Show first ingredient
                 if recipe['full_recipe'].get('ingredients'):
                     ing = recipe['full_recipe']['ingredients'][0]
-                    print(f"\n  Ejemplo de ingrediente:")
+                    print(f"\n  Sample ingredient:")
                     print(f"    {ing.get('quantity', '')} {ing.get('unit', '')} {ing.get('name', '')}")
     else:
         print(f"\n❌ Error: {response.status_code}")
         print(response.text)
 
 def test_get_recipe_by_id():
-    print_separator("EJEMPLO 5: Obtener Receta por ID")
+    print_separator("EXAMPLE 5: Get recipe by ID")
     
     recipe_id = "christmas-salad-jamie-oliver-recipes"
     url = f"{API_URL}/api/v1/recipes/{recipe_id}?include_chunks=false"
@@ -153,7 +153,7 @@ def test_get_recipe_by_id():
     if response.status_code == 200:
         data = response.json()
         print(f"\n✅ Response (HTTP 200 OK)")
-        print(f"\nReceta: {data['title']}")
+        print(f"\nRecipe: {data['title']}")
         print(f"ID: {data['recipe_id']}")
         print(f"File: {data['file_path']}")
         
@@ -168,7 +168,7 @@ def test_get_recipe_by_id():
         print(response.text)
 
 def test_list_recipes():
-    print_separator("EJEMPLO 6: Listar Recetas con Filtros")
+    print_separator("EXAMPLE 6: List recipes")
     
     url = f"{API_URL}/api/v1/recipes?limit=3"
     
@@ -179,7 +179,7 @@ def test_list_recipes():
     if response.status_code == 200:
         data = response.json()
         print(f"\n✅ Response (HTTP 200 OK)")
-        print(f"\nTotal: {data['total']} recetas\n")
+        print(f"\nTotal: {data['total']} recipes\n")
         
         for recipe in data['recipes']:
             print(f"• {recipe['title']} ({recipe['id']})")
@@ -188,7 +188,7 @@ def test_list_recipes():
         print(response.text)
 
 def test_health_check():
-    print_separator("EJEMPLO 7: Health Check")
+    print_separator("EXAMPLE 7: Health check")
     
     url = f"{API_URL}/health"
     
@@ -205,7 +205,7 @@ def test_health_check():
         print(response.text)
 
 def test_complete_payload():
-    print_separator("EJEMPLO 8: Payload Completo (todas las opciones)")
+    print_separator("EXAMPLE 8: Full payload (all options)")
     
     payload = {
         "query": "quick vegetarian dinner",
@@ -219,7 +219,7 @@ def test_complete_payload():
         "include_chunks": True
     }
     
-    print("\n📤 Payload:")
+    print("\n📤 Request body:")
     print(json.dumps(payload, indent=2))
     
     response = requests.post(f"{API_URL}/api/v1/recipes/search", json=payload)
@@ -227,9 +227,9 @@ def test_complete_payload():
     if response.status_code == 200:
         data = response.json()
         print(f"\n✅ Response (HTTP 200 OK)")
-        print(f"\nFiltros aplicados: {json.dumps(data['filters_applied'], indent=2)}")
-        print(f"Resultados: {data['total']}")
-        print(f"Tiempo: {data['took_ms']:.1f}ms")
+        print(f"\nFilters applied: {json.dumps(data['filters_applied'], indent=2)}")
+        print(f"Results: {data['total']}")
+        print(f"Time: {data['took_ms']:.1f}ms")
     else:
         print(f"\n❌ Error: {response.status_code}")
         print(response.text)

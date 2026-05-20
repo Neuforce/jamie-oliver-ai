@@ -38,9 +38,9 @@ def print_results(results, query: str):
 
 
 def test_basic_search(agent: RecipeSearchAgent):
-    """Test búsqueda básica sin filtros."""
+    """Basic search without filters."""
     print("\n" + "="*80)
-    print("TEST 1: Búsqueda Básica")
+    print("TEST 1: Basic search")
     print("="*80)
     
     queries = [
@@ -64,9 +64,9 @@ def test_basic_search(agent: RecipeSearchAgent):
 
 
 def test_filtered_search(agent: RecipeSearchAgent):
-    """Test búsqueda con filtros."""
+    """Search with filters."""
     print("\n" + "="*80)
-    print("TEST 2: Búsqueda con Filtros")
+    print("TEST 2: Search with filters")
     print("="*80)
     
     test_cases = [
@@ -106,9 +106,9 @@ def test_filtered_search(agent: RecipeSearchAgent):
 
 
 def test_ingredient_search(agent: RecipeSearchAgent):
-    """Test búsqueda por ingredientes."""
+    """Search constrained by ingredients."""
     print("\n" + "="*80)
-    print("TEST 3: Búsqueda por Ingredientes")
+    print("TEST 3: Ingredient search")
     print("="*80)
     
     test_cases = [
@@ -136,9 +136,9 @@ def test_ingredient_search(agent: RecipeSearchAgent):
 
 
 def test_detailed_search(agent: RecipeSearchAgent):
-    """Test búsqueda con resultados detallados."""
+    """Search with detailed results (chunks and JSON)."""
     print("\n" + "="*80)
-    print("TEST 4: Búsqueda Detallada (con chunks y JSON)")
+    print("TEST 4: Detailed search (chunks + JSON)")
     print("="*80)
     
     query = "christmas salad"

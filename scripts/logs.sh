@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script para ver logs de los servicios en desarrollo
+# Tail local dev service logs
 
 set -e
 
@@ -14,29 +14,29 @@ else
 fi
 
 show_help() {
-    echo "📋 Ver logs de servicios"
+    echo "📋 Service logs"
     echo ""
-    echo "Uso: $0 [servicio] [opciones]"
+    echo "Usage: $0 [service] [options]"
     echo ""
-    echo "Servicios disponibles:"
-    echo "  all          - Ver logs de todos los servicios (multiplexado)"
-    echo "  voice        - Ver logs del backend-voice (Docker)"
-    echo "  search       - Ver logs del backend-search (uvicorn)"
-    echo "  frontend     - Ver logs del frontend (vite)"
-    echo "  clean        - Limpiar todos los archivos de logs"
+    echo "Services:"
+    echo "  all          - All services (multiplexed output)"
+    echo "  voice        - backend-voice (Docker)"
+    echo "  search       - backend-search (uvicorn log file)"
+    echo "  frontend     - frontend (vite log file)"
+    echo "  clean        - Remove log files under logs/"
     echo ""
-    echo "Opciones:"
-    echo "  -f, --follow - Seguir logs en tiempo real (solo para servicios individuales)"
+    echo "Options:"
+    echo "  -f, --follow - Stream logs (single services only)"
     echo ""
-    echo "Ejemplos:"
-    echo "  $0 all              # Ver todos los logs"
-    echo "  $0 voice            # Ver logs del backend-voice"
-    echo "  $0 voice -f         # Seguir logs del backend-voice en tiempo real"
-    echo "  $0 search           # Ver logs del backend-search"
-    echo "  $0 search -f        # Seguir logs del backend-search en tiempo real"
-    echo "  $0 frontend         # Ver logs del frontend"
-    echo "  $0 frontend -f      # Seguir logs del frontend en tiempo real"
-    echo "  $0 clean            # Limpiar todos los archivos de logs"
+    echo "Examples:"
+    echo "  $0 all"
+    echo "  $0 voice"
+    echo "  $0 voice -f"
+    echo "  $0 search"
+    echo "  $0 search -f"
+    echo "  $0 frontend"
+    echo "  $0 frontend -f"
+    echo "  $0 clean"
 }
 
 show_voice_logs() {
@@ -54,19 +54,19 @@ show_search_logs() {
     local log_file="$PROJECT_ROOT/logs/backend-search.log"
     
     if [ ! -f "$log_file" ]; then
-        echo "⚠️  Backend-search no está corriendo o no hay logs"
-        echo "   Inicia con: ./scripts/dev-backend-search.sh"
+        echo "⚠️  backend-search is not running or no log file yet"
+        echo "   Start with: ./scripts/dev-backend-search.sh"
         return 1
     fi
     
     if [ "$follow" = "-f" ] || [ "$follow" = "--follow" ]; then
-        echo "🔍 Backend-search logs (siguiendo en tiempo real...)"
-        echo "📍 Servicio: http://localhost:8000"
+        echo "🔍 backend-search (streaming...)"
+        echo "📍 http://localhost:8000"
         echo "---------------------------"
         tail -f "$log_file"
     else
-        echo "🔍 Backend-search logs (últimas 50 líneas):"
-        echo "📍 Servicio: http://localhost:8000"
+        echo "🔍 backend-search (last 50 lines)"
+        echo "📍 http://localhost:8000"
         echo "---------------------------"
         tail -n 50 "$log_file"
     fi
@@ -77,26 +77,26 @@ show_frontend_logs() {
     local log_file="$PROJECT_ROOT/logs/frontend.log"
     
     if [ ! -f "$log_file" ]; then
-        echo "⚠️  Frontend no está corriendo o no hay logs"
-        echo "   Inicia con: ./scripts/dev-frontend.sh"
+        echo "⚠️  frontend is not running or no log file yet"
+        echo "   Start with: ./scripts/dev-frontend.sh"
         return 1
     fi
     
     if [ "$follow" = "-f" ] || [ "$follow" = "--follow" ]; then
-        echo "⚛️  Frontend logs (siguiendo en tiempo real...)"
-        echo "📍 Servicio: http://localhost:3000"
+        echo "⚛️  frontend (streaming...)"
+        echo "📍 http://localhost:3000"
         echo "---------------------------"
         tail -f "$log_file"
     else
-        echo "⚛️  Frontend logs (últimas 50 líneas):"
-        echo "📍 Servicio: http://localhost:3000"
+        echo "⚛️  frontend (last 50 lines)"
+        echo "📍 http://localhost:3000"
         echo "---------------------------"
         tail -n 50 "$log_file"
     fi
 }
 
 show_all_logs() {
-    echo "📋 Logs de todos los servicios"
+    echo "📋 All services"
     echo "================================"
     echo ""
     
@@ -119,12 +119,12 @@ clean_logs() {
     local log_dir="$PROJECT_ROOT/logs"
     
     if [ ! -d "$log_dir" ]; then
-        echo "📁 Directorio de logs no existe: $log_dir"
+        echo "📁 Log directory missing: $log_dir"
         return 0
     fi
     
-    echo "🧹 Limpiando logs..."
-    echo "📍 Directorio: $log_dir"
+    echo "🧹 Cleaning logs..."
+    echo "📍 $log_dir"
     echo ""
     
     local count=0
@@ -132,16 +132,16 @@ clean_logs() {
         if [ -f "$log_file" ]; then
             local size=$(du -h "$log_file" | cut -f1)
             rm -f "$log_file"
-            echo "  ✅ Eliminado: $(basename "$log_file") ($size)"
+            echo "  ✅ Removed: $(basename "$log_file") ($size)"
             count=$((count + 1))
         fi
     done
     
     if [ $count -eq 0 ]; then
-        echo "  ℹ️  No hay archivos de logs para limpiar"
+        echo "  ℹ️  No log files to remove"
     else
         echo ""
-        echo "✅ Limpieza completada: $count archivo(s) eliminado(s)"
+        echo "✅ Removed $count log file(s)"
     fi
 }
 
@@ -166,7 +166,7 @@ case "${1:-}" in
         clean_logs
         ;;
     *)
-        echo "❌ Servicio desconocido: $1"
+        echo "❌ Unknown service: $1"
         echo ""
         show_help
         exit 1

@@ -1,173 +1,169 @@
 #!/usr/bin/env python3
 """
-¿Cómo el sistema "entiende" la INTENCIÓN del usuario?
+How does the system "understand" user INTENT?
 
-Explicación técnica de cómo los embeddings capturan intención sin medir explícitamente.
+Technical note: embeddings capture intent without an explicit intent score.
 """
 
 from fastembed import TextEmbedding
 import numpy as np
 
-print("="*80)
-print("¿CÓMO SE CAPTURA LA INTENCIÓN DEL USUARIO?")
-print("="*80)
+print("=" * 80)
+print("HOW IS USER INTENT CAPTURED?")
+print("=" * 80)
 
 # ============================================================================
-# PARTE 1: El modelo de embeddings fue ENTRENADO con millones de ejemplos
+# PART 1: The embedding model was trained on millions of examples
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 1: Entrenamiento del Modelo de Embeddings")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 1: Training the Embedding Model")
+print("=" * 80)
 
 print("""
-El modelo BAAI/bge-small-en-v1.5 fue entrenado con:
+BAAI/bge-small-en-v1.5 was trained on:
 
-📚 Millones de pares de texto como:
-   • Pregunta: "I need something quick" → Respuesta: "Fast pasta recipe"
-   • Pregunta: "comfort food for winter" → Respuesta: "Hearty beef stew"
-   • Pregunta: "healthy breakfast" → Respuesta: "Light oatmeal with fruits"
+📚 Millions of text pairs such as:
+   • Question: "I need something quick" → Answer: "Fast pasta recipe"
+   • Question: "comfort food for winter" → Answer: "Hearty beef stew"
+   • Question: "healthy breakfast" → Answer: "Light oatmeal with fruits"
 
-🧠 El modelo aprende PATRONES semánticos:
-   • "quick", "fast", "now", "hurry" → URGENCIA/VELOCIDAD
-   • "comfort", "cozy", "warm" → RECONFORTANTE
-   • "healthy", "light", "nutritious" → SALUDABLE
-   • "impress", "guests", "special" → ELABORADO/FORMAL
+🧠 The model learns SEMANTIC patterns:
+   • "quick", "fast", "now", "hurry" → URGENCY / SPEED
+   • "comfort", "cozy", "warm" → COMFORTING
+   • "healthy", "light", "nutritious" → HEALTHY
+   • "impress", "guests", "special" → FANCY / SPECIAL
 
-💡 Estos patrones se codifican en los 384 números del embedding.
-   NO es magia, es APRENDIZAJE de millones de ejemplos.
+💡 Those patterns live in the 384 embedding numbers.
+   Not magic — learning from millions of examples.
 """)
 
 # ============================================================================
-# PARTE 2: Los embeddings capturan CONTEXTO, no solo palabras
+# PART 2: Embeddings encode CONTEXT, not isolated words
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 2: Embeddings = Contexto Semántico Codificado")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 2: Embeddings = Encoded Semantic Context")
+print("=" * 80)
 
 model = TextEmbedding(model_name="BAAI/bge-small-en-v1.5")
 
-# Ejemplos con diferentes "intenciones"
-queries_con_intencion = {
-    "urgencia": [
+queries_by_intent = {
+    "urgency": [
         "I'm hungry NOW",
         "need something quick",
         "fast recipe please",
     ],
-    "confort": [
+    "comfort": [
         "comfort food for a cold day",
         "something warm and cozy",
         "hearty meal",
     ],
-    "salud": [
+    "health": [
         "healthy dinner option",
         "light meal",
         "nutritious recipe",
     ],
-    "impresionar": [
+    "impress": [
         "impress my dinner guests",
         "fancy recipe for special occasion",
         "elegant dish",
     ],
 }
 
-print("\n📊 Embeddings para queries con diferentes INTENCIONES:\n")
+print("\n📊 Embeddings for queries with different INTENTS:\n")
 
-# Generar embeddings
-embeddings_por_intencion = {}
-for intencion, queries in queries_con_intencion.items():
-    print(f"🎯 Intención: {intencion.upper()}")
+embeddings_by_intent = {}
+for intent, queries in queries_by_intent.items():
+    print(f"🎯 Intent: {intent.upper()}")
     embeddings = []
     for q in queries:
         emb = list(model.embed([q]))[0]
         embeddings.append(emb)
         print(f"   '{q}'")
         print(f"   → [{emb[0]:.3f}, {emb[1]:.3f}, {emb[2]:.3f}, ..., {emb[-1]:.3f}]")
-    embeddings_por_intencion[intencion] = embeddings
+    embeddings_by_intent[intent] = embeddings
     print()
 
 # ============================================================================
-# PARTE 3: Similitud DENTRO de cada intención vs ENTRE intenciones
+# PART 3: Similarity within vs between intents
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 3: Similitud INTRA-intención vs INTER-intención")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 3: Within-Intent vs Between-Intent Similarity")
+print("=" * 80)
+
 
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-print("\n📐 Similitud DENTRO de la misma intención (ALTA):\n")
 
-for intencion, embeddings in embeddings_por_intencion.items():
+print("\n📐 Similarity WITHIN the same intent (HIGH):\n")
+
+for intent, embeddings in embeddings_by_intent.items():
     sims = []
     for i, emb1 in enumerate(embeddings):
-        for emb2 in embeddings[i+1:]:
+        for emb2 in embeddings[i + 1 :]:
             sim = cosine_similarity(emb1, emb2)
             sims.append(sim)
-    
+
     avg_sim = np.mean(sims) if sims else 0
-    print(f"   {intencion.upper()}: promedio {avg_sim:.3f}")
-    print(f"   💡 Queries con la MISMA intención tienen vectores SIMILARES")
+    print(f"   {intent.upper()}: average {avg_sim:.3f}")
+    print("   💡 Same-intent queries have SIMILAR vectors")
 
-print("\n📐 Similitud ENTRE diferentes intenciones (BAJA):\n")
+print("\n📐 Similarity BETWEEN different intents (LOWER):\n")
 
-intenciones = list(embeddings_por_intencion.keys())
-for i, int1 in enumerate(intenciones):
-    for int2 in intenciones[i+1:]:
-        # Comparar primer embedding de cada intención
-        sim = cosine_similarity(
-            embeddings_por_intencion[int1][0],
-            embeddings_por_intencion[int2][0]
-        )
-        print(f"   {int1} ↔ {int2}: {sim:.3f}")
+intents = list(embeddings_by_intent.keys())
+for i, i1 in enumerate(intents):
+    for i2 in intents[i + 1 :]:
+        sim = cosine_similarity(embeddings_by_intent[i1][0], embeddings_by_intent[i2][0])
+        print(f"   {i1} ↔ {i2}: {sim:.3f}")
 
-print(f"\n💡 Queries con DIFERENTES intenciones tienen vectores MÁS DISTANTES")
+print("\n💡 Different-intent queries sit FARTHER apart in vector space")
 
 # ============================================================================
-# PARTE 4: ¿Cómo se "mide" la intención? NO se mide, se INFIERE
+# PART 4: Intent is not "measured" — it's inferred
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 4: La Intención NO se Mide, se INFIERE del Espacio Vectorial")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 4: Intent Is Not Measured — It Is Inferred from Vector Space")
+print("=" * 80)
 
 print("""
-🔍 Proceso paso a paso:
+🔍 Step by step:
 
-1️⃣ Usuario escribe: "I'm hungry NOW"
+1️⃣ User types: "I'm hungry NOW"
    ↓
-2️⃣ Se genera embedding: [-0.109, 0.034, 0.021, ..., 0.015]
+2️⃣ Embedding: [-0.109, 0.034, 0.021, ..., 0.015]
    ↓
-3️⃣ Este embedding está CERCA de:
+3️⃣ That point is CLOSE to:
    • "quick pasta" (sim: 0.82)
    • "fast meal" (sim: 0.79)
    • "easy recipe" (sim: 0.76)
    ↓
-4️⃣ Y LEJOS de:
+4️⃣ And FAR from:
    • "elaborate dish" (sim: 0.23)
    • "slow-cooked" (sim: 0.18)
    ↓
-5️⃣ Las recetas también tienen embeddings:
-   • "TOMATO & MUSSEL PASTA" tiene chunks como:
-     - "Quick 20-minute meal" (alto en urgencia)
-     - "Simple ingredients" (alto en simplicidad)
+5️⃣ Recipes also have embeddings:
+   • "TOMATO & MUSSEL PASTA" has chunks like:
+     - "Quick 20-minute meal" (high urgency)
+     - "Simple ingredients" (high simplicity)
    ↓
-6️⃣ Cálculo de similitud coseno:
-   query_emb <=> recipe_chunk_emb = 0.703
+6️⃣ Cosine similarity:
+   query_emb vs recipe_chunk_emb = 0.703
    ↓
-7️⃣ ¡Match! La receta tiene chunks "cerca" del query en el espacio vectorial
+7️⃣ Match! Recipe chunks are "near" the query in 384D space
 
-💡 NO hay un "medidor de intención" explícito.
-   La intención emerge de las DISTANCIAS en el espacio de 384 dimensiones.
+💡 There is no standalone "intent meter".
+   Intent emerges from DISTANCES in embedding space.
 """)
 
 # ============================================================================
-# PARTE 5: Visualización conceptual del espacio vectorial
+# PART 5: Conceptual picture of vector space
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 5: Visualización Conceptual del Espacio de 384D")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 5: Conceptual View of 384D Space")
+print("=" * 80)
 
 print("""
-Imagina el espacio vectorial como un mapa 3D (en realidad es 384D):
+Think of embedding space like a 3D map (really 384D):
 
         🏔️ "elaborate dishes"
               ↑
@@ -179,63 +175,61 @@ Imagina el espacio vectorial como un mapa 3D (en realidad es 384D):
               ↓
         🍲 "comfort food"
 
-Cuando el usuario dice:
-  • "I'm hungry NOW" → el embedding cae cerca de ⚡
-  • "comfort food" → el embedding cae cerca de 🍲
-  • "healthy meal" → el embedding cae cerca de 🥗
-  • "impress guests" → el embedding cae cerca de 🏔️
+When the user says:
+  • "I'm hungry NOW" → lands near ⚡
+  • "comfort food" → lands near 🍲
+  • "healthy meal" → lands near 🥗
+  • "impress guests" → lands near 🏔️
 
-Las recetas TAMBIÉN tienen embeddings en este espacio:
-  • "Quick pasta" → cerca de ⚡
-  • "Fish pie" → cerca de 🍲
-  • "Salad" → cerca de 🥗
+Recipes live in the SAME space:
+  • "Quick pasta" → near ⚡
+  • "Fish pie" → near 🍲
+  • "Salad" → near 🥗
 
-La búsqueda encuentra recetas CERCANAS al query en este espacio.
+Search returns recipes NEAR the query in this space.
 """)
 
 # ============================================================================
-# PARTE 6: ¿Por qué funciona? Entrenamiento masivo
+# PART 6: Why it works — massive scale training
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 6: ¿Por Qué Funciona Tan Bien?")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 6: Why It Works So Well")
+print("=" * 80)
 
 print("""
-✅ El modelo BAAI/bge-small-en-v1.5 fue entrenado con:
+✅ BAAI/bge-small-en-v1.5 was trained on:
 
-📚 Datasets masivos:
-   • MS MARCO (8.8M queries → documents)
-   • Natural Questions (307K questions → passages)
-   • BEIR (múltiples dominios)
-   • Millones de pares pregunta-respuesta
+📚 Large datasets:
+   • MS MARCO (8.8M query → document pairs)
+   • Natural Questions (307K Q → passages)
+   • BEIR (multiple domains)
+   • Millions of QA pairs
 
-🎯 Tarea de entrenamiento:
-   • Dado un query, predecir qué documentos son RELEVANTES
-   • El modelo aprende que:
-     - "quick" → documentos con "fast", "easy", "simple"
-     - "comfort" → documentos con "warm", "hearty", "cozy"
-     - "healthy" → documentos con "light", "nutritious", "fresh"
+🎯 Training objective:
+   • Given a query, predict which documents are RELEVANT
+   • The model learns:
+     - "quick" ↔ docs with "fast", "easy", "simple"
+     - "comfort" ↔ docs with "warm", "hearty", "cozy"
+     - "healthy" ↔ docs with "light", "nutritious", "fresh"
 
-🧠 Resultado:
-   • 384 dimensiones que codifican SIGNIFICADO, no palabras
-   • Cada dimensión captura un "aspecto" semántico
-   • Ejemplo (hipotético):
-     - Dim 23: "urgencia/velocidad" → alta si query es urgente
-     - Dim 157: "reconfortante" → alta si query es sobre comfort
-     - Dim 301: "saludable" → alta si query es sobre health
+🧠 Outcome:
+   • 384 dimensions encode MEANING, not words
+   • Each dim captures a fuzzy semantic "aspect"
+   • Example (hypothetical):
+     - Dim 23: urgency / speed
+     - Dim 157: comfort
+     - Dim 301: health
 
-💡 NO es un "medidor de intención" diseñado manualmente.
-   Es un MODELO APRENDIDO de millones de ejemplos reales.
+💡 No hand-crafted intent rules — a model trained on real data.
 """)
 
 # ============================================================================
-# PARTE 7: Ejemplo práctico con números reales
+# PART 7: Concrete numbers
 # ============================================================================
-print("\n" + "="*80)
-print("PARTE 7: Ejemplo con Números Reales")
-print("="*80)
+print("\n" + "=" * 80)
+print("PART 7: Example with Real Numbers")
+print("=" * 80)
 
-# Generar embeddings para comparación
 query1 = "I'm hungry NOW"
 query2 = "elaborate dinner for guests"
 
@@ -243,18 +237,17 @@ emb1 = list(model.embed([query1]))[0]
 emb2 = list(model.embed([query2]))[0]
 
 print(f"\n🔍 Query 1: '{query1}'")
-print(f"   Primeras 10 dimensiones: {emb1[:10]}")
-print(f"   (384 dimensiones en total)")
+print(f"   First 10 dimensions: {emb1[:10]}")
+print("   (384 dimensions total)")
 
 print(f"\n🔍 Query 2: '{query2}'")
-print(f"   Primeras 10 dimensiones: {emb2[:10]}")
-print(f"   (384 dimensiones en total)")
+print(f"   First 10 dimensions: {emb2[:10]}")
+print("   (384 dimensions total)")
 
 sim = cosine_similarity(emb1, emb2)
-print(f"\n📐 Similitud entre ambos: {sim:.3f}")
-print(f"   💡 Baja similitud = diferentes intenciones")
+print(f"\n📐 Similarity between them: {sim:.3f}")
+print("   💡 Low similarity → different intents")
 
-# Ahora con recetas
 recipe_quick = "Quick 20-minute tomato pasta"
 recipe_elaborate = "Slow-cooked beef wellington with truffle sauce"
 
@@ -266,55 +259,53 @@ sim_q1_elaborate = cosine_similarity(emb1, emb_elaborate)
 sim_q2_quick = cosine_similarity(emb2, emb_quick)
 sim_q2_elaborate = cosine_similarity(emb2, emb_elaborate)
 
-print(f"\n🍝 Receta 1: '{recipe_quick}'")
-print(f"   Similitud con '{query1}': {sim_q1_quick:.3f} ✅ ALTA")
-print(f"   Similitud con '{query2}': {sim_q2_quick:.3f} ❌ BAJA")
+print(f"\n🍝 Recipe 1: '{recipe_quick}'")
+print(f"   Similarity to '{query1}': {sim_q1_quick:.3f} ✅ HIGH")
+print(f"   Similarity to '{query2}': {sim_q2_quick:.3f} ❌ LOW")
 
-print(f"\n🥩 Receta 2: '{recipe_elaborate}'")
-print(f"   Similitud con '{query1}': {sim_q1_elaborate:.3f} ❌ BAJA")
-print(f"   Similitud con '{query2}': {sim_q2_elaborate:.3f} ✅ ALTA")
+print(f"\n🥩 Recipe 2: '{recipe_elaborate}'")
+print(f"   Similarity to '{query1}': {sim_q1_elaborate:.3f} ❌ LOW")
+print(f"   Similarity to '{query2}': {sim_q2_elaborate:.3f} ✅ HIGH")
 
-print(f"\n💡 El sistema AUTOMÁTICAMENTE matchea intenciones sin medirlas explícitamente!")
+print("\n💡 The system matches intents automatically without an explicit intent classifier!")
 
 # ============================================================================
-# RESUMEN FINAL
+# FINAL SUMMARY
 # ============================================================================
-print("\n" + "="*80)
-print("📝 RESUMEN: ¿Cómo se Captura la Intención?")
-print("="*80)
+print("\n" + "=" * 80)
+print("📝 SUMMARY: How Intent Is Captured")
+print("=" * 80)
 
 print("""
-❌ NO hay un "medidor de intención" explícito
-✅ La intención emerge de:
+❌ No explicit "intent gauge"
+✅ Intent emerges from:
 
-1️⃣ ENTRENAMIENTO MASIVO
-   • Modelo aprende de millones de ejemplos
-   • Patrones semánticos se codifican en 384 dimensiones
+1️⃣ LARGE-SCALE TRAINING
+   • Millions of examples
+   • Semantic patterns → 384 numbers
 
-2️⃣ ESPACIO VECTORIAL
-   • Queries similares → vectores cercanos
-   • Queries diferentes → vectores lejanos
+2️⃣ VECTOR SPACE
+   • Similar queries → nearby vectors
+   • Different queries → farther vectors
 
-3️⃣ DISTANCIA COSENO
-   • Mide cercanía en el espacio de 384D
-   • Cercanía = intención similar
+3️⃣ COSINE DISTANCE
+   • Proximity in 384D ≈ similar intent
 
-4️⃣ NO usa palabras clave
-   • "I'm hungry NOW" no busca "hungry" literalmente
-   • Busca vectores CERCANOS que capturen urgencia/rapidez
+4️⃣ NOT keyword lookup
+   • "I'm hungry NOW" does not literally search "hungry"
+   • It searches NEARBY vectors capturing urgency / speed
 
-🎯 En otras palabras:
-   • NO medimos intención directamente
-   • La intención está CODIFICADA en los embeddings
-   • La búsqueda encuentra recetas con embeddings SIMILARES
-   • Similitud de embeddings = similitud de intención
+🎯 In short:
+   • We do not measure intent directly
+   • Intent is ENCODED in embeddings
+   • Search finds recipes with SIMILAR embeddings
+   • Embedding similarity ≈ intent similarity
 
-🚀 Por eso funciona mejor que búsqueda por keywords:
-   • Keywords: "hungry" → busca literal "hungry"
-   • Embeddings: "hungry" → busca concepto de "comida rápida/urgencia"
+🚀 That's why this beats raw keywords:
+   • Keywords: "hungry" → literal "hungry"
+   • Embeddings: "hungry" → "need food fast" concept space
 """)
 
-print("="*80)
-print("✅ Explicación completada!")
-print("="*80)
-
+print("=" * 80)
+print("✅ Explanation complete!")
+print("=" * 80)

@@ -20,11 +20,11 @@ from tests.tools.tools import function_manager
 
 # import chainlit as cl
 
-# Obtener la fecha actual
-fecha_actual = datetime.now()
+# Current date
+current_date = datetime.now()
 
-# Formatear la fecha con día de la semana
-fecha_formateada = fecha_actual.strftime("%A, %B %d, %Y %H:%M")
+# Weekday + formatted timestamp for the system prompt
+formatted_date = current_date.strftime("%A, %B %d, %Y %H:%M")
 
 pr = cProfile.Profile()
 pr.enable()
@@ -37,7 +37,7 @@ chat_memory = SimpleChatMemory()
 
 chat_memory.add_system_message(
     content=f"""
-date: {fecha_formateada}.
+date: {formatted_date}.
 Based on the date, you should be able to infer which day of the week it is, and talk naturally about schedules with the  user without spefically asking for date formats.
 
 # Botland CCAI Sales Assistant: Alex
