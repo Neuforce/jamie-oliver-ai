@@ -32,7 +32,7 @@ import {
 import { transformRecipeMatch, transformRecipeFromSummary, loadRecipeFromLocal, type BackendRecipeSummary } from '../data/recipeTransformer';
 import type { JamieOliverRecipe } from '../data/recipeTransformer';
 import {
-  getFocusedRecipeDetail,
+  getRecipeDetailForOpenIntent,
   backendSummaryFromRecipeDetail,
   userAffirmsGoToFullRecipe,
 } from '../lib/discoveryFullRecipeGate';
@@ -361,20 +361,22 @@ export function ChatView({
       }
 
       if (isFinal && normalizedText) {
-        const focusedDetail = getFocusedRecipeDetail(messagesRef.current);
-        if (focusedDetail && userAffirmsGoToFullRecipe(normalizedText)) {
-          interruptVoiceRef.current();
-          const userMessage: Message = {
-            id: Date.now().toString(),
-            type: 'user',
-            content: normalizedText,
-            timestamp: new Date(),
-          };
-          setMessages(prev => [...prev, userMessage]);
-          setIsTyping(false);
-          setThinkingStatus(null);
-          void openRecipeModalFromDetailRef.current(focusedDetail);
-          return;
+        if (userAffirmsGoToFullRecipe(normalizedText)) {
+          const focusedDetail = getRecipeDetailForOpenIntent(messagesRef.current, normalizedText);
+          if (focusedDetail) {
+            interruptVoiceRef.current();
+            const userMessage: Message = {
+              id: Date.now().toString(),
+              type: 'user',
+              content: normalizedText,
+              timestamp: new Date(),
+            };
+            setMessages(prev => [...prev, userMessage]);
+            setIsTyping(false);
+            setThinkingStatus(null);
+            void openRecipeModalFromDetailRef.current(focusedDetail);
+            return;
+          }
         }
 
         // Create user message from voice transcript
@@ -731,25 +733,27 @@ export function ChatView({
     const text = messageText || inputValue.trim();
     if (!text) return;
 
-    const focusedDetail = getFocusedRecipeDetail(messages);
-    if (focusedDetail && userAffirmsGoToFullRecipe(text)) {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-        abortControllerRef.current = null;
-      }
-      setIsTyping(false);
-      setThinkingStatus(null);
+    if (userAffirmsGoToFullRecipe(text)) {
+      const focusedDetail = getRecipeDetailForOpenIntent(messages, text);
+      if (focusedDetail) {
+        if (abortControllerRef.current) {
+          abortControllerRef.current.abort();
+          abortControllerRef.current = null;
+        }
+        setIsTyping(false);
+        setThinkingStatus(null);
 
-      const userMessage: Message = {
-        id: Date.now().toString(),
-        type: 'user',
-        content: text,
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, userMessage]);
-      setInputValue('');
-      await openRecipeModalFromDetail(focusedDetail);
-      return;
+        const userMessage: Message = {
+          id: Date.now().toString(),
+          type: 'user',
+          content: text,
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, userMessage]);
+        setInputValue('');
+        await openRecipeModalFromDetail(focusedDetail);
+        return;
+      }
     }
 
     // Cancel any ongoing request
@@ -1364,12 +1368,11 @@ export function ChatView({
         /*
          * Voice Mode — stacked roller of "alive" cards.
          *
-         * We intentionally DO NOT wrap this in `.jamie-scroll-area`: the
-         * roller owns navigation via pointer drag (`touch-action: none`).
-         * A scrollable ancestor would steal the gesture on phones and give
-         * a confusing "I can scroll up but not down" feel, because the
-         * native scroll consumes vertical movement before the roller's
-         * pointer handlers can process it.
+         * We intentionally DO NOT wrap this in `.jamie-scroll-area`: a
+         * scrollable ancestor would steal vertical gestures from the stack
+         * on some devices. The roller uses pointer drag on the top card for
+         * stack navigation; `touch-action: pan-y` on the stage and top card
+         * lets the inner card body scroll while Jamie streams (NEU-621).
          */
         <div className="jamie-voice-stage">
           <div className="jamie-shell-width jamie-voice-stage__inner">

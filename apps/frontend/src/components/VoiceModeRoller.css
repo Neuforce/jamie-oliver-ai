@@ -17,6 +17,8 @@
 .voice-roller {
   position: relative;
   width: 100%;
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -85,8 +87,9 @@
   align-items: center;
   justify-content: flex-end;
   width: 100%;
+  flex: 1;
+  min-height: 0;
   padding: 24px 0 12px;
-  min-height: 500px;
 }
 
 /*
@@ -158,7 +161,7 @@
   margin-bottom: 0;
   z-index: 3;
   cursor: grab;
-  touch-action: none;
+  touch-action: pan-y;
 }
 
 .voice-roller__card[data-role='top']:active {
@@ -202,6 +205,22 @@
 }
 
 /*
+ * Long Jamie payloads (carousel, tool card) must scroll *inside* the top
+ * slot so the 3-card stack keeps a stable footprint; vertical centering +
+ * overflow:hidden on the voice stage previously clipped/overlapped cards.
+ */
+.voice-roller__card[data-role='top'] .voice-roller__card-body {
+  width: 100%;
+  min-width: 0;
+  max-height: min(62vh, calc(100dvh - 320px));
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior: contain;
+}
+
+/*
  * User-speaker variant — roller doesn't enforce user/jamie styling,
  * consumers handle that in renderMessage. But we expose the speaker via
  * data-speaker so consumers can target it with a child selector if needed.
@@ -228,12 +247,15 @@
 
 @media (max-width: 640px) {
   .voice-roller__stack {
-    min-height: 430px;
     padding-top: 10px;
   }
 
   .voice-roller__card[data-speaker='jamie'] {
     padding: 20px 16px 18px;
+  }
+
+  .voice-roller__card[data-role='top'] .voice-roller__card-body {
+    max-height: min(52vh, calc(100dvh - 260px));
   }
 
   .voice-roller__stack[data-tall-top='true'] {

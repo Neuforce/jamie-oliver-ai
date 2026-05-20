@@ -9,6 +9,8 @@ export interface AppHeaderProps {
   activeTab: TabView;
   onOpenMenu: () => void;
   onTabChange: (tab: TabView) => void;
+  /** E.g. reset chat / home — client ask (NEU-621). */
+  onLogoClick?: () => void;
 }
 
 /**
@@ -18,7 +20,7 @@ export interface AppHeaderProps {
  * container surface. Background is fully transparent so the page surface
  * reads through. Matches the `ui-1` spec and honours the shell width tokens.
  */
-export function AppHeader({ activeTab, onOpenMenu, onTabChange }: AppHeaderProps) {
+export function AppHeader({ activeTab, onOpenMenu, onTabChange, onLogoClick }: AppHeaderProps) {
   const isChatView = activeTab === 'chat';
 
   return (
@@ -31,12 +33,23 @@ export function AppHeader({ activeTab, onOpenMenu, onTabChange }: AppHeaderProps
           size="md"
         />
 
-        <img
-          src={logoImage}
-          alt="Jamie Oliver"
-          className="jamie-app-header__logo"
-          draggable={false}
-        />
+        {onLogoClick ? (
+          <button type="button" className="jamie-app-header__logo-hit" onClick={onLogoClick} aria-label="Back to start">
+            <img
+              src={logoImage}
+              alt="Jamie Oliver"
+              className="jamie-app-header__logo"
+              draggable={false}
+            />
+          </button>
+        ) : (
+          <img
+            src={logoImage}
+            alt="Jamie Oliver"
+            className="jamie-app-header__logo"
+            draggable={false}
+          />
+        )}
 
         {isChatView ? (
           <IconButton
