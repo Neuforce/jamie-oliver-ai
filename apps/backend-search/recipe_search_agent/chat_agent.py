@@ -8,6 +8,7 @@ and manages chat sessions with persistent memory.
 import os
 import logging
 import asyncio
+import uuid
 from typing import Dict, Optional, AsyncGenerator, Any
 from dataclasses import dataclass
 from datetime import datetime, timedelta
@@ -27,7 +28,7 @@ from recipe_search_agent.discovery_tools import (
     discovery_function_manager,
     set_search_agent,
 )
-from recipe_search_agent.guardrails import evaluate_message, set_gate_blocked
+from recipe_search_agent.guardrails import evaluate_message, reset_gate_blocked, set_gate_blocked
 
 logger = logging.getLogger(__name__)
 
@@ -245,17 +246,20 @@ class DiscoveryChatAgent:
         """
         session = self._get_or_create_session(session_id)
 
-        gate = await evaluate_message(message)
+        correlation_id = str(uuid.uuid4())
+        gate = await evaluate_message(message, correlation_id=correlation_id)
         if gate.blocked:
             set_gate_blocked(True)
             logger.info(
-                "Query gate blocked session=%s source=%s category=%s",
+                "Query gate blocked session=%s source=%s category=%s correlation_id=%s",
                 session_id,
                 gate.source,
                 gate.category,
+                correlation_id,
             )
             yield ChatEvent(type="text_chunk", content=gate.response_text or "")
             yield ChatEvent(type="done", content="")
+            reset_gate_blocked()
             return
 
         set_gate_blocked(False)

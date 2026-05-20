@@ -3,6 +3,11 @@
 import sys
 from pathlib import Path
 
+# Add backend-voice app root so `from src.` resolves in pytest.
+_voice_app_root = Path(__file__).resolve().parents[1]
+if str(_voice_app_root) not in sys.path:
+    sys.path.insert(0, str(_voice_app_root))
+
 # Add ccai package to path
 ccai_path = Path(__file__).parent.parent.parent.parent / "packages" / "ccai"
 if str(ccai_path) not in sys.path:

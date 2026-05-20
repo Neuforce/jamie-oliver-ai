@@ -125,6 +125,7 @@ Until brand/legal approval, **impasse** wording must be **British English**, **s
 ## 13. Related documentation
 
 - Implementation plan: `JAMIE_OLIVER_AI_GUARDRAILS_PLAN.md` (same directory / copy at `neuForce/` root and `jamie-oliver-ai/docs/guardrails/`).
+- RAG index governance: `RAG_INDEX_3.md` (ingest, Supabase tables, rollback).
 - NeuGate: `neuGate/README.md`, `neuGate/docs/INTEGRATION.md`, `neuGate/config/schema/neugate-schema.json`.
 - Current code references: `apps/backend-search/recipe_search_agent/prompts.py`, `chat_agent.py`, `discovery_tools.py`, `search.py` (`hybrid_recipe_search`); `apps/backend-voice/src/config/prompts.py`; planned `recipe_search_agent/guardrails/`.
 

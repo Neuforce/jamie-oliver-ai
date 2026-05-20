@@ -154,7 +154,7 @@ jamie-oliver-ai/
 | [Development Guide](docs/DEVELOPMENT.md) | Local setup and development workflow |
 | [Environment Variables](docs/ENVIRONMENT_VARIABLES.md) | All required environment variables |
 | [Backend-Search Docs](apps/backend-search/docs/README.md) | Search API documentation |
-| [Backend-Voice Docs](apps/backend-voice/README.md) | Voice service documentation |
+| [RAG Index 3 governance](docs/guardrails/RAG_INDEX_3.md) | Ingest, tables, rollback, release checklist |
 | [Frontend Docs](apps/frontend/README.md) | Frontend application guide |
 
 ## Development
@@ -171,6 +171,17 @@ cd apps/backend-search && pytest
 # Frontend (if configured)
 cd apps/frontend && npm test
 ```
+
+### Guardrails (NeuGate) unit tests
+
+From the repo root (requires [Poetry](https://python-poetry.org/) for `apps/backend-voice`):
+
+```bash
+make test-guardrails
+# same as: bash scripts/test-guardrails.sh
+```
+
+Optional **live** red-team certification against NeuGate (`pytest -m guardrails`): run the GitHub Actions workflow **Guardrails NeuGate certification** (manual `workflow_dispatch`) after setting secrets `NEUGATE_URL` and, if needed, `NEUGATE_API_KEY`. See `docs/guardrails/JAMIE_OLIVER_AI_GUARDRAILS_PLAN.md`.
 
 ### Useful Commands
 

@@ -1,4 +1,4 @@
-"""Fail-safe NeuGate query gate (progressive: bypass or error → proceed)."""
+"""Fail-safe NeuGate query gate for voice."""
 
 from __future__ import annotations
 
@@ -10,19 +10,15 @@ from typing import Literal
 
 import httpx
 
-from recipe_search_agent.guardrails.config import GuardrailsSettings, get_guardrails_settings
-from recipe_search_agent.guardrails.inline_fallback import evaluate_inline_fallback
-from recipe_search_agent.guardrails.neugate_client import evaluate_via_neugate
-from recipe_search_agent.guardrails.policy_loader import load_jamie_policy
+from src.config.prompts import PREPROMPT_VERSION as _PREPROMPT_VERSION
+from src.guardrails.config import GuardrailsSettings, get_guardrails_settings
+from src.guardrails.inline_fallback import evaluate_inline_fallback
+from src.guardrails.neugate_client import evaluate_via_neugate
+from src.guardrails.policy_loader import load_jamie_policy
 
 logger = logging.getLogger(__name__)
 
 GateSource = Literal["bypass", "neugate", "fail_safe", "inline_fallback"]
-
-try:
-    from recipe_search_agent.prompts import PREPROMPT_VERSION as _PREPROMPT_VERSION
-except Exception:  # pragma: no cover
-    _PREPROMPT_VERSION = "unknown"
 
 
 @dataclass(frozen=True)
@@ -90,8 +86,7 @@ def evaluate_message_sync(
             gate_category=None,
             blocked=False,
         )
-        extra = {"error_type": type(exc).__name__}
-        logger.debug("NeuGate error detail %s cid=%s", extra, cid)
+        logger.debug("NeuGate error detail %s cid=%s", type(exc).__name__, cid)
         if settings.inline_fallback_on_neugate_error:
             blocked_fb, pivot, cat_fb = evaluate_inline_fallback(message=message, policy=policy)
             if blocked_fb and pivot.strip():

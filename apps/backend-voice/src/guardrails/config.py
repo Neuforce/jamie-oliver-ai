@@ -1,4 +1,4 @@
-"""Environment settings for NeuGate guardrails."""
+"""Environment settings for NeuGate guardrails (voice backend)."""
 
 from __future__ import annotations
 
@@ -25,6 +25,9 @@ class GuardrailsSettings:
     neugate_project_id: str
     neugate_timeout_seconds: float
     inline_fallback_on_neugate_error: bool = True
+    # FR-5: second pass on assistant text before TTS (only when neugate_enabled is true).
+    neugate_output_moderation_enabled: bool = False
+    neugate_output_moderation_min_chars: int = 24
 
     @classmethod
     def from_env(cls) -> "GuardrailsSettings":
@@ -38,6 +41,12 @@ class GuardrailsSettings:
             neugate_timeout_seconds=float(os.getenv("NEUGATE_TIMEOUT_SECONDS", "0.8")),
             inline_fallback_on_neugate_error=_env_bool(
                 "NEUGATE_INLINE_FALLBACK_ON_ERROR", default=True
+            ),
+            neugate_output_moderation_enabled=_env_bool(
+                "NEUGATE_OUTPUT_MODERATION_ENABLED", default=False
+            ),
+            neugate_output_moderation_min_chars=int(
+                os.getenv("NEUGATE_OUTPUT_MODERATION_MIN_CHARS", "24")
             ),
         )
 

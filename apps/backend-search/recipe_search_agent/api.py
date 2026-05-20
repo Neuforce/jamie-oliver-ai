@@ -9,10 +9,11 @@ import time
 import json
 import logging
 import asyncio
+import uuid
 from typing import List, Optional
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, Query, Header, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
@@ -23,6 +24,7 @@ from recipe_search_agent.search import RecipeSearchAgent, SearchFilters, RecipeM
 from recipe_search_agent.identity_service import IdentityService
 from recipe_search_agent.access_service import AccessService
 from recipe_search_agent.purchase_sync_service import PurchaseSyncService
+from recipe_search_agent.guardrails import evaluate_message_sync
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -150,6 +152,8 @@ class SearchResponse(BaseModel):
     results: List[RecipeMatchResponse]
     total: int
     took_ms: float
+    guardrail_blocked: bool = Field(False, description="True when semantic search was skipped by guardrails")
+    guardrail_category: Optional[str] = Field(None, description="Guardrail category when blocked")
 
 
 # Chat Agent Models
@@ -399,7 +403,10 @@ async def sync_supertab_purchase(request: SupertabPurchaseSyncRequest):
 
 
 @app.post("/api/v1/recipes/search", response_model=SearchResponse)
-async def search_recipes(request: SearchRequest):
+async def search_recipes(
+    request: SearchRequest,
+    x_correlation_id: Optional[str] = Header(None, alias="X-Correlation-ID"),
+):
     """
     Semantic recipe search.
 
@@ -419,6 +426,25 @@ async def search_recipes(request: SearchRequest):
     """
     try:
         start_time = time.time()
+        cid = x_correlation_id or str(uuid.uuid4())
+
+        gate = evaluate_message_sync(request.query.strip() or "", correlation_id=cid)
+        if gate.blocked:
+            return SearchResponse(
+                query=request.query,
+                filters_applied={
+                    "category": request.category,
+                    "mood": request.mood,
+                    "complexity": request.complexity,
+                    "cost": request.cost,
+                    "ingredients_query": request.ingredients_query,
+                },
+                results=[],
+                total=0,
+                took_ms=round((time.time() - start_time) * 1000, 2),
+                guardrail_blocked=True,
+                guardrail_category=gate.category,
+            )
 
         # Build filters
         filters = SearchFilters(
