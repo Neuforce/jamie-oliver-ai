@@ -732,6 +732,7 @@ export default function App() {
             <TabNav
               activeTab={activeView}
               onTabChange={setActiveView}
+              onLogoClick={handleLogoClick}
               onCloseChat={handleCloseChat}
               myTabCard={myTabCard}
               onOpenMyTab={handleOpenMyTab}

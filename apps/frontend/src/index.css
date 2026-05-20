@@ -3576,25 +3576,33 @@ body {
 /*
  * Voice-mode stage — fills the view-shell without its own scroll.
  *
- * The roller inside captures pointer drag (`touch-action: none`) for its
- * up/down navigation. A scrollable ancestor would intercept that gesture,
- * so we use a simple flex container that both horizontally (via
- * `.jamie-shell-width` on the inner + `justify-content`) and vertically
- * (`align-items: center`) centers the roller. Bottom padding reserves
- * room for the floating voice dock (`--jamie-voice-dock-offset`) so the
- * roller never ducks behind it.
+ * The roller captures pointer drag on the top card for stack navigation.
+ * A scrollable ancestor would intercept that gesture, so we avoid wrapping
+ * the roller in `.jamie-scroll-area`.
+ *
+ * `touch-action: pan-y` on this stage (and on the top card) lets the inner
+ * `.voice-roller__card-body` scroll while Jamie is streaming; `touch-action: none`
+ * on the stage previously blocked native vertical scrolling on iOS.
+ *
+ * Vertically we pin from the top (`align-items: stretch`) instead of
+ * centering the roller: tall Jamie cards + carousel used to clash with
+ * `overflow: hidden` + vertical centering, producing clipped/overlapping
+ * stacks. Horizontal centering stays via `.jamie-shell-width` on the inner.
+ *
+ * Bottom padding reserves room for the floating voice dock.
  */
 .jamie-voice-stage {
   flex: 1;
   min-height: 0;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
   padding: 12px 0 180px;
   overflow: hidden;
   /* Prevent iOS rubber-band scroll on the body from stealing the drag. */
   overscroll-behavior: contain;
-  touch-action: manipulation;
+  /* Allow vertical scroll inside the top card while stack swipe still uses pointer events (NEU-621). */
+  touch-action: pan-y;
 }
 
 /*
@@ -3614,7 +3622,9 @@ body {
 .jamie-voice-stage__inner {
   display: flex;
   flex-direction: column;
-  align-self: stretch;
+  align-self: center;
+  flex: 1;
+  min-height: 0;
   width: 100%;
   max-width: var(--jamie-shell-max);
   padding-inline: var(--jamie-shell-gutter);
@@ -4239,7 +4249,7 @@ body {
 
 /* --- Voice dock (keep existing behaviour, align tokens) ------------------ */
 .jamie-view-shell[data-voice-active='true'] .jamie-scroll-area {
-  padding-bottom: 180px;
+  padding-bottom: 220px;
 }
 
 .jamie-voice-dock-shell {
@@ -4248,12 +4258,8 @@ body {
   right: 0;
   bottom: 0;
   padding: 12px 20px 20px;
-  background: linear-gradient(
-    180deg,
-    rgba(240, 244, 245, 0) 0%,
-    rgba(240, 244, 245, 0.9) 30%,
-    var(--jamie-page-bg) 100%
-  );
+  /* Fully opaque so chat/recipe content isn’t visible through the dock (client NEU-621). */
+  background: var(--jamie-page-bg);
   pointer-events: none;
   z-index: 24;
 }
@@ -4725,6 +4731,22 @@ body {
   justify-content: space-between;
   gap: 12px;
   padding: 0 var(--jamie-shell-gutter);
+}
+
+.jamie-app-header__logo-hit {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 6px 10px;
+  margin: -6px -10px;
+  cursor: pointer;
+  border-radius: 999px;
+  line-height: 0;
+}
+
+.jamie-app-header__logo-hit:focus-visible {
+  outline: 2px solid var(--jamie-ink-teal, #0d9488);
+  outline-offset: 2px;
 }
 
 .jamie-app-header__logo {

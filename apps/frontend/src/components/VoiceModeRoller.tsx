@@ -243,10 +243,10 @@ export function VoiceModeRoller({
   /*
    * Mouse-wheel / trackpad navigation.
    *
-   * Desktop users reach for the wheel before they think to click-and-drag,
-   * and without this handler voice-mode feels "frozen" on a laptop (the
-   * stage already disables body scroll with `touch-action: none` and an
-   * ancestor `overflow: hidden`, so there's no fallback gesture).
+   * Desktop users reach for the wheel before they think to click-and-drag.
+   * The voice stage allows `touch-action: pan-y` so the inner card can scroll
+   * on touch devices; on laptop, this wheel handler still moves the stack
+   * (without it, navigation feels frozen when the outer stage does not scroll).
    *
    * We coalesce fast scroll deltas with a throttle ref — one wheel burst
    * should move exactly one step in the stack. Horizontal wheels (e.g.
@@ -388,9 +388,13 @@ export function VoiceModeRoller({
                 data-voice-interactive={
                   isTop && msg.type === 'jamie' ? 'true' : undefined
                 }
-                ref={isTop ? topCardContentRef : undefined}
               >
-                {renderMessage(msg, role)}
+                <div
+                  className="voice-roller__card-body"
+                  ref={isTop ? topCardContentRef : undefined}
+                >
+                  {renderMessage(msg, role)}
+                </div>
               </div>
             </div>
           );
