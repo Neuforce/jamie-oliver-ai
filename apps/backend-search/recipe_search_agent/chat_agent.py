@@ -8,6 +8,7 @@ and manages chat sessions with persistent memory.
 import os
 import logging
 import asyncio
+import time
 import uuid
 from typing import Dict, Optional, AsyncGenerator, Any
 from dataclasses import dataclass
@@ -245,9 +246,21 @@ class DiscoveryChatAgent:
             ChatEvent objects with response chunks and tool call info
         """
         session = self._get_or_create_session(session_id)
+        turn_started_at = time.perf_counter()
 
         correlation_id = str(uuid.uuid4())
+        gate_started_at = time.perf_counter()
         gate = await evaluate_message(message, correlation_id=correlation_id)
+        logger.info(
+            "[voice_latency] %s",
+            {
+                "stage": "guardrail_complete",
+                "session_id": session_id,
+                "gate_ms": round((time.perf_counter() - gate_started_at) * 1000, 1),
+                "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                "blocked": gate.blocked,
+            },
+        )
         if gate.blocked:
             set_gate_blocked(True)
             logger.info(
@@ -287,6 +300,8 @@ class DiscoveryChatAgent:
         # anything to the user.
         tool_used = False
         any_text_sent = False
+        first_text_chunk_logged = False
+        tool_call_started_at: Dict[str, float] = {}
 
         try:
             # Process message through brain
@@ -301,12 +316,32 @@ class DiscoveryChatAgent:
                     # says, the user sees.
                     if event.content:
                         any_text_sent = True
+                        if not first_text_chunk_logged:
+                            first_text_chunk_logged = True
+                            logger.info(
+                                "[voice_latency] %s",
+                                {
+                                    "stage": "llm_first_text_chunk",
+                                    "session_id": session_id,
+                                    "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                                },
+                            )
                         yield ChatEvent(type="text_chunk", content=event.content)
                 elif isinstance(event, FunctionCallResponse):
                     tool_used = True
                     tool_calls_seen.add(event.function_name)
                     # Track this tool call
                     pending_tool_calls[event.tool_call_id] = event.function_name
+                    tool_call_started_at[event.tool_call_id] = time.perf_counter()
+                    logger.info(
+                        "[voice_latency] %s",
+                        {
+                            "stage": "tool_call_requested",
+                            "session_id": session_id,
+                            "tool_name": event.function_name,
+                            "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                        },
+                    )
 
                     # Tool call event
                     yield ChatEvent(
@@ -345,6 +380,20 @@ class DiscoveryChatAgent:
                                         }
                                     )
                                     logger.info(f"Emitted {len(result['recipes'])} recipes")
+                                    logger.info(
+                                        "[voice_latency] %s",
+                                        {
+                                            "stage": "tool_result_ready",
+                                            "session_id": session_id,
+                                            "tool_name": func_name,
+                                            "tool_ms": round(
+                                                (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
+                                                * 1000,
+                                                1,
+                                            ),
+                                            "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                                        },
+                                    )
                                     tool_results_emitted = True
 
                             elif func_name == 'plan_meal':
@@ -358,6 +407,20 @@ class DiscoveryChatAgent:
                                     }
                                 )
                                 logger.info(f"Emitted meal_plan for {result.get('occasion')}")
+                                logger.info(
+                                    "[voice_latency] %s",
+                                    {
+                                        "stage": "tool_result_ready",
+                                        "session_id": session_id,
+                                        "tool_name": func_name,
+                                        "tool_ms": round(
+                                            (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
+                                            * 1000,
+                                            1,
+                                        ),
+                                        "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                                    },
+                                )
                                 tool_results_emitted = True
 
                             elif func_name == 'get_recipe_details':
@@ -370,6 +433,20 @@ class DiscoveryChatAgent:
                                         }
                                     )
                                     logger.info(f"Emitted recipe_detail for {result['recipe'].get('title')}")
+                                    logger.info(
+                                        "[voice_latency] %s",
+                                        {
+                                            "stage": "tool_result_ready",
+                                            "session_id": session_id,
+                                            "tool_name": func_name,
+                                            "tool_ms": round(
+                                                (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
+                                                * 1000,
+                                                1,
+                                            ),
+                                            "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                                        },
+                                    )
                                     tool_results_emitted = True
 
                             elif func_name == 'create_shopping_list':
@@ -383,6 +460,20 @@ class DiscoveryChatAgent:
                                     }
                                 )
                                 logger.info(f"Emitted shopping_list with {result.get('total_items')} items")
+                                logger.info(
+                                    "[voice_latency] %s",
+                                    {
+                                        "stage": "tool_result_ready",
+                                        "session_id": session_id,
+                                        "tool_name": func_name,
+                                        "tool_ms": round(
+                                            (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
+                                            * 1000,
+                                            1,
+                                        ),
+                                        "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                                    },
+                                )
                                 tool_results_emitted = True
 
                             elif func_name == 'request_supertab_unlock':
@@ -401,6 +492,20 @@ class DiscoveryChatAgent:
                                         },
                                     )
                                     logger.info(f"Emitted recipe_paywall_requested for {rid_meta}")
+                                    logger.info(
+                                        "[voice_latency] %s",
+                                        {
+                                            "stage": "tool_result_ready",
+                                            "session_id": session_id,
+                                            "tool_name": func_name,
+                                            "tool_ms": round(
+                                                (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
+                                                * 1000,
+                                                1,
+                                            ),
+                                            "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                                        },
+                                    )
                                     tool_results_emitted = True
 
                         except (json.JSONDecodeError, KeyError) as e:
@@ -435,6 +540,14 @@ class DiscoveryChatAgent:
                 yield ChatEvent(type="text_chunk", content=intro)
 
             # Signal completion
+            logger.info(
+                "[voice_latency] %s",
+                {
+                    "stage": "turn_complete",
+                    "session_id": session_id,
+                    "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
+                },
+            )
             yield ChatEvent(type="done", content="")
 
         except Exception as e:

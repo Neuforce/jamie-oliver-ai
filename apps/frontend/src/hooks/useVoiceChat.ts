@@ -25,6 +25,20 @@ import { useAudioPlayback } from './useAudioPlayback';
 import type { VoiceTurnState } from './voiceTurnUtils';
 import { VOICE_WS_URL } from '../lib/runtimeConfig';
 
+type VoiceLatencyTurnMetrics = {
+  transcriptFinalAt: number;
+  responseId?: string;
+  processingAt?: number;
+  firstTextAt?: number;
+  firstAudioAt?: number;
+};
+
+type VoiceLatencySession = {
+  connectStartedAt: number;
+  stageMarks: Record<string, number>;
+  currentTurn?: VoiceLatencyTurnMetrics;
+};
+
 export type VoiceChatState = VoiceTurnState;
 
 export interface VoiceChatMessage {
@@ -99,12 +113,122 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   const pendingListenRef = useRef(false);
   // Track the active response so stale audio from a previous turn is discarded
   const activeResponseIdRef = useRef<string | null>(null);
+  const latencyRef = useRef<VoiceLatencySession | null>(null);
 
   // Keep callbacks stable via ref so closures don't go stale
   const callbacksRef = useRef(options);
   useEffect(() => { callbacksRef.current = options; }, [options]);
 
   // ── helpers ────────────────────────────────────────────────────────────
+
+  const nowMs = useCallback(() => {
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
+      return performance.now();
+    }
+    return Date.now();
+  }, []);
+
+  const roundMs = useCallback((value: number) => Math.round(value * 10) / 10, []);
+
+  const startLatencySession = useCallback(() => {
+    const startedAt = nowMs();
+    latencyRef.current = {
+      connectStartedAt: startedAt,
+      stageMarks: { connect_started: startedAt },
+    };
+    console.info('[voice-latency]', { stage: 'connect_started', totalMs: 0 });
+  }, [nowMs]);
+
+  const markLatencyStage = useCallback(
+    (stage: string, extra: Record<string, unknown> = {}, once = true) => {
+      const session = latencyRef.current;
+      if (!session) return;
+      if (once && session.stageMarks[stage] !== undefined) return;
+      const stamp = nowMs();
+      session.stageMarks[stage] = stamp;
+      console.info('[voice-latency]', {
+        stage,
+        totalMs: roundMs(stamp - session.connectStartedAt),
+        ...extra,
+      });
+    },
+    [nowMs, roundMs]
+  );
+
+  const markTranscriptFinalLatency = useCallback(
+    (text: string) => {
+      const session = latencyRef.current;
+      if (!session) return;
+      const stamp = nowMs();
+      session.currentTurn = {
+        transcriptFinalAt: stamp,
+      };
+      console.info('[voice-latency]', {
+        stage: 'transcript_final',
+        totalMs: roundMs(stamp - session.connectStartedAt),
+        transcriptLength: text.length,
+      });
+    },
+    [nowMs, roundMs]
+  );
+
+  const markProcessingLatency = useCallback(
+    (responseId: string) => {
+      const session = latencyRef.current;
+      if (!session?.currentTurn) return;
+      if (session.currentTurn.responseId === responseId && session.currentTurn.processingAt !== undefined) return;
+      const stamp = nowMs();
+      session.currentTurn.responseId = responseId;
+      session.currentTurn.processingAt = stamp;
+      console.info('[voice-latency]', {
+        stage: 'processing',
+        totalMs: roundMs(stamp - session.connectStartedAt),
+        transcriptToProcessingMs: roundMs(stamp - session.currentTurn.transcriptFinalAt),
+      });
+    },
+    [nowMs, roundMs]
+  );
+
+  const markFirstTextLatency = useCallback(
+    (responseId?: string) => {
+      const session = latencyRef.current;
+      const turn = session?.currentTurn;
+      if (!session || !turn || !responseId || turn.responseId !== responseId || turn.firstTextAt !== undefined) {
+        return;
+      }
+      const stamp = nowMs();
+      turn.firstTextAt = stamp;
+      console.info('[voice-latency]', {
+        stage: 'first_text_chunk',
+        totalMs: roundMs(stamp - session.connectStartedAt),
+        processingToFirstTextMs:
+          turn.processingAt !== undefined ? roundMs(stamp - turn.processingAt) : undefined,
+      });
+    },
+    [nowMs, roundMs]
+  );
+
+  const markFirstAudioLatency = useCallback(
+    (responseId?: string) => {
+      const session = latencyRef.current;
+      const turn = session?.currentTurn;
+      if (!session || !turn || !responseId || turn.responseId !== responseId || turn.firstAudioAt !== undefined) {
+        return;
+      }
+      const stamp = nowMs();
+      turn.firstAudioAt = stamp;
+      console.info('[voice-latency]', {
+        stage: 'first_audio_chunk',
+        totalMs: roundMs(stamp - session.connectStartedAt),
+        processingToFirstAudioMs:
+          turn.processingAt !== undefined ? roundMs(stamp - turn.processingAt) : undefined,
+        firstTextToFirstAudioMs:
+          turn.firstTextAt !== undefined ? roundMs(stamp - turn.firstTextAt) : undefined,
+        tapToFirstAudioMs: roundMs(stamp - session.connectStartedAt),
+      });
+    },
+    [nowMs, roundMs]
+  );
 
   const sendSocketEvent = useCallback((event: string, data?: unknown) => {
     if (wsRef.current?.readyState !== WebSocket.OPEN) return;
@@ -132,6 +256,25 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   // whether the user is speaking and triggers barge-in server-side.
   const { startCapture, stopCapture, setMuted } = useAudioCapture({
     sampleRate,
+    onLifecycleEvent: (event, metadata) => {
+      switch (event) {
+        case 'get_user_media_start':
+          markLatencyStage('get_user_media_start');
+          break;
+        case 'get_user_media_ready':
+          markLatencyStage('get_user_media_ready', metadata);
+          break;
+        case 'worklet_ready':
+          markLatencyStage('audio_worklet_ready');
+          break;
+        case 'capture_ready':
+          markLatencyStage('capture_ready', metadata);
+          break;
+        case 'capture_error':
+          markLatencyStage('capture_error', {}, false);
+          break;
+      }
+    },
     onAudioData: useCallback((base64Audio: string) => {
       if (
         wsRef.current?.readyState !== WebSocket.OPEN
@@ -157,6 +300,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     switch (event) {
       case 'session_info':
         console.log('🎤 Voice session started:', data);
+        markLatencyStage('session_info');
         break;
 
       case 'listening':
@@ -168,6 +312,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
           resetActiveResponse();
           setState('listening');
           setCurrentTranscript('');
+          markLatencyStage('server_listening');
         }
         break;
 
@@ -183,6 +328,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         resetActiveResponse();
         setState('user_speaking');
         setCurrentTranscript(data || '');
+        markTranscriptFinalLatency(data || '');
         callbacks.onTranscript?.(data || '', true);
         break;
 
@@ -197,16 +343,19 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         }
         activeResponseIdRef.current = responseId;
         setState('processing');
+        markProcessingLatency(responseId);
         break;
 
       case 'text_chunk':
         if (!isCurrentResponse(responseId)) return;
         setState('assistant_speaking');
+        markFirstTextLatency(responseId);
         callbacks.onTextChunk?.(data || '');
         break;
 
       case 'audio':
         if (!isCurrentResponse(responseId)) return;
+        markFirstAudioLatency(responseId);
         if (data) playAudio(data);
         break;
 
@@ -267,7 +416,18 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       default:
         console.log('🎤 Unhandled voice chat event:', event, data);
     }
-  }, [isAudioPlaying, isCurrentResponse, playAudio, resetActiveResponse, stopAllAudio]);
+  }, [
+    isAudioPlaying,
+    isCurrentResponse,
+    markFirstAudioLatency,
+    markFirstTextLatency,
+    markLatencyStage,
+    markProcessingLatency,
+    markTranscriptFinalLatency,
+    playAudio,
+    resetActiveResponse,
+    stopAllAudio,
+  ]);
 
   // ── pending state transitions (audio drain) ────────────────────────────
   useEffect(() => {
@@ -297,40 +457,55 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       return;
     }
 
+    startLatencySession();
     setState('connecting');
     setError(null);
-    await initAudioContext();
+    const sharedCtx = await initAudioContext();
+    markLatencyStage('audio_context_ready');
 
     const wsUrl = getWebSocketUrl();
     console.log('🎤 Connecting to voice chat:', wsUrl);
 
     try {
+      let captureError: unknown = null;
+      let connectCancelled = false;
+      const capturePromise = (async () => {
+        try {
+          const started = await startCapture(sharedCtx);
+          if (connectCancelled) {
+            stopCapture();
+            return false;
+          }
+          return started;
+        } catch (err) {
+          captureError = err;
+          return false;
+        }
+      })();
       const ws = new WebSocket(wsUrl);
       wsRef.current = ws;
+      markLatencyStage('websocket_created');
 
       ws.onopen = async () => {
         console.log('🎤 Voice chat WebSocket connected');
+        markLatencyStage('websocket_open');
         setIsConnected(true);
 
         ws.send(JSON.stringify({ event: 'start', sessionId, sampleRate }));
+        markLatencyStage('start_event_sent');
 
         try {
-          /*
-           * Pass the already-initialised playback AudioContext to the
-           * capture hook so both graphs share a single AudioContext.
-           *
-           * When capture and playback run on separate AudioContexts at the
-           * same sample rate, the browser's AEC loses its reference signal —
-           * it can no longer pair the mic input against the speaker output —
-           * which can let Jamie's TTS voice leak into the mic stream and be
-           * transcribed as user speech (the "background noise" symptom).
-           * Sharing one context gives the OS a single coherent input/output
-           * view so AEC works correctly on all hardware.
-           */
-          const sharedCtx = await initAudioContext();
-          await startCapture(sharedCtx);
+          const captureStarted = await capturePromise;
+          if (!captureStarted) {
+            throw captureError instanceof Error ? captureError : new Error('Failed to start audio capture');
+          }
+          if (connectCancelled) {
+            stopCapture();
+            return;
+          }
           isVoiceModeActiveRef.current = true;
           setState('listening');
+          markLatencyStage('local_listening_ready');
         } catch (err) {
           console.error('Failed to start audio capture:', err);
           setError('Microphone access denied');
@@ -347,13 +522,16 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       };
 
       ws.onerror = () => {
+        connectCancelled = true;
         setError('Connection error');
         setIsConnected(false);
         setState('idle');
+        stopCapture();
       };
 
       ws.onclose = (ev) => {
         console.log('🎤 Voice chat WebSocket closed:', ev.code, ev.reason);
+        connectCancelled = true;
         setIsConnected(false);
         isVoiceModeActiveRef.current = false;
         setState('idle');
@@ -364,7 +542,18 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       setError('Failed to connect');
       setState('idle');
     }
-  }, [sessionId, getWebSocketUrl, sampleRate, startCapture, stopCapture, handleMessage, initAudioContext, onError]);
+  }, [
+    getWebSocketUrl,
+    handleMessage,
+    initAudioContext,
+    markLatencyStage,
+    onError,
+    sampleRate,
+    sessionId,
+    startCapture,
+    startLatencySession,
+    stopCapture,
+  ]);
 
   /** Tell the discovery voice backend which recipe sheet is focused (modal). */
   const notifyFocusedRecipe = useCallback(
@@ -380,6 +569,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     pendingDoneRef.current   = false;
     pendingListenRef.current = false;
     resetActiveResponse();
+    latencyRef.current = null;
 
     if (wsRef.current) {
       if (wsRef.current.readyState === WebSocket.OPEN) sendSocketEvent('stop');

@@ -35,6 +35,7 @@ import asyncio
 import logging
 import os
 import re
+import time
 from typing import Any, Optional, Tuple
 
 from ccai.core.speech_to_text.stt_deepgram import DeepgramSTTService
@@ -45,6 +46,7 @@ from ccai.core.logger import configure_logger
 from recipe_search_agent.chat_agent import DiscoveryChatAgent
 
 logger = configure_logger(__name__)
+_TTS_MIN_CHUNK_WORDS = 4
 
 
 # ── configuration ─────────────────────────────────────────────────────────────
@@ -63,8 +65,8 @@ class VoiceConfig:
         tts_speed: float = 1.0,
         stt_language: str = "en-US",
         stt_interim_results: bool = True,
-        stt_utterance_end_ms: int = 1500,
-        stt_endpointing_ms: int = 700,
+        stt_utterance_end_ms: int = 900,
+        stt_endpointing_ms: int = 450,
     ):
         self.deepgram_api_key = deepgram_api_key
         self.elevenlabs_api_key = elevenlabs_api_key
@@ -104,8 +106,8 @@ def get_voice_config() -> VoiceConfig:
         tts_speed=float(os.getenv("TTS_SPEED", "0.8")),
         stt_language=os.getenv("STT_LANGUAGE", "en-US"),
         stt_interim_results=os.getenv("STT_INTERIM_RESULTS", "true").strip().lower() != "false",
-        stt_utterance_end_ms=int(os.getenv("STT_UTTERANCE_END_MS", "1500")),
-        stt_endpointing_ms=int(os.getenv("STT_ENDPOINTING_MS", "700")),
+        stt_utterance_end_ms=int(os.getenv("STT_UTTERANCE_END_MS", "900")),
+        stt_endpointing_ms=int(os.getenv("STT_ENDPOINTING_MS", "450")),
     )
 
 
@@ -122,7 +124,7 @@ def _contains_punctuation(text: str) -> Tuple[Optional[str], Optional[str]]:
     """
     pattern = r"([.,;:?!])([ \n]|$)"
     matches = list(re.finditer(pattern, text))
-    if matches and len(text.split()) > 8:
+    if matches and len(text.split()) >= _TTS_MIN_CHUNK_WORDS:
         last_match = matches[-1]
         end_index = last_match.end()
         sentence = text[:end_index].strip()
@@ -166,6 +168,7 @@ class DiscoveryVoiceHandler:
         chat_agent: DiscoveryChatAgent,
         config: VoiceConfig,
         session_id: str = "",
+        connection_started_at: Optional[float] = None,
     ):
         self.input_channel  = input_channel
         self.output_channel = output_channel
@@ -173,6 +176,7 @@ class DiscoveryVoiceHandler:
         self.chat_agent     = chat_agent
         self.config         = config
         self.session_id     = session_id or f"voice_{id(self)}"
+        self.connection_started_at = connection_started_at or time.perf_counter()
         # Backend slug for focused recipe modal; set via WS `focused_recipe` event.
         self._focused_backend_recipe_id: Optional[str] = None
 
@@ -187,6 +191,11 @@ class DiscoveryVoiceHandler:
         self._is_running            = False
         self._response_counter      = 0
         self._current_response_id: Optional[str] = None
+        self._current_turn_started_at: Optional[float] = None
+        self._current_processing_started_at: Optional[float] = None
+        self._first_text_chunk_sent = False
+        self._first_tts_queued_at: Optional[float] = None
+        self._first_audio_chunk_sent = False
 
         # ── voice services ─────────────────────────────────────────────────
         self.stt = DeepgramSTTService(
@@ -212,6 +221,15 @@ class DiscoveryVoiceHandler:
     def _next_response_id(self) -> str:
         self._response_counter += 1
         return f"{self.session_id}:r{self._response_counter}"
+
+    def _log_latency(self, stage: str, **extra: Any) -> None:
+        payload = {
+            "stage": stage,
+            "session_id": self.session_id,
+            "total_ms": round((time.perf_counter() - self.connection_started_at) * 1000, 1),
+            **extra,
+        }
+        logger.info("[voice_latency] %s", payload)
 
     # ── send helpers ──────────────────────────────────────────────────────────
 
@@ -296,6 +314,7 @@ class DiscoveryVoiceHandler:
             "session_id": self.session_id,
             "sample_rate": self.config.sample_rate,
         })
+        self._log_latency("session_info_sent")
 
         brain_task   = asyncio.create_task(self._process_brain_queue(),   name="dvh_brain")
         output_task  = asyncio.create_task(self._process_output_queue(),  name="dvh_output")
@@ -338,6 +357,7 @@ class DiscoveryVoiceHandler:
           Then queue the utterance for brain processing.
         """
         await self._send("listening")
+        self._log_latency("listening_sent")
 
         async for transcription in self.stt.transcribe(self.input_channel):
             if not transcription.content:
@@ -350,7 +370,9 @@ class DiscoveryVoiceHandler:
                 text = transcription.content.strip()
                 if not text:
                     continue
+                self._current_turn_started_at = time.perf_counter()
                 logger.info("Final transcript [%s]: %s", self.session_id, text)
+                self._log_latency("transcript_final", transcript_length=len(text))
                 await self._send("transcript_final", text)
                 self.interrupt_requested.clear()
                 await self._brain_queue.put(text)
@@ -427,7 +449,22 @@ class DiscoveryVoiceHandler:
                 # processing / text_chunk / audio / done events to a single turn.
                 rid = self._next_response_id()
                 self._current_response_id = rid
+                self._current_processing_started_at = time.perf_counter()
+                self._first_text_chunk_sent = False
+                self._first_tts_queued_at = None
+                self._first_audio_chunk_sent = False
                 await self._send("processing", response_id=rid)
+                transcript_to_processing_ms = None
+                if self._current_turn_started_at is not None:
+                    transcript_to_processing_ms = round(
+                        (self._current_processing_started_at - self._current_turn_started_at) * 1000,
+                        1,
+                    )
+                self._log_latency(
+                    "processing_sent",
+                    response_id=rid,
+                    transcript_to_processing_ms=transcript_to_processing_ms,
+                )
 
                 try:
                     await self._brain_process_internal(transcript_for_agent)
@@ -484,10 +521,36 @@ class DiscoveryVoiceHandler:
                 if event.type == "text_chunk":
                     full_content += event.content
                     buffer       += event.content
+                    if not self._first_text_chunk_sent:
+                        self._first_text_chunk_sent = True
+                        processing_to_first_text_ms = None
+                        if self._current_processing_started_at is not None:
+                            processing_to_first_text_ms = round(
+                                (time.perf_counter() - self._current_processing_started_at) * 1000,
+                                1,
+                            )
+                        self._log_latency(
+                            "first_text_chunk_sent",
+                            response_id=self._current_response_id,
+                            processing_to_first_text_ms=processing_to_first_text_ms,
+                        )
                     await self._send("text_chunk", event.content, response_id=self._current_response_id)
 
                     sentence, remainder = _contains_punctuation(buffer)
                     if sentence:
+                        if self._first_tts_queued_at is None:
+                            self._first_tts_queued_at = time.perf_counter()
+                            processing_to_first_tts_queue_ms = None
+                            if self._current_processing_started_at is not None:
+                                processing_to_first_tts_queue_ms = round(
+                                    (self._first_tts_queued_at - self._current_processing_started_at) * 1000,
+                                    1,
+                                )
+                            self._log_latency(
+                                "first_tts_chunk_queued",
+                                response_id=self._current_response_id,
+                                processing_to_first_tts_queue_ms=processing_to_first_tts_queue_ms,
+                            )
                         await self.synth_and_send(sentence)
                         buffer = remainder or ""
 
@@ -503,6 +566,19 @@ class DiscoveryVoiceHandler:
 
             # Flush any remaining buffered text that didn't end with punctuation.
             if buffer.strip() and not self.interrupt_requested.is_set():
+                if self._first_tts_queued_at is None:
+                    self._first_tts_queued_at = time.perf_counter()
+                    processing_to_first_tts_queue_ms = None
+                    if self._current_processing_started_at is not None:
+                        processing_to_first_tts_queue_ms = round(
+                            (self._first_tts_queued_at - self._current_processing_started_at) * 1000,
+                            1,
+                        )
+                    self._log_latency(
+                        "first_tts_chunk_queued",
+                        response_id=self._current_response_id,
+                        processing_to_first_tts_queue_ms=processing_to_first_tts_queue_ms,
+                    )
                 await self.synth_and_send(buffer)
 
         finally:
@@ -543,6 +619,26 @@ class DiscoveryVoiceHandler:
                         self.is_speaking = True
                         try:
                             async for chunk in self.tts.synthesize(clean):
+                                if not self._first_audio_chunk_sent:
+                                    self._first_audio_chunk_sent = True
+                                    processing_to_first_audio_ms = None
+                                    first_tts_queue_to_first_audio_ms = None
+                                    if self._current_processing_started_at is not None:
+                                        processing_to_first_audio_ms = round(
+                                            (time.perf_counter() - self._current_processing_started_at) * 1000,
+                                            1,
+                                        )
+                                    if self._first_tts_queued_at is not None:
+                                        first_tts_queue_to_first_audio_ms = round(
+                                            (time.perf_counter() - self._first_tts_queued_at) * 1000,
+                                            1,
+                                        )
+                                    self._log_latency(
+                                        "first_audio_chunk_sent",
+                                        response_id=response_id,
+                                        processing_to_first_audio_ms=processing_to_first_audio_ms,
+                                        first_tts_queue_to_first_audio_ms=first_tts_queue_to_first_audio_ms,
+                                    )
                                 if self.interrupt_requested.is_set():
                                     logger.info("TTS stream interrupted")
                                     break

@@ -30,6 +30,15 @@ from recipe_search_agent.guardrails import evaluate_message_sync
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
+def _log_voice_latency(stage: str, started_at: float, **extra) -> None:
+    payload = {
+        "stage": stage,
+        "total_ms": round((time.perf_counter() - started_at) * 1000, 1),
+        **extra,
+    }
+    logger.info("[voice_latency] %s", payload)
+
 # Helpers to walk up paths safely in environments like Railway
 def _safe_parent(path: Path, levels: int) -> Path:
     current = path
@@ -93,6 +102,7 @@ def get_search_agent() -> RecipeSearchAgent:
     global _supabase_client, _search_agent
 
     if _search_agent is None:
+        init_started_at = time.perf_counter()
         # Create Supabase client
         supabase_url = os.getenv("SUPABASE_URL")
         supabase_key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
@@ -107,6 +117,7 @@ def get_search_agent() -> RecipeSearchAgent:
             project_root=project_root,
         )
         logger.info("Search agent initialized")
+        _log_voice_latency("search_agent_initialized", init_started_at)
 
     return _search_agent
 
@@ -184,6 +195,7 @@ def get_chat_agent():
     global _chat_agent
 
     if _chat_agent is None:
+        init_started_at = time.perf_counter()
         # Verify ccai is installed before importing
         try:
             import ccai
@@ -200,8 +212,20 @@ def get_chat_agent():
         search_agent = get_search_agent()
         _chat_agent = DiscoveryChatAgent(search_agent=search_agent)
         logger.info("Chat agent initialized")
+        _log_voice_latency("chat_agent_initialized", init_started_at)
 
     return _chat_agent
+
+
+@app.on_event("startup")
+async def warm_discovery_voice_dependencies() -> None:
+    warm_started_at = time.perf_counter()
+    try:
+        get_search_agent()
+        get_chat_agent()
+        _log_voice_latency("discovery_voice_warmup_complete", warm_started_at)
+    except Exception as exc:
+        logger.warning("Discovery voice warmup skipped: %s", exc)
 
 
 def get_identity_service() -> IdentityService:
@@ -843,6 +867,7 @@ async def voice_chat_websocket(websocket: WebSocket):
     from ccai.core.audio_interface.websocket_audio_interface import WebSocketAudioInterface
     from recipe_search_agent.voice_handler import DiscoveryVoiceHandler, get_voice_config
 
+    connection_started_at = time.perf_counter()
     try:
         config = get_voice_config()
     except ValueError as exc:
@@ -857,7 +882,17 @@ async def voice_chat_websocket(websocket: WebSocket):
         await audio_interface.start()
 
         session_id = audio_interface._input_service.session_id or f"voice_{id(websocket)}"
+        _log_voice_latency(
+            "voice_ws_handshake_complete",
+            connection_started_at,
+            session_id=session_id,
+        )
         chat_agent = get_chat_agent()
+        _log_voice_latency(
+            "voice_handler_dependencies_ready",
+            connection_started_at,
+            session_id=session_id,
+        )
 
         handler = DiscoveryVoiceHandler(
             input_channel=audio_interface.get_input_service(),
@@ -866,6 +901,7 @@ async def voice_chat_websocket(websocket: WebSocket):
             chat_agent=chat_agent,
             config=config,
             session_id=session_id,
+            connection_started_at=connection_started_at,
         )
         await handler.handle()
 
