@@ -21,6 +21,15 @@ import {
 export interface UseAudioCaptureOptions {
   sampleRate?: number;
   onAudioData?: (base64Audio: string, metadata: AudioChunkMetadata) => void;
+  onLifecycleEvent?: (
+    event:
+      | 'get_user_media_start'
+      | 'get_user_media_ready'
+      | 'worklet_ready'
+      | 'capture_ready'
+      | 'capture_error',
+    metadata?: Record<string, number | string>
+  ) => void;
 }
 
 type AudioCaptureNode = ScriptProcessorNode | AudioWorkletNode;
@@ -44,7 +53,7 @@ function isAlreadyRegisteredWorkletError(error: unknown): boolean {
 }
 
 export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
-  const { sampleRate = 16000, onAudioData } = options;
+  const { sampleRate = 16000, onAudioData, onLifecycleEvent } = options;
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   // When the caller provides a shared context, we must not close it on cleanup.
@@ -54,6 +63,21 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
   const silentGainRef = useRef<GainNode | null>(null);
   const isMutedRef = useRef(false);
   const engineRef = useRef<AudioCaptureEngine>('legacy');
+
+  const emitLifecycleEvent = useCallback(
+    (
+      event:
+        | 'get_user_media_start'
+        | 'get_user_media_ready'
+        | 'worklet_ready'
+        | 'capture_ready'
+        | 'capture_error',
+      metadata?: Record<string, number | string>
+    ) => {
+      onLifecycleEvent?.(event, metadata);
+    },
+    [onLifecycleEvent]
+  );
 
   const handleAudioChunk = useCallback(
     (inputData: Float32Array, audioChunkCount: number) => {
@@ -92,6 +116,8 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
         return true;
       }
 
+      const mediaRequestStartedAt = performance.now();
+      emitLifecycleEvent('get_user_media_start');
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: {
           sampleRate,
@@ -99,6 +125,9 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
           echoCancellation: true,
           noiseSuppression: true,
         },
+      });
+      emitLifecycleEvent('get_user_media_ready', {
+        elapsedMs: Math.round((performance.now() - mediaRequestStartedAt) * 10) / 10,
       });
 
       mediaStreamRef.current = stream;
@@ -160,6 +189,7 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
               URL.revokeObjectURL(workletBlobUrl);
             }
           }
+          emitLifecycleEvent('worklet_ready');
           const workletNode = new AudioWorkletNode(audioContext, AUDIO_CAPTURE_PROCESSOR_NAME, {
             numberOfInputs: 1,
             numberOfOutputs: 1,
@@ -202,13 +232,15 @@ export function useAudioCapture(options: UseAudioCaptureOptions = {}) {
 
       processorRef.current = processor;
       silentGain.connect(silentDestination);
+      emitLifecycleEvent('capture_ready', { engine: engineRef.current });
 
       return true;
     } catch (err) {
+      emitLifecycleEvent('capture_error');
       console.error('Error starting audio capture:', err);
       throw err;
     }
-  }, [sampleRate, onAudioData]);
+  }, [sampleRate, onAudioData, emitLifecycleEvent]);
 
   const stopCapture = useCallback(() => {
     if (processorRef.current) {
