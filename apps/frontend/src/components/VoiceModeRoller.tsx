@@ -99,10 +99,13 @@ export function VoiceModeRoller({
   const [dragDelta, setDragDelta] = useState(0);
   const [isBouncing, setIsBouncing] = useState<'top' | 'bottom' | null>(null);
   const [isTallTopCard, setIsTallTopCard] = useState(false);
+  const [hasExpandableTopCard, setHasExpandableTopCard] = useState(false);
+  const [expandedMessageId, setExpandedMessageId] = useState<string | null>(null);
 
   const stageRef = useRef<HTMLDivElement | null>(null);
   const lastSeenTailIdRef = useRef<string | null>(null);
-  const topCardContentRef = useRef<HTMLDivElement | null>(null);
+  const latestTailIdRef = useRef<string | null>(null);
+  const topCardBodyRef = useRef<HTMLDivElement | null>(null);
 
   const isStreamingActive = useMemo(() => {
     const last = messages[messages.length - 1];
@@ -154,6 +157,14 @@ export function VoiceModeRoller({
     }
   }, [messages, offset, unseenIds]);
 
+  const setOffsetWithNotification = useCallback(
+    (nextOffset: number) => {
+      setOffset(nextOffset);
+      onOffsetChange?.(nextOffset);
+    },
+    [onOffsetChange],
+  );
+
   const triggerBounce = useCallback((edge: 'top' | 'bottom') => {
     setIsBouncing(edge);
     window.setTimeout(() => setIsBouncing(null), 320);
@@ -171,16 +182,14 @@ export function VoiceModeRoller({
         return;
       }
       if (nextOffset === offset) return;
-      setOffset(nextOffset);
-      onOffsetChange?.(nextOffset);
+      setOffsetWithNotification(nextOffset);
     },
-    [isStreamingActive, maxOffset, offset, onOffsetChange, triggerBounce],
+    [isStreamingActive, maxOffset, offset, setOffsetWithNotification, triggerBounce],
   );
 
   const jumpToNewest = useCallback(() => {
-    setOffset(0);
-    onOffsetChange?.(0);
-  }, [onOffsetChange]);
+    setOffsetWithNotification(0);
+  }, [setOffsetWithNotification]);
 
   // --- Pointer drag on the top card ---
   const dragStateRef = useRef<{
@@ -191,7 +200,7 @@ export function VoiceModeRoller({
 
   const handlePointerDown = useCallback(
     (e: ReactPointerEvent<HTMLDivElement>) => {
-      if (isStreamingActive) return;
+      if (isStreamingActive || expandedMessageId) return;
       const target = e.target as HTMLElement | null;
       if (target?.closest(INTERACTIVE_SELECTOR)) {
         return;
@@ -203,7 +212,7 @@ export function VoiceModeRoller({
       };
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     },
-    [isStreamingActive],
+    [expandedMessageId, isStreamingActive],
   );
 
   const handlePointerMove = useCallback(
@@ -253,11 +262,32 @@ export function VoiceModeRoller({
    * Magic Mouse side scrolling) are ignored.
    */
   const wheelLockRef = useRef<number>(0);
+  const canScrollTopBody = useCallback((target: EventTarget | null, deltaY: number) => {
+    const body = topCardBodyRef.current;
+    const targetNode = target instanceof Node ? target : null;
+    if (!body || !targetNode || !body.contains(targetNode)) {
+      return false;
+    }
+
+    const maxScrollTop = body.scrollHeight - body.clientHeight;
+    if (maxScrollTop <= 1) {
+      return false;
+    }
+
+    if (deltaY > 0) {
+      return body.scrollTop < maxScrollTop - 1;
+    }
+
+    return body.scrollTop > 1;
+  }, []);
+
   const handleWheel = useCallback(
     (e: React.WheelEvent<HTMLDivElement>) => {
       if (isStreamingActive) return;
       if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
       if (Math.abs(e.deltaY) < 4) return;
+      if (canScrollTopBody(e.target, e.deltaY)) return;
+      if (expandedMessageId) return;
       const now = Date.now();
       if (now - wheelLockRef.current < 280) return;
       wheelLockRef.current = now;
@@ -267,20 +297,25 @@ export function VoiceModeRoller({
         scrollTo(offset - 1);
       }
     },
-    [isStreamingActive, offset, scrollTo],
+    [canScrollTopBody, expandedMessageId, isStreamingActive, offset, scrollTo],
   );
 
   const unseenCount = unseenIds.size;
   const showNewBadge = offset > 0 && unseenCount > 0;
   const topVisibleId = visibleWindow[2]?.id ?? null;
+  const isExpandedTopCard = Boolean(expandedMessageId && expandedMessageId === topVisibleId);
 
   const recomputeTopCardLayout = useCallback(() => {
-    const el = topCardContentRef.current;
+    const el = topCardBodyRef.current;
     if (!el || typeof window === 'undefined') {
       setIsTallTopCard(false);
+      setHasExpandableTopCard(false);
       return;
     }
     const availableBeforeCompression = Math.max(320, window.innerHeight - 420);
+    setHasExpandableTopCard(
+      Boolean(el.querySelector('[data-voice-expandable-card="true"]')),
+    );
     setIsTallTopCard(el.scrollHeight > availableBeforeCompression);
   }, []);
 
@@ -289,7 +324,7 @@ export function VoiceModeRoller({
   }, [topVisibleId, recomputeTopCardLayout]);
 
   useEffect(() => {
-    const el = topCardContentRef.current;
+    const el = topCardBodyRef.current;
     if (!el || typeof ResizeObserver === 'undefined') {
       return;
     }
@@ -308,12 +343,47 @@ export function VoiceModeRoller({
     };
   }, [topVisibleId, recomputeTopCardLayout]);
 
+  useEffect(() => {
+    if (!topVisibleId) {
+      setExpandedMessageId(null);
+      return;
+    }
+    if (isTallTopCard && hasExpandableTopCard) {
+      setExpandedMessageId(topVisibleId);
+      return;
+    }
+    setExpandedMessageId(null);
+  }, [hasExpandableTopCard, isTallTopCard, topVisibleId]);
+
+  useEffect(() => {
+    const tailId = messages[messages.length - 1]?.id ?? null;
+    if (!tailId) {
+      latestTailIdRef.current = null;
+      return;
+    }
+    if (!latestTailIdRef.current) {
+      latestTailIdRef.current = tailId;
+      return;
+    }
+    if (latestTailIdRef.current !== tailId) {
+      latestTailIdRef.current = tailId;
+      if (offset !== 0) {
+        setOffsetWithNotification(0);
+      }
+    }
+  }, [messages, offset, setOffsetWithNotification]);
+
+  useEffect(() => {
+    topCardBodyRef.current?.scrollTo({ top: 0, behavior: 'auto' });
+  }, [topVisibleId]);
+
   return (
     <div
       ref={stageRef}
       className={'voice-roller' + (className ? ` ${className}` : '')}
       data-bounce={isBouncing ?? undefined}
       data-streaming={isStreamingActive || undefined}
+      data-expanded={isExpandedTopCard || undefined}
       data-tall-top={isTallTopCard || undefined}
       onWheel={handleWheel}
     >
@@ -334,7 +404,11 @@ export function VoiceModeRoller({
         )}
       </AnimatePresence>
 
-      <div className="voice-roller__stack" data-tall-top={isTallTopCard || undefined}>
+      <div
+        className="voice-roller__stack"
+        data-expanded={isExpandedTopCard || undefined}
+        data-tall-top={isTallTopCard || undefined}
+      >
         {visibleWindow.map((msg, i) => {
           if (!msg) return <EmptySlot key={`empty-${i}`} />;
           const role: StackRole = i === 0 ? 'back' : i === 1 ? 'middle' : 'top';
@@ -345,7 +419,9 @@ export function VoiceModeRoller({
               : undefined;
 
           const handleClick =
-            role === 'back'
+            isExpandedTopCard
+              ? undefined
+              : role === 'back'
               ? () => scrollTo(offset + 2)
               : role === 'middle'
                 ? () => scrollTo(offset + 1)
@@ -359,12 +435,12 @@ export function VoiceModeRoller({
               data-speaker={msg.type}
               style={style}
               onClick={handleClick}
-              onPointerDown={isTop ? handlePointerDown : undefined}
-              onPointerMove={isTop ? handlePointerMove : undefined}
-              onPointerUp={isTop ? handlePointerUp : undefined}
-              onPointerCancel={isTop ? handlePointerCancel : undefined}
-              role={role === 'top' ? undefined : 'button'}
-              tabIndex={role === 'top' ? -1 : 0}
+              onPointerDown={isTop && !isExpandedTopCard ? handlePointerDown : undefined}
+              onPointerMove={isTop && !isExpandedTopCard ? handlePointerMove : undefined}
+              onPointerUp={isTop && !isExpandedTopCard ? handlePointerUp : undefined}
+              onPointerCancel={isTop && !isExpandedTopCard ? handlePointerCancel : undefined}
+              role={role === 'top' || isExpandedTopCard ? undefined : 'button'}
+              tabIndex={role === 'top' || isExpandedTopCard ? -1 : 0}
               aria-label={
                 role === 'top'
                   ? undefined
@@ -391,7 +467,7 @@ export function VoiceModeRoller({
               >
                 <div
                   className="voice-roller__card-body"
-                  ref={isTop ? topCardContentRef : undefined}
+                  ref={isTop ? topCardBodyRef : undefined}
                 >
                   {renderMessage(msg, role)}
                 </div>

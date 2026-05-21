@@ -56,6 +56,7 @@ interface ChatViewProps {
   onPromptClick: (prompt: string) => void;
   onClearInitialMessage: () => void;
   onScrollStateChange?: (scrolled: boolean) => void;
+  isChatVisible?: boolean;
   /** True when App has a recipe sheet (modal) open — voice dock portals above it. */
   recipeModalOpen?: boolean;
   focusedRecipeBackendId?: string | null;
@@ -278,6 +279,7 @@ export function ChatView({
   onPromptClick,
   onClearInitialMessage,
   onScrollStateChange,
+  isChatVisible = true,
   recipeModalOpen = false,
   focusedRecipeBackendId = null,
   onRecipeModalVoiceDockOverlapChange,
@@ -551,6 +553,18 @@ export function ChatView({
     recipeModalOpen,
     focusedRecipeBackendId,
     notifyFocusedRecipe,
+  ]);
+
+  useEffect(() => {
+    if (!isChatVisible && (isVoiceConnected || isVoiceActive || isPausedByVisibility)) {
+      disconnectVoice();
+    }
+  }, [
+    disconnectVoice,
+    isChatVisible,
+    isPausedByVisibility,
+    isVoiceActive,
+    isVoiceConnected,
   ]);
 
   const voiceFooterDetail = isMicMuted
@@ -1091,41 +1105,50 @@ export function ChatView({
     switch (payload.kind) {
       case 'recipe':
         return (
-          <RecipeCarousel
-            recipes={options?.recipes?.length ? options.recipes : [payload.recipe]}
-            onRecipeClick={async (recipe) => {
-              const completeRecipe = await ensureRecipeHasPayload(recipe);
-              onRecipeClick(completeRecipe);
-            }}
-            singleSlide
-            voiceMode={options?.voiceMode}
-            voiceRole={options?.voiceRole}
-          />
+          <div data-voice-expandable-card="true">
+            <RecipeCarousel
+              recipes={options?.recipes?.length ? options.recipes : [payload.recipe]}
+              onRecipeClick={async (recipe) => {
+                const completeRecipe = await ensureRecipeHasPayload(recipe);
+                onRecipeClick(completeRecipe);
+              }}
+              singleSlide
+              voiceMode={options?.voiceMode}
+              voiceRole={options?.voiceRole}
+            />
+          </div>
         );
       case 'meal_plan':
         return (
-          <MealPlanCard
-            mealPlan={payload.mealPlan}
-            onViewRecipe={async (recipeId) => {
-              const transformed = await loadRecipeForSelection(recipeId);
-              if (transformed) {
-                onRecipeClick(transformed);
-              }
-            }}
-            onCookRecipe={async (recipeId) => {
-              const transformed = await loadRecipeForSelection(recipeId);
-              if (transformed) {
-                onRecipeClick(transformed);
-              }
-            }}
-          />
+          <div data-voice-expandable-card="true">
+            <MealPlanCard
+              mealPlan={payload.mealPlan}
+              onViewRecipe={async (recipeId) => {
+                const transformed = await loadRecipeForSelection(recipeId);
+                if (transformed) {
+                  onRecipeClick(transformed);
+                }
+              }}
+              onCookRecipe={async (recipeId) => {
+                const transformed = await loadRecipeForSelection(recipeId);
+                if (transformed) {
+                  onRecipeClick(transformed);
+                }
+              }}
+            />
+          </div>
         );
       case 'shopping_list':
-        return <ShoppingListCard shoppingList={payload.shoppingList} />;
+        return (
+          <div data-voice-expandable-card="true">
+            <ShoppingListCard shoppingList={payload.shoppingList} />
+          </div>
+        );
       case 'recipe_detail':
         return (
           <div
             className="bg-white overflow-hidden"
+            data-voice-expandable-card="true"
             style={{ borderRadius: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
           >
             <div style={{ padding: '16px 20px 12px' }}>
@@ -1133,6 +1156,34 @@ export function ChatView({
                 {payload.recipe.title}
               </h3>
             </div>
+            {(payload.recipe.estimated_time ||
+              payload.recipe.difficulty ||
+              payload.recipe.ingredient_count ||
+              payload.recipe.step_count) && (
+              <div
+                style={{
+                  padding: '0 20px 12px',
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '8px',
+                }}
+              >
+                {payload.recipe.estimated_time && (
+                  <span className="jamie-chip">{payload.recipe.estimated_time}</span>
+                )}
+                {payload.recipe.difficulty && (
+                  <span className="jamie-chip">{payload.recipe.difficulty}</span>
+                )}
+                {payload.recipe.ingredient_count ? (
+                  <span className="jamie-chip">
+                    {payload.recipe.ingredient_count} ingredients
+                  </span>
+                ) : null}
+                {payload.recipe.step_count ? (
+                  <span className="jamie-chip">{payload.recipe.step_count} steps</span>
+                ) : null}
+              </div>
+            )}
             {payload.recipe.description && (
               <div style={{ padding: '0 20px 16px' }}>
                 <p style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)', fontSize: '14px', color: 'var(--jamie-text-primary, #234252)', margin: 0, lineHeight: 1.55 }}>
@@ -1167,15 +1218,21 @@ export function ChatView({
       return (
         <>
           {message.process ? (
-            <ProcessCard
-              state={message.process}
-              renderFeatured={(payload) => renderFeaturedPayload(payload, {
-                voiceMode,
-                voiceRole: options?.voiceRole,
-                recipes: message.recipes,
-              })}
-              className={voiceMode ? 'process-card--embedded' : undefined}
-            />
+            <div
+              data-voice-expandable-card={
+                voiceMode && message.process.featured ? 'true' : undefined
+              }
+            >
+              <ProcessCard
+                state={message.process}
+                renderFeatured={(payload) => renderFeaturedPayload(payload, {
+                  voiceMode,
+                  voiceRole: options?.voiceRole,
+                  recipes: message.recipes,
+                })}
+                className={voiceMode ? 'process-card--embedded' : undefined}
+              />
+            </div>
           ) : (
             /*
              * Non-process Jamie turn: render intro text, any attached tool
@@ -1201,6 +1258,7 @@ export function ChatView({
               const hasRecipes = !!(message.recipes && message.recipes.length > 0);
               const hasMealPlan = !!message.mealPlan;
               const hasShopping = !!message.shoppingList;
+              const hasStructuredPayload = hasRecipes || hasMealPlan || hasShopping;
               const hasAnyBody =
                 !!message.content || hasRecipes || hasMealPlan || hasShopping;
               if (!hasAnyBody) return null;
@@ -1215,7 +1273,12 @@ export function ChatView({
                 : 'jamie-thread-card jamie-thread-card--jamie';
 
               return (
-                <div className={cardClassName}>
+                <div
+                  className={cardClassName}
+                  data-voice-expandable-card={
+                    voiceMode && hasStructuredPayload ? 'true' : undefined
+                  }
+                >
                   {/*
                    * Speaker badge — mint-teal heart glyph + "JAMIE" wordmark.
                    * Matches ProcessCard and the design mocks (`Jamie_03.png`,

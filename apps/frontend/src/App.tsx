@@ -694,8 +694,7 @@ export default function App() {
   const showDiscoverChatChrome = activeView === 'chat';
   const retainDiscoveryChatMount =
     showDiscoverChatChrome ||
-    Boolean(selectedRecipe) ||
-    discoveryVoiceSessionActive;
+    Boolean(selectedRecipe);
 
   useEffect(() => {
     setIsHeaderScrolled(false);
@@ -760,6 +759,7 @@ export default function App() {
                   onPromptClick={handlePromptClick}
                   onClearInitialMessage={() => setInitialChatMessage(undefined)}
                   onScrollStateChange={showDiscoverChatChrome ? setIsHeaderScrolled : undefined}
+                  isChatVisible={showDiscoverChatChrome}
                   recipeModalOpen={Boolean(selectedRecipe)}
                   focusedRecipeBackendId={selectedRecipe?.backendId ?? null}
                   onRecipeModalVoiceDockOverlapChange={setRecipeModalVoiceDockOverlap}

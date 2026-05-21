@@ -43,9 +43,12 @@ export interface RecipeDetailData {
   servings?: number;
   estimated_time?: string;
   difficulty?: string;
+  ingredient_count?: number;
+  step_count?: number;
   ingredients: string[];
   steps: string[];
   notes?: string;
+  next_step_hint?: string;
 }
 
 // Shopping list structure

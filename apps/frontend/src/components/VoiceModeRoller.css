@@ -92,6 +92,11 @@
   padding: 24px 0 12px;
 }
 
+.voice-roller[data-expanded] .voice-roller__new-badge {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /*
  * Roller card wrapper.
  *
@@ -117,6 +122,14 @@
 .voice-roller__card-content {
   width: 100%;
   min-width: 0;
+}
+
+.voice-roller__card[data-role='back'] .voice-roller__card-body,
+.voice-roller__card[data-role='middle'] .voice-roller__card-body {
+  width: 100%;
+  min-width: 0;
+  max-height: 124px;
+  overflow: hidden;
 }
 
 /* Jamie speaker wraps content in a white card. */
@@ -204,6 +217,52 @@
   padding: 18px 16px 16px;
 }
 
+.voice-roller__stack[data-expanded='true'] {
+  min-height: 0;
+  justify-content: flex-start;
+  padding-top: 10px;
+}
+
+.voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='back'],
+.voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='middle'] {
+  position: absolute;
+  left: 50%;
+  margin-bottom: 0;
+  pointer-events: none;
+}
+
+.voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='back'] .voice-roller__card-body,
+.voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='middle'] .voice-roller__card-body {
+  max-height: 96px;
+}
+
+.voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='back'] {
+  top: -2px;
+  width: 72%;
+  transform: translateX(-50%) scale(0.93);
+  opacity: 0.18;
+  filter: blur(2.2px);
+}
+
+.voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='middle'] {
+  top: 18px;
+  width: 82%;
+  transform: translateX(-50%) scale(0.965);
+  opacity: 0.42;
+  filter: blur(1.05px);
+}
+
+.voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='top'] {
+  margin-top: 34px;
+  cursor: default;
+  touch-action: pan-y;
+}
+
+.voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='top'][data-speaker='jamie'] {
+  padding: 18px 16px 18px;
+  box-shadow: 0 22px 44px rgba(35, 66, 82, 0.14);
+}
+
 /*
  * Long Jamie payloads (carousel, tool card) must scroll *inside* the top
  * slot so the 3-card stack keeps a stable footprint; vertical centering +
@@ -218,6 +277,10 @@
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;
   overscroll-behavior: contain;
+}
+
+.voice-roller[data-expanded] .voice-roller__card[data-role='top'] .voice-roller__card-body {
+  max-height: min(76vh, calc(100dvh - 214px));
 }
 
 /*
@@ -258,6 +321,11 @@
     max-height: min(52vh, calc(100dvh - 260px));
   }
 
+  .voice-roller__card[data-role='back'] .voice-roller__card-body,
+  .voice-roller__card[data-role='middle'] .voice-roller__card-body {
+    max-height: 104px;
+  }
+
   .voice-roller__stack[data-tall-top='true'] {
     padding-top: 2px;
   }
@@ -280,6 +348,30 @@
 
   .voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='top'][data-speaker='jamie'] {
     padding: 16px 14px 14px;
+  }
+
+  .voice-roller__stack[data-expanded='true'] {
+    padding-top: 4px;
+  }
+
+  .voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='back'] {
+    top: -10px;
+    width: 66%;
+    opacity: 0.16;
+  }
+
+  .voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='middle'] {
+    top: 8px;
+    width: 74%;
+    opacity: 0.34;
+  }
+
+  .voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='top'] {
+    margin-top: 20px;
+  }
+
+  .voice-roller[data-expanded] .voice-roller__card[data-role='top'] .voice-roller__card-body {
+    max-height: min(72vh, calc(100dvh - 186px));
   }
   /*
    * Mobile inherits the 100% / 92% / 84% rule from the base — the parent
