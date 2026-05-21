@@ -390,6 +390,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     stopCapture();
     stopAllAudio();
     setIsConnected(false);
+    setIsPausedByVisibility(false);
     setState('idle');
     setCurrentTranscript('');
   }, [resetActiveResponse, sendSocketEvent, stopCapture, stopAllAudio]);

@@ -246,16 +246,17 @@ def search_recipes(
 
 def get_recipe_details(recipe_id: str) -> str:
     """
-    Get full details about a specific recipe.
+    Get summary details about a specific recipe for discovery mode.
     
     Use this when the user wants more information about a particular recipe,
-    or when you need to provide detailed ingredient lists or instructions.
+    but keep discovery responses summary-first. The full recipe UI handles
+    ingredients, steps, tabs, and detailed cook-through once the user opens it.
     
     Args:
         recipe_id: The unique identifier (slug) of the recipe
     
     Returns:
-        JSON string with complete recipe details including ingredients, steps, and tips
+        JSON string with summary-level recipe details for the discovery assistant
     """
     import json
     
@@ -273,8 +274,12 @@ def get_recipe_details(recipe_id: str) -> str:
     recipe_row = response.data[0]
     recipe_json = recipe_row.get("recipe_json", {})
     recipe = recipe_json.get("recipe", {})
+    ingredients = recipe_json.get("ingredients", [])
+    steps = recipe_json.get("steps", [])
     
-    # Format for agent consumption
+    # Discovery contract: keep this summary-only so Jamie does not narrate the
+    # full recipe in chat or voice. The client can still open the full recipe
+    # sheet and hydrate complete ingredients/steps from the backend when needed.
     details = {
         "recipe_id": recipe_id,
         "title": recipe.get("title", recipe_id),
@@ -282,15 +287,12 @@ def get_recipe_details(recipe_id: str) -> str:
         "servings": recipe.get("servings"),
         "estimated_time": recipe.get("estimated_total", ""),
         "difficulty": recipe.get("difficulty", ""),
-        "ingredients": [
-            f"{ing.get('quantity', '')} {ing.get('unit', '')} {ing.get('name', '')}".strip()
-            for ing in recipe_json.get("ingredients", [])
-        ],
-        "steps": [
-            step.get("instructions", step.get("descr", ""))
-            for step in recipe_json.get("steps", [])
-        ],
-        "notes": recipe_json.get("notes", {}).get("text", ""),
+        "ingredient_count": len(ingredients),
+        "step_count": len(steps),
+        "ingredients": [],
+        "steps": [],
+        "notes": "",
+        "next_step_hint": "Open the full recipe view for ingredients, steps, and cook mode.",
     }
     
     return json.dumps({"recipe": details}, indent=2)
