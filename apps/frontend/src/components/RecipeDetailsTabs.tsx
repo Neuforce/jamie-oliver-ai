@@ -3,6 +3,7 @@ import { Play } from 'lucide-react';
 import { Recipe } from '../data/recipes';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { VideoStepCard } from './cooking/VideoStepCard';
+import { getStepDisplayTitle } from '../lib/recipeStepTitle';
 
 export type RecipeDetailsTabId = 'ingredients' | 'steps' | 'videos' | 'tips';
 
@@ -54,14 +55,21 @@ export function RecipeDetailsTabs({
     if (recipe.backendSteps && recipe.backendSteps.length > 0) {
       return recipe.backendSteps.map((step, idx) => ({
         idx,
-        title: step.descr || `Step ${idx + 1}`,
+        title: getStepDisplayTitle({
+          descr: step.descr,
+          instructions: step.instructions,
+          stepNumber: idx + 1,
+        }),
         body: step.instructions || '',
         clip: step.clip,
       }));
     }
     return (recipe.instructions ?? []).map((text, idx) => ({
       idx,
-      title: `Step ${idx + 1}`,
+      title: getStepDisplayTitle({
+        instructions: text,
+        stepNumber: idx + 1,
+      }),
       body: text,
       clip: undefined as
         | { thumbnailUrl: string; videoUrl: string }

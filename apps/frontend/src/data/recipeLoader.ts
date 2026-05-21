@@ -1,5 +1,6 @@
 import type { Recipe, BackendRecipeStep } from './recipes';
 import { API_BASE_URL } from '../lib/runtimeConfig';
+import { getStepDisplayTitle } from '../lib/recipeStepTitle';
 
 // Recipe data from jamie-oliver-ai format
 export interface BackendRecipePayload {
@@ -204,11 +205,13 @@ function rebuildCharacterSplitSteps(
   return segments.map((text, index) => {
     const currentId = `step_${index + 1}`;
     const nextId = index < segments.length - 1 ? `step_${index + 2}` : undefined;
-    const summary = text.length > 120 ? `${text.slice(0, 117).trimEnd()}...` : text;
 
     return {
       id: currentId,
-      descr: summary,
+      descr: getStepDisplayTitle({
+        instructions: text,
+        stepNumber: index + 1,
+      }),
       instructions: text,
       type: 'immediate',
       auto_start: index === 0,

@@ -14,6 +14,23 @@ _STEM_FALSE_PREFIX: Dict[str, tuple[str, ...]] = {
     "egg": ("plant",),
 }
 
+_QUALIFIER_STOPWORDS = {
+    "a",
+    "an",
+    "and",
+    "for",
+    "fresh",
+    "into",
+    "of",
+    "or",
+    "some",
+    "the",
+    "their",
+    "then",
+    "to",
+    "with",
+}
+
 
 def _float_quantity(quantity: Any) -> float | None:
     if quantity is None:
@@ -178,6 +195,63 @@ def _already_has_phrase(text: str, phrase: str) -> bool:
     return False
 
 
+def _qualifier_tokens(phrase: str, stems: Sequence[str]) -> set[str]:
+    """
+    Extract non-stem descriptive tokens from the spoken ingredient phrase.
+
+    These help us recognise when the surrounding prose already qualifies the
+    ingredient naturally, e.g. "mashed bananas" or "pinch of salt", so we can
+    avoid replacing the stem with a clunky full phrase.
+    """
+    stem_tokens = {
+        tokens[-1].lower()
+        for stem in stems
+        for tokens in [re.findall(r"[a-zA-Z]+", stem.lower())]
+        if tokens
+    }
+    tokens = re.findall(r"[a-zA-Z]+", phrase.lower())
+    return {
+        token
+        for token in tokens
+        if len(token) > 2
+        and token not in stem_tokens
+        and token not in _QUALIFIER_STOPWORDS
+    }
+
+
+def _context_already_qualifies_stem(
+    text: str,
+    stem_start: int,
+    qualifier_tokens: set[str],
+) -> bool:
+    """
+    True when nearby prose already includes descriptive ingredient wording.
+
+    Example:
+      - "mashed bananas" before stem "bananas"
+      - "pinch of salt" before stem "salt"
+      - "melted butter" before stem "butter"
+    """
+    if not qualifier_tokens or stem_start <= 0:
+        return False
+
+    context = text[max(0, stem_start - 40) : stem_start].lower()
+    prior_words = re.findall(r"[a-zA-Z]+", context)
+    if not prior_words:
+        return False
+
+    return any(token in qualifier_tokens for token in prior_words[-4:])
+
+
+def _matched_stem_already_qualified(match_text: str, qualifier_tokens: set[str]) -> bool:
+    if not qualifier_tokens:
+        return False
+    words = re.findall(r"[a-zA-Z]+", match_text.lower())
+    if len(words) <= 1:
+        return False
+    return any(word in qualifier_tokens for word in words[:-1])
+
+
 def _bad_eggplant(match: re.Match[str], text: str) -> bool:
     stem = match.group(0).lower()
     if stem != "egg":
@@ -224,7 +298,7 @@ def enrich_say_with_ingredients(say: str, ingredients: Sequence[Dict[str, Any]] 
     if not say or not ingredients:
         return say
 
-    prepared: List[tuple[str, List[str]]] = []
+    prepared: List[tuple[str, List[str], set[str]]] = []
     for ing in ingredients:
         if not isinstance(ing, dict):
             continue
@@ -234,12 +308,12 @@ def enrich_say_with_ingredients(say: str, ingredients: Sequence[Dict[str, Any]] 
         stems = _match_tokens_for_ingredient(ing)
         if not stems:
             continue
-        prepared.append((phrase, stems))
+        prepared.append((phrase, stems, _qualifier_tokens(phrase, stems)))
 
     prepared.sort(key=lambda x: max((len(t) for t in x[1]), default=0), reverse=True)
 
     result = say
-    for phrase, stems in prepared:
+    for phrase, stems, qualifier_tokens in prepared:
         if _already_has_phrase(result, phrase):
             continue
         for stem in stems:
@@ -248,9 +322,13 @@ def enrich_say_with_ingredients(say: str, ingredients: Sequence[Dict[str, Any]] 
             pattern = re.compile(rf"\b{re.escape(stem)}\b", re.IGNORECASE)
 
             def _repl(m: re.Match[str], phrase: str = phrase) -> str:
+                if _matched_stem_already_qualified(m.group(0), qualifier_tokens):
+                    return m.group(0)
                 if _bad_eggplant(m, result):
                     return m.group(0)
                 if _quantity_precedes_stem(result, m.start()):
+                    return m.group(0)
+                if _context_already_qualifies_stem(result, m.start(), qualifier_tokens):
                     return m.group(0)
                 false_suffix = _STEM_FALSE_PREFIX.get(m.group(0).lower())
                 if false_suffix:

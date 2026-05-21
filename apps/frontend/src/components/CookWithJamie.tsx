@@ -53,6 +53,7 @@ import {
 } from './cooking';
 import { VoiceFooter } from './VoiceFooter';
 import { RecipeDetailsTabs } from './RecipeDetailsTabs';
+import { getStepDisplayTitle } from '../lib/recipeStepTitle';
 // @ts-ignore - handled by Vite
 import jamieLogoImport from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 // @ts-ignore - handled by Vite
@@ -250,6 +251,21 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     return recipe.instructions;
   }, [recipe]);
 
+  const currentStepDisplayTitle = useMemo(() => {
+    if (recipe?.backendSteps?.length) {
+      const backendStep = recipe.backendSteps[currentStep];
+      return getStepDisplayTitle({
+        descr: backendStep?.descr,
+        instructions: backendStep?.instructions,
+        stepNumber: currentStep + 1,
+      });
+    }
+    return getStepDisplayTitle({
+      instructions: instructions[currentStep],
+      stepNumber: currentStep + 1,
+    });
+  }, [currentStep, instructions, recipe]);
+
   /*
    * Timers for the *current* step, normalized for the cook surface.
    *
@@ -296,7 +312,11 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     return recipe.backendSteps.reduce<Record<string, { number?: number; title?: string }>>((acc, step, index) => {
       acc[step.id] = {
         number: index + 1,
-        title: step.descr || step.instructions,
+        title: getStepDisplayTitle({
+          descr: step.descr,
+          instructions: step.instructions,
+          stepNumber: index + 1,
+        }),
       };
       return acc;
     }, {});
@@ -1308,7 +1328,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
               recipeTitle={recipe.title}
               totalSteps={totalSteps}
               currentStep={currentStep + 1}
-              currentStepName={recipe.backendSteps?.[currentStep]?.descr ?? ''}
+              currentStepName={currentStepDisplayTitle}
               timerActive={timerRunning}
             />
 
@@ -1351,7 +1371,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
                 {recipe.backendSteps?.[currentStep]?.clip && (
                   <VideoClipCard
                     thumbnailUrl={recipe.backendSteps[currentStep].clip!.thumbnailUrl}
-                    label={recipe.backendSteps[currentStep]?.descr ?? 'Watch clip'}
+                    label={currentStepDisplayTitle || 'Watch clip'}
                     onPlay={() => {
                       const clip = recipe.backendSteps?.[currentStep]?.clip;
                       if (clip?.videoUrl) {
@@ -1501,7 +1521,15 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
           >
             <StepDoneCelebration
               stepNumber={celebrationFor}
-              nextStepName={recipe.backendSteps?.[celebrationFor]?.descr}
+              nextStepName={
+                celebrationFor !== null
+                  ? getStepDisplayTitle({
+                      descr: recipe.backendSteps?.[celebrationFor]?.descr,
+                      instructions: recipe.backendSteps?.[celebrationFor]?.instructions,
+                      stepNumber: celebrationFor + 1,
+                    })
+                  : undefined
+              }
               onComplete={handleCelebrationComplete}
             />
           </motion.div>

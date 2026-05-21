@@ -68,6 +68,24 @@ def test_neu612_still_enriches_bare_ingredient_after_scaling_request():
     assert "2 2" not in out
 
 
+def test_keeps_natural_ingredient_qualifier_for_mashed_bananas():
+    ingredients = [{"name": "3 ripe bananas, mashed", "unit": None, "quantity": None}]
+    say = "Fold in the mashed bananas until combined."
+    assert enrich_say_with_ingredients(say, ingredients) == say
+
+
+def test_keeps_pinch_of_salt_phrase_when_unit_already_in_prose():
+    ingredients = [{"name": "salt", "unit": "pinch", "quantity": 1}]
+    say = "Add a pinch of salt, then stir."
+    assert enrich_say_with_ingredients(say, ingredients) == say
+
+
+def test_keeps_melted_butter_phrase_when_descriptor_already_present():
+    ingredients = [{"name": "melted butter", "unit": "g", "quantity": 75}]
+    say = "Pour in the melted butter and mix well."
+    assert enrich_say_with_ingredients(say, ingredients) == say
+
+
 def test_recipe_from_dict_loads_ingredients():
     from src.recipe_engine import Recipe
 
