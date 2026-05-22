@@ -15,11 +15,13 @@ else
 fi
 # DiscoveryChatAgent tests import ccai (monorepo package; not a backend-search wheel dep).
 "${PY[@]}" -m pip install -q -e "${ROOT}/packages/ccai"
+"${PY[@]}" -m pip install -q -e "${ROOT}/packages/jamie-guardrails"
 "${PY[@]}" -m pytest \
   tests/test_guardrails_gate.py \
   tests/test_guardrails_inline_fallback.py \
   tests/test_guardrails_chat_agent.py \
   tests/test_guardrails_policy_loader.py \
+  tests/test_guardrails_policy_render.py \
   tests/test_guardrails_golden_cooking.py \
   tests/test_guardrails_neugate_client.py \
   tests/test_preprompt_v1_2.py \

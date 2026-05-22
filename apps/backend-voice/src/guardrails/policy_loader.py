@@ -1,19 +1,31 @@
-"""Load Jamie consumer policy for NeuGate requests."""
+"""Re-export shared jamie-guardrails policy helpers (Path-friendly loader)."""
 
 from __future__ import annotations
 
-import json
-from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
-_VOICE_APP_ROOT = Path(__file__).resolve().parents[2]
-_DEFAULT_POLICY_PATH = _VOICE_APP_ROOT / "config" / "guardrails" / "jamie-policy.json"
+from jamie_guardrails import policy as _policy
+
+clear_policy_cache = _policy.clear_policy_cache
+default_policy_path = _policy.default_policy_path
+neugate_policy = _policy.neugate_policy
+render_preprompt_block = _policy.render_preprompt_block
 
 
-@lru_cache(maxsize=1)
 def load_jamie_policy(path: Path | None = None) -> dict[str, Any]:
-    policy_path = path or _DEFAULT_POLICY_PATH
-    if not policy_path.is_file():
-        raise FileNotFoundError(f"Jamie policy not found: {policy_path}")
-    return json.loads(policy_path.read_text(encoding="utf-8"))
+    if path is not None:
+        clear_policy_cache()
+        return _policy.load_jamie_policy(str(path))
+    return _policy.load_jamie_policy()
+
+
+load_jamie_policy.cache_clear = clear_policy_cache  # type: ignore[attr-defined]
+
+__all__ = [
+    "clear_policy_cache",
+    "default_policy_path",
+    "load_jamie_policy",
+    "neugate_policy",
+    "render_preprompt_block",
+]

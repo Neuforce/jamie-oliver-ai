@@ -62,7 +62,7 @@ elif [ -d "venv" ]; then
 fi
 
 # Install dependencies if needed
-if [ ! -f ".deps-installed" ] || ! python -c "import uvicorn" 2>/dev/null || ! python -c "import ccai" 2>/dev/null; then
+if [ ! -f ".deps-installed" ] || ! python -c "import uvicorn" 2>/dev/null || ! python -c "import ccai" 2>/dev/null || ! python -c "import jamie_guardrails" 2>/dev/null; then
     echo "📦 Installing dependencies..."
     pip install --upgrade pip
     # Install onnxruntime first (required by fastembed)
@@ -112,6 +112,9 @@ if [ ! -f ".deps-installed" ] || ! python -c "import uvicorn" 2>/dev/null || ! p
     fi
     rm -f /tmp/ccai_install.log
 
+    echo "   Installing jamie-guardrails package..."
+    cd ../jamie-guardrails
+    pip install -e .
     cd ../../apps/backend-search
     touch .deps-installed
     echo "✅ Dependencies installed"

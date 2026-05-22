@@ -33,7 +33,7 @@ def test_bypass_when_neugate_disabled() -> None:
     assert result.source == "bypass"
 
 
-@patch("recipe_search_agent.guardrails.gate.evaluate_via_neugate")
+@patch("jamie_guardrails.gate.evaluate_via_neugate")
 def test_fail_safe_on_http_error(mock_evaluate: MagicMock) -> None:
     mock_evaluate.side_effect = httpx.ConnectError("connection refused")
     settings = GuardrailsSettings(
@@ -48,7 +48,7 @@ def test_fail_safe_on_http_error(mock_evaluate: MagicMock) -> None:
     assert result.source == "fail_safe"
 
 
-@patch("recipe_search_agent.guardrails.gate.evaluate_via_neugate")
+@patch("jamie_guardrails.gate.evaluate_via_neugate")
 def test_short_circuit_on_violation(mock_evaluate: MagicMock) -> None:
     mock_evaluate.return_value = {
         "is_violation": True,
@@ -69,7 +69,7 @@ def test_short_circuit_on_violation(mock_evaluate: MagicMock) -> None:
     assert result.response_text == "Back to cooking, mate."
 
 
-@patch("recipe_search_agent.guardrails.gate.evaluate_via_neugate")
+@patch("jamie_guardrails.gate.evaluate_via_neugate")
 def test_proceed_on_safe_response(mock_evaluate: MagicMock) -> None:
     mock_evaluate.return_value = {
         "is_violation": False,
@@ -128,7 +128,7 @@ def test_plan_meal_skips_search_when_gate_blocked() -> None:
     mock_agent.search.assert_not_called()
 
 
-@patch("recipe_search_agent.guardrails.gate.evaluate_via_neugate")
+@patch("jamie_guardrails.gate.evaluate_via_neugate")
 def test_short_circuit_uses_default_pivot_when_cached_response_empty(mock_evaluate: MagicMock) -> None:
     mock_evaluate.return_value = {
         "is_violation": True,

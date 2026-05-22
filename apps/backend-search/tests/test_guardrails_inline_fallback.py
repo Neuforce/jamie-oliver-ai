@@ -11,7 +11,7 @@ from recipe_search_agent.guardrails.config import GuardrailsSettings
 from recipe_search_agent.guardrails.gate import evaluate_message_sync
 
 
-@patch("recipe_search_agent.guardrails.gate.evaluate_via_neugate")
+@patch("jamie_guardrails.gate.evaluate_via_neugate")
 def test_inline_fallback_blocks_after_connect_error_when_enabled(mock_eval: MagicMock) -> None:
     mock_eval.side_effect = httpx.ConnectError("connection refused")
     settings = GuardrailsSettings(
@@ -30,7 +30,7 @@ def test_inline_fallback_blocks_after_connect_error_when_enabled(mock_eval: Magi
     assert "kitchen" in (result.response_text or "").lower() or "mate" in (result.response_text or "").lower()
 
 
-@patch("recipe_search_agent.guardrails.gate.evaluate_via_neugate")
+@patch("jamie_guardrails.gate.evaluate_via_neugate")
 def test_inline_fallback_disabled_proceeds_on_error(mock_eval: MagicMock) -> None:
     mock_eval.side_effect = httpx.ConnectError("connection refused")
     settings = GuardrailsSettings(
@@ -46,7 +46,7 @@ def test_inline_fallback_disabled_proceeds_on_error(mock_eval: MagicMock) -> Non
     assert result.source == "fail_safe"
 
 
-@patch("recipe_search_agent.guardrails.gate.evaluate_via_neugate")
+@patch("jamie_guardrails.gate.evaluate_via_neugate")
 def test_inline_fallback_safe_message_proceeds_on_error(mock_eval: MagicMock) -> None:
     mock_eval.side_effect = httpx.ConnectError("connection refused")
     settings = GuardrailsSettings(

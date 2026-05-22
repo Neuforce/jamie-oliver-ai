@@ -33,7 +33,7 @@ Use **§0** as the status summary; older numbered sections (§3–§8) are histo
 
 **Jamie (`jamie-oliver-ai`, branch `docs/NEU-622-jamie-guardrails`)**
 
-- [x] `config/guardrails/jamie-policy.json` (pivots PRD §12, critical/soft blocks)
+- [x] `packages/jamie-guardrails` — canonical policy JSON + NeuGate gate/client/render (shared by search + voice)
 - [x] `recipe_search_agent/guardrails/` — `config`, `policy_loader`, `neugate_client`, `gate` (bypass / fail-safe / short-circuit), `session`
 - [x] `DiscoveryChatAgent.chat()` — `evaluate_message` before `SimpleBrain.process()`; pivot on block
 - [x] Tool guard — `search_recipes` checks `is_gate_blocked` (covers `suggest_recipes_for_mood` / `plan_meal` via `search_recipes`)

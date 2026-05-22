@@ -1,0 +1,15 @@
+README.md
+pyproject.toml
+jamie_guardrails/__init__.py
+jamie_guardrails/config.py
+jamie_guardrails/gate.py
+jamie_guardrails/inline_fallback.py
+jamie_guardrails/neugate_client.py
+jamie_guardrails/policy.py
+jamie_guardrails/session.py
+jamie_guardrails.egg-info/PKG-INFO
+jamie_guardrails.egg-info/SOURCES.txt
+jamie_guardrails.egg-info/dependency_links.txt
+jamie_guardrails.egg-info/requires.txt
+jamie_guardrails.egg-info/top_level.txt
+jamie_guardrails/data/jamie-policy.json

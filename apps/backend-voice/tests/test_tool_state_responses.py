@@ -10,7 +10,7 @@ See apps/backend-voice/src/tools/TOOL_RESPONSE_FORMAT.md for standards.
 
 import pytest
 from src.recipe_engine import StepStatus, Recipe, RecipeEngine
-from src.services import session_service
+from src.services.session_service import session_service
 from src.services.tool_runner import run_recipe_tool
 
 

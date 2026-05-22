@@ -14,6 +14,7 @@ python-dotenv = "^1.0.1"
 websockets = "^14.1"
 openai = "^1.51.2"
 ccai = {path = "../../packages/ccai", develop = true}
+jamie-guardrails = {path = "../../packages/jamie-guardrails", develop = true}
 pydantic = "^2.10.6"
 python-multipart = "^0.0.20"
 supabase = ">=2.0.0"

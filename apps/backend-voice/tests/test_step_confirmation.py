@@ -3,7 +3,7 @@
 import pytest
 from unittest.mock import AsyncMock, patch
 from src.recipe_engine import StepStatus
-from src.services import session_service
+from src.services.session_service import session_service
 
 
 @pytest.mark.asyncio
@@ -36,7 +36,7 @@ async def test_step_confirmation_unlocks_dependent_steps(recipe_engine, event_ca
 async def test_assistant_receives_system_message_on_confirmation(mock_assistant):
     """Test that assistant receives system message when step confirmed via API."""
     from src.recipe_engine import RecipeEngine, Recipe
-    from src.services import session_service
+    from src.services.session_service import session_service
     
     # Use a unique session ID
     unique_session_id = "test-session-confirm-123"
@@ -101,7 +101,7 @@ async def test_assistant_receives_system_message_on_confirmation(mock_assistant)
 async def test_step_confirmation_graceful_without_assistant():
     """Test that step confirmation works gracefully when assistant is not available."""
     from src.recipe_engine import RecipeEngine, Recipe
-    from src.services import session_service
+    from src.services.session_service import session_service
     
     # Use a unique session ID that won't have an assistant
     unique_session_id = "test-session-no-assistant-456"
@@ -160,7 +160,7 @@ async def test_confirm_tool_preserves_parallel_timer_state():
     engine.start_timer_for_step(), not auto-started when step becomes active.
     """
     from src.recipe_engine import Recipe
-    from src.services import session_service
+    from src.services.session_service import session_service
     from src.services.tool_runner import run_recipe_tool
     from src.tools.recipe_tools import confirm_step_done as confirm_tool
 

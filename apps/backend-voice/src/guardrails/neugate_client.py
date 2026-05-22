@@ -1,32 +1,7 @@
-"""HTTP client for NeuGate POST /v1/evaluate."""
+"""Re-export shared jamie-guardrails NeuGate client."""
 
-from __future__ import annotations
+import httpx  # noqa: F401 — @patch target for tests
 
-from typing import Any
+from jamie_guardrails.neugate_client import evaluate_via_neugate
 
-import httpx
-
-from src.guardrails.config import GuardrailsSettings
-
-
-def evaluate_via_neugate(
-    *,
-    message: str,
-    policy: dict[str, Any],
-    settings: GuardrailsSettings,
-) -> dict[str, Any]:
-    url = f"{settings.neugate_url}/v1/evaluate"
-    headers: dict[str, str] = {"Content-Type": "application/json"}
-    if settings.neugate_api_key:
-        headers["X-API-Key"] = settings.neugate_api_key
-
-    body = {
-        "project_id": settings.neugate_project_id,
-        "message": message,
-        "policy": policy,
-    }
-
-    with httpx.Client(timeout=settings.neugate_timeout_seconds) as client:
-        response = client.post(url, json=body, headers=headers)
-        response.raise_for_status()
-        return response.json()
+__all__ = ["evaluate_via_neugate", "httpx"]

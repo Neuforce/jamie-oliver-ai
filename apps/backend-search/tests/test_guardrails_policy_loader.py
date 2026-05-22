@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from recipe_search_agent.guardrails.policy_loader import load_jamie_policy
+from recipe_search_agent.guardrails.policy_loader import load_jamie_policy, neugate_policy
 
 
 def test_load_jamie_policy_default_path() -> None:
@@ -15,8 +15,15 @@ def test_load_jamie_policy_default_path() -> None:
     assert "critical_blocks" in policy
     assert "soft_blocks" in policy
     assert "pivot_templates" in policy
+    assert "preprompt" in policy
     assert "illegal_activities" in policy["critical_blocks"]
     assert len(policy["pivot_templates"]) >= 1
+
+
+def test_neugate_policy_from_loaded_default() -> None:
+    stripped = neugate_policy(load_jamie_policy())
+    assert "preprompt" not in stripped
+    assert "critical_blocks" in stripped
 
 
 def test_load_jamie_policy_from_custom_path(tmp_path: Path) -> None:

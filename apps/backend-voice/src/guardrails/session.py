@@ -1,19 +1,5 @@
-"""Per-request gate state for tool guards (voice)."""
+"""Re-export shared jamie-guardrails session state."""
 
-from __future__ import annotations
+from jamie_guardrails.session import is_gate_blocked, reset_gate_blocked, set_gate_blocked
 
-from contextvars import ContextVar
-
-_gate_blocked: ContextVar[bool] = ContextVar("jamie_voice_gate_blocked", default=False)
-
-
-def set_gate_blocked(blocked: bool) -> None:
-    _gate_blocked.set(blocked)
-
-
-def is_gate_blocked() -> bool:
-    return _gate_blocked.get()
-
-
-def reset_gate_blocked() -> None:
-    _gate_blocked.set(False)
+__all__ = ["is_gate_blocked", "reset_gate_blocked", "set_gate_blocked"]

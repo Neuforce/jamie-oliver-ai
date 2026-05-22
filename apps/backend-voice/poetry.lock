@@ -1204,6 +1204,26 @@ files = [
 ]
 
 [[package]]
+name = "jamie-guardrails"
+version = "0.1.0"
+description = "Shared NeuGate guardrails for Jamie Oliver AI backends"
+optional = false
+python-versions = ">=3.11"
+groups = ["main"]
+files = []
+develop = true
+
+[package.dependencies]
+httpx = ">=0.28.0"
+
+[package.extras]
+dev = ["pytest (>=8.0.0)"]
+
+[package.source]
+type = "directory"
+url = "../../packages/jamie-guardrails"
+
+[[package]]
 name = "jiter"
 version = "0.12.0"
 description = "Fast iterable JSON parser."
@@ -3541,4 +3561,4 @@ observability = ["opentelemetry-api", "opentelemetry-exporter-otlp", "openteleme
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.11"
-content-hash = "b81bedebf90d644eb6a7daa48dfb071ee951c13fe70339e84fccd197f5efa6f3"
+content-hash = "cbc009d18e2b0cb8777cd04985bcb656ecbcf6e66370bfff341fd9894c7c448a"

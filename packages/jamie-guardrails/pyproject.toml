@@ -1,0 +1,25 @@
+[project]
+name = "jamie-guardrails"
+version = "0.1.0"
+description = "Shared NeuGate guardrails for Jamie Oliver AI backends"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "httpx>=0.28.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["jamie_guardrails*"]
+
+[tool.setuptools.package-data]
+jamie_guardrails = ["data/*.json"]

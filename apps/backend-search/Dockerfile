@@ -20,7 +20,9 @@ RUN pip install --upgrade pip && pip install -r /app/requirements.txt
 # Note: deepgram-sdk should already be installed from requirements.txt above
 # This ensures version compatibility before installing ccai
 COPY packages/ccai /app/packages/ccai
+COPY packages/jamie-guardrails /app/packages/jamie-guardrails
 RUN pip install /app/packages/ccai
+RUN pip install /app/packages/jamie-guardrails
 
 # Copy application source
 COPY apps/backend-search /app/apps/backend-search
