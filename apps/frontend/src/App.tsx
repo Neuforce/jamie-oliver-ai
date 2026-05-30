@@ -814,7 +814,7 @@ export default function App() {
                           <p className="jamie-page-subtitle">
                             {isMyRecipesView
                               ? 'Everything you have already unlocked, styled to match the new Jamie experience.'
-                              : 'Find the recipe, nail every step, and keep the whole experience in one calm, guided flow.'}
+                              : "Pick a recipe. Let's make something brilliant."}
                           </p>
                         </motion.div>
 
