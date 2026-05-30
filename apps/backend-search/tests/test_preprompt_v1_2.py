@@ -19,3 +19,5 @@ def test_discovery_prompt_includes_guardrails_block() -> None:
     assert "Do not debate" in JAMIE_DISCOVERY_PROMPT
     assert "search_recipes" in JAMIE_DISCOVERY_PROMPT
     assert DISCOVERY_PROMPT_REVISION >= 11
+    assert GUARDRAILS_POLICY_BLOCK.strip()
+    assert "Right — I'm here for the food, mate" in GUARDRAILS_POLICY_BLOCK

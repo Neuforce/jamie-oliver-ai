@@ -1,0 +1,21 @@
+Metadata-Version: 2.4
+Name: jamie-guardrails
+Version: 0.1.0
+Summary: Shared NeuGate guardrails for Jamie Oliver AI backends
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: httpx>=0.28.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0.0; extra == "dev"
+
+# jamie-guardrails
+
+Shared Jamie Oliver AI guardrails: NeuGate client, query gate, policy JSON, and PrePrompt rendering.
+
+Used by `apps/backend-search` and `apps/backend-voice`.
+
+```bash
+pip install -e packages/jamie-guardrails
+```
+
+Policy file: `jamie_guardrails/data/jamie-policy.json` (override with `JAMIE_POLICY_PATH`).

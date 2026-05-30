@@ -21,50 +21,54 @@ Requires-Dist: mangum>=0.17.0
 Provides-Extra: dev
 Requires-Dist: pytest>=8.0.0; extra == "dev"
 
-# Backend Search - Jamie Oliver AI
+# Backend Search — Jamie Oliver AI
 
 PDF recipe ingestion service that:
+
 - Extracts text from recipe PDFs
 - Produces JOAv0-compliant recipe JSON (validated)
-- Generates MiniLM embeddings (384 dims)
+- Generates MiniLM embeddings (384 dimensions)
 - Upserts minimal metadata + embedding into Supabase Postgres (pgvector)
 
-## Estructura del Proyecto
+## Project structure
 
 ```
 apps/backend-search/
 ├── api/                    # API endpoints (Vercel serverless)
-├── recipe_search_agent/     # Agente de búsqueda semántica
-├── recipe_pdf_agent/        # Agente de procesamiento de PDFs
-├── recipe_pdf_agent_llama/  # Agente de PDFs con Llama (LLM)
-├── data/                    # Datos (recetas, PDFs procesados, errores)
-├── db/                      # Scripts SQL para Supabase
-├── tests/                   # Tests unitarios e integración
-├── demos/                   # Scripts de demostración
-├── examples/                 # Scripts explicativos
-├── scripts/                 # Scripts de utilidad
-└── docs/                    # Documentación organizada
-    ├── api/                 # Documentación de API
-    ├── deployment/          # Guías de despliegue
-    ├── ingestion/           # Documentación de ingesta
-    ├── design/              # Diseño y arquitectura
-    ├── performance/        # Notas de rendimiento
-    └── examples/            # Ejemplos y casos de uso
+├── recipe_search_agent/     # Semantic search agent
+├── recipe_pdf_agent/        # PDF processing agent
+├── recipe_pdf_agent_llama/  # PDF agent with Llama (LLM)
+├── data/                    # Data (recipes, processed PDFs, errors)
+├── db/                      # SQL scripts for Supabase
+├── tests/                   # Unit and integration tests
+├── demos/                   # Demo scripts
+├── examples/                 # Exploratory scripts
+├── scripts/                 # Utility scripts
+└── docs/                    # Documentation
+    ├── api/                 # API documentation
+    ├── deployment/          # Deployment guides
+    ├── ingestion/           # Ingestion documentation
+    ├── design/              # Design and architecture
+    ├── performance/        # Performance notes
+    └── examples/            # Examples and use cases
 ```
 
 ## CLI
 
-### PDF Processing
-- `recipe-pdf run <pdf_dir>` - Procesar PDFs de recetas
-- `recipe-pdf watch <pdf_dir>` - Monitorear directorio y procesar nuevos PDFs
-- `recipe-pdf validate <json_file>` - Validar JSON contra schema JOAv0
+### PDF processing
 
-### Recipe Pipeline (URL Import)
-- `python -m recipe_pipeline.cli import --url "URL" --enhance --publish` - Import recipe from Jamie Oliver website
-- `python -m recipe_pipeline.cli batch-import --category "vegetarian" --limit 50 --enhance` - Batch import from category
-- `python -m recipe_pipeline.cli enhance-existing --input-dir path/to/jsons --publish` - Enhance existing JSON files
+- `recipe-pdf run <pdf_dir>` — Process recipe PDFs
+- `recipe-pdf watch <pdf_dir>` — Watch directory and process new PDFs
+- `recipe-pdf validate <json_file>` — Validate JSON against JOAv0 schema
 
-### JSON Ingestion (Local Files)
+### Recipe pipeline (URL import)
+
+- `python -m recipe_pipeline.cli import --url "URL" --enhance --publish` — Import recipe from Jamie Oliver website
+- `python -m recipe_pipeline.cli batch-import --category "vegetarian" --limit 50 --enhance` — Batch import from category
+- `python -m recipe_pipeline.cli enhance-existing --input-dir path/to/jsons --publish` — Enhance existing JSON files
+
+### JSON ingestion (local files)
+
 ```bash
 # Import JSON recipes with LLM enhancement (recommended)
 python ingest_json_recipes.py /path/to/recipes --enhance --publish
@@ -77,30 +81,34 @@ python ingest_json_recipes.py /path/to/recipes --enhance --dry-run
 ```
 
 **Flags:**
-- `--enhance` / `-e` - Use LLM to add Jamie Oliver voice, semantic step IDs, and timer detection
-- `--publish` / `-p` - Publish recipes immediately (otherwise saved as draft)
-- `--overwrite` - Re-process recipes that already exist in Supabase
-- `--dry-run` - Show what would be processed without saving
 
-## Desarrollo
+- `--enhance` / `-e` — Use LLM to add Jamie Oliver voice, semantic step IDs, and timer detection
+- `--publish` / `-p` — Publish recipes immediately (otherwise saved as draft)
+- `--overwrite` — Re-process recipes that already exist in Supabase
+- `--dry-run` — Show what would be processed without saving
+
+## Development
 
 ### Tests
+
 ```bash
 pytest tests/
 ```
 
 ### Demos
+
 ```bash
 python demos/demo_semantic_search.py
 ```
 
-### Ejemplos
+### Examples
+
 ```bash
 python examples/explain_text_to_vector.py
 ```
 
-## Documentación
+## Documentation
 
-Ver [docs/README.md](./docs/README.md) para documentación completa organizada por categorías.
+See [docs/README.md](./docs/README.md) for full documentation organized by category.
 
 

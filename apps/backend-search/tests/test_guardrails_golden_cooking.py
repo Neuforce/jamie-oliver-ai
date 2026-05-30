@@ -29,7 +29,7 @@ def golden_cases() -> list[dict[str, str]]:
     return json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
 
 
-@patch("recipe_search_agent.guardrails.gate.evaluate_via_neugate")
+@patch("jamie_guardrails.gate.evaluate_via_neugate")
 def test_golden_cooking_prompts_proceed(mock_evaluate: MagicMock, golden_cases: list[dict[str, str]]) -> None:
     mock_evaluate.return_value = {
         "is_violation": False,

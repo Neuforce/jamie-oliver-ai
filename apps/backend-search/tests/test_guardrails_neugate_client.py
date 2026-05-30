@@ -20,7 +20,7 @@ def _settings(*, api_key: str = "test-key") -> GuardrailsSettings:
     )
 
 
-@patch("recipe_search_agent.guardrails.neugate_client.httpx.Client")
+@patch("jamie_guardrails.neugate_client.httpx.Client")
 def test_evaluate_via_neugate_posts_message_and_policy(mock_client_cls: MagicMock) -> None:
     mock_response = MagicMock()
     mock_response.json.return_value = {
@@ -52,7 +52,7 @@ def test_evaluate_via_neugate_posts_message_and_policy(mock_client_cls: MagicMoc
     assert call_args[1]["headers"]["X-API-Key"] == "test-key"
 
 
-@patch("recipe_search_agent.guardrails.neugate_client.httpx.Client")
+@patch("jamie_guardrails.neugate_client.httpx.Client")
 def test_evaluate_via_neugate_omits_api_key_header_when_empty(mock_client_cls: MagicMock) -> None:
     mock_response = MagicMock()
     mock_response.json.return_value = {"is_violation": False, "action": "proceed"}
@@ -71,7 +71,7 @@ def test_evaluate_via_neugate_omits_api_key_header_when_empty(mock_client_cls: M
     assert "X-API-Key" not in headers
 
 
-@patch("recipe_search_agent.guardrails.neugate_client.httpx.Client")
+@patch("jamie_guardrails.neugate_client.httpx.Client")
 def test_evaluate_via_neugate_raises_on_http_error(mock_client_cls: MagicMock) -> None:
     mock_client = MagicMock()
     mock_client.__enter__ = MagicMock(return_value=mock_client)

@@ -33,18 +33,21 @@ RUN apt-get update && \
 # Copy files needed for dependency installation
 COPY apps/backend-voice/requirements.txt ./apps/backend-voice/
 COPY packages/ccai ./packages/ccai/
+COPY packages/jamie-guardrails ./packages/jamie-guardrails/
 
 # Install Python dependencies
 WORKDIR /app/apps/backend-voice
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
-    pip install -e /app/packages/ccai
+    pip install -e /app/packages/ccai && \
+    pip install -e /app/packages/jamie-guardrails
 
 # Copy backend source
 COPY apps/backend-voice/src ./src
 
 # Copy ccai source (needed at runtime)
 COPY packages/ccai /app/packages/ccai
+COPY packages/jamie-guardrails /app/packages/jamie-guardrails
 
 # Copy and set up startup script
 COPY apps/backend-voice/startup.sh /app/startup.sh
@@ -55,5 +58,5 @@ WORKDIR /app/apps/backend-voice
 ENV PYTHONPATH="/app/apps/backend-voice/src:/app/packages"
 
 ENTRYPOINT ["/app/startup.sh"]
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8100", "--reload", "--reload-dir", "/app/apps/backend-voice/src", "--reload-dir", "/app/packages/ccai"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8100", "--reload", "--reload-dir", "/app/apps/backend-voice/src", "--reload-dir", "/app/packages/ccai", "--reload-dir", "/app/packages/jamie-guardrails"]
 

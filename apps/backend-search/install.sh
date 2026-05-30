@@ -21,9 +21,11 @@ python -c "import deepgram; print(f'✅ deepgram-sdk version: {deepgram.__versio
     exit 1
 }
 
-# Install ccai package from monorepo root
+# Install ccai and jamie-guardrails from monorepo root
 echo "📦 Installing ccai package..."
 cd ../../packages/ccai
+pip install -e .
+cd ../jamie-guardrails
 pip install -e .
 cd ../../apps/backend-search
 

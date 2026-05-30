@@ -1,7 +1,7 @@
 """Tests for session service functionality."""
 
 import pytest
-from src.services import session_service
+from src.services.session_service import session_service
 from src.services.session_service import SessionService
 from unittest.mock import MagicMock
 

@@ -25,12 +25,14 @@ RUN apt-get update && \
 COPY apps/backend-voice/requirements.txt ./apps/backend-voice/
 COPY apps/backend-voice/README.md ./apps/backend-voice/
 COPY packages/ccai /app/packages/ccai
+COPY packages/jamie-guardrails /app/packages/jamie-guardrails
 
 # Install Python dependencies
 WORKDIR /app/apps/backend-voice
 RUN pip install --upgrade pip && \
     pip install -r requirements.txt && \
-    pip install -e /app/packages/ccai
+    pip install -e /app/packages/ccai && \
+    pip install -e /app/packages/jamie-guardrails
 
 # Copy backend source
 COPY apps/backend-voice/src ./src

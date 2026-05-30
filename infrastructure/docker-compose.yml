@@ -20,6 +20,7 @@ services:
     volumes:
       - ../apps/backend-voice/src:/app/apps/backend-voice/src
       - ../packages/ccai:/app/packages/ccai
+      - ../packages/jamie-guardrails:/app/packages/jamie-guardrails
       # Mount .env file so Python can read it directly if needed
       - ../apps/backend-voice/.env:/app/apps/backend-voice/.env:ro
     networks:
