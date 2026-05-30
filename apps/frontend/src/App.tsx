@@ -919,7 +919,7 @@ export default function App() {
                           initial={{ y: 20, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
                           transition={{ duration: 0.5 }}
-                          className="mb-8 px-4"
+                          className="mb-5 px-4"
                         >
                           <div
                             style={{
@@ -1197,7 +1197,7 @@ export default function App() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.2, duration: 0.5 }}
-                          className="px-4 mb-12"
+                          className="px-4 mb-6"
                         >
                           <div
                             className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3"
@@ -1227,9 +1227,9 @@ export default function App() {
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
                           transition={{ delay: 0.2, duration: 0.5 }}
-                          className="px-5 mb-12"
+                          className="px-5 mb-6"
                         >
-                          <div className="max-w-3xl mx-auto flex flex-col" style={{ gap: '32px' }}>
+                          <div className="max-w-3xl mx-auto flex flex-col" style={{ gap: '24px' }}>
                             {visibleRecipes.map((recipe, index) => (
                               <motion.div
                                 key={recipe.id}

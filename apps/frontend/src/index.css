@@ -3918,10 +3918,10 @@ body {
 }
 
 .jamie-section-hero {
-  padding: 28px 24px 28px;
+  padding: 20px 24px 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   align-items: center;
   text-align: center;
 }
@@ -4231,7 +4231,7 @@ body {
 
 .jamie-page-shell {
   min-height: 100%;
-  padding: 16px 0 40px;
+  padding: 12px 0 32px;
 }
 
 /*
@@ -4243,8 +4243,8 @@ body {
  * Keeping the spacing as an explicit CSS rule removes that footgun.
  */
 .jamie-page-main {
-  padding-top: 40px;
-  padding-bottom: 48px;
+  padding-top: 24px;
+  padding-bottom: 32px;
 }
 
 /* --- Voice dock (keep existing behaviour, align tokens) ------------------ */
