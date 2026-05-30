@@ -1165,7 +1165,7 @@ export default function App() {
                                 {selectedCategory !== 'All' && (
                                   <button
                                     type="button"
-                                    onClick={() => setSelectedCategory('All')}
+                                    onClick={() => { setSelectedCategory('All'); setFiltersExpanded(false); }}
                                     className="jamie-filter-panel__clear"
                                   >
                                     Clear
@@ -1177,7 +1177,7 @@ export default function App() {
                                   <button
                                     key={category}
                                     type="button"
-                                    onClick={() => setSelectedCategory(category)}
+                                    onClick={() => { setSelectedCategory(category); setFiltersExpanded(false); }}
                                     className="jamie-chip"
                                     data-active={selectedCategory === category || undefined}
                                   >
