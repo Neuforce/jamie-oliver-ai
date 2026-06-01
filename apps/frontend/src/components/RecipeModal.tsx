@@ -31,9 +31,8 @@ export type RecipeModalHandle = {
  * Inspired by Jamie_06 / Jamie_07 (back + "Let's cook" header, uppercase
  * title, segmented pill tabs, clean bullet lists) but expanded to
  * surface the richness of the underlying recipe data: hero image,
- * short description, time/servings/difficulty meta row, and four
- * content tabs (Ingredients, Steps, Videos, Tips) so everything the
- * recipe carries is one tap away before the cook session starts.
+ * short description, time/servings/difficulty meta row, and overview
+ * tabs (Ingredients, Steps) before the cook session starts.
  *
  *   ┌──────────────────────────────────────────────┐
  *   │ [<]                         [  Let's cook  ] │  ← header
@@ -47,7 +46,7 @@ export type RecipeModalHandle = {
  *   │ Rich short description paragraph…            │  ← lede
  *   │ [——————— 4 of 7 segments (optional) ———————] │  ← only if savedSession
  *   │                                              │
- *   │ ( Ingredients | Steps | Videos | Tips )      │  ← segmented pill tabs
+ *   │ ( Ingredients | Steps )                      │  ← segmented pill tabs
  *   │                                              │
  *   │ content list (per-tab)…                      │
  *   └──────────────────────────────────────────────┘
@@ -390,11 +389,11 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
            * `RecipeDetailsTabs.tsx`) so RecipeModal (pre-cook) and
            * CookWithJamie (in-cook reference panel) render identical
            * content from a single source of truth. Keeps the design
-           * system consistent — ingredients, steps, videos, and tips
-           * use the same segmented pill tabs, typography, and list
-           * styles everywhere they appear.
+           * system consistent — ingredients and steps use the same
+           * segmented pill tabs, typography, and list styles.
+           * Videos / Tips remain in cook mode (`variant="full"`).
            */}
-          <RecipeDetailsTabs recipe={recipe} />
+          <RecipeDetailsTabs recipe={recipe} variant="overview" />
         </div>
       </div>
     </div>

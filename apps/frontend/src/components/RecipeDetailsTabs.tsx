@@ -9,6 +9,11 @@ export type RecipeDetailsTabId = 'ingredients' | 'steps' | 'videos' | 'tips';
 interface RecipeDetailsTabsProps {
   recipe: Recipe;
   /**
+   * `overview` — pre-cook recipe sheet (Ingredients + Steps only, NEU-640).
+   * `full` — in-cook reference panel (all four tabs). Default: `full`.
+   */
+  variant?: 'overview' | 'full';
+  /**
    * Tab selected on first render. Defaults to `ingredients` — the most
    * common pre-cook question. Consumer can override (e.g. deep link
    * into Steps).
@@ -33,7 +38,7 @@ interface RecipeDetailsTabsProps {
 }
 
 /**
- * Shared 4-tab recipe detail surface — Ingredients / Steps / Videos / Tips.
+ * Shared recipe detail tabs — Ingredients / Steps, optionally Videos / Tips.
  *
  * Single source of truth for the pre-cook (RecipeModal) and in-cook
  * (CookWithJamie details panel) tabs. Every class name intentionally
@@ -43,12 +48,18 @@ interface RecipeDetailsTabsProps {
  */
 export function RecipeDetailsTabs({
   recipe,
+  variant = 'full',
   defaultTab = 'ingredients',
   currentStepIndex,
   onJumpToStep,
   className,
 }: RecipeDetailsTabsProps) {
-  const [activeTab, setActiveTab] = useState<RecipeDetailsTabId>(defaultTab);
+  const showExtendedTabs = variant === 'full';
+  const initialTab: RecipeDetailsTabId =
+    !showExtendedTabs && (defaultTab === 'videos' || defaultTab === 'tips')
+      ? 'ingredients'
+      : defaultTab;
+  const [activeTab, setActiveTab] = useState<RecipeDetailsTabId>(initialTab);
 
   const stepRows = useMemo(() => {
     if (recipe.backendSteps && recipe.backendSteps.length > 0) {
@@ -95,20 +106,24 @@ export function RecipeDetailsTabs({
         >
           Steps
         </TabsTrigger>
-        <TabsTrigger
-          value="videos"
-          className="jamie-recipe-modal__segmented-option"
-          data-active={activeTab === 'videos' || undefined}
-        >
-          Videos
-        </TabsTrigger>
-        <TabsTrigger
-          value="tips"
-          className="jamie-recipe-modal__segmented-option"
-          data-active={activeTab === 'tips' || undefined}
-        >
-          Tips
-        </TabsTrigger>
+        {showExtendedTabs && (
+          <>
+            <TabsTrigger
+              value="videos"
+              className="jamie-recipe-modal__segmented-option"
+              data-active={activeTab === 'videos' || undefined}
+            >
+              Videos
+            </TabsTrigger>
+            <TabsTrigger
+              value="tips"
+              className="jamie-recipe-modal__segmented-option"
+              data-active={activeTab === 'tips' || undefined}
+            >
+              Tips
+            </TabsTrigger>
+          </>
+        )}
       </TabsList>
 
       <div className="jamie-recipe-modal__panels">
@@ -211,54 +226,58 @@ export function RecipeDetailsTabs({
           )}
         </TabsContent>
 
-        <TabsContent value="videos" className="mt-0">
-          {videoSteps.length === 0 ? (
-            <p className="jamie-recipe-modal__empty">
-              No step videos for this recipe yet — Jamie will walk you through
-              each step by voice when you start cooking.
-            </p>
-          ) : (
-            <ul className="jamie-recipe-modal__videos">
-              {videoSteps.map((row) => (
-                <li key={row.idx} className="jamie-recipe-modal__video-row">
-                  <VideoStepCard
-                    stepNumber={row.idx + 1}
-                    title={row.title}
-                    thumbnailUrl={row.clip!.thumbnailUrl}
-                    onPlay={() => {
-                      const url = row.clip!.videoUrl;
-                      if (url) {
-                        window.open(url, '_blank', 'noopener,noreferrer');
-                      }
-                    }}
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-        </TabsContent>
+        {showExtendedTabs && (
+          <>
+            <TabsContent value="videos" className="mt-0">
+              {videoSteps.length === 0 ? (
+                <p className="jamie-recipe-modal__empty">
+                  No step videos for this recipe yet — Jamie will walk you through
+                  each step by voice when you start cooking.
+                </p>
+              ) : (
+                <ul className="jamie-recipe-modal__videos">
+                  {videoSteps.map((row) => (
+                    <li key={row.idx} className="jamie-recipe-modal__video-row">
+                      <VideoStepCard
+                        stepNumber={row.idx + 1}
+                        title={row.title}
+                        thumbnailUrl={row.clip!.thumbnailUrl}
+                        onPlay={() => {
+                          const url = row.clip!.videoUrl;
+                          if (url) {
+                            window.open(url, '_blank', 'noopener,noreferrer');
+                          }
+                        }}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </TabsContent>
 
-        <TabsContent value="tips" className="mt-0">
-          {recipe.tips && recipe.tips.length > 0 ? (
-            <ul className="jamie-recipe-modal__tips">
-              {recipe.tips.map((tip, idx) => (
-                <li key={idx} className="jamie-recipe-modal__tip-row">
-                  <span
-                    className="jamie-recipe-modal__tip-marker"
-                    aria-hidden="true"
-                  >
-                    {String(idx + 1).padStart(2, '0')}
-                  </span>
-                  <p className="jamie-recipe-modal__tip-copy">{tip}</p>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="jamie-recipe-modal__empty">
-              No tips yet — Jamie will share what he notices as you cook.
-            </p>
-          )}
-        </TabsContent>
+            <TabsContent value="tips" className="mt-0">
+              {recipe.tips && recipe.tips.length > 0 ? (
+                <ul className="jamie-recipe-modal__tips">
+                  {recipe.tips.map((tip, idx) => (
+                    <li key={idx} className="jamie-recipe-modal__tip-row">
+                      <span
+                        className="jamie-recipe-modal__tip-marker"
+                        aria-hidden="true"
+                      >
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+                      <p className="jamie-recipe-modal__tip-copy">{tip}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="jamie-recipe-modal__empty">
+                  No tips yet — Jamie will share what he notices as you cook.
+                </p>
+              )}
+            </TabsContent>
+          </>
+        )}
       </div>
     </Tabs>
   );
