@@ -14,7 +14,12 @@ import { TOOL_STEP_DISPLAY } from './ProcessCardTypes';
 import { JamieHeart } from './JamieHeart';
 import { VoiceModeRoller } from './VoiceModeRoller';
 import { VoiceFooter } from './VoiceFooter';
-import type { RollerMessage, StackRole } from './VoiceModeRoller';
+import type { RollerMessage, StackRole, RollerRenderContext } from './VoiceModeRoller';
+import { VoiceRichCardPreview } from './VoiceRichCardPreview';
+import {
+  getVoiceRichCardPreview,
+  isVoiceExpandableMessage,
+} from '../lib/voiceRichCard';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 // @ts-expect-error - Vite resolves figma:asset imports
@@ -287,6 +292,17 @@ export function ChatView({
   onDiscoveryVoiceSessionChange,
 }: ChatViewProps) {
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
+  const rollerMessages = useMemo<RollerMessage[]>(
+    () =>
+      messages.map((message) => ({
+        id: message.id,
+        type: message.type,
+        content: message.content,
+        isStreaming: message.isStreaming,
+        voiceExpandable: isVoiceExpandableMessage(message),
+      })),
+    [messages],
+  );
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [thinkingStatus, setThinkingStatus] = useState<string | null>(null);
@@ -1210,9 +1226,31 @@ export function ChatView({
 
   const renderMessageContent = useCallback((message: Message, options?: {
     voiceMode?: boolean;
-    voiceRole?: StackRole;
+    voiceContext?: RollerRenderContext;
   }) => {
     const voiceMode = options?.voiceMode ?? false;
+    const voiceRole = options?.voiceContext?.role;
+    const voiceExpanded = options?.voiceContext?.expanded ?? false;
+    const onVoiceToggleExpand = options?.voiceContext?.onToggleExpand;
+
+    if (voiceMode && message.type === 'jamie') {
+      const richPreview = getVoiceRichCardPreview(message);
+      const isRichCard = isVoiceExpandableMessage(message);
+      const showCompactPreview =
+        isRichCard &&
+        richPreview &&
+        (voiceRole !== 'top' || !voiceExpanded);
+
+      if (showCompactPreview) {
+        return (
+          <VoiceRichCardPreview
+            preview={richPreview}
+            onExpand={voiceRole === 'top' ? onVoiceToggleExpand : undefined}
+            interactive={voiceRole === 'top'}
+          />
+        );
+      }
+    }
 
     if (message.type === 'jamie') {
       return (
@@ -1227,7 +1265,7 @@ export function ChatView({
                 state={message.process}
                 renderFeatured={(payload) => renderFeaturedPayload(payload, {
                   voiceMode,
-                  voiceRole: options?.voiceRole,
+                  voiceRole: voiceRole,
                   recipes: message.recipes,
                 })}
                 className={voiceMode ? 'process-card--embedded' : undefined}
@@ -1352,7 +1390,7 @@ export function ChatView({
                         }}
                         singleSlide
                         voiceMode={voiceMode}
-                        voiceRole={options?.voiceRole}
+                        voiceRole={voiceRole}
                       />
                     </div>
                   )}
@@ -1440,9 +1478,12 @@ export function ChatView({
         <div className="jamie-voice-stage">
           <div className="jamie-shell-width jamie-voice-stage__inner">
             <VoiceModeRoller
-              messages={messages as RollerMessage[]}
-              renderMessage={(msg, role) =>
-                renderMessageContent(msg as Message, { voiceMode: true, voiceRole: role })
+              messages={rollerMessages}
+              renderMessage={(msg, context) =>
+                renderMessageContent(msg as Message, {
+                  voiceMode: true,
+                  voiceContext: context,
+                })
               }
             />
           </div>
