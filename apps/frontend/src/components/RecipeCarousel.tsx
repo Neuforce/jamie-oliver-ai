@@ -13,6 +13,8 @@ interface RecipeCarouselProps {
   singleSlide?: boolean; // Force single slide display (e.g., for chat)
   voiceMode?: boolean;
   voiceRole?: StackRole;
+  /** When false in voice mode, carousel is not shown (compact preview instead). */
+  voiceExpanded?: boolean;
 }
 
 export function RecipeCarousel({
@@ -21,6 +23,7 @@ export function RecipeCarousel({
   singleSlide = false,
   voiceMode = false,
   voiceRole,
+  voiceExpanded = true,
 }: RecipeCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(singleSlide ? 1 : 3);
@@ -53,6 +56,7 @@ export function RecipeCarousel({
    * must NOT steal touch/pagination interactions from the top card.
    */
   const isTopVoiceCard = !voiceMode || voiceRole === 'top' || voiceRole === undefined;
+  const voiceCarouselActive = voiceMode && isTopVoiceCard && voiceExpanded;
   /*
    * Single-slide carousel caps at 335px in BOTH chat and voice mode.
    * Without the cap, the recipe image ballooned to fill the voice-mode
@@ -169,7 +173,6 @@ export function RecipeCarousel({
             style={
               singleSlideMaxWidth ? { maxWidth: `${singleSlideMaxWidth}px` } : undefined
             }
-            {...(voiceMode ? { onPointerDownCapture: stopRollerDrag } : undefined)}
           >
             {/*
               * Navigation arrows — identical between chat and voice mode.
@@ -215,13 +218,18 @@ export function RecipeCarousel({
 
             <div
               className="flex items-center justify-center"
-              {...(voiceMode && isTopVoiceCard
+              {...(voiceCarouselActive
                 ? {
-                    onPointerDown: handleSwipeStart,
+                    onPointerDown: (e: React.PointerEvent<HTMLDivElement>) => {
+                      stopRollerDrag(e);
+                      handleSwipeStart(e);
+                    },
                     onPointerMove: handleSwipeMove,
                     onPointerUp: handleSwipeEnd,
                     onPointerCancel: handleSwipeCancel,
-                    style: { touchAction: 'pan-y' },
+                    'data-voice-interactive': 'true',
+                    'data-voice-scroll-zone': 'horizontal',
+                    style: { touchAction: 'pan-x' },
                   }
                 : undefined)}
             >
