@@ -1296,9 +1296,17 @@ export function ChatView({
               const hasRecipes = !!(message.recipes && message.recipes.length > 0);
               const hasMealPlan = !!message.mealPlan;
               const hasShopping = !!message.shoppingList;
-              const hasStructuredPayload = hasRecipes || hasMealPlan || hasShopping;
+              const hasRecipeDetail = !!(
+                message.recipeDetail?.recipe_id && message.recipeDetail.title
+              );
+              const hasStructuredPayload =
+                hasRecipes || hasMealPlan || hasShopping || hasRecipeDetail;
               const hasAnyBody =
-                !!message.content || hasRecipes || hasMealPlan || hasShopping;
+                !!message.content ||
+                hasRecipes ||
+                hasMealPlan ||
+                hasShopping ||
+                hasRecipeDetail;
               if (!hasAnyBody) return null;
               const hasLongText =
                 !!message.content &&
@@ -1418,6 +1426,15 @@ export function ChatView({
                   {hasShopping && (
                     <div className="jamie-thread-card__payload">
                       <ShoppingListCard shoppingList={message.shoppingList!} />
+                    </div>
+                  )}
+
+                  {hasRecipeDetail && (
+                    <div className={voiceMode ? 'mt-3' : 'jamie-thread-card__payload'}>
+                      {renderFeaturedPayload(
+                        { kind: 'recipe_detail', recipe: message.recipeDetail! },
+                        { voiceMode, voiceRole, voiceExpanded },
+                      )}
                     </div>
                   )}
                 </div>

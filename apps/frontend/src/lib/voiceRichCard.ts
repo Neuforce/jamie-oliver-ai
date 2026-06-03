@@ -1,6 +1,7 @@
 import type { MealPlanData, RecipeDetailData, ShoppingListData } from './api';
 import type { Recipe } from '../data/recipes';
 import type { ProcessCardState } from '../components/ProcessCardTypes';
+import type { FeaturedPayload } from '../components/ProcessCardTypes';
 
 export type VoiceRichCardKind =
   | 'recipes'
@@ -15,6 +16,7 @@ export interface VoiceRichCardPreviewData {
   emoji: string;
   chips: string[];
   imageUrl?: string;
+  subtitle?: string;
 }
 
 /** Minimal Jamie message shape for voice rich-card detection. */
@@ -26,6 +28,75 @@ export type VoiceRichMessageSource = Readonly<{
   recipeDetail?: RecipeDetailData | null;
   process?: ProcessCardState | null;
 }>;
+
+const SUBTITLE_MAX_LEN = 100;
+
+function truncateSubtitle(text: string): string {
+  const trimmed = text.trim();
+  if (trimmed.length <= SUBTITLE_MAX_LEN) {
+    return trimmed;
+  }
+  return `${trimmed.slice(0, SUBTITLE_MAX_LEN - 1).trim()}…`;
+}
+
+function subtitleFromRecipeTitles(recipes: ReadonlyArray<Recipe>): string | undefined {
+  if (recipes.length === 0) {
+    return undefined;
+  }
+  if (recipes.length === 1) {
+    const description = recipes[0].description?.trim();
+    return description ? truncateSubtitle(description) : undefined;
+  }
+  const names = recipes.slice(0, 3).map((recipe) => recipe.title);
+  const joined = names.join(', ');
+  const suffix = recipes.length > 3 ? '…' : '';
+  return truncateSubtitle(`${joined}${suffix}`);
+}
+
+function subtitleFromMealPlan(mealPlan: MealPlanData): string | undefined {
+  const courseLabels: string[] = [];
+  const courses = mealPlan.courses ?? {};
+  if (courses.starter?.length) courseLabels.push('Starter');
+  if (courses.main?.length) courseLabels.push('Main');
+  if (courses.dessert?.length) courseLabels.push('Dessert');
+  if (courses.side?.length) courseLabels.push('Side');
+  if (courses.salad?.length) courseLabels.push('Salad');
+  if (courseLabels.length > 0) {
+    return courseLabels.join(', ');
+  }
+  const courseCount = Object.values(courses).reduce(
+    (total, course) => total + (course?.length ?? 0),
+    0,
+  );
+  return courseCount > 0 ? `${courseCount} dishes planned` : undefined;
+}
+
+function subtitleFromShoppingList(shoppingList: ShoppingListData): string | undefined {
+  const items = shoppingList.shopping_list ?? [];
+  if (items.length === 0) {
+    return undefined;
+  }
+  const names = items.slice(0, 3).map((entry) => entry.item);
+  const suffix = items.length > 3 ? '…' : '';
+  return truncateSubtitle(`${names.join(', ')}${suffix}`);
+}
+
+function subtitleFromFeatured(featured: FeaturedPayload): string | undefined {
+  switch (featured.kind) {
+    case 'recipe':
+      return subtitleFromRecipeTitles([featured.recipe]);
+    case 'meal_plan':
+      return subtitleFromMealPlan(featured.mealPlan);
+    case 'shopping_list':
+      return subtitleFromShoppingList(featured.shoppingList);
+    case 'recipe_detail': {
+      const description = featured.recipe.description?.trim();
+      return description ? truncateSubtitle(description) : undefined;
+    }
+    default:
+      return undefined;
+  }
+}
 
 export function isVoiceExpandableMessage(message: VoiceRichMessageSource): boolean {
   if (message.type !== 'jamie') {
@@ -75,11 +146,13 @@ export function getVoiceRichCardPreview(
   }
 
   if (message.recipeDetail?.title) {
+    const description = message.recipeDetail.description?.trim();
     return {
       kind: 'recipe_detail',
       title: message.recipeDetail.title,
       emoji: '🍳',
       chips: chipsFromRecipeDetail(message.recipeDetail),
+      subtitle: description ? truncateSubtitle(description) : undefined,
     };
   }
 
@@ -92,6 +165,7 @@ export function getVoiceRichCardPreview(
       emoji: '🥘',
       chips: chipsFromRecipe(first),
       imageUrl: first.image,
+      subtitle: subtitleFromRecipeTitles(message.recipes),
     };
   }
 
@@ -112,6 +186,7 @@ export function getVoiceRichCardPreview(
         : 'Meal plan',
       emoji: '📅',
       chips: chips.length > 0 ? chips.slice(0, 3) : courseCount > 0 ? [`${courseCount} dishes`] : [],
+      subtitle: subtitleFromMealPlan(message.mealPlan),
     };
   }
 
@@ -124,11 +199,13 @@ export function getVoiceRichCardPreview(
       title: 'Shopping list',
       emoji: '🛒',
       chips: count > 0 ? [`${count} items`] : [],
+      subtitle: subtitleFromShoppingList(message.shoppingList),
     };
   }
 
   if (message.process?.featured) {
     const featured = message.process.featured;
+    const subtitle = subtitleFromFeatured(featured);
     switch (featured.kind) {
       case 'recipe': {
         const recipe = featured.recipe;
@@ -138,6 +215,7 @@ export function getVoiceRichCardPreview(
           emoji: '🥘',
           chips: chipsFromRecipe(recipe),
           imageUrl: recipe.image,
+          subtitle,
         };
       }
       case 'meal_plan':
@@ -150,6 +228,7 @@ export function getVoiceRichCardPreview(
           chips: featured.mealPlan.serves
             ? [`${featured.mealPlan.serves} servings`]
             : [],
+          subtitle,
         };
       case 'shopping_list': {
         const itemCount = featured.shoppingList.total_items
@@ -160,6 +239,7 @@ export function getVoiceRichCardPreview(
           title: 'Shopping list',
           emoji: '🛒',
           chips: itemCount > 0 ? [`${itemCount} items`] : [],
+          subtitle,
         };
       }
       case 'recipe_detail':
@@ -168,6 +248,7 @@ export function getVoiceRichCardPreview(
           title: featured.recipe.title,
           emoji: '🍳',
           chips: chipsFromRecipeDetail(featured.recipe),
+          subtitle,
         };
       default:
         return {

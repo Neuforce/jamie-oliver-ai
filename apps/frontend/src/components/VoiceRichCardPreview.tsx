@@ -34,6 +34,9 @@ export function VoiceRichCardPreview({
       </div>
       <div className="voice-rich-preview__body">
         <p className="voice-rich-preview__title">{preview.title}</p>
+        {preview.subtitle && (
+          <p className="voice-rich-preview__subtitle">{preview.subtitle}</p>
+        )}
         {preview.chips.length > 0 && (
           <ul className="voice-rich-preview__chips" aria-label="Recipe details">
             {preview.chips.map((chip) => (
