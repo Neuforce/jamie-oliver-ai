@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'motion/react';
 import { Clock, Users, ChefHat, ChevronRight } from 'lucide-react';
 import type { MealPlanData, ToolRecipe } from '../lib/api';
@@ -124,7 +124,7 @@ const RecipeRow: React.FC<{
   </motion.button>
 );
 
-export const MealPlanCard: React.FC<MealPlanCardProps> = ({
+const MealPlanCardInner: React.FC<MealPlanCardProps> = ({
   mealPlan,
   onViewRecipe,
 }) => {
@@ -231,3 +231,5 @@ export const MealPlanCard: React.FC<MealPlanCardProps> = ({
     </motion.div>
   );
 };
+
+export const MealPlanCard = memo(MealPlanCardInner);

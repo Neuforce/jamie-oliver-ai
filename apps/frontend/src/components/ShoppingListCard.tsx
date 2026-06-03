@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { motion } from 'motion/react';
 import { Check, Copy } from 'lucide-react';
 import type { ShoppingListData } from '../lib/api';
@@ -7,7 +7,7 @@ interface ShoppingListCardProps {
   shoppingList: ShoppingListData;
 }
 
-export const ShoppingListCard: React.FC<ShoppingListCardProps> = ({
+const ShoppingListCardInner: React.FC<ShoppingListCardProps> = ({
   shoppingList,
 }) => {
   const [checkedItems, setCheckedItems] = useState<Set<number>>(new Set());
@@ -207,3 +207,5 @@ export const ShoppingListCard: React.FC<ShoppingListCardProps> = ({
     </motion.div>
   );
 };
+
+export const ShoppingListCard = memo(ShoppingListCardInner);

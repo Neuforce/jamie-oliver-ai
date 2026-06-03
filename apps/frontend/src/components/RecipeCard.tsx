@@ -11,7 +11,7 @@ interface RecipeCardProps {
   showInProgress?: boolean;
 }
 
-export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPill = false, showInProgress = false }: RecipeCardProps) {
+function RecipeCardInner({ recipe, onClick, variant = 'grid', showDifficultyPill = false, showInProgress = false }: RecipeCardProps) {
   const [hasSession, setHasSession] = useState(false);
   const [sessionProgress, setSessionProgress] = useState(0);
   const badgeStyle: React.CSSProperties = {
@@ -126,6 +126,9 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
           src={recipe.image}
           alt={recipe.title}
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.03]"
+          loading="lazy"
+          decoding="async"
+          sizes="(max-width: 640px) 335px, 335px"
         />
 
         {/* Category / In-Progress badge — top-left, same teal pill as the feed card */}
@@ -523,3 +526,5 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
     </motion.div>
   );
 }
+
+export const RecipeCard = React.memo(RecipeCardInner);
