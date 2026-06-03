@@ -20,6 +20,7 @@
  */
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { voiceDebugInfo, voiceDebugLog } from '../lib/voiceDebug';
 import { useAudioCapture } from './useAudioCapture';
 import { useAudioPlayback } from './useAudioPlayback';
 import type { VoiceTurnState } from './voiceTurnUtils';
@@ -136,7 +137,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       connectStartedAt: startedAt,
       stageMarks: { connect_started: startedAt },
     };
-    console.info('[voice-latency]', { stage: 'connect_started', totalMs: 0 });
+    voiceDebugInfo('[voice-latency]', { stage: 'connect_started', totalMs: 0 });
   }, [nowMs]);
 
   const markLatencyStage = useCallback(
@@ -146,7 +147,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       if (once && session.stageMarks[stage] !== undefined) return;
       const stamp = nowMs();
       session.stageMarks[stage] = stamp;
-      console.info('[voice-latency]', {
+      voiceDebugInfo('[voice-latency]', {
         stage,
         totalMs: roundMs(stamp - session.connectStartedAt),
         ...extra,
@@ -163,7 +164,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       session.currentTurn = {
         transcriptFinalAt: stamp,
       };
-      console.info('[voice-latency]', {
+      voiceDebugInfo('[voice-latency]', {
         stage: 'transcript_final',
         totalMs: roundMs(stamp - session.connectStartedAt),
         transcriptLength: text.length,
@@ -180,7 +181,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       const stamp = nowMs();
       session.currentTurn.responseId = responseId;
       session.currentTurn.processingAt = stamp;
-      console.info('[voice-latency]', {
+      voiceDebugInfo('[voice-latency]', {
         stage: 'processing',
         totalMs: roundMs(stamp - session.connectStartedAt),
         transcriptToProcessingMs: roundMs(stamp - session.currentTurn.transcriptFinalAt),
@@ -198,7 +199,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       }
       const stamp = nowMs();
       turn.firstTextAt = stamp;
-      console.info('[voice-latency]', {
+      voiceDebugInfo('[voice-latency]', {
         stage: 'first_text_chunk',
         totalMs: roundMs(stamp - session.connectStartedAt),
         processingToFirstTextMs:
@@ -217,7 +218,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       }
       const stamp = nowMs();
       turn.firstAudioAt = stamp;
-      console.info('[voice-latency]', {
+      voiceDebugInfo('[voice-latency]', {
         stage: 'first_audio_chunk',
         totalMs: roundMs(stamp - session.connectStartedAt),
         processingToFirstAudioMs:
@@ -299,7 +300,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
 
     switch (event) {
       case 'session_info':
-        console.log('🎤 Voice session started:', data);
+        voiceDebugLog('🎤 Voice session started:', data);
         markLatencyStage('session_info');
         break;
 
@@ -385,7 +386,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       }
 
       case 'tool_call':
-        console.log('🔧 Tool called:', data?.name);
+        voiceDebugLog('🔧 Tool called:', data?.name);
         break;
 
       case 'done':
@@ -414,7 +415,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         break;
 
       default:
-        console.log('🎤 Unhandled voice chat event:', event, data);
+        voiceDebugLog('🎤 Unhandled voice chat event:', event, data);
     }
   }, [
     isAudioPlaying,
@@ -453,7 +454,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   // ── connect / disconnect ───────────────────────────────────────────────
   const connect = useCallback(async () => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
-      console.log('🎤 Already connected');
+      voiceDebugLog('🎤 Already connected');
       return;
     }
 
@@ -464,7 +465,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     markLatencyStage('audio_context_ready');
 
     const wsUrl = getWebSocketUrl();
-    console.log('🎤 Connecting to voice chat:', wsUrl);
+    voiceDebugLog('🎤 Connecting to voice chat:', wsUrl);
 
     try {
       let captureError: unknown = null;
@@ -487,7 +488,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       markLatencyStage('websocket_created');
 
       ws.onopen = async () => {
-        console.log('🎤 Voice chat WebSocket connected');
+        voiceDebugLog('🎤 Voice chat WebSocket connected');
         markLatencyStage('websocket_open');
         setIsConnected(true);
 
@@ -530,7 +531,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       };
 
       ws.onclose = (ev) => {
-        console.log('🎤 Voice chat WebSocket closed:', ev.code, ev.reason);
+        voiceDebugLog('🎤 Voice chat WebSocket closed:', ev.code, ev.reason);
         connectCancelled = true;
         setIsConnected(false);
         isVoiceModeActiveRef.current = false;
@@ -628,7 +629,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   useEffect(() => {
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'hidden' && (isVoiceModeActiveRef.current || isConnected)) {
-        console.log('[useVoiceChat] Page hidden – releasing microphone and disconnecting');
+        voiceDebugLog('[useVoiceChat] Page hidden – releasing microphone and disconnecting');
         isVoiceModeActiveRef.current = false;
         stopCapture();
         if (wsRef.current) {

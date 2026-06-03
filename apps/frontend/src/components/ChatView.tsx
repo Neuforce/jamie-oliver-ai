@@ -20,6 +20,8 @@ import {
   getVoiceRichCardPreview,
   isVoiceExpandableMessage,
 } from '../lib/voiceRichCard';
+import { voiceDebugLog } from '../lib/voiceDebug';
+import { VoiceRollerMessageCell } from './VoiceRollerMessageCell';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 // @ts-expect-error - Vite resolves figma:asset imports
@@ -303,6 +305,10 @@ export function ChatView({
       })),
     [messages],
   );
+  const messagesById = useMemo(
+    () => new Map(messages.map((message) => [message.id, message])),
+    [messages],
+  );
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [thinkingStatus, setThinkingStatus] = useState<string | null>(null);
@@ -338,6 +344,7 @@ export function ChatView({
   const voiceMessageRef = useRef<string | null>(null);
   const voiceMessageIdRef = useRef<string | null>(null);
   const voiceResponseAccumulatorRef = useRef<string>('');
+  const voiceChunkRafRef = useRef<number | null>(null);
 
   /*
    * Mute toggle for the mic in voice mode. We expose this as a click-target
@@ -370,7 +377,7 @@ export function ChatView({
   } = useVoiceChat({
     sessionId,  // Share session ID between voice and text chat
     onTranscript: (text, isFinal) => {
-      console.log('🎤 Transcript received:', { text, isFinal });
+      voiceDebugLog('🎤 Transcript received:', { text, isFinal });
 
       const normalizedText = text.trim();
       if (IGNORED_VOICE_TRANSCRIPTS.has(normalizedText)) {
@@ -410,7 +417,7 @@ export function ChatView({
         voiceMessageIdRef.current = streamingId;
         voiceResponseAccumulatorRef.current = '';
 
-        console.log('🎤 Created voice message placeholder:', streamingId);
+        voiceDebugLog('🎤 Created voice message placeholder:', streamingId);
 
         const streamingMessage: Message = {
           id: streamingId,
@@ -426,30 +433,40 @@ export function ChatView({
       }
     },
     onTextChunk: (text) => {
-      // Accumulate voice response text
       voiceResponseAccumulatorRef.current += text;
-
-      console.log('🎤 Text chunk received:', {
-        chunk: text.substring(0, 50),
-        totalLength: voiceResponseAccumulatorRef.current.length,
-        messageId: voiceMessageIdRef.current
-      });
-
-      if (voiceMessageIdRef.current) {
-        setMessages(prev => prev.map(msg =>
-          msg.id === voiceMessageIdRef.current
-            ? { ...msg, content: voiceResponseAccumulatorRef.current }
-            : msg
-        ));
+      const messageId = voiceMessageIdRef.current;
+      if (!messageId) {
+        return;
       }
 
-      // Clear thinking status once we get text
+      voiceDebugLog('🎤 Text chunk received:', {
+        chunk: text.substring(0, 50),
+        totalLength: voiceResponseAccumulatorRef.current.length,
+        messageId,
+      });
+
+      if (voiceChunkRafRef.current !== null) {
+        return;
+      }
+
+      voiceChunkRafRef.current = requestAnimationFrame(() => {
+        voiceChunkRafRef.current = null;
+        const streamingId = voiceMessageIdRef.current;
+        if (!streamingId) {
+          return;
+        }
+        const content = voiceResponseAccumulatorRef.current;
+        setMessages((prev) =>
+          prev.map((msg) => (msg.id === streamingId ? { ...msg, content } : msg)),
+        );
+      });
+
       if (thinkingStatus) {
         setThinkingStatus(null);
       }
     },
     onRecipes: (data) => {
-      console.log('🎤 Recipes received:', { count: data?.recipes?.length, messageId: voiceMessageIdRef.current });
+      voiceDebugLog('🎤 Recipes received:', { count: data?.recipes?.length, messageId: voiceMessageIdRef.current });
 
       // Transform backend recipe summaries to Recipe format for display
       const recipeData = data?.recipes || [];
@@ -457,7 +474,7 @@ export function ChatView({
         transformRecipeFromSummary(r, index)
       );
 
-      console.log('🎤 Transformed recipes for voice:', recipes.length);
+      voiceDebugLog('🎤 Transformed recipes for voice:', recipes.length);
 
       if (voiceMessageIdRef.current && recipes.length > 0) {
         setMessages(prev => prev.map(msg =>
@@ -468,7 +485,7 @@ export function ChatView({
       }
     },
     onMealPlan: (data) => {
-      console.log('🎤 Meal plan received:', { hasData: !!data?.meal_plan, messageId: voiceMessageIdRef.current });
+      voiceDebugLog('🎤 Meal plan received:', { hasData: !!data?.meal_plan, messageId: voiceMessageIdRef.current });
 
       if (voiceMessageIdRef.current && data?.meal_plan) {
         setMessages(prev => prev.map(msg =>
@@ -479,7 +496,7 @@ export function ChatView({
       }
     },
     onRecipeDetail: (data) => {
-      console.log('🎤 Recipe detail received:', { hasData: !!data?.recipe, messageId: voiceMessageIdRef.current });
+      voiceDebugLog('🎤 Recipe detail received:', { hasData: !!data?.recipe, messageId: voiceMessageIdRef.current });
 
       if (voiceMessageIdRef.current && data?.recipe) {
         setMessages(prev => prev.map(msg =>
@@ -490,7 +507,7 @@ export function ChatView({
       }
     },
     onShoppingList: (data) => {
-      console.log('🎤 Shopping list received:', { hasData: !!data?.shopping_list, messageId: voiceMessageIdRef.current });
+      voiceDebugLog('🎤 Shopping list received:', { hasData: !!data?.shopping_list, messageId: voiceMessageIdRef.current });
 
       if (voiceMessageIdRef.current && data?.shopping_list) {
         setMessages(prev => prev.map(msg =>
@@ -504,12 +521,17 @@ export function ChatView({
       if (bid) onVoiceRecipePaywallRequested?.(bid);
     },
     onDone: () => {
+      if (voiceChunkRafRef.current !== null) {
+        cancelAnimationFrame(voiceChunkRafRef.current);
+        voiceChunkRafRef.current = null;
+      }
+
       // Finalize the voice message
       if (voiceMessageIdRef.current) {
         const messageId = voiceMessageIdRef.current;
         const accumulatedText = voiceResponseAccumulatorRef.current;
 
-        console.log('🎤 Voice response done:', { messageId, textLength: accumulatedText.length });
+        voiceDebugLog('🎤 Voice response done:', { messageId, textLength: accumulatedText.length });
 
         setMessages(prev => prev.map(msg => {
           if (msg.id === messageId) {
@@ -1473,6 +1495,18 @@ export function ChatView({
     );
   }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion]);
 
+  const renderMessageContentRef = useRef(renderMessageContent);
+  renderMessageContentRef.current = renderMessageContent;
+
+  const renderVoiceMessageContent = useCallback(
+    (message: Message, voiceContext: RollerRenderContext) =>
+      renderMessageContentRef.current(message, {
+        voiceMode: true,
+        voiceContext,
+      }),
+    [],
+  );
+
   return (
     <div className="relative jamie-view-shell" data-voice-active={isVoiceActive || undefined}>
       {/* Empty State */}
@@ -1500,12 +1534,19 @@ export function ChatView({
           <div className="jamie-shell-width jamie-voice-stage__inner">
             <VoiceModeRoller
               messages={rollerMessages}
-              renderMessage={(msg, context) =>
-                renderMessageContent(msg as Message, {
-                  voiceMode: true,
-                  voiceContext: context,
-                })
-              }
+              renderMessage={(msg, context) => {
+                const fullMessage = messagesById.get(msg.id);
+                if (!fullMessage) {
+                  return null;
+                }
+                return (
+                  <VoiceRollerMessageCell
+                    message={fullMessage}
+                    voiceContext={context}
+                    renderContent={renderVoiceMessageContent}
+                  />
+                );
+              }}
             />
           </div>
         </div>

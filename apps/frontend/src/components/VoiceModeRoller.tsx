@@ -116,6 +116,7 @@ export function VoiceModeRoller({
   const lastSeenTailIdRef = useRef<string | null>(null);
   const latestTailIdRef = useRef<string | null>(null);
   const topCardBodyRef = useRef<HTMLDivElement | null>(null);
+  const layoutMeasureRafRef = useRef<number | null>(null);
 
   const isStreamingActive = useMemo(() => {
     const last = messages[messages.length - 1];
@@ -349,14 +350,31 @@ export function VoiceModeRoller({
     }
 
     const observer = new ResizeObserver(() => {
-      recomputeTopCardLayout();
+      if (layoutMeasureRafRef.current !== null) {
+        cancelAnimationFrame(layoutMeasureRafRef.current);
+      }
+      layoutMeasureRafRef.current = requestAnimationFrame(() => {
+        layoutMeasureRafRef.current = null;
+        recomputeTopCardLayout();
+      });
     });
     observer.observe(el);
 
-    const handleResize = () => recomputeTopCardLayout();
+    const handleResize = () => {
+      if (layoutMeasureRafRef.current !== null) {
+        cancelAnimationFrame(layoutMeasureRafRef.current);
+      }
+      layoutMeasureRafRef.current = requestAnimationFrame(() => {
+        layoutMeasureRafRef.current = null;
+        recomputeTopCardLayout();
+      });
+    };
     window.addEventListener('resize', handleResize);
 
     return () => {
+      if (layoutMeasureRafRef.current !== null) {
+        cancelAnimationFrame(layoutMeasureRafRef.current);
+      }
       observer.disconnect();
       window.removeEventListener('resize', handleResize);
     };

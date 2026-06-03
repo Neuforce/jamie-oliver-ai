@@ -112,11 +112,11 @@
   box-shadow: none;
   transition:
     width 420ms cubic-bezier(0.32, 0.72, 0, 1),
-    filter 420ms cubic-bezier(0.32, 0.72, 0, 1),
     opacity 420ms ease,
     margin-bottom 420ms cubic-bezier(0.32, 0.72, 0, 1),
-    box-shadow 420ms ease;
-  will-change: width, transform, filter, opacity;
+    box-shadow 420ms ease,
+    transform 420ms cubic-bezier(0.32, 0.72, 0, 1);
+  will-change: transform, opacity;
 }
 
 .voice-roller__card-content {
@@ -152,25 +152,24 @@
  */
 .voice-roller__card[data-role='back'] {
   width: 84%;
-  filter: blur(1.35px);
   margin-bottom: -10px;
   z-index: 1;
-  opacity: 0.7;
+  opacity: 0.62;
+  transform: scale(0.94);
   cursor: pointer;
 }
 
 .voice-roller__card[data-role='middle'] {
   width: 92%;
-  filter: blur(0.5px);
   margin-bottom: -16px;
   z-index: 2;
-  opacity: 0.9;
+  opacity: 0.82;
+  transform: scale(0.97);
   cursor: pointer;
 }
 
 .voice-roller__card[data-role='top'] {
   width: 100%;
-  filter: blur(0);
   margin-bottom: 0;
   z-index: 3;
   cursor: grab;
@@ -200,17 +199,15 @@
 .voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='back'] {
   top: 0;
   width: 76%;
-  transform: translateX(-50%) scale(0.94);
-  opacity: 0.3;
-  filter: blur(1.9px);
+  transform: translateX(-50%) scale(0.92);
+  opacity: 0.34;
 }
 
 .voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='middle'] {
   top: 36px;
   width: 84%;
-  transform: translateX(-50%) scale(0.97);
-  opacity: 0.62;
-  filter: blur(0.85px);
+  transform: translateX(-50%) scale(0.96);
+  opacity: 0.58;
 }
 
 .voice-roller__stack[data-tall-top='true'] .voice-roller__card[data-role='top'] {
@@ -243,17 +240,15 @@
 .voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='back'] {
   top: -2px;
   width: 72%;
-  transform: translateX(-50%) scale(0.93);
-  opacity: 0.18;
-  filter: blur(2.2px);
+  transform: translateX(-50%) scale(0.91);
+  opacity: 0.22;
 }
 
 .voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='middle'] {
   top: 18px;
   width: 82%;
-  transform: translateX(-50%) scale(0.965);
-  opacity: 0.42;
-  filter: blur(1.05px);
+  transform: translateX(-50%) scale(0.955);
+  opacity: 0.4;
 }
 
 .voice-roller__stack[data-expanded='true'] .voice-roller__card[data-role='top'] {

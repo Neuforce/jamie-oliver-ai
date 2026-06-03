@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState, memo } from 'react';
 import { Recipe } from '../data/recipes';
 import { RecipeCard } from './RecipeCard';
 import { Button } from './ui/button';
@@ -17,7 +17,7 @@ interface RecipeCarouselProps {
   voiceExpanded?: boolean;
 }
 
-export function RecipeCarousel({
+function RecipeCarouselInner({
   recipes,
   onRecipeClick,
   singleSlide = false,
@@ -314,3 +314,5 @@ export function RecipeCarousel({
     </div>
   );
 }
+
+export const RecipeCarousel = memo(RecipeCarouselInner);
