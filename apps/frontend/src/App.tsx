@@ -24,7 +24,12 @@ import {
 import { AvatarWithOrganicGlow } from './design-system/components/AvatarWithOrganicGlow';
 import { SearchInput } from './design-system/components/SearchInput';
 import { RecipeSkeletonLoader } from './components/ui/skeleton-loader';
-import { getJamieUser, getMyRecipes, getRecipeAccess, type JamieUserSummary, type OwnedRecipeSummary, type RecipeAccessResponse } from './lib/api';
+import { getJamieUser, getMyRecipes, getRecipeAccess, getRecipeById, type JamieUserSummary, type OwnedRecipeSummary, type RecipeAccessResponse } from './lib/api';
+import {
+  transformRecipeMatch,
+  loadRecipeFromLocal,
+  type JamieOliverRecipe,
+} from './data/recipeTransformer';
 import {
   loadMyTabSnapshot,
   getStoredJamieAccessUserId,
@@ -42,6 +47,53 @@ import {
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
 const jamieAvatar = typeof jamieAvatarImport === 'string' ? jamieAvatarImport : (jamieAvatarImport as any).src || jamieAvatarImport;
+
+async function loadRecipeForVoicePurchase(backendId: string): Promise<Recipe | null> {
+  const recipeId = backendId.trim();
+  if (!recipeId) {
+    return null;
+  }
+
+  try {
+    const response = await getRecipeById(recipeId);
+    if (response.full_recipe && 'recipe' in response.full_recipe) {
+      return transformRecipeMatch(
+        {
+          recipe_id: recipeId,
+          title: response.title || recipeId,
+          similarity_score: 1,
+          combined_score: 1,
+          file_path: response.file_path || '',
+          match_explanation: '',
+          matching_chunks: [],
+        },
+        response.full_recipe as JamieOliverRecipe,
+        0,
+      );
+    }
+  } catch (error) {
+    console.warn(`Could not load recipe ${recipeId} from API for voice purchase`, error);
+  }
+
+  const localRecipe = await loadRecipeFromLocal(recipeId);
+  if (!localRecipe) {
+    return null;
+  }
+
+  return transformRecipeMatch(
+    {
+      recipe_id: recipeId,
+      title: localRecipe.recipe?.title || recipeId,
+      similarity_score: 1,
+      combined_score: 1,
+      file_path: '',
+      match_explanation: '',
+      matching_chunks: [],
+    },
+    localRecipe,
+    0,
+  );
+}
 
 export default function App() {
   // Navigation state - unified tab-based navigation
@@ -520,12 +572,25 @@ export default function App() {
       if (!bid || voiceRecipeUnlockInFlightRef.current) {
         return;
       }
-      const recipe = selectedRecipe;
-      if (!recipe?.backendId || recipe.backendId !== bid) {
+
+      let recipe: Recipe | null =
+        selectedRecipe?.backendId === bid ? selectedRecipe : null;
+
+      if (!recipe) {
+        recipe = loadedRecipesByBackendId.get(bid) ?? null;
+      }
+      if (!recipe) {
+        recipe = await loadRecipeForVoicePurchase(bid);
+      }
+      if (!recipe) {
         toast.error('Checkout did not match this recipe', {
           description: 'Close the modal and open the recipe again, or tap Unlock on screen.',
         });
         return;
+      }
+
+      if (selectedRecipe?.backendId !== bid) {
+        setSelectedRecipe(recipe);
       }
 
       let access =
@@ -623,6 +688,7 @@ export default function App() {
       launchRecipePaywall,
       loadOwnedRecipes,
       loadRecipeAccess,
+      loadedRecipesByBackendId,
       recipeAccessMap,
       selectedRecipe,
       getRecipeAccessKey,
