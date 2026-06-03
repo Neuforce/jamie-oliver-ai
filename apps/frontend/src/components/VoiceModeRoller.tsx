@@ -458,6 +458,7 @@ export function VoiceModeRoller({
               className="voice-roller__card"
               data-role={role}
               data-speaker={msg.type}
+              data-card-expanded={isTop && isExpandedTopCard ? 'true' : undefined}
               style={style}
               onClick={handleClick}
               onPointerDown={isTop && !isExpandedTopCard ? handlePointerDown : undefined}

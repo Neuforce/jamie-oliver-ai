@@ -1116,6 +1116,7 @@ export function ChatView({
   const renderFeaturedPayload = useCallback((payload: FeaturedPayload, options?: {
     voiceMode?: boolean;
     voiceRole?: StackRole;
+    voiceExpanded?: boolean;
     recipes?: Recipe[];
   }) => {
     switch (payload.kind) {
@@ -1131,6 +1132,7 @@ export function ChatView({
               singleSlide
               voiceMode={options?.voiceMode}
               voiceRole={options?.voiceRole}
+              voiceExpanded={options?.voiceExpanded}
             />
           </div>
         );
@@ -1266,6 +1268,7 @@ export function ChatView({
                 renderFeatured={(payload) => renderFeaturedPayload(payload, {
                   voiceMode,
                   voiceRole: voiceRole,
+                  voiceExpanded: voiceExpanded,
                   recipes: message.recipes,
                 })}
                 className={voiceMode ? 'process-card--embedded' : undefined}
@@ -1399,6 +1402,7 @@ export function ChatView({
                         singleSlide
                         voiceMode={voiceMode}
                         voiceRole={voiceRole}
+                        voiceExpanded={voiceExpanded}
                       />
                     </div>
                   )}
