@@ -43,7 +43,7 @@ import { useAudioPlayback } from '../hooks/useAudioPlayback';
 import type { VoiceTurnState } from '../hooks/voiceTurnUtils';
 import { RecipeCard } from './RecipeCard';
 import { TimerPanel, type ActiveTimer } from './TimerPanel';
-import { clearChatHistory } from './ChatView';
+import { clearChatHistory } from '../lib/chatStorage';
 import {
   TimerCard,
   TimerCarousel,

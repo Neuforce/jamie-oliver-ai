@@ -108,6 +108,9 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   const wsRef                = useRef<WebSocket | null>(null);
   const isVoiceModeActiveRef = useRef(false);
   const isMicManuallyMutedRef = useRef(false);
+  // Mirror of isAudioPlaying state — lets ws.onmessage always read the
+  // current value without capturing a stale closure from connect().
+  const isAudioPlayingRef = useRef(false);
   // Deferred state transitions while audio is still playing
   const pendingDoneRef   = useRef(false);
   const pendingListenRef = useRef(false);
@@ -247,8 +250,16 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   }, []);
 
   // ── audio playback ─────────────────────────────────────────────────────
+  // Stable callback — wrapping in useCallback prevents it from changing every
+  // render, which would cascade: updatePlaybackState → stopAllAudio →
+  // disconnect → cleanup effect → disconnect() called on every re-render.
+  const onPlaybackStateChange = useCallback((playing: boolean) => {
+    isAudioPlayingRef.current = playing;
+    setIsAudioPlaying(playing);
+  }, []);
+
   const { playAudio, stopAllAudio, cleanup: cleanupAudio, initAudioContext } = useAudioPlayback({
-    onPlaybackStateChange: setIsAudioPlaying,
+    onPlaybackStateChange,
   });
 
   // ── audio capture ──────────────────────────────────────────────────────
@@ -306,7 +317,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       case 'listening':
         // Server is ready for the next user turn.  If the browser still has
         // buffered TTS audio playing, defer the state transition.
-        if (isAudioPlaying) {
+        if (isAudioPlayingRef.current) {
           pendingListenRef.current = true;
         } else {
           resetActiveResponse();
@@ -391,7 +402,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
       case 'done':
         if (!isCurrentResponse(responseId)) return;
         pendingDoneRef.current = true;
-        if (!isAudioPlaying) {
+        if (!isAudioPlayingRef.current) {
           pendingDoneRef.current = false;
           resetActiveResponse();
           setState('listening');
@@ -417,7 +428,6 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         console.log('🎤 Unhandled voice chat event:', event, data);
     }
   }, [
-    isAudioPlaying,
     isCurrentResponse,
     markFirstAudioLatency,
     markFirstTextLatency,

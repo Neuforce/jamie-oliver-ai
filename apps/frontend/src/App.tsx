@@ -4,7 +4,8 @@ import { recipes, categories, Recipe, initializeRecipes, getCategories } from '.
 import { RecipeCard } from './components/RecipeCard';
 import { RecipeModal, type RecipeModalHandle } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
-import { ChatView, clearChatHistory } from './components/ChatView';
+import { ChatView } from './components/ChatView';
+import { clearChatHistory } from './lib/chatStorage';
 import { TabNav, TabView, type MyTabCardData } from './components/TabNav';
 import { Button } from './components/ui/button';
 import { Search, ChefHat, Grid3x3, LayoutList, Clock, SlidersHorizontal, X as XIcon } from 'lucide-react';

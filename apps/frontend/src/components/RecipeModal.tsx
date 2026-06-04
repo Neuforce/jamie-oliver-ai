@@ -1,9 +1,10 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { Recipe } from '../data/recipes';
-import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play, Share2 } from 'lucide-react';
 import { SupertabPurchaseButton, type SupertabPurchaseButtonHandle } from './SupertabPurchaseButton';
 import { toast } from './ui/sonner';
 import type { RecipeAccessResponse } from '../lib/api';
+import { routeToUrl } from '../lib/permalinks';
 import type { RecipePurchaseResolution } from '../lib/supertab';
 import { RecipeDetailsTabs } from './RecipeDetailsTabs';
 // @ts-expect-error - Vite resolves figma:asset imports
@@ -111,7 +112,44 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
     },
   }), [recipe]);
 
+  const handleShare = useCallback(async () => {
+    if (!recipe?.backendId) {
+      return;
+    }
+
+    const url = `${window.location.origin}${routeToUrl({ kind: 'recipe', slug: recipe.backendId })}`;
+
+    try {
+      if (typeof navigator.share === 'function') {
+        await navigator.share({ title: recipe.title, url });
+        return;
+      }
+
+      await navigator.clipboard.writeText(url);
+      toast.success('Link copied', {
+        description: 'Recipe link copied to clipboard',
+      });
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') {
+        return;
+      }
+
+      try {
+        await navigator.clipboard.writeText(url);
+        toast.success('Link copied', {
+          description: 'Recipe link copied to clipboard',
+        });
+      } catch {
+        toast.error('Could not copy link');
+      }
+    }
+  }, [recipe]);
+
   if (!recipe) return null;
+
+  const shareUrl = recipe.backendId
+    ? `${window.location.origin}${routeToUrl({ kind: 'recipe', slug: recipe.backendId })}`
+    : null;
 
   const isLocked = recipeAccess?.accessState === 'locked';
   const canResumeSavedSession = !!savedSession && !isLocked;
@@ -197,7 +235,13 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
        */}
       <header className="jamie-app-header-shell">
         <div className="jamie-shell-width jamie-cook-header">
-          <div className="jamie-cook-header__side">
+          <div
+            className={
+              shareUrl
+                ? 'jamie-cook-header__side jamie-cook-header__side--multi'
+                : 'jamie-cook-header__side'
+            }
+          >
             <button
               type="button"
               onClick={onClose}
@@ -206,6 +250,16 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
             >
               <ArrowLeft size={20} />
             </button>
+            {shareUrl && (
+              <button
+                type="button"
+                onClick={() => void handleShare()}
+                className="jamie-icon-button"
+                aria-label="Share recipe"
+              >
+                <Share2 size={20} />
+              </button>
+            )}
           </div>
 
           <div className="jamie-cook-header__center">

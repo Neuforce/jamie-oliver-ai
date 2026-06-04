@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Mic, Loader2 } from 'lucide-react';
 import { AvatarWithOrganicGlow } from '../design-system/components/AvatarWithOrganicGlow';
+import { TalkToJamiePillButton, type TalkToJamiePillState } from './TalkToJamiePillButton';
 // @ts-expect-error - Vite resolves figma:asset imports
 import jamieAvatarLarge from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 
@@ -29,7 +29,7 @@ const STARTERS = [
   'Plan my dinners for the week',
 ] as const;
 
-type VoiceButtonState = 'idle' | 'connecting' | 'listening';
+type VoiceButtonState = TalkToJamiePillState;
 
 interface OnboardingEmptyStateProps {
   /** Called when a starter chip is tapped — forwards the chip text. */
@@ -119,98 +119,11 @@ export function OnboardingEmptyState({
               transition={{ delay: 0.36, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
               className="flex flex-col items-center mb-6"
             >
-              <motion.button
-                onClick={voiceState === 'idle' ? onVoiceStart : undefined}
+              <TalkToJamiePillButton
+                state={voiceState}
+                onClick={onVoiceStart}
                 disabled={voiceState === 'connecting'}
-                whileTap={voiceState === 'idle' ? { scale: 0.97 } : {}}
-                animate={{
-                  boxShadow: voiceState === 'listening'
-                    ? [
-                        '0 12px 32px rgba(61,110,108,0.30), 0 0 0 0px rgba(61,110,108,0.25)',
-                        '0 12px 32px rgba(61,110,108,0.30), 0 0 0 8px rgba(61,110,108,0.0)',
-                      ]
-                    : '0 12px 32px rgba(61,110,108,0.30)',
-                }}
-                transition={voiceState === 'listening'
-                  ? { duration: 1.2, repeat: Infinity, ease: 'easeOut' }
-                  : { duration: 0.3 }}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '10px',
-                  width: '100%',
-                  maxWidth: `${CONTENT_MAX_WIDTH}px`,
-                  minHeight: '58px',
-                  padding: '16px 28px',
-                  borderRadius: '200px',
-                  border: 'none',
-                  background: 'var(--jamie-ink-teal, #3D6E6C)',
-                  color: '#fff',
-                  fontFamily: 'var(--font-display, Poppins, sans-serif)',
-                  fontSize: '17px',
-                  fontWeight: 600,
-                  letterSpacing: '0.01em',
-                  cursor: voiceState === 'idle' ? 'pointer' : 'default',
-                  opacity: voiceState === 'connecting' ? 0.72 : 1,
-                  transition: 'opacity 0.2s',
-                }}
-              >
-                {voiceState === 'idle' && (
-                  <>
-                    <motion.span
-                      animate={{ scale: [1, 1.15, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-                      style={{ display: 'flex', alignItems: 'center' }}
-                    >
-                      <Mic size={20} strokeWidth={2.2} />
-                    </motion.span>
-                    Tap to talk to Jamie
-                  </>
-                )}
-
-                {voiceState === 'connecting' && (
-                  <>
-                    <motion.span
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                      style={{ display: 'flex', alignItems: 'center' }}
-                    >
-                      <Loader2 size={20} strokeWidth={2.2} />
-                    </motion.span>
-                    Connecting…
-                  </>
-                )}
-
-                {voiceState === 'listening' && (
-                  <>
-                    {/* Three animated sound-wave bars */}
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
-                      {[0, 1, 2].map((i) => (
-                        <motion.span
-                          key={i}
-                          animate={{ scaleY: [0.4, 1, 0.4] }}
-                          transition={{
-                            duration: 0.8,
-                            repeat: Infinity,
-                            ease: 'easeInOut',
-                            delay: i * 0.15,
-                          }}
-                          style={{
-                            display: 'block',
-                            width: '3px',
-                            height: '18px',
-                            borderRadius: '99px',
-                            background: '#fff',
-                            transformOrigin: 'center',
-                          }}
-                        />
-                      ))}
-                    </span>
-                    Listening…
-                  </>
-                )}
-              </motion.button>
+              />
             </motion.div>
           )}
 
