@@ -41,6 +41,12 @@ import {
   userAffirmsGoToFullRecipe,
 } from '../lib/discoveryFullRecipeGate';
 import { CHAT_STORAGE_KEY, SESSION_ID_KEY } from '../lib/chatStorage';
+import type { RecipeAccessResponse } from '../lib/api';
+import {
+  getRecipeCommerceBadge,
+  RECIPE_COMMERCE_BADGE_STYLES,
+  type RecipeCommerceBadge,
+} from '../lib/recipeAccessDisplay';
 
 interface Message {
   id: string;
@@ -70,6 +76,9 @@ interface ChatViewProps {
   onVoiceRecipePaywallRequested?: (backendRecipeId: string) => void;
   /** Notifies parent when discovery voice mode is connected (keeps ChatView mounted across tabs). */
   onDiscoveryVoiceSessionChange?: (active: boolean) => void;
+  recipeAccessMap?: Record<string, RecipeAccessResponse>;
+  recipeAccessLoadingId?: string | null;
+  onPrefetchChatRecipeAccess?: (backendIds: string[]) => void;
 }
 
 const IGNORED_VOICE_TRANSCRIPTS = new Set(['[Connection restored]']);
@@ -270,6 +279,9 @@ export function ChatView({
   onRecipeModalVoiceDockOverlapChange,
   onVoiceRecipePaywallRequested,
   onDiscoveryVoiceSessionChange,
+  recipeAccessMap = {},
+  recipeAccessLoadingId = null,
+  onPrefetchChatRecipeAccess,
 }: ChatViewProps) {
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const rollerMessages = useMemo<RollerMessage[]>(
@@ -301,6 +313,64 @@ export function ChatView({
 
   // Shared session ID for both text and voice chat (ensures unified experience)
   const sessionId = useMemo(() => getOrCreateSessionId(), []);
+
+  const visibleChatRecipeBackendIds = useMemo(() => {
+    const ids = new Set<string>();
+    for (const message of messages) {
+      message.recipes?.forEach((recipe) => {
+        if (recipe.backendId) {
+          ids.add(recipe.backendId);
+        }
+      });
+      if (message.recipeDetail?.recipe_id) {
+        ids.add(message.recipeDetail.recipe_id);
+      }
+      const featured = message.process?.featured;
+      if (featured?.kind === 'recipe' && featured.recipe.backendId) {
+        ids.add(featured.recipe.backendId);
+      }
+    }
+    return [...ids];
+  }, [messages]);
+
+  useEffect(() => {
+    if (visibleChatRecipeBackendIds.length === 0 || !onPrefetchChatRecipeAccess) {
+      return;
+    }
+    onPrefetchChatRecipeAccess(visibleChatRecipeBackendIds);
+  }, [onPrefetchChatRecipeAccess, visibleChatRecipeBackendIds]);
+
+  const resolveCommerceBadgeForBackendId = useCallback((backendId?: string | null): RecipeCommerceBadge | null => {
+    if (!backendId) {
+      return null;
+    }
+    const access = recipeAccessMap[backendId] ?? null;
+    const isLoading = recipeAccessLoadingId === backendId;
+    return getRecipeCommerceBadge(access, isLoading);
+  }, [recipeAccessMap, recipeAccessLoadingId]);
+
+  const resolveCommerceBadgeForRecipe = useCallback((recipe: Recipe): RecipeCommerceBadge | null => {
+    return resolveCommerceBadgeForBackendId(recipe.backendId ?? null);
+  }, [resolveCommerceBadgeForBackendId]);
+
+  const renderCommerceBadgeChip = useCallback((badge: RecipeCommerceBadge | null) => {
+    if (!badge) {
+      return null;
+    }
+    return (
+      <span
+        className="inline-flex items-center gap-1 text-white text-[10px] font-semibold uppercase tracking-[0.08em]"
+        style={{
+          height: '24px',
+          padding: '4px 10px',
+          borderRadius: '999px',
+          ...RECIPE_COMMERCE_BADGE_STYLES[badge.tone],
+        }}
+      >
+        {badge.label}
+      </span>
+    );
+  }, []);
 
   const openRecipeModalFromDetail = useCallback(
     async (detail: RecipeDetailData) => {
@@ -1115,6 +1185,7 @@ export function ChatView({
               voiceMode={options?.voiceMode}
               voiceRole={options?.voiceRole}
               voiceCardExpanded={options?.voiceExpanded}
+              resolveCommerceBadge={resolveCommerceBadgeForRecipe}
             />
           </div>
         );
@@ -1151,10 +1222,13 @@ export function ChatView({
             data-voice-expandable-card="true"
             style={{ borderRadius: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
           >
-            <div style={{ padding: '16px 20px 12px' }}>
-              <h3 style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)', fontSize: '16px', fontWeight: 700, color: 'var(--jamie-text-heading, #2C5F5D)', textTransform: 'uppercase', margin: 0 }}>
+            <div style={{ padding: '16px 20px 12px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
+              <h3 style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)', fontSize: '16px', fontWeight: 700, color: 'var(--jamie-text-heading, #2C5F5D)', textTransform: 'uppercase', margin: 0, flex: 1 }}>
                 {payload.recipe.title}
               </h3>
+              {renderCommerceBadgeChip(
+                resolveCommerceBadgeForBackendId(payload.recipe.recipe_id),
+              )}
             </div>
             {(payload.recipe.estimated_time ||
               payload.recipe.difficulty ||
@@ -1206,7 +1280,7 @@ export function ChatView({
       default:
         return null;
     }
-  }, [openRecipeModalFromDetail, onRecipeClick]);
+  }, [openRecipeModalFromDetail, onRecipeClick, renderCommerceBadgeChip, resolveCommerceBadgeForBackendId, resolveCommerceBadgeForRecipe]);
 
   const renderMessageContent = useCallback((message: Message, options?: {
     voiceMode?: boolean;
@@ -1226,9 +1300,24 @@ export function ChatView({
         (voiceRole !== 'top' || !voiceExpanded);
 
       if (showCompactPreview) {
+        const primaryBackendId =
+          message.recipes?.[0]?.backendId
+          ?? message.recipeDetail?.recipe_id
+          ?? null;
+        const commerceBadge = resolveCommerceBadgeForBackendId(primaryBackendId);
+        const previewWithCommerce = commerceBadge
+          ? {
+              ...richPreview,
+              chips: [
+                commerceBadge.label,
+                ...richPreview.chips.filter((chip) => chip !== commerceBadge.label),
+              ].slice(0, 3),
+            }
+          : richPreview;
+
         return (
           <VoiceRichCardPreview
-            preview={richPreview}
+            preview={previewWithCommerce}
             onExpand={voiceRole === 'top' ? onVoiceToggleExpand : undefined}
             interactive={voiceRole === 'top'}
           />
@@ -1340,6 +1429,7 @@ export function ChatView({
                         voiceMode={voiceMode}
                         voiceRole={voiceRole}
                         voiceCardExpanded={voiceExpanded}
+                        resolveCommerceBadge={resolveCommerceBadgeForRecipe}
                       />
                     </div>
                   )}
@@ -1410,6 +1500,7 @@ export function ChatView({
                         voiceMode={voiceMode}
                         voiceRole={voiceRole}
                         voiceCardExpanded={voiceExpanded}
+                        resolveCommerceBadge={resolveCommerceBadgeForRecipe}
                       />
                     </div>
                   )}
@@ -1478,7 +1569,7 @@ export function ChatView({
         </p>
       </div>
     );
-  }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion]);
+  }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion, resolveCommerceBadgeForBackendId, resolveCommerceBadgeForRecipe]);
 
   return (
     <div className="relative jamie-view-shell" data-voice-active={isVoiceActive || undefined}>

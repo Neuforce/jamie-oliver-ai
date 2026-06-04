@@ -314,6 +314,54 @@ export default function App() {
     );
   }, [loadedRecipes]);
 
+  const loadRecipeAccessByBackendId = useCallback(async (
+    backendId: string,
+    options: { force?: boolean; userId?: string } = {},
+  ): Promise<RecipeAccessResponse | null> => {
+    const recipe = loadedRecipesByBackendId.get(backendId);
+    if (recipe) {
+      return loadRecipeAccess(recipe, options);
+    }
+
+    const key = backendId;
+    if (!options.force && recipeAccessMap[key]) {
+      return recipeAccessMap[key];
+    }
+
+    setRecipeAccessLoadingId(key);
+    try {
+      const access = await getRecipeAccess(
+        backendId,
+        options.userId ?? getStoredJamieAccessUserId() ?? undefined,
+      );
+      setRecipeAccessMap(prev => ({ ...prev, [key]: access }));
+      setRecipeAccessErrorIds(prev => {
+        if (!prev[key]) {
+          return prev;
+        }
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
+      return access;
+    } catch (error) {
+      console.error('Failed to load recipe access:', error);
+      setRecipeAccessErrorIds(prev => ({ ...prev, [key]: true }));
+      return null;
+    } finally {
+      setRecipeAccessLoadingId(current => (current === key ? null : current));
+    }
+  }, [loadedRecipesByBackendId, loadRecipeAccess, recipeAccessMap]);
+
+  const prefetchChatRecipeAccess = useCallback((backendIds: string[]) => {
+    for (const backendId of backendIds) {
+      if (recipeAccessMap[backendId] || recipeAccessLoadingId === backendId) {
+        continue;
+      }
+      void loadRecipeAccessByBackendId(backendId);
+    }
+  }, [loadRecipeAccessByBackendId, recipeAccessLoadingId, recipeAccessMap]);
+
   const ownedRecipeCollection = useMemo(() => {
     return myRecipes
       .map((ownedRecipe) => loadedRecipesByBackendId.get(ownedRecipe.recipeId))
@@ -882,6 +930,9 @@ export default function App() {
                   onRecipeModalVoiceDockOverlapChange={setRecipeModalVoiceDockOverlap}
                   onVoiceRecipePaywallRequested={handleVoiceRecipePaywallRequested}
                   onDiscoveryVoiceSessionChange={setDiscoveryVoiceSessionActive}
+                  recipeAccessMap={recipeAccessMap}
+                  recipeAccessLoadingId={recipeAccessLoadingId}
+                  onPrefetchChatRecipeAccess={prefetchChatRecipeAccess}
                 />
               </div>
             )}

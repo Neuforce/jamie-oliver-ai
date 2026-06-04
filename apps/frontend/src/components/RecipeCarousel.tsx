@@ -7,6 +7,8 @@ import type { StackRole } from './VoiceModeRoller';
 
 const SWIPE_THRESHOLD_PX = 36;
 
+import type { RecipeCommerceBadge } from '../lib/recipeAccessDisplay';
+
 interface RecipeCarouselProps {
   recipes: Recipe[];
   onRecipeClick: (recipe: Recipe) => void;
@@ -15,6 +17,7 @@ interface RecipeCarouselProps {
   voiceRole?: StackRole;
   /** Top rich card is expanded — horizontal paging only; vertical scroll is on the card body. */
   voiceCardExpanded?: boolean;
+  resolveCommerceBadge?: (recipe: Recipe) => RecipeCommerceBadge | null | undefined;
 }
 
 export function RecipeCarousel({
@@ -24,6 +27,7 @@ export function RecipeCarousel({
   voiceMode = false,
   voiceRole,
   voiceCardExpanded = false,
+  resolveCommerceBadge,
 }: RecipeCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(singleSlide ? 1 : 3);
@@ -231,6 +235,7 @@ export function RecipeCarousel({
                     recipe={recipe}
                     onClick={() => onRecipeClick(recipe)}
                     variant="chat"
+                    commerceBadge={resolveCommerceBadge?.(recipe) ?? null}
                   />
                 </div>
               ))}
@@ -275,6 +280,7 @@ export function RecipeCarousel({
                   recipe={recipe}
                   onClick={() => onRecipeClick(recipe)}
                   variant="chat"
+                  commerceBadge={resolveCommerceBadge?.(recipe) ?? null}
                 />
               </div>
             ))}
