@@ -13,6 +13,8 @@ interface RecipeCarouselProps {
   singleSlide?: boolean; // Force single slide display (e.g., for chat)
   voiceMode?: boolean;
   voiceRole?: StackRole;
+  /** Top rich card is expanded — horizontal paging only; vertical scroll is on the card body. */
+  voiceCardExpanded?: boolean;
 }
 
 export function RecipeCarousel({
@@ -21,6 +23,7 @@ export function RecipeCarousel({
   singleSlide = false,
   voiceMode = false,
   voiceRole,
+  voiceCardExpanded = false,
 }: RecipeCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [slidesToShow, setSlidesToShow] = useState(singleSlide ? 1 : 3);
@@ -92,10 +95,6 @@ export function RecipeCarousel({
     startY: 0,
     pointerId: null,
   });
-
-  const stopRollerDrag = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
-    e.stopPropagation();
-  }, []);
 
   const handleSwipeStart = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     swipeState.current = {
@@ -169,7 +168,6 @@ export function RecipeCarousel({
             style={
               singleSlideMaxWidth ? { maxWidth: `${singleSlideMaxWidth}px` } : undefined
             }
-            {...(voiceMode ? { onPointerDownCapture: stopRollerDrag } : undefined)}
           >
             {/*
               * Navigation arrows — identical between chat and voice mode.
@@ -221,7 +219,9 @@ export function RecipeCarousel({
                     onPointerMove: handleSwipeMove,
                     onPointerUp: handleSwipeEnd,
                     onPointerCancel: handleSwipeCancel,
-                    style: { touchAction: 'pan-y' },
+                    style: {
+                      touchAction: voiceCardExpanded ? 'pan-x' : 'manipulation',
+                    },
                   }
                 : undefined)}
             >

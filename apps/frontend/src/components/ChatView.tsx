@@ -14,6 +14,11 @@ import { TOOL_STEP_DISPLAY } from './ProcessCardTypes';
 import { JamieHeart } from './JamieHeart';
 import { VoiceModeRoller } from './VoiceModeRoller';
 import { VoiceFooter } from './VoiceFooter';
+import { VoiceRichCardShell } from './VoiceRichCardShell';
+import {
+  getVoiceRichPreview,
+  messageHasVoiceRichCard,
+} from './voiceRichCard';
 import type { RollerMessage, StackRole } from './VoiceModeRoller';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
 import { useVoiceChat } from '../hooks/useVoiceChat';
@@ -293,6 +298,8 @@ export function ChatView({
   const [displayedThinkingText, setDisplayedThinkingText] = useState('');
   const [showScrollButton, setShowScrollButton] = useState(false);
   const [expandedMessageIds, setExpandedMessageIds] = useState<Record<string, boolean>>({});
+  const [voiceRichExpandedId, setVoiceRichExpandedId] = useState<string | null>(null);
+  const voiceRichTailIdRef = useRef<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -1097,31 +1104,55 @@ export function ChatView({
     }));
   }, []);
 
+  const toggleVoiceRichCard = useCallback((messageId: string) => {
+    setVoiceRichExpandedId((prev) => (prev === messageId ? null : messageId));
+  }, []);
+
+  useEffect(() => {
+    if (!isVoiceActive) {
+      voiceRichTailIdRef.current = null;
+      setVoiceRichExpandedId(null);
+      return;
+    }
+    const tail = messages[messages.length - 1];
+    const tailId = tail?.id ?? null;
+    if (!tailId) return;
+    const signature = messageHasVoiceRichCard(tail)
+      ? `${tailId}:rich`
+      : `${tailId}:plain`;
+    if (signature === voiceRichTailIdRef.current) return;
+    voiceRichTailIdRef.current = signature;
+    if (messageHasVoiceRichCard(tail)) {
+      setVoiceRichExpandedId(tailId);
+    } else {
+      setVoiceRichExpandedId(null);
+    }
+  }, [messages, isVoiceActive]);
+
   const renderFeaturedPayload = useCallback((payload: FeaturedPayload, options?: {
     voiceMode?: boolean;
     voiceRole?: StackRole;
+    voiceCardExpanded?: boolean;
     recipes?: Recipe[];
   }) => {
     switch (payload.kind) {
       case 'recipe':
         return (
-          <div data-voice-expandable-card="true">
-            <RecipeCarousel
-              recipes={options?.recipes?.length ? options.recipes : [payload.recipe]}
-              onRecipeClick={async (recipe) => {
-                const completeRecipe = await ensureRecipeHasPayload(recipe);
-                onRecipeClick(completeRecipe);
-              }}
-              singleSlide
-              voiceMode={options?.voiceMode}
-              voiceRole={options?.voiceRole}
-            />
-          </div>
+          <RecipeCarousel
+            recipes={options?.recipes?.length ? options.recipes : [payload.recipe]}
+            onRecipeClick={async (recipe) => {
+              const completeRecipe = await ensureRecipeHasPayload(recipe);
+              onRecipeClick(completeRecipe);
+            }}
+            singleSlide
+            voiceMode={options?.voiceMode}
+            voiceRole={options?.voiceRole}
+            voiceCardExpanded={options?.voiceCardExpanded}
+          />
         );
       case 'meal_plan':
         return (
-          <div data-voice-expandable-card="true">
-            <MealPlanCard
+          <MealPlanCard
               mealPlan={payload.mealPlan}
               onViewRecipe={async (recipeId) => {
                 const transformed = await loadRecipeForSelection(recipeId);
@@ -1136,19 +1167,13 @@ export function ChatView({
                 }
               }}
             />
-          </div>
         );
       case 'shopping_list':
-        return (
-          <div data-voice-expandable-card="true">
-            <ShoppingListCard shoppingList={payload.shoppingList} />
-          </div>
-        );
+        return <ShoppingListCard shoppingList={payload.shoppingList} />;
       case 'recipe_detail':
         return (
           <div
             className="bg-white overflow-hidden"
-            data-voice-expandable-card="true"
             style={{ borderRadius: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
           >
             <div style={{ padding: '16px 20px 12px' }}>
@@ -1213,26 +1238,39 @@ export function ChatView({
     voiceRole?: StackRole;
   }) => {
     const voiceMode = options?.voiceMode ?? false;
+    const voiceRich =
+      voiceMode && message.type === 'jamie' && messageHasVoiceRichCard(message);
+    const voiceRichPreview = voiceRich ? getVoiceRichPreview(message) : null;
+    const isVoiceRichExpanded = voiceRichExpandedId === message.id;
+
+    const wrapVoiceRich = (body: React.ReactNode) => {
+      if (!voiceRich || !voiceRichPreview) return body;
+      return (
+        <VoiceRichCardShell
+          preview={voiceRichPreview}
+          isExpanded={isVoiceRichExpanded}
+          onToggleExpand={() => toggleVoiceRichCard(message.id)}
+          isStreaming={message.isStreaming}
+        >
+          {body}
+        </VoiceRichCardShell>
+      );
+    };
 
     if (message.type === 'jamie') {
-      return (
+      return wrapVoiceRich(
         <>
           {message.process ? (
-            <div
-              data-voice-expandable-card={
-                voiceMode && message.process.featured ? 'true' : undefined
-              }
-            >
-              <ProcessCard
-                state={message.process}
-                renderFeatured={(payload) => renderFeaturedPayload(payload, {
-                  voiceMode,
-                  voiceRole: options?.voiceRole,
-                  recipes: message.recipes,
-                })}
-                className={voiceMode ? 'process-card--embedded' : undefined}
-              />
-            </div>
+            <ProcessCard
+              state={message.process}
+              renderFeatured={(payload) => renderFeaturedPayload(payload, {
+                voiceMode,
+                voiceRole: options?.voiceRole,
+                voiceCardExpanded: isVoiceRichExpanded,
+                recipes: message.recipes,
+              })}
+              className={voiceMode ? 'process-card--embedded' : undefined}
+            />
           ) : (
             /*
              * Non-process Jamie turn: render intro text, any attached tool
@@ -1273,22 +1311,13 @@ export function ChatView({
                 : 'jamie-thread-card jamie-thread-card--jamie';
 
               return (
-                <div
-                  className={cardClassName}
-                  data-voice-expandable-card={
-                    voiceMode && hasStructuredPayload ? 'true' : undefined
-                  }
-                >
-                  {/*
-                   * Speaker badge — mint-teal heart glyph + "JAMIE" wordmark.
-                   * Matches ProcessCard and the design mocks (`Jamie_03.png`,
-                   * `Jamie_04.png`, `Jamie_05.png`) so a conversational reply
-                   * and a tool-driven reply share one identity.
-                   */}
-                  <div className="jamie-thread-speaker">
-                    <JamieHeart className="jamie-thread-speaker__heart" />
-                    <span>Jamie</span>
-                  </div>
+                <div className={cardClassName}>
+                  {!voiceRich && (
+                    <div className="jamie-thread-speaker">
+                      <JamieHeart className="jamie-thread-speaker__heart" />
+                      <span>Jamie</span>
+                    </div>
+                  )}
 
                   {message.content && (
                     <div
@@ -1353,6 +1382,7 @@ export function ChatView({
                         singleSlide
                         voiceMode={voiceMode}
                         voiceRole={options?.voiceRole}
+                        voiceCardExpanded={isVoiceRichExpanded}
                       />
                     </div>
                   )}
@@ -1398,7 +1428,7 @@ export function ChatView({
            * the entire gallery inside the card, so no sibling carousel is
            * needed.
            */}
-        </>
+        </>,
       );
     }
 
@@ -1412,7 +1442,14 @@ export function ChatView({
         </p>
       </div>
     );
-  }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion]);
+  }, [
+    expandedMessageIds,
+    renderFeaturedPayload,
+    onRecipeClick,
+    toggleMessageExpansion,
+    toggleVoiceRichCard,
+    voiceRichExpandedId,
+  ]);
 
   return (
     <div className="relative jamie-view-shell" data-voice-active={isVoiceActive || undefined}>
@@ -1441,6 +1478,7 @@ export function ChatView({
           <div className="jamie-shell-width jamie-voice-stage__inner">
             <VoiceModeRoller
               messages={messages as RollerMessage[]}
+              expandedRichMessageId={voiceRichExpandedId}
               renderMessage={(msg, role) =>
                 renderMessageContent(msg as Message, { voiceMode: true, voiceRole: role })
               }

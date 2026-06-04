@@ -17,8 +17,10 @@ services:
       - ENVIRONMENT=development
       - HOST=0.0.0.0
       - PORT=8100
+      - PYTHONPATH=/app/apps/backend-voice/src:/app/packages/jamie-guardrails:/app/packages/ccai
     volumes:
       - ../apps/backend-voice/src:/app/apps/backend-voice/src
+      - ../apps/backend-voice/startup.sh:/app/startup.sh:ro
       - ../packages/ccai:/app/packages/ccai
       - ../packages/jamie-guardrails:/app/packages/jamie-guardrails
       # Mount .env file so Python can read it directly if needed

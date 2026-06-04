@@ -51,6 +51,11 @@ export interface VoiceModeRollerProps {
   onOffsetChange?: (offset: number) => void;
   /** Extra classes on the roller wrapper. */
   className?: string;
+  /**
+   * Explicit rich-card expansion (NEU-644). When this id matches the top
+   * visible message, stack navigation is suppressed so the card body scrolls.
+   */
+  expandedRichMessageId?: string | null;
 }
 
 export type StackRole = 'top' | 'middle' | 'back';
@@ -93,6 +98,7 @@ export function VoiceModeRoller({
   renderMessage,
   onOffsetChange,
   className,
+  expandedRichMessageId = null,
 }: VoiceModeRollerProps) {
   const [offset, setOffset] = useState(0);
   const [unseenIds, setUnseenIds] = useState<Set<string>>(new Set());
@@ -100,7 +106,6 @@ export function VoiceModeRoller({
   const [isBouncing, setIsBouncing] = useState<'top' | 'bottom' | null>(null);
   const [isTallTopCard, setIsTallTopCard] = useState(false);
   const [hasExpandableTopCard, setHasExpandableTopCard] = useState(false);
-  const [expandedMessageId, setExpandedMessageId] = useState<string | null>(null);
 
   const stageRef = useRef<HTMLDivElement | null>(null);
   const lastSeenTailIdRef = useRef<string | null>(null);
@@ -191,6 +196,11 @@ export function VoiceModeRoller({
     setOffsetWithNotification(0);
   }, [setOffsetWithNotification]);
 
+  const topVisibleId = visibleWindow[2]?.id ?? null;
+  const isExpandedTopCard = Boolean(
+    expandedRichMessageId && expandedRichMessageId === topVisibleId,
+  );
+
   // --- Pointer drag on the top card ---
   const dragStateRef = useRef<{
     startY: number;
@@ -200,7 +210,7 @@ export function VoiceModeRoller({
 
   const handlePointerDown = useCallback(
     (e: ReactPointerEvent<HTMLDivElement>) => {
-      if (isStreamingActive || expandedMessageId) return;
+      if (isStreamingActive || isExpandedTopCard) return;
       const target = e.target as HTMLElement | null;
       if (target?.closest(INTERACTIVE_SELECTOR)) {
         return;
@@ -212,7 +222,7 @@ export function VoiceModeRoller({
       };
       (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
     },
-    [expandedMessageId, isStreamingActive],
+    [isExpandedTopCard, isStreamingActive],
   );
 
   const handlePointerMove = useCallback(
@@ -287,7 +297,7 @@ export function VoiceModeRoller({
       if (Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
       if (Math.abs(e.deltaY) < 4) return;
       if (canScrollTopBody(e.target, e.deltaY)) return;
-      if (expandedMessageId) return;
+      if (isExpandedTopCard) return;
       const now = Date.now();
       if (now - wheelLockRef.current < 280) return;
       wheelLockRef.current = now;
@@ -297,13 +307,11 @@ export function VoiceModeRoller({
         scrollTo(offset - 1);
       }
     },
-    [canScrollTopBody, expandedMessageId, isStreamingActive, offset, scrollTo],
+    [canScrollTopBody, isExpandedTopCard, isStreamingActive, offset, scrollTo],
   );
 
   const unseenCount = unseenIds.size;
   const showNewBadge = offset > 0 && unseenCount > 0;
-  const topVisibleId = visibleWindow[2]?.id ?? null;
-  const isExpandedTopCard = Boolean(expandedMessageId && expandedMessageId === topVisibleId);
 
   const recomputeTopCardLayout = useCallback(() => {
     const el = topCardBodyRef.current;
@@ -316,8 +324,13 @@ export function VoiceModeRoller({
     setHasExpandableTopCard(
       Boolean(el.querySelector('[data-voice-expandable-card="true"]')),
     );
-    setIsTallTopCard(el.scrollHeight > availableBeforeCompression);
-  }, []);
+    const isExpanded =
+      Boolean(expandedRichMessageId) &&
+      expandedRichMessageId === topVisibleId;
+    setIsTallTopCard(
+      isExpanded && el.scrollHeight > availableBeforeCompression,
+    );
+  }, [expandedRichMessageId, topVisibleId]);
 
   useLayoutEffect(() => {
     recomputeTopCardLayout();
@@ -342,18 +355,6 @@ export function VoiceModeRoller({
       window.removeEventListener('resize', handleResize);
     };
   }, [topVisibleId, recomputeTopCardLayout]);
-
-  useEffect(() => {
-    if (!topVisibleId) {
-      setExpandedMessageId(null);
-      return;
-    }
-    if (isTallTopCard && hasExpandableTopCard) {
-      setExpandedMessageId(topVisibleId);
-      return;
-    }
-    setExpandedMessageId(null);
-  }, [hasExpandableTopCard, isTallTopCard, topVisibleId]);
 
   useEffect(() => {
     const tailId = messages[messages.length - 1]?.id ?? null;
