@@ -4,7 +4,8 @@ import { recipes, categories, Recipe, initializeRecipes, getCategories } from '.
 import { RecipeCard } from './components/RecipeCard';
 import { RecipeModal, type RecipeModalHandle } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
-import { ChatView, clearChatHistory } from './components/ChatView';
+import { ChatView } from './components/ChatView';
+import { clearChatHistory } from './lib/chatStorage';
 import { TabNav, TabView, type MyTabCardData } from './components/TabNav';
 import { Button } from './components/ui/button';
 import { Search, ChefHat, Grid3x3, LayoutList, Clock, SlidersHorizontal, X as XIcon } from 'lucide-react';
@@ -25,6 +26,9 @@ import { AvatarWithOrganicGlow } from './design-system/components/AvatarWithOrga
 import { SearchInput } from './design-system/components/SearchInput';
 import { RecipeSkeletonLoader } from './components/ui/skeleton-loader';
 import { getJamieUser, getMyRecipes, getRecipeAccess, type JamieUserSummary, type OwnedRecipeSummary, type RecipeAccessResponse } from './lib/api';
+import { loadRecipeBySlug } from './data/loadRecipeBySlug';
+import { usePermalinks } from './hooks/usePermalinks';
+import { RecipeNotFound } from './components/RecipeNotFound';
 import {
   loadMyTabSnapshot,
   getStoredJamieAccessUserId,
@@ -63,6 +67,8 @@ export default function App() {
 
   // Loading states
   const [isLoading, setIsLoading] = useState(false);
+  const [permalinkNotFound, setPermalinkNotFound] = useState<{ slug: string } | null>(null);
+  const [permalinkResolving, setPermalinkResolving] = useState(false);
   const [recipeAccessMap, setRecipeAccessMap] = useState<Record<string, RecipeAccessResponse>>({});
   const [recipeAccessLoadingId, setRecipeAccessLoadingId] = useState<string | null>(null);
 
@@ -287,28 +293,7 @@ export default function App() {
     }
   }, [getRecipeAccessKey, recipeAccessMap]);
 
-  const startCookingOverlay = useCallback((recipe: Recipe) => {
-    setIsLoading(true);
-    setSelectedRecipe(null);
-    setTimeout(() => {
-      setCookingRecipe(recipe);
-      setIsLoading(false);
-    }, 500);
-  }, []);
-
-  const startCookingForRecipe = useCallback(async (recipe: Recipe) => {
-    const access = await loadRecipeAccess(recipe, { force: true });
-    if (!access) {
-      return;
-    }
-
-    if (access.accessState === 'locked') {
-      setSelectedRecipe(recipe);
-      return;
-    }
-
-    startCookingOverlay(recipe);
-  }, [getRecipeAccessKey, loadRecipeAccess, startCookingOverlay]);
+  const startCookingOverlayRef = useRef<(recipe: Recipe) => void>(() => {});
 
   const loadedRecipesByBackendId = useMemo(() => {
     return new Map(
@@ -323,6 +308,63 @@ export default function App() {
       .map((ownedRecipe) => loadedRecipesByBackendId.get(ownedRecipe.recipeId))
       .filter((recipe): recipe is Recipe => Boolean(recipe));
   }, [loadedRecipesByBackendId, myRecipes]);
+
+  const {
+    navigateToTab,
+    navigateToRecipe,
+    navigateToCook,
+    navigateCloseRecipe,
+    navigateCloseCook,
+    navigateRecipesFilters,
+    navigateBrowseRecipes,
+  } = usePermalinks({
+    activeView,
+    setActiveView,
+    searchQuery,
+    setSearchQuery,
+    selectedCategory,
+    setSelectedCategory,
+    viewMode,
+    setViewMode,
+    selectedRecipe,
+    setSelectedRecipe,
+    cookingRecipe,
+    setCookingRecipe,
+    loadedRecipesByBackendId,
+    loadRecipeAccess,
+    startCookingOverlay: (recipe) => startCookingOverlayRef.current(recipe),
+    setIsLoading,
+    permalinkNotFound,
+    setPermalinkNotFound,
+    setPermalinkResolving,
+  });
+
+  const startCookingOverlay = useCallback((recipe: Recipe) => {
+    setIsLoading(true);
+    setSelectedRecipe(null);
+    setTimeout(() => {
+      setCookingRecipe(recipe);
+      setIsLoading(false);
+      navigateToCook(recipe, { replace: true });
+    }, 500);
+  }, [navigateToCook]);
+
+  startCookingOverlayRef.current = startCookingOverlay;
+
+  const startCookingForRecipe = useCallback(async (recipe: Recipe) => {
+    const access = await loadRecipeAccess(recipe, { force: true });
+    if (!access) {
+      return;
+    }
+
+    if (access.accessState === 'locked') {
+      setSelectedRecipe(recipe);
+      navigateToRecipe(recipe, { replace: true });
+      return;
+    }
+
+    startCookingOverlay(recipe);
+  }, [loadRecipeAccess, navigateToRecipe, startCookingOverlay]);
 
   const displayCategories = useMemo(() => {
     return activeView === 'my-recipes'
@@ -373,10 +415,13 @@ export default function App() {
       return;
     }
 
+    setPermalinkNotFound(null);
     setIsLoading(true);
     setTimeout(() => {
       setSelectedRecipe(recipe);
       setIsLoading(false);
+      navigateToRecipe(recipe);
+      void loadRecipeAccess(recipe);
     }, 300);
   };
 
@@ -393,6 +438,7 @@ export default function App() {
           void startCookingForRecipe(nextRecipe);
         } else {
           setSelectedRecipe(nextRecipe);
+          navigateToRecipe(nextRecipe);
           void loadRecipeAccess(nextRecipe);
           setIsLoading(false);
         }
@@ -431,7 +477,14 @@ export default function App() {
   // Handle recipe selection from Chat view
   const handleChatRecipeClick = (recipe: Recipe) => {
     setSelectedRecipe(recipe);
+    setPermalinkNotFound(null);
+    navigateToRecipe(recipe);
     void loadRecipeAccess(recipe);
+  };
+
+  const handleTabChange = (view: TabView) => {
+    setActiveView(view);
+    navigateToTab(view);
   };
 
   // Handle logo click - return to home (Chat with fresh state)
@@ -440,6 +493,8 @@ export default function App() {
     setChatKey(prev => prev + 1); // Force ChatView to remount with fresh state
     setActiveView('chat');
     setInitialChatMessage(undefined);
+    setPermalinkNotFound(null);
+    navigateToTab('chat');
   };
 
   // Handle close chat - clear storage and reset chat
@@ -475,7 +530,8 @@ export default function App() {
 
   const handleOpenMyRecipes = useCallback(() => {
     setActiveView('my-recipes');
-  }, []);
+    navigateToTab('my-recipes');
+  }, [navigateToTab]);
 
   const handleRecipePurchaseResolved = useCallback(async (
     recipe: Recipe,
@@ -520,12 +576,26 @@ export default function App() {
       if (!bid || voiceRecipeUnlockInFlightRef.current) {
         return;
       }
-      const recipe = selectedRecipe;
-      if (!recipe?.backendId || recipe.backendId !== bid) {
+
+      let recipe: Recipe | null =
+        selectedRecipe?.backendId === bid ? selectedRecipe : null;
+
+      if (!recipe) {
+        recipe = loadedRecipesByBackendId.get(bid) ?? null;
+      }
+      if (!recipe) {
+        recipe = await loadRecipeBySlug(bid);
+      }
+      if (!recipe) {
         toast.error('Checkout did not match this recipe', {
           description: 'Close the modal and open the recipe again, or tap Unlock on screen.',
         });
         return;
+      }
+
+      if (selectedRecipe?.backendId !== bid) {
+        setSelectedRecipe(recipe);
+        navigateToRecipe(recipe, { replace: true });
       }
 
       let access =
@@ -623,9 +693,11 @@ export default function App() {
       launchRecipePaywall,
       loadOwnedRecipes,
       loadRecipeAccess,
+      loadedRecipesByBackendId,
       recipeAccessMap,
       selectedRecipe,
       getRecipeAccessKey,
+      navigateToRecipe,
       startCookingOverlay,
     ],
   );
@@ -707,14 +779,22 @@ export default function App() {
         {cookingRecipe && (
           <CookWithJamie
             recipe={cookingRecipe}
-            onClose={() => setCookingRecipe(null)}
+            onClose={() => {
+              const recipe = cookingRecipe;
+              setCookingRecipe(null);
+              if (recipe) {
+                navigateCloseCook(recipe);
+              }
+            }}
             onBackToChat={() => {
               setCookingRecipe(null);
               setActiveView('chat');
+              navigateToTab('chat');
             }}
             onExploreRecipes={() => {
               setCookingRecipe(null);
               setActiveView('recipes');
+              navigateToTab('recipes');
             }}
           />
         )}
@@ -730,7 +810,7 @@ export default function App() {
           >
             <TabNav
               activeTab={activeView}
-              onTabChange={setActiveView}
+              onTabChange={handleTabChange}
               onLogoClick={handleLogoClick}
               onCloseChat={handleCloseChat}
               myTabCard={myTabCard}
@@ -743,6 +823,17 @@ export default function App() {
 
           {/* Tab Content — ChatView can stay mounted (hidden) so discovery voice survives tab + RecipeModal */}
           <main className="jamie-view-shell relative flex flex-1 min-h-0 flex-col overflow-hidden">
+            {permalinkNotFound && !cookingRecipe ? (
+              <RecipeNotFound
+                slug={permalinkNotFound.slug}
+                onBrowseRecipes={() => {
+                  setPermalinkNotFound(null);
+                  setActiveView('recipes');
+                  navigateBrowseRecipes();
+                }}
+              />
+            ) : (
+              <>
             {retainDiscoveryChatMount && (
               <div
                 className={
@@ -826,7 +917,16 @@ export default function App() {
                         >
                           <SearchInput
                             value={normalizedSearchQuery}
-                            onSearch={(value) => setSearchQuery(typeof value === 'string' ? value : '')}
+                            onSearch={(value) => {
+                              const q = typeof value === 'string' ? value : '';
+                              setSearchQuery(q);
+                              if (activeView === 'recipes') {
+                                navigateRecipesFilters(
+                                  { category: selectedCategory, q, viewMode },
+                                  { replace: true },
+                                );
+                              }
+                            }}
                             placeholder={isMyRecipesView ? 'Search your recipes...' : 'Search recipes by name or ingredient...'}
                           />
                         </motion.div>
@@ -853,7 +953,14 @@ export default function App() {
                               type="button"
                               role="tab"
                               aria-selected={viewMode === 'feed'}
-                              onClick={() => setViewMode('feed')}
+                              onClick={() => {
+                                setViewMode('feed');
+                                navigateRecipesFilters({
+                                  category: selectedCategory,
+                                  q: searchQuery,
+                                  viewMode: 'feed',
+                                });
+                              }}
                               className="jamie-view-toggle__btn"
                               data-active={viewMode === 'feed' || undefined}
                               aria-label="List view"
@@ -865,7 +972,14 @@ export default function App() {
                               type="button"
                               role="tab"
                               aria-selected={viewMode === 'grid'}
-                              onClick={() => setViewMode('grid')}
+                              onClick={() => {
+                                setViewMode('grid');
+                                navigateRecipesFilters({
+                                  category: selectedCategory,
+                                  q: searchQuery,
+                                  viewMode: 'grid',
+                                });
+                              }}
                               className="jamie-view-toggle__btn"
                               data-active={viewMode === 'grid' || undefined}
                               aria-label="Grid view"
@@ -881,7 +995,14 @@ export default function App() {
                                 <motion.button
                                   key="active-filter-chip"
                                   type="button"
-                                  onClick={() => setSelectedCategory('All')}
+                                  onClick={() => {
+                                    setSelectedCategory('All');
+                                    navigateRecipesFilters({
+                                      category: 'All',
+                                      q: searchQuery,
+                                      viewMode,
+                                    });
+                                  }}
                                   className="jamie-active-filter-chip"
                                   aria-label={`Clear ${selectedCategory} filter`}
                                   initial={{ opacity: 0, x: 8, scale: 0.96 }}
@@ -1165,7 +1286,15 @@ export default function App() {
                                 {selectedCategory !== 'All' && (
                                   <button
                                     type="button"
-                                    onClick={() => { setSelectedCategory('All'); setFiltersExpanded(false); }}
+                                    onClick={() => {
+                                      setSelectedCategory('All');
+                                      setFiltersExpanded(false);
+                                      navigateRecipesFilters({
+                                        category: 'All',
+                                        q: searchQuery,
+                                        viewMode,
+                                      });
+                                    }}
                                     className="jamie-filter-panel__clear"
                                   >
                                     Clear
@@ -1177,7 +1306,15 @@ export default function App() {
                                   <button
                                     key={category}
                                     type="button"
-                                    onClick={() => { setSelectedCategory(category); setFiltersExpanded(false); }}
+                                    onClick={() => {
+                                      setSelectedCategory(category);
+                                      setFiltersExpanded(false);
+                                      navigateRecipesFilters({
+                                        category,
+                                        q: searchQuery,
+                                        viewMode,
+                                      });
+                                    }}
                                     className="jamie-chip"
                                     data-active={selectedCategory === category || undefined}
                                   >
@@ -1269,6 +1406,8 @@ export default function App() {
                 </motion.div>
               ) : null}
             </AnimatePresence>
+              </>
+            )}
           </main>
         </>
       )}
@@ -1278,7 +1417,10 @@ export default function App() {
         <RecipeModal
           ref={recipeModalRef}
           recipe={selectedRecipe}
-          onClose={() => setSelectedRecipe(null)}
+          onClose={() => {
+            setSelectedRecipe(null);
+            navigateCloseRecipe(activeView);
+          }}
           onCookWithJamie={handleCookWithJamie}
           recipeAccess={selectedRecipeAccess}
           isAccessLoading={isSelectedRecipeAccessLoading}
@@ -1310,7 +1452,7 @@ export default function App() {
 
       {/* Loading Skeleton */}
       <AnimatePresence>
-        {isLoading && (
+        {isLoading || permalinkResolving ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -1319,7 +1461,7 @@ export default function App() {
           >
             <RecipeSkeletonLoader />
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );
