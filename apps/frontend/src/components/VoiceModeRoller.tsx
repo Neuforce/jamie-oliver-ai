@@ -9,7 +9,7 @@ import React, {
   type ReactNode,
 } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, ChevronUp } from 'lucide-react';
 import './VoiceModeRoller.css';
 
 /**
@@ -23,6 +23,16 @@ export interface RollerMessage {
   content: string;
   /** True while a message is actively streaming. Top slot locks during streaming. */
   isStreaming?: boolean;
+  /** Rich payload (carousel, meal plan, etc.) — eligible for expand/collapse. */
+  voiceExpandable?: boolean;
+}
+
+export interface RollerRenderContext {
+  role: StackRole;
+  /** True when this card is expanded in the top slot (always false for middle/back). */
+  expanded: boolean;
+  /** Toggle expand/collapse for rich cards on the top slot. */
+  onToggleExpand: () => void;
 }
 
 export interface VoiceModeRollerProps {
@@ -42,7 +52,7 @@ export interface VoiceModeRollerProps {
    */
   renderMessage: (
     message: RollerMessage,
-    role: StackRole,
+    context: RollerRenderContext,
   ) => ReactNode;
   /**
    * Called when the user clicks a deeper card or swipes — informational only,
@@ -51,11 +61,6 @@ export interface VoiceModeRollerProps {
   onOffsetChange?: (offset: number) => void;
   /** Extra classes on the roller wrapper. */
   className?: string;
-  /**
-   * Explicit rich-card expansion (NEU-644). When this id matches the top
-   * visible message, stack navigation is suppressed so the card body scrolls.
-   */
-  expandedRichMessageId?: string | null;
 }
 
 export type StackRole = 'top' | 'middle' | 'back';
@@ -98,14 +103,14 @@ export function VoiceModeRoller({
   renderMessage,
   onOffsetChange,
   className,
-  expandedRichMessageId = null,
 }: VoiceModeRollerProps) {
   const [offset, setOffset] = useState(0);
   const [unseenIds, setUnseenIds] = useState<Set<string>>(new Set());
   const [dragDelta, setDragDelta] = useState(0);
   const [isBouncing, setIsBouncing] = useState<'top' | 'bottom' | null>(null);
   const [isTallTopCard, setIsTallTopCard] = useState(false);
-  const [hasExpandableTopCard, setHasExpandableTopCard] = useState(false);
+  const [expandedMessageId, setExpandedMessageId] = useState<string | null>(null);
+  const prevTopVisibleIdRef = useRef<string | null>(null);
 
   const stageRef = useRef<HTMLDivElement | null>(null);
   const lastSeenTailIdRef = useRef<string | null>(null);
@@ -129,6 +134,13 @@ export function VoiceModeRoller({
     while (slice.length < 3) slice.unshift(null);
     return slice;
   }, [messages, offset]);
+
+  const topVisibleMessage = visibleWindow[2];
+  const topVisibleId = topVisibleMessage?.id ?? null;
+  const hasExpandableTopCard = Boolean(topVisibleMessage?.voiceExpandable);
+  const isExpandedTopCard = Boolean(
+    hasExpandableTopCard && expandedMessageId && expandedMessageId === topVisibleId,
+  );
 
   // Detect new messages arriving while scrolled away from the tail.
   // Keyed on message IDs — safe against streaming chunks updating a single
@@ -195,11 +207,6 @@ export function VoiceModeRoller({
   const jumpToNewest = useCallback(() => {
     setOffsetWithNotification(0);
   }, [setOffsetWithNotification]);
-
-  const topVisibleId = visibleWindow[2]?.id ?? null;
-  const isExpandedTopCard = Boolean(
-    expandedRichMessageId && expandedRichMessageId === topVisibleId,
-  );
 
   // --- Pointer drag on the top card ---
   const dragStateRef = useRef<{
@@ -313,24 +320,27 @@ export function VoiceModeRoller({
   const unseenCount = unseenIds.size;
   const showNewBadge = offset > 0 && unseenCount > 0;
 
+  const handleCollapseTop = useCallback(() => {
+    setExpandedMessageId(null);
+  }, []);
+
+  const handleToggleExpandForMessage = useCallback((messageId: string) => {
+    setExpandedMessageId((current) => (current === messageId ? null : messageId));
+  }, []);
+
   const recomputeTopCardLayout = useCallback(() => {
     const el = topCardBodyRef.current;
     if (!el || typeof window === 'undefined') {
       setIsTallTopCard(false);
-      setHasExpandableTopCard(false);
       return;
     }
     const availableBeforeCompression = Math.max(320, window.innerHeight - 420);
-    setHasExpandableTopCard(
-      Boolean(el.querySelector('[data-voice-expandable-card="true"]')),
-    );
     const isExpanded =
-      Boolean(expandedRichMessageId) &&
-      expandedRichMessageId === topVisibleId;
+      Boolean(expandedMessageId) && expandedMessageId === topVisibleId;
     setIsTallTopCard(
       isExpanded && el.scrollHeight > availableBeforeCompression,
     );
-  }, [expandedRichMessageId, topVisibleId]);
+  }, [expandedMessageId, topVisibleId]);
 
   useLayoutEffect(() => {
     recomputeTopCardLayout();
@@ -355,6 +365,30 @@ export function VoiceModeRoller({
       window.removeEventListener('resize', handleResize);
     };
   }, [topVisibleId, recomputeTopCardLayout]);
+
+  // Explicit expand: rich cards open expanded when they reach the top (including
+  // when a payload arrives mid-stream on the same message id).
+  const topExpandSignature = topVisibleId
+    ? `${topVisibleId}:${hasExpandableTopCard ? 'rich' : 'plain'}`
+    : null;
+
+  useEffect(() => {
+    if (!topExpandSignature) {
+      setExpandedMessageId(null);
+      prevTopVisibleIdRef.current = null;
+      return;
+    }
+    if (prevTopVisibleIdRef.current === topExpandSignature) {
+      return;
+    }
+    prevTopVisibleIdRef.current = topExpandSignature;
+    const [messageId, kind] = topExpandSignature.split(':');
+    if (kind === 'rich') {
+      setExpandedMessageId(messageId);
+    } else {
+      setExpandedMessageId(null);
+    }
+  }, [topExpandSignature]);
 
   useEffect(() => {
     const tailId = messages[messages.length - 1]?.id ?? null;
@@ -469,8 +503,32 @@ export function VoiceModeRoller({
                 <div
                   className="voice-roller__card-body"
                   ref={isTop ? topCardBodyRef : undefined}
+                  data-voice-scroll-owner={
+                    isTop && isExpandedTopCard ? 'card-body' : undefined
+                  }
                 >
-                  {renderMessage(msg, role)}
+                  {isTop && isExpandedTopCard && hasExpandableTopCard && (
+                    <div className="voice-roller__collapse-bar">
+                      <button
+                        type="button"
+                        className="voice-roller__collapse-button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCollapseTop();
+                        }}
+                        aria-label="Collapse card"
+                        data-voice-interactive="true"
+                      >
+                        <ChevronUp size={16} aria-hidden="true" />
+                        <span>Collapse</span>
+                      </button>
+                    </div>
+                  )}
+                  {renderMessage(msg, {
+                    role,
+                    expanded: isTop && isExpandedTopCard,
+                    onToggleExpand: () => handleToggleExpandForMessage(msg.id),
+                  })}
                 </div>
               </div>
             </div>
