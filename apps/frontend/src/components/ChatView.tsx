@@ -333,12 +333,15 @@ export function ChatView({
     return [...ids];
   }, [messages]);
 
+  const onPrefetchChatRecipeAccessRef = useRef(onPrefetchChatRecipeAccess);
+  onPrefetchChatRecipeAccessRef.current = onPrefetchChatRecipeAccess;
+
   useEffect(() => {
-    if (visibleChatRecipeBackendIds.length === 0 || !onPrefetchChatRecipeAccess) {
+    if (visibleChatRecipeBackendIds.length === 0) {
       return;
     }
-    onPrefetchChatRecipeAccess(visibleChatRecipeBackendIds);
-  }, [onPrefetchChatRecipeAccess, visibleChatRecipeBackendIds]);
+    onPrefetchChatRecipeAccessRef.current?.(visibleChatRecipeBackendIds);
+  }, [visibleChatRecipeBackendIds]);
 
   const resolveCommerceBadgeForBackendId = useCallback((backendId?: string | null): RecipeCommerceBadge | null => {
     if (!backendId) {

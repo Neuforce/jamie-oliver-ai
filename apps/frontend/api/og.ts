@@ -33,6 +33,26 @@ function extractSlug(pathname: string): string | null {
   return decodeURIComponent(recipeMatch[1]);
 }
 
+function resolvePathname(req: VercelRequest): string {
+  const requestUrl = new URL(req.url ?? 'http://localhost/', 'http://localhost');
+  const fromQuery = requestUrl.searchParams.get('pathname')?.trim();
+  if (fromQuery?.startsWith('/recipe/')) {
+    return fromQuery;
+  }
+  return requestUrl.pathname;
+}
+
+function resolveOrigin(req: VercelRequest): string {
+  const hostHeader = req.headers['x-forwarded-host'] ?? req.headers.host;
+  const host = Array.isArray(hostHeader) ? hostHeader[0] : hostHeader;
+  const protoHeader = req.headers['x-forwarded-proto'] ?? 'https';
+  const proto = Array.isArray(protoHeader) ? protoHeader[0] : protoHeader;
+  if (host) {
+    return `${proto}://${host}`;
+  }
+  return 'https://jamie-oliver-ai.vercel.app';
+}
+
 function readIndexHtml(): string {
   const candidates = [
     join(process.cwd(), 'dist', 'index.html'),
@@ -107,9 +127,9 @@ async function fetchRecipeMeta(slug: string, apiBaseUrl: string): Promise<{
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
-    const requestUrl = new URL(req.url ?? 'http://localhost/recipe/unknown', 'http://localhost');
-    const slug = extractSlug(requestUrl.pathname);
-    const origin = `${requestUrl.protocol}//${requestUrl.host}`;
+    const pathname = resolvePathname(req);
+    const slug = extractSlug(pathname);
+    const origin = resolveOrigin(req);
     const pageUrl = slug ? `${origin}/recipe/${encodeURIComponent(slug)}` : origin;
 
     const apiBaseUrl = (process.env.VITE_API_BASE_URL || process.env.API_BASE_URL || '').replace(

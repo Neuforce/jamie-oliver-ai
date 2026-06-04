@@ -263,46 +263,95 @@ export default function App() {
 
   const getRecipeAccessKey = useCallback((recipe: Recipe) => recipe.backendId || String(recipe.id), []);
 
-  const loadRecipeAccess = useCallback(async (
-    recipe: Recipe,
-    options: { force?: boolean; userId?: string } = {}
+  const recipeAccessMapRef = useRef(recipeAccessMap);
+  const recipeAccessErrorIdsRef = useRef(recipeAccessErrorIds);
+  const recipeAccessInFlightRef = useRef(new Set<string>());
+  const recipeAccessErrorToastShownRef = useRef(new Set<string>());
+
+  recipeAccessMapRef.current = recipeAccessMap;
+  recipeAccessErrorIdsRef.current = recipeAccessErrorIds;
+
+  const fetchRecipeAccessForKey = useCallback(async (
+    key: string,
+    recipeId: string,
+    options: { force?: boolean; userId?: string } = {},
   ): Promise<RecipeAccessResponse | null> => {
-    if (!recipe.backendId) {
-      return null;
-    }
-
-    const key = getRecipeAccessKey(recipe);
-    if (!options.force && recipeAccessMap[key]) {
-      return recipeAccessMap[key];
-    }
-
-    setRecipeAccessLoadingId(key);
-    try {
-      const access = await getRecipeAccess(
-        recipe.backendId,
-        options.userId ?? getStoredJamieAccessUserId() ?? undefined
-      );
-      setRecipeAccessMap(prev => ({ ...prev, [key]: access }));
-      setRecipeAccessErrorIds(prev => {
+    if (!options.force) {
+      const cached = recipeAccessMapRef.current[key];
+      if (cached) {
+        return cached;
+      }
+      if (recipeAccessErrorIdsRef.current[key]) {
+        return null;
+      }
+      if (recipeAccessInFlightRef.current.has(key)) {
+        return null;
+      }
+    } else {
+      setRecipeAccessErrorIds((prev) => {
         if (!prev[key]) {
           return prev;
         }
         const next = { ...prev };
         delete next[key];
+        recipeAccessErrorIdsRef.current = next;
+        return next;
+      });
+      recipeAccessErrorToastShownRef.current.delete(key);
+    }
+
+    recipeAccessInFlightRef.current.add(key);
+    setRecipeAccessLoadingId(key);
+
+    try {
+      const access = await getRecipeAccess(
+        recipeId,
+        options.userId ?? getStoredJamieAccessUserId() ?? undefined,
+      );
+      setRecipeAccessMap((prev) => {
+        const next = { ...prev, [key]: access };
+        recipeAccessMapRef.current = next;
+        return next;
+      });
+      setRecipeAccessErrorIds((prev) => {
+        if (!prev[key]) {
+          return prev;
+        }
+        const next = { ...prev };
+        delete next[key];
+        recipeAccessErrorIdsRef.current = next;
         return next;
       });
       return access;
     } catch (error) {
       console.error('Failed to load recipe access:', error);
-      setRecipeAccessErrorIds(prev => ({ ...prev, [key]: true }));
-      toast.error('Could not load recipe access', {
-        description: 'Please try again in a moment.',
+      setRecipeAccessErrorIds((prev) => {
+        const next = { ...prev, [key]: true };
+        recipeAccessErrorIdsRef.current = next;
+        return next;
       });
+      if (!recipeAccessErrorToastShownRef.current.has(key)) {
+        recipeAccessErrorToastShownRef.current.add(key);
+        toast.error('Could not load recipe access', {
+          description: 'Please try again in a moment.',
+        });
+      }
       return null;
     } finally {
-      setRecipeAccessLoadingId(current => (current === key ? null : current));
+      recipeAccessInFlightRef.current.delete(key);
+      setRecipeAccessLoadingId((current) => (current === key ? null : current));
     }
-  }, [getRecipeAccessKey, recipeAccessMap]);
+  }, []);
+
+  const loadRecipeAccess = useCallback(async (
+    recipe: Recipe,
+    options: { force?: boolean; userId?: string } = {},
+  ): Promise<RecipeAccessResponse | null> => {
+    if (!recipe.backendId) {
+      return null;
+    }
+    return fetchRecipeAccessForKey(getRecipeAccessKey(recipe), recipe.backendId, options);
+  }, [fetchRecipeAccessForKey, getRecipeAccessKey]);
 
   const startCookingOverlayRef = useRef<(recipe: Recipe) => void>(() => {});
 
@@ -322,45 +371,23 @@ export default function App() {
     if (recipe) {
       return loadRecipeAccess(recipe, options);
     }
-
-    const key = backendId;
-    if (!options.force && recipeAccessMap[key]) {
-      return recipeAccessMap[key];
-    }
-
-    setRecipeAccessLoadingId(key);
-    try {
-      const access = await getRecipeAccess(
-        backendId,
-        options.userId ?? getStoredJamieAccessUserId() ?? undefined,
-      );
-      setRecipeAccessMap(prev => ({ ...prev, [key]: access }));
-      setRecipeAccessErrorIds(prev => {
-        if (!prev[key]) {
-          return prev;
-        }
-        const next = { ...prev };
-        delete next[key];
-        return next;
-      });
-      return access;
-    } catch (error) {
-      console.error('Failed to load recipe access:', error);
-      setRecipeAccessErrorIds(prev => ({ ...prev, [key]: true }));
-      return null;
-    } finally {
-      setRecipeAccessLoadingId(current => (current === key ? null : current));
-    }
-  }, [loadedRecipesByBackendId, loadRecipeAccess, recipeAccessMap]);
+    return fetchRecipeAccessForKey(backendId, backendId, options);
+  }, [fetchRecipeAccessForKey, loadRecipeAccess, loadedRecipesByBackendId]);
 
   const prefetchChatRecipeAccess = useCallback((backendIds: string[]) => {
     for (const backendId of backendIds) {
-      if (recipeAccessMap[backendId] || recipeAccessLoadingId === backendId) {
+      if (recipeAccessMapRef.current[backendId]) {
+        continue;
+      }
+      if (recipeAccessErrorIdsRef.current[backendId]) {
+        continue;
+      }
+      if (recipeAccessInFlightRef.current.has(backendId)) {
         continue;
       }
       void loadRecipeAccessByBackendId(backendId);
     }
-  }, [loadRecipeAccessByBackendId, recipeAccessLoadingId, recipeAccessMap]);
+  }, [loadRecipeAccessByBackendId]);
 
   const ownedRecipeCollection = useMemo(() => {
     return myRecipes
@@ -773,11 +800,14 @@ export default function App() {
     ],
   );
 
+  const selectedRecipeBackendId = selectedRecipe?.backendId ?? null;
+
   useEffect(() => {
-    if (selectedRecipe) {
-      void loadRecipeAccess(selectedRecipe);
+    if (!selectedRecipeBackendId) {
+      return;
     }
-  }, [selectedRecipe, loadRecipeAccess]);
+    void loadRecipeAccessByBackendId(selectedRecipeBackendId);
+  }, [selectedRecipeBackendId, loadRecipeAccessByBackendId]);
 
   const selectedRecipeAccess = selectedRecipe
     ? recipeAccessMap[getRecipeAccessKey(selectedRecipe)] ?? null
