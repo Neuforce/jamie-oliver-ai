@@ -106,8 +106,11 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
 
   const CommerceBadge = commerceBadge && variant === 'chat' ? (
     <span
-      className="absolute top-3 right-3 inline-flex items-center gap-1 text-white text-[10px] font-semibold uppercase tracking-[0.08em]"
+      className="inline-flex items-center gap-1 text-white text-[10px] font-semibold uppercase tracking-[0.08em]"
       style={{
+        position: 'absolute',
+        top: 12,
+        right: 12,
         height: '24px',
         padding: '4px 10px',
         borderRadius: '33554400px',
