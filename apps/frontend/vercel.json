@@ -6,14 +6,15 @@
   "framework": "vite",
   "rewrites": [
     {
-      "source": "/recipe/:slug*",
-      "destination": "/api/og"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
+  "functions": {
+    "api/og.ts": {
+      "includeFiles": "dist/index.html"
+    }
+  },
   "headers": [
     {
       "source": "/assets/(.*)",
