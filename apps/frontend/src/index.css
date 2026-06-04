@@ -4272,8 +4272,9 @@ body {
   box-shadow: 0 4px 16px rgba(35, 66, 82, 0.09);
 }
 
+/* Launcher variant: slightly more padding to breathe around the centered button */
 .jamie-voice-dock-shell .jamie-shell-width:has(.jamie-recipe-modal-voice-launcher) {
-  padding: 4px 12px 4px 10px;
+  padding: 5px 12px;
 }
 
 /* Portaled discovery voice dock sits above RecipeModal (z-50) — NEU-619 */
@@ -4307,6 +4308,38 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+}
+
+.jamie-recipe-modal-voice-launcher {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  pointer-events: auto;
+}
+
+.jamie-recipe-modal-voice-launcher__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  min-height: 44px;
+  border-radius: 999px;
+  background: var(--jamie-ink-teal, #3D6E6C);
+  color: #fff;
+  font-family: var(--font-display, Poppins, sans-serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(61, 110, 108, 0.28);
+  transition: opacity 0.2s;
+}
+
+.jamie-recipe-modal-voice-launcher__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .jamie-voice-ghost-button {
@@ -5010,7 +5043,7 @@ body {
   }
 
   .jamie-voice-dock-over-modal .jamie-voice-dock-shell .jamie-shell-width:has(.jamie-recipe-modal-voice-launcher) {
-    padding: 3px 10px 3px 8px;
+    padding: 5px 10px;
   }
 
   .jamie-voice-dock-over-modal .jamie-voice-avatar-wrap {
@@ -5026,17 +5059,6 @@ body {
   .jamie-voice-dock-over-modal .jamie-voice-stop-button[data-variant='icon'] {
     width: 36px;
     height: 36px;
-  }
-
-  .jamie-recipe-modal-voice-launcher p:first-of-type {
-    font-size: 14px;
-    line-height: 1.2;
-  }
-
-  .jamie-recipe-modal-voice-launcher p + p {
-    margin-top: 0;
-    font-size: 10px;
-    line-height: 1.25;
   }
 
   .jamie-voice-avatar-wrap { width: 64px; height: 64px; }
@@ -5113,6 +5135,10 @@ body {
   width: 40px;
   display: flex;
   align-items: center;
+}
+.jamie-cook-header__side--multi {
+  width: auto;
+  gap: 8px;
 }
 .jamie-cook-header__side--end { justify-content: flex-end; }
 

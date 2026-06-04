@@ -5,7 +5,7 @@ import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
 import { MealPlanCard } from './MealPlanCard';
 import { ShoppingListCard } from './ShoppingListCard';
-import { ArrowUp, ArrowDown, MessageCircle, Square, MicOff } from 'lucide-react';
+import { ArrowUp, ArrowDown, MessageCircle, Square, MicOff, Mic, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { OnboardingEmptyState } from './OnboardingEmptyState';
 import { ProcessCard, selectFeatured } from './ProcessCard';
@@ -27,7 +27,6 @@ import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332
 import {
   chatWithAgent,
   generateSessionId,
-  clearChatSession,
   getRecipeById,
   searchRecipes,
   type MealPlanData,
@@ -41,6 +40,7 @@ import {
   backendSummaryFromRecipeDetail,
   userAffirmsGoToFullRecipe,
 } from '../lib/discoveryFullRecipeGate';
+import { CHAT_STORAGE_KEY, SESSION_ID_KEY } from '../lib/chatStorage';
 
 interface Message {
   id: string;
@@ -72,31 +72,11 @@ interface ChatViewProps {
   onDiscoveryVoiceSessionChange?: (active: boolean) => void;
 }
 
-const CHAT_STORAGE_KEY = 'jamie-oliver-chat-messages';
-const SESSION_ID_KEY = 'jamie-oliver-chat-session';
 const IGNORED_VOICE_TRANSCRIPTS = new Set(['[Connection restored]']);
 const JAMIE_MESSAGE_COLLAPSE_CHAR_THRESHOLD = 520;
 
 /** Max width for chat content; matches TabNav for consistent layout (NEU-470). */
 const CHAT_CONTENT_MAX_WIDTH = 600;
-
-// Export function to clear chat history (used when recipe is completed)
-export const clearChatHistory = async () => {
-  try {
-    localStorage.removeItem(CHAT_STORAGE_KEY);
-    const sessionId = localStorage.getItem(SESSION_ID_KEY);
-    if (sessionId) {
-      try {
-        await clearChatSession(sessionId);
-      } catch (e) {
-        console.warn('Failed to clear backend session:', e);
-      }
-      localStorage.removeItem(SESSION_ID_KEY);
-    }
-  } catch (error) {
-    console.error('Error clearing chat history:', error);
-  }
-};
 
 
 // Helper function to get or create session ID
@@ -449,55 +429,57 @@ export function ChatView({
       }
     },
     onRecipes: (data) => {
-      console.log('🎤 Recipes received:', { count: data?.recipes?.length, messageId: voiceMessageIdRef.current });
-
-      // Transform backend recipe summaries to Recipe format for display
+      const messageId = voiceMessageIdRef.current;
       const recipeData = data?.recipes || [];
       const recipes: Recipe[] = recipeData.map((r: BackendRecipeSummary, index: number) =>
         transformRecipeFromSummary(r, index)
       );
-
-      console.log('🎤 Transformed recipes for voice:', recipes.length);
-
-      if (voiceMessageIdRef.current && recipes.length > 0) {
-        setMessages(prev => prev.map(msg =>
-          msg.id === voiceMessageIdRef.current
-            ? { ...msg, recipes }
-            : msg
-        ));
+      if (recipes.length > 0) {
+        setMessages(prev => {
+          // Use the tracked ID first; fall back to the last Jamie message so
+          // timing issues (premature onDone clearing the ref) can't lose data.
+          const targetId = (messageId && prev.some(m => m.id === messageId))
+            ? messageId
+            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
+          if (!targetId) return prev;
+          return prev.map(msg => msg.id === targetId ? { ...msg, recipes } : msg);
+        });
       }
     },
     onMealPlan: (data) => {
-      console.log('🎤 Meal plan received:', { hasData: !!data?.meal_plan, messageId: voiceMessageIdRef.current });
-
-      if (voiceMessageIdRef.current && data?.meal_plan) {
-        setMessages(prev => prev.map(msg =>
-          msg.id === voiceMessageIdRef.current
-            ? { ...msg, mealPlan: data.meal_plan }
-            : msg
-        ));
+      const messageId = voiceMessageIdRef.current;
+      if (data?.meal_plan) {
+        setMessages(prev => {
+          const targetId = (messageId && prev.some(m => m.id === messageId))
+            ? messageId
+            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
+          if (!targetId) return prev;
+          return prev.map(msg => msg.id === targetId ? { ...msg, mealPlan: data.meal_plan } : msg);
+        });
       }
     },
     onRecipeDetail: (data) => {
-      console.log('🎤 Recipe detail received:', { hasData: !!data?.recipe, messageId: voiceMessageIdRef.current });
-
-      if (voiceMessageIdRef.current && data?.recipe) {
-        setMessages(prev => prev.map(msg =>
-          msg.id === voiceMessageIdRef.current
-            ? { ...msg, recipeDetail: data.recipe }
-            : msg
-        ));
+      const messageId = voiceMessageIdRef.current;
+      if (data?.recipe) {
+        setMessages(prev => {
+          const targetId = (messageId && prev.some(m => m.id === messageId))
+            ? messageId
+            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
+          if (!targetId) return prev;
+          return prev.map(msg => msg.id === targetId ? { ...msg, recipeDetail: data.recipe } : msg);
+        });
       }
     },
     onShoppingList: (data) => {
-      console.log('🎤 Shopping list received:', { hasData: !!data?.shopping_list, messageId: voiceMessageIdRef.current });
-
-      if (voiceMessageIdRef.current && data?.shopping_list) {
-        setMessages(prev => prev.map(msg =>
-          msg.id === voiceMessageIdRef.current
-            ? { ...msg, shoppingList: data.shopping_list }
-            : msg
-        ));
+      const messageId = voiceMessageIdRef.current;
+      if (data?.shopping_list) {
+        setMessages(prev => {
+          const targetId = (messageId && prev.some(m => m.id === messageId))
+            ? messageId
+            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
+          if (!targetId) return prev;
+          return prev.map(msg => msg.id === targetId ? { ...msg, shoppingList: data.shopping_list } : msg);
+        });
       }
     },
     onRecipePaywallRequested: (bid) => {
@@ -1336,10 +1318,32 @@ export function ChatView({
                     <span>Jamie</span>
                   </div>
 
+                  {/*
+                   * In voice-expanded mode with a recipe payload, the carousel
+                   * is the hero element — render it before the prose text so
+                   * the user sees it without scrolling. The verbose text list
+                   * (which echoes what Jamie just said aloud) follows below,
+                   * without a "Read more" truncation gate.
+                   */}
+                  {voiceMode && voiceExpanded && hasRecipes && (
+                    <div className="mt-3 mb-3">
+                      <RecipeCarousel
+                        recipes={message.recipes!}
+                        onRecipeClick={async (recipe) => {
+                          const completeRecipe = await ensureRecipeHasPayload(recipe);
+                          onRecipeClick(completeRecipe);
+                        }}
+                        singleSlide
+                        voiceMode={voiceMode}
+                        voiceRole={voiceRole}
+                      />
+                    </div>
+                  )}
+
                   {message.content && (
                     <div
                       className={`jamie-thread-markdown prose prose-sm max-w-none ${
-                        hasLongText && !isExpanded
+                        hasLongText && !isExpanded && !(voiceMode && voiceExpanded)
                           ? 'jamie-thread-markdown--collapsed'
                           : ''
                       }`}
@@ -1378,7 +1382,8 @@ export function ChatView({
                     </div>
                   )}
 
-                  {hasLongText && !message.isStreaming && (
+                  {/* "Read more" is hidden in voice expanded mode (carousel shown above already). */}
+                  {hasLongText && !message.isStreaming && !(voiceMode && voiceExpanded) && (
                     <button
                       type="button"
                       className="jamie-thread-card__expand"
@@ -1388,7 +1393,8 @@ export function ChatView({
                     </button>
                   )}
 
-                  {hasRecipes && (
+                  {/* Non-voice OR voice without expanded state: carousel in its normal position. */}
+                  {hasRecipes && !(voiceMode && voiceExpanded) && (
                     <div className={voiceMode ? 'mt-3' : 'jamie-thread-card__payload'}>
                       <RecipeCarousel
                         recipes={message.recipes!}
@@ -1477,9 +1483,11 @@ export function ChatView({
           onStart={handlePromptButtonClick}
           onVoiceStart={toggleVoiceMode}
           voiceState={
-            voiceState === 'connecting' || voiceState === 'listening'
-              ? voiceState
-              : 'idle'
+            voiceState === 'connecting'
+              ? 'connecting'
+              : voiceState !== 'idle'
+                ? 'listening'
+                : 'idle'
           }
         />
       ) : isVoiceActive ? (
@@ -1496,12 +1504,14 @@ export function ChatView({
           <div className="jamie-shell-width jamie-voice-stage__inner">
             <VoiceModeRoller
               messages={rollerMessages}
-              renderMessage={(msg, context) =>
-                renderMessageContent(msg as Message, {
+              renderMessage={(msg, context) => {
+                const fullMessage = messages.find(m => m.id === msg.id);
+                if (!fullMessage) return null;
+                return renderMessageContent(fullMessage, {
                   voiceMode: true,
                   voiceContext: context,
-                })
-              }
+                });
+              }}
             />
           </div>
         </div>
@@ -1712,38 +1722,43 @@ export function ChatView({
                     className="jamie-voice-dock-shell"
                   >
                     <div className="jamie-shell-width">
-                      <div className="jamie-voice-footer-row jamie-recipe-modal-voice-launcher">
-                        <span className="jamie-voice-ghost-button" aria-hidden="true" />
-                        <div className="min-w-0 flex-1 px-1">
-                          <p
-                            className="truncate text-[15px] font-semibold leading-snug tracking-tight"
-                            style={{
-                              fontFamily: 'var(--font-display)',
-                              color: 'var(--jamie-text-body, #324652)',
-                            }}
-                          >
-                            Talk to Jamie
-                          </p>
-                          <p
-                            className="mt-0.5 text-xs leading-snug"
-                            style={{
-                              fontFamily: 'var(--font-display)',
-                              color: 'var(--text-tertiary)',
-                            }}
-                          >
-                            Uses this chat session. Mic permission required.
-                          </p>
-                        </div>
-                        <VoiceModeButton
-                          isActive={isPausedByVisibility}
-                          isConnecting={voiceState === 'connecting'}
+                      <div className="jamie-recipe-modal-voice-launcher">
+                        <motion.button
+                          type="button"
+                          className="jamie-recipe-modal-voice-launcher__btn"
                           onClick={
                             isPausedByVisibility ? resumeFromVisibility : () => void toggleVoiceMode()
                           }
                           disabled={
-                            isTyping && !isVoiceActive && !isPausedByVisibility
+                            (isTyping && !isVoiceActive && !isPausedByVisibility) ||
+                            voiceState === 'connecting'
                           }
-                        />
+                          whileTap={{ scale: 0.96 }}
+                          aria-label={isPausedByVisibility ? 'Resume voice conversation' : 'Talk to Jamie'}
+                        >
+                          {voiceState === 'connecting' ? (
+                            <motion.span
+                              animate={{ rotate: 360 }}
+                              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                              style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                              <Loader2 size={17} strokeWidth={2.2} />
+                            </motion.span>
+                          ) : (
+                            <motion.span
+                              animate={{ scale: [1, 1.12, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                              style={{ display: 'flex', alignItems: 'center' }}
+                            >
+                              <Mic size={17} strokeWidth={2.2} />
+                            </motion.span>
+                          )}
+                          {voiceState === 'connecting'
+                            ? 'Connecting…'
+                            : isPausedByVisibility
+                              ? 'Tap to resume'
+                              : 'Talk to Jamie'}
+                        </motion.button>
                       </div>
                     </div>
                   </motion.div>
