@@ -16,6 +16,8 @@ interface RecipeModalProps {
   onCookWithJamie: () => void;
   recipeAccess?: RecipeAccessResponse | null;
   isAccessLoading?: boolean;
+  accessLoadFailed?: boolean;
+  onRetryAccessLoad?: () => void;
   onPurchaseResolved?: (resolution: RecipePurchaseResolution) => void;
   /** Extra bottom padding while the modal has portaled voice strip (launcher or active dock). */
   reserveBottomForVoiceDock?: boolean;
@@ -67,6 +69,8 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
   onCookWithJamie,
   recipeAccess,
   isAccessLoading = false,
+  accessLoadFailed = false,
+  onRetryAccessLoad,
   onPurchaseResolved,
   reserveBottomForVoiceDock = false,
   },
@@ -152,7 +156,8 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
     : null;
 
   const isLocked = recipeAccess?.accessState === 'locked';
-  const canResumeSavedSession = !!savedSession && !isLocked;
+  const canCook = recipeAccess?.accessState === 'free' || recipeAccess?.accessState === 'owned';
+  const canResumeSavedSession = !!savedSession && canCook;
 
   const resumeStepsCount = recipe.instructions.length;
   const resumeCurrentStep = savedSession
@@ -190,6 +195,42 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
         >
           <Lock size={14} aria-hidden="true" />
           Unlock
+        </button>
+      );
+    }
+    if (!canCook) {
+      if (!recipe.backendId) {
+        return (
+          <button
+            type="button"
+            className="jamie-recipe-modal__header-pill"
+            disabled
+            aria-label="Recipe unavailable"
+          >
+            Unavailable
+          </button>
+        );
+      }
+      if (accessLoadFailed && onRetryAccessLoad) {
+        return (
+          <button
+            type="button"
+            className="jamie-recipe-modal__header-pill"
+            onClick={onRetryAccessLoad}
+            aria-label="Retry access check"
+          >
+            Retry
+          </button>
+        );
+      }
+      return (
+        <button
+          type="button"
+          className="jamie-recipe-modal__header-pill"
+          disabled
+          aria-label="Access unavailable"
+        >
+          Unavailable
         </button>
       );
     }

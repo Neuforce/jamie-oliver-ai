@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
 import type { RecipeAccessResponse } from '../lib/api';
 import {
+  canEmbedRecipePurchaseButton,
   hasSupertabConfig,
   mountRecipePurchaseButton,
+  purchaseRecipe,
   type MountedRecipePurchaseButton,
   type RecipePurchaseResolution,
 } from '../lib/supertab';
@@ -26,6 +28,30 @@ export const SupertabPurchaseButton = forwardRef<
   const onResolvedRef = useRef<typeof onResolved>(onResolved);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isMounting, setIsMounting] = useState(true);
+  const [embedUnavailable, setEmbedUnavailable] = useState(false);
+  const [isLaunchingPaywall, setIsLaunchingPaywall] = useState(false);
+
+  const handlePaywallFallback = async () => {
+    setIsLaunchingPaywall(true);
+    setStatusMessage(null);
+    try {
+      const outcome = await purchaseRecipe(access);
+      if (outcome.resolution) {
+        onResolvedRef.current?.(outcome.resolution);
+        return;
+      }
+      if (outcome.via === 'unavailable') {
+        setStatusMessage('Supertab checkout is not configured for this recipe.');
+      } else if (outcome.via === 'abandoned') {
+        setStatusMessage('Checkout closed before the recipe was unlocked.');
+      }
+    } catch (error) {
+      console.error('Supertab paywall fallback failed:', error);
+      setStatusMessage('We could not open My Tab checkout right now.');
+    } finally {
+      setIsLaunchingPaywall(false);
+    }
+  };
 
   useEffect(() => {
     onResolvedRef.current = onResolved;
@@ -57,10 +83,21 @@ export const SupertabPurchaseButton = forwardRef<
 
     if (!hasSupertabConfig()) {
       setStatusMessage('Add your Supertab client ID to load the official purchase button.');
+      setEmbedUnavailable(true);
       setIsMounting(false);
       mountedRef.current = null;
       return;
     }
+
+    if (!canEmbedRecipePurchaseButton(access)) {
+      setStatusMessage('Use My Tab checkout below to unlock this recipe.');
+      setEmbedUnavailable(true);
+      setIsMounting(false);
+      mountedRef.current = null;
+      return;
+    }
+
+    setEmbedUnavailable(false);
 
     setStatusMessage(null);
     setIsMounting(true);
@@ -93,6 +130,7 @@ export const SupertabPurchaseButton = forwardRef<
       onError: (message) => {
         if (!isCancelled) {
           setStatusMessage(message);
+          setEmbedUnavailable(true);
         }
       },
     }).then((result) => {
@@ -113,6 +151,7 @@ export const SupertabPurchaseButton = forwardRef<
       console.error('Failed to mount Supertab purchase button:', error);
       if (!isCancelled) {
         setStatusMessage('We could not load the Supertab purchase button right now.');
+        setEmbedUnavailable(true);
         setIsMounting(false);
         mountedRef.current = null;
       }
@@ -144,14 +183,26 @@ export const SupertabPurchaseButton = forwardRef<
         </div>
 
         <div className="mt-4 rounded-[22px] bg-white p-3">
-          <div
-            ref={containerRef}
-            data-jamie-supertab-purchase-host=""
-          />
-          {isMounting && (
+          {!embedUnavailable && (
+            <div
+              ref={containerRef}
+              data-jamie-supertab-purchase-host=""
+            />
+          )}
+          {isMounting && !embedUnavailable && (
             <p className="text-sm text-[#6B5F81]">
               Loading Supertab purchase options...
             </p>
+          )}
+          {embedUnavailable && (
+            <button
+              type="button"
+              className="w-full rounded-full bg-[#7C5AC3] px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
+              disabled={isLaunchingPaywall}
+              onClick={() => void handlePaywallFallback()}
+            >
+              {isLaunchingPaywall ? 'Opening My Tab…' : 'Open My Tab checkout'}
+            </button>
           )}
         </div>
       </div>

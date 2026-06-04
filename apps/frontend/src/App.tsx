@@ -33,9 +33,9 @@ import {
   loadMyTabSnapshot,
   getStoredJamieAccessUserId,
   openMyTab,
-  launchRecipePaywall,
-  canEmbedRecipePurchaseButton,
-  clickVisibleJamieSupertabPurchaseButton,
+  purchaseRecipe,
+  pollRecipeAccessUntilUnlocked,
+  canStartCookingWithAccess,
   type MyTabAccountSummary,
   type MyTabMessageTone,
   type RecipePurchaseResolution,
@@ -70,6 +70,7 @@ export default function App() {
   const [permalinkNotFound, setPermalinkNotFound] = useState<{ slug: string } | null>(null);
   const [permalinkResolving, setPermalinkResolving] = useState(false);
   const [recipeAccessMap, setRecipeAccessMap] = useState<Record<string, RecipeAccessResponse>>({});
+  const [recipeAccessErrorIds, setRecipeAccessErrorIds] = useState<Record<string, true>>({});
   const [recipeAccessLoadingId, setRecipeAccessLoadingId] = useState<string | null>(null);
 
   // Data state
@@ -92,6 +93,7 @@ export default function App() {
   const normalizedSearchQuery = typeof searchQuery === 'string' ? searchQuery : '';
   const [recipeModalVoiceDockOverlap, setRecipeModalVoiceDockOverlap] = useState(false);
   const recipeModalRef = useRef<RecipeModalHandle>(null);
+  const pendingEmbeddedPurchaseRef = useRef<((resolution: RecipePurchaseResolution) => void) | null>(null);
   const voiceRecipeUnlockInFlightRef = useRef(false);
   /** Keeps ChatView (and `/ws/chat-voice`) alive when switching tabs with voice or an open recipe sheet. */
   const [discoveryVoiceSessionActive, setDiscoveryVoiceSessionActive] = useState(false);
@@ -281,9 +283,18 @@ export default function App() {
         options.userId ?? getStoredJamieAccessUserId() ?? undefined
       );
       setRecipeAccessMap(prev => ({ ...prev, [key]: access }));
+      setRecipeAccessErrorIds(prev => {
+        if (!prev[key]) {
+          return prev;
+        }
+        const next = { ...prev };
+        delete next[key];
+        return next;
+      });
       return access;
     } catch (error) {
       console.error('Failed to load recipe access:', error);
+      setRecipeAccessErrorIds(prev => ({ ...prev, [key]: true }));
       toast.error('Could not load recipe access', {
         description: 'Please try again in a moment.',
       });
@@ -533,9 +544,24 @@ export default function App() {
     navigateToTab('my-recipes');
   }, [navigateToTab]);
 
-  const handleRecipePurchaseResolved = useCallback(async (
+  const waitForEmbeddedPurchaseResolution = useCallback((timeoutMs = 120_000) => {
+    return new Promise<RecipePurchaseResolution | null>((resolve) => {
+      const timer = window.setTimeout(() => {
+        pendingEmbeddedPurchaseRef.current = null;
+        resolve(null);
+      }, timeoutMs);
+
+      pendingEmbeddedPurchaseRef.current = (resolution) => {
+        window.clearTimeout(timer);
+        pendingEmbeddedPurchaseRef.current = null;
+        resolve(resolution);
+      };
+    });
+  }, []);
+
+  const applyRecipePurchaseOutcome = useCallback(async (
     recipe: Recipe,
-    resolution: RecipePurchaseResolution
+    resolution: RecipePurchaseResolution,
   ) => {
     setMyTabStatus(resolution.snapshot.status);
     setMyTabAccount(resolution.snapshot.account ?? null);
@@ -545,22 +571,35 @@ export default function App() {
     await hydrateJamieUser(resolution.snapshot.userId);
     await loadOwnedRecipes(resolution.snapshot.userId);
 
-    if (resolution.refreshedAccess) {
+    const purchaseCompleted = resolution.state.purchase?.status === 'completed';
+    const alreadyOwned = resolution.priorEntitlements.length > 0;
+    let refreshedAccess = resolution.refreshedAccess ?? null;
+
+    if (refreshedAccess) {
       setRecipeAccessMap(prev => ({
         ...prev,
-        [getRecipeAccessKey(recipe)]: resolution.refreshedAccess!,
+        [getRecipeAccessKey(recipe)]: refreshedAccess!,
       }));
     }
 
-    const purchaseCompleted = resolution.state.purchase?.status === 'completed';
-    const alreadyOwned = resolution.priorEntitlements.length > 0;
-    const refreshedAccess = resolution.refreshedAccess;
+    if (purchaseCompleted || alreadyOwned) {
+      if (!canStartCookingWithAccess(refreshedAccess) && recipe.backendId) {
+        const userId =
+          resolution.snapshot.userId
+          ?? getStoredJamieAccessUserId()
+          ?? undefined;
+        if (userId) {
+          const polledAccess = await pollRecipeAccessUntilUnlocked(recipe.backendId, userId);
+          if (polledAccess) {
+            refreshedAccess = polledAccess;
+            setRecipeAccessMap(prev => ({
+              ...prev,
+              [getRecipeAccessKey(recipe)]: polledAccess,
+            }));
+          }
+        }
+      }
 
-    if (
-      refreshedAccess
-      && (refreshedAccess.accessState === 'owned' || refreshedAccess.accessState === 'free')
-      && (purchaseCompleted || alreadyOwned)
-    ) {
       toast.success('Recipe unlocked', {
         description: 'Jamie is ready to start cooking with you.',
       });
@@ -568,7 +607,25 @@ export default function App() {
     }
 
     await loadRecipeAccess(recipe, { force: true });
-  }, [getRecipeAccessKey, hydrateJamieUser, loadOwnedRecipes, loadRecipeAccess, startCookingOverlay]);
+  }, [
+    getRecipeAccessKey,
+    hydrateJamieUser,
+    loadOwnedRecipes,
+    loadRecipeAccess,
+    startCookingOverlay,
+  ]);
+
+  const handleRecipePurchaseResolved = useCallback(async (
+    recipe: Recipe,
+    resolution: RecipePurchaseResolution
+  ) => {
+    if (pendingEmbeddedPurchaseRef.current) {
+      pendingEmbeddedPurchaseRef.current(resolution);
+      return;
+    }
+
+    await applyRecipePurchaseOutcome(recipe, resolution);
+  }, [applyRecipePurchaseOutcome]);
 
   const handleVoiceRecipePaywallRequested = useCallback(
     async (backendId: string) => {
@@ -613,70 +670,40 @@ export default function App() {
 
       voiceRecipeUnlockInFlightRef.current = true;
       try {
-        // Same SDK instance as the in-modal “Put it on my Tab” — no duplicate mount.
-        if (canEmbedRecipePurchaseButton(access)) {
-          // Commit locked access before opening: otherwise RecipeModal still has stale props,
-          // the Supertab pane never mounts, and openMyTabPurchaseFlow is a silent no-op.
-          const accessKey = getRecipeAccessKey(recipe);
-          flushSync(() => {
-            setRecipeAccessMap(prev => ({ ...prev, [accessKey]: access }));
-          });
-          await new Promise<void>(resolve => {
-            requestAnimationFrame(() => resolve());
-          });
-          // 1) Literally click whatever Supertab rendered in the panel (same as a finger on “Put it on my Tab”).
-          let clicked = clickVisibleJamieSupertabPurchaseButton();
-          if (!clicked) {
-            await new Promise<void>(r => setTimeout(r, 250));
-            clicked = clickVisibleJamieSupertabPurchaseButton();
-          }
-          if (!clicked) {
+        const accessKey = getRecipeAccessKey(recipe);
+        flushSync(() => {
+          setRecipeAccessMap(prev => ({ ...prev, [accessKey]: access }));
+        });
+        await new Promise<void>((resolve) => {
+          requestAnimationFrame(() => resolve());
+        });
+
+        const waitPromise = waitForEmbeddedPurchaseResolution(15_000);
+        const outcome = await purchaseRecipe(access, {
+          openEmbeddedCheckout: async () => {
+            document
+              .querySelector('[data-supertab-pane]')
+              ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             await recipeModalRef.current?.openMyTabPurchaseFlow();
-          }
-          return;
-        }
+          },
+          waitForEmbeddedResolution: () => waitPromise,
+        });
 
-        const paywallResult = await launchRecipePaywall(access);
-
-        if (paywallResult.status === 'unavailable') {
+        if (outcome.via === 'unavailable') {
           toast.error('Could not open My Tab', {
             description: 'Set the purchase-button or paywall experience ID for Supertab.',
           });
           return;
         }
 
-        const snapshot = await loadMyTabSnapshot();
-        setMyTabStatus(snapshot.status);
-        setMyTabAccount(snapshot.account ?? null);
-        setMyTabSite(snapshot.site ?? null);
-        setMyTabMessage(snapshot.message ?? null);
-        setMyTabMessageTone(snapshot.messageTone);
-        await hydrateJamieUser(snapshot.userId);
-        await loadOwnedRecipes(snapshot.userId);
-
-        const refreshedAccess = paywallResult.refreshedAccess;
-        if (refreshedAccess) {
-          setRecipeAccessMap(prev => ({
-            ...prev,
-            [getRecipeAccessKey(recipe)]: refreshedAccess,
-          }));
+        if (outcome.resolution) {
+          await applyRecipePurchaseOutcome(recipe, outcome.resolution);
+          return;
         }
 
-        const purchaseCompleted = paywallResult.status === 'completed';
-        const alreadyOwned = paywallResult.status === 'prior-entitlement';
-
-        if (
-          refreshedAccess
-          && (refreshedAccess.accessState === 'owned' || refreshedAccess.accessState === 'free')
-          && (purchaseCompleted || alreadyOwned)
-        ) {
-          toast.success('Recipe unlocked', {
-            description: 'Jamie is ready to start cooking with you.',
-          });
-          startCookingOverlay(recipe);
+        if (outcome.via === 'abandoned') {
+          return;
         }
-
-        await loadRecipeAccess(recipe, { force: true });
       } catch (error) {
         console.error('Voice-triggered paywall failed:', error);
         toast.error('Could not open My Tab', {
@@ -687,18 +714,14 @@ export default function App() {
       }
     },
     [
-      canEmbedRecipePurchaseButton,
-      clickVisibleJamieSupertabPurchaseButton,
-      hydrateJamieUser,
-      launchRecipePaywall,
-      loadOwnedRecipes,
+      applyRecipePurchaseOutcome,
+      getRecipeAccessKey,
       loadRecipeAccess,
       loadedRecipesByBackendId,
+      navigateToRecipe,
       recipeAccessMap,
       selectedRecipe,
-      getRecipeAccessKey,
-      navigateToRecipe,
-      startCookingOverlay,
+      waitForEmbeddedPurchaseResolution,
     ],
   );
 
@@ -713,6 +736,9 @@ export default function App() {
     : null;
   const isSelectedRecipeAccessLoading = selectedRecipe
     ? recipeAccessLoadingId === getRecipeAccessKey(selectedRecipe)
+    : false;
+  const isSelectedRecipeAccessFailed = selectedRecipe
+    ? Boolean(recipeAccessErrorIds[getRecipeAccessKey(selectedRecipe)])
     : false;
   const unlockedRecipesLabel = `${myRecipes.length} ${myRecipes.length === 1 ? 'recipe' : 'recipes'} unlocked`;
   const myTabHeadline = myTabStatus === 'signed_in'
@@ -1424,6 +1450,12 @@ export default function App() {
           onCookWithJamie={handleCookWithJamie}
           recipeAccess={selectedRecipeAccess}
           isAccessLoading={isSelectedRecipeAccessLoading}
+          accessLoadFailed={isSelectedRecipeAccessFailed}
+          onRetryAccessLoad={() => {
+            if (selectedRecipe) {
+              void loadRecipeAccess(selectedRecipe, { force: true });
+            }
+          }}
           onPurchaseResolved={(resolution) => handleRecipePurchaseResolved(selectedRecipe, resolution)}
           reserveBottomForVoiceDock={recipeModalVoiceDockOverlap}
         />
