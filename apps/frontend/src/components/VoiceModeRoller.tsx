@@ -335,8 +335,12 @@ export function VoiceModeRoller({
       return;
     }
     const availableBeforeCompression = Math.max(320, window.innerHeight - 420);
-    setIsTallTopCard(el.scrollHeight > availableBeforeCompression);
-  }, []);
+    const isExpanded =
+      Boolean(expandedMessageId) && expandedMessageId === topVisibleId;
+    setIsTallTopCard(
+      isExpanded && el.scrollHeight > availableBeforeCompression,
+    );
+  }, [expandedMessageId, topVisibleId]);
 
   useLayoutEffect(() => {
     recomputeTopCardLayout();
@@ -362,23 +366,29 @@ export function VoiceModeRoller({
     };
   }, [topVisibleId, recomputeTopCardLayout]);
 
-  // Explicit expand: rich cards open expanded when they arrive at the top slot.
+  // Explicit expand: rich cards open expanded when they reach the top (including
+  // when a payload arrives mid-stream on the same message id).
+  const topExpandSignature = topVisibleId
+    ? `${topVisibleId}:${hasExpandableTopCard ? 'rich' : 'plain'}`
+    : null;
+
   useEffect(() => {
-    if (!topVisibleId) {
+    if (!topExpandSignature) {
       setExpandedMessageId(null);
       prevTopVisibleIdRef.current = null;
       return;
     }
-
-    if (prevTopVisibleIdRef.current !== topVisibleId) {
-      prevTopVisibleIdRef.current = topVisibleId;
-      if (hasExpandableTopCard) {
-        setExpandedMessageId(topVisibleId);
-      } else {
-        setExpandedMessageId(null);
-      }
+    if (prevTopVisibleIdRef.current === topExpandSignature) {
+      return;
     }
-  }, [hasExpandableTopCard, topVisibleId]);
+    prevTopVisibleIdRef.current = topExpandSignature;
+    const [messageId, kind] = topExpandSignature.split(':');
+    if (kind === 'rich') {
+      setExpandedMessageId(messageId);
+    } else {
+      setExpandedMessageId(null);
+    }
+  }, [topExpandSignature]);
 
   useEffect(() => {
     const tailId = messages[messages.length - 1]?.id ?? null;

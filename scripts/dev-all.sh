@@ -116,13 +116,14 @@ fi
 echo "🐳 Starting backend-voice (Docker)..."
 cd "$PROJECT_ROOT/infrastructure"
 
-if ! $DOCKER_COMPOSE up -d backend-voice; then
+if ! $DOCKER_COMPOSE up -d --build backend-voice; then
     error_exit "Could not start backend-voice with Docker Compose"
 fi
 
-# Wait until the container is running
-echo "   ⏳ Waiting for backend-voice container..."
-for i in {1..30}; do
+# Wait until the container is running (startup.sh installs ccai on first boot)
+BACKEND_VOICE_WAIT_SECS="${BACKEND_VOICE_WAIT_SECS:-90}"
+echo "   ⏳ Waiting for backend-voice container (up to ${BACKEND_VOICE_WAIT_SECS}s)..."
+for i in $(seq 1 "$BACKEND_VOICE_WAIT_SECS"); do
     if $DOCKER_COMPOSE ps backend-voice | grep -q "Up"; then
         # Ensure the service responds
         if curl -s http://localhost:8100/health > /dev/null 2>&1 || \
@@ -131,11 +132,14 @@ for i in {1..30}; do
             break
         fi
     fi
-    if [ $i -eq 30 ]; then
+    if [ "$i" -eq "$BACKEND_VOICE_WAIT_SECS" ]; then
         echo ""
         echo "   Recent container logs:"
-        $DOCKER_COMPOSE logs --tail=20 backend-voice
-        error_exit "Backend-voice did not become healthy within 30 seconds"
+        $DOCKER_COMPOSE logs --tail=30 backend-voice
+        error_exit "Backend-voice did not become healthy within ${BACKEND_VOICE_WAIT_SECS} seconds"
+    fi
+    if [ $((i % 30)) -eq 0 ]; then
+        echo "   ... still starting (${i}/${BACKEND_VOICE_WAIT_SECS}s)"
     fi
     sleep 1
 done

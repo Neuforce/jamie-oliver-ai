@@ -12,6 +12,13 @@ shutdown() {
 # Set up signal handlers
 trap 'shutdown' SIGTERM SIGINT
 
+echo "🔧 Installing jamie-guardrails in editable mode..."
+cd /app/packages/jamie-guardrails
+pip install -e . || {
+    echo "❌ Failed to install jamie-guardrails (required for prompts and guardrails)"
+    exit 1
+}
+
 echo "🔧 Installing ccai in editable mode with dependencies..."
 cd /app/packages/ccai
 # pyaudio is optional - if it fails, that's OK since backend-voice uses WebSocketAudioInterface

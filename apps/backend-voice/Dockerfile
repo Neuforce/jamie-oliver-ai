@@ -42,8 +42,8 @@ COPY apps/backend-voice/startup.sh /app/startup.sh
 RUN sed -i 's/\r$//' /app/startup.sh && chmod +x /app/startup.sh
 
 WORKDIR /app/apps/backend-voice
-ENV PYTHONPATH="/app/apps/backend-voice/src:/app/packages"
+ENV PYTHONPATH="/app/apps/backend-voice/src:/app/packages/jamie-guardrails:/app/packages/ccai"
 
-ENTRYPOINT ["/app/startup.sh"]
+ENTRYPOINT ["bash", "/app/startup.sh"]
 CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8100"]
 
