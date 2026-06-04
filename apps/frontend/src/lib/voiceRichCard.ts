@@ -2,6 +2,7 @@ import type { MealPlanData, RecipeDetailData, ShoppingListData } from './api';
 import type { Recipe } from '../data/recipes';
 import type { ProcessCardState } from '../components/ProcessCardTypes';
 import type { FeaturedPayload } from '../components/ProcessCardTypes';
+import { getFeaturedToolPart, type ToolInvocationPart } from './chatStream';
 
 export type VoiceRichCardKind =
   | 'recipes'
@@ -22,12 +23,38 @@ export interface VoiceRichCardPreviewData {
 /** Minimal Jamie message shape for voice rich-card detection. */
 export type VoiceRichMessageSource = Readonly<{
   type: 'user' | 'jamie';
+  toolParts?: ReadonlyArray<ToolInvocationPart> | null;
   recipes?: ReadonlyArray<Recipe> | null;
   mealPlan?: MealPlanData | null;
   shoppingList?: ShoppingListData | null;
   recipeDetail?: RecipeDetailData | null;
   process?: ProcessCardState | null;
 }>;
+
+function resolveFeaturedFields(message: VoiceRichMessageSource): {
+  recipes?: ReadonlyArray<Recipe> | null;
+  mealPlan?: MealPlanData | null;
+  shoppingList?: ShoppingListData | null;
+  recipeDetail?: RecipeDetailData | null;
+} {
+  const featured = message.toolParts?.length
+    ? getFeaturedToolPart([...message.toolParts])
+    : null;
+  if (featured) {
+    return {
+      recipes: featured.recipes,
+      mealPlan: featured.mealPlan,
+      shoppingList: featured.shoppingList,
+      recipeDetail: featured.recipeDetail,
+    };
+  }
+  return {
+    recipes: message.recipes,
+    mealPlan: message.mealPlan,
+    shoppingList: message.shoppingList,
+    recipeDetail: message.recipeDetail,
+  };
+}
 
 const SUBTITLE_MAX_LEN = 100;
 
@@ -102,19 +129,20 @@ export function isVoiceExpandableMessage(message: VoiceRichMessageSource): boole
   if (message.type !== 'jamie') {
     return false;
   }
+  const fields = resolveFeaturedFields(message);
   if (message.process?.featured) {
     return true;
   }
-  if (message.recipes && message.recipes.length > 0) {
+  if (fields.recipes && fields.recipes.length > 0) {
     return true;
   }
-  if (message.mealPlan) {
+  if (fields.mealPlan) {
     return true;
   }
-  if (message.shoppingList) {
+  if (fields.shoppingList) {
     return true;
   }
-  if (message.recipeDetail?.recipe_id && message.recipeDetail.title) {
+  if (fields.recipeDetail?.recipe_id && fields.recipeDetail.title) {
     return true;
   }
   return false;
@@ -145,61 +173,63 @@ export function getVoiceRichCardPreview(
     return null;
   }
 
-  if (message.recipeDetail?.title) {
-    const description = message.recipeDetail.description?.trim();
+  const fields = resolveFeaturedFields(message);
+
+  if (fields.recipeDetail?.title) {
+    const description = fields.recipeDetail.description?.trim();
     return {
       kind: 'recipe_detail',
-      title: message.recipeDetail.title,
+      title: fields.recipeDetail.title,
       emoji: '🍳',
-      chips: chipsFromRecipeDetail(message.recipeDetail),
+      chips: chipsFromRecipeDetail(fields.recipeDetail),
       subtitle: description ? truncateSubtitle(description) : undefined,
     };
   }
 
-  if (message.recipes && message.recipes.length > 0) {
-    const first = message.recipes[0];
-    const count = message.recipes.length;
+  if (fields.recipes && fields.recipes.length > 0) {
+    const first = fields.recipes[0];
+    const count = fields.recipes.length;
     return {
       kind: 'recipes',
       title: count === 1 ? first.title : `${count} recipes`,
       emoji: '🥘',
       chips: chipsFromRecipe(first),
       imageUrl: first.image,
-      subtitle: subtitleFromRecipeTitles(message.recipes),
+      subtitle: subtitleFromRecipeTitles(fields.recipes),
     };
   }
 
-  if (message.mealPlan) {
-    const courseCount = Object.values(message.mealPlan.courses ?? {}).reduce(
+  if (fields.mealPlan) {
+    const courseCount = Object.values(fields.mealPlan.courses ?? {}).reduce(
       (total, course) => total + (course?.length ?? 0),
       0,
     );
     const chips: string[] = [];
-    if (message.mealPlan.occasion) chips.push(message.mealPlan.occasion);
-    if (message.mealPlan.serves) {
-      chips.push(`${message.mealPlan.serves} servings`);
+    if (fields.mealPlan.occasion) chips.push(fields.mealPlan.occasion);
+    if (fields.mealPlan.serves) {
+      chips.push(`${fields.mealPlan.serves} servings`);
     }
     return {
       kind: 'meal_plan',
-      title: message.mealPlan.occasion
-        ? `${message.mealPlan.occasion} meal plan`
+      title: fields.mealPlan.occasion
+        ? `${fields.mealPlan.occasion} meal plan`
         : 'Meal plan',
       emoji: '📅',
       chips: chips.length > 0 ? chips.slice(0, 3) : courseCount > 0 ? [`${courseCount} dishes`] : [],
-      subtitle: subtitleFromMealPlan(message.mealPlan),
+      subtitle: subtitleFromMealPlan(fields.mealPlan),
     };
   }
 
-  if (message.shoppingList) {
-    const count = message.shoppingList.total_items
-      ?? message.shoppingList.shopping_list?.length
+  if (fields.shoppingList) {
+    const count = fields.shoppingList.total_items
+      ?? fields.shoppingList.shopping_list?.length
       ?? 0;
     return {
       kind: 'shopping_list',
       title: 'Shopping list',
       emoji: '🛒',
       chips: count > 0 ? [`${count} items`] : [],
-      subtitle: subtitleFromShoppingList(message.shoppingList),
+      subtitle: subtitleFromShoppingList(fields.shoppingList),
     };
   }
 

@@ -63,11 +63,13 @@ export interface ShoppingListData {
 }
 
 export interface ChatEvent {
-  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'done' | 'error';
+  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'recipe_paywall_requested' | 'done' | 'error';
   content: string;
   metadata?: {
-    // Tool call info
+    // Correlation (discovery tool contract)
     tool_call_id?: string;
+    response_id?: string;
+    // Tool call info
     arguments?: Record<string, unknown>;
     // Recipe search results
     recipes?: ToolRecipe[];

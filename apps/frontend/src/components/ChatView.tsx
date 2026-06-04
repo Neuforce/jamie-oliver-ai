@@ -42,6 +42,14 @@ import {
   userAffirmsGoToFullRecipe,
   shouldOpenRecipeFromVoiceUtterance,
 } from '../lib/discoveryFullRecipeGate';
+import {
+  createChatTurnStreamState,
+  legacyFieldsFromStreamState,
+  reduceChatStreamEvent,
+  type ChatTurnStreamState,
+  type ToolInvocationPart,
+} from '../lib/chatStream';
+import type { ChatEvent } from '../lib/api';
 import { CHAT_STORAGE_KEY, SESSION_ID_KEY } from '../lib/chatStorage';
 import type { RecipeAccessResponse } from '../lib/api';
 import {
@@ -54,6 +62,8 @@ interface Message {
   id: string;
   type: 'user' | 'jamie';
   content: string;
+  toolParts?: ToolInvocationPart[];
+  responseId?: string;
   recipes?: Recipe[];
   mealPlan?: MealPlanData;
   recipeDetail?: RecipeDetailData;
@@ -61,6 +71,19 @@ interface Message {
   timestamp: Date;
   isStreaming?: boolean;
   process?: ProcessCardState;
+}
+
+function messagePatchFromStreamState(state: ChatTurnStreamState): Partial<Message> {
+  const legacy = legacyFieldsFromStreamState(state);
+  return {
+    content: state.text,
+    toolParts: state.parts,
+    responseId: state.responseId,
+    recipes: legacy.recipes,
+    recipeDetail: legacy.recipeDetail,
+    mealPlan: legacy.mealPlan,
+    shoppingList: legacy.shoppingList,
+  };
 }
 
 interface ChatViewProps {
@@ -393,6 +416,17 @@ export function ChatView({
   const voiceMessageRef = useRef<string | null>(null);
   const voiceMessageIdRef = useRef<string | null>(null);
   const voiceResponseAccumulatorRef = useRef<string>('');
+  const voiceStreamStateRef = useRef(createChatTurnStreamState());
+
+  const applyStreamToVoiceMessage = useCallback((event: ChatEvent) => {
+    const messageId = voiceMessageIdRef.current;
+    if (!messageId) return;
+    voiceStreamStateRef.current = reduceChatStreamEvent(voiceStreamStateRef.current, event);
+    const patch = messagePatchFromStreamState(voiceStreamStateRef.current);
+    setMessages(prev =>
+      prev.map(msg => (msg.id === messageId ? { ...msg, ...patch } : msg)),
+    );
+  }, []);
 
   /*
    * Mute toggle for the mic in voice mode. We expose this as a click-target
@@ -465,6 +499,7 @@ export function ChatView({
         const streamingId = (Date.now() + 1).toString();
         voiceMessageIdRef.current = streamingId;
         voiceResponseAccumulatorRef.current = '';
+        voiceStreamStateRef.current = createChatTurnStreamState();
 
         console.log('🎤 Created voice message placeholder:', streamingId);
 
@@ -482,66 +517,56 @@ export function ChatView({
       }
     },
     onTextChunk: (text) => {
-      // Accumulate voice response text
       voiceResponseAccumulatorRef.current += text;
-
-      console.log('🎤 Text chunk received:', {
-        chunk: text.substring(0, 50),
-        totalLength: voiceResponseAccumulatorRef.current.length,
-        messageId: voiceMessageIdRef.current
+      applyStreamToVoiceMessage({
+        type: 'text_chunk',
+        content: text,
       });
-
-      if (voiceMessageIdRef.current) {
-        setMessages(prev => prev.map(msg =>
-          msg.id === voiceMessageIdRef.current
-            ? { ...msg, content: voiceResponseAccumulatorRef.current }
-            : msg
-        ));
-      }
-
-      // Clear thinking status once we get text
       if (thinkingStatus) {
         setThinkingStatus(null);
       }
     },
     onRecipes: (data) => {
-      const messageId = voiceMessageIdRef.current;
-      if (!messageId) return;
-      const recipeData = data?.recipes || [];
-      const recipes: Recipe[] = recipeData.map((r: BackendRecipeSummary, index: number) =>
-        transformRecipeFromSummary(r, index)
-      );
-      if (recipes.length > 0) {
-        setMessages(prev =>
-          prev.map(msg => (msg.id === messageId ? { ...msg, recipes } : msg)),
-        );
-      }
+      applyStreamToVoiceMessage({
+        type: 'recipes',
+        content: '',
+        metadata: (data ?? {}) as ChatEvent['metadata'],
+      });
     },
     onMealPlan: (data) => {
-      const messageId = voiceMessageIdRef.current;
-      if (!messageId || !data?.meal_plan) return;
-      setMessages(prev =>
-        prev.map(msg => (msg.id === messageId ? { ...msg, mealPlan: data.meal_plan } : msg)),
-      );
+      applyStreamToVoiceMessage({
+        type: 'meal_plan',
+        content: '',
+        metadata: (data ?? {}) as ChatEvent['metadata'],
+      });
     },
     onRecipeDetail: (data) => {
-      const messageId = voiceMessageIdRef.current;
-      if (!messageId || !data?.recipe) return;
-      setMessages(prev =>
-        prev.map(msg => (msg.id === messageId ? { ...msg, recipeDetail: data.recipe } : msg)),
-      );
+      applyStreamToVoiceMessage({
+        type: 'recipe_detail',
+        content: '',
+        metadata: (data ?? {}) as ChatEvent['metadata'],
+      });
     },
     onShoppingList: (data) => {
-      const messageId = voiceMessageIdRef.current;
-      if (!messageId || !data?.shopping_list) return;
-      setMessages(prev =>
-        prev.map(msg =>
-          msg.id === messageId ? { ...msg, shoppingList: data.shopping_list } : msg,
-        ),
-      );
+      applyStreamToVoiceMessage({
+        type: 'shopping_list',
+        content: '',
+        metadata: (data ?? {}) as ChatEvent['metadata'],
+      });
     },
-    onRecipePaywallRequested: (bid) => {
-      if (bid) onVoiceRecipePaywallRequested?.(bid);
+    onRecipePaywallRequested: (payload) => {
+      if (payload.backend_recipe_id) {
+        applyStreamToVoiceMessage({
+          type: 'recipe_paywall_requested',
+          content: '',
+          metadata: {
+            backend_recipe_id: payload.backend_recipe_id,
+            tool_call_id: payload.tool_call_id,
+            response_id: payload.response_id,
+          },
+        });
+        onVoiceRecipePaywallRequested?.(payload.backend_recipe_id);
+      }
     },
     onDone: () => {
       // Finalize the voice message
@@ -561,6 +586,7 @@ export function ChatView({
       }
       voiceMessageIdRef.current = null;
       voiceResponseAccumulatorRef.current = '';
+      voiceStreamStateRef.current = createChatTurnStreamState();
       setIsTyping(false);
       setThinkingStatus(null);
     },
@@ -575,6 +601,7 @@ export function ChatView({
       }
       voiceMessageIdRef.current = null;
       voiceResponseAccumulatorRef.current = '';
+      voiceStreamStateRef.current = createChatTurnStreamState();
       setIsTyping(false);
       setThinkingStatus(null);
     },
@@ -855,23 +882,20 @@ export function ChatView({
 
     // Use the shared sessionId (same for text and voice chat)
     let fullResponse = '';
-    let agentRecipes: Recipe[] = []; // Recipes from agent's tool call (exact matches)
+    let streamState = createChatTurnStreamState();
 
     try {
-      // Stream response from chat agent
       for await (const event of chatWithAgent(text, sessionId)) {
-        if (event.type === 'text_chunk') {
-          const chunk = event.content;
-          fullResponse += chunk;
+        streamState = reduceChatStreamEvent(streamState, event);
+        const streamPatch = messagePatchFromStreamState(streamState);
+        fullResponse = streamState.text;
 
-          // Update streaming message with new content
+        if (event.type === 'text_chunk') {
           setMessages(prev => prev.map(msg =>
             msg.id === streamingMessageId
-              ? { ...msg, content: fullResponse }
+              ? { ...msg, ...streamPatch }
               : msg
           ));
-
-          // Clear thinking status once we start receiving text
           if (thinkingStatus) {
             setThinkingStatus(null);
           }
@@ -941,97 +965,40 @@ export function ChatView({
               setThinkingStatus("Creating shopping list...");
             }
           }
-        } else if (event.type === 'recipes') {
-          // Recipes from agent's tool call - these are the EXACT recipes Jamie mentioned
-          console.log('Received recipes from agent:', event.metadata?.recipes);
-          const recipeData = event.metadata?.recipes || [];
-
-          // Transform backend recipe summaries to Recipe format for display
-          for (const r of recipeData) {
-            const transformed = transformRecipeFromSummary(r as BackendRecipeSummary, agentRecipes.length);
-            agentRecipes.push(transformed);
-          }
-          console.log('Transformed', agentRecipes.length, 'recipes for display');
-
-          // Update both the message's recipe list and the process card's
-          // featured payload so mixed-tool turns (e.g. plan_meal falling back
-          // to recipe search) can still render the carousel immediately.
+        } else if (
+          event.type === 'recipes'
+          || event.type === 'meal_plan'
+          || event.type === 'recipe_detail'
+          || event.type === 'shopping_list'
+          || event.type === 'recipe_paywall_requested'
+        ) {
           setMessages(prev => prev.map(msg => {
-            if (msg.id !== streamingMessageId || !msg.process) return msg;
-            const featured = selectFeatured({ tool: msg.process.tool, recipes: agentRecipes });
+            if (msg.id !== streamingMessageId) return msg;
+            const featured = msg.process
+              ? selectFeatured({
+                  tool: msg.process.tool,
+                  recipes: streamPatch.recipes,
+                  mealPlan: streamPatch.mealPlan,
+                  recipeDetail: streamPatch.recipeDetail,
+                  shoppingList: streamPatch.shoppingList,
+                })
+              : undefined;
             return {
               ...msg,
-              recipes: agentRecipes,
-              process: { ...msg.process, featured },
+              ...streamPatch,
+              process: msg.process ? { ...msg.process, featured } : msg.process,
             };
           }));
-        } else if (event.type === 'meal_plan') {
-          // Meal plan from plan_meal tool
-          console.log('Received meal plan:', event.metadata?.meal_plan);
-          if (event.metadata?.meal_plan) {
-            setMessages(prev => prev.map(msg => {
-              if (msg.id !== streamingMessageId) return msg;
-              const featured = msg.process
-                ? selectFeatured({ tool: msg.process.tool, mealPlan: event.metadata!.meal_plan })
-                : undefined;
-              return {
-                ...msg,
-                mealPlan: event.metadata!.meal_plan,
-                process: msg.process ? { ...msg.process, featured } : msg.process,
-              };
-            }));
-          }
-        } else if (event.type === 'recipe_detail') {
-          // Recipe detail from get_recipe_details tool
-          console.log('Received recipe detail:', event.metadata?.recipe);
-          if (event.metadata?.recipe) {
-            setMessages(prev => prev.map(msg => {
-              if (msg.id !== streamingMessageId) return msg;
-              const featured = msg.process
-                ? selectFeatured({ tool: msg.process.tool, recipeDetail: event.metadata!.recipe })
-                : undefined;
-              return {
-                ...msg,
-                recipeDetail: event.metadata!.recipe,
-                process: msg.process ? { ...msg.process, featured } : msg.process,
-              };
-            }));
-          }
-        } else if (event.type === 'shopping_list') {
-          // Shopping list from create_shopping_list tool
-          console.log('Received shopping list:', event.metadata?.shopping_list);
-          if (event.metadata?.shopping_list) {
-            setMessages(prev => prev.map(msg => {
-              if (msg.id !== streamingMessageId) return msg;
-              const featured = msg.process
-                ? selectFeatured({ tool: msg.process.tool, shoppingList: event.metadata!.shopping_list })
-                : undefined;
-              return {
-                ...msg,
-                shoppingList: event.metadata!.shopping_list,
-                process: msg.process ? { ...msg.process, featured } : msg.process,
-              };
-            }));
-          }
         } else if (event.type === 'done') {
-          // Finalize the message
           setThinkingStatus(null);
           setIsTyping(false);
 
-          // Only show recipes that came from the agent's tool call
-          const recipes = agentRecipes;
-
-          // Update message to final state with all accumulated data.
-          // `fullResponse` is the canonical Jamie prose — no rewriting,
-          // no truncation, no replacement with a generic intro. The
-          // ProcessCard (when present) mirrors the same text as its quote.
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId) return msg;
-            const updated = {
+            const updated: Message = {
               ...msg,
-              content: fullResponse,
+              ...streamPatch,
               isStreaming: false,
-              recipes: recipes.length > 0 ? recipes : msg.recipes,
             };
 
             if (updated.process) {
@@ -1043,6 +1010,13 @@ export function ChatView({
                 status: 'done',
                 quote: fullResponse,
                 steps: finalizedSteps,
+                featured: selectFeatured({
+                  tool: updated.process.tool,
+                  recipes: streamPatch.recipes,
+                  mealPlan: streamPatch.mealPlan,
+                  recipeDetail: streamPatch.recipeDetail,
+                  shoppingList: streamPatch.shoppingList,
+                }),
               };
             }
 

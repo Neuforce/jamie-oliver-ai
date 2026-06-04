@@ -72,7 +72,11 @@ export interface UseVoiceChatOptions {
   /** Callback when shopping list is received */
   onShoppingList?: (data: any) => void;
   /** Server asks client to open My Tab checkout for focused recipe (NEU-619) */
-  onRecipePaywallRequested?: (backendRecipeId: string) => void;
+  onRecipePaywallRequested?: (payload: {
+    backend_recipe_id: string;
+    tool_call_id?: string;
+    response_id?: string;
+  }) => void;
   /** Callback when response is complete */
   onDone?: () => void;
   /** Callback on error */
@@ -401,7 +405,12 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
           typeof data?.backend_recipe_id === 'string'
             ? data.backend_recipe_id.trim()
             : '';
-        callbacks.onRecipePaywallRequested?.(bid);
+        if (!bid) break;
+        callbacks.onRecipePaywallRequested?.({
+          backend_recipe_id: bid,
+          tool_call_id: typeof data?.tool_call_id === 'string' ? data.tool_call_id : undefined,
+          response_id: typeof data?.response_id === 'string' ? data.response_id : responseId,
+        });
         break;
       }
 
