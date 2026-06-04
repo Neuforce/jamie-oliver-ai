@@ -70,6 +70,26 @@ function carouselRecipeToDetail(ref: CarouselRecipeRef): RecipeDetailData | null
   };
 }
 
+/** Strip "let's see the …" / "show me the …" so title matching sees the dish name. */
+function utteranceDishHint(userUtterance: string): string {
+  let hint = normalizeForMatch(userUtterance);
+  const prefixes = [
+    /^let s see (the |a )?/,
+    /^let me see (the |a )?/,
+    /^show me (the |a )?/,
+    /^i want to see (the |a )?/,
+    /^i d like to see (the |a )?/,
+    /^can (i|we) see (the |a )?/,
+    /^open (the |a )?/,
+    /^view (the |a )?/,
+    /^take me to (the |a )?/,
+  ];
+  for (const pattern of prefixes) {
+    hint = hint.replace(pattern, '');
+  }
+  return hint.trim();
+}
+
 /**
  * Pick one carousel row when the user asks to open the full recipe.
  * Single-result carousels need no title in the utterance; multi-result needs overlap.
@@ -83,9 +103,13 @@ export function pickCarouselRecipeForOpen(
   if (list.length === 1) return carouselRecipeToDetail(list[0]);
 
   const u = normalizeForMatch(userUtterance);
+  const dishHint = utteranceDishHint(userUtterance);
   let best: { ref: CarouselRecipeRef; score: number } | null = null;
   for (const ref of list) {
-    const score = titleMatchScore(u, ref.title);
+    const score = Math.max(
+      titleMatchScore(u, ref.title),
+      dishHint ? titleMatchScore(dishHint, ref.title) : 0,
+    );
     if (!best || score > best.score) best = { ref, score };
   }
   if (best && best.score >= 0.45) return carouselRecipeToDetail(best.ref);
@@ -97,23 +121,67 @@ export function pickCarouselRecipeForOpen(
   return null;
 }
 
-/** Prefer recipe_detail; else most recent Jamie message with a matching carousel pick. */
+function findCarouselMatchInRecentJamieTurns(
+  messages: MessageRecipeContext,
+  userUtterance: string,
+): RecipeDetailData | null {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const msg = messages[i];
+    if (msg.type !== 'jamie') continue;
+    const picked = pickCarouselRecipeForOpen(msg.recipes, userUtterance);
+    if (picked) return picked;
+  }
+  return null;
+}
+
+/**
+ * Voice/text: user names a dish from the carousel ("let's see the fish tacos")
+ * without saying the word "recipe".
+ */
+export function userRequestsSpecificRecipeOpen(text: string): boolean {
+  const t = text.trim();
+  if (!t || t.length > 140) return false;
+
+  const negative =
+    /\b(no|nope|not\s+now|not\s+yet|nothing|later|stop|different\s+recipe|another\s+one|don't|dont)\b/i;
+  if (negative.test(t)) return false;
+
+  return (
+    /\b(let'?s|let me)\s+see\b/i.test(t) ||
+    /\bshow\s+me\b/i.test(t) ||
+    /\b(i\s+)?want\s+to\s+see\b/i.test(t) ||
+    /\b(can\s+(i|we)|could\s+(i|we))\s+see\b/i.test(t) ||
+    /\b(open|view)\s+(the\s+)?/i.test(t) ||
+    /\btake\s+me\s+to\b/i.test(t)
+  );
+}
+
+/** True when we should open RecipeModal from a final voice transcript (client-side). */
+export function shouldOpenRecipeFromVoiceUtterance(text: string): boolean {
+  return userAffirmsGoToFullRecipe(text) || userRequestsSpecificRecipeOpen(text);
+}
+
+/**
+ * Resolve which recipe to open. Carousel match wins when the user names a dish;
+ * short affirmations ("yes", "open it") use the latest get_recipe_details tile.
+ */
 export function getRecipeDetailForOpenIntent(
   messages: MessageRecipeContext,
   userUtterance: string,
 ): RecipeDetailData | null {
-  const fromTool = getFocusedRecipeDetail(messages);
-  if (fromTool) return fromTool;
-
   const u = userUtterance.trim();
   if (!u) return null;
 
-  for (let i = messages.length - 1; i >= 0; i--) {
-    const msg = messages[i];
-    if (msg.type !== 'jamie') continue;
-    const picked = pickCarouselRecipeForOpen(msg.recipes, u);
-    if (picked) return picked;
+  const carouselMatch = findCarouselMatchInRecentJamieTurns(messages, u);
+
+  if (userRequestsSpecificRecipeOpen(u) && carouselMatch) {
+    return carouselMatch;
   }
+
+  if (userAffirmsGoToFullRecipe(u)) {
+    return getFocusedRecipeDetail(messages) ?? carouselMatch;
+  }
+
   return null;
 }
 

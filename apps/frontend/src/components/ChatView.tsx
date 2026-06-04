@@ -21,6 +21,7 @@ import {
   isVoiceExpandableMessage,
 } from '../lib/voiceRichCard';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
+import { VoiceThinkingBubble } from './VoiceThinkingBubble';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 // @ts-expect-error - Vite resolves figma:asset imports
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
@@ -39,6 +40,7 @@ import {
   getRecipeDetailForOpenIntent,
   backendSummaryFromRecipeDetail,
   userAffirmsGoToFullRecipe,
+  shouldOpenRecipeFromVoiceUtterance,
 } from '../lib/discoveryFullRecipeGate';
 import { CHAT_STORAGE_KEY, SESSION_ID_KEY } from '../lib/chatStorage';
 import type { RecipeAccessResponse } from '../lib/api';
@@ -432,22 +434,23 @@ export function ChatView({
       }
 
       if (isFinal && normalizedText) {
-        if (userAffirmsGoToFullRecipe(normalizedText)) {
-          const focusedDetail = getRecipeDetailForOpenIntent(messagesRef.current, normalizedText);
-          if (focusedDetail) {
-            interruptVoiceRef.current();
-            const userMessage: Message = {
-              id: Date.now().toString(),
-              type: 'user',
-              content: normalizedText,
-              timestamp: new Date(),
-            };
-            setMessages(prev => [...prev, userMessage]);
-            setIsTyping(false);
-            setThinkingStatus(null);
-            void openRecipeModalFromDetailRef.current(focusedDetail);
-            return;
-          }
+        const openDetail = getRecipeDetailForOpenIntent(
+          messagesRef.current,
+          normalizedText,
+        );
+        if (openDetail && shouldOpenRecipeFromVoiceUtterance(normalizedText)) {
+          interruptVoiceRef.current();
+          const userMessage: Message = {
+            id: Date.now().toString(),
+            type: 'user',
+            content: normalizedText,
+            timestamp: new Date(),
+          };
+          setMessages(prev => [...prev, userMessage]);
+          setIsTyping(false);
+          setThinkingStatus(null);
+          void openRecipeModalFromDetailRef.current(openDetail);
+          return;
         }
 
         // Create user message from voice transcript
@@ -503,57 +506,39 @@ export function ChatView({
     },
     onRecipes: (data) => {
       const messageId = voiceMessageIdRef.current;
+      if (!messageId) return;
       const recipeData = data?.recipes || [];
       const recipes: Recipe[] = recipeData.map((r: BackendRecipeSummary, index: number) =>
         transformRecipeFromSummary(r, index)
       );
       if (recipes.length > 0) {
-        setMessages(prev => {
-          // Use the tracked ID first; fall back to the last Jamie message so
-          // timing issues (premature onDone clearing the ref) can't lose data.
-          const targetId = (messageId && prev.some(m => m.id === messageId))
-            ? messageId
-            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
-          if (!targetId) return prev;
-          return prev.map(msg => msg.id === targetId ? { ...msg, recipes } : msg);
-        });
+        setMessages(prev =>
+          prev.map(msg => (msg.id === messageId ? { ...msg, recipes } : msg)),
+        );
       }
     },
     onMealPlan: (data) => {
       const messageId = voiceMessageIdRef.current;
-      if (data?.meal_plan) {
-        setMessages(prev => {
-          const targetId = (messageId && prev.some(m => m.id === messageId))
-            ? messageId
-            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
-          if (!targetId) return prev;
-          return prev.map(msg => msg.id === targetId ? { ...msg, mealPlan: data.meal_plan } : msg);
-        });
-      }
+      if (!messageId || !data?.meal_plan) return;
+      setMessages(prev =>
+        prev.map(msg => (msg.id === messageId ? { ...msg, mealPlan: data.meal_plan } : msg)),
+      );
     },
     onRecipeDetail: (data) => {
       const messageId = voiceMessageIdRef.current;
-      if (data?.recipe) {
-        setMessages(prev => {
-          const targetId = (messageId && prev.some(m => m.id === messageId))
-            ? messageId
-            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
-          if (!targetId) return prev;
-          return prev.map(msg => msg.id === targetId ? { ...msg, recipeDetail: data.recipe } : msg);
-        });
-      }
+      if (!messageId || !data?.recipe) return;
+      setMessages(prev =>
+        prev.map(msg => (msg.id === messageId ? { ...msg, recipeDetail: data.recipe } : msg)),
+      );
     },
     onShoppingList: (data) => {
       const messageId = voiceMessageIdRef.current;
-      if (data?.shopping_list) {
-        setMessages(prev => {
-          const targetId = (messageId && prev.some(m => m.id === messageId))
-            ? messageId
-            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
-          if (!targetId) return prev;
-          return prev.map(msg => msg.id === targetId ? { ...msg, shoppingList: data.shopping_list } : msg);
-        });
-      }
+      if (!messageId || !data?.shopping_list) return;
+      setMessages(prev =>
+        prev.map(msg =>
+          msg.id === messageId ? { ...msg, shoppingList: data.shopping_list } : msg,
+        ),
+      );
     },
     onRecipePaywallRequested: (bid) => {
       if (bid) onVoiceRecipePaywallRequested?.(bid);
@@ -568,10 +553,7 @@ export function ChatView({
 
         setMessages(prev => prev.map(msg => {
           if (msg.id === messageId) {
-            const content =
-              msg.content ||
-              accumulatedText ||
-              "I'm here to help! What would you like to cook today?";
+            const content = (msg.content || accumulatedText || '').trim();
             return { ...msg, content, isStreaming: false };
           }
           return msg;
@@ -655,14 +637,16 @@ export function ChatView({
    * glows even if the hook reports those states — the UI is telling the
    * user that their mic is off, which is the information they care about.
    */
-  const avatarState: 'muted' | 'speaking' | 'listening' | 'idle' =
+  const avatarState: 'muted' | 'speaking' | 'listening' | 'thinking' | 'idle' =
     isMicMuted
       ? 'muted'
       : isSpeaking
         ? 'speaking'
-        : isListening || isProcessing
-          ? 'listening'
-          : 'idle';
+        : isProcessing
+          ? 'thinking'
+          : isListening
+            ? 'listening'
+            : 'idle';
 
   const toggleMicMute = useCallback(() => {
     setIsMicMuted(prev => {
@@ -1384,113 +1368,102 @@ export function ChatView({
                 hasMealPlan ||
                 hasShopping ||
                 hasRecipeDetail;
-              if (!hasAnyBody) return null;
+              const isForming =
+                voiceMode &&
+                Boolean(message.isStreaming) &&
+                !message.content.trim() &&
+                !hasStructuredPayload;
+              if (!hasAnyBody && !isForming) return null;
               const hasLongText =
                 !!message.content &&
                 message.content.trim().length > JAMIE_MESSAGE_COLLAPSE_CHAR_THRESHOLD;
               const isExpanded = !!expandedMessageIds[message.id];
-              const normalizedContent = message.content.replace(/\n{3,}/g, '\n\n').trim();
+              const normalizedContent = (message.content || '')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
 
               const cardClassName = voiceMode
                 ? 'jamie-voice-message'
                 : 'jamie-thread-card jamie-thread-card--jamie';
 
-              return (
-                <div
-                  className={cardClassName}
-                  data-voice-expandable-card={
-                    voiceMode && hasStructuredPayload ? 'true' : undefined
-                  }
-                >
-                  {/*
-                   * Speaker badge — mint-teal heart glyph + "JAMIE" wordmark.
-                   * Matches ProcessCard and the design mocks (`Jamie_03.png`,
-                   * `Jamie_04.png`, `Jamie_05.png`) so a conversational reply
-                   * and a tool-driven reply share one identity.
-                   */}
-                  <div className="jamie-thread-speaker">
-                    <JamieHeart className="jamie-thread-speaker__heart" />
-                    <span>Jamie</span>
+              const speakerBadge = (
+                <div className="jamie-thread-speaker">
+                  <JamieHeart className="jamie-thread-speaker__heart" />
+                  <span>Jamie</span>
+                </div>
+              );
+
+              const voiceExpandedRecipesBlock =
+                voiceMode && voiceExpanded && hasRecipes ? (
+                  <div className="mt-3 mb-3">
+                    <RecipeCarousel
+                      recipes={message.recipes!}
+                      onRecipeClick={async (recipe) => {
+                        const completeRecipe = await ensureRecipeHasPayload(recipe);
+                        onRecipeClick(completeRecipe);
+                      }}
+                      singleSlide
+                      voiceMode={voiceMode}
+                      voiceRole={voiceRole}
+                      voiceCardExpanded={voiceExpanded}
+                      resolveCommerceBadge={resolveCommerceBadgeForRecipe}
+                    />
                   </div>
+                ) : null;
 
-                  {/*
-                   * In voice-expanded mode with a recipe payload, the carousel
-                   * is the hero element — render it before the prose text so
-                   * the user sees it without scrolling. The verbose text list
-                   * (which echoes what Jamie just said aloud) follows below,
-                   * without a "Read more" truncation gate.
-                   */}
-                  {voiceMode && voiceExpanded && hasRecipes && (
-                    <div className="mt-3 mb-3">
-                      <RecipeCarousel
-                        recipes={message.recipes!}
-                        onRecipeClick={async (recipe) => {
-                          const completeRecipe = await ensureRecipeHasPayload(recipe);
-                          onRecipeClick(completeRecipe);
-                        }}
-                        singleSlide
-                        voiceMode={voiceMode}
-                        voiceRole={voiceRole}
-                        voiceCardExpanded={voiceExpanded}
-                        resolveCommerceBadge={resolveCommerceBadgeForRecipe}
-                      />
-                    </div>
-                  )}
-
-                  {message.content && (
-                    <div
-                      className={`jamie-thread-markdown prose prose-sm max-w-none ${
-                        hasLongText && !isExpanded && !(voiceMode && voiceExpanded)
-                          ? 'jamie-thread-markdown--collapsed'
-                          : ''
-                      }`}
-                    >
-                      <ReactMarkdown
-                        components={{
-                          h1: ({ children }) => <h3 className="text-lg font-bold mt-5 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
-                          h2: ({ children }) => <h4 className="text-base font-bold mt-4 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
-                          h3: ({ children }) => <h5 className="text-base font-semibold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
-                          p: ({ children }) => (
-                            <p
-                              className="mb-4 last:mb-0"
-                              style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}
-                            >
-                              {children}
-                            </p>
-                          ),
-                          strong: ({ children }) => <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>{children}</strong>,
-                          ul: ({ children }) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
-                          ol: ({ children }) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
-                          li: ({ children }) => <li className="mb-1" style={{ whiteSpace: 'pre-wrap' }}>{children}</li>,
-                          hr: () => <hr className="my-4 border-black/10" />,
-                        }}
-                      >
-                        {normalizedContent}
-                      </ReactMarkdown>
-                      {message.isStreaming && (
-                        <motion.span
-                          animate={{ opacity: [1, 0, 1] }}
-                          transition={{ duration: 0.8, repeat: Infinity }}
-                          className="inline-block ml-0.5"
+              const markdownBlock = message.content ? (
+                <div
+                  className={`jamie-thread-markdown prose prose-sm max-w-none ${
+                    hasLongText && !isExpanded && !(voiceMode && voiceExpanded)
+                      ? 'jamie-thread-markdown--collapsed'
+                      : ''
+                  }`}
+                >
+                  <ReactMarkdown
+                    components={{
+                      h1: ({ children }) => <h3 className="text-lg font-bold mt-5 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
+                      h2: ({ children }) => <h4 className="text-base font-bold mt-4 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
+                      h3: ({ children }) => <h5 className="text-base font-semibold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
+                      p: ({ children }) => (
+                        <p
+                          className="mb-4 last:mb-0"
+                          style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}
                         >
-                          ▊
-                        </motion.span>
-                      )}
-                    </div>
+                          {children}
+                        </p>
+                      ),
+                      strong: ({ children }) => <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>{children}</strong>,
+                      ul: ({ children }) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
+                      ol: ({ children }) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
+                      li: ({ children }) => <li className="mb-1" style={{ whiteSpace: 'pre-wrap' }}>{children}</li>,
+                      hr: () => <hr className="my-4 border-black/10" />,
+                    }}
+                  >
+                    {normalizedContent}
+                  </ReactMarkdown>
+                  {message.isStreaming && (
+                    voiceMode ? (
+                      <motion.span
+                        animate={{ opacity: [0.35, 0.9, 0.35] }}
+                        transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+                        className="jamie-voice-stream-caret"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <motion.span
+                        animate={{ opacity: [1, 0, 1] }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                        className="inline-block ml-0.5"
+                      >
+                        ▊
+                      </motion.span>
+                    )
                   )}
+                </div>
+              ) : null;
 
-                  {/* "Read more" is hidden in voice expanded mode (carousel shown above already). */}
-                  {hasLongText && !message.isStreaming && !(voiceMode && voiceExpanded) && (
-                    <button
-                      type="button"
-                      className="jamie-thread-card__expand"
-                      onClick={() => toggleMessageExpansion(message.id)}
-                    >
-                      {isExpanded ? 'Show less' : 'Read more'}
-                    </button>
-                  )}
-
-                  {/* Non-voice OR voice without expanded state: carousel in its normal position. */}
+              const payloadBlocks = (
+                <>
                   {hasRecipes && !(voiceMode && voiceExpanded) && (
                     <div className={voiceMode ? 'mt-3' : 'jamie-thread-card__payload'}>
                       <RecipeCarousel
@@ -1542,6 +1515,64 @@ export function ChatView({
                       )}
                     </div>
                   )}
+                </>
+              );
+
+              if (voiceMode) {
+                return (
+                  <div
+                    className={cardClassName}
+                    data-voice-forming={isForming ? 'true' : undefined}
+                    data-voice-expandable-card={
+                      hasStructuredPayload ? 'true' : undefined
+                    }
+                  >
+                    <AnimatePresence mode="wait" initial={false}>
+                      {isForming ? (
+                        <VoiceThinkingBubble key="forming" />
+                      ) : (
+                        <motion.div
+                          key="body"
+                          className="jamie-voice-message__body"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
+                        >
+                          {speakerBadge}
+                          {voiceExpandedRecipesBlock}
+                          {markdownBlock}
+                          {hasLongText && !message.isStreaming && !voiceExpanded && (
+                            <button
+                              type="button"
+                              className="jamie-thread-card__expand"
+                              onClick={() => toggleMessageExpansion(message.id)}
+                            >
+                              {isExpanded ? 'Show less' : 'Read more'}
+                            </button>
+                          )}
+                          {payloadBlocks}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
+              return (
+                <div className={cardClassName}>
+                  {speakerBadge}
+                  {markdownBlock}
+                  {hasLongText && !message.isStreaming && (
+                    <button
+                      type="button"
+                      className="jamie-thread-card__expand"
+                      onClick={() => toggleMessageExpansion(message.id)}
+                    >
+                      {isExpanded ? 'Show less' : 'Read more'}
+                    </button>
+                  )}
+                  {payloadBlocks}
                 </div>
               );
             })()

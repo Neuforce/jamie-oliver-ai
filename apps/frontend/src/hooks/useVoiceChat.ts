@@ -245,8 +245,13 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   }, []);
 
   const isCurrentResponse = useCallback((responseId?: string) => {
-    if (!responseId) return false;
-    return activeResponseIdRef.current === responseId;
+    const activeId = activeResponseIdRef.current;
+    if (!activeId) return false;
+    if (!responseId) {
+      // Legacy payloads without responseId — only while a turn is in flight.
+      return true;
+    }
+    return activeId === responseId;
   }, []);
 
   // ── audio playback ─────────────────────────────────────────────────────
@@ -371,22 +376,27 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         break;
 
       case 'recipes':
+        if (!isCurrentResponse(responseId)) return;
         callbacks.onRecipes?.(data);
         break;
 
       case 'meal_plan':
+        if (!isCurrentResponse(responseId)) return;
         callbacks.onMealPlan?.(data);
         break;
 
       case 'recipe_detail':
+        if (!isCurrentResponse(responseId)) return;
         callbacks.onRecipeDetail?.(data);
         break;
 
       case 'shopping_list':
+        if (!isCurrentResponse(responseId)) return;
         callbacks.onShoppingList?.(data);
         break;
 
       case 'recipe_paywall_requested': {
+        if (!isCurrentResponse(responseId)) return;
         const bid =
           typeof data?.backend_recipe_id === 'string'
             ? data.backend_recipe_id.trim()
