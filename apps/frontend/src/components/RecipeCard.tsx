@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Recipe } from '../data/recipes';
-import { Clock, Users, ChefHat } from 'lucide-react';
+import { Clock, Users, ChefHat, Lock } from 'lucide-react';
 import { motion } from 'motion/react';
+import type { RecipeCommerceBadge } from '../lib/recipeAccessDisplay';
+import { RECIPE_COMMERCE_BADGE_STYLES } from '../lib/recipeAccessDisplay';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -9,9 +11,10 @@ interface RecipeCardProps {
   variant?: 'grid' | 'feed' | 'cooking' | 'modal' | 'chat';
   showDifficultyPill?: boolean;
   showInProgress?: boolean;
+  commerceBadge?: RecipeCommerceBadge | null;
 }
 
-export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPill = false, showInProgress = false }: RecipeCardProps) {
+export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPill = false, showInProgress = false, commerceBadge = null }: RecipeCardProps) {
   const [hasSession, setHasSession] = useState(false);
   const [sessionProgress, setSessionProgress] = useState(0);
   const badgeStyle: React.CSSProperties = {
@@ -101,6 +104,21 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
     );
   }
 
+  const CommerceBadge = commerceBadge && variant === 'chat' ? (
+    <span
+      className="absolute top-3 right-3 inline-flex items-center gap-1 text-white text-[10px] font-semibold uppercase tracking-[0.08em]"
+      style={{
+        height: '24px',
+        padding: '4px 10px',
+        borderRadius: '33554400px',
+        ...RECIPE_COMMERCE_BADGE_STYLES[commerceBadge.tone],
+      }}
+    >
+      {commerceBadge.tone === 'locked' && <Lock className="size-3" aria-hidden="true" />}
+      {commerceBadge.label}
+    </span>
+  ) : null;
+
   // Shared compact card body — used by both `grid` and `chat` variants.
   // Matches the `feed` card's structural language (image-top + white card
   // body with title) so all recipe surfaces feel like one design family.
@@ -144,6 +162,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
             recipe.category.toUpperCase()
           )}
         </span>
+        {CommerceBadge}
       </div>
 
       {/* White body — fixed-height title row so all cards in a row align.

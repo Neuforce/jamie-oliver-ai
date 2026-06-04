@@ -108,6 +108,36 @@ export function canEmbedRecipePurchaseButton(access: RecipeAccessResponse): bool
   );
 }
 
+/** True only when access is positively resolved as cookable. */
+export function canStartCookingWithAccess(access: RecipeAccessResponse | null | undefined): boolean {
+  return access?.accessState === 'free' || access?.accessState === 'owned';
+}
+
+const DEFAULT_ACCESS_POLL_ATTEMPTS = 6;
+const DEFAULT_ACCESS_POLL_INTERVAL_MS = 500;
+
+/** Poll access after purchase when webhook/sync may lag behind Supertab. */
+export async function pollRecipeAccessUntilUnlocked(
+  recipeId: string,
+  userId: string,
+  options: { maxAttempts?: number; intervalMs?: number } = {},
+): Promise<RecipeAccessResponse | null> {
+  const maxAttempts = options.maxAttempts ?? DEFAULT_ACCESS_POLL_ATTEMPTS;
+  const intervalMs = options.intervalMs ?? DEFAULT_ACCESS_POLL_INTERVAL_MS;
+
+  for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    const access = await getRecipeAccess(recipeId, userId);
+    if (canStartCookingWithAccess(access)) {
+      return access;
+    }
+    if (attempt < maxAttempts - 1) {
+      await new Promise((resolve) => setTimeout(resolve, intervalMs));
+    }
+  }
+
+  return null;
+}
+
 function formatPrice(price?: {
   amount: number;
   currency: { symbol: string; baseUnit: number; code: string };
@@ -511,6 +541,74 @@ export interface LaunchRecipePaywallResult {
   status: 'completed' | 'abandoned' | 'prior-entitlement' | 'unavailable';
   userId?: string;
   refreshedAccess?: RecipeAccessResponse;
+}
+
+export type PurchaseRecipeVia = 'embedded' | 'paywall' | 'unavailable' | 'abandoned';
+
+export interface PurchaseRecipeOutcome {
+  via: PurchaseRecipeVia;
+  resolution: RecipePurchaseResolution | null;
+  paywallResult?: LaunchRecipePaywallResult;
+}
+
+export interface PurchaseRecipeOptions {
+  /** Opens the in-modal embedded Supertab checkout (same as tapping "Put it on my Tab"). */
+  openEmbeddedCheckout?: () => Promise<void>;
+  /** Resolves when embedded `onDone` fires; omit to skip the embed path. */
+  waitForEmbeddedResolution?: () => Promise<RecipePurchaseResolution | null>;
+}
+
+async function buildResolutionFromPaywallResult(
+  paywallResult: LaunchRecipePaywallResult,
+): Promise<RecipePurchaseResolution | null> {
+  if (paywallResult.status === 'unavailable' || paywallResult.status === 'abandoned') {
+    return null;
+  }
+
+  const snapshot = await loadMyTabSnapshot();
+  const priorEntitlements =
+    paywallResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [];
+
+  return {
+    snapshot,
+    refreshedAccess: paywallResult.refreshedAccess ?? null,
+    state: {
+      purchase: paywallResult.status === 'completed' ? { status: 'completed' } : undefined,
+      priorEntitlement: priorEntitlements,
+    },
+    priorEntitlements,
+  };
+}
+
+/**
+ * Single purchase entry: embedded button when available, otherwise Supertab paywall.
+ * Voice and tap both call this instead of DOM click-walking.
+ */
+export async function purchaseRecipe(
+  access: RecipeAccessResponse,
+  options: PurchaseRecipeOptions = {},
+): Promise<PurchaseRecipeOutcome> {
+  const canEmbed = canEmbedRecipePurchaseButton(access);
+
+  if (canEmbed && options.openEmbeddedCheckout && options.waitForEmbeddedResolution) {
+    await options.openEmbeddedCheckout();
+    const resolution = await options.waitForEmbeddedResolution();
+    if (resolution) {
+      return { via: 'embedded', resolution };
+    }
+    // Embed did not complete (abandoned, failed to mount, or timed out) → paywall fallback.
+  }
+
+  const paywallResult = await launchRecipePaywall(access);
+  if (paywallResult.status === 'unavailable') {
+    return { via: 'unavailable', resolution: null, paywallResult };
+  }
+  if (paywallResult.status === 'abandoned') {
+    return { via: 'abandoned', resolution: null, paywallResult };
+  }
+
+  const resolution = await buildResolutionFromPaywallResult(paywallResult);
+  return { via: 'paywall', resolution, paywallResult };
 }
 
 export async function launchRecipePaywall(access: RecipeAccessResponse): Promise<LaunchRecipePaywallResult> {
