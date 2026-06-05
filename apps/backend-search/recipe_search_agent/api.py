@@ -527,44 +527,37 @@ async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
         include_chunks: If True, include all recipe chunks
     """
     try:
+        from recipe_search_agent.recipe_catalog import get_published_catalog
+
+        catalog = get_published_catalog()
+        if not catalog.is_published(recipe_id):
+            raise HTTPException(status_code=404, detail=f"Recipe not found: {recipe_id}")
+
         agent = get_search_agent()
+        recipes_response = (
+            agent.client.table("recipes")
+            .select("*")
+            .eq("slug", recipe_id)
+            .eq("status", "published")
+            .execute()
+        )
 
-        # First try the new `recipes` table (source of truth)
-        recipes_response = agent.client.table("recipes").select("*").eq("slug", recipe_id).execute()
+        if not recipes_response.data:
+            raise HTTPException(status_code=404, detail=f"Recipe not found: {recipe_id}")
 
-        if recipes_response.data:
-            recipe_row = recipes_response.data[0]
-            result = {
-                "recipe_id": recipe_row["slug"],
-                "title": recipe_row.get("metadata", {}).get("title", recipe_row["slug"]),
-                "category": recipe_row.get("metadata", {}).get("categories", [None])[0] if recipe_row.get("metadata", {}).get("categories") else None,
-                "mood": recipe_row.get("metadata", {}).get("moods", [None])[0] if recipe_row.get("metadata", {}).get("moods") else None,
-                "complexity": recipe_row.get("metadata", {}).get("difficulty"),
-                "cost": None,
-                "quality_score": recipe_row.get("quality_score"),
-                "status": recipe_row.get("status"),
-                "full_recipe": recipe_row.get("recipe_json"),
-            }
-        else:
-            # Fallback to recipe_index for backward compatibility
-            response = agent.client.table("recipe_index").select("*").eq("id", recipe_id).execute()
-
-            if not response.data:
-                raise HTTPException(status_code=404, detail=f"Recipe not found: {recipe_id}")
-
-            recipe_data = response.data[0]
-            full_recipe = agent._load_recipe_json(recipe_data["file_path"])
-
-            result = {
-                "recipe_id": recipe_id,
-                "title": recipe_data["title"],
-                "category": recipe_data.get("category"),
-                "mood": recipe_data.get("mood"),
-                "complexity": recipe_data.get("complexity"),
-                "cost": recipe_data.get("cost"),
-                "file_path": recipe_data["file_path"],
-                "full_recipe": full_recipe,
-            }
+        recipe_row = recipes_response.data[0]
+        result = {
+            "recipe_id": recipe_row["slug"],
+            "title": recipe_row.get("metadata", {}).get("title", recipe_row["slug"]),
+            "category": recipe_row.get("metadata", {}).get("categories", [None])[0] if recipe_row.get("metadata", {}).get("categories") else None,
+            "mood": recipe_row.get("metadata", {}).get("moods", [None])[0] if recipe_row.get("metadata", {}).get("moods") else None,
+            "complexity": recipe_row.get("metadata", {}).get("difficulty"),
+            "cost": None,
+            "quality_score": recipe_row.get("quality_score"),
+            "status": recipe_row.get("status"),
+            "full_recipe": recipe_row.get("recipe_json"),
+            "source": "recipes_table",
+        }
 
         # Include chunks when requested
         if include_chunks:

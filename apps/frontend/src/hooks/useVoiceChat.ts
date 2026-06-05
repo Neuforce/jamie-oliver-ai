@@ -72,7 +72,11 @@ export interface UseVoiceChatOptions {
   /** Callback when shopping list is received */
   onShoppingList?: (data: any) => void;
   /** Server asks client to open My Tab checkout for focused recipe (NEU-619) */
-  onRecipePaywallRequested?: (backendRecipeId: string) => void;
+  onRecipePaywallRequested?: (payload: {
+    backend_recipe_id: string;
+    tool_call_id?: string;
+    response_id?: string;
+  }) => void;
   /** Callback when response is complete */
   onDone?: () => void;
   /** Callback on error */
@@ -245,8 +249,13 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   }, []);
 
   const isCurrentResponse = useCallback((responseId?: string) => {
-    if (!responseId) return false;
-    return activeResponseIdRef.current === responseId;
+    const activeId = activeResponseIdRef.current;
+    if (!activeId) return false;
+    if (!responseId) {
+      // Legacy payloads without responseId — only while a turn is in flight.
+      return true;
+    }
+    return activeId === responseId;
   }, []);
 
   // ── audio playback ─────────────────────────────────────────────────────
@@ -371,27 +380,37 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         break;
 
       case 'recipes':
+        if (!isCurrentResponse(responseId)) return;
         callbacks.onRecipes?.(data);
         break;
 
       case 'meal_plan':
+        if (!isCurrentResponse(responseId)) return;
         callbacks.onMealPlan?.(data);
         break;
 
       case 'recipe_detail':
+        if (!isCurrentResponse(responseId)) return;
         callbacks.onRecipeDetail?.(data);
         break;
 
       case 'shopping_list':
+        if (!isCurrentResponse(responseId)) return;
         callbacks.onShoppingList?.(data);
         break;
 
       case 'recipe_paywall_requested': {
+        if (!isCurrentResponse(responseId)) return;
         const bid =
           typeof data?.backend_recipe_id === 'string'
             ? data.backend_recipe_id.trim()
             : '';
-        callbacks.onRecipePaywallRequested?.(bid);
+        if (!bid) break;
+        callbacks.onRecipePaywallRequested?.({
+          backend_recipe_id: bid,
+          tool_call_id: typeof data?.tool_call_id === 'string' ? data.tool_call_id : undefined,
+          response_id: typeof data?.response_id === 'string' ? data.response_id : responseId,
+        });
         break;
       }
 

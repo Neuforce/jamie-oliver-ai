@@ -1,13 +1,12 @@
 import type { Recipe } from './recipes';
 import {
   transformRecipeMatch,
-  loadRecipeFromLocal,
   type JamieOliverRecipe,
 } from './recipeTransformer';
 import { getRecipeById } from '../lib/api';
 
 /**
- * Resolve a recipe by stable backend slug (recipe_id / backendId).
+ * Resolve a recipe by stable backend slug (published catalog only).
  */
 export async function loadRecipeBySlug(slug: string): Promise<Recipe | null> {
   const recipeId = slug.trim();
@@ -33,25 +32,8 @@ export async function loadRecipeBySlug(slug: string): Promise<Recipe | null> {
       );
     }
   } catch {
-    // Fall through to local bundle
-  }
-
-  const localRecipe = await loadRecipeFromLocal(recipeId);
-  if (!localRecipe) {
     return null;
   }
 
-  return transformRecipeMatch(
-    {
-      recipe_id: recipeId,
-      title: localRecipe.recipe?.title || recipeId,
-      similarity_score: 1,
-      combined_score: 1,
-      file_path: '',
-      match_explanation: '',
-      matching_chunks: [],
-    },
-    localRecipe,
-    0,
-  );
+  return null;
 }

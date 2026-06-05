@@ -14,14 +14,14 @@ import { MessageCircle, MicOff, Square } from 'lucide-react';
  *
  * States:
  *   - `avatarState` drives the glow via `data-state` — the CSS rules
- *     pick up `idle | listening | speaking | muted`.
+ *     pick up `idle | listening | thinking | speaking | muted`.
  *   - `isMicMuted` reveals the small mic-off pip overlay on the avatar
  *     and flips the mute button's aria-pressed.
  *   - Stop button uses the icon-only variant by default; pass
  *     `stopVariant="icon-label"` to render with a trailing "Stop"
  *     label (the cook surface before this refactor used that).
  */
-export type VoiceAvatarState = 'muted' | 'speaking' | 'listening' | 'idle';
+export type VoiceAvatarState = 'muted' | 'speaking' | 'listening' | 'thinking' | 'idle';
 
 export interface VoiceFooterProps {
   /** Source URL for the circular Jamie avatar. */
