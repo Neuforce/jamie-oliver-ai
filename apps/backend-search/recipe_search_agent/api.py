@@ -13,7 +13,7 @@ import uuid
 from typing import List, Optional
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Query, Header, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, Query, Header, WebSocket, WebSocketDisconnect, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
@@ -24,6 +24,14 @@ from recipe_search_agent.search import RecipeSearchAgent, SearchFilters, RecipeM
 from recipe_search_agent.identity_service import IdentityService
 from recipe_search_agent.access_service import AccessService
 from recipe_search_agent.purchase_sync_service import PurchaseSyncService
+from recipe_search_agent.webhook_service import WebhookService
+from recipe_search_agent.spend_mandate_service import SpendMandateService
+from recipe_search_agent.supertab_merchant import SupertabMerchantClient
+from recipe_search_agent.supertab_token_verifier import SupertabTokenVerifier
+from recipe_search_agent.commerce_capability import (
+    build_commerce_capability_manifest,
+    build_purchase_intent_payload,
+)
 from recipe_search_agent.guardrails import evaluate_message_sync
 
 # Configure logging
@@ -188,6 +196,9 @@ _chat_agent = None
 _identity_service = None
 _access_service = None
 _purchase_sync_service = None
+_webhook_service = None
+_spend_mandate_service = None
+_supertab_merchant_client = None
 
 
 def get_chat_agent():
@@ -252,6 +263,30 @@ def get_purchase_sync_service() -> PurchaseSyncService:
     return _purchase_sync_service
 
 
+def get_webhook_service() -> WebhookService:
+    """Get or create the webhook service singleton."""
+    global _webhook_service
+    if _webhook_service is None:
+        _webhook_service = WebhookService()
+    return _webhook_service
+
+
+def get_spend_mandate_service() -> SpendMandateService:
+    """Get or create the spend mandate service singleton."""
+    global _spend_mandate_service
+    if _spend_mandate_service is None:
+        _spend_mandate_service = SpendMandateService()
+    return _spend_mandate_service
+
+
+def get_supertab_merchant_client() -> SupertabMerchantClient:
+    """Get or create the Supertab Merchant API client singleton."""
+    global _supertab_merchant_client
+    if _supertab_merchant_client is None:
+        _supertab_merchant_client = SupertabMerchantClient()
+    return _supertab_merchant_client
+
+
 class SupertabBootstrapRequest(BaseModel):
     provider: str = Field(..., description="External identity provider", example="supertab")
     external_subject_id: str = Field(..., description="External provider subject ID")
@@ -278,6 +313,39 @@ class SupertabPurchaseSyncRequest(BaseModel):
     recipe_id: str
     purchase: Optional[dict] = None
     prior_entitlement: list[dict] = Field(default_factory=list)
+
+
+class SpendMandateCreateRequest(BaseModel):
+    user_id: str
+    ceiling_amount: int = Field(..., description="Spending ceiling in minor units (cents)")
+    currency_code: str = "USD"
+    session_id: Optional[str] = None
+    source: str = "voice"
+    expires_at: Optional[str] = None
+
+
+class SpendMandateResponse(BaseModel):
+    id: str
+    userId: str
+    sessionId: Optional[str] = None
+    ceilingAmount: int
+    currencyCode: str
+    consumedAmount: int
+    status: str
+    source: str
+    grantedAt: Optional[str] = None
+    expiresAt: Optional[str] = None
+    remainingAmount: int
+
+
+class OnetimeOfferingRequest(BaseModel):
+    content_key: str
+    price_amount: int
+    currency_code: str = "USD"
+    description: str
+    recipe_slug: Optional[str] = None
+    user_id: Optional[str] = None
+    metadata: dict = Field(default_factory=dict)
 
 
 class OwnedRecipeSummaryResponse(BaseModel):
@@ -424,6 +492,172 @@ async def sync_supertab_purchase(request: SupertabPurchaseSyncRequest):
     except Exception as e:
         logger.error(f"Failed to sync Supertab purchase: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to sync Supertab purchase: {str(e)}")
+
+
+def _map_spend_mandate(mandate: dict) -> SpendMandateResponse:
+    ceiling = mandate.get("ceiling_amount", 0)
+    consumed = mandate.get("consumed_amount", 0)
+    return SpendMandateResponse(
+        id=mandate["id"],
+        userId=mandate["user_id"],
+        sessionId=mandate.get("session_id"),
+        ceilingAmount=ceiling,
+        currencyCode=mandate.get("currency_code", "USD"),
+        consumedAmount=consumed,
+        status=mandate.get("status", "active"),
+        source=mandate.get("source", "voice"),
+        grantedAt=mandate.get("granted_at"),
+        expiresAt=mandate.get("expires_at"),
+        remainingAmount=max(0, ceiling - consumed),
+    )
+
+
+@app.post("/api/v1/webhooks/{provider}")
+async def receive_provider_webhook(provider: str, request: Request):
+    """Generic provider webhook endpoint with signature verification and idempotent reconciliation."""
+    try:
+        payload = await request.body()
+        headers = {k: v for k, v in request.headers.items()}
+        result = get_webhook_service().process_webhook(provider, payload=payload, headers=headers)
+        return result
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        logger.error(f"Webhook processing failed for {provider}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Webhook processing failed: {str(e)}")
+
+
+@app.post("/api/v1/spend-mandates", response_model=SpendMandateResponse)
+async def create_spend_mandate(request: SpendMandateCreateRequest):
+    """Grant an AP2-style session spend mandate for agentic purchases."""
+    try:
+        identity_service = get_identity_service()
+        user = identity_service.get_user(request.user_id)
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        mandate = get_spend_mandate_service().create_mandate(
+            user_id=request.user_id,
+            ceiling_amount=request.ceiling_amount,
+            currency_code=request.currency_code,
+            session_id=request.session_id,
+            source=request.source,
+            expires_at=request.expires_at,
+        )
+        return _map_spend_mandate(mandate)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to create spend mandate: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to create spend mandate: {str(e)}")
+
+
+@app.get("/api/v1/spend-mandates/current", response_model=Optional[SpendMandateResponse])
+async def get_current_spend_mandate(user_id: str = Query(..., description="Jamie internal user ID")):
+    """Return the user's active session spend mandate, if any."""
+    try:
+        mandate = get_spend_mandate_service().get_current_mandate(user_id)
+        if not mandate:
+            return None
+        return _map_spend_mandate(mandate)
+    except Exception as e:
+        logger.error(f"Failed to get spend mandate: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to get spend mandate: {str(e)}")
+
+
+@app.delete("/api/v1/spend-mandates/current")
+async def revoke_current_spend_mandate(user_id: str = Query(..., description="Jamie internal user ID")):
+    """Revoke the user's active session spend mandate."""
+    try:
+        revoked = get_spend_mandate_service().revoke_current_mandate(user_id)
+        return {"revoked": len(revoked)}
+    except Exception as e:
+        logger.error(f"Failed to revoke spend mandate: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to revoke spend mandate: {str(e)}")
+
+
+@app.post("/api/v1/offerings/onetime")
+async def create_onetime_offering(request: OnetimeOfferingRequest):
+    """Mint a Supertab one-time offering via Merchant API (agentic payment intent)."""
+    try:
+        offering = get_supertab_merchant_client().create_onetime_offering(
+            content_key=request.content_key,
+            price_amount=request.price_amount,
+            currency_code=request.currency_code,
+            description=request.description,
+            metadata={
+                **request.metadata,
+                **({"recipe_id": request.recipe_slug} if request.recipe_slug else {}),
+                **({"jamie_user_id": request.user_id} if request.user_id else {}),
+            },
+        )
+        intent = None
+        if request.user_id and request.recipe_slug:
+            mandate = get_spend_mandate_service().get_current_mandate(request.user_id)
+            intent = build_purchase_intent_payload(
+                user_id=request.user_id,
+                recipe_slug=request.recipe_slug,
+                content_key=request.content_key,
+                price_amount=request.price_amount,
+                currency_code=request.currency_code,
+                mandate_id=mandate["id"] if mandate else None,
+                onetime_offering_id=offering.get("id"),
+            )
+        return {"offering": offering, "purchase_intent": intent}
+    except RuntimeError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+    except Exception as e:
+        logger.error(f"Failed to create one-time offering: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to create one-time offering: {str(e)}")
+
+
+@app.get("/api/v1/commerce/capabilities")
+async def get_commerce_capabilities():
+    """UCP/MCP-compatible commerce capability manifest for external agents."""
+    return build_commerce_capability_manifest()
+
+
+@app.post("/api/v1/auth/supertab/verify")
+async def verify_supertab_token(
+    authorization: str = Header(..., alias="Authorization"),
+):
+    """Verify a Supertab customer token and return the linked Jamie user."""
+    try:
+        token = authorization.removeprefix("Bearer ").strip()
+        customer = SupertabTokenVerifier().verify_token(token)
+        supertab_user = customer.get("user") or {}
+        external_subject_id = supertab_user.get("id")
+        if not external_subject_id:
+            raise HTTPException(status_code=400, detail="Supertab customer has no user id")
+
+        identity_service = get_identity_service()
+        user = identity_service.get_or_create_user_from_supertab(
+            external_subject_id=external_subject_id,
+            profile={
+                "email": supertab_user.get("email"),
+                "firstName": supertab_user.get("firstName"),
+                "lastName": supertab_user.get("lastName"),
+                "isGuest": supertab_user.get("isGuest", False),
+            },
+        )
+        return {
+            "user": {
+                "id": user["id"],
+                "email": user.get("email"),
+                "displayName": user.get("display_name") or user.get("displayName"),
+            },
+            "supertab": {
+                "authenticated": customer.get("authenticated"),
+                "testMode": (customer.get("tab") or {}).get("testMode"),
+            },
+        }
+    except ValueError as e:
+        raise HTTPException(status_code=401, detail=str(e))
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to verify Supertab token: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to verify Supertab token: {str(e)}")
 
 
 @app.post("/api/v1/recipes/search", response_model=SearchResponse)

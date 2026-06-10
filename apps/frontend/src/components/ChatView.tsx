@@ -972,6 +972,12 @@ export function ChatView({
           || event.type === 'shopping_list'
           || event.type === 'recipe_paywall_requested'
         ) {
+          if (event.type === 'recipe_paywall_requested') {
+            const backendId = (event.metadata?.backend_recipe_id as string | undefined)?.trim();
+            if (backendId) {
+              onVoiceRecipePaywallRequested?.(backendId);
+            }
+          }
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId) return msg;
             const featured = msg.process

@@ -127,12 +127,16 @@ def tool_result_to_chat_events(
                     ),
                 )
             )
+        purchase_intent = result.get("purchase_intent")
         events.append(
             ChatEvent(
                 type="recipe_paywall_requested",
                 content="",
                 metadata=_with_correlation(
-                    {"backend_recipe_id": rid},
+                    {
+                        "backend_recipe_id": rid,
+                        **({"purchase_intent": purchase_intent} if purchase_intent else {}),
+                    },
                     tool_call_id=tool_call_id,
                     response_id=response_id,
                 ),

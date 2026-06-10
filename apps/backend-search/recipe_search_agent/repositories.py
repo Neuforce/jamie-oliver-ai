@@ -274,3 +274,95 @@ class MonetizationRepository:
     def create_entitlement(self, payload: dict[str, Any]) -> dict[str, Any]:
         response = self._client.table("entitlements").insert(payload).execute()
         return first_row(response) or payload
+
+    def get_offering_by_content_key(self, content_key: str) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("recipe_offerings")
+            .select("*")
+            .eq("content_key", content_key)
+            .limit(1)
+            .execute()
+        )
+        return first_row(response)
+
+
+class WebhookEventRepository:
+    """Idempotent ledger for provider webhook events."""
+
+    def __init__(self, client: Client | None = None):
+        self._client = client or create_service_role_client()
+
+    def get_event(self, provider: str, event_id: str) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("webhook_events")
+            .select("*")
+            .eq("provider", provider)
+            .eq("event_id", event_id)
+            .limit(1)
+            .execute()
+        )
+        return first_row(response)
+
+    def insert_if_absent(self, payload: dict[str, Any]) -> tuple[dict[str, Any] | None, bool]:
+        """Return (row, created). If duplicate, returns (existing_row, False)."""
+        existing = self.get_event(payload["provider"], payload["event_id"])
+        if existing:
+            return existing, False
+        response = self._client.table("webhook_events").insert(payload).execute()
+        return first_row(response) or payload, True
+
+    def mark_processed(self, provider: str, event_id: str) -> Optional[dict[str, Any]]:
+        from datetime import datetime, timezone
+
+        response = (
+            self._client.table("webhook_events")
+            .update({"processed_at": datetime.now(timezone.utc).isoformat()})
+            .eq("provider", provider)
+            .eq("event_id", event_id)
+            .execute()
+        )
+        return first_row(response)
+
+
+class SpendMandateRepository:
+    """Persistence operations for AP2-style session spend mandates."""
+
+    def __init__(self, client: Client | None = None):
+        self._client = client or create_service_role_client()
+
+    def get_active_mandate(self, user_id: str) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("spend_mandates")
+            .select("*")
+            .eq("user_id", user_id)
+            .eq("status", "active")
+            .order("granted_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+        return first_row(response)
+
+    def create_mandate(self, payload: dict[str, Any]) -> dict[str, Any]:
+        response = self._client.table("spend_mandates").insert(payload).execute()
+        return first_row(response) or payload
+
+    def update_mandate(self, mandate_id: str, updates: dict[str, Any]) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("spend_mandates")
+            .update(updates)
+            .eq("id", mandate_id)
+            .execute()
+        )
+        return first_row(response)
+
+    def revoke_active_mandates(self, user_id: str) -> list[dict[str, Any]]:
+        from datetime import datetime, timezone
+
+        response = (
+            self._client.table("spend_mandates")
+            .update({"status": "revoked", "updated_at": datetime.now(timezone.utc).isoformat()})
+            .eq("user_id", user_id)
+            .eq("status", "active")
+            .execute()
+        )
+        return getattr(response, "data", None) or []

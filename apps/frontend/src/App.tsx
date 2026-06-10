@@ -25,7 +25,17 @@ import {
 import { AvatarWithOrganicGlow } from './design-system/components/AvatarWithOrganicGlow';
 import { SearchInput } from './design-system/components/SearchInput';
 import { RecipeSkeletonLoader } from './components/ui/skeleton-loader';
-import { getJamieUser, getMyRecipes, getRecipeAccess, type JamieUserSummary, type OwnedRecipeSummary, type RecipeAccessResponse } from './lib/api';
+import {
+  getCurrentSpendMandate,
+  getJamieUser,
+  getMyRecipes,
+  getRecipeAccess,
+  revokeCurrentSpendMandate,
+  type JamieUserSummary,
+  type OwnedRecipeSummary,
+  type RecipeAccessResponse,
+  type SpendMandate,
+} from './lib/api';
 import { loadRecipeBySlug } from './data/loadRecipeBySlug';
 import { usePermalinks } from './hooks/usePermalinks';
 import { RecipeNotFound } from './components/RecipeNotFound';
@@ -87,6 +97,7 @@ export default function App() {
   const [myTabSite, setMyTabSite] = useState<MyTabSiteSummary | null>(null);
   const [myTabMessage, setMyTabMessage] = useState<string | null>(null);
   const [myTabMessageTone, setMyTabMessageTone] = useState<MyTabMessageTone | undefined>(undefined);
+  const [spendMandate, setSpendMandate] = useState<SpendMandate | null>(null);
   const [myRecipes, setMyRecipes] = useState<OwnedRecipeSummary[]>([]);
   const [isMyRecipesLoading, setIsMyRecipesLoading] = useState(false);
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
@@ -112,10 +123,25 @@ export default function App() {
     }
   }, []);
 
+  const refreshSpendMandate = useCallback(async (userId?: string) => {
+    if (!userId) {
+      setSpendMandate(null);
+      return;
+    }
+    try {
+      const mandate = await getCurrentSpendMandate(userId);
+      setSpendMandate(mandate);
+    } catch (error) {
+      console.error('Failed to load spend mandate:', error);
+      setSpendMandate(null);
+    }
+  }, []);
+
   const hydrateJamieUser = useCallback(async (userId?: string, isMounted?: () => boolean) => {
     if (!userId) {
       if (!isMounted || isMounted()) {
         setMyTabJamieUser(null);
+        setSpendMandate(null);
       }
       return;
     }
@@ -125,13 +151,14 @@ export default function App() {
       if (!isMounted || isMounted()) {
         setMyTabJamieUser(response.user);
       }
+      await refreshSpendMandate(userId);
     } catch (error) {
       console.error('Failed to load Jamie user for My Tab:', error);
       if (!isMounted || isMounted()) {
         setMyTabJamieUser(null);
       }
     }
-  }, []);
+  }, [refreshSpendMandate]);
 
   const loadOwnedRecipes = useCallback(async (userId?: string, isMounted?: () => boolean) => {
     if (!userId) {
@@ -619,6 +646,23 @@ export default function App() {
     navigateToTab('my-recipes');
   }, [navigateToTab]);
 
+  const handleRevokeSpendMandate = useCallback(async () => {
+    const userId = myTabJamieUser?.id ?? getStoredJamieAccessUserId();
+    if (!userId) {
+      return;
+    }
+    try {
+      await revokeCurrentSpendMandate(userId);
+      setSpendMandate(null);
+      toast.success('Agent spending revoked', {
+        description: 'Jamie will ask before adding unlocks to your Tab again.',
+      });
+    } catch (error) {
+      console.error('Failed to revoke spend mandate:', error);
+      toast.error('Could not revoke agent spending');
+    }
+  }, [myTabJamieUser?.id]);
+
   const waitForEmbeddedPurchaseResolution = useCallback((timeoutMs = 120_000) => {
     return new Promise<RecipePurchaseResolution | null>((resolve) => {
       const timer = window.setTimeout(() => {
@@ -745,34 +789,28 @@ export default function App() {
 
       voiceRecipeUnlockInFlightRef.current = true;
       try {
-        const accessKey = getRecipeAccessKey(recipe);
-        flushSync(() => {
-          setRecipeAccessMap(prev => ({ ...prev, [accessKey]: access }));
-        });
-        await new Promise<void>((resolve) => {
-          requestAnimationFrame(() => resolve());
-        });
-
-        const waitPromise = waitForEmbeddedPurchaseResolution(15_000);
         const outcome = await purchaseRecipe(access, {
-          openEmbeddedCheckout: async () => {
-            document
-              .querySelector('[data-supertab-pane]')
-              ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            await recipeModalRef.current?.openMyTabPurchaseFlow();
-          },
-          waitForEmbeddedResolution: () => waitPromise,
+          agentic: true,
+          requestSpendMandateConsent: async ({ ceilingAmount, currencyCode }) =>
+            window.confirm(
+              `Allow Jamie to add recipe unlocks to your Tab automatically this session `
+              + `(up to ${currencyCode} ${(ceilingAmount / 100).toFixed(2)})?`,
+            ),
         });
 
         if (outcome.via === 'unavailable') {
           toast.error('Could not open My Tab', {
-            description: 'Set the purchase-button or paywall experience ID for Supertab.',
+            description: 'Sign in to Supertab or set the client ID for this environment.',
           });
           return;
         }
 
         if (outcome.resolution) {
           await applyRecipePurchaseOutcome(recipe, outcome.resolution);
+          const userId = outcome.resolution.snapshot.userId ?? getStoredJamieAccessUserId();
+          if (userId) {
+            await refreshSpendMandate(userId);
+          }
           return;
         }
 
@@ -780,8 +818,8 @@ export default function App() {
           return;
         }
       } catch (error) {
-        console.error('Voice-triggered paywall failed:', error);
-        toast.error('Could not open My Tab', {
+        console.error('Voice-triggered purchase failed:', error);
+        toast.error('Could not unlock via My Tab', {
           description: 'Please try again or use Unlock on screen.',
         });
       } finally {
@@ -795,8 +833,8 @@ export default function App() {
       loadedRecipesByBackendId,
       navigateToRecipe,
       recipeAccessMap,
+      refreshSpendMandate,
       selectedRecipe,
-      waitForEmbeddedPurchaseResolution,
     ],
   );
 
@@ -855,12 +893,16 @@ export default function App() {
     helperText: myTabStatus === 'signed_in'
       ? 'Your owned recipes stay synced into My Recipes.'
       : 'Use the Supertab purchase flow on any locked recipe to get started.',
+    spendMandateLabel: spendMandate
+      ? `Agent spending: ${(spendMandate.remainingAmount / 100).toFixed(2)} ${spendMandate.currencyCode} remaining this session`
+      : undefined,
     primaryActionLabel: myTabStatus === 'signed_in'
       ? 'Open My Recipes'
       : myTabStatus === 'signed_out'
         ? 'Browse Recipes'
         : undefined,
     secondaryActionLabel: myTabStatus === 'signed_in' ? 'Refresh' : undefined,
+    tertiaryActionLabel: spendMandate ? 'Revoke agent spending' : undefined,
     message: myTabMessage,
     messageTone: myTabMessageTone,
     isTestMode: myTabAccount?.isTestMode,
@@ -920,6 +962,7 @@ export default function App() {
               myTabCard={myTabCard}
               onOpenMyTab={handleOpenMyTab}
               onOpenMyRecipes={handleOpenMyRecipes}
+              onRevokeSpendMandate={handleRevokeSpendMandate}
               isMyTabLoading={isMyTabLoading}
               myRecipesCount={myRecipes.length}
             />
