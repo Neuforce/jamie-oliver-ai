@@ -18,8 +18,10 @@ export interface MyTabCardData {
   purchaseCountLabel?: string;
   recentPurchaseLabel?: string;
   helperText?: string;
+  spendMandateLabel?: string;
   primaryActionLabel?: string;
   secondaryActionLabel?: string;
+  tertiaryActionLabel?: string;
   message?: string | null;
   messageTone?: 'neutral' | 'error';
   isTestMode?: boolean;
@@ -33,6 +35,7 @@ export interface TabNavProps {
   myTabCard?: MyTabCardData;
   onOpenMyTab?: () => void;
   onOpenMyRecipes?: () => void;
+  onRevokeSpendMandate?: () => void;
   isMyTabLoading?: boolean;
   myRecipesCount?: number;
 }
@@ -54,6 +57,7 @@ export function TabNav({
   myTabCard,
   onOpenMyTab,
   onOpenMyRecipes,
+  onRevokeSpendMandate,
   isMyTabLoading = false,
   myRecipesCount = 0,
 }: TabNavProps) {
@@ -75,6 +79,7 @@ export function TabNav({
         onCloseChat={onCloseChat}
         onOpenMyTab={onOpenMyTab}
         onOpenMyRecipes={onOpenMyRecipes}
+        onRevokeSpendMandate={onRevokeSpendMandate}
         myTabCard={myTabCard}
         isMyTabLoading={isMyTabLoading}
         myRecipesCount={myRecipesCount}

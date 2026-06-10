@@ -525,3 +525,83 @@ export async function syncSupertabPurchase(
 
   return response.json();
 }
+
+// =============================================================================
+// AGENTIC PAYMENTS — spend mandates + purchase intents
+// =============================================================================
+
+export interface PurchaseIntent {
+  intent_type: 'recipe_unlock';
+  provider: string;
+  user_id: string;
+  recipe_slug: string;
+  content_key: string;
+  price_amount: number;
+  currency_code: string;
+  mandate_id?: string | null;
+  offer: {
+    offering_id?: string | null;
+    onetime_offering_id?: string | null;
+  };
+  metadata: Record<string, unknown>;
+}
+
+export interface SpendMandate {
+  id: string;
+  userId: string;
+  sessionId?: string | null;
+  ceilingAmount: number;
+  currencyCode: string;
+  consumedAmount: number;
+  status: string;
+  source: string;
+  grantedAt?: string | null;
+  expiresAt?: string | null;
+  remainingAmount: number;
+}
+
+export async function getCurrentSpendMandate(userId: string): Promise<SpendMandate | null> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/v1/spend-mandates/current?user_id=${encodeURIComponent(userId)}`,
+  );
+  if (response.status === 404) {
+    return null;
+  }
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to get spend mandate: ${response.status} ${errorText}`);
+  }
+  const data = await response.json();
+  return data ?? null;
+}
+
+export async function createSpendMandate(params: {
+  user_id: string;
+  ceiling_amount: number;
+  currency_code?: string;
+  session_id?: string;
+  source?: string;
+}): Promise<SpendMandate> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/spend-mandates`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to create spend mandate: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}
+
+export async function revokeCurrentSpendMandate(userId: string): Promise<{ revoked: number }> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/v1/spend-mandates/current?user_id=${encodeURIComponent(userId)}`,
+    { method: 'DELETE' },
+  );
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to revoke spend mandate: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}

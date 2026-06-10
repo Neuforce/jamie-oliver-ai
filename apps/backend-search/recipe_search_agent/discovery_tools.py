@@ -533,12 +533,25 @@ def request_supertab_unlock(recipe_backend_id: str) -> str:
     recipe_row = catalog.get_recipe_row(rid)
     recipe_detail = build_recipe_detail_payload(recipe_row) if recipe_row else None
 
+    purchase_intent = {
+        "intent_type": "recipe_unlock",
+        "provider": "supertab",
+        "recipe_slug": rid,
+        "content_key": f"recipe:{rid}:cook",
+        "metadata": {
+            "recipe_id": rid,
+            "content_key": f"recipe:{rid}:cook",
+            "source": "agentic-commerce",
+        },
+    }
+
     return json.dumps(
         {
             "ok": True,
             "recipe_backend_id": rid,
             "recipe_detail": recipe_detail,
-            "hint": "Client may open Supertab paywall when modal is locked and ids match.",
+            "purchase_intent": purchase_intent,
+            "hint": "Client executes purchase_intent via silent on-tab purchase when mandate allows.",
         }
     )
 
@@ -626,6 +639,24 @@ discovery_function_manager.register_function(get_recipe_details)
 discovery_function_manager.register_function(suggest_recipes_for_mood)
 discovery_function_manager.register_function(plan_meal)
 discovery_function_manager.register_function(create_shopping_list)
+def get_commerce_capabilities() -> str:
+    """
+    Return Jamie's agentic commerce capability manifest (UCP/MCP-compatible).
+
+    Use when an external agent or integration needs to discover how to
+    authorize spending, mint offers, and reconcile purchases.
+
+    Returns:
+        JSON capability manifest describing recipe_unlock commerce.
+    """
+    import json
+
+    from recipe_search_agent.commerce_capability import build_commerce_capability_manifest
+
+    return json.dumps(build_commerce_capability_manifest(), indent=2)
+
+
 discovery_function_manager.register_function(request_supertab_unlock)
+discovery_function_manager.register_function(get_commerce_capabilities)
 
 logger.info(f"Registered {len(discovery_function_manager.registered_functions)} discovery tools")

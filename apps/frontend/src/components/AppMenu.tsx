@@ -19,6 +19,7 @@ export interface AppMenuProps {
   onCloseChat?: () => void;
   onOpenMyTab?: () => void;
   onOpenMyRecipes?: () => void;
+  onRevokeSpendMandate?: () => void;
   myTabCard?: MyTabCardData;
   isMyTabLoading?: boolean;
   myRecipesCount?: number;
@@ -38,6 +39,7 @@ export function AppMenu({
   onCloseChat,
   onOpenMyTab,
   onOpenMyRecipes,
+  onRevokeSpendMandate,
   myTabCard,
   isMyTabLoading = false,
   myRecipesCount = 0,
@@ -109,6 +111,14 @@ export function AppMenu({
             onOpenMyTab();
             close();
           }}
+          onTertiaryAction={
+            myTabCard.tertiaryActionLabel && onRevokeSpendMandate
+              ? () => {
+                  onRevokeSpendMandate();
+                  close();
+                }
+              : undefined
+          }
         />
       )}
 
@@ -122,9 +132,10 @@ interface MyTabCardProps {
   isLoading: boolean;
   onPrimaryAction: () => void;
   onSecondaryAction: () => void;
+  onTertiaryAction?: () => void;
 }
 
-function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTabCardProps) {
+function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction, onTertiaryAction }: MyTabCardProps) {
   const CircleIcon =
     card.messageTone === 'error'
       ? AlertCircle
@@ -187,6 +198,9 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
         )}
 
         <p className="jamie-mytab-card__description">{card.description}</p>
+        {card.spendMandateLabel && (
+          <p className="jamie-mytab-card__description">{card.spendMandateLabel}</p>
+        )}
       </div>
 
       {card.status === 'signed_in' && (card.purchaseCountLabel || balanceSummary) && (
@@ -208,7 +222,7 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
         </p>
       )}
 
-      {(card.primaryActionLabel || card.secondaryActionLabel) && (
+      {(card.primaryActionLabel || card.secondaryActionLabel || card.tertiaryActionLabel) && (
         <div className="jamie-mytab-card__actions">
           {card.primaryActionLabel && (
             <button
@@ -229,6 +243,16 @@ function MyTabCard({ card, isLoading, onPrimaryAction, onSecondaryAction }: MyTa
               disabled={isLoading}
             >
               {isLoading ? 'Refreshing…' : card.secondaryActionLabel}
+            </button>
+          )}
+          {card.tertiaryActionLabel && onTertiaryAction && (
+            <button
+              type="button"
+              className="jamie-mytab-card__secondary"
+              onClick={onTertiaryAction}
+              disabled={isLoading}
+            >
+              {card.tertiaryActionLabel}
             </button>
           )}
         </div>
