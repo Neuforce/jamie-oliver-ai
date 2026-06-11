@@ -53,10 +53,12 @@ import {
   type MyTabStatus,
 } from './lib/supertab';
 import {
+  formatConsentPrice,
   requestSpendMandateConsent as waitForSpendMandateConsent,
   resolveSpendMandateConsent,
   getPendingSpendMandateConsent,
 } from './lib/spendMandateConsentGate';
+import { addPurchaseReceipt } from './lib/purchaseReceiptStore';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -833,6 +835,17 @@ export default function App() {
 
         if (outcome.resolution) {
           await applyRecipePurchaseOutcome(recipe, outcome.resolution);
+          if (outcome.resolution.state.purchase) {
+            const priceLabel =
+              typeof access.offering?.priceAmount === 'number' && access.offering?.currencyCode
+                ? formatConsentPrice(access.offering.priceAmount, access.offering.currencyCode)
+                : '$0.05';
+            addPurchaseReceipt({
+              backendRecipeId: bid,
+              recipeTitle: recipe.title,
+              priceLabel,
+            });
+          }
           const userId = outcome.resolution.snapshot.userId ?? getStoredJamieAccessUserId();
           if (userId) {
             await refreshSpendMandate(userId);

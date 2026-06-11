@@ -13,6 +13,7 @@ import type { ProcessCardState, ProcessStep, ToolName, FeaturedPayload } from '.
 import { TOOL_STEP_DISPLAY } from './ProcessCardTypes';
 import { JamieHeart } from './JamieHeart';
 import { SpendMandateConsentInline } from './SpendMandateConsentInline';
+import { PurchaseReceiptChip } from './PurchaseReceiptChip';
 import { VoiceModeRoller } from './VoiceModeRoller';
 import { VoiceFooter } from './VoiceFooter';
 import type { RollerMessage, StackRole, RollerRenderContext } from './VoiceModeRoller';
@@ -1336,10 +1337,16 @@ export function ChatView({
                 className={voiceMode ? 'process-card--embedded' : undefined}
               />
               {mandateConsentPart && (
-                <SpendMandateConsentInline
-                  backendRecipeId={mandateBackendId}
-                  className="mt-3"
-                />
+                <>
+                  <SpendMandateConsentInline
+                    backendRecipeId={mandateBackendId}
+                    className="mt-3"
+                  />
+                  <PurchaseReceiptChip
+                    backendRecipeId={mandateBackendId}
+                    className="mt-3"
+                  />
+                </>
               )}
             </div>
           ) : (
@@ -1473,10 +1480,16 @@ export function ChatView({
               ) : null;
 
               const mandateConsentBlock = mandateConsentPart ? (
-                <SpendMandateConsentInline
-                  backendRecipeId={mandateBackendId}
-                  className="jamie-thread-card__payload"
-                />
+                <>
+                  <SpendMandateConsentInline
+                    backendRecipeId={mandateBackendId}
+                    className="jamie-thread-card__payload"
+                  />
+                  <PurchaseReceiptChip
+                    backendRecipeId={mandateBackendId}
+                    className="jamie-thread-card__payload"
+                  />
+                </>
               ) : null;
 
               const payloadBlocks = (

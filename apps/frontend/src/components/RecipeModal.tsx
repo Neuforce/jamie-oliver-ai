@@ -3,6 +3,7 @@ import { Recipe } from '../data/recipes';
 import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play, Share2 } from 'lucide-react';
 import { SupertabPurchaseButton, type SupertabPurchaseButtonHandle } from './SupertabPurchaseButton';
 import { SpendMandateConsentInline } from './SpendMandateConsentInline';
+import { PurchaseReceiptChip } from './PurchaseReceiptChip';
 import { toast } from './ui/sonner';
 import type { RecipeAccessResponse } from '../lib/api';
 import { routeToUrl } from '../lib/permalinks';
@@ -467,12 +468,14 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
            * is never ambiguous. The header pill scrolls to this pane
            * when tapped while locked.
            */}
+          <PurchaseReceiptChip backendRecipeId={recipe.backendId ?? undefined} className="mb-3" />
           {isLocked && recipeAccess && (
             <div
               className="jamie-recipe-modal__supertab"
               data-supertab-pane="true"
             >
               <SpendMandateConsentInline backendRecipeId={recipe.backendId ?? undefined} />
+              <PurchaseReceiptChip backendRecipeId={recipe.backendId ?? undefined} className="mt-3" />
               <SupertabPurchaseButton
                 ref={purchaseButtonRef}
                 access={recipeAccess}

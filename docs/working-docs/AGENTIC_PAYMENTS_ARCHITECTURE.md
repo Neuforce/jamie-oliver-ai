@@ -287,6 +287,8 @@ Each payment provider is one adapter implementing:
 
 ## 8. Phase Roadmap
 
+Detailed, current sequencing lives in [AGENTIC_PAYMENTS_ROADMAP.md](AGENTIC_PAYMENTS_ROADMAP.md).
+
 ### Phase 1 — Current implementation
 
 Text chat + recipe sheet consent surfaces. Silent Tab purchase via `Supertab.api.purchase` with backend-minted one-time offerings (`onetimeOfferingId`). Svix-verified webhook reconciliation as authoritative entitlement grant. Optimistic sync retained as UX fast-path. Mandate lifecycle management (create, check, consume on settlement, revoke). Commerce capability manifest at `GET /api/v1/commerce/capabilities`.
