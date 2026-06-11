@@ -557,7 +557,14 @@ class DiscoveryVoiceHandler:
                 elif event.type == "tool_call":
                     logger.info("Tool called: %s", event.content)
 
-                elif event.type in ("recipes", "meal_plan", "recipe_detail", "shopping_list", "recipe_paywall_requested"):
+                elif event.type in (
+                    "recipes",
+                    "meal_plan",
+                    "recipe_detail",
+                    "shopping_list",
+                    "spend_mandate_consent_requested",
+                    "recipe_paywall_requested",
+                ):
                     await self._send(
                         event.type,
                         event.metadata,

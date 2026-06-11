@@ -63,7 +63,7 @@ export interface ShoppingListData {
 }
 
 export interface ChatEvent {
-  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'recipe_paywall_requested' | 'done' | 'error';
+  type: 'text_chunk' | 'tool_call' | 'recipes' | 'meal_plan' | 'recipe_detail' | 'shopping_list' | 'spend_mandate_consent_requested' | 'recipe_paywall_requested' | 'done' | 'error';
   content: string;
   metadata?: {
     // Correlation (discovery tool contract)
@@ -85,6 +85,11 @@ export interface ChatEvent {
     shopping_list?: ShoppingListData;
     recipes_included?: string[];
     total_items?: number;
+    // Spend mandate consent (agentic commerce)
+    backend_recipe_id?: string;
+    price_amount?: number;
+    currency_code?: string;
+    ceiling_amount?: number;
   };
 }
 
