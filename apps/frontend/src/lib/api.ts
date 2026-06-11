@@ -565,6 +565,24 @@ export interface SpendMandate {
   remainingAmount: number;
 }
 
+export interface OnetimeOfferingRequest {
+  content_key: string;
+  price_amount: number;
+  currency_code?: string;
+  description: string;
+  recipe_slug?: string;
+  user_id?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface OnetimeOfferingResponse {
+  offering: {
+    id: string;
+    [key: string]: unknown;
+  };
+  purchase_intent: PurchaseIntent | null;
+}
+
 export async function getCurrentSpendMandate(userId: string): Promise<SpendMandate | null> {
   const response = await fetch(
     `${API_BASE_URL}/api/v1/spend-mandates/current?user_id=${encodeURIComponent(userId)}`,
@@ -607,6 +625,21 @@ export async function revokeCurrentSpendMandate(userId: string): Promise<{ revok
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Failed to revoke spend mandate: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}
+
+export async function createOnetimeOffering(
+  params: OnetimeOfferingRequest,
+): Promise<OnetimeOfferingResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/offerings/onetime`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to create one-time offering: ${response.status} ${errorText}`);
   }
   return response.json();
 }

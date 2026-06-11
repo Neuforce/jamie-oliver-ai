@@ -569,6 +569,20 @@ export function ChatView({
         onVoiceRecipePaywallRequested?.(payload.backend_recipe_id);
       }
     },
+    onSpendMandateConsentRequested: (payload) => {
+      applyStreamToVoiceMessage({
+        type: 'spend_mandate_consent_requested',
+        content: '',
+        metadata: {
+          backend_recipe_id: payload.backend_recipe_id,
+          price_amount: payload.price_amount,
+          currency_code: payload.currency_code,
+          ceiling_amount: payload.ceiling_amount,
+          tool_call_id: payload.tool_call_id,
+          response_id: payload.response_id,
+        },
+      });
+    },
     onDone: () => {
       // Finalize the voice message
       if (voiceMessageIdRef.current) {
@@ -1199,7 +1213,7 @@ export function ChatView({
                 resolveCommerceBadgeForBackendId(payload.recipe.recipe_id),
               )}
             </div>
-            {(payload.recipe.estimated_time ||
+            {Boolean(payload.recipe.estimated_time ||
               payload.recipe.difficulty ||
               payload.recipe.ingredient_count ||
               payload.recipe.step_count) && (

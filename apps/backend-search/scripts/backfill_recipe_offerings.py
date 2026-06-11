@@ -10,7 +10,7 @@ from dotenv import load_dotenv
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from recipe_search_agent.repositories import MonetizationRepository
+from recipe_search_agent.repositories import DEFAULT_RECIPE_PRICE_CENTS, MonetizationRepository
 
 
 def parse_args() -> argparse.Namespace:
@@ -50,7 +50,7 @@ def main() -> None:
 
         if not args.apply:
             is_free = recipe["slug"] in repository._FREE_RECIPE_SLUGS  # noqa: SLF001
-            desired_price = 0 if is_free else 199
+            desired_price = 0 if is_free else DEFAULT_RECIPE_PRICE_CENTS
             desired_content_key = f"recipe:{recipe['slug']}:cook"
             needs_update = (
                 existing.get("status") != "active"

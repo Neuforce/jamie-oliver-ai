@@ -2,6 +2,7 @@ import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef,
 import { Recipe } from '../data/recipes';
 import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play, Share2 } from 'lucide-react';
 import { SupertabPurchaseButton, type SupertabPurchaseButtonHandle } from './SupertabPurchaseButton';
+import { SpendMandateConsentInline } from './SpendMandateConsentInline';
 import { toast } from './ui/sonner';
 import type { RecipeAccessResponse } from '../lib/api';
 import { routeToUrl } from '../lib/permalinks';
@@ -471,6 +472,7 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
               className="jamie-recipe-modal__supertab"
               data-supertab-pane="true"
             >
+              <SpendMandateConsentInline backendRecipeId={recipe.backendId ?? undefined} />
               <SupertabPurchaseButton
                 ref={purchaseButtonRef}
                 access={recipeAccess}

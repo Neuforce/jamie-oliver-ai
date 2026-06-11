@@ -52,7 +52,11 @@ import {
   type MyTabSiteSummary,
   type MyTabStatus,
 } from './lib/supertab';
-import { requestSpendMandateConsent as waitForSpendMandateConsent } from './lib/spendMandateConsentGate';
+import {
+  requestSpendMandateConsent as waitForSpendMandateConsent,
+  resolveSpendMandateConsent,
+  getPendingSpendMandateConsent,
+} from './lib/spendMandateConsentGate';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -750,8 +754,19 @@ export default function App() {
   const handleVoiceRecipePaywallRequested = useCallback(
     async (backendId: string) => {
       const bid = (backendId || '').trim();
-      if (!bid || voiceRecipeUnlockInFlightRef.current) {
+      if (!bid) {
         return;
+      }
+      if (voiceRecipeUnlockInFlightRef.current) {
+        if (getPendingSpendMandateConsent()) {
+          // A previous request is blocked waiting for user consent.
+          // Cancel the stale consent so the gate auto-resolves it as false,
+          // then let this new attempt proceed.
+          resolveSpendMandateConsent(false);
+        } else {
+          // An actual purchase is already executing — don't overlap it.
+          return;
+        }
       }
 
       let recipe: Recipe | null =
@@ -826,6 +841,9 @@ export default function App() {
         }
 
         if (outcome.via === 'abandoned') {
+          toast('No problem — nothing was charged', {
+            description: "The recipe stays locked. Ask me again or tap Unlock whenever you're ready.",
+          });
           return;
         }
       } catch (error) {

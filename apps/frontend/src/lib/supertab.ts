@@ -1,6 +1,7 @@
 import { loadSupertab } from '@getsupertab/supertab-js';
 import {
   bootstrapSupertabIdentity,
+  createOnetimeOffering,
   createSpendMandate,
   getCurrentSpendMandate,
   getRecipeAccess,
@@ -22,7 +23,6 @@ type SupertabPurchaseButtonHandle = Awaited<ReturnType<SupertabClient['createPur
 };
 
 let supertabClientPromise: Promise<SupertabClient> | null = null;
-let siteOfferingsCache: Array<{ id: string; contentKey?: string | null; description?: string | null }> | null = null;
 
 const DEFAULT_AGENTIC_MANDATE_CEILING_CENTS = 1000;
 const SPEND_MANDATE_SESSION_KEY = 'jamie-spend-mandate-session';
@@ -475,6 +475,8 @@ export async function mountRecipePurchaseButton({
   const button = await client.createPurchaseButton({
     containerElement,
     experienceId,
+    language: 'en',
+    label: 'Put it on my Tab',
     purchaseMetadata: {
       recipeId: access.recipeId,
       contentKey: access.offering.contentKey,
@@ -619,48 +621,6 @@ export function buildPurchaseIntent(
   };
 }
 
-async function resolveRecipeOfferingId(
-  client: SupertabClient,
-  access: RecipeAccessResponse,
-): Promise<string | null> {
-  if (access.offering?.supertabOfferingId) {
-    return access.offering.supertabOfferingId;
-  }
-
-  const configured = import.meta.env.VITE_SUPERTAB_RECIPE_OFFERING_ID;
-  if (configured) {
-    return configured;
-  }
-
-  if (!siteOfferingsCache) {
-    const site = await client.api.retrieveSite();
-    siteOfferingsCache = (site?.offerings || []).map((offering: any) => {
-      const details = offering.entitlementDetails;
-      const contentKey = Array.isArray(details)
-        ? details[0]?.contentKey
-        : details?.contentKey;
-      return {
-        id: offering.id,
-        contentKey: contentKey ?? null,
-        description: offering.description ?? null,
-      };
-    });
-  }
-
-  const contentKey = access.offering?.contentKey;
-  if (contentKey) {
-    const match = siteOfferingsCache.find((o) => o.contentKey === contentKey);
-    if (match) {
-      return match.id;
-    }
-  }
-
-  const recipeOffering = siteOfferingsCache.find((o) =>
-    o.description?.toLowerCase().includes('recipe'),
-  );
-  return recipeOffering?.id ?? siteOfferingsCache[0]?.id ?? null;
-}
-
 export async function ensureSpendMandateForAgenticPurchase(
   userId: string,
   access: RecipeAccessResponse,
@@ -732,11 +692,6 @@ export async function purchaseRecipeOnTab(
     }
   }
 
-  const offeringId = await resolveRecipeOfferingId(client, access);
-  if (!offeringId) {
-    return { status: 'unavailable', userId };
-  }
-
   const customer = await client.api.retrieveCustomer().catch(() => null);
   const currencyCode = customer?.tab?.currency?.code || access.offering.currencyCode || 'USD';
 
@@ -756,8 +711,35 @@ export async function purchaseRecipeOnTab(
     };
   }
 
+  const priceAmount = access.offering.priceAmount ?? 5;
+  let onetimeOfferingId: string | undefined;
+  try {
+    const minted = await createOnetimeOffering({
+      content_key: access.offering.contentKey,
+      price_amount: priceAmount,
+      currency_code: currencyCode,
+      description: `Cook with Jamie: ${access.recipeId}`,
+      recipe_slug: access.recipeId,
+      user_id: userId,
+      metadata: {
+        source: options.agentic ? 'agent-silent-tab' : 'jamie-on-tab',
+      },
+    });
+    onetimeOfferingId = minted?.offering?.id;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (/Failed to create one-time offering:\s5\d{2}\b/.test(message)) {
+      return { status: 'unavailable', userId };
+    }
+    throw error;
+  }
+
+  if (!onetimeOfferingId) {
+    return { status: 'unavailable', userId };
+  }
+
   const result = await client.api.purchase({
-    offeringId,
+    onetimeOfferingId,
     currencyCode,
     metadata: {
       jamieUserId: userId,
@@ -882,6 +864,7 @@ export async function launchRecipePaywall(access: RecipeAccessResponse): Promise
   const supertabClient = await getSupertabClient();
   const paywall = await supertabClient.createPaywall({
     experienceId,
+    language: 'en',
     purchaseMetadata: {
       jamieUserId: userId,
       recipeId: access.recipeId,

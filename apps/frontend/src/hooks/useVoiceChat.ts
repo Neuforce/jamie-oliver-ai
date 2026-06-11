@@ -77,6 +77,15 @@ export interface UseVoiceChatOptions {
     tool_call_id?: string;
     response_id?: string;
   }) => void;
+  /** Server requests spend-mandate consent before agentic purchase */
+  onSpendMandateConsentRequested?: (payload: {
+    backend_recipe_id?: string;
+    price_amount?: number;
+    currency_code?: string;
+    ceiling_amount?: number;
+    tool_call_id?: string;
+    response_id?: string;
+  }) => void;
   /** Callback when response is complete */
   onDone?: () => void;
   /** Callback on error */
@@ -97,6 +106,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     onDone,
     onError,
     onRecipePaywallRequested,
+    onSpendMandateConsentRequested,
     sampleRate = 16000,
   } = options;
 
@@ -408,6 +418,19 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         if (!bid) break;
         callbacks.onRecipePaywallRequested?.({
           backend_recipe_id: bid,
+          tool_call_id: typeof data?.tool_call_id === 'string' ? data.tool_call_id : undefined,
+          response_id: typeof data?.response_id === 'string' ? data.response_id : responseId,
+        });
+        break;
+      }
+
+      case 'spend_mandate_consent_requested': {
+        if (!isCurrentResponse(responseId)) return;
+        callbacks.onSpendMandateConsentRequested?.({
+          backend_recipe_id: typeof data?.backend_recipe_id === 'string' ? data.backend_recipe_id : undefined,
+          price_amount: typeof data?.price_amount === 'number' ? data.price_amount : undefined,
+          currency_code: typeof data?.currency_code === 'string' ? data.currency_code : undefined,
+          ceiling_amount: typeof data?.ceiling_amount === 'number' ? data.ceiling_amount : undefined,
           tool_call_id: typeof data?.tool_call_id === 'string' ? data.tool_call_id : undefined,
           response_id: typeof data?.response_id === 'string' ? data.response_id : responseId,
         });
