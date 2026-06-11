@@ -18,6 +18,15 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
+
+load_dotenv()
+
+# Disable Langfuse tracing when not configured (avoids per-request auth warnings + latency).
+if os.getenv("LANGFUSE_DISABLED", "").lower() in ("1", "true", "yes"):
+    os.environ["LANGFUSE_TRACING_ENABLED"] = "false"
+    os.environ.pop("LANGFUSE_PUBLIC_KEY", None)
+    os.environ.pop("LANGFUSE_SECRET_KEY", None)
+
 from supabase import create_client
 
 from recipe_search_agent.search import RecipeSearchAgent, SearchFilters, RecipeMatch

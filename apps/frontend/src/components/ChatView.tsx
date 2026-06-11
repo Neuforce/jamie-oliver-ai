@@ -12,6 +12,7 @@ import { ProcessCard, selectFeatured } from './ProcessCard';
 import type { ProcessCardState, ProcessStep, ToolName, FeaturedPayload } from './ProcessCardTypes';
 import { TOOL_STEP_DISPLAY } from './ProcessCardTypes';
 import { JamieHeart } from './JamieHeart';
+import { SpendMandateConsentInline } from './SpendMandateConsentInline';
 import { VoiceModeRoller } from './VoiceModeRoller';
 import { VoiceFooter } from './VoiceFooter';
 import type { RollerMessage, StackRole, RollerRenderContext } from './VoiceModeRoller';
@@ -970,6 +971,7 @@ export function ChatView({
           || event.type === 'meal_plan'
           || event.type === 'recipe_detail'
           || event.type === 'shopping_list'
+          || event.type === 'spend_mandate_consent_requested'
           || event.type === 'recipe_paywall_requested'
         ) {
           if (event.type === 'recipe_paywall_requested') {
@@ -1293,6 +1295,14 @@ export function ChatView({
     }
 
     if (message.type === 'jamie') {
+      const mandateConsentPart = message.toolParts?.find(
+        (part) => part.outputKind === 'mandate_consent',
+      );
+      const mandateBackendId =
+        mandateConsentPart?.paywallBackendId
+        ?? message.recipeDetail?.recipe_id
+        ?? undefined;
+
       return (
         <>
           {message.process ? (
@@ -1311,6 +1321,12 @@ export function ChatView({
                 })}
                 className={voiceMode ? 'process-card--embedded' : undefined}
               />
+              {mandateConsentPart && (
+                <SpendMandateConsentInline
+                  backendRecipeId={mandateBackendId}
+                  className="mt-3"
+                />
+              )}
             </div>
           ) : (
             /*
@@ -1442,8 +1458,16 @@ export function ChatView({
                 </div>
               ) : null;
 
+              const mandateConsentBlock = mandateConsentPart ? (
+                <SpendMandateConsentInline
+                  backendRecipeId={mandateBackendId}
+                  className="jamie-thread-card__payload"
+                />
+              ) : null;
+
               const payloadBlocks = (
                 <>
+                  {mandateConsentBlock}
                   {hasRecipes && !(voiceMode && voiceExpanded) && (
                     <div className={voiceMode ? 'mt-3' : 'jamie-thread-card__payload'}>
                       <RecipeCarousel

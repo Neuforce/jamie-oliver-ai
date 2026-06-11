@@ -21,7 +21,8 @@ export type ToolOutputKind =
   | 'recipe_detail'
   | 'meal_plan'
   | 'shopping_list'
-  | 'paywall';
+  | 'paywall'
+  | 'mandate_consent';
 
 export interface ToolInvocationPart {
   toolCallId: string;
@@ -33,6 +34,9 @@ export interface ToolInvocationPart {
   mealPlan?: MealPlanData;
   shoppingList?: ShoppingListData;
   paywallBackendId?: string;
+  mandatePriceAmount?: number;
+  mandateCurrencyCode?: string;
+  mandateCeilingAmount?: number;
 }
 
 export interface ChatTurnStreamState {
@@ -173,6 +177,27 @@ export function reduceChatStreamEvent(
     };
   }
 
+  if (event.type === 'spend_mandate_consent_requested') {
+    const backendId = (meta.backend_recipe_id as string | undefined)?.trim();
+    const existing = state.parts.find((p) => p.toolCallId === toolCallId);
+    return {
+      ...state,
+      responseId,
+      parts: upsertPart(state.parts, toolCallId, {
+        toolCallId,
+        toolName: 'request_supertab_unlock',
+        status: existing?.status ?? 'running',
+        outputKind: 'mandate_consent',
+        paywallBackendId: backendId,
+        mandatePriceAmount: meta.price_amount as number | undefined,
+        mandateCurrencyCode: meta.currency_code as string | undefined,
+        mandateCeilingAmount: meta.ceiling_amount as number | undefined,
+        recipeDetail: existing?.recipeDetail,
+        recipes: existing?.recipes,
+      }),
+    };
+  }
+
   if (event.type === 'recipe_paywall_requested') {
     const backendId = (meta.backend_recipe_id as string | undefined)?.trim();
     const existing = state.parts.find((p) => p.toolCallId === toolCallId);
@@ -183,8 +208,11 @@ export function reduceChatStreamEvent(
         toolCallId,
         toolName: 'request_supertab_unlock',
         ...completePatch,
-        outputKind: 'paywall',
+        outputKind: existing?.outputKind === 'mandate_consent' ? 'mandate_consent' : 'paywall',
         paywallBackendId: backendId,
+        mandatePriceAmount: existing?.mandatePriceAmount,
+        mandateCurrencyCode: existing?.mandateCurrencyCode,
+        mandateCeilingAmount: existing?.mandateCeilingAmount,
         recipeDetail: existing?.recipeDetail,
         recipes: existing?.recipes,
       }),
@@ -210,7 +238,9 @@ export function getFeaturedToolPart(parts: ToolInvocationPart[]): ToolInvocation
     if (part.outputKind === 'recipes' && part.recipes?.length) return part;
     if (part.outputKind === 'meal_plan' && part.mealPlan) return part;
     if (part.outputKind === 'shopping_list' && part.shoppingList) return part;
-    if (part.outputKind === 'paywall' && part.recipeDetail) return part;
+    if ((part.outputKind === 'paywall' || part.outputKind === 'mandate_consent') && part.recipeDetail) {
+      return part;
+    }
   }
   return null;
 }
@@ -265,9 +295,10 @@ export function voiceWireEventToChatEvent(
     case 'meal_plan':
     case 'recipe_detail':
     case 'shopping_list':
+    case 'spend_mandate_consent_requested':
     case 'recipe_paywall_requested':
       return {
-        type: eventName === 'recipe_paywall_requested' ? 'recipe_paywall_requested' : eventName,
+        type: eventName,
         content: '',
         metadata: {
           ...meta,

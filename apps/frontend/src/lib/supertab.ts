@@ -550,7 +550,13 @@ export interface LaunchRecipePaywallResult {
   refreshedAccess?: RecipeAccessResponse;
 }
 
-export type PurchaseRecipeVia = 'on_tab' | 'embedded' | 'paywall' | 'unavailable' | 'abandoned';
+export type PurchaseRecipeVia =
+  | 'on_tab'
+  | 'embedded'
+  | 'paywall'
+  | 'unavailable'
+  | 'abandoned'
+  | 'tab_settlement_required';
 
 export type { PurchaseIntent };
 
@@ -670,9 +676,7 @@ export async function ensureSpendMandateForAgenticPurchase(
   const ceiling = Math.max(DEFAULT_AGENTIC_MANDATE_CEILING_CENTS, price);
   const approved = requestConsent
     ? await requestConsent({ ceilingAmount: ceiling, currencyCode: currency, priceAmount: price })
-    : window.confirm(
-        `Allow Jamie to add recipe unlocks to your Tab automatically this session (up to $${(ceiling / 100).toFixed(2)})?`,
-      );
+    : false;
   if (!approved) {
     return null;
   }
@@ -834,6 +838,10 @@ export async function purchaseRecipe(
           onTabResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [],
       },
     };
+  }
+
+  if (onTabResult.status === 'action_required' && options.agentic) {
+    return { via: 'tab_settlement_required', resolution: null };
   }
 
   if (onTabResult.status === 'abandoned' && options.agentic) {

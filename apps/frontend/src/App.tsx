@@ -52,6 +52,7 @@ import {
   type MyTabSiteSummary,
   type MyTabStatus,
 } from './lib/supertab';
+import { requestSpendMandateConsent as waitForSpendMandateConsent } from './lib/spendMandateConsentGate';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -791,16 +792,26 @@ export default function App() {
       try {
         const outcome = await purchaseRecipe(access, {
           agentic: true,
-          requestSpendMandateConsent: async ({ ceilingAmount, currencyCode }) =>
-            window.confirm(
-              `Allow Jamie to add recipe unlocks to your Tab automatically this session `
-              + `(up to ${currencyCode} ${(ceilingAmount / 100).toFixed(2)})?`,
-            ),
+          requestSpendMandateConsent: async ({ ceilingAmount, currencyCode, priceAmount }) =>
+            waitForSpendMandateConsent({
+              ceilingAmount,
+              currencyCode,
+              priceAmount,
+              backendRecipeId: bid,
+            }),
         });
 
         if (outcome.via === 'unavailable') {
           toast.error('Could not open My Tab', {
             description: 'Sign in to Supertab or set the client ID for this environment.',
+          });
+          return;
+        }
+
+        if (outcome.via === 'tab_settlement_required') {
+          toast.error('Your Tab needs settling first', {
+            description:
+              "Tap Unlock on the recipe to pay now — I can't charge silently until your Tab has headroom.",
           });
           return;
         }

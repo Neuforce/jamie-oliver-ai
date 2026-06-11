@@ -38,6 +38,18 @@ describe('chatStream', () => {
       },
     });
     state = reduceChatStreamEvent(state, {
+      type: 'spend_mandate_consent_requested',
+      content: '',
+      metadata: {
+        tool_call_id: 'call-unlock',
+        response_id: 'turn-1',
+        backend_recipe_id: 'fish-chips-mushy-peas',
+        price_amount: 25,
+        currency_code: 'USD',
+        ceiling_amount: 1000,
+      },
+    });
+    state = reduceChatStreamEvent(state, {
       type: 'recipe_paywall_requested',
       content: '',
       metadata: {
@@ -48,8 +60,10 @@ describe('chatStream', () => {
     });
 
     const featured = getFeaturedToolPart(state.parts);
+    const unlockPart = state.parts.find((p) => p.toolCallId === 'call-unlock');
     expect(featured?.toolCallId).toBe('call-unlock');
     expect(featured?.recipeDetail?.recipe_id).toBe('fish-chips-mushy-peas');
-    expect(featured?.outputKind).toBe('paywall');
+    expect(unlockPart?.outputKind).toBe('mandate_consent');
+    expect(unlockPart?.mandatePriceAmount).toBe(25);
   });
 });
