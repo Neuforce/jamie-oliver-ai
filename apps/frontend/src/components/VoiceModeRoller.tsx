@@ -496,9 +496,6 @@ export function VoiceModeRoller({
                 className="voice-roller__card-content"
                 data-role={role}
                 data-speaker={msg.type}
-                data-voice-interactive={
-                  isTop && msg.type === 'jamie' ? 'true' : undefined
-                }
               >
                 <div
                   className="voice-roller__card-body"
