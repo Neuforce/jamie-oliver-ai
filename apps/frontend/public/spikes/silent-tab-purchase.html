@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spike: Modal-free Supertab Tab purchase</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0f172a;
+        --panel: rgba(17, 24, 39, 0.86);
+        --muted: #94a3b8;
+        --text: #e5e7eb;
+        --accent: #8b5cf6;
+        --border: rgba(148, 163, 184, 0.25);
+        --success: #10b981;
+        --warn: #f59e0b;
+        --error: #f87171;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; min-height: 100vh; padding: 32px 20px;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, rgba(139, 92, 246, 0.18), transparent 32%),
+          linear-gradient(180deg, #020617 0%, var(--bg) 100%);
+        color: var(--text);
+      }
+      main { max-width: 920px; margin: 0 auto; }
+      h1 { margin: 0 0 8px; font-size: clamp(24px, 4vw, 38px); line-height: 1.1; }
+      p { margin: 0; color: var(--muted); line-height: 1.6; }
+      .hypothesis { margin-top: 12px; padding: 14px 16px; border-left: 3px solid var(--accent);
+        background: rgba(139, 92, 246, 0.10); border-radius: 8px; color: #ddd6fe; }
+      .stack { display: grid; gap: 18px; margin-top: 24px; }
+      .card { background: var(--panel); border: 1px solid var(--border); border-radius: 18px;
+        padding: 20px; backdrop-filter: blur(14px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.28); }
+      .card h2 { margin: 0 0 12px; font-size: 15px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+      .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+      button {
+        appearance: none; border: 1px solid var(--border); border-radius: 12px; cursor: pointer;
+        background: var(--accent); color: white; font-weight: 600; padding: 11px 16px; font-size: 14px;
+      }
+      button.secondary { background: rgba(255,255,255,0.05); color: var(--text); }
+      button:disabled { opacity: 0.45; cursor: not-allowed; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+      .stat { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+      .stat .label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+      .stat .value { font-size: 18px; font-weight: 700; margin-top: 4px; }
+      select { padding: 10px; border-radius: 10px; background: #0b1220; color: var(--text); border: 1px solid var(--border); min-width: 280px; }
+      .verdict { font-size: 16px; font-weight: 700; padding: 14px 16px; border-radius: 12px; margin-top: 6px; }
+      .verdict.success { background: rgba(16,185,129,0.14); color: #6ee7b7; border: 1px solid rgba(16,185,129,0.4); }
+      .verdict.warn { background: rgba(245,158,11,0.14); color: #fcd34d; border: 1px solid rgba(245,158,11,0.4); }
+      .verdict.error { background: rgba(248,113,113,0.14); color: #fca5a5; border: 1px solid rgba(248,113,113,0.4); }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+      .inline-code { display: inline-block; padding: 2px 7px; border-radius: 999px; background: rgba(139, 92, 246, 0.14); color: #ddd6fe; font-size: 12px; }
+      pre#log { margin: 0; white-space: pre-wrap; word-break: break-word; font-size: 12px; line-height: 1.5; max-height: 420px; overflow: auto; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Spike 1 &mdash; Modal-free Supertab Tab purchase</h1>
+      <p>Pure Supertab.js + Customer API. No React, no Jamie app state, no paywall modal, no purchase button widget.</p>
+      <div class="hypothesis">
+        <strong>Hypothesis under test:</strong> A logged-in Supertab user can have a recipe added to their Tab by a direct
+        <code>client.api.purchase(...)</code> call. When the Tab has headroom, <code>actionRequired === false</code> and the charge lands
+        <strong>with zero payment UI</strong> &mdash; the exact primitive an agent/voice flow needs.
+      </div>
+
+      <div class="stack">
+        <section class="card">
+          <h2>1 &middot; Identity (one-time, not a payment step)</h2>
+          <div class="row">
+            <button id="signin">Sign in to Supertab</button>
+            <button id="refresh" class="secondary">Refresh customer + offerings</button>
+            <span id="authStatus" class="inline-code">auth: unknown</span>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>2 &middot; The Tab</h2>
+          <div class="grid" id="tabStats">
+            <div class="stat"><div class="label">Authenticated</div><div class="value" id="statAuth">&mdash;</div></div>
+            <div class="stat"><div class="label">Tab total</div><div class="value" id="statTotal">&mdash;</div></div>
+            <div class="stat"><div class="label">Tab limit</div><div class="value" id="statLimit">&mdash;</div></div>
+            <div class="stat"><div class="label">Currency</div><div class="value" id="statCurrency">&mdash;</div></div>
+            <div class="stat"><div class="label">Test mode</div><div class="value" id="statTest">&mdash;</div></div>
+            <div class="stat"><div class="label">Purchases</div><div class="value" id="statPurchases">&mdash;</div></div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>3 &middot; Pick an offering and charge it silently</h2>
+          <div class="row" style="margin-bottom: 12px;">
+            <select id="offeringSelect"><option>Sign in, then refresh…</option></select>
+          </div>
+          <div class="row">
+            <button id="checkEntitlement" class="secondary" disabled>Check entitlement (before)</button>
+            <button id="silentBuy" disabled>Put it on my Tab silently &rarr; api.purchase()</button>
+          </div>
+          <div id="verdict" class="verdict warn" style="display:none;"></div>
+        </section>
+
+        <section class="card">
+          <h2>Runtime log</h2>
+          <pre id="log"></pre>
+        </section>
+      </div>
+    </main>
+
+    <script type="module">
+      import { Supertab } from "https://js.supertab.co/v3/supertab.js";
+
+      // Client id is configurable so the page works on whichever deployed origin is
+      // registered with Supertab: append ?clientId=live_client.xxxx (or test_client.xxxx).
+      // Defaults to the test client used locally.
+      const params = new URLSearchParams(location.search);
+      const CLIENT_ID =
+        params.get("clientId") || "test_client.4764f49f-00fa-49be-a628-6b4a46005afd";
+
+      const el = (id) => document.getElementById(id);
+      const logEl = el("log");
+
+      function serialize(value) {
+        try {
+          return JSON.stringify(value, (_k, v) => {
+            if (typeof v === "function") return `[Function ${v.name || "anon"}]`;
+            if (v instanceof Error) return { name: v.name, message: v.message };
+            return v;
+          }, 2);
+        } catch (e) { return String(e); }
+      }
+      function log(label, value) {
+        logEl.textContent += `[${new Date().toISOString()}] ${label}\n${value === undefined ? "" : serialize(value)}\n\n`;
+        logEl.scrollTop = logEl.scrollHeight;
+        console.log(label, value);
+      }
+      function money(price) {
+        if (!price) return "—";
+        const div = price.currency?.baseUnit || 100;
+        const sym = price.currency?.symbol || price.currency?.code || "";
+        return `${sym}${(price.amount / div).toFixed(2)}`;
+      }
+      function setVerdict(kind, text) {
+        const v = el("verdict");
+        v.style.display = "block";
+        v.className = `verdict ${kind}`;
+        v.textContent = text;
+      }
+
+      window.addEventListener("error", (e) => log("window.error", { message: e.message }));
+      window.addEventListener("unhandledrejection", (e) => log("unhandledrejection", e.reason));
+
+      // Make the modal-free claim auditable: any popup window opened during purchase is logged loudly.
+      const originalOpen = window.open.bind(window);
+      window.open = function (...args) {
+        log("⚠️ window.open (a UI surface was opened!)", { url: args[0] ?? null });
+        return originalOpen(...args);
+      };
+
+      let client;
+      let site = null;
+      let customer = null;
+
+      function tabCurrencyCode() {
+        return customer?.tab?.currency?.code || "USD";
+      }
+
+      async function loadState() {
+        customer = await client.api.retrieveCustomer().catch((e) => { log("retrieveCustomer error", e); return null; });
+        site = await client.api.retrieveSite().catch((e) => { log("retrieveSite error", e); return null; });
+
+        const authed = Boolean(customer?.authenticated);
+        el("statAuth").textContent = authed ? "yes" : "no";
+        el("statTotal").textContent = money(customer?.tab?.total);
+        el("statLimit").textContent = money(customer?.tab?.limit);
+        el("statCurrency").textContent = tabCurrencyCode();
+        el("statTest").textContent = String(customer?.tab?.testMode ?? "—");
+        el("statPurchases").textContent = String(customer?.tab?.purchases?.length ?? 0);
+        el("authStatus").textContent = `auth: ${await client.auth.status}`;
+        log("retrieveCustomer", customer);
+
+        const select = el("offeringSelect");
+        const offerings = site?.offerings || [];
+        if (offerings.length) {
+          select.innerHTML = "";
+          for (const o of offerings) {
+            const opt = document.createElement("option");
+            opt.value = o.id;
+            const ck = Array.isArray(o.entitlementDetails)
+              ? (o.entitlementDetails[0]?.contentKey || "")
+              : (o.entitlementDetails?.contentKey || "");
+            opt.textContent = `${o.description} — ${money(o.price)} ${ck ? "(" + ck + ")" : ""}`;
+            opt.dataset.contentKey = ck;
+            select.appendChild(opt);
+          }
+          el("silentBuy").disabled = !authed;
+          el("checkEntitlement").disabled = !authed;
+        } else {
+          select.innerHTML = "<option>No predefined offerings on this site</option>";
+        }
+        log("retrieveSite.offerings", offerings.map((o) => ({ id: o.id, description: o.description, price: money(o.price) })));
+      }
+
+      async function init() {
+        log("boot", { clientId: CLIENT_ID, origin: location.origin });
+        client = new Supertab({ clientId: CLIENT_ID });
+        // Try a silent session refresh first — no popup for returning users.
+        const silent = await client.auth.start({ silently: true }).catch(() => null);
+        log("auth.start({ silently: true })", { recovered: Boolean(silent) });
+        await loadState();
+      }
+
+      el("signin").addEventListener("click", async () => {
+        setVerdict("warn", "Opening Supertab sign-in… if your browser blocks the popup, allow it and click again.");
+        try {
+          await client.auth.start(); // opens SSO popup ONLY for identity, not for payment
+          log("auth.start()", { status: await client.auth.status });
+          setVerdict("success", "Signed in. Now click ‘Check entitlement’ or ‘Put it on my Tab silently’.");
+          await loadState();
+        } catch (e) {
+          log("signin error", e);
+          const msg = e && e.message ? e.message : String(e);
+          if (/popup|auth window/i.test(msg)) {
+            setVerdict(
+              "error",
+              "Sign-in popup was BLOCKED. This will never work in the in-editor preview — " +
+                "open http://localhost:3000/spikes/silent-tab-purchase.html in a normal Chrome window " +
+                "and allow popups for localhost:3000. (Or sign into ‘My Tab’ in the main app at " +
+                "localhost:3000 first, then come back here and click ‘Refresh’ — no popup needed.)"
+            );
+          } else {
+            setVerdict("error", `Sign-in failed: ${msg}`);
+          }
+        }
+      });
+
+      el("refresh").addEventListener("click", () => loadState().catch((e) => log("refresh error", e)));
+
+      el("checkEntitlement").addEventListener("click", async () => {
+        const opt = el("offeringSelect").selectedOptions[0];
+        const contentKey = opt?.dataset?.contentKey;
+        if (!contentKey) { setVerdict("warn", "This offering has no content key to check."); return; }
+        try {
+          const result = await client.api.checkEntitlement({ contentKey });
+          log("checkEntitlement (before)", result);
+          setVerdict(result.hasEntitlement ? "success" : "warn",
+            result.hasEntitlement ? `Already entitled to ${contentKey}.` : `Not yet entitled to ${contentKey}.`);
+        } catch (e) { log("checkEntitlement error", e); setVerdict("error", "checkEntitlement failed — see log."); }
+      });
+
+      el("silentBuy").addEventListener("click", async () => {
+        const offeringId = el("offeringSelect").value;
+        const currencyCode = tabCurrencyCode();
+        const opt = el("offeringSelect").selectedOptions[0];
+        const contentKey = opt?.dataset?.contentKey || null;
+        setVerdict("warn", "Calling api.purchase() … watch for any popup in the log.");
+        log("api.purchase request", { offeringId, currencyCode, metadata: { source: "spike", contentKey } });
+        try {
+          const result = await client.api.purchase({
+            offeringId,
+            currencyCode,
+            metadata: { source: "spike-silent-tab", contentKey },
+          });
+          log("api.purchase result", result);
+
+          const status = result?.purchase?.status;
+          if (result?.actionRequired) {
+            setVerdict("warn",
+              `actionRequired = TRUE → Supertab needs the user (${result?.actionRequiredDetails?.reason || "payment/limit"}). ` +
+              `This is the FALLBACK case where the modal/paywall would appear.`);
+          } else if (status === "completed" || status === "pending") {
+            setVerdict("success",
+              `✅ MODAL-FREE: actionRequired = false, purchase.status = "${status}". ` +
+              `The charge was added to the Tab with no payment UI. Hypothesis confirmed.`);
+          } else {
+            setVerdict("warn", `Unexpected outcome: status="${status}", actionRequired=${result?.actionRequired}. See log.`);
+          }
+
+          if (contentKey) {
+            const after = await client.api.checkEntitlement({ contentKey }).catch(() => null);
+            log("checkEntitlement (after)", after);
+          }
+          await loadState();
+        } catch (e) {
+          log("api.purchase error", e);
+          setVerdict("error", `api.purchase threw: ${e instanceof Error ? e.message : String(e)} — see log.`);
+        }
+      });
+
+      init().catch((e) => log("init error", e));
+    </script>
+  </body>
+</html>

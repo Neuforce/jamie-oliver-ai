@@ -557,8 +557,19 @@ class DiscoveryVoiceHandler:
                 elif event.type == "tool_call":
                     logger.info("Tool called: %s", event.content)
 
-                elif event.type in ("recipes", "meal_plan", "recipe_detail", "shopping_list", "recipe_paywall_requested"):
-                    await self._send(event.type, event.metadata)
+                elif event.type in (
+                    "recipes",
+                    "meal_plan",
+                    "recipe_detail",
+                    "shopping_list",
+                    "spend_mandate_consent_requested",
+                    "recipe_paywall_requested",
+                ):
+                    await self._send(
+                        event.type,
+                        event.metadata,
+                        response_id=self._current_response_id,
+                    )
 
                 elif event.type == "error":
                     logger.error("Chat agent error: %s", event.content)

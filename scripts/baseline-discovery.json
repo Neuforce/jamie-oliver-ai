@@ -1,0 +1,2021 @@
+{
+  "base_url": "http://localhost:8000",
+  "passed": true,
+  "results": [
+    {
+      "name": "health",
+      "passed": true,
+      "detail": "{'status': 'healthy', 'supabase': 'connected', 'embedding_model': 'BAAI/bge-small-en-v1.5'}",
+      "data": {}
+    },
+    {
+      "name": "catalog_list",
+      "passed": true,
+      "detail": "251 published slugs",
+      "data": {
+        "slugs": [
+          "wonderful-veg-tagine",
+          "whole-roasted-cauliflower",
+          "venison-juniper-stew",
+          "veggie-stuffing",
+          "veggie-pasta-bake",
+          "veggie-casserole",
+          "vegetarian-chilli",
+          "vegan-shepherd-s-pie",
+          "vegan-gravy",
+          "vegan-chocolate-brownies",
+          "vanilla-custard",
+          "ultimate-veggie-lasagne",
+          "trevor-s-chicken",
+          "tomato-soup",
+          "toad-in-the-hole",
+          "tinned-peach-cobbler",
+          "tin-raid-fishcakes",
+          "the-world-famous-tarte-tatin",
+          "the-perfect-chips",
+          "the-best-cauliflower-broccoli-cheese"
+        ],
+        "total": 251
+      }
+    },
+    {
+      "name": "catalog_get_a-basic-risotto-recipe",
+      "passed": true,
+      "detail": "HTTP 200 (expected 200)",
+      "data": {
+        "body": {
+          "recipe_id": "a-basic-risotto-recipe",
+          "title": "A basic risotto recipe",
+          "category": "rice",
+          "mood": "comfort",
+          "complexity": "not-too-tricky",
+          "cost": null,
+          "quality_score": 100,
+          "status": "published",
+          "full_recipe": {
+            "steps": [
+              {
+                "id": "heat_stock",
+                "next": [
+                  "heat_small"
+                ],
+                "type": "immediate",
+                "descr": "Heat the stock",
+                "on_enter": [
+                  {
+                    "say": "Heat the stock. Peel and finely chop the onion and garlic, trim and finely chop the celery. Finely grate the Parmesan."
+                  }
+                ],
+                "auto_start": true,
+                "instructions": "Heat the stock. Peel and finely chop the onion and garlic, trim and finely chop the celery. Finely grate the Parmesan.",
+                "requires_confirm": true
+              },
+              {
+                "id": "heat_small",
+                "next": [
+                  "heat_rice"
+                ],
+                "type": "timer",
+                "descr": "In a separate pan, heat the oil and 1 small knob of...",
+                "duration": "PT900S",
+                "on_enter": [
+                  {
+                    "say": "In a separate pan, heat the oil and 1 small knob of butter over a low heat, add the onions, garlic and celery, and fry gently for about 15 minutes, or until softened but not coloured."
+                  }
+                ],
+                "auto_start": false,
+                "depends_on": [
+                  "heat_stock"
+                ],
+                "instructions": "In a separate pan, heat the oil and 1 small knob of butter over a low heat, add the onions, garlic and celery, and fry gently for about 15 minutes, or until softened but not coloured.",
+                "requires_confirm": true
+              },
+              {
+                "id": "heat_rice",
+                "next": [
+                  "heat_down"
+                ],
+                "type": "timer",
+                "descr": "Add the rice and turn up the heat \u2013 the rice will now...",
+                "duration": "PT60S",
+                "on_enter": [
+                  {
+                    "say": "Add the rice and turn up the heat \u2013 the rice will now begin to lightly fry, so keep stirring it. After 1 minute it will look slightly translucent. Add the vermouth or wine and keep stirring \u2014 it will smell fantastic. Any harsh alcohol flavours will evaporate and leave the rice with a tasty essence."
+                  }
+                ],
+                "auto_start": false,
+                "depends_on": [
+                  "heat_small"
+                ],
+                "instructions": "Add the rice and turn up the heat \u2013 the rice will now begin to lightly fry, so keep stirring it. After 1 minute it will look slightly translucent. Add the vermouth or wine and keep stirring \u2014 it will smell fantastic. Any harsh alcohol flavours will evaporate and leave the rice with a tasty essence.",
+                "requires_confirm": true
+              },
+              {
+                "id": "heat_down",
+                "next": [
+                  "stir_ring"
+                ],
+                "type": "immediate",
+                "descr": "Once the vermouth or wine has cooked into the rice, add...",
+                "on_enter": [
+                  {
+                    "say": "Once the vermouth or wine has cooked into the rice, add your first ladle of hot stock and a good pinch of sea salt. Turn the heat down to a simmer so the rice doesn\u2019t cook too quickly on the outside."
+                  }
+                ],
+                "auto_start": false,
+                "depends_on": [
+                  "heat_rice"
+                ],
+                "instructions": "Once the vermouth or wine has cooked into the rice, add your first ladle of hot stock and a good pinch of sea salt. Turn the heat down to a simmer so the rice doesn\u2019t cook too quickly on the outside.",
+                "requires_confirm": true
+              },
+              {
+                "id": "stir_ring",
+                "next": [
+                  "heat_knob"
+                ],
+                "type": "timer",
+                "descr": "Keep adding ladlefuls of stock, stirring and almost...",
+                "duration": "PT900S",
+                "on_enter": [
+                  {
+                    "say": "Keep adding ladlefuls of stock, stirring and almost massaging the creamy starch out of the rice, allowing each ladleful to be absorbed before adding the next. This will take around 15 minutes. Taste the rice \u2014 is it cooked? Carry on adding stock until the rice is soft but with a slight bite. Don\u2019t forget to check the seasoning carefully. If you run out of stock before the rice is cooked, add some boiling water."
+                  }
+                ],
+                "auto_start": false,
+                "depends_on": [
+                  "heat_down"
+                ],
+                "instructions": "Keep adding ladlefuls of stock, stirring and almost massaging the creamy starch out of the rice, allowing each ladleful to be absorbed before adding the next. This will take around 15 minutes. Taste the rice \u2014 is it cooked? Carry on adding stock until the rice is soft but with a slight bite. Don\u2019t forget to check the seasoning carefully. If you run out of stock before the rice is cooked, add some boiling water.",
+                "requires_confirm": true
+              },
+              {
+                "id": "heat_knob",
+                "next": [
+                  "step_step_7"
+                ],
+                "type": "immediate",
+                "descr": "Remove the pan from the heat, add 1 knob of butter and...",
+                "on_enter": [
+                  {
+                    "say": "Remove the pan from the heat, add 1 knob of butter and the Parmesan, then stir well."
+                  }
+                ],
+                "auto_start": false,
+                "depends_on": [
+                  "stir_ring"
+                ],
+                "instructions": "Remove the pan from the heat, add 1 knob of butter and the Parmesan, then stir well.",
+                "requires_confirm": true
+              },
+              {
+                "id": "step_step_7",
+                "type": "timer",
+                "descr": "Place a lid on the pan and allow to sit for 2 minutes \u2013...",
+                "duration": "PT120S",
+                "on_enter": [
+                  {
+                    "say": "Place a lid on the pan and allow to sit for 2 minutes \u2013 this is the most important part of making the perfect risotto, as this is when it becomes outrageously creamy and oozy like it should be. Eat it as soon as possible, while the risotto retains its beautiful texture."
+                  }
+                ],
+                "auto_start": false,
+                "depends_on": [
+                  "heat_knob"
+                ],
+                "instructions": "Place a lid on the pan and allow to sit for 2 minutes \u2013 this is the most important part of making the perfect risotto, as this is when it becomes outrageously creamy and oozy like it should be. Eat it as soon as possible, while the risotto retains its beautiful texture.",
+                "requires_confirm": false
+              }
+            ],
+            "recipe": {
+              "id": "a-basic-risotto-recipe",
+              "tags": [
+                "perfect-white-rice",
+                "main-ingredient",
+                "student-recipes",
+                "rissotto",
+                "pasta-amp-risotto",
+                "vegetarian",
+                "mains",
+                "risotto",
+                "dish-type",
+                "method",
+                "rice",
+                "gluten-free",
+                "rissoto",
+                "popular",
+                "occasion",
+                "frying",
+                "course"
+              ],
+              "title": "A basic risotto recipe",
+              "course": "main",
+              "images": [
+                "https://asset.jamieoliver.com/images/cq7w2e71/production/6908a1fb25785aba429db2589833a9917adfaf40-1076x1435.jpg/basicrisotto.jpg?rect=0,180,1076,1076&w=600&h=600&fm=webp&q=75&fit=crop&auto=format",
+                "https://asset.jamieoliver.com/images/cq7w2e71/production/6908a1fb25785aba429db2589833a9917adfaf40-1076x1435.jpg/basicrisotto.jpg?rect=0,180,1076,1076&w=1200&h=1200&fm=webp&q=75&fit=crop&auto=format",
+                "https://asset.jamieoliver.com/images/cq7w2e71/production/6908a1fb25785aba429db2589833a9917adfaf40-1076x1435.jpg/basicrisotto.jpg?rect=0,315,1076,807&w=1200&h=900&fm=webp&q=75&fit=crop&auto=format",
+                "https://asset.jamieoliver.com/images/cq7w2e71/production/6908a1fb25785aba429db2589833a9917adfaf40-1076x1435.jpg/basicrisotto.jpg?rect=0,416,1076,605&w=1280&h=720&fm=webp&q=75&fit=crop&auto=format"
+              ],
+              "locale": "en",
+              "source": "jamieoliver.com",
+              "cuisine": "italian",
+              "servings": 6,
+              "categories": [
+                "rice"
+              ],
+              "difficulty": "not-too-tricky",
+              "source_url": "https://www.jamieoliver.com/recipes/rice/a-basic-risotto-recipe",
+              "description": "Easy, oozy and cheesy, this is a simple but delicious risotto recipe to be used as the base for all your favourite flavour combinations!",
+              "estimated_total": "PT45M"
+            },
+            "utensils": [
+              "ladle",
+              "pan"
+            ],
+            "nutrition": {
+              "fat": "14 g",
+              "fiber": "1.6 g",
+              "protein": "15.1 g",
+              "calories": "446 calories",
+              "carbohydrates": "55.8 g"
+            },
+            "ingredients": [
+              {
+                "id": "organic-stock",
+                "name": "organic stock",
+                "note": "such as chicken, fish, vegetable",
+                "unit": "litres",
+                "quantity": 1.1
+              },
+              {
+                "id": "large-onion",
+                "name": "large onion",
+                "note": null,
+                "unit": null,
+                "quantity": 1.0
+              },
+              {
+                "id": "garlic",
+                "name": "garlic",
+                "note": null,
+                "unit": "cloves",
+                "quantity": 2.0
+              },
+              {
+                "id": "a-head-of-celery",
+                "name": "\u00bd a head of celery",
+                "note": null,
+                "unit": null,
+                "quantity": null
+              },
+              {
+                "id": "parmesan-cheese",
+                "name": "Parmesan cheese",
+                "note": null,
+                "unit": "g",
+                "quantity": 90.0
+              },
+              {
+                "id": "olive-oil",
+                "name": "olive oil",
+                "note": null,
+                "unit": "tablespoons",
+                "quantity": 2.0
+              },
+              {
+                "id": "unsalted-butter",
+                "name": "unsalted butter",
+                "note": null,
+                "unit": null,
+                "quantity": null
+              },
+              {
+                "id": "risotto-rice",
+                "name": "risotto rice",
+                "note": null,
+                "unit": "g",
+                "quantity": 400.0
+              },
+              {
+                "id": "wine-glasses-of-dry-white-verm",
+                "name": "wine glasses of dry white vermouth or dry white wine",
+                "note": "dry Martini or Noilly Prat",
+                "unit": null,
+                "quantity": 2.0
+              }
+            ]
+          },
+          "source": "recipes_table"
+        }
+      }
+    },
+    {
+      "name": "catalog_get_fish-tacos",
+      "passed": true,
+      "detail": "HTTP 404 (expected 404)",
+      "data": {
+        "body": {
+          "detail": "Recipe not found: fish-tacos"
+        }
+      }
+    },
+    {
+      "name": "sse_find_me_easy_pasta_recipes",
+      "passed": true,
+      "detail": "events=231 slugs=['veggie-pasta-bake', 'easy-carbonara', 'simple-sausage-pasta', 'garlic-mushroom-pasta', 'jarred-pepper-pasta'] unknown=[] tool_call_ids=1 response_ids=1",
+      "data": {
+        "events": [
+          {
+            "type": "tool_call",
+            "content": "search_recipes",
+            "metadata": {
+              "tool_call_id": "call_WTH8OxOrB3l6iQ8NB7zq1SpM",
+              "arguments": {
+                "query": "easy pasta",
+                "course": "main",
+                "max_results": 5
+              },
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "Alright",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ",",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " I've",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " found",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " some",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " cracking",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " easy",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " pasta",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " recipes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " for",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " you",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ":\n\n",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "1",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " **",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "Veg",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "gie",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Pasta",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Bake",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "**",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " -",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " A",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " family",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " favourite",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " with",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " sweet",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " le",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "eks",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ",",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " fresh",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " basil",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ",",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " a",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " garlic",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " breadcrumb",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " topping",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Perfect",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " for",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " a",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " mid",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "week",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " meal",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " serves",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "8",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " It",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " takes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " about",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "60",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " minutes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " is",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " not",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "-too",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "-tr",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "icky",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " to",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " make",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".\n\n",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "2",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " **",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "Easy",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Carbon",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "ara",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "**",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " -",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " A",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " super",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " quick",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " tasty",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " pasta",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " sauce",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " that",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " cooks",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " in",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " the",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " same",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " time",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " as",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " your",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " pasta",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "!",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Serv",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "es",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "2",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " is",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " done",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " in",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " just",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "10",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " minutes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".\n\n",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "3",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " **",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "Simple",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Sa",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "usage",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Pasta",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "**",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " -",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " A",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " quick",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " sausage",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " rag",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "\u00f9",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ",",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " bumped",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " up",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " with",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " chick",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "peas",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ",",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " that's",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " sure",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " to",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " please",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " a",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " crowd",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Serv",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "es",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "6",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " takes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " about",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "50",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " minutes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".\n\n",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "4",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " **",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "Gar",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "lic",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Mushroom",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Pasta",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "**",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " -",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Al",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " d",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "ente",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " fus",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "illi",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " tossed",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " in",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " a",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " delicious",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " garlic",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " mushroom",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " sauce",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " So",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " quick",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " flavour",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "-packed",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "!",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Serv",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "es",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "2",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ready",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " in",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "16",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " minutes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".\n\n",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "5",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " **",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "Jar",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "red",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Pepper",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " Pasta",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "**",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " -",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " A",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " no",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "-c",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "ook",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " pasta",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " sauce",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " with",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " creamy",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " cottage",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " cheese",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " chilli",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " flakes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " A",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " mid",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "week",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " meal",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " in",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " no",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " time",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ",",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " serving",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "4",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " and",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " done",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " in",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " ",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "12",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " minutes",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": ".\n\n",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "Any",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " of",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " these",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " calling",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " your",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": " name",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "text_chunk",
+            "content": "?",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "recipes",
+            "content": "",
+            "metadata": {
+              "recipes": [
+                {
+                  "recipe_id": "veggie-pasta-bake",
+                  "title": "Veggie pasta bake",
+                  "similarity_score": 0.7,
+                  "description": "When it comes to family favourites, it\u2019s pretty hard to beat a good pasta bake. Sweet leeks, fresh basil and a garlic bread crumb make this easy pasta dish a midweek winner.  ",
+                  "servings": 8,
+                  "estimated_time": "PT60M",
+                  "difficulty": "not-too-tricky",
+                  "ingredient_count": 10,
+                  "step_count": 9
+                },
+                {
+                  "recipe_id": "easy-carbonara",
+                  "title": "Easy carbonara",
+                  "similarity_score": 0.64,
+                  "description": "This easy pasta sauce will cook in about the same time it takes to cook some dried pasta in boiling salted water \u2013 super quick and tasty.",
+                  "servings": 2,
+                  "estimated_time": "PT10M",
+                  "difficulty": "not-too-tricky",
+                  "ingredient_count": 5,
+                  "step_count": 6
+                },
+                {
+                  "recipe_id": "simple-sausage-pasta",
+                  "title": "Simple sausage pasta",
+                  "similarity_score": 0.58,
+                  "description": "Add this easy recipe for quick sausage rag\u00f9 to your repertoire! Bumped up with chickpeas, it's a real crowd-pleaser.",
+                  "servings": 6,
+                  "estimated_time": "PT50M",
+                  "difficulty": "not-too-tricky",
+                  "ingredient_count": 9,
+                  "step_count": 5
+                },
+                {
+                  "recipe_id": "garlic-mushroom-pasta",
+                  "title": "Garlic mushroom pasta",
+                  "similarity_score": 0.52,
+                  "description": "This creamy mushroom pasta recipe from 5 Ingredients is al dente fusilli tossed in a delicious garlic mushroom sauce. So quick, so easy, so flavour-packed!",
+                  "servings": 2,
+                  "estimated_time": "PT16M",
+                  "difficulty": "not-too-tricky",
+                  "ingredient_count": 5,
+                  "step_count": 5
+                },
+                {
+                  "recipe_id": "jarred-pepper-pasta",
+                  "title": "Jarred pepper pasta",
+                  "similarity_score": 0.52,
+                  "description": "Jamie shows us how to make a midweek meal in no time with his easy no-cook pasta sauce. Creamy cottage cheese and chilli flakes take this to the next level.",
+                  "servings": 4,
+                  "estimated_time": "PT12M",
+                  "difficulty": "not-too-tricky",
+                  "ingredient_count": 10,
+                  "step_count": 5
+                }
+              ],
+              "mood": null,
+              "mood_explanation": null,
+              "tool_call_id": "call_WTH8OxOrB3l6iQ8NB7zq1SpM",
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          },
+          {
+            "type": "done",
+            "content": "",
+            "metadata": {
+              "response_id": "a6a7efff-b26c-4235-af25-056028896289"
+            }
+          }
+        ],
+        "slugs": [
+          "veggie-pasta-bake",
+          "easy-carbonara",
+          "simple-sausage-pasta",
+          "garlic-mushroom-pasta",
+          "jarred-pepper-pasta"
+        ]
+      }
+    }
+  ]
+}

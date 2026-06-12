@@ -147,7 +147,7 @@ class RecipeSearchAgent:
         response = (
             self.client.table("recipes")
             .select("slug, metadata, quality_score, status, recipe_json")
-            .in_("status", ["published", "draft"])
+            .in_("status", ["published"])
             .limit(500)
             .execute()
         )
@@ -570,19 +570,24 @@ class RecipeSearchAgent:
 
             if not results_data:
                 logger.info(
-                    "Hybrid search returned no rows; using local lexical fallback under %s",
-                    self.project_root,
+                    "Hybrid search returned no rows; using recipes-table ranking"
                 )
-                return self._local_lexical_fallback(
-                    query,
-                    filters,
-                    top_k,
-                    include_full_recipe,
+                return self._search_from_recipes_table(
+                    query=query,
+                    filters=filters,
+                    top_k=top_k,
+                    include_full_recipe=include_full_recipe,
                 )
             
             # 4. Enrich results
+            from recipe_search_agent.recipe_catalog import get_published_catalog
+
+            catalog = get_published_catalog()
             results = []
             for row in results_data:
+                recipe_id = row.get("recipe_id")
+                if not recipe_id or not catalog.is_published(recipe_id):
+                    continue
                 # Fetch relevant chunks
                 matching_chunks = []
                 if include_chunks:
@@ -627,7 +632,7 @@ class RecipeSearchAgent:
             
         except Exception as e:
             logger.error(f"Search failed: {e}", exc_info=True)
-            fb = self._local_lexical_fallback(
+            fb = self._search_from_recipes_table(
                 query,
                 effective_filters,
                 top_k,
@@ -635,7 +640,7 @@ class RecipeSearchAgent:
             )
             if fb:
                 logger.warning(
-                    "Returning %d lexical fallback hits after hybrid search error",
+                    "Returning %d recipes-table hits after hybrid search error",
                     len(fb),
                 )
                 return fb

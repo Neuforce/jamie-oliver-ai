@@ -44,24 +44,8 @@ class ChatSession:
     prompt_revision: int = 0
 
 
-@dataclass
-class ChatEvent:
-    """
-    Event emitted during chat processing.
-
-    Event types:
-    - "text_chunk": Streaming text from LLM
-    - "tool_call": Tool is being called (content = tool name)
-    - "recipes": Recipe search results (metadata.recipes = list of recipes)
-    - "meal_plan": Meal plan results (metadata.meal_plan = structured plan)
-    - "recipe_detail": Single recipe details (metadata.recipe = full recipe)
-    - "shopping_list": Shopping list (metadata.shopping_list = list data)
-    - "done": Processing complete
-    - "error": Error occurred (content = error message)
-    """
-    type: str
-    content: str
-    metadata: Optional[Dict[str, Any]] = None
+from recipe_search_agent.chat_events import ChatEvent
+from recipe_search_agent.tool_result_events import tool_result_to_chat_events
 
 
 class DiscoveryChatAgent:
@@ -247,6 +231,7 @@ class DiscoveryChatAgent:
         """
         session = self._get_or_create_session(session_id)
         turn_started_at = time.perf_counter()
+        response_id = str(uuid.uuid4())
 
         correlation_id = str(uuid.uuid4())
         gate_started_at = time.perf_counter()
@@ -271,7 +256,7 @@ class DiscoveryChatAgent:
                 correlation_id,
             )
             yield ChatEvent(type="text_chunk", content=gate.response_text or "")
-            yield ChatEvent(type="done", content="")
+            yield ChatEvent(type="done", content="", metadata={"response_id": str(uuid.uuid4())})
             reset_gate_blocked()
             return
 
@@ -326,7 +311,11 @@ class DiscoveryChatAgent:
                                     "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
                                 },
                             )
-                        yield ChatEvent(type="text_chunk", content=event.content)
+                        yield ChatEvent(
+                            type="text_chunk",
+                            content=event.content,
+                            metadata={"response_id": response_id},
+                        )
                 elif isinstance(event, FunctionCallResponse):
                     tool_used = True
                     tool_calls_seen.add(event.function_name)
@@ -350,173 +339,57 @@ class DiscoveryChatAgent:
                         metadata={
                             "tool_call_id": event.tool_call_id,
                             "arguments": event.arguments,
+                            "response_id": response_id,
                         }
                     )
 
-            # After brain processing, check for tool results in chat memory
-            # and emit structured events for UI components
+            # Emit structured tool outputs in conversation order (toolCallId-bound).
             if pending_tool_calls:
                 import json
+
                 messages = session.chat_memory.get_messages()
+                tool_call_order = list(pending_tool_calls.keys())
 
-                # Process all tool results (not just the most recent)
-                for msg in reversed(messages):
-                    if hasattr(msg, 'tool_call_id') and msg.tool_call_id in pending_tool_calls:
-                        func_name = pending_tool_calls[msg.tool_call_id]
+                for msg in messages:
+                    if not hasattr(msg, "tool_call_id"):
+                        continue
+                    tool_call_id = msg.tool_call_id
+                    if tool_call_id not in pending_tool_calls:
+                        continue
 
-                        try:
-                            result = json.loads(msg.content)
+                    func_name = pending_tool_calls.pop(tool_call_id)
+                    try:
+                        result = json.loads(msg.content)
+                        if not isinstance(result, dict):
+                            continue
+                        for structured in tool_result_to_chat_events(
+                            func_name,
+                            tool_call_id,
+                            result,
+                            response_id=response_id,
+                        ):
+                            logger.info(
+                                "Emitted %s for tool %s (%s)",
+                                structured.type,
+                                func_name,
+                                tool_call_id,
+                            )
+                            tool_results_emitted = True
+                            yield structured
+                    except (json.JSONDecodeError, KeyError, TypeError) as exc:
+                        logger.warning(
+                            "Failed to parse tool result for %s (%s): %s",
+                            func_name,
+                            tool_call_id,
+                            exc,
+                        )
 
-                            # Emit appropriate event based on tool type
-                            if func_name in ('search_recipes', 'suggest_recipes_for_mood'):
-                                if result.get('recipes'):
-                                    yield ChatEvent(
-                                        type="recipes",
-                                        content="",
-                                        metadata={
-                                            "recipes": result['recipes'],
-                                            "mood": result.get('mood'),
-                                            "mood_explanation": result.get('mood_explanation'),
-                                        }
-                                    )
-                                    logger.info(f"Emitted {len(result['recipes'])} recipes")
-                                    logger.info(
-                                        "[voice_latency] %s",
-                                        {
-                                            "stage": "tool_result_ready",
-                                            "session_id": session_id,
-                                            "tool_name": func_name,
-                                            "tool_ms": round(
-                                                (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
-                                                * 1000,
-                                                1,
-                                            ),
-                                            "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
-                                        },
-                                    )
-                                    tool_results_emitted = True
-
-                            elif func_name == 'plan_meal':
-                                yield ChatEvent(
-                                    type="meal_plan",
-                                    content="",
-                                    metadata={
-                                        "meal_plan": result,
-                                        "occasion": result.get('occasion'),
-                                        "serves": result.get('serves'),
-                                    }
-                                )
-                                logger.info(f"Emitted meal_plan for {result.get('occasion')}")
-                                logger.info(
-                                    "[voice_latency] %s",
-                                    {
-                                        "stage": "tool_result_ready",
-                                        "session_id": session_id,
-                                        "tool_name": func_name,
-                                        "tool_ms": round(
-                                            (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
-                                            * 1000,
-                                            1,
-                                        ),
-                                        "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
-                                    },
-                                )
-                                tool_results_emitted = True
-
-                            elif func_name == 'get_recipe_details':
-                                if result.get('recipe'):
-                                    yield ChatEvent(
-                                        type="recipe_detail",
-                                        content="",
-                                        metadata={
-                                            "recipe": result['recipe'],
-                                        }
-                                    )
-                                    logger.info(f"Emitted recipe_detail for {result['recipe'].get('title')}")
-                                    logger.info(
-                                        "[voice_latency] %s",
-                                        {
-                                            "stage": "tool_result_ready",
-                                            "session_id": session_id,
-                                            "tool_name": func_name,
-                                            "tool_ms": round(
-                                                (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
-                                                * 1000,
-                                                1,
-                                            ),
-                                            "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
-                                        },
-                                    )
-                                    tool_results_emitted = True
-
-                            elif func_name == 'create_shopping_list':
-                                yield ChatEvent(
-                                    type="shopping_list",
-                                    content="",
-                                    metadata={
-                                        "shopping_list": result,
-                                        "recipes_included": result.get('recipes_included'),
-                                        "total_items": result.get('total_items'),
-                                    }
-                                )
-                                logger.info(f"Emitted shopping_list with {result.get('total_items')} items")
-                                logger.info(
-                                    "[voice_latency] %s",
-                                    {
-                                        "stage": "tool_result_ready",
-                                        "session_id": session_id,
-                                        "tool_name": func_name,
-                                        "tool_ms": round(
-                                            (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
-                                            * 1000,
-                                            1,
-                                        ),
-                                        "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
-                                    },
-                                )
-                                tool_results_emitted = True
-
-                            elif func_name == 'request_supertab_unlock':
-                                rid_meta = (
-                                    result.get("recipe_backend_id")
-                                    if isinstance(result, dict)
-                                    else None
-                                )
-                                if isinstance(rid_meta, str) and rid_meta.strip():
-                                    rid_meta = rid_meta.strip()
-                                    yield ChatEvent(
-                                        type="recipe_paywall_requested",
-                                        content="",
-                                        metadata={
-                                            "backend_recipe_id": rid_meta,
-                                        },
-                                    )
-                                    logger.info(f"Emitted recipe_paywall_requested for {rid_meta}")
-                                    logger.info(
-                                        "[voice_latency] %s",
-                                        {
-                                            "stage": "tool_result_ready",
-                                            "session_id": session_id,
-                                            "tool_name": func_name,
-                                            "tool_ms": round(
-                                                (time.perf_counter() - tool_call_started_at.get(msg.tool_call_id, turn_started_at))
-                                                * 1000,
-                                                1,
-                                            ),
-                                            "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
-                                        },
-                                    )
-                                    tool_results_emitted = True
-
-                        except (json.JSONDecodeError, KeyError) as e:
-                            logger.warning(f"Failed to parse tool result for {func_name}: {e}")
-
-                        # Remove processed tool call
-                        del pending_tool_calls[msg.tool_call_id]
-
-                        # Stop if we've processed all tool calls
-                        if not pending_tool_calls:
-                            break
+                if pending_tool_calls:
+                    logger.warning(
+                        "Unmatched tool calls (no ToolMessage): %s order=%s",
+                        list(pending_tool_calls.keys()),
+                        tool_call_order,
+                    )
 
             # Fallback intro only when the model ran a tool but never said
             # anything to the user. This keeps a short narration on screen
@@ -548,7 +421,7 @@ class DiscoveryChatAgent:
                     "total_ms": round((time.perf_counter() - turn_started_at) * 1000, 1),
                 },
             )
-            yield ChatEvent(type="done", content="")
+            yield ChatEvent(type="done", content="", metadata={"response_id": response_id})
 
         except Exception as e:
             logger.error(f"Error processing chat message: {e}", exc_info=True)

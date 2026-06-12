@@ -212,10 +212,16 @@ def search_recipes(
             "message": "No recipes found matching your search.",
             "recipes": []
         })
+
+    from recipe_search_agent.recipe_catalog import get_published_catalog
+
+    catalog = get_published_catalog()
     
     # Format results for the agent
     formatted_recipes = []
     for match in results:
+        if not catalog.is_published(match.recipe_id):
+            continue
         recipe_info = {
             "recipe_id": match.recipe_id,
             "title": match.title,
@@ -237,6 +243,13 @@ def search_recipes(
             recipe_info["step_count"] = len(steps)
         
         formatted_recipes.append(recipe_info)
+
+    if not formatted_recipes:
+        return json.dumps({
+            "found": 0,
+            "message": "No published recipes found matching your search.",
+            "recipes": []
+        })
     
     return json.dumps({
         "found": len(formatted_recipes),
@@ -261,6 +274,16 @@ def get_recipe_details(recipe_id: str) -> str:
     import json
     
     agent = get_search_agent()
+    from recipe_search_agent.recipe_catalog import get_published_catalog
+    from recipe_search_agent.tool_result_events import build_recipe_detail_payload
+
+    catalog = get_published_catalog()
+    recipe_id = (recipe_id or "").strip()
+    if not catalog.is_published(recipe_id):
+        return json.dumps({
+            "error": f"Recipe '{recipe_id}' not found in published catalog",
+            "recipe": None
+        })
     
     # Query the recipes table
     response = agent.client.table("recipes").select("*").eq("slug", recipe_id).execute()
@@ -272,28 +295,12 @@ def get_recipe_details(recipe_id: str) -> str:
         })
     
     recipe_row = response.data[0]
-    recipe_json = recipe_row.get("recipe_json", {})
-    recipe = recipe_json.get("recipe", {})
-    ingredients = recipe_json.get("ingredients", [])
-    steps = recipe_json.get("steps", [])
-    
-    # Discovery contract: keep this summary-only so Jamie does not narrate the
-    # full recipe in chat or voice. The client can still open the full recipe
-    # sheet and hydrate complete ingredients/steps from the backend when needed.
-    details = {
-        "recipe_id": recipe_id,
-        "title": recipe.get("title", recipe_id),
-        "description": recipe.get("description", ""),
-        "servings": recipe.get("servings"),
-        "estimated_time": recipe.get("estimated_total", ""),
-        "difficulty": recipe.get("difficulty", ""),
-        "ingredient_count": len(ingredients),
-        "step_count": len(steps),
-        "ingredients": [],
-        "steps": [],
-        "notes": "",
-        "next_step_hint": "Open the full recipe view for ingredients, steps, and cook mode.",
-    }
+    details = build_recipe_detail_payload(recipe_row)
+    if not details:
+        return json.dumps({
+            "error": f"Recipe '{recipe_id}' not found",
+            "recipe": None
+        })
     
     return json.dumps({"recipe": details}, indent=2)
 
@@ -505,14 +512,46 @@ def request_supertab_unlock(recipe_backend_id: str) -> str:
     """
     import json
 
+    from recipe_search_agent.recipe_catalog import get_published_catalog
+    from recipe_search_agent.tool_result_events import build_recipe_detail_payload
+
     rid = (recipe_backend_id or "").strip()
     if not rid:
         return json.dumps({"ok": False, "error": "missing_recipe_backend_id"})
+
+    catalog = get_published_catalog()
+    if not catalog.is_published(rid):
+        return json.dumps(
+            {
+                "ok": False,
+                "error": "unknown_recipe_slug",
+                "recipe_backend_id": rid,
+                "hint": "Use recipe_id from search_recipes or get_recipe_details only.",
+            }
+        )
+
+    recipe_row = catalog.get_recipe_row(rid)
+    recipe_detail = build_recipe_detail_payload(recipe_row) if recipe_row else None
+
+    purchase_intent = {
+        "intent_type": "recipe_unlock",
+        "provider": "supertab",
+        "recipe_slug": rid,
+        "content_key": f"recipe:{rid}:cook",
+        "metadata": {
+            "recipe_id": rid,
+            "content_key": f"recipe:{rid}:cook",
+            "source": "agentic-commerce",
+        },
+    }
+
     return json.dumps(
         {
             "ok": True,
             "recipe_backend_id": rid,
-            "hint": "Client may open Supertab paywall when modal is locked and ids match.",
+            "recipe_detail": recipe_detail,
+            "purchase_intent": purchase_intent,
+            "hint": "Client executes purchase_intent via silent on-tab purchase when mandate allows.",
         }
     )
 
@@ -600,6 +639,24 @@ discovery_function_manager.register_function(get_recipe_details)
 discovery_function_manager.register_function(suggest_recipes_for_mood)
 discovery_function_manager.register_function(plan_meal)
 discovery_function_manager.register_function(create_shopping_list)
+def get_commerce_capabilities() -> str:
+    """
+    Return Jamie's agentic commerce capability manifest (UCP/MCP-compatible).
+
+    Use when an external agent or integration needs to discover how to
+    authorize spending, mint offers, and reconcile purchases.
+
+    Returns:
+        JSON capability manifest describing recipe_unlock commerce.
+    """
+    import json
+
+    from recipe_search_agent.commerce_capability import build_commerce_capability_manifest
+
+    return json.dumps(build_commerce_capability_manifest(), indent=2)
+
+
 discovery_function_manager.register_function(request_supertab_unlock)
+discovery_function_manager.register_function(get_commerce_capabilities)
 
 logger.info(f"Registered {len(discovery_function_manager.registered_functions)} discovery tools")

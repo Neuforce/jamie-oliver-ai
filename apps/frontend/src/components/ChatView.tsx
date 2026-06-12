@@ -12,6 +12,7 @@ import { ProcessCard, selectFeatured } from './ProcessCard';
 import type { ProcessCardState, ProcessStep, ToolName, FeaturedPayload } from './ProcessCardTypes';
 import { TOOL_STEP_DISPLAY } from './ProcessCardTypes';
 import { JamieHeart } from './JamieHeart';
+import { SpendMandateConsentInline } from './SpendMandateConsentInline';
 import { VoiceModeRoller } from './VoiceModeRoller';
 import { VoiceFooter } from './VoiceFooter';
 import type { RollerMessage, StackRole, RollerRenderContext } from './VoiceModeRoller';
@@ -21,6 +22,7 @@ import {
   isVoiceExpandableMessage,
 } from '../lib/voiceRichCard';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
+import { VoiceThinkingBubble } from './VoiceThinkingBubble';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 // @ts-expect-error - Vite resolves figma:asset imports
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
@@ -39,7 +41,16 @@ import {
   getRecipeDetailForOpenIntent,
   backendSummaryFromRecipeDetail,
   userAffirmsGoToFullRecipe,
+  shouldOpenRecipeFromVoiceUtterance,
 } from '../lib/discoveryFullRecipeGate';
+import {
+  createChatTurnStreamState,
+  legacyFieldsFromStreamState,
+  reduceChatStreamEvent,
+  type ChatTurnStreamState,
+  type ToolInvocationPart,
+} from '../lib/chatStream';
+import type { ChatEvent } from '../lib/api';
 import { CHAT_STORAGE_KEY, SESSION_ID_KEY } from '../lib/chatStorage';
 import { markAppLoadStage } from '../lib/appLoadMetrics';
 import type { RecipeAccessResponse } from '../lib/api';
@@ -53,6 +64,8 @@ interface Message {
   id: string;
   type: 'user' | 'jamie';
   content: string;
+  toolParts?: ToolInvocationPart[];
+  responseId?: string;
   recipes?: Recipe[];
   mealPlan?: MealPlanData;
   recipeDetail?: RecipeDetailData;
@@ -60,6 +73,19 @@ interface Message {
   timestamp: Date;
   isStreaming?: boolean;
   process?: ProcessCardState;
+}
+
+function messagePatchFromStreamState(state: ChatTurnStreamState): Partial<Message> {
+  const legacy = legacyFieldsFromStreamState(state);
+  return {
+    content: state.text,
+    toolParts: state.parts,
+    responseId: state.responseId,
+    recipes: legacy.recipes,
+    recipeDetail: legacy.recipeDetail,
+    mealPlan: legacy.mealPlan,
+    shoppingList: legacy.shoppingList,
+  };
 }
 
 interface ChatViewProps {
@@ -392,6 +418,17 @@ export function ChatView({
   const voiceMessageRef = useRef<string | null>(null);
   const voiceMessageIdRef = useRef<string | null>(null);
   const voiceResponseAccumulatorRef = useRef<string>('');
+  const voiceStreamStateRef = useRef(createChatTurnStreamState());
+
+  const applyStreamToVoiceMessage = useCallback((event: ChatEvent) => {
+    const messageId = voiceMessageIdRef.current;
+    if (!messageId) return;
+    voiceStreamStateRef.current = reduceChatStreamEvent(voiceStreamStateRef.current, event);
+    const patch = messagePatchFromStreamState(voiceStreamStateRef.current);
+    setMessages(prev =>
+      prev.map(msg => (msg.id === messageId ? { ...msg, ...patch } : msg)),
+    );
+  }, []);
 
   /*
    * Mute toggle for the mic in voice mode. We expose this as a click-target
@@ -433,22 +470,23 @@ export function ChatView({
       }
 
       if (isFinal && normalizedText) {
-        if (userAffirmsGoToFullRecipe(normalizedText)) {
-          const focusedDetail = getRecipeDetailForOpenIntent(messagesRef.current, normalizedText);
-          if (focusedDetail) {
-            interruptVoiceRef.current();
-            const userMessage: Message = {
-              id: Date.now().toString(),
-              type: 'user',
-              content: normalizedText,
-              timestamp: new Date(),
-            };
-            setMessages(prev => [...prev, userMessage]);
-            setIsTyping(false);
-            setThinkingStatus(null);
-            void openRecipeModalFromDetailRef.current(focusedDetail);
-            return;
-          }
+        const openDetail = getRecipeDetailForOpenIntent(
+          messagesRef.current,
+          normalizedText,
+        );
+        if (openDetail && shouldOpenRecipeFromVoiceUtterance(normalizedText)) {
+          interruptVoiceRef.current();
+          const userMessage: Message = {
+            id: Date.now().toString(),
+            type: 'user',
+            content: normalizedText,
+            timestamp: new Date(),
+          };
+          setMessages(prev => [...prev, userMessage]);
+          setIsTyping(false);
+          setThinkingStatus(null);
+          void openRecipeModalFromDetailRef.current(openDetail);
+          return;
         }
 
         // Create user message from voice transcript
@@ -463,6 +501,7 @@ export function ChatView({
         const streamingId = (Date.now() + 1).toString();
         voiceMessageIdRef.current = streamingId;
         voiceResponseAccumulatorRef.current = '';
+        voiceStreamStateRef.current = createChatTurnStreamState();
 
         console.log('🎤 Created voice message placeholder:', streamingId);
 
@@ -480,84 +519,56 @@ export function ChatView({
       }
     },
     onTextChunk: (text) => {
-      // Accumulate voice response text
       voiceResponseAccumulatorRef.current += text;
-
-      console.log('🎤 Text chunk received:', {
-        chunk: text.substring(0, 50),
-        totalLength: voiceResponseAccumulatorRef.current.length,
-        messageId: voiceMessageIdRef.current
+      applyStreamToVoiceMessage({
+        type: 'text_chunk',
+        content: text,
       });
-
-      if (voiceMessageIdRef.current) {
-        setMessages(prev => prev.map(msg =>
-          msg.id === voiceMessageIdRef.current
-            ? { ...msg, content: voiceResponseAccumulatorRef.current }
-            : msg
-        ));
-      }
-
-      // Clear thinking status once we get text
       if (thinkingStatus) {
         setThinkingStatus(null);
       }
     },
     onRecipes: (data) => {
-      const messageId = voiceMessageIdRef.current;
-      const recipeData = data?.recipes || [];
-      const recipes: Recipe[] = recipeData.map((r: BackendRecipeSummary, index: number) =>
-        transformRecipeFromSummary(r, index)
-      );
-      if (recipes.length > 0) {
-        setMessages(prev => {
-          // Use the tracked ID first; fall back to the last Jamie message so
-          // timing issues (premature onDone clearing the ref) can't lose data.
-          const targetId = (messageId && prev.some(m => m.id === messageId))
-            ? messageId
-            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
-          if (!targetId) return prev;
-          return prev.map(msg => msg.id === targetId ? { ...msg, recipes } : msg);
-        });
-      }
+      applyStreamToVoiceMessage({
+        type: 'recipes',
+        content: '',
+        metadata: (data ?? {}) as ChatEvent['metadata'],
+      });
     },
     onMealPlan: (data) => {
-      const messageId = voiceMessageIdRef.current;
-      if (data?.meal_plan) {
-        setMessages(prev => {
-          const targetId = (messageId && prev.some(m => m.id === messageId))
-            ? messageId
-            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
-          if (!targetId) return prev;
-          return prev.map(msg => msg.id === targetId ? { ...msg, mealPlan: data.meal_plan } : msg);
-        });
-      }
+      applyStreamToVoiceMessage({
+        type: 'meal_plan',
+        content: '',
+        metadata: (data ?? {}) as ChatEvent['metadata'],
+      });
     },
     onRecipeDetail: (data) => {
-      const messageId = voiceMessageIdRef.current;
-      if (data?.recipe) {
-        setMessages(prev => {
-          const targetId = (messageId && prev.some(m => m.id === messageId))
-            ? messageId
-            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
-          if (!targetId) return prev;
-          return prev.map(msg => msg.id === targetId ? { ...msg, recipeDetail: data.recipe } : msg);
-        });
-      }
+      applyStreamToVoiceMessage({
+        type: 'recipe_detail',
+        content: '',
+        metadata: (data ?? {}) as ChatEvent['metadata'],
+      });
     },
     onShoppingList: (data) => {
-      const messageId = voiceMessageIdRef.current;
-      if (data?.shopping_list) {
-        setMessages(prev => {
-          const targetId = (messageId && prev.some(m => m.id === messageId))
-            ? messageId
-            : [...prev].reverse().find(m => m.type === 'jamie')?.id;
-          if (!targetId) return prev;
-          return prev.map(msg => msg.id === targetId ? { ...msg, shoppingList: data.shopping_list } : msg);
-        });
-      }
+      applyStreamToVoiceMessage({
+        type: 'shopping_list',
+        content: '',
+        metadata: (data ?? {}) as ChatEvent['metadata'],
+      });
     },
-    onRecipePaywallRequested: (bid) => {
-      if (bid) onVoiceRecipePaywallRequested?.(bid);
+    onRecipePaywallRequested: (payload) => {
+      if (payload.backend_recipe_id) {
+        applyStreamToVoiceMessage({
+          type: 'recipe_paywall_requested',
+          content: '',
+          metadata: {
+            backend_recipe_id: payload.backend_recipe_id,
+            tool_call_id: payload.tool_call_id,
+            response_id: payload.response_id,
+          },
+        });
+        onVoiceRecipePaywallRequested?.(payload.backend_recipe_id);
+      }
     },
     onDone: () => {
       // Finalize the voice message
@@ -569,10 +580,7 @@ export function ChatView({
 
         setMessages(prev => prev.map(msg => {
           if (msg.id === messageId) {
-            const content =
-              msg.content ||
-              accumulatedText ||
-              "I'm here to help! What would you like to cook today?";
+            const content = (msg.content || accumulatedText || '').trim();
             return { ...msg, content, isStreaming: false };
           }
           return msg;
@@ -580,6 +588,7 @@ export function ChatView({
       }
       voiceMessageIdRef.current = null;
       voiceResponseAccumulatorRef.current = '';
+      voiceStreamStateRef.current = createChatTurnStreamState();
       setIsTyping(false);
       setThinkingStatus(null);
     },
@@ -594,6 +603,7 @@ export function ChatView({
       }
       voiceMessageIdRef.current = null;
       voiceResponseAccumulatorRef.current = '';
+      voiceStreamStateRef.current = createChatTurnStreamState();
       setIsTyping(false);
       setThinkingStatus(null);
     },
@@ -669,14 +679,16 @@ export function ChatView({
    * glows even if the hook reports those states — the UI is telling the
    * user that their mic is off, which is the information they care about.
    */
-  const avatarState: 'muted' | 'speaking' | 'listening' | 'idle' =
+  const avatarState: 'muted' | 'speaking' | 'listening' | 'thinking' | 'idle' =
     isMicMuted
       ? 'muted'
       : isSpeaking
         ? 'speaking'
-        : isListening || isProcessing
-          ? 'listening'
-          : 'idle';
+        : isProcessing
+          ? 'thinking'
+          : isListening
+            ? 'listening'
+            : 'idle';
 
   const toggleMicMute = useCallback(() => {
     setIsMicMuted(prev => {
@@ -885,23 +897,20 @@ export function ChatView({
 
     // Use the shared sessionId (same for text and voice chat)
     let fullResponse = '';
-    let agentRecipes: Recipe[] = []; // Recipes from agent's tool call (exact matches)
+    let streamState = createChatTurnStreamState();
 
     try {
-      // Stream response from chat agent
       for await (const event of chatWithAgent(text, sessionId)) {
-        if (event.type === 'text_chunk') {
-          const chunk = event.content;
-          fullResponse += chunk;
+        streamState = reduceChatStreamEvent(streamState, event);
+        const streamPatch = messagePatchFromStreamState(streamState);
+        fullResponse = streamState.text;
 
-          // Update streaming message with new content
+        if (event.type === 'text_chunk') {
           setMessages(prev => prev.map(msg =>
             msg.id === streamingMessageId
-              ? { ...msg, content: fullResponse }
+              ? { ...msg, ...streamPatch }
               : msg
           ));
-
-          // Clear thinking status once we start receiving text
           if (thinkingStatus) {
             setThinkingStatus(null);
           }
@@ -971,97 +980,47 @@ export function ChatView({
               setThinkingStatus("Creating shopping list...");
             }
           }
-        } else if (event.type === 'recipes') {
-          // Recipes from agent's tool call - these are the EXACT recipes Jamie mentioned
-          console.log('Received recipes from agent:', event.metadata?.recipes);
-          const recipeData = event.metadata?.recipes || [];
-
-          // Transform backend recipe summaries to Recipe format for display
-          for (const r of recipeData) {
-            const transformed = transformRecipeFromSummary(r as BackendRecipeSummary, agentRecipes.length);
-            agentRecipes.push(transformed);
+        } else if (
+          event.type === 'recipes'
+          || event.type === 'meal_plan'
+          || event.type === 'recipe_detail'
+          || event.type === 'shopping_list'
+          || event.type === 'spend_mandate_consent_requested'
+          || event.type === 'recipe_paywall_requested'
+        ) {
+          if (event.type === 'recipe_paywall_requested') {
+            const backendId = (event.metadata?.backend_recipe_id as string | undefined)?.trim();
+            if (backendId) {
+              onVoiceRecipePaywallRequested?.(backendId);
+            }
           }
-          console.log('Transformed', agentRecipes.length, 'recipes for display');
-
-          // Update both the message's recipe list and the process card's
-          // featured payload so mixed-tool turns (e.g. plan_meal falling back
-          // to recipe search) can still render the carousel immediately.
           setMessages(prev => prev.map(msg => {
-            if (msg.id !== streamingMessageId || !msg.process) return msg;
-            const featured = selectFeatured({ tool: msg.process.tool, recipes: agentRecipes });
+            if (msg.id !== streamingMessageId) return msg;
+            const featured = msg.process
+              ? selectFeatured({
+                  tool: msg.process.tool,
+                  recipes: streamPatch.recipes,
+                  mealPlan: streamPatch.mealPlan,
+                  recipeDetail: streamPatch.recipeDetail,
+                  shoppingList: streamPatch.shoppingList,
+                })
+              : undefined;
             return {
               ...msg,
-              recipes: agentRecipes,
-              process: { ...msg.process, featured },
+              ...streamPatch,
+              process: msg.process ? { ...msg.process, featured } : msg.process,
             };
           }));
-        } else if (event.type === 'meal_plan') {
-          // Meal plan from plan_meal tool
-          console.log('Received meal plan:', event.metadata?.meal_plan);
-          if (event.metadata?.meal_plan) {
-            setMessages(prev => prev.map(msg => {
-              if (msg.id !== streamingMessageId) return msg;
-              const featured = msg.process
-                ? selectFeatured({ tool: msg.process.tool, mealPlan: event.metadata!.meal_plan })
-                : undefined;
-              return {
-                ...msg,
-                mealPlan: event.metadata!.meal_plan,
-                process: msg.process ? { ...msg.process, featured } : msg.process,
-              };
-            }));
-          }
-        } else if (event.type === 'recipe_detail') {
-          // Recipe detail from get_recipe_details tool
-          console.log('Received recipe detail:', event.metadata?.recipe);
-          if (event.metadata?.recipe) {
-            setMessages(prev => prev.map(msg => {
-              if (msg.id !== streamingMessageId) return msg;
-              const featured = msg.process
-                ? selectFeatured({ tool: msg.process.tool, recipeDetail: event.metadata!.recipe })
-                : undefined;
-              return {
-                ...msg,
-                recipeDetail: event.metadata!.recipe,
-                process: msg.process ? { ...msg.process, featured } : msg.process,
-              };
-            }));
-          }
-        } else if (event.type === 'shopping_list') {
-          // Shopping list from create_shopping_list tool
-          console.log('Received shopping list:', event.metadata?.shopping_list);
-          if (event.metadata?.shopping_list) {
-            setMessages(prev => prev.map(msg => {
-              if (msg.id !== streamingMessageId) return msg;
-              const featured = msg.process
-                ? selectFeatured({ tool: msg.process.tool, shoppingList: event.metadata!.shopping_list })
-                : undefined;
-              return {
-                ...msg,
-                shoppingList: event.metadata!.shopping_list,
-                process: msg.process ? { ...msg.process, featured } : msg.process,
-              };
-            }));
-          }
         } else if (event.type === 'done') {
-          // Finalize the message
           setThinkingStatus(null);
           setIsTyping(false);
 
-          // Only show recipes that came from the agent's tool call
-          const recipes = agentRecipes;
-
-          // Update message to final state with all accumulated data.
-          // `fullResponse` is the canonical Jamie prose — no rewriting,
-          // no truncation, no replacement with a generic intro. The
-          // ProcessCard (when present) mirrors the same text as its quote.
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId) return msg;
-            const updated = {
+            const updated: Message = {
               ...msg,
-              content: fullResponse,
+              ...streamPatch,
               isStreaming: false,
-              recipes: recipes.length > 0 ? recipes : msg.recipes,
             };
 
             if (updated.process) {
@@ -1073,6 +1032,13 @@ export function ChatView({
                 status: 'done',
                 quote: fullResponse,
                 steps: finalizedSteps,
+                featured: selectFeatured({
+                  tool: updated.process.tool,
+                  recipes: streamPatch.recipes,
+                  mealPlan: streamPatch.mealPlan,
+                  recipeDetail: streamPatch.recipeDetail,
+                  shoppingList: streamPatch.shoppingList,
+                }),
               };
             }
 
@@ -1343,6 +1309,14 @@ export function ChatView({
     }
 
     if (message.type === 'jamie') {
+      const mandateConsentPart = message.toolParts?.find(
+        (part) => part.outputKind === 'mandate_consent',
+      );
+      const mandateBackendId =
+        mandateConsentPart?.paywallBackendId
+        ?? message.recipeDetail?.recipe_id
+        ?? undefined;
+
       return (
         <>
           {message.process ? (
@@ -1361,6 +1335,12 @@ export function ChatView({
                 })}
                 className={voiceMode ? 'process-card--embedded' : undefined}
               />
+              {mandateConsentPart && (
+                <SpendMandateConsentInline
+                  backendRecipeId={mandateBackendId}
+                  className="mt-3"
+                />
+              )}
             </div>
           ) : (
             /*
@@ -1398,113 +1378,110 @@ export function ChatView({
                 hasMealPlan ||
                 hasShopping ||
                 hasRecipeDetail;
-              if (!hasAnyBody) return null;
+              const isForming =
+                voiceMode &&
+                Boolean(message.isStreaming) &&
+                !message.content.trim() &&
+                !hasStructuredPayload;
+              if (!hasAnyBody && !isForming) return null;
               const hasLongText =
                 !!message.content &&
                 message.content.trim().length > JAMIE_MESSAGE_COLLAPSE_CHAR_THRESHOLD;
               const isExpanded = !!expandedMessageIds[message.id];
-              const normalizedContent = message.content.replace(/\n{3,}/g, '\n\n').trim();
+              const normalizedContent = (message.content || '')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
 
               const cardClassName = voiceMode
                 ? 'jamie-voice-message'
                 : 'jamie-thread-card jamie-thread-card--jamie';
 
-              return (
-                <div
-                  className={cardClassName}
-                  data-voice-expandable-card={
-                    voiceMode && hasStructuredPayload ? 'true' : undefined
-                  }
-                >
-                  {/*
-                   * Speaker badge — mint-teal heart glyph + "JAMIE" wordmark.
-                   * Matches ProcessCard and the design mocks (`Jamie_03.png`,
-                   * `Jamie_04.png`, `Jamie_05.png`) so a conversational reply
-                   * and a tool-driven reply share one identity.
-                   */}
-                  <div className="jamie-thread-speaker">
-                    <JamieHeart className="jamie-thread-speaker__heart" />
-                    <span>Jamie</span>
+              const speakerBadge = (
+                <div className="jamie-thread-speaker">
+                  <JamieHeart className="jamie-thread-speaker__heart" />
+                  <span>Jamie</span>
+                </div>
+              );
+
+              const voiceExpandedRecipesBlock =
+                voiceMode && voiceExpanded && hasRecipes ? (
+                  <div className="mt-3 mb-3">
+                    <RecipeCarousel
+                      recipes={message.recipes!}
+                      onRecipeClick={async (recipe) => {
+                        const completeRecipe = await ensureRecipeHasPayload(recipe);
+                        onRecipeClick(completeRecipe);
+                      }}
+                      singleSlide
+                      voiceMode={voiceMode}
+                      voiceRole={voiceRole}
+                      voiceCardExpanded={voiceExpanded}
+                      resolveCommerceBadge={resolveCommerceBadgeForRecipe}
+                    />
                   </div>
+                ) : null;
 
-                  {/*
-                   * In voice-expanded mode with a recipe payload, the carousel
-                   * is the hero element — render it before the prose text so
-                   * the user sees it without scrolling. The verbose text list
-                   * (which echoes what Jamie just said aloud) follows below,
-                   * without a "Read more" truncation gate.
-                   */}
-                  {voiceMode && voiceExpanded && hasRecipes && (
-                    <div className="mt-3 mb-3">
-                      <RecipeCarousel
-                        recipes={message.recipes!}
-                        onRecipeClick={async (recipe) => {
-                          const completeRecipe = await ensureRecipeHasPayload(recipe);
-                          onRecipeClick(completeRecipe);
-                        }}
-                        singleSlide
-                        voiceMode={voiceMode}
-                        voiceRole={voiceRole}
-                        voiceCardExpanded={voiceExpanded}
-                        resolveCommerceBadge={resolveCommerceBadgeForRecipe}
-                      />
-                    </div>
-                  )}
-
-                  {message.content && (
-                    <div
-                      className={`jamie-thread-markdown prose prose-sm max-w-none ${
-                        hasLongText && !isExpanded && !(voiceMode && voiceExpanded)
-                          ? 'jamie-thread-markdown--collapsed'
-                          : ''
-                      }`}
-                    >
-                      <ReactMarkdown
-                        components={{
-                          h1: ({ children }) => <h3 className="text-lg font-bold mt-5 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
-                          h2: ({ children }) => <h4 className="text-base font-bold mt-4 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
-                          h3: ({ children }) => <h5 className="text-base font-semibold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
-                          p: ({ children }) => (
-                            <p
-                              className="mb-4 last:mb-0"
-                              style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}
-                            >
-                              {children}
-                            </p>
-                          ),
-                          strong: ({ children }) => <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>{children}</strong>,
-                          ul: ({ children }) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
-                          ol: ({ children }) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
-                          li: ({ children }) => <li className="mb-1" style={{ whiteSpace: 'pre-wrap' }}>{children}</li>,
-                          hr: () => <hr className="my-4 border-black/10" />,
-                        }}
-                      >
-                        {normalizedContent}
-                      </ReactMarkdown>
-                      {message.isStreaming && (
-                        <motion.span
-                          animate={{ opacity: [1, 0, 1] }}
-                          transition={{ duration: 0.8, repeat: Infinity }}
-                          className="inline-block ml-0.5"
+              const markdownBlock = message.content ? (
+                <div
+                  className={`jamie-thread-markdown prose prose-sm max-w-none ${
+                    hasLongText && !isExpanded && !(voiceMode && voiceExpanded)
+                      ? 'jamie-thread-markdown--collapsed'
+                      : ''
+                  }`}
+                >
+                  <ReactMarkdown
+                    components={{
+                      h1: ({ children }) => <h3 className="text-lg font-bold mt-5 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h3>,
+                      h2: ({ children }) => <h4 className="text-base font-bold mt-4 mb-3" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h4>,
+                      h3: ({ children }) => <h5 className="text-base font-semibold mt-4 mb-2" style={{ color: 'var(--jamie-text-heading)' }}>{children}</h5>,
+                      p: ({ children }) => (
+                        <p
+                          className="mb-4 last:mb-0"
+                          style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8 }}
                         >
-                          ▊
-                        </motion.span>
-                      )}
-                    </div>
+                          {children}
+                        </p>
+                      ),
+                      strong: ({ children }) => <strong className="font-semibold" style={{ color: 'var(--jamie-text-heading)' }}>{children}</strong>,
+                      ul: ({ children }) => <ul className="list-disc pl-5 mb-4 space-y-2">{children}</ul>,
+                      ol: ({ children }) => <ol className="list-decimal pl-5 mb-4 space-y-2">{children}</ol>,
+                      li: ({ children }) => <li className="mb-1" style={{ whiteSpace: 'pre-wrap' }}>{children}</li>,
+                      hr: () => <hr className="my-4 border-black/10" />,
+                    }}
+                  >
+                    {normalizedContent}
+                  </ReactMarkdown>
+                  {message.isStreaming && (
+                    voiceMode ? (
+                      <motion.span
+                        animate={{ opacity: [0.35, 0.9, 0.35] }}
+                        transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
+                        className="jamie-voice-stream-caret"
+                        aria-hidden="true"
+                      />
+                    ) : (
+                      <motion.span
+                        animate={{ opacity: [1, 0, 1] }}
+                        transition={{ duration: 0.8, repeat: Infinity }}
+                        className="inline-block ml-0.5"
+                      >
+                        ▊
+                      </motion.span>
+                    )
                   )}
+                </div>
+              ) : null;
 
-                  {/* "Read more" is hidden in voice expanded mode (carousel shown above already). */}
-                  {hasLongText && !message.isStreaming && !(voiceMode && voiceExpanded) && (
-                    <button
-                      type="button"
-                      className="jamie-thread-card__expand"
-                      onClick={() => toggleMessageExpansion(message.id)}
-                    >
-                      {isExpanded ? 'Show less' : 'Read more'}
-                    </button>
-                  )}
+              const mandateConsentBlock = mandateConsentPart ? (
+                <SpendMandateConsentInline
+                  backendRecipeId={mandateBackendId}
+                  className="jamie-thread-card__payload"
+                />
+              ) : null;
 
-                  {/* Non-voice OR voice without expanded state: carousel in its normal position. */}
+              const payloadBlocks = (
+                <>
+                  {mandateConsentBlock}
                   {hasRecipes && !(voiceMode && voiceExpanded) && (
                     <div className={voiceMode ? 'mt-3' : 'jamie-thread-card__payload'}>
                       <RecipeCarousel
@@ -1556,6 +1533,64 @@ export function ChatView({
                       )}
                     </div>
                   )}
+                </>
+              );
+
+              if (voiceMode) {
+                return (
+                  <div
+                    className={cardClassName}
+                    data-voice-forming={isForming ? 'true' : undefined}
+                    data-voice-expandable-card={
+                      hasStructuredPayload ? 'true' : undefined
+                    }
+                  >
+                    <AnimatePresence mode="wait" initial={false}>
+                      {isForming ? (
+                        <VoiceThinkingBubble key="forming" />
+                      ) : (
+                        <motion.div
+                          key="body"
+                          className="jamie-voice-message__body"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
+                        >
+                          {speakerBadge}
+                          {voiceExpandedRecipesBlock}
+                          {markdownBlock}
+                          {hasLongText && !message.isStreaming && !voiceExpanded && (
+                            <button
+                              type="button"
+                              className="jamie-thread-card__expand"
+                              onClick={() => toggleMessageExpansion(message.id)}
+                            >
+                              {isExpanded ? 'Show less' : 'Read more'}
+                            </button>
+                          )}
+                          {payloadBlocks}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
+              return (
+                <div className={cardClassName}>
+                  {speakerBadge}
+                  {markdownBlock}
+                  {hasLongText && !message.isStreaming && (
+                    <button
+                      type="button"
+                      className="jamie-thread-card__expand"
+                      onClick={() => toggleMessageExpansion(message.id)}
+                    >
+                      {isExpanded ? 'Show less' : 'Read more'}
+                    </button>
+                  )}
+                  {payloadBlocks}
                 </div>
               );
             })()

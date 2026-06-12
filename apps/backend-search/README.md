@@ -30,7 +30,19 @@ apps/backend-search/
     └── examples/            # Examples and use cases
 ```
 
-## CLI
+## Discovery dev workflow
+
+Runtime discovery uses **one catalog**: published rows in Supabase `recipes` only. Local JSON under `data/recipes/` and frontend `public/recipes-json/` are for ingest/seed — not for search or cards at runtime.
+
+See [Discovery tool contract](../../docs/architecture/DISCOVERY_TOOL_CONTRACT.md).
+
+Smoke tests (backend must be running on `:8000`):
+
+```bash
+python scripts/smoke-discovery.py
+python scripts/smoke-discovery.py --save scripts/baseline-discovery.json
+```
+
 
 ### PDF processing
 
