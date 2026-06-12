@@ -53,6 +53,7 @@ import {
 } from '../lib/chatStream';
 import type { ChatEvent } from '../lib/api';
 import { CHAT_STORAGE_KEY, SESSION_ID_KEY } from '../lib/chatStorage';
+import { markAppLoadStage } from '../lib/appLoadMetrics';
 import type { RecipeAccessResponse } from '../lib/api';
 import {
   getRecipeCommerceBadge,
@@ -618,6 +619,19 @@ export function ChatView({
   useEffect(() => {
     onDiscoveryVoiceSessionChange?.(isVoiceActive);
   }, [isVoiceActive, onDiscoveryVoiceSessionChange]);
+
+  useEffect(() => {
+    let raf2 = 0;
+    const raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        markAppLoadStage('chat_shell_ready');
+      });
+    });
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, []);
 
   useEffect(() => {
     return () => {
@@ -1613,7 +1627,11 @@ export function ChatView({
   }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion, resolveCommerceBadgeForBackendId, resolveCommerceBadgeForRecipe]);
 
   return (
-    <div className="relative jamie-view-shell" data-voice-active={isVoiceActive || undefined}>
+    <div
+      className="relative jamie-view-shell"
+      data-testid="chat-shell"
+      data-voice-active={isVoiceActive || undefined}
+    >
       {/* Empty State */}
       {!hasMessages && !isTyping ? (
         <OnboardingEmptyState

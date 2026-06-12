@@ -211,6 +211,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
   if (variant === 'grid') {
     return (
       <motion.div
+        data-testid="recipe-card"
         whileTap={{ scale: 0.98 }}
         className="cursor-pointer w-full"
         onClick={onClick}
@@ -407,6 +408,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
   // Feed variant: large editorial card with prominent image
   return (
     <motion.div
+      data-testid="recipe-card"
       whileTap={{ scale: 0.98 }}
       className="cursor-pointer"
       onClick={onClick}
