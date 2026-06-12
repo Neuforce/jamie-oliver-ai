@@ -2,7 +2,8 @@ import type { MealPlanData, RecipeDetailData, ShoppingListData } from './api';
 import type { Recipe } from '../data/recipes';
 import type { ProcessCardState } from '../components/ProcessCardTypes';
 import type { FeaturedPayload } from '../components/ProcessCardTypes';
-import { getFeaturedToolPart, type ToolInvocationPart } from './chatStream';
+import { selectFeatured } from '../components/ProcessCard';
+import { type ToolInvocationPart } from './chatStream';
 
 export type VoiceRichCardKind =
   | 'recipes'
@@ -31,29 +32,93 @@ export type VoiceRichMessageSource = Readonly<{
   process?: ProcessCardState | null;
 }>;
 
-function resolveFeaturedFields(message: VoiceRichMessageSource): {
-  recipes?: ReadonlyArray<Recipe> | null;
-  mealPlan?: MealPlanData | null;
-  shoppingList?: ShoppingListData | null;
-  recipeDetail?: RecipeDetailData | null;
+export interface VoiceFeaturedSelection {
+  featured: FeaturedPayload;
+  /** Full recipe list when the featured surface is a carousel. */
+  recipes?: ReadonlyArray<Recipe>;
+}
+
+function collectFieldsFromToolParts(parts: ReadonlyArray<ToolInvocationPart>): {
+  recipes?: ReadonlyArray<Recipe>;
+  mealPlan?: MealPlanData;
+  shoppingList?: ShoppingListData;
+  recipeDetail?: RecipeDetailData;
 } {
-  const featured = message.toolParts?.length
-    ? getFeaturedToolPart([...message.toolParts])
-    : null;
-  if (featured) {
-    return {
-      recipes: featured.recipes,
-      mealPlan: featured.mealPlan,
-      shoppingList: featured.shoppingList,
-      recipeDetail: featured.recipeDetail,
-    };
+  let recipes: ReadonlyArray<Recipe> | undefined;
+  let mealPlan: MealPlanData | undefined;
+  let shoppingList: ShoppingListData | undefined;
+  let recipeDetail: RecipeDetailData | undefined;
+
+  for (const part of parts) {
+    if (part.recipeDetail) recipeDetail = part.recipeDetail;
+    if (part.mealPlan) mealPlan = part.mealPlan;
+    if (part.shoppingList) shoppingList = part.shoppingList;
+    if (part.recipes?.length) recipes = part.recipes;
+  }
+
+  return { recipes, mealPlan, shoppingList, recipeDetail };
+}
+
+function mergedPayloadFields(message: VoiceRichMessageSource): {
+  recipes?: ReadonlyArray<Recipe>;
+  mealPlan?: MealPlanData;
+  shoppingList?: ShoppingListData;
+  recipeDetail?: RecipeDetailData;
+} {
+  if (message.toolParts?.length) {
+    return collectFieldsFromToolParts(message.toolParts);
   }
   return {
-    recipes: message.recipes,
-    mealPlan: message.mealPlan,
-    shoppingList: message.shoppingList,
-    recipeDetail: message.recipeDetail,
+    recipes: message.recipes ?? undefined,
+    mealPlan: message.mealPlan ?? undefined,
+    shoppingList: message.shoppingList ?? undefined,
+    recipeDetail: message.recipeDetail ?? undefined,
   };
+}
+
+/**
+ * Single featured rich surface for voice — same priority as chat `selectFeatured`:
+ * recipeDetail → mealPlan → shoppingList → recipes.
+ */
+export function resolveVoiceFeatured(
+  message: VoiceRichMessageSource,
+): VoiceFeaturedSelection | null {
+  if (message.type !== 'jamie') {
+    return null;
+  }
+
+  if (message.process?.featured) {
+    const featured = message.process.featured;
+    if (featured.kind === 'recipe') {
+      return {
+        featured,
+        recipes: message.recipes?.length ? message.recipes : [featured.recipe],
+      };
+    }
+    return { featured };
+  }
+
+  const fields = mergedPayloadFields(message);
+  const featured = selectFeatured({
+    tool: 'search_recipes',
+    recipeDetail: fields.recipeDetail,
+    mealPlan: fields.mealPlan,
+    shoppingList: fields.shoppingList,
+    recipes: fields.recipes ? [...fields.recipes] : undefined,
+  });
+
+  if (!featured) {
+    return null;
+  }
+
+  if (featured.kind === 'recipe') {
+    return {
+      featured,
+      recipes: fields.recipes?.length ? fields.recipes : [featured.recipe],
+    };
+  }
+
+  return { featured };
 }
 
 const SUBTITLE_MAX_LEN = 100;
@@ -108,46 +173,6 @@ function subtitleFromShoppingList(shoppingList: ShoppingListData): string | unde
   return truncateSubtitle(`${names.join(', ')}${suffix}`);
 }
 
-function subtitleFromFeatured(featured: FeaturedPayload): string | undefined {
-  switch (featured.kind) {
-    case 'recipe':
-      return subtitleFromRecipeTitles([featured.recipe]);
-    case 'meal_plan':
-      return subtitleFromMealPlan(featured.mealPlan);
-    case 'shopping_list':
-      return subtitleFromShoppingList(featured.shoppingList);
-    case 'recipe_detail': {
-      const description = featured.recipe.description?.trim();
-      return description ? truncateSubtitle(description) : undefined;
-    }
-    default:
-      return undefined;
-  }
-}
-
-export function isVoiceExpandableMessage(message: VoiceRichMessageSource): boolean {
-  if (message.type !== 'jamie') {
-    return false;
-  }
-  const fields = resolveFeaturedFields(message);
-  if (message.process?.featured) {
-    return true;
-  }
-  if (fields.recipes && fields.recipes.length > 0) {
-    return true;
-  }
-  if (fields.mealPlan) {
-    return true;
-  }
-  if (fields.shoppingList) {
-    return true;
-  }
-  if (fields.recipeDetail?.recipe_id && fields.recipeDetail.title) {
-    return true;
-  }
-  return false;
-}
-
 function chipsFromRecipe(recipe: Recipe): string[] {
   const chips: string[] = [];
   if (recipe.time) chips.push(recipe.time);
@@ -166,129 +191,84 @@ function chipsFromRecipeDetail(detail: RecipeDetailData): string[] {
   return chips.slice(0, 3);
 }
 
+function previewFromFeaturedSelection(
+  selection: VoiceFeaturedSelection,
+): VoiceRichCardPreviewData {
+  const { featured, recipes } = selection;
+
+  switch (featured.kind) {
+    case 'recipe': {
+      const list = recipes ?? [featured.recipe];
+      const first = list[0];
+      const count = list.length;
+      return {
+        kind: 'recipes',
+        title: count === 1 ? first.title : `${count} recipes`,
+        emoji: '🥘',
+        chips: chipsFromRecipe(first),
+        imageUrl: first.image,
+        subtitle: subtitleFromRecipeTitles(list),
+      };
+    }
+    case 'meal_plan': {
+      const mp = featured.mealPlan;
+      const courseCount = Object.values(mp.courses ?? {}).reduce(
+        (total, course) => total + (course?.length ?? 0),
+        0,
+      );
+      const chips: string[] = [];
+      if (mp.occasion) chips.push(mp.occasion);
+      if (mp.serves) chips.push(`${mp.serves} servings`);
+      return {
+        kind: 'meal_plan',
+        title: mp.occasion ? `${mp.occasion} meal plan` : 'Meal plan',
+        emoji: '📅',
+        chips: chips.length > 0 ? chips.slice(0, 3) : courseCount > 0 ? [`${courseCount} dishes`] : [],
+        subtitle: subtitleFromMealPlan(mp),
+      };
+    }
+    case 'shopping_list': {
+      const count = featured.shoppingList.total_items
+        ?? featured.shoppingList.shopping_list?.length
+        ?? 0;
+      return {
+        kind: 'shopping_list',
+        title: 'Shopping list',
+        emoji: '🛒',
+        chips: count > 0 ? [`${count} items`] : [],
+        subtitle: subtitleFromShoppingList(featured.shoppingList),
+      };
+    }
+    case 'recipe_detail': {
+      const description = featured.recipe.description?.trim();
+      return {
+        kind: 'recipe_detail',
+        title: featured.recipe.title,
+        emoji: '🍳',
+        chips: chipsFromRecipeDetail(featured.recipe),
+        subtitle: description ? truncateSubtitle(description) : undefined,
+      };
+    }
+    default:
+      return {
+        kind: 'process',
+        title: "Jamie's suggestion",
+        emoji: '✨',
+        chips: [],
+      };
+  }
+}
+
+export function isVoiceExpandableMessage(message: VoiceRichMessageSource): boolean {
+  return resolveVoiceFeatured(message) !== null;
+}
+
 export function getVoiceRichCardPreview(
   message: VoiceRichMessageSource,
 ): VoiceRichCardPreviewData | null {
-  if (!isVoiceExpandableMessage(message)) {
+  const selection = resolveVoiceFeatured(message);
+  if (!selection) {
     return null;
   }
-
-  const fields = resolveFeaturedFields(message);
-
-  if (fields.recipeDetail?.title) {
-    const description = fields.recipeDetail.description?.trim();
-    return {
-      kind: 'recipe_detail',
-      title: fields.recipeDetail.title,
-      emoji: '🍳',
-      chips: chipsFromRecipeDetail(fields.recipeDetail),
-      subtitle: description ? truncateSubtitle(description) : undefined,
-    };
-  }
-
-  if (fields.recipes && fields.recipes.length > 0) {
-    const first = fields.recipes[0];
-    const count = fields.recipes.length;
-    return {
-      kind: 'recipes',
-      title: count === 1 ? first.title : `${count} recipes`,
-      emoji: '🥘',
-      chips: chipsFromRecipe(first),
-      imageUrl: first.image,
-      subtitle: subtitleFromRecipeTitles(fields.recipes),
-    };
-  }
-
-  if (fields.mealPlan) {
-    const courseCount = Object.values(fields.mealPlan.courses ?? {}).reduce(
-      (total, course) => total + (course?.length ?? 0),
-      0,
-    );
-    const chips: string[] = [];
-    if (fields.mealPlan.occasion) chips.push(fields.mealPlan.occasion);
-    if (fields.mealPlan.serves) {
-      chips.push(`${fields.mealPlan.serves} servings`);
-    }
-    return {
-      kind: 'meal_plan',
-      title: fields.mealPlan.occasion
-        ? `${fields.mealPlan.occasion} meal plan`
-        : 'Meal plan',
-      emoji: '📅',
-      chips: chips.length > 0 ? chips.slice(0, 3) : courseCount > 0 ? [`${courseCount} dishes`] : [],
-      subtitle: subtitleFromMealPlan(fields.mealPlan),
-    };
-  }
-
-  if (fields.shoppingList) {
-    const count = fields.shoppingList.total_items
-      ?? fields.shoppingList.shopping_list?.length
-      ?? 0;
-    return {
-      kind: 'shopping_list',
-      title: 'Shopping list',
-      emoji: '🛒',
-      chips: count > 0 ? [`${count} items`] : [],
-      subtitle: subtitleFromShoppingList(fields.shoppingList),
-    };
-  }
-
-  if (message.process?.featured) {
-    const featured = message.process.featured;
-    const subtitle = subtitleFromFeatured(featured);
-    switch (featured.kind) {
-      case 'recipe': {
-        const recipe = featured.recipe;
-        return {
-          kind: 'process',
-          title: recipe.title,
-          emoji: '🥘',
-          chips: chipsFromRecipe(recipe),
-          imageUrl: recipe.image,
-          subtitle,
-        };
-      }
-      case 'meal_plan':
-        return {
-          kind: 'process',
-          title: featured.mealPlan.occasion
-            ? `${featured.mealPlan.occasion} meal plan`
-            : 'Meal plan',
-          emoji: '📅',
-          chips: featured.mealPlan.serves
-            ? [`${featured.mealPlan.serves} servings`]
-            : [],
-          subtitle,
-        };
-      case 'shopping_list': {
-        const itemCount = featured.shoppingList.total_items
-          ?? featured.shoppingList.shopping_list?.length
-          ?? 0;
-        return {
-          kind: 'process',
-          title: 'Shopping list',
-          emoji: '🛒',
-          chips: itemCount > 0 ? [`${itemCount} items`] : [],
-          subtitle,
-        };
-      }
-      case 'recipe_detail':
-        return {
-          kind: 'process',
-          title: featured.recipe.title,
-          emoji: '🍳',
-          chips: chipsFromRecipeDetail(featured.recipe),
-          subtitle,
-        };
-      default:
-        return {
-          kind: 'process',
-          title: 'Jamie\'s suggestion',
-          emoji: '✨',
-          chips: [],
-        };
-    }
-  }
-
-  return null;
+  return previewFromFeaturedSelection(selection);
 }

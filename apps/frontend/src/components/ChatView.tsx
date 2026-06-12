@@ -19,6 +19,7 @@ import { VoiceRichCardPreview } from './VoiceRichCardPreview';
 import {
   getVoiceRichCardPreview,
   isVoiceExpandableMessage,
+  resolveVoiceFeatured,
 } from '../lib/voiceRichCard';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
 import { VoiceThinkingBubble } from './VoiceThinkingBubble';
@@ -1328,14 +1329,16 @@ export function ChatView({
                * disclosure here — `message.content` is the canonical reply
                * and it's always on screen.
                */
+              const voiceFeatured = voiceMode ? resolveVoiceFeatured(message) : null;
               const hasRecipes = !!(message.recipes && message.recipes.length > 0);
               const hasMealPlan = !!message.mealPlan;
               const hasShopping = !!message.shoppingList;
               const hasRecipeDetail = !!(
                 message.recipeDetail?.recipe_id && message.recipeDetail.title
               );
-              const hasStructuredPayload =
-                hasRecipes || hasMealPlan || hasShopping || hasRecipeDetail;
+              const hasStructuredPayload = voiceMode
+                ? Boolean(voiceFeatured)
+                : hasRecipes || hasMealPlan || hasShopping || hasRecipeDetail;
               const hasAnyBody =
                 !!message.content ||
                 hasRecipes ||
@@ -1367,28 +1370,25 @@ export function ChatView({
                 </div>
               );
 
-              const voiceExpandedRecipesBlock =
-                voiceMode && voiceExpanded && hasRecipes ? (
+              const voiceExpandedHeroBlock =
+                voiceMode && voiceExpanded && voiceFeatured ? (
                   <div className="mt-3 mb-3">
-                    <RecipeCarousel
-                      recipes={message.recipes!}
-                      onRecipeClick={async (recipe) => {
-                        const completeRecipe = await ensureRecipeHasPayload(recipe);
-                        onRecipeClick(completeRecipe);
-                      }}
-                      singleSlide
-                      voiceMode={voiceMode}
-                      voiceRole={voiceRole}
-                      voiceCardExpanded={voiceExpanded}
-                      resolveCommerceBadge={resolveCommerceBadgeForRecipe}
-                    />
+                    {renderFeaturedPayload(voiceFeatured.featured, {
+                      voiceMode,
+                      voiceRole,
+                      voiceExpanded,
+                      recipes:
+                        voiceFeatured.featured.kind === 'recipe'
+                          ? [...(voiceFeatured.recipes ?? [voiceFeatured.featured.recipe])]
+                          : message.recipes,
+                    })}
                   </div>
                 ) : null;
 
               const markdownBlock = message.content ? (
                 <div
                   className={`jamie-thread-markdown prose prose-sm max-w-none ${
-                    hasLongText && !isExpanded && !(voiceMode && voiceExpanded)
+                    hasLongText && !isExpanded && !voiceMode
                       ? 'jamie-thread-markdown--collapsed'
                       : ''
                   }`}
@@ -1436,9 +1436,12 @@ export function ChatView({
                 </div>
               ) : null;
 
+              const hideAuxiliaryPayloadBlocks =
+                voiceMode && voiceExpanded && Boolean(voiceFeatured);
+
               const payloadBlocks = (
                 <>
-                  {hasRecipes && !(voiceMode && voiceExpanded) && (
+                  {hasRecipes && !hideAuxiliaryPayloadBlocks && (
                     <div className={voiceMode ? 'mt-3' : 'jamie-thread-card__payload'}>
                       <RecipeCarousel
                         recipes={message.recipes!}
@@ -1455,7 +1458,7 @@ export function ChatView({
                     </div>
                   )}
 
-                  {hasMealPlan && (
+                  {hasMealPlan && !hideAuxiliaryPayloadBlocks && (
                     <div className="jamie-thread-card__payload">
                       <MealPlanCard
                         mealPlan={message.mealPlan!}
@@ -1475,13 +1478,13 @@ export function ChatView({
                     </div>
                   )}
 
-                  {hasShopping && (
+                  {hasShopping && !hideAuxiliaryPayloadBlocks && (
                     <div className="jamie-thread-card__payload">
                       <ShoppingListCard shoppingList={message.shoppingList!} />
                     </div>
                   )}
 
-                  {hasRecipeDetail && (
+                  {hasRecipeDetail && !hideAuxiliaryPayloadBlocks && (
                     <div className={voiceMode ? 'mt-3' : 'jamie-thread-card__payload'}>
                       {renderFeaturedPayload(
                         { kind: 'recipe_detail', recipe: message.recipeDetail! },
@@ -1514,9 +1517,9 @@ export function ChatView({
                           transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
                         >
                           {speakerBadge}
-                          {voiceExpandedRecipesBlock}
+                          {voiceExpandedHeroBlock}
                           {markdownBlock}
-                          {hasLongText && !message.isStreaming && !voiceExpanded && (
+                          {hasLongText && !message.isStreaming && !voiceMode && !isExpanded && (
                             <button
                               type="button"
                               className="jamie-thread-card__expand"

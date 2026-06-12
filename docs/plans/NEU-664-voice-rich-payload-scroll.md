@@ -7,13 +7,13 @@ overview: Follow-up to NEU-644. Fix wrong featured payload in voice (carousel vs
 todos:
   - id: featured-payload
     content: "Unify voice featured selection with chat (mealPlan > shoppingList > recipeDetail > recipes)"
-    status: pending
+    status: completed
   - id: voice-long-text
     content: "Disable chat markdown collapse in voice; card-body owns vertical scroll"
-    status: pending
+    status: completed
   - id: interactive-scope
     content: "Remove blanket data-voice-interactive on Jamie card wrapper"
-    status: pending
+    status: completed
   - id: tests-qa
     content: "Extend voiceRichCard tests + manual QA checklist from NEU-644 session"
     status: pending
