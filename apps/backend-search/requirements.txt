@@ -10,6 +10,7 @@ pydantic>=2.0.0
 
 # Optional but recommended
 httpx>=0.28.0
+svix>=1.37.0
 
 # Chat Agent dependencies
 openai>=1.0.0

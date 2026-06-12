@@ -1,8 +1,11 @@
 import { loadSupertab } from '@getsupertab/supertab-js';
 import {
   bootstrapSupertabIdentity,
+  createSpendMandate,
+  getCurrentSpendMandate,
   getRecipeAccess,
   syncSupertabPurchase,
+  type PurchaseIntent,
   type RecipeAccessResponse,
 } from './api';
 
@@ -19,6 +22,10 @@ type SupertabPurchaseButtonHandle = Awaited<ReturnType<SupertabClient['createPur
 };
 
 let supertabClientPromise: Promise<SupertabClient> | null = null;
+let siteOfferingsCache: Array<{ id: string; contentKey?: string | null; description?: string | null }> | null = null;
+
+const DEFAULT_AGENTIC_MANDATE_CEILING_CENTS = 1000;
+const SPEND_MANDATE_SESSION_KEY = 'jamie-spend-mandate-session';
 
 export type MyTabStatus = 'unavailable' | 'signed_out' | 'signed_in';
 export type MyTabMessageTone = 'neutral' | 'error';
@@ -543,7 +550,15 @@ export interface LaunchRecipePaywallResult {
   refreshedAccess?: RecipeAccessResponse;
 }
 
-export type PurchaseRecipeVia = 'embedded' | 'paywall' | 'unavailable' | 'abandoned';
+export type PurchaseRecipeVia =
+  | 'on_tab'
+  | 'embedded'
+  | 'paywall'
+  | 'unavailable'
+  | 'abandoned'
+  | 'tab_settlement_required';
+
+export type { PurchaseIntent };
 
 export interface PurchaseRecipeOutcome {
   via: PurchaseRecipeVia;
@@ -552,10 +567,228 @@ export interface PurchaseRecipeOutcome {
 }
 
 export interface PurchaseRecipeOptions {
+  /** Agent/voice path: ensure spend mandate before silent charge. */
+  agentic?: boolean;
   /** Opens the in-modal embedded Supertab checkout (same as tapping "Put it on my Tab"). */
   openEmbeddedCheckout?: () => Promise<void>;
   /** Resolves when embedded `onDone` fires; omit to skip the embed path. */
   waitForEmbeddedResolution?: () => Promise<RecipePurchaseResolution | null>;
+  /** One-time consent prompt for agentic spend mandate. */
+  requestSpendMandateConsent?: (params: {
+    ceilingAmount: number;
+    currencyCode: string;
+    priceAmount: number;
+  }) => Promise<boolean>;
+}
+
+function getSpendMandateSessionId(): string {
+  const existing = sessionStorage.getItem(SPEND_MANDATE_SESSION_KEY);
+  if (existing) {
+    return existing;
+  }
+  const created = `jamie-session-${crypto.randomUUID()}`;
+  sessionStorage.setItem(SPEND_MANDATE_SESSION_KEY, created);
+  return created;
+}
+
+export function buildPurchaseIntent(
+  access: RecipeAccessResponse,
+  userId: string,
+  offeringId?: string | null,
+  mandateId?: string | null,
+): PurchaseIntent {
+  return {
+    intent_type: 'recipe_unlock',
+    provider: 'supertab',
+    user_id: userId,
+    recipe_slug: access.recipeId,
+    content_key: access.offering?.contentKey || `recipe:${access.recipeId}:cook`,
+    price_amount: access.offering?.priceAmount ?? 0,
+    currency_code: access.offering?.currencyCode || 'USD',
+    mandate_id: mandateId ?? null,
+    offer: {
+      offering_id: offeringId ?? access.offering?.supertabOfferingId ?? null,
+      onetime_offering_id: null,
+    },
+    metadata: {
+      jamie_user_id: userId,
+      recipe_id: access.recipeId,
+      content_key: access.offering?.contentKey,
+      source: 'agentic-commerce',
+    },
+  };
+}
+
+async function resolveRecipeOfferingId(
+  client: SupertabClient,
+  access: RecipeAccessResponse,
+): Promise<string | null> {
+  if (access.offering?.supertabOfferingId) {
+    return access.offering.supertabOfferingId;
+  }
+
+  const configured = import.meta.env.VITE_SUPERTAB_RECIPE_OFFERING_ID;
+  if (configured) {
+    return configured;
+  }
+
+  if (!siteOfferingsCache) {
+    const site = await client.api.retrieveSite();
+    siteOfferingsCache = (site?.offerings || []).map((offering: any) => {
+      const details = offering.entitlementDetails;
+      const contentKey = Array.isArray(details)
+        ? details[0]?.contentKey
+        : details?.contentKey;
+      return {
+        id: offering.id,
+        contentKey: contentKey ?? null,
+        description: offering.description ?? null,
+      };
+    });
+  }
+
+  const contentKey = access.offering?.contentKey;
+  if (contentKey) {
+    const match = siteOfferingsCache.find((o) => o.contentKey === contentKey);
+    if (match) {
+      return match.id;
+    }
+  }
+
+  const recipeOffering = siteOfferingsCache.find((o) =>
+    o.description?.toLowerCase().includes('recipe'),
+  );
+  return recipeOffering?.id ?? siteOfferingsCache[0]?.id ?? null;
+}
+
+export async function ensureSpendMandateForAgenticPurchase(
+  userId: string,
+  access: RecipeAccessResponse,
+  requestConsent?: PurchaseRecipeOptions['requestSpendMandateConsent'],
+): Promise<string | null> {
+  const price = access.offering?.priceAmount ?? 0;
+  const currency = access.offering?.currencyCode || 'USD';
+  const existing = await getCurrentSpendMandate(userId);
+  if (existing && existing.remainingAmount >= price) {
+    return existing.id;
+  }
+
+  const ceiling = Math.max(DEFAULT_AGENTIC_MANDATE_CEILING_CENTS, price);
+  const approved = requestConsent
+    ? await requestConsent({ ceilingAmount: ceiling, currencyCode: currency, priceAmount: price })
+    : false;
+  if (!approved) {
+    return null;
+  }
+
+  const mandate = await createSpendMandate({
+    user_id: userId,
+    ceiling_amount: ceiling,
+    currency_code: currency,
+    session_id: getSpendMandateSessionId(),
+    source: 'voice',
+  });
+  return mandate.id;
+}
+
+export interface PurchaseRecipeOnTabResult {
+  status: 'completed' | 'action_required' | 'unavailable' | 'abandoned' | 'prior-entitlement';
+  userId?: string;
+  refreshedAccess?: RecipeAccessResponse;
+  purchase?: Record<string, unknown> | null;
+  actionRequired?: boolean;
+}
+
+/**
+ * Modal-free purchase via Supertab Customer API `api.purchase`.
+ * Falls back to paywall when `actionRequired` is true.
+ */
+export async function purchaseRecipeOnTab(
+  access: RecipeAccessResponse,
+  options: PurchaseRecipeOptions = {},
+): Promise<PurchaseRecipeOnTabResult> {
+  if (!hasSupertabConfig() || !access.offering?.contentKey) {
+    return { status: 'unavailable' };
+  }
+
+  const client = await getSupertabClient();
+  const authStatus = await client.auth.status;
+  if (authStatus !== 'valid') {
+    const silent = await client.auth.start({ silently: true }).catch(() => null);
+    if (!silent) {
+      return { status: 'unavailable' };
+    }
+  }
+
+  const userId = await ensureJamieSupertabUser();
+  if (options.agentic) {
+    const mandateId = await ensureSpendMandateForAgenticPurchase(
+      userId,
+      access,
+      options.requestSpendMandateConsent,
+    );
+    if (!mandateId) {
+      return { status: 'abandoned', userId };
+    }
+  }
+
+  const offeringId = await resolveRecipeOfferingId(client, access);
+  if (!offeringId) {
+    return { status: 'unavailable', userId };
+  }
+
+  const customer = await client.api.retrieveCustomer().catch(() => null);
+  const currencyCode = customer?.tab?.currency?.code || access.offering.currencyCode || 'USD';
+
+  const entitlementCheck = await client.api
+    .checkEntitlement({ contentKey: access.offering.contentKey })
+    .catch(() => null);
+  if (entitlementCheck?.hasEntitlement) {
+    await syncSupertabPurchase({
+      user_id: userId,
+      recipe_id: access.recipeId,
+      prior_entitlement: [{ contentKey: access.offering.contentKey, hasEntitlement: true }],
+    });
+    return {
+      status: 'prior-entitlement',
+      userId,
+      refreshedAccess: await getRecipeAccess(access.recipeId, userId),
+    };
+  }
+
+  const result = await client.api.purchase({
+    offeringId,
+    currencyCode,
+    metadata: {
+      jamieUserId: userId,
+      recipeId: access.recipeId,
+      contentKey: access.offering.contentKey,
+      source: options.agentic ? 'agent-silent-tab' : 'jamie-on-tab',
+    },
+  });
+
+  if (result?.actionRequired) {
+    return { status: 'action_required', userId, actionRequired: true };
+  }
+
+  const purchase = result?.purchase ?? null;
+  if (!purchase) {
+    return { status: 'abandoned', userId };
+  }
+
+  await syncSupertabPurchase({
+    user_id: userId,
+    recipe_id: access.recipeId,
+    purchase,
+    prior_entitlement: [],
+  });
+
+  return {
+    status: purchase.status === 'completed' ? 'completed' : 'abandoned',
+    userId,
+    purchase,
+    refreshedAccess: await getRecipeAccess(access.recipeId, userId),
+  };
 }
 
 async function buildResolutionFromPaywallResult(
@@ -581,13 +814,40 @@ async function buildResolutionFromPaywallResult(
 }
 
 /**
- * Single purchase entry: embedded button when available, otherwise Supertab paywall.
+ * Single purchase entry: silent on-tab first, then embedded button, then paywall fallback.
  * Voice and tap both call this instead of DOM click-walking.
  */
 export async function purchaseRecipe(
   access: RecipeAccessResponse,
   options: PurchaseRecipeOptions = {},
 ): Promise<PurchaseRecipeOutcome> {
+  const onTabResult = await purchaseRecipeOnTab(access, options);
+  if (onTabResult.status === 'completed' || onTabResult.status === 'prior-entitlement') {
+    const snapshot = await loadMyTabSnapshot();
+    return {
+      via: 'on_tab',
+      resolution: {
+        snapshot,
+        refreshedAccess: onTabResult.refreshedAccess ?? null,
+        state: {
+          purchase: onTabResult.purchase || { status: 'completed' },
+          priorEntitlement:
+            onTabResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [],
+        },
+        priorEntitlements:
+          onTabResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [],
+      },
+    };
+  }
+
+  if (onTabResult.status === 'action_required' && options.agentic) {
+    return { via: 'tab_settlement_required', resolution: null };
+  }
+
+  if (onTabResult.status === 'abandoned' && options.agentic) {
+    return { via: 'abandoned', resolution: null };
+  }
+
   const canEmbed = canEmbedRecipePurchaseButton(access);
 
   if (canEmbed && options.openEmbeddedCheckout && options.waitForEmbeddedResolution) {
@@ -596,7 +856,6 @@ export async function purchaseRecipe(
     if (resolution) {
       return { via: 'embedded', resolution };
     }
-    // Embed did not complete (abandoned, failed to mount, or timed out) → paywall fallback.
   }
 
   const paywallResult = await launchRecipePaywall(access);

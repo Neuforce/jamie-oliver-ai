@@ -166,52 +166,39 @@ export const SupertabPurchaseButton = forwardRef<
   }, [access.recipeId, access.offering?.contentKey, access.offering?.supertabExperienceId]);
 
   return (
-    <div className="space-y-3">
-      <div className="rounded-[28px] border border-[#E8DDF8] bg-[#FAF7FF] p-4 shadow-[0_12px_30px_rgba(120,84,196,0.10)]">
-        <div className="flex items-center justify-between gap-3">
-          <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#7C5AC3]">
-              My Tab
-            </p>
-            <p className="mt-1 text-sm font-medium text-[#3A2A58]">
-              Unlock this recipe with Supertab
-            </p>
-          </div>
-          <div className="rounded-full bg-white px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#7C5AC3]">
-            Powered by Supertab
-          </div>
-        </div>
+    <div className="jamie-recipe-modal__unlock-pane space-y-3">
+      <p className="text-sm text-[#5C5C5C] leading-relaxed">
+        Unlock this recipe to cook with Jamie step by step.
+      </p>
 
-        <div className="mt-4 rounded-[22px] bg-white p-3">
-          {!embedUnavailable && (
-            <div
-              ref={containerRef}
-              data-jamie-supertab-purchase-host=""
-            />
-          )}
-          {isMounting && !embedUnavailable && (
-            <p className="text-sm text-[#6B5F81]">
-              Loading Supertab purchase options...
-            </p>
-          )}
-          {embedUnavailable && (
-            <button
-              type="button"
-              className="w-full rounded-full bg-[#7C5AC3] px-4 py-3 text-sm font-semibold text-white disabled:opacity-60"
-              disabled={isLaunchingPaywall}
-              onClick={() => void handlePaywallFallback()}
-            >
-              {isLaunchingPaywall ? 'Opening My Tab…' : 'Open My Tab checkout'}
-            </button>
-          )}
-        </div>
+      <div className="flex flex-wrap items-center gap-3">
+        {!embedUnavailable && (
+          <div
+            ref={containerRef}
+            className="min-h-[44px] flex-1"
+            data-jamie-supertab-purchase-host=""
+          />
+        )}
+        {isMounting && !embedUnavailable && (
+          <p className="text-sm text-[#6B5F81]">Loading checkout…</p>
+        )}
+        {embedUnavailable && (
+          <button
+            type="button"
+            className="jamie-recipe-modal__header-pill"
+            disabled={isLaunchingPaywall}
+            onClick={() => void handlePaywallFallback()}
+          >
+            {isLaunchingPaywall ? 'Opening…' : 'Unlock this recipe'}
+          </button>
+        )}
       </div>
 
       {statusMessage && (
-        <p className="text-center text-sm text-[#6B5F81]">
-          {statusMessage}
-        </p>
+        <p className="text-sm text-[#6B5F81]">{statusMessage}</p>
       )}
+
+      <p className="text-xs text-[#9A9A9A]">Secured by Supertab</p>
     </div>
   );
 });

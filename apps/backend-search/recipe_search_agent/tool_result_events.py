@@ -127,12 +127,49 @@ def tool_result_to_chat_events(
                     ),
                 )
             )
+
+        price_amount = 199
+        currency_code = "USD"
+        try:
+            from recipe_search_agent.repositories import MonetizationRepository
+
+            row = get_published_catalog().get_recipe_row(rid)
+            if row and row.get("id"):
+                offering = MonetizationRepository().get_active_offering(row["id"])
+                if offering:
+                    price_amount = int(offering.get("price_amount") or price_amount)
+                    currency_code = offering.get("currency_code") or currency_code
+        except Exception:
+            pass
+
+        ceiling_amount = max(1000, price_amount)
+        events.append(
+            ChatEvent(
+                type="spend_mandate_consent_requested",
+                content="",
+                metadata=_with_correlation(
+                    {
+                        "backend_recipe_id": rid,
+                        "price_amount": price_amount,
+                        "currency_code": currency_code,
+                        "ceiling_amount": ceiling_amount,
+                    },
+                    tool_call_id=tool_call_id,
+                    response_id=response_id,
+                ),
+            )
+        )
+
+        purchase_intent = result.get("purchase_intent")
         events.append(
             ChatEvent(
                 type="recipe_paywall_requested",
                 content="",
                 metadata=_with_correlation(
-                    {"backend_recipe_id": rid},
+                    {
+                        "backend_recipe_id": rid,
+                        **({"purchase_intent": purchase_intent} if purchase_intent else {}),
+                    },
                     tool_call_id=tool_call_id,
                     response_id=response_id,
                 ),

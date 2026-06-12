@@ -40,9 +40,9 @@ recipe_pdf_agent_llama/pipeline.py
 recipe_pdf_agent_llama/prompts.py
 recipe_pdf_agent_llama/supabase_store.py
 recipe_pdf_agent_llama/validate.py
+tests/test_agentic_payments.py
 tests/test_api_examples.py
 tests/test_chunker.py
-tests/test_chunks.py
 tests/test_discovery_tools.py
 tests/test_foundations_services.py
 tests/test_guardrails_certification.py
@@ -54,4 +54,5 @@ tests/test_guardrails_neugate_client.py
 tests/test_guardrails_policy_loader.py
 tests/test_guardrails_policy_render.py
 tests/test_preprompt_v1_2.py
+tests/test_recipe_catalog.py
 tests/test_search_agent.py
