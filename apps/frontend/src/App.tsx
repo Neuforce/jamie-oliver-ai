@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
 import { flushSync } from 'react-dom';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
+import { hydrateRecipe } from './data/recipeLoader';
 import { RecipeCard } from './components/RecipeCard';
 import { RecipeModal, type RecipeModalHandle } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
@@ -42,6 +43,7 @@ import {
   type MyTabSiteSummary,
   type MyTabStatus,
 } from './lib/supertab';
+import { markAppLoadStage, startAppLoadSession } from './lib/appLoadMetrics';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -76,6 +78,8 @@ export default function App() {
   // Data state
   const [loadedRecipes, setLoadedRecipes] = useState<Recipe[]>(recipes);
   const [availableCategories, setAvailableCategories] = useState<string[]>(categories);
+  const [isRecipesCatalogLoading, setIsRecipesCatalogLoading] = useState(recipes.length === 0);
+  const [recipesCatalogFailed, setRecipesCatalogFailed] = useState(false);
 
   // Chat state
   const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>(undefined);
@@ -98,17 +102,47 @@ export default function App() {
   /** Keeps ChatView (and `/ws/chat-voice`) alive when switching tabs with voice or an open recipe sheet. */
   const [discoveryVoiceSessionActive, setDiscoveryVoiceSessionActive] = useState(false);
 
+  useEffect(() => {
+    startAppLoadSession();
+    markAppLoadStage('app_mount');
+  }, []);
+
+  const upsertLoadedRecipe = useCallback((hydrated: Recipe) => {
+    const key = hydrated.backendId || String(hydrated.id);
+    setLoadedRecipes((prev) => {
+      const idx = prev.findIndex((entry) => (entry.backendId || String(entry.id)) === key);
+      if (idx < 0) {
+        return prev;
+      }
+      const next = [...prev];
+      next[idx] = hydrated;
+      return next;
+    });
+  }, []);
+
   // Load recipes asynchronously in production (when recipes array is empty)
   useEffect(() => {
     if (recipes.length === 0) {
-      initializeRecipes().then((loaded) => {
-        setLoadedRecipes(loaded);
-        setAvailableCategories(getCategories(loaded));
-      }).catch((error) => {
-        console.error('Failed to load recipes:', error);
-      });
+      setIsRecipesCatalogLoading(true);
+      setRecipesCatalogFailed(false);
+      initializeRecipes()
+        .then((loaded) => {
+          setLoadedRecipes(loaded);
+          setAvailableCategories(getCategories(loaded));
+          markAppLoadStage('recipes_ready', { count: loaded.length });
+        })
+        .catch((error) => {
+          console.error('Failed to load recipes:', error);
+          setRecipesCatalogFailed(true);
+          markAppLoadStage('recipes_ready', { count: 0, error: true });
+        })
+        .finally(() => {
+          setIsRecipesCatalogLoading(false);
+        });
     } else {
       setAvailableCategories(getCategories(recipes));
+      markAppLoadStage('recipes_ready', { count: recipes.length, source: 'bundled' });
+      setIsRecipesCatalogLoading(false);
     }
   }, []);
 
@@ -167,12 +201,14 @@ export default function App() {
 
     const resolveMyTabState = async () => {
       setIsMyTabLoading(true);
+      let resolvedStatus: MyTabStatus = 'signed_out';
       try {
         const snapshot = await loadMyTabSnapshot();
         if (!isMounted) {
           return;
         }
 
+        resolvedStatus = snapshot.status;
         setMyTabStatus(snapshot.status);
         setMyTabAccount(snapshot.account ?? null);
         setMyTabSite(snapshot.site ?? null);
@@ -181,6 +217,7 @@ export default function App() {
         await hydrateJamieUser(snapshot.userId, () => isMounted);
       } catch (error) {
         console.error('Failed to resolve My Tab status:', error);
+        resolvedStatus = 'signed_out';
         if (isMounted) {
           setMyTabStatus('signed_out');
           setMyTabAccount(null);
@@ -192,6 +229,10 @@ export default function App() {
       } finally {
         if (isMounted) {
           setIsMyTabLoading(false);
+          markAppLoadStage('mytab_ready', {
+            status: resolvedStatus,
+            loading: false,
+          });
         }
       }
     };
@@ -423,6 +464,7 @@ export default function App() {
     permalinkNotFound,
     setPermalinkNotFound,
     setPermalinkResolving,
+    onRecipeResolved: upsertLoadedRecipe,
   });
 
   const startCookingOverlay = useCallback((recipe: Recipe) => {
@@ -438,19 +480,22 @@ export default function App() {
   startCookingOverlayRef.current = startCookingOverlay;
 
   const startCookingForRecipe = useCallback(async (recipe: Recipe) => {
-    const access = await loadRecipeAccess(recipe, { force: true });
+    const hydrated = await hydrateRecipe(recipe);
+    upsertLoadedRecipe(hydrated);
+
+    const access = await loadRecipeAccess(hydrated, { force: true });
     if (!access) {
       return;
     }
 
     if (access.accessState === 'locked') {
-      setSelectedRecipe(recipe);
-      navigateToRecipe(recipe, { replace: true });
+      setSelectedRecipe(hydrated);
+      navigateToRecipe(hydrated, { replace: true });
       return;
     }
 
-    startCookingOverlay(recipe);
-  }, [loadRecipeAccess, navigateToRecipe, startCookingOverlay]);
+    startCookingOverlay(hydrated);
+  }, [loadRecipeAccess, navigateToRecipe, startCookingOverlay, upsertLoadedRecipe]);
 
   const displayCategories = useMemo(() => {
     return activeView === 'my-recipes'
@@ -478,6 +523,18 @@ export default function App() {
     });
   }, [activeView, normalizedSearchQuery, ownedRecipeCollection, selectedCategory, loadedRecipes]);
 
+  useEffect(() => {
+    if (activeView === 'recipes' || activeView === 'my-recipes') {
+      markAppLoadStage('recipes_route_ready', { view: activeView });
+    }
+  }, [activeView]);
+
+  useEffect(() => {
+    if (activeView === 'recipes' && visibleRecipes.length > 0) {
+      markAppLoadStage('recipes_first_card', { count: visibleRecipes.length });
+    }
+  }, [activeView, visibleRecipes.length]);
+
   // Recipe interaction handlers
   const handleCookWithJamie = () => {
     if (!selectedRecipe) return;
@@ -503,12 +560,17 @@ export default function App() {
 
     setPermalinkNotFound(null);
     setIsLoading(true);
-    setTimeout(() => {
-      setSelectedRecipe(recipe);
-      setIsLoading(false);
-      navigateToRecipe(recipe);
-      void loadRecipeAccess(recipe);
-    }, 300);
+    void (async () => {
+      try {
+        const hydrated = await hydrateRecipe(recipe);
+        upsertLoadedRecipe(hydrated);
+        setSelectedRecipe(hydrated);
+        navigateToRecipe(hydrated);
+        void loadRecipeAccess(hydrated);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   };
 
   const handleContinueWithNewRecipe = () => {
@@ -523,10 +585,17 @@ export default function App() {
           setIsLoading(false);
           void startCookingForRecipe(nextRecipe);
         } else {
-          setSelectedRecipe(nextRecipe);
-          navigateToRecipe(nextRecipe);
-          void loadRecipeAccess(nextRecipe);
-          setIsLoading(false);
+          void (async () => {
+            try {
+              const hydrated = await hydrateRecipe(nextRecipe);
+              upsertLoadedRecipe(hydrated);
+              setSelectedRecipe(hydrated);
+              navigateToRecipe(hydrated);
+              void loadRecipeAccess(hydrated);
+            } finally {
+              setIsLoading(false);
+            }
+          })();
         }
         setPendingRecipe(null);
         setPendingRecipeAction('view');
@@ -562,10 +631,19 @@ export default function App() {
 
   // Handle recipe selection from Chat view
   const handleChatRecipeClick = (recipe: Recipe) => {
-    setSelectedRecipe(recipe);
     setPermalinkNotFound(null);
-    navigateToRecipe(recipe);
-    void loadRecipeAccess(recipe);
+    setIsLoading(true);
+    void (async () => {
+      try {
+        const hydrated = await hydrateRecipe(recipe);
+        upsertLoadedRecipe(hydrated);
+        setSelectedRecipe(hydrated);
+        navigateToRecipe(hydrated);
+        void loadRecipeAccess(hydrated);
+      } finally {
+        setIsLoading(false);
+      }
+    })();
   };
 
   const handleTabChange = (view: TabView) => {
@@ -981,7 +1059,7 @@ export default function App() {
                   }}
                 >
                   {/* Recipes View */}
-                  <div className="jamie-page-shell">
+                  <div className="jamie-page-shell" data-testid="recipes-view">
                     {/* Hero Section with Glow Effect */}
                     <div className="jamie-shell-width jamie-surface-panel">
                       <div className="jamie-section-hero">
@@ -1434,8 +1512,15 @@ export default function App() {
                         )}
                       </AnimatePresence>
 
+                      {/* Catalog loading */}
+                      {!isMyRecipesView && isRecipesCatalogLoading && loadedRecipes.length === 0 ? (
+                        <div className="px-4 mb-6">
+                          <RecipeSkeletonLoader />
+                        </div>
+                      ) : null}
+
                       {/* Recipe Grid View */}
-                      {viewMode === 'grid' && (
+                      {viewMode === 'grid' && visibleRecipes.length > 0 && (
                         <motion.div
                           key={`grid-${recipesInProgress.length}`}
                           initial={{ opacity: 0 }}
@@ -1466,7 +1551,7 @@ export default function App() {
                       )}
 
                       {/* Recipe Feed View */}
-                      {viewMode === 'feed' && (
+                      {viewMode === 'feed' && visibleRecipes.length > 0 && (
                         <motion.div
                           initial={{ opacity: 0 }}
                           animate={{ opacity: 1 }}
@@ -1493,21 +1578,27 @@ export default function App() {
                       )}
 
                       {/* No Results */}
-                      {visibleRecipes.length === 0 && (
+                      {!isRecipesCatalogLoading && visibleRecipes.length === 0 ? (
                         <div className="text-center py-12">
                           <ChefHat className="size-16 mx-auto mb-4 text-muted-foreground" />
                           <h3 className="mb-2 font-medium">
-                            {isMyRecipesView ? 'No owned recipes yet' : 'No recipes found'}
+                            {isMyRecipesView
+                              ? 'No owned recipes yet'
+                              : recipesCatalogFailed
+                                ? 'Could not load recipes'
+                                : 'No recipes found'}
                           </h3>
                           <p className="text-muted-foreground">
                             {isMyRecipesView
                               ? (isMyRecipesLoading
                                 ? 'Loading your unlocked recipes...'
                                 : 'Unlock a recipe with Supertab and it will appear here.')
-                              : 'Try adjusting your search or filters'}
+                              : recipesCatalogFailed
+                                ? 'Check your API connection and try again.'
+                                : 'Try adjusting your search or filters'}
                           </p>
                         </div>
-                      )}
+                      ) : null}
                     </div>
                   </div>
                 </motion.div>

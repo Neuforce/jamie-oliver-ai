@@ -1,5 +1,17 @@
 import type { Recipe, BackendRecipeStep } from './recipes';
+import { loadRecipeBySlug } from './loadRecipeBySlug';
 import { API_BASE_URL } from '../lib/runtimeConfig';
+
+interface ApiRecipeListItem {
+  recipe_id: string;
+  title?: string;
+  description?: string;
+  category?: string | null;
+  complexity?: string | null;
+  servings?: number | null;
+  image_url?: string | null;
+  full_recipe?: BackendRecipePayload;
+}
 
 // Recipe data from jamie-oliver-ai format
 export interface BackendRecipePayload {
@@ -105,6 +117,14 @@ function getImagePath(recipeId: string): string {
   
   const mappedName = imageMap[recipeId] || imageMap[imageName] || imageName;
   return `/recipes-img/${mappedName}.webp`;
+}
+
+function slugToTitle(slug: string): string {
+  return slug
+    .split('-')
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
 
 // Parse ISO 8601 duration (PT20M, PT1H5M) to "20 mins" format
@@ -504,6 +524,78 @@ export function transformRecipe(
   };
 }
 
+/** Card-level recipe from GET /api/v1/recipes (no full_recipe). */
+export function transformApiSummary(apiRecipe: ApiRecipeListItem, index: number): Recipe {
+  const recipeId = apiRecipe.recipe_id?.trim() || `recipe-${index + 1}`;
+  const category =
+    typeof apiRecipe.category === 'string' && apiRecipe.category.trim() !== ''
+      ? formatCategoryLabel(apiRecipe.category.trim())
+      : 'Main Course';
+
+  return {
+    id: index + 1,
+    backendId: recipeId,
+    title: apiRecipe.title?.trim() || slugToTitle(recipeId),
+    description: apiRecipe.description?.trim() || '',
+    category,
+    difficulty: mapDifficulty(apiRecipe.complexity),
+    time: '30 mins',
+    servings: apiRecipe.servings ?? 4,
+    image: apiRecipe.image_url?.trim() || getImagePath(recipeId),
+    ingredients: [],
+    instructions: [],
+    tips: [],
+  };
+}
+
+export function isRecipeHydrated(recipe: Recipe): boolean {
+  return Boolean(recipe.rawRecipePayload && (recipe.backendSteps?.length || recipe.instructions.length > 0));
+}
+
+export function upsertRecipeInCache(recipe: Recipe): void {
+  if (!cachedRecipes?.length) {
+    return;
+  }
+  const key = recipe.backendId || String(recipe.id);
+  const idx = cachedRecipes.findIndex(
+    (entry) => (entry.backendId || String(entry.id)) === key,
+  );
+  if (idx < 0) {
+    return;
+  }
+  cachedRecipes[idx] = {
+    ...cachedRecipes[idx],
+    ...recipe,
+    id: cachedRecipes[idx].id,
+  };
+}
+
+/** Fetch full recipe JSON when the catalog entry is summary-only. */
+export async function hydrateRecipe(recipe: Recipe): Promise<Recipe> {
+  if (isRecipeHydrated(recipe)) {
+    return recipe;
+  }
+
+  const slug = recipe.backendId?.trim();
+  if (!slug) {
+    return recipe;
+  }
+
+  const full = await loadRecipeBySlug(slug);
+  if (!full) {
+    return recipe;
+  }
+
+  const merged: Recipe = {
+    ...recipe,
+    ...full,
+    id: recipe.id,
+    backendId: slug,
+  };
+  upsertRecipeInCache(merged);
+  return merged;
+}
+
 // Load recipes from Supabase API with fallback to local files
 // API endpoint: /api/v1/recipes (backend-search service)
 // Local fallback: public/recipes-json/ (development mode)
@@ -528,9 +620,8 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
     if (!API_BASE_URL?.trim()) {
       throw new Error('VITE_API_BASE_URL is missing; cannot load recipes from API in this environment.');
     }
-    // Fetch all recipes with full JSON from API
-    const url = `${API_BASE_URL}/api/v1/recipes?include_full=true&limit=500`;
-    console.log(`[RecipeLoader] Fetching from API: ${url}`);
+    const url = `${API_BASE_URL}/api/v1/recipes?limit=500`;
+    console.log(`[RecipeLoader] Fetching catalog from API: ${url}`);
     
     const response = await fetch(url);
     
@@ -553,7 +644,7 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
     // Transform API response to Recipe format
     let index = 0;
     let skipped = 0;
-    for (const apiRecipe of data.recipes) {
+    for (const apiRecipe of data.recipes as ApiRecipeListItem[]) {
       if (apiRecipe.full_recipe && 'recipe' in apiRecipe.full_recipe) {
         const apiCat =
           typeof apiRecipe.category === 'string' && apiRecipe.category.trim() !== ''
@@ -562,16 +653,23 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
         recipes.push(
           transformRecipe(apiRecipe.full_recipe as BackendRecipePayload, index, {
             apiCategory: apiCat,
-          })
+          }),
         );
         index++;
-      } else {
-        console.warn(`[RecipeLoader] Skipping recipe without full_recipe:`, apiRecipe.recipe_id || apiRecipe.title);
-        skipped++;
+        continue;
       }
+
+      if (apiRecipe.recipe_id) {
+        recipes.push(transformApiSummary(apiRecipe, index));
+        index++;
+        continue;
+      }
+
+      console.warn('[RecipeLoader] Skipping recipe without recipe_id:', apiRecipe.title);
+      skipped++;
     }
-    
-    console.log(`[RecipeLoader] ✅ Loaded ${recipes.length} recipes from Supabase (skipped: ${skipped})`);
+
+    console.log(`[RecipeLoader] ✅ Loaded ${recipes.length} catalog recipes from API (skipped: ${skipped})`);
     
     if (recipes.length === 0) {
       throw new Error('All recipes were skipped - no valid full_recipe data');
@@ -585,14 +683,10 @@ async function loadRecipesFromAPI(): Promise<Recipe[]> {
 }
 
 /**
- * Load recipes from local JSON files (fallback)
+ * Lightweight local catalog — list file only (hydrate on modal/cook).
  */
-async function loadRecipesFromLocal(): Promise<Recipe[]> {
-  const recipes: Recipe[] = [];
-  let index = 0;
-
+async function loadRecipesFromLocalSummaries(): Promise<Recipe[]> {
   try {
-    // Fetch recipes list
     const listResponse = await fetch('/recipes-json/recipes-list.json');
     if (!listResponse.ok) {
       console.error('Failed to load recipes list:', listResponse.statusText);
@@ -600,14 +694,46 @@ async function loadRecipesFromLocal(): Promise<Recipe[]> {
     }
 
     const recipeNames: string[] = await listResponse.json();
-    
-    // Fetch all recipes in parallel
+    const recipes = recipeNames.map((name, index) =>
+      transformApiSummary(
+        {
+          recipe_id: name,
+          title: slugToTitle(name),
+        },
+        index,
+      ),
+    );
+
+    console.log(`[RecipeLoader] Loaded ${recipes.length} local catalog summaries`);
+    return recipes;
+  } catch (e) {
+    console.error('Failed to load local recipe summaries:', e);
+    return [];
+  }
+}
+
+/**
+ * Full local JSON files (dev fidelity when editing recipe payloads).
+ */
+async function loadRecipesFromLocalFull(): Promise<Recipe[]> {
+  const recipes: Recipe[] = [];
+  let index = 0;
+
+  try {
+    const listResponse = await fetch('/recipes-json/recipes-list.json');
+    if (!listResponse.ok) {
+      console.error('Failed to load recipes list:', listResponse.statusText);
+      return [];
+    }
+
+    const recipeNames: string[] = await listResponse.json();
+
     const loadedRecipes = await Promise.all(
       recipeNames.map(async (name) => {
         try {
           const response = await fetch(`/recipes-json/${name}.json`);
           if (response.ok) {
-            return await response.json() as BackendRecipePayload;
+            return (await response.json()) as BackendRecipePayload;
           }
           console.warn(`Failed to load recipe ${name}: ${response.statusText}`);
           return null;
@@ -615,23 +741,29 @@ async function loadRecipesFromLocal(): Promise<Recipe[]> {
           console.warn(`Failed to load recipe ${name}:`, e);
           return null;
         }
-      })
+      }),
     );
-    
-    // Transform and add recipes
+
     for (const recipe of loadedRecipes) {
       if (recipe && 'recipe' in recipe) {
         recipes.push(transformRecipe(recipe as BackendRecipePayload, index));
         index++;
       }
     }
-    
-    console.log(`Loaded ${recipes.length} recipes from local files (fallback)`);
+
+    console.log(`[RecipeLoader] Loaded ${recipes.length} recipes from local files (dev full)`);
     return recipes;
   } catch (e) {
     console.error('Failed to load recipes from local files:', e);
     return [];
   }
+}
+
+async function loadRecipesFromLocal(): Promise<Recipe[]> {
+  if (import.meta.env.DEV) {
+    return loadRecipesFromLocalFull();
+  }
+  return loadRecipesFromLocalSummaries();
 }
 
 export async function loadRecipes(): Promise<Recipe[]> {

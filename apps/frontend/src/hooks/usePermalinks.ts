@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import type { TabView } from '../components/TabNav';
 import type { Recipe } from '../data/recipes';
+import { hydrateRecipe } from '../data/recipeLoader';
 import { loadRecipeBySlug } from '../data/loadRecipeBySlug';
 import type { RecipeAccessResponse } from '../lib/api';
 import {
@@ -40,6 +41,7 @@ type UsePermalinksOptions = {
   permalinkNotFound: PermalinkNotFoundState;
   setPermalinkNotFound: (state: PermalinkNotFoundState) => void;
   setPermalinkResolving: (resolving: boolean) => void;
+  onRecipeResolved?: (recipe: Recipe) => void;
 };
 
 type NavigateOptions = {
@@ -68,10 +70,13 @@ export function usePermalinks(options: UsePermalinksOptions) {
   const resolveRecipe = useCallback(
     async (slug: string): Promise<Recipe | null> => {
       const cached = optionsRef.current.loadedRecipesByBackendId.get(slug);
-      if (cached) {
-        return cached;
+      const base = cached ?? await loadRecipeBySlug(slug);
+      if (!base) {
+        return null;
       }
-      return loadRecipeBySlug(slug);
+      const hydrated = await hydrateRecipe(base);
+      optionsRef.current.onRecipeResolved?.(hydrated);
+      return hydrated;
     },
     [],
   );

@@ -60,4 +60,8 @@
       port: 3000,
       open: true,
     },
+    test: {
+      environment: 'node',
+      include: ['src/**/*.test.ts'],
+    },
   });

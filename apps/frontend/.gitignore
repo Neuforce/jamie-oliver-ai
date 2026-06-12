@@ -1,1 +1,3 @@
 .vercel
+benchmarks/bench-*.json
+benchmarks/compare-*.json
