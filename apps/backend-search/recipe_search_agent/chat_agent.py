@@ -215,6 +215,7 @@ class DiscoveryChatAgent:
         self,
         message: str,
         session_id: str,
+        focused_recipe_backend_id: Optional[str] = None,
     ) -> AsyncGenerator[ChatEvent, None]:
         """
         Process a chat message and stream responses.
@@ -262,6 +263,17 @@ class DiscoveryChatAgent:
 
         set_gate_blocked(False)
 
+        agent_message = message
+        focused_id = (focused_recipe_backend_id or "").strip()
+        if focused_id:
+            agent_message = (
+                f"{message}\n\n"
+                "[Context for tools only: The full recipe sheet is focused on backend recipe "
+                f"id `{focused_id}`. When the user clearly asks to unlock, purchase, pay, put something "
+                "on My Tab, open checkout, or buy this recipe for money, call `request_supertab_unlock` "
+                f"with recipe_backend_id exactly `{focused_id}`.]"
+            )
+
         # Create brain with session's memory
         brain = SimpleBrain(
             llm=self._create_llm(),
@@ -270,7 +282,7 @@ class DiscoveryChatAgent:
         )
 
         # Create user message - identical processing for text and voice
-        user_msg = UserMessage(content=message)
+        user_msg = UserMessage(content=agent_message)
 
         logger.info(f"Processing message for session {session_id}: {message[:50]}...")
 
