@@ -41,6 +41,8 @@ export interface VoiceModeRollerProps {
    * oldest first, newest last).
    */
   messages: RollerMessage[];
+  /** When set, jump to newest and expand this Jamie message (recipe cards). */
+  autoExpandMessageId?: string | null;
   /**
    * Render function for each message. Receives the message and the stack
    * role ("top" | "middle" | "back"). The roller handles sizing/blur
@@ -100,6 +102,7 @@ const INTERACTIVE_SELECTOR = [
  */
 export function VoiceModeRoller({
   messages,
+  autoExpandMessageId = null,
   renderMessage,
   onOffsetChange,
   className,
@@ -207,6 +210,15 @@ export function VoiceModeRoller({
   const jumpToNewest = useCallback(() => {
     setOffsetWithNotification(0);
   }, [setOffsetWithNotification]);
+
+  // Surface recipe/meal-plan cards when they arrive on the active turn.
+  useEffect(() => {
+    if (!autoExpandMessageId) return;
+    const tailId = messages[messages.length - 1]?.id ?? null;
+    if (tailId !== autoExpandMessageId) return;
+    jumpToNewest();
+    setExpandedMessageId(autoExpandMessageId);
+  }, [autoExpandMessageId, jumpToNewest, messages]);
 
   // --- Pointer drag on the top card ---
   const dragStateRef = useRef<{
