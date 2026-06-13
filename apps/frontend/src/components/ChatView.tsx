@@ -420,12 +420,16 @@ export function ChatView({
   const voiceMessageIdRef = useRef<string | null>(null);
   const voiceResponseAccumulatorRef = useRef<string>('');
   const voiceStreamStateRef = useRef(createChatTurnStreamState());
+  const [voiceAutoExpandMessageId, setVoiceAutoExpandMessageId] = useState<string | null>(null);
 
   const applyStreamToVoiceMessage = useCallback((event: ChatEvent) => {
     const messageId = voiceMessageIdRef.current;
     if (!messageId) return;
     voiceStreamStateRef.current = reduceChatStreamEvent(voiceStreamStateRef.current, event);
     const patch = messagePatchFromStreamState(voiceStreamStateRef.current);
+    if (patch.recipes?.length || patch.recipeDetail?.recipe_id) {
+      setVoiceAutoExpandMessageId(messageId);
+    }
     setMessages(prev =>
       prev.map(msg => (msg.id === messageId ? { ...msg, ...patch } : msg)),
     );
@@ -488,6 +492,19 @@ export function ChatView({
           setThinkingStatus(null);
           void openRecipeModalFromDetailRef.current(openDetail);
           return;
+        }
+
+        // Finalize any in-flight Jamie turn before starting a new one. Without
+        // this, barge-in leaves the prior message stuck at isStreaming:true
+        // and later tool payloads can attach to the wrong turn.
+        const previousStreamingId = voiceMessageIdRef.current;
+        if (previousStreamingId) {
+          const accumulatedText = voiceResponseAccumulatorRef.current;
+          setMessages(prev => prev.map(msg => {
+            if (msg.id !== previousStreamingId) return msg;
+            const content = (msg.content || accumulatedText || '').trim();
+            return { ...msg, content, isStreaming: false };
+          }));
         }
 
         // Create user message from voice transcript
@@ -1278,9 +1295,16 @@ export function ChatView({
     if (voiceMode && message.type === 'jamie') {
       const richPreview = getVoiceRichCardPreview(message);
       const isRichCard = isVoiceExpandableMessage(message);
+      const hasRecipePayload = Boolean(
+        (message.recipes && message.recipes.length > 0)
+        || (message.recipeDetail?.recipe_id && message.recipeDetail.title),
+      );
+      // Recipe results must stay visible on the top card — collapsing them into
+      // the tiny preview bubble hid cards users thought were missing entirely.
       const showCompactPreview =
         isRichCard &&
         richPreview &&
+        !hasRecipePayload &&
         (voiceRole !== 'top' || !voiceExpanded);
 
       if (showCompactPreview) {
@@ -1659,6 +1683,7 @@ export function ChatView({
           <div className="jamie-shell-width jamie-voice-stage__inner">
             <VoiceModeRoller
               messages={rollerMessages}
+              autoExpandMessageId={voiceAutoExpandMessageId}
               renderMessage={(msg, context) => {
                 const fullMessage = messages.find(m => m.id === msg.id);
                 if (!fullMessage) return null;
