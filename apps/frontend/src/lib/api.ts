@@ -331,7 +331,8 @@ export async function getRecipeById(recipeId: string): Promise<RecipeByIdRespons
  */
 export async function* chatWithAgent(
   message: string,
-  sessionId: string
+  sessionId: string,
+  options?: { focusedRecipeBackendId?: string | null },
 ): AsyncGenerator<ChatEvent, void, unknown> {
   const response = await fetch(`${API_BASE_URL}/api/v1/chat`, {
     method: 'POST',
@@ -341,6 +342,7 @@ export async function* chatWithAgent(
     body: JSON.stringify({
       message,
       session_id: sessionId,
+      focused_recipe_backend_id: options?.focusedRecipeBackendId?.trim() || undefined,
     }),
   });
 
@@ -607,6 +609,39 @@ export async function revokeCurrentSpendMandate(userId: string): Promise<{ revok
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Failed to revoke spend mandate: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}
+
+export interface OnetimeOfferingRequest {
+  content_key: string;
+  price_amount: number;
+  currency_code?: string;
+  description: string;
+  recipe_slug?: string;
+  user_id?: string;
+  metadata?: Record<string, unknown>;
+}
+
+export interface OnetimeOfferingResponse {
+  offering: {
+    id: string;
+    [key: string]: unknown;
+  };
+  purchase_intent: PurchaseIntent | null;
+}
+
+export async function createOnetimeOffering(
+  params: OnetimeOfferingRequest,
+): Promise<OnetimeOfferingResponse> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/offerings/onetime`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to create one-time offering: ${response.status} ${errorText}`);
   }
   return response.json();
 }

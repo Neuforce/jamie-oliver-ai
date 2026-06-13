@@ -128,10 +128,11 @@ def tool_result_to_chat_events(
                 )
             )
 
-        price_amount = 199
+        from recipe_search_agent.repositories import DEFAULT_RECIPE_PRICE_CENTS, MonetizationRepository
+
+        price_amount = DEFAULT_RECIPE_PRICE_CENTS
         currency_code = "USD"
         try:
-            from recipe_search_agent.repositories import MonetizationRepository
 
             row = get_published_catalog().get_recipe_row(rid)
             if row and row.get("id"):
