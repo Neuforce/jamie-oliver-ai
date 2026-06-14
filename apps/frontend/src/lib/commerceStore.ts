@@ -250,6 +250,19 @@ export function openAsk(params: OpenAskParams): Promise<boolean> {
     && activeAsk.status === 'requested'
     && askPromise
   ) {
+    const nextAskId = params.askId?.trim();
+    const shouldReconcile = Boolean(nextAskId && nextAskId !== activeAsk.askId);
+    activeAsk = {
+      ...activeAsk,
+      askId: nextAskId || activeAsk.askId,
+      priceAmount: params.priceAmount,
+      currencyCode: params.currencyCode,
+      ceilingAmount: params.ceilingAmount,
+    };
+    notifyListeners();
+    if (shouldReconcile && nextAskId) {
+      startAskReconciliation(nextAskId, params.recipeId);
+    }
     return askPromise;
   }
 

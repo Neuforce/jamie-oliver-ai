@@ -2,7 +2,6 @@ import { loadSupertab } from '@getsupertab/supertab-js';
 import {
   bootstrapSupertabIdentity,
   createOnetimeOffering,
-  createSpendMandate,
   getCurrentSpendMandate,
   getRecipeAccess,
   syncSupertabPurchase,
@@ -25,9 +24,6 @@ type SupertabPurchaseButtonHandle = Awaited<ReturnType<SupertabClient['createPur
 
 let supertabClientPromise: Promise<SupertabClient> | null = null;
 let siteOfferingsCache: Array<{ id: string; contentKey?: string | null; description?: string | null }> | null = null;
-
-const DEFAULT_AGENTIC_MANDATE_CEILING_CENTS = 1000;
-const SPEND_MANDATE_SESSION_KEY = 'jamie-spend-mandate-session';
 
 export type MyTabStatus = 'unavailable' | 'signed_out' | 'signed_in';
 export type MyTabMessageTone = 'neutral' | 'error';
@@ -575,22 +571,6 @@ export interface PurchaseRecipeOptions {
   openEmbeddedCheckout?: () => Promise<void>;
   /** Resolves when embedded `onDone` fires; omit to skip the embed path. */
   waitForEmbeddedResolution?: () => Promise<RecipePurchaseResolution | null>;
-  /** One-time consent prompt for agentic spend mandate. */
-  requestSpendMandateConsent?: (params: {
-    ceilingAmount: number;
-    currencyCode: string;
-    priceAmount: number;
-  }) => Promise<boolean>;
-}
-
-function getSpendMandateSessionId(): string {
-  const existing = sessionStorage.getItem(SPEND_MANDATE_SESSION_KEY);
-  if (existing) {
-    return existing;
-  }
-  const created = `jamie-session-${crypto.randomUUID()}`;
-  sessionStorage.setItem(SPEND_MANDATE_SESSION_KEY, created);
-  return created;
 }
 
 export function buildPurchaseIntent(
@@ -666,21 +646,11 @@ async function resolveRecipeOfferingId(
 export async function ensureSpendMandateForAgenticPurchase(
   userId: string,
   access: RecipeAccessResponse,
-  requestConsent?: PurchaseRecipeOptions['requestSpendMandateConsent'],
 ): Promise<string | null> {
   const price = access.offering?.priceAmount ?? 0;
-  const currency = access.offering?.currencyCode || 'USD';
   const existing = await getCurrentSpendMandate(userId);
   if (existing && existing.remainingAmount >= price) {
     return existing.id;
-  }
-
-  const ceiling = Math.max(DEFAULT_AGENTIC_MANDATE_CEILING_CENTS, price);
-  const approved = requestConsent
-    ? await requestConsent({ ceilingAmount: ceiling, currencyCode: currency, priceAmount: price })
-    : false;
-  if (!approved) {
-    return null;
   }
 
   const mandateFromStore = getMandate();
@@ -700,15 +670,7 @@ export async function ensureSpendMandateForAgenticPurchase(
   ) {
     return refreshedMandate.id;
   }
-
-  const mandate = await createSpendMandate({
-    user_id: userId,
-    ceiling_amount: ceiling,
-    currency_code: currency,
-    session_id: getSpendMandateSessionId(),
-    source: 'agentic',
-  });
-  return mandate.id;
+  return null;
 }
 
 export interface PurchaseRecipeOnTabResult {
@@ -745,7 +707,6 @@ export async function purchaseRecipeOnTab(
     const mandateId = await ensureSpendMandateForAgenticPurchase(
       userId,
       access,
-      options.requestSpendMandateConsent,
     );
     if (!mandateId) {
       return { status: 'abandoned', userId };
