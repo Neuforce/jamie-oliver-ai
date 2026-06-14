@@ -158,15 +158,23 @@ describe('unlockController', () => {
       expect(getUnlockState('fish-pie')).toBe('noTab');
     });
 
-    it("maps via 'tab_settlement_required' to needsCheckout", async () => {
+    it("maps agentic action_required (via 'tab_settlement_required') to needsCheckout without awaiting an embed", async () => {
+      // The agentic runPurchase config no longer passes embedded-checkout
+      // callbacks, so purchaseRecipe returns 'tab_settlement_required' on a Tab
+      // action_required. The controller must transition straight to needsCheckout
+      // (single runPurchase call, no second embed-driven attempt/wait).
       const runPurchase = vi
         .fn()
         .mockResolvedValue({ via: 'tab_settlement_required', resolution: null });
-      configureUnlockController(setupConfig(runPurchase));
+      const config = setupConfig(runPurchase);
+      configureUnlockController(config);
 
       await startRecipeUnlock('fish-pie', { trigger: 'consent_approve' });
 
       expect(getUnlockState('fish-pie')).toBe('needsCheckout');
+      expect(runPurchase).toHaveBeenCalledTimes(1);
+      expect(config.onSettlementRequired).toHaveBeenCalledTimes(1);
+      expect(config.onPurchaseResolved).not.toHaveBeenCalled();
     });
 
     it("maps post-consent 'abandoned' to failed", async () => {

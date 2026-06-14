@@ -14,6 +14,9 @@ export type SupertabPurchaseButtonHandle = {
   openPurchaseExperience: () => Promise<void>;
 };
 
+/** Stop the embedded widget from hanging on "Loading checkout…" forever. */
+const MOUNT_TIMEOUT_MS = 12_000;
+
 interface SupertabPurchaseButtonProps {
   access: RecipeAccessResponse;
   onResolved?: (resolution: RecipePurchaseResolution) => void;
@@ -104,6 +107,20 @@ export const SupertabPurchaseButton = forwardRef<
     container.replaceChildren();
     mountedRef.current = null;
 
+    // Belt-and-suspenders: if the SDK mount never resolves, stop showing
+    // "Loading checkout…" forever and surface the paywall fallback button.
+    let mountSettled = false;
+    const mountTimeout = window.setTimeout(() => {
+      if (isCancelled || mountSettled) {
+        return;
+      }
+      console.info('[unlock] SupertabPurchaseButton mount timeout');
+      setStatusMessage('Checkout is taking too long — tap Unlock to try again.');
+      setEmbedUnavailable(true);
+      setIsMounting(false);
+      mountedRef.current = null;
+    }, MOUNT_TIMEOUT_MS);
+
     void mountRecipePurchaseButton({
       containerElement: container,
       access,
@@ -134,6 +151,8 @@ export const SupertabPurchaseButton = forwardRef<
         }
       },
     }).then((result) => {
+      mountSettled = true;
+      window.clearTimeout(mountTimeout);
       if (isCancelled) {
         result.destroy();
         container.replaceChildren();
@@ -148,9 +167,11 @@ export const SupertabPurchaseButton = forwardRef<
       };
       setIsMounting(false);
     }).catch((error) => {
+      mountSettled = true;
+      window.clearTimeout(mountTimeout);
       console.error('Failed to mount Supertab purchase button:', error);
       if (!isCancelled) {
-        setStatusMessage('We could not load the Supertab purchase button right now.');
+        setStatusMessage('Checkout is taking too long — tap Unlock to try again.');
         setEmbedUnavailable(true);
         setIsMounting(false);
         mountedRef.current = null;
@@ -159,6 +180,7 @@ export const SupertabPurchaseButton = forwardRef<
 
     return () => {
       isCancelled = true;
+      window.clearTimeout(mountTimeout);
       mountedRef.current = null;
       destroy();
       container.replaceChildren();

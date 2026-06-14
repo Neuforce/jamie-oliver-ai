@@ -102,6 +102,10 @@ async function runUnlock(
   if (!activeConfig) {
     return;
   }
+  const transition = (state: Parameters<typeof setUnlockState>[1]): void => {
+    console.info('[unlock] runUnlock state', { recipeId: backendRecipeId, state, trigger: options.trigger });
+    setUnlockState(backendRecipeId, state);
+  };
   try {
     const recipe = await activeConfig.resolveRecipe(backendRecipeId);
     if (!recipe) {
@@ -121,7 +125,7 @@ async function runUnlock(
 
     if (access.accessState !== 'locked') {
       if (canStartCooking(access)) {
-        setUnlockState(backendRecipeId, 'unlocked');
+        transition('unlocked');
         await activeConfig.onAlreadyUnlocked(recipe, access);
       }
       return;
@@ -133,7 +137,7 @@ async function runUnlock(
     // retry with consentGranted=true.
     const consentAlreadyGranted = options.trigger === 'consent_approve';
     if (consentAlreadyGranted) {
-      setUnlockState(backendRecipeId, 'processing');
+      transition('processing');
     }
     let outcome = await activeConfig.runPurchase(recipe, access, {
       consentGranted: consentAlreadyGranted,
@@ -147,10 +151,10 @@ async function runUnlock(
           ceilingAmount: Math.max(1000, access.offering?.priceAmount ?? 5),
         });
         if (!approved) {
-          setUnlockState(backendRecipeId, 'declined');
+          transition('declined');
           return;
         }
-        setUnlockState(backendRecipeId, 'processing');
+        transition('processing');
         outcome = await activeConfig.runPurchase(recipe, access, { consentGranted: true });
       } else {
         // Consent was just granted; retry once in case mandate projection is still settling.
@@ -158,30 +162,32 @@ async function runUnlock(
       }
     }
 
+    console.info('[unlock] runUnlock outcome', { recipeId: backendRecipeId, via: outcome.via });
+
     if (outcome.via === 'unavailable') {
-      setUnlockState(backendRecipeId, 'noTab');
+      transition('noTab');
       activeConfig.onUnavailable();
       return;
     }
 
     if (outcome.via === 'tab_settlement_required') {
-      setUnlockState(backendRecipeId, 'needsCheckout');
+      transition('needsCheckout');
       activeConfig.onSettlementRequired();
       return;
     }
 
     if (outcome.resolution) {
-      setUnlockState(backendRecipeId, 'unlocked');
+      transition('unlocked');
       await activeConfig.onPurchaseResolved(recipe, access, outcome);
       return;
     }
 
     if (outcome.via === 'abandoned') {
       // Abandoned AFTER consent is a real failure, not a "nothing charged" no-op.
-      setUnlockState(backendRecipeId, 'failed');
+      transition('failed');
     }
   } catch (error) {
-    setUnlockState(backendRecipeId, 'failed');
+    transition('failed');
     activeConfig.onError(error);
   }
 }

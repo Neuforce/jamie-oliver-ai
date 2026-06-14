@@ -126,7 +126,6 @@ export default function App() {
   const normalizedSearchQuery = typeof searchQuery === 'string' ? searchQuery : '';
   const [recipeModalVoiceDockOverlap, setRecipeModalVoiceDockOverlap] = useState(false);
   const recipeModalRef = useRef<RecipeModalHandle>(null);
-  const pendingEmbeddedPurchaseRef = useRef<((resolution: RecipePurchaseResolution) => void) | null>(null);
   /** Keeps ChatView (and `/ws/chat-voice`) alive when switching tabs with voice or an open recipe sheet. */
   const [discoveryVoiceSessionActive, setDiscoveryVoiceSessionActive] = useState(false);
 
@@ -757,21 +756,6 @@ export default function App() {
     }
   }, [myTabJamieUser?.id]);
 
-  const waitForEmbeddedPurchaseResolution = useCallback((timeoutMs = 120_000) => {
-    return new Promise<RecipePurchaseResolution | null>((resolve) => {
-      const timer = window.setTimeout(() => {
-        pendingEmbeddedPurchaseRef.current = null;
-        resolve(null);
-      }, timeoutMs);
-
-      pendingEmbeddedPurchaseRef.current = (resolution) => {
-        window.clearTimeout(timer);
-        pendingEmbeddedPurchaseRef.current = null;
-        resolve(resolution);
-      };
-    });
-  }, []);
-
   const applyRecipePurchaseOutcome = useCallback(async (
     recipe: Recipe,
     resolution: RecipePurchaseResolution,
@@ -832,11 +816,6 @@ export default function App() {
     recipe: Recipe,
     resolution: RecipePurchaseResolution
   ) => {
-    if (pendingEmbeddedPurchaseRef.current) {
-      pendingEmbeddedPurchaseRef.current(resolution);
-      return;
-    }
-
     await applyRecipePurchaseOutcome(recipe, resolution);
   }, [applyRecipePurchaseOutcome]);
 
@@ -873,13 +852,15 @@ export default function App() {
         })
       ),
       runPurchase: async (recipe, access, purchaseOptions) => (
+        // Agentic unlock must resolve to a terminal state quickly. We do NOT pass
+        // the embedded-checkout callbacks here: on `action_required` the test Tab
+        // can't charge silently, and auto-opening + awaiting the embed widget
+        // froze the unlock for up to 120s. Without these callbacks purchaseRecipe
+        // returns `tab_settlement_required` -> controller maps it to needsCheckout,
+        // and the user explicitly taps "Complete checkout" (requestCheckout).
         purchaseRecipe(access, {
           agentic: true,
           mandateConsentGranted: purchaseOptions.consentGranted,
-          openEmbeddedCheckout: async () => {
-            await recipeModalRef.current?.openMyTabPurchaseFlow();
-          },
-          waitForEmbeddedResolution: () => waitForEmbeddedPurchaseResolution(),
         })
       ),
       onAlreadyUnlocked: async (recipe) => {
@@ -955,7 +936,6 @@ export default function App() {
     refreshSpendMandate,
     selectedRecipe,
     startCookingOverlay,
-    waitForEmbeddedPurchaseResolution,
   ]);
 
   const handleVoiceRecipePaywallRequested = useCallback(
