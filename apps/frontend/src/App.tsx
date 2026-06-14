@@ -59,7 +59,8 @@ import {
   requestSpendMandateConsent as waitForSpendMandateConsent,
 } from './lib/spendMandateConsentGate';
 import { addPurchaseReceipt } from './lib/purchaseReceiptStore';
-import { AgentActionSurfacePortal } from './components/AgentActionSurfacePortal';
+import { AgentActionSurface } from './components/AgentActionSurface';
+import { setActiveSurface } from './lib/agentActionSurfaceStore';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -972,6 +973,18 @@ export default function App() {
     void loadRecipeAccessByBackendId(selectedRecipeBackendId);
   }, [selectedRecipeBackendId, loadRecipeAccessByBackendId]);
 
+  useEffect(() => {
+    if (selectedRecipeBackendId) {
+      setActiveSurface({ kind: 'recipe_sheet', backendRecipeId: selectedRecipeBackendId });
+      return;
+    }
+    if (activeView === 'chat') {
+      setActiveSurface({ kind: 'chat' });
+      return;
+    }
+    setActiveSurface({ kind: 'none' });
+  }, [selectedRecipeBackendId, activeView]);
+
   const selectedRecipeAccess = selectedRecipe
     ? recipeAccessMap[getRecipeAccessKey(selectedRecipe)] ?? null
     : null;
@@ -1723,7 +1736,7 @@ export default function App() {
         />
       )}
 
-      <AgentActionSurfacePortal backendRecipeId={selectedRecipeBackendId} />
+      <AgentActionSurface mode="portal" backendRecipeId={selectedRecipeBackendId} />
 
       {/* Toaster */}
       <Toaster />

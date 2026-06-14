@@ -2,23 +2,39 @@ import { Check } from 'lucide-react';
 import { useSyncExternalStore } from 'react';
 import {
   getPurchaseReceipts,
-  subscribePurchaseReceipts,
-} from '../lib/purchaseReceiptStore';
+  shouldRenderCommercePortaled,
+  subscribeAgentActionSurface,
+} from '../lib/agentActionSurfaceStore';
 
 interface PurchaseReceiptChipProps {
   backendRecipeId?: string;
   className?: string;
+  /** When true, skip active-surface gating (used by AgentActionSurface portal). */
+  bypassSurfaceGate?: boolean;
 }
 
 const BASE_CLASS_NAME = 'rounded-2xl border border-[#E8E4DF] bg-[#FAFAF8] px-4 py-3';
 const EMPTY_RECEIPTS = [];
 
-export function PurchaseReceiptChip({ backendRecipeId, className }: PurchaseReceiptChipProps) {
+export function PurchaseReceiptChip({
+  backendRecipeId,
+  className,
+  bypassSurfaceGate = false,
+}: PurchaseReceiptChipProps) {
+  const showPortaled = useSyncExternalStore(
+    subscribeAgentActionSurface,
+    shouldRenderCommercePortaled,
+    () => false,
+  );
   const receipts = useSyncExternalStore(
-    subscribePurchaseReceipts,
+    subscribeAgentActionSurface,
     getPurchaseReceipts,
     () => EMPTY_RECEIPTS,
   );
+
+  if (!bypassSurfaceGate && !showPortaled) {
+    return null;
+  }
 
   const receipt = backendRecipeId
     ? receipts.find((item) => item.backendRecipeId === backendRecipeId) ?? null

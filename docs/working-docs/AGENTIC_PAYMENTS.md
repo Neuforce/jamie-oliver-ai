@@ -32,11 +32,11 @@ flowchart TD
 
 ---
 
-## Agent Action Surface (Tier 1)
+## Agent Action Surface (Tier 2 — NEU-679)
 
-Today: a **portal** (`AgentActionSurfacePortal`) renders consent asks and purchase receipts above the recipe modal (`z-[10060]`), so voice sessions with an open sheet still show commerce UI. Consent still uses the global `spendMandateConsentGate` singleton; receipts use `purchaseReceiptStore`.
+Unified store: `agentActionSurfaceStore.ts` holds **`activeSurface`** (chat | recipe_sheet | none), spend-mandate consent, and purchase receipts. `AgentActionSurface` renders inline in chat or portaled above the recipe sheet based on `activeSurface` — replacing the Tier 1 portal + separate singletons.
 
-**Tier 2:** unify asks, notifications, and receipts into one view-agnostic store with a single `activeSurface` source of truth.
+**Tier 3:** server-side ask FSM, voice verbal approval, undo window, trust hardening.
 
 ---
 
