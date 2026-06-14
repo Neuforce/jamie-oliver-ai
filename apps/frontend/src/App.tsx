@@ -872,9 +872,10 @@ export default function App() {
           ceilingAmount,
         })
       ),
-      runPurchase: async (recipe, access) => (
+      runPurchase: async (recipe, access, purchaseOptions) => (
         purchaseRecipe(access, {
           agentic: true,
+          mandateConsentGranted: purchaseOptions.consentGranted,
           openEmbeddedCheckout: async () => {
             await recipeModalRef.current?.openMyTabPurchaseFlow();
           },
@@ -923,11 +924,6 @@ export default function App() {
           description: 'Complete the checkout on screen to put this recipe on your Tab.',
         });
       },
-      onDeclinedOrAbandoned: () => {
-        toast.message('No problem — nothing was charged', {
-          description: 'The recipe stays locked. Ask me again or tap Unlock whenever you\'re ready.',
-        });
-      },
       onRecipeNotFound: () => {
         toast.error('Checkout did not match this recipe', {
           description: 'Close the modal and open the recipe again, or tap Unlock on screen.',
@@ -939,10 +935,14 @@ export default function App() {
         });
       },
       onError: (error) => {
+        // The in-card 'failed' state is the primary surface; keep logging here.
         console.error('Voice-triggered purchase failed:', error);
-        toast.error('Could not unlock via My Tab', {
-          description: 'Please try again or use Unlock on screen.',
-        });
+      },
+      openCheckout: () => {
+        void recipeModalRef.current?.openMyTabPurchaseFlow();
+      },
+      connectTab: () => {
+        void openMyTab();
       },
     });
   }, [

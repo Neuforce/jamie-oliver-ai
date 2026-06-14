@@ -2,6 +2,7 @@ import { loadSupertab } from '@getsupertab/supertab-js';
 import {
   bootstrapSupertabIdentity,
   createOnetimeOffering,
+  createSpendMandate,
   getCurrentSpendMandate,
   getRecipeAccess,
   syncSupertabPurchase,
@@ -24,6 +25,9 @@ type SupertabPurchaseButtonHandle = Awaited<ReturnType<SupertabClient['createPur
 
 let supertabClientPromise: Promise<SupertabClient> | null = null;
 let siteOfferingsCache: Array<{ id: string; contentKey?: string | null; description?: string | null }> | null = null;
+
+const DEFAULT_AGENTIC_MANDATE_CEILING_CENTS = 1000;
+const SPEND_MANDATE_SESSION_KEY = 'jamie-spend-mandate-session';
 
 export type MyTabStatus = 'unavailable' | 'signed_out' | 'signed_in';
 export type MyTabMessageTone = 'neutral' | 'error';
@@ -567,10 +571,27 @@ export interface PurchaseRecipeOutcome {
 export interface PurchaseRecipeOptions {
   /** Agent/voice path: ensure spend mandate before silent charge. */
   agentic?: boolean;
+  /**
+   * Set true once the user has actually granted spend-mandate consent. Only
+   * then may the agentic path mint a mandate client-side as a guaranteed
+   * fallback. The pre-consent paywall attempt must leave this false so it can
+   * never auto-mint a mandate and bypass consent.
+   */
+  mandateConsentGranted?: boolean;
   /** Opens the in-modal embedded Supertab checkout (same as tapping "Put it on my Tab"). */
   openEmbeddedCheckout?: () => Promise<void>;
   /** Resolves when embedded `onDone` fires; omit to skip the embed path. */
   waitForEmbeddedResolution?: () => Promise<RecipePurchaseResolution | null>;
+}
+
+function getSpendMandateSessionId(): string {
+  const existing = sessionStorage.getItem(SPEND_MANDATE_SESSION_KEY);
+  if (existing) {
+    return existing;
+  }
+  const created = `jamie-session-${crypto.randomUUID()}`;
+  sessionStorage.setItem(SPEND_MANDATE_SESSION_KEY, created);
+  return created;
 }
 
 export function buildPurchaseIntent(
@@ -646,8 +667,11 @@ async function resolveRecipeOfferingId(
 export async function ensureSpendMandateForAgenticPurchase(
   userId: string,
   access: RecipeAccessResponse,
+  consentGranted = false,
 ): Promise<string | null> {
   const price = access.offering?.priceAmount ?? 0;
+  const currency = access.offering?.currencyCode || 'USD';
+
   const existing = await getCurrentSpendMandate(userId);
   if (existing && existing.remainingAmount >= price) {
     return existing.id;
@@ -670,7 +694,23 @@ export async function ensureSpendMandateForAgenticPurchase(
   ) {
     return refreshedMandate.id;
   }
-  return null;
+
+  // No usable mandate exists. Only mint one when the user has actually granted
+  // consent (e.g. the server ask grant was "degraded" with no ask_id/userId, so
+  // resolveAskWithServer never minted server-side). The pre-consent paywall
+  // attempt (consentGranted=false) must return null so it cannot bypass consent.
+  if (!consentGranted) {
+    return null;
+  }
+
+  const mandate = await createSpendMandate({
+    user_id: userId,
+    ceiling_amount: Math.max(DEFAULT_AGENTIC_MANDATE_CEILING_CENTS, price),
+    currency_code: currency,
+    session_id: getSpendMandateSessionId(),
+    source: 'agentic',
+  });
+  return mandate.id;
 }
 
 export interface PurchaseRecipeOnTabResult {
@@ -707,6 +747,7 @@ export async function purchaseRecipeOnTab(
     const mandateId = await ensureSpendMandateForAgenticPurchase(
       userId,
       access,
+      options.mandateConsentGranted ?? false,
     );
     if (!mandateId) {
       return { status: 'abandoned', userId };

@@ -3,6 +3,7 @@ import { Recipe } from '../data/recipes';
 import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play, Share2 } from 'lucide-react';
 import { SupertabPurchaseButton, type SupertabPurchaseButtonHandle } from './SupertabPurchaseButton';
 import { toast } from './ui/sonner';
+import { useUnlockState } from '../lib/commerceStore';
 import type { RecipeAccessResponse } from '../lib/api';
 import { routeToUrl } from '../lib/permalinks';
 import type { RecipePurchaseResolution } from '../lib/supertab';
@@ -78,6 +79,9 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
 ) {
   const [savedSession, setSavedSession] = useState<any>(null);
   const purchaseButtonRef = useRef<SupertabPurchaseButtonHandle | null>(null);
+  // Reflect the shared unlock projection so the sheet shows an unlocking state
+  // and flips to owned from the same store — no manual syncing.
+  const unlockState = useUnlockState(recipe?.backendId ?? null);
 
   useEffect(() => {
     if (!recipe) {
@@ -178,6 +182,18 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
           aria-label="Checking access"
         >
           Checking…
+        </button>
+      );
+    }
+    if (isLocked && unlockState === 'processing') {
+      return (
+        <button
+          type="button"
+          className="jamie-recipe-modal__header-pill"
+          disabled
+          aria-label="Unlocking recipe"
+        >
+          Unlocking…
         </button>
       );
     }

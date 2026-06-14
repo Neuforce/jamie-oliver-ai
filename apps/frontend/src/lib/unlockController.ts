@@ -1,5 +1,6 @@
 import type { Recipe } from '../data/recipes';
 import type { RecipeAccessResponse } from './api';
+import { resolveAskWithServer, setUnlockState } from './commerceStore';
 import type { PurchaseRecipeOutcome } from './supertab';
 
 type UnlockTrigger = 'paywall_event' | 'consent_approve';
@@ -21,6 +22,7 @@ export interface UnlockControllerConfig {
   runPurchase: (
     recipe: Recipe,
     access: RecipeAccessResponse,
+    options: RunPurchaseOptions,
   ) => Promise<PurchaseRecipeOutcome>;
   onAlreadyUnlocked: (recipe: Recipe, access: RecipeAccessResponse) => Promise<void>;
   onPurchaseResolved: (
@@ -30,10 +32,18 @@ export interface UnlockControllerConfig {
   ) => Promise<void>;
   onUnavailable: () => void;
   onSettlementRequired: () => void;
-  onDeclinedOrAbandoned: () => void;
   onRecipeNotFound: () => void;
   onAccessUnavailable: () => void;
   onError: (error: unknown) => void;
+  /** Opens the embedded Supertab checkout for the recipe (needsCheckout CTA). */
+  openCheckout?: (recipeId: string) => void;
+  /** Opens the Connect My Tab flow (noTab CTA). */
+  connectTab?: () => void;
+}
+
+export interface RunPurchaseOptions {
+  /** True when the user has already granted spend-mandate consent. */
+  consentGranted: boolean;
 }
 
 export interface StartUnlockOptions {
@@ -111,12 +121,23 @@ async function runUnlock(
 
     if (access.accessState !== 'locked') {
       if (canStartCooking(access)) {
+        setUnlockState(backendRecipeId, 'unlocked');
         await activeConfig.onAlreadyUnlocked(recipe, access);
       }
       return;
     }
 
-    let outcome = await activeConfig.runPurchase(recipe, access);
+    // consent_approve: the user already approved, so the purchase may mint a
+    // mandate as a guaranteed fallback. paywall_event: first attempt without
+    // consent so it can never auto-mint; only after explicit approval do we
+    // retry with consentGranted=true.
+    const consentAlreadyGranted = options.trigger === 'consent_approve';
+    if (consentAlreadyGranted) {
+      setUnlockState(backendRecipeId, 'processing');
+    }
+    let outcome = await activeConfig.runPurchase(recipe, access, {
+      consentGranted: consentAlreadyGranted,
+    });
     if (outcome.via === 'abandoned') {
       if (options.trigger === 'paywall_event') {
         const approved = await activeConfig.openConsentAsk({
@@ -126,35 +147,84 @@ async function runUnlock(
           ceilingAmount: Math.max(1000, access.offering?.priceAmount ?? 5),
         });
         if (!approved) {
-          activeConfig.onDeclinedOrAbandoned();
+          setUnlockState(backendRecipeId, 'declined');
           return;
         }
-        outcome = await activeConfig.runPurchase(recipe, access);
+        setUnlockState(backendRecipeId, 'processing');
+        outcome = await activeConfig.runPurchase(recipe, access, { consentGranted: true });
       } else {
         // Consent was just granted; retry once in case mandate projection is still settling.
-        outcome = await activeConfig.runPurchase(recipe, access);
+        outcome = await activeConfig.runPurchase(recipe, access, { consentGranted: true });
       }
     }
 
     if (outcome.via === 'unavailable') {
+      setUnlockState(backendRecipeId, 'noTab');
       activeConfig.onUnavailable();
       return;
     }
 
     if (outcome.via === 'tab_settlement_required') {
+      setUnlockState(backendRecipeId, 'needsCheckout');
       activeConfig.onSettlementRequired();
       return;
     }
 
     if (outcome.resolution) {
+      setUnlockState(backendRecipeId, 'unlocked');
       await activeConfig.onPurchaseResolved(recipe, access, outcome);
       return;
     }
 
     if (outcome.via === 'abandoned') {
-      activeConfig.onDeclinedOrAbandoned();
+      // Abandoned AFTER consent is a real failure, not a "nothing charged" no-op.
+      setUnlockState(backendRecipeId, 'failed');
     }
   } catch (error) {
+    setUnlockState(backendRecipeId, 'failed');
     activeConfig.onError(error);
   }
+}
+
+/**
+ * View verb: the user approved the consent card. Sets processing, resolves the
+ * ask server-side (grant), then drives the unlock to completion. If a
+ * paywall-triggered unlock is already in flight for this recipe, startRecipeUnlock
+ * dedupe joins it. Safe to call again as a retry from the 'failed' state — the
+ * mandate is already granted so the purchase proceeds.
+ */
+export async function confirmUnlock(
+  recipeId: string,
+  userId?: string | null,
+): Promise<void> {
+  const id = recipeId.trim();
+  if (!id) {
+    return;
+  }
+  setUnlockState(id, 'processing');
+  await resolveAskWithServer(id, true, userId);
+  await startRecipeUnlock(id, { trigger: 'consent_approve' });
+}
+
+/** View verb: the user declined. Resolves the ask (decline) and shows declined. */
+export async function declineUnlock(
+  recipeId: string,
+  userId?: string | null,
+): Promise<void> {
+  const id = recipeId.trim();
+  if (!id) {
+    return;
+  }
+  await resolveAskWithServer(id, false, userId);
+  setUnlockState(id, 'declined');
+}
+
+/** View verb: complete checkout for the needsCheckout state. */
+export function requestCheckout(recipeId: string): void {
+  config?.openCheckout?.(recipeId);
+}
+
+/** View verb: connect a Tab for the noTab state. */
+export function connectTab(): void {
+  config?.connectTab?.();
 }

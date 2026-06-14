@@ -7,7 +7,11 @@ import {
   shouldRenderCommercePortaled,
   subscribeAgentActionSurface,
 } from '../lib/agentActionSurfaceStore';
-import { getActiveAsk, subscribeCommerceStore } from '../lib/commerceStore';
+import {
+  getUnlockState,
+  isUnlockSurfaceState,
+  subscribeCommerceStore,
+} from '../lib/commerceStore';
 
 export type AgentActionSurfaceMode = 'inline' | 'portal';
 
@@ -26,8 +30,12 @@ function useCommercePortaled() {
   );
 }
 
-function useActiveAsk() {
-  return useSyncExternalStore(subscribeCommerceStore, getActiveAsk, () => null);
+function useUnlockSurfaceFor(recipeId?: string | null) {
+  return useSyncExternalStore(
+    subscribeCommerceStore,
+    () => isUnlockSurfaceState(getUnlockState(recipeId)),
+    () => false,
+  );
 }
 
 function useFocusedRecipeId(fallback?: string | null) {
@@ -47,13 +55,13 @@ export function AgentActionSurface({
   className,
 }: AgentActionSurfaceProps) {
   const showPortaled = useCommercePortaled();
-  const activeAsk = useActiveAsk();
   const recipeId = useFocusedRecipeId(backendRecipeId);
+  const showConsent = useUnlockSurfaceFor(recipeId);
 
   if (mode === 'portal' && !showPortaled) {
     return null;
   }
-  if (!activeAsk && !recipeId) {
+  if (!showConsent && !recipeId) {
     return null;
   }
 
@@ -66,7 +74,7 @@ export function AgentActionSurface({
       }
       aria-live="polite"
     >
-      {activeAsk?.status === 'requested' ? (
+      {showConsent ? (
         <SpendMandateConsentInline
           backendRecipeId={recipeId}
           className={mode === 'portal' ? 'shadow-lg' : undefined}
