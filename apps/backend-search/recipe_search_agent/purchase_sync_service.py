@@ -8,6 +8,7 @@ from typing import Any, Optional
 
 from recipe_search_agent.payment_provider import ReconcileEvent
 from recipe_search_agent.repositories import MonetizationRepository
+from recipe_search_agent.spend_mandate_service import SpendMandateService
 
 
 def _utc_now_iso() -> str:
@@ -17,8 +18,13 @@ def _utc_now_iso() -> str:
 class PurchaseSyncService:
     """Translate provider purchase outcomes into Jamie purchases and entitlements."""
 
-    def __init__(self, repository: MonetizationRepository | None = None):
+    def __init__(
+        self,
+        repository: MonetizationRepository | None = None,
+        spend_mandate_service: SpendMandateService | None = None,
+    ):
         self._repository = repository or MonetizationRepository()
+        self._spend_mandate = spend_mandate_service or SpendMandateService()
 
     def sync_supertab_state(
         self,
@@ -167,6 +173,16 @@ class PurchaseSyncService:
                         "expires_at": matched_prior_entitlement.get("expires") if matched_prior_entitlement else None,
                     }
                 )
+
+        if synced_purchase and synced_purchase.get("status") == "completed":
+            claimed = self._repository.claim_purchase_for_mandate_consumption(synced_purchase["id"])
+            if claimed:
+                mandate = self._spend_mandate.get_current_mandate(user_id)
+                if mandate:
+                    self._spend_mandate.consume_mandate(
+                        mandate,
+                        int(offering.get("price_amount") or 0),
+                    )
 
         return {
             "recipeId": recipe["slug"],

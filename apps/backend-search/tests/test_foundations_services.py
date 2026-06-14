@@ -73,6 +73,7 @@ class FakeMonetizationRepository:
     def __init__(self):
         self.purchase = None
         self.entitlement = None
+        self.claimed_purchase_ids = set()
 
     def get_recipe(self, recipe_slug_or_id):
         return {"id": "recipe-uuid-1", "slug": recipe_slug_or_id}
@@ -82,6 +83,7 @@ class FakeMonetizationRepository:
             "id": "offering-1",
             "content_key": "recipe:avocado-toast:cook",
             "is_free": False,
+            "price_amount": 199,
         }
 
     def get_purchase_by_provider_id(self, provider, provider_purchase_id):
@@ -91,12 +93,32 @@ class FakeMonetizationRepository:
         self.purchase = payload
         return payload
 
+    def claim_purchase_for_mandate_consumption(self, purchase_id):
+        if purchase_id in self.claimed_purchase_ids:
+            return False
+        self.claimed_purchase_ids.add(purchase_id)
+        return True
+
     def get_active_entitlement_by_content_key(self, user_id, content_key):
         return self.entitlement
 
     def create_entitlement(self, payload):
         self.entitlement = payload
         return payload
+
+
+class FakeSpendMandateService:
+    def __init__(self, mandate=None):
+        self.mandate = mandate
+        self.consume_calls = []
+
+    def get_current_mandate(self, user_id):
+        return self.mandate
+
+    def consume_mandate(self, mandate, amount):
+        self.consume_calls.append(amount)
+        mandate["consumed_amount"] = mandate.get("consumed_amount", 0) + amount
+        return mandate
 
 
 class FakeOwnedRecipesRepository:
@@ -255,7 +277,7 @@ def test_access_service_creates_missing_offering():
 
 def test_purchase_sync_service_creates_purchase_and_entitlement_for_completed_purchase():
     repository = FakeMonetizationRepository()
-    service = PurchaseSyncService(repository=repository)
+    service = PurchaseSyncService(repository=repository, spend_mandate_service=FakeSpendMandateService())
 
     result = service.sync_supertab_state(
         user_id="user-1",
@@ -271,6 +293,60 @@ def test_purchase_sync_service_creates_purchase_and_entitlement_for_completed_pu
 
     assert result["purchase"]["provider_purchase_id"] == "purchase-1"
     assert result["entitlement"]["provider_content_key"] == "recipe:avocado-toast:cook"
+
+
+def test_purchase_sync_service_consumes_mandate_once_using_offering_price():
+    repository = FakeMonetizationRepository()
+    spend_mandate = FakeSpendMandateService(mandate={"id": "mandate-1", "status": "active", "consumed_amount": 0})
+    service = PurchaseSyncService(repository=repository, spend_mandate_service=spend_mandate)
+
+    first = service.sync_supertab_state(
+        user_id="user-1",
+        recipe_slug_or_id="avocado-toast",
+        purchase={
+            "id": "purchase-1",
+            "offeringId": "supertab-offering-1",
+            "status": "completed",
+            "price": {"amount": 99999, "currencyCode": "USD"},
+        },
+        prior_entitlement=[],
+    )
+    second = service.sync_supertab_state(
+        user_id="user-1",
+        recipe_slug_or_id="avocado-toast",
+        purchase={
+            "id": "purchase-1",
+            "offeringId": "supertab-offering-1",
+            "status": "completed",
+            "price": {"amount": 1, "currencyCode": "USD"},
+        },
+        prior_entitlement=[],
+    )
+
+    assert first["purchase"]["provider_purchase_id"] == "purchase-1"
+    assert second["purchase"]["provider_purchase_id"] == "purchase-1"
+    assert spend_mandate.consume_calls == [199]
+
+
+def test_purchase_sync_service_skips_consumption_without_active_mandate():
+    repository = FakeMonetizationRepository()
+    spend_mandate = FakeSpendMandateService(mandate=None)
+    service = PurchaseSyncService(repository=repository, spend_mandate_service=spend_mandate)
+
+    result = service.sync_supertab_state(
+        user_id="user-1",
+        recipe_slug_or_id="avocado-toast",
+        purchase={
+            "id": "purchase-2",
+            "offeringId": "supertab-offering-1",
+            "status": "completed",
+            "price": {"amount": 199, "currencyCode": "USD"},
+        },
+        prior_entitlement=[],
+    )
+
+    assert result["purchase"]["provider_purchase_id"] == "purchase-2"
+    assert spend_mandate.consume_calls == []
 
 
 def test_access_service_lists_owned_recipes():

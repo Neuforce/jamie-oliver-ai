@@ -16,6 +16,16 @@ def _utc_now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
+def _parse_iso_datetime(value: str) -> datetime:
+    normalized = value.strip()
+    if normalized.endswith("Z"):
+        normalized = normalized[:-1] + "+00:00"
+    parsed = datetime.fromisoformat(normalized)
+    if parsed.tzinfo is None:
+        return parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
 class SpendMandateAskService:
     """Create and resolve consent asks; grant mints a spend mandate."""
 
@@ -92,6 +102,16 @@ class SpendMandateAskService:
             return {"ok": False, "error": "invalid_ask_state", "ask": ask}
 
         resolved_at = _utc_now_iso()
+        expires_at_raw = ask.get("expires_at")
+        if expires_at_raw:
+            expires_at = _parse_iso_datetime(str(expires_at_raw))
+            if expires_at <= datetime.now(timezone.utc):
+                updated = self._repository.update_ask(
+                    ask_id,
+                    {"status": "expired", "resolved_at": resolved_at, "updated_at": resolved_at},
+                )
+                return {"ok": False, "error": "ask_expired", "ask": updated or ask}
+
         if not grant:
             updated = self._repository.update_ask(
                 ask_id,
