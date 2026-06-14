@@ -2,10 +2,13 @@
 
 from __future__ import annotations
 
+import logging
 from typing import Any, Optional
 
 from recipe_search_agent.chat_events import ChatEvent
 from recipe_search_agent.recipe_catalog import get_published_catalog
+
+logger = logging.getLogger(__name__)
 
 
 def _with_correlation(
@@ -144,17 +147,45 @@ def tool_result_to_chat_events(
             pass
 
         ceiling_amount = max(1000, price_amount)
+
+        ask_id: Optional[str] = None
+        try:
+            from recipe_search_agent.commerce_context import get_commerce_session_id, get_commerce_user_id
+            from recipe_search_agent.spend_mandate_ask_service import SpendMandateAskService
+
+            session_id = get_commerce_session_id()
+            if session_id:
+                ask = SpendMandateAskService().create_ask(
+                    backend_recipe_id=rid,
+                    price_amount=price_amount,
+                    currency_code=currency_code,
+                    ceiling_amount=ceiling_amount,
+                    session_id=session_id,
+                    user_id=get_commerce_user_id(),
+                    tool_call_id=tool_call_id,
+                    response_id=response_id,
+                )
+                ask_id = ask.get("id")
+        except Exception:
+            logger.exception("Failed to create server-side spend mandate ask for recipe %s", rid)
+
+        consent_metadata: dict[str, Any] = {
+            "backend_recipe_id": rid,
+            "price_amount": price_amount,
+            "currency_code": currency_code,
+            "ceiling_amount": ceiling_amount,
+        }
+        if ask_id:
+            consent_metadata["ask_id"] = ask_id
+        else:
+            consent_metadata["ask_degraded"] = True
+
         events.append(
             ChatEvent(
                 type="spend_mandate_consent_requested",
                 content="",
                 metadata=_with_correlation(
-                    {
-                        "backend_recipe_id": rid,
-                        "price_amount": price_amount,
-                        "currency_code": currency_code,
-                        "ceiling_amount": ceiling_amount,
-                    },
+                    consent_metadata,
                     tool_call_id=tool_call_id,
                     response_id=response_id,
                 ),

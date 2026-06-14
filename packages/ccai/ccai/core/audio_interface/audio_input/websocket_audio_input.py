@@ -20,6 +20,7 @@ class WebSocketAudioInput(AudioInputService):
         self.websocket = websocket
         self.sample_rate = sample_rate
         self.session_id = None
+        self.jamie_user_id = None
         self.custom_parameters = {}
         self.is_paused = False
         self.running = False
@@ -36,6 +37,7 @@ class WebSocketAudioInput(AudioInputService):
             message = await self.websocket.receive_json()
             if message.get("event") == "start":
                 self.session_id = message.get("sessionId", "unknown")
+                self.jamie_user_id = message.get("userId")
                 self.sample_rate = message.get("sampleRate", 16000)
                 self.custom_parameters = message.get("customParameters", {})
                 self.logger.info(f"Session started: {self.session_id}, sample_rate: {self.sample_rate}")

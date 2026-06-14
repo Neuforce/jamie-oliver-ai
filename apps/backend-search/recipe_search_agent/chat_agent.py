@@ -217,6 +217,7 @@ class DiscoveryChatAgent:
         message: str,
         session_id: str,
         focused_recipe_backend_id: Optional[str] = None,
+        user_id: Optional[str] = None,
     ) -> AsyncGenerator[ChatEvent, None]:
         """
         Process a chat message and stream responses.
@@ -232,6 +233,9 @@ class DiscoveryChatAgent:
             ChatEvent objects with response chunks and tool call info
         """
         session = self._get_or_create_session(session_id)
+        from recipe_search_agent.commerce_context import set_commerce_context
+
+        set_commerce_context(session_id, user_id)
         turn_started_at = time.perf_counter()
         response_id = str(uuid.uuid4())
 

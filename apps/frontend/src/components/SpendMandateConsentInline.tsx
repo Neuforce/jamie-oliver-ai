@@ -1,25 +1,22 @@
 import { useSyncExternalStore } from 'react';
 import {
   formatConsentPrice,
-  getPendingSpendMandateConsent,
-  resolveSpendMandateConsent,
-  shouldRenderCommerceInline,
-  subscribeAgentActionSurface,
-} from '../lib/agentActionSurfaceStore';
+  getCommerceState,
+  resolveAskWithServer,
+  subscribeCommerceStore,
+} from '../lib/commerceStore';
+import { getStoredJamieAccessUserId } from '../lib/supertab';
 
-function usePendingConsent() {
+function usePendingAskForRecipe(recipeId?: string) {
   return useSyncExternalStore(
-    subscribeAgentActionSurface,
-    getPendingSpendMandateConsent,
+    subscribeCommerceStore,
+    () => {
+      if (!recipeId) {
+        return getCommerceState().pendingAsk;
+      }
+      return getCommerceState(recipeId).pendingAsk;
+    },
     () => null,
-  );
-}
-
-function useShowInlineCommerce() {
-  return useSyncExternalStore(
-    subscribeAgentActionSurface,
-    shouldRenderCommerceInline,
-    () => true,
   );
 }
 
@@ -27,31 +24,42 @@ interface SpendMandateConsentInlineProps {
   /** When set, only show if pending consent matches this recipe. */
   backendRecipeId?: string;
   className?: string;
-  /** When true, skip active-surface gating (used by AgentActionSurface portal). */
-  bypassSurfaceGate?: boolean;
+  /** chat = inline thread; sheet = recipe modal portal */
+  placement?: 'chat' | 'sheet';
+  /** When placement is chat, hide if the recipe sheet is open for this recipe. */
+  recipeSheetOpenForRecipe?: boolean;
 }
 
 /**
- * Inline Jamie consent — rendered inside the chat thread, not a modal.
+ * Inline Jamie consent — rendered in chat or recipe sheet from one activeAsk.
  */
 export function SpendMandateConsentInline({
   backendRecipeId,
   className,
-  bypassSurfaceGate = false,
+  placement = 'chat',
+  recipeSheetOpenForRecipe = false,
 }: SpendMandateConsentInlineProps) {
-  const pending = usePendingConsent();
-  const showInline = useShowInlineCommerce();
+  const pendingAsk = usePendingAskForRecipe(backendRecipeId);
 
-  if ((!bypassSurfaceGate && !showInline) || !pending) {
+  if (!pendingAsk) {
     return null;
   }
 
-  if (backendRecipeId && pending.backendRecipeId && pending.backendRecipeId !== backendRecipeId) {
+  if (backendRecipeId && pendingAsk.recipeId !== backendRecipeId) {
     return null;
   }
 
-  const priceLabel = formatConsentPrice(pending.priceAmount, pending.currencyCode);
-  const ceilingLabel = formatConsentPrice(pending.ceilingAmount, pending.currencyCode);
+  if (placement === 'chat' && recipeSheetOpenForRecipe) {
+    return null;
+  }
+
+  if (placement === 'sheet' && !recipeSheetOpenForRecipe) {
+    return null;
+  }
+
+  const priceLabel = formatConsentPrice(pendingAsk.priceAmount, pendingAsk.currencyCode);
+  const ceilingLabel = formatConsentPrice(pendingAsk.ceilingAmount, pendingAsk.currencyCode);
+  const recipeId = pendingAsk.recipeId;
 
   return (
     <div
@@ -72,14 +80,14 @@ export function SpendMandateConsentInline({
         <button
           type="button"
           className="jamie-recipe-modal__header-pill"
-          onClick={() => resolveSpendMandateConsent(true)}
+          onClick={() => void resolveAskWithServer(recipeId, true, getStoredJamieAccessUserId())}
         >
           Yes, put it on my Tab
         </button>
         <button
           type="button"
           className="rounded-full border border-[#D4CFC8] bg-white px-4 py-2 text-sm font-semibold text-[#5C5C5C] transition hover:bg-[#F5F3F0]"
-          onClick={() => resolveSpendMandateConsent(false)}
+          onClick={() => void resolveAskWithServer(recipeId, false, getStoredJamieAccessUserId())}
         >
           Not now
         </button>

@@ -1,10 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, beforeEach } from 'vitest';
 import {
-  addPurchaseReceipt,
   getActiveSurface,
-  getPendingSpendMandateConsent,
-  requestSpendMandateConsent,
-  resolveSpendMandateConsent,
   setActiveSurface,
   shouldRenderCommerceInline,
   shouldRenderCommercePortaled,
@@ -22,26 +18,5 @@ describe('agentActionSurfaceStore', () => {
     setActiveSurface({ kind: 'chat' });
     expect(shouldRenderCommerceInline()).toBe(true);
     expect(shouldRenderCommercePortaled()).toBe(false);
-  });
-
-  it('tracks pending consent and receipts in one store', async () => {
-    setActiveSurface({ kind: 'chat' });
-    const pending = requestSpendMandateConsent({
-      priceAmount: 5,
-      currencyCode: 'USD',
-      ceilingAmount: 1000,
-      backendRecipeId: 'fish-chips',
-    });
-    expect(getPendingSpendMandateConsent()?.backendRecipeId).toBe('fish-chips');
-    resolveSpendMandateConsent(true);
-    await expect(pending).resolves.toBe(true);
-    expect(getPendingSpendMandateConsent()).toBeNull();
-
-    const receipt = addPurchaseReceipt({
-      backendRecipeId: 'fish-chips',
-      recipeTitle: 'Fish & chips',
-      priceLabel: '$0.05',
-    });
-    expect(receipt.backendRecipeId).toBe('fish-chips');
   });
 });

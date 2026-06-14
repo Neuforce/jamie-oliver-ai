@@ -368,3 +368,45 @@ class SpendMandateRepository:
             .execute()
         )
         return getattr(response, "data", None) or []
+
+
+class SpendMandateAskRepository:
+    """Persistence for server-side spend mandate consent asks."""
+
+    def __init__(self, client: Client | None = None):
+        self._client = client or create_service_role_client()
+
+    def create_ask(self, payload: dict[str, Any]) -> dict[str, Any]:
+        response = self._client.table("spend_mandate_asks").insert(payload).execute()
+        return first_row(response) or payload
+
+    def get_ask(self, ask_id: str) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("spend_mandate_asks")
+            .select("*")
+            .eq("id", ask_id)
+            .limit(1)
+            .execute()
+        )
+        return first_row(response)
+
+    def update_ask(self, ask_id: str, updates: dict[str, Any]) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("spend_mandate_asks")
+            .update(updates)
+            .eq("id", ask_id)
+            .execute()
+        )
+        return first_row(response)
+
+    def get_open_ask_for_session(self, session_id: str) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("spend_mandate_asks")
+            .select("*")
+            .eq("session_id", session_id)
+            .eq("status", "requested")
+            .order("requested_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+        return first_row(response)

@@ -24,6 +24,7 @@ import { useAudioCapture } from './useAudioCapture';
 import { useAudioPlayback } from './useAudioPlayback';
 import type { VoiceTurnState } from './voiceTurnUtils';
 import { VOICE_WS_URL } from '../lib/runtimeConfig';
+import { getStoredJamieAccessUserId } from '../lib/supertab';
 
 type VoiceLatencyTurnMetrics = {
   transcriptFinalAt: number;
@@ -85,6 +86,13 @@ export interface UseVoiceChatOptions {
     price_amount?: number;
     currency_code?: string;
     ceiling_amount?: number;
+    ask_id?: string;
+  }) => void;
+  /** Server resolved a consent ask (e.g. verbal yes/no in voice) */
+  onSpendMandateConsentResolved?: (payload: {
+    backend_recipe_id: string;
+    approved: boolean;
+    ask_id?: string;
   }) => void;
   /** Callback when response is complete */
   onDone?: () => void;
@@ -433,6 +441,20 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
           price_amount: typeof data?.price_amount === 'number' ? data.price_amount : undefined,
           currency_code: typeof data?.currency_code === 'string' ? data.currency_code : undefined,
           ceiling_amount: typeof data?.ceiling_amount === 'number' ? data.ceiling_amount : undefined,
+          ask_id: typeof data?.ask_id === 'string' ? data.ask_id : undefined,
+        });
+        break;
+      }
+
+      case 'spend_mandate_consent_resolved': {
+        if (!isCurrentResponse(responseId)) return;
+        const bid =
+          typeof data?.backend_recipe_id === 'string' ? data.backend_recipe_id.trim() : '';
+        if (!bid) break;
+        callbacks.onSpendMandateConsentResolved?.({
+          backend_recipe_id: bid,
+          approved: Boolean(data?.approved),
+          ask_id: typeof data?.ask_id === 'string' ? data.ask_id : undefined,
         });
         break;
       }
@@ -543,7 +565,12 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         markLatencyStage('websocket_open');
         setIsConnected(true);
 
-        ws.send(JSON.stringify({ event: 'start', sessionId, sampleRate }));
+        ws.send(JSON.stringify({
+          event: 'start',
+          sessionId,
+          sampleRate,
+          userId: getStoredJamieAccessUserId() ?? undefined,
+        }));
         markLatencyStage('start_event_sent');
 
         try {

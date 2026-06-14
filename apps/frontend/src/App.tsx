@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useCallback, useRef, useSyncExternalStore } from 'react';
 import { flushSync } from 'react-dom';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
 import { hydrateRecipe } from './data/recipeLoader';
@@ -35,7 +35,6 @@ import {
   type JamieUserSummary,
   type OwnedRecipeSummary,
   type RecipeAccessResponse,
-  type SpendMandate,
 } from './lib/api';
 import { loadRecipeBySlug } from './data/loadRecipeBySlug';
 import { usePermalinks } from './hooks/usePermalinks';
@@ -56,11 +55,21 @@ import {
 import { markAppLoadStage, startAppLoadSession } from './lib/appLoadMetrics';
 import {
   formatConsentPrice,
-  requestSpendMandateConsent as waitForSpendMandateConsent,
-} from './lib/spendMandateConsentGate';
-import { addPurchaseReceipt } from './lib/purchaseReceiptStore';
+  getMandate,
+  openAsk,
+  clearActiveAsk,
+  setMandate,
+  setReceipt,
+} from './lib/commerceStore';
 import { AgentActionSurface } from './components/AgentActionSurface';
 import { setActiveSurface } from './lib/agentActionSurfaceStore';
+import {
+  getCommerceSnapshotVersion,
+  getRecipeAccess as getStoredRecipeAccess,
+  invalidateAccess,
+  setAccess as setStoredRecipeAccess,
+  subscribeCommerceStore,
+} from './lib/commerceStore';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -88,7 +97,6 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [permalinkNotFound, setPermalinkNotFound] = useState<{ slug: string } | null>(null);
   const [permalinkResolving, setPermalinkResolving] = useState(false);
-  const [recipeAccessMap, setRecipeAccessMap] = useState<Record<string, RecipeAccessResponse>>({});
   const [recipeAccessErrorIds, setRecipeAccessErrorIds] = useState<Record<string, true>>({});
   const [recipeAccessLoadingId, setRecipeAccessLoadingId] = useState<string | null>(null);
 
@@ -108,7 +116,6 @@ export default function App() {
   const [myTabSite, setMyTabSite] = useState<MyTabSiteSummary | null>(null);
   const [myTabMessage, setMyTabMessage] = useState<string | null>(null);
   const [myTabMessageTone, setMyTabMessageTone] = useState<MyTabMessageTone | undefined>(undefined);
-  const [spendMandate, setSpendMandate] = useState<SpendMandate | null>(null);
   const [myRecipes, setMyRecipes] = useState<OwnedRecipeSummary[]>([]);
   const [isMyRecipesLoading, setIsMyRecipesLoading] = useState(false);
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
@@ -166,15 +173,15 @@ export default function App() {
 
   const refreshSpendMandate = useCallback(async (userId?: string) => {
     if (!userId) {
-      setSpendMandate(null);
+      setMandate(null);
       return;
     }
     try {
       const mandate = await getCurrentSpendMandate(userId);
-      setSpendMandate(mandate);
+      setMandate(mandate);
     } catch (error) {
       console.error('Failed to load spend mandate:', error);
-      setSpendMandate(null);
+      setMandate(null);
     }
   }, []);
 
@@ -182,7 +189,7 @@ export default function App() {
     if (!userId) {
       if (!isMounted || isMounted()) {
         setMyTabJamieUser(null);
-        setSpendMandate(null);
+        setMandate(null);
       }
       return;
     }
@@ -338,12 +345,11 @@ export default function App() {
 
   const getRecipeAccessKey = useCallback((recipe: Recipe) => recipe.backendId || String(recipe.id), []);
 
-  const recipeAccessMapRef = useRef(recipeAccessMap);
+  const visibleChatRecipeBackendIdsRef = useRef<string[]>([]);
   const recipeAccessErrorIdsRef = useRef(recipeAccessErrorIds);
   const recipeAccessInFlightRef = useRef(new Set<string>());
   const recipeAccessErrorToastShownRef = useRef(new Set<string>());
 
-  recipeAccessMapRef.current = recipeAccessMap;
   recipeAccessErrorIdsRef.current = recipeAccessErrorIds;
 
   const fetchRecipeAccessForKey = useCallback(async (
@@ -352,7 +358,7 @@ export default function App() {
     options: { force?: boolean; userId?: string } = {},
   ): Promise<RecipeAccessResponse | null> => {
     if (!options.force) {
-      const cached = recipeAccessMapRef.current[key];
+      const cached = getStoredRecipeAccess(key);
       if (cached) {
         return cached;
       }
@@ -363,6 +369,7 @@ export default function App() {
         return null;
       }
     } else {
+      invalidateAccess(key);
       setRecipeAccessErrorIds((prev) => {
         if (!prev[key]) {
           return prev;
@@ -383,11 +390,7 @@ export default function App() {
         recipeId,
         options.userId ?? getStoredJamieAccessUserId() ?? undefined,
       );
-      setRecipeAccessMap((prev) => {
-        const next = { ...prev, [key]: access };
-        recipeAccessMapRef.current = next;
-        return next;
-      });
+      setStoredRecipeAccess(key, access);
       setRecipeAccessErrorIds((prev) => {
         if (!prev[key]) {
           return prev;
@@ -449,18 +452,21 @@ export default function App() {
     return fetchRecipeAccessForKey(backendId, backendId, options);
   }, [fetchRecipeAccessForKey, loadRecipeAccess, loadedRecipesByBackendId]);
 
-  const prefetchChatRecipeAccess = useCallback((backendIds: string[]) => {
+  const prefetchChatRecipeAccess = useCallback((backendIds: string[], options?: { force?: boolean }) => {
+    visibleChatRecipeBackendIdsRef.current = backendIds;
     for (const backendId of backendIds) {
-      if (recipeAccessMapRef.current[backendId]) {
-        continue;
+      if (!options?.force) {
+        if (getStoredRecipeAccess(backendId)) {
+          continue;
+        }
+        if (recipeAccessErrorIdsRef.current[backendId]) {
+          continue;
+        }
+        if (recipeAccessInFlightRef.current.has(backendId)) {
+          continue;
+        }
       }
-      if (recipeAccessErrorIdsRef.current[backendId]) {
-        continue;
-      }
-      if (recipeAccessInFlightRef.current.has(backendId)) {
-        continue;
-      }
-      void loadRecipeAccessByBackendId(backendId);
+      void loadRecipeAccessByBackendId(backendId, { force: options?.force });
     }
   }, [loadRecipeAccessByBackendId]);
 
@@ -738,7 +744,7 @@ export default function App() {
     }
     try {
       await revokeCurrentSpendMandate(userId);
-      setSpendMandate(null);
+      setMandate(null);
       toast.success('Agent spending revoked', {
         description: 'Jamie will ask before adding unlocks to your Tab again.',
       });
@@ -780,10 +786,7 @@ export default function App() {
     let refreshedAccess = resolution.refreshedAccess ?? null;
 
     if (refreshedAccess) {
-      setRecipeAccessMap(prev => ({
-        ...prev,
-        [getRecipeAccessKey(recipe)]: refreshedAccess!,
-      }));
+      setStoredRecipeAccess(getRecipeAccessKey(recipe), refreshedAccess);
     }
 
     if (purchaseCompleted || alreadyOwned) {
@@ -796,10 +799,7 @@ export default function App() {
           const polledAccess = await pollRecipeAccessUntilUnlocked(recipe.backendId, userId);
           if (polledAccess) {
             refreshedAccess = polledAccess;
-            setRecipeAccessMap(prev => ({
-              ...prev,
-              [getRecipeAccessKey(recipe)]: polledAccess,
-            }));
+            setStoredRecipeAccess(getRecipeAccessKey(recipe), polledAccess);
           }
         }
       }
@@ -807,16 +807,22 @@ export default function App() {
       toast.success('Recipe unlocked', {
         description: 'Jamie is ready to start cooking with you.',
       });
-      startCookingOverlay(recipe);
+      const hydratedRecipe = await hydrateRecipe(recipe);
+      upsertLoadedRecipe(hydratedRecipe);
+      clearActiveAsk();
+      startCookingOverlay(hydratedRecipe);
     }
 
     await loadRecipeAccess(recipe, { force: true });
+    prefetchChatRecipeAccess(visibleChatRecipeBackendIdsRef.current, { force: true });
   }, [
     getRecipeAccessKey,
     hydrateJamieUser,
     loadOwnedRecipes,
     loadRecipeAccess,
+    prefetchChatRecipeAccess,
     startCookingOverlay,
+    upsertLoadedRecipe,
   ]);
 
   const handleRecipePurchaseResolved = useCallback(async (
@@ -854,13 +860,14 @@ export default function App() {
         return;
       }
 
-      if (selectedRecipe?.backendId !== bid) {
+      const sheetAlreadyOpen = selectedRecipe?.backendId === bid;
+      if (!sheetAlreadyOpen && activeView !== 'chat') {
         setSelectedRecipe(recipe);
         navigateToRecipe(recipe, { replace: true });
       }
 
       let access =
-        recipeAccessMap[getRecipeAccessKey(recipe)] ??
+        getStoredRecipeAccess(getRecipeAccessKey(recipe)) ??
         (await loadRecipeAccess(recipe));
       if (!access) {
         toast.error('Could not check recipe access', {
@@ -883,11 +890,11 @@ export default function App() {
         const outcome = await purchaseRecipe(access, {
           agentic: true,
           requestSpendMandateConsent: async ({ ceilingAmount, currencyCode, priceAmount }) =>
-            waitForSpendMandateConsent({
+            openAsk({
+              recipeId: bid,
               ceilingAmount,
               currencyCode,
               priceAmount,
-              backendRecipeId: bid,
             }),
           openEmbeddedCheckout: async () => {
             await recipeModalRef.current?.openMyTabPurchaseFlow();
@@ -922,8 +929,7 @@ export default function App() {
               typeof access.offering?.priceAmount === 'number' && access.offering?.currencyCode
                 ? formatConsentPrice(access.offering.priceAmount, access.offering.currencyCode)
                 : '$0.05';
-            addPurchaseReceipt({
-              backendRecipeId: bid,
+            setReceipt(bid, {
               recipeTitle: recipe.title,
               priceLabel,
             });
@@ -951,12 +957,12 @@ export default function App() {
       }
     },
     [
+      activeView,
       applyRecipePurchaseOutcome,
       getRecipeAccessKey,
       loadRecipeAccess,
       loadedRecipesByBackendId,
       navigateToRecipe,
-      recipeAccessMap,
       refreshSpendMandate,
       selectedRecipe,
       startCookingOverlay,
@@ -985,8 +991,10 @@ export default function App() {
     setActiveSurface({ kind: 'none' });
   }, [selectedRecipeBackendId, activeView]);
 
+  useSyncExternalStore(subscribeCommerceStore, getCommerceSnapshotVersion);
+
   const selectedRecipeAccess = selectedRecipe
-    ? recipeAccessMap[getRecipeAccessKey(selectedRecipe)] ?? null
+    ? getStoredRecipeAccess(getRecipeAccessKey(selectedRecipe)) ?? null
     : null;
   const isSelectedRecipeAccessLoading = selectedRecipe
     ? recipeAccessLoadingId === getRecipeAccessKey(selectedRecipe)
@@ -1012,6 +1020,7 @@ export default function App() {
     || myTabAccount?.displayName
     || myTabAccount?.email
     || (myTabAccount?.isGuest ? 'Guest session' : undefined);
+  const spendMandate = getMandate();
   const myTabCard: MyTabCardData = {
     status: myTabStatus,
     title: 'My Tab',
@@ -1141,7 +1150,6 @@ export default function App() {
                   onRecipeModalVoiceDockOverlapChange={setRecipeModalVoiceDockOverlap}
                   onVoiceRecipePaywallRequested={handleVoiceRecipePaywallRequested}
                   onDiscoveryVoiceSessionChange={setDiscoveryVoiceSessionActive}
-                  recipeAccessMap={recipeAccessMap}
                   recipeAccessLoadingId={recipeAccessLoadingId}
                   onPrefetchChatRecipeAccess={prefetchChatRecipeAccess}
                 />

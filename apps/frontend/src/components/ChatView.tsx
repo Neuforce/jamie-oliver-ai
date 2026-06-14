@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useMemo, useSyncExternalStore } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { createPortal } from 'react-dom';
 import { Recipe } from '../data/recipes';
@@ -24,7 +24,15 @@ import {
 } from '../lib/voiceRichCard';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
 import { VoiceThinkingBubble } from './VoiceThinkingBubble';
+import {
+  getCommerceSnapshotVersion,
+  getRecipeAccess as getStoredRecipeAccess,
+  openAsk,
+  resolveAsk,
+  subscribeCommerceStore,
+} from '../lib/commerceStore';
 import { useVoiceChat } from '../hooks/useVoiceChat';
+import { getStoredJamieAccessUserId } from '../lib/supertab';
 // @ts-expect-error - Vite resolves figma:asset imports
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 import {
@@ -104,9 +112,8 @@ interface ChatViewProps {
   onVoiceRecipePaywallRequested?: (backendRecipeId: string) => void;
   /** Notifies parent when discovery voice mode is connected (keeps ChatView mounted across tabs). */
   onDiscoveryVoiceSessionChange?: (active: boolean) => void;
-  recipeAccessMap?: Record<string, RecipeAccessResponse>;
   recipeAccessLoadingId?: string | null;
-  onPrefetchChatRecipeAccess?: (backendIds: string[]) => void;
+  onPrefetchChatRecipeAccess?: (backendIds: string[], options?: { force?: boolean }) => void;
 }
 
 const IGNORED_VOICE_TRANSCRIPTS = new Set(['[Connection restored]']);
@@ -114,6 +121,30 @@ const JAMIE_MESSAGE_COLLAPSE_CHAR_THRESHOLD = 520;
 
 /** Max width for chat content; matches TabNav for consistent layout (NEU-470). */
 const CHAT_CONTENT_MAX_WIDTH = 600;
+
+function openAskFromConsentMetadata(metadata?: {
+  backend_recipe_id?: string;
+  price_amount?: number;
+  currency_code?: string;
+  ceiling_amount?: number;
+  ask_id?: string;
+}): void {
+  const bid = typeof metadata?.backend_recipe_id === 'string' ? metadata.backend_recipe_id.trim() : '';
+  if (!bid) {
+    return;
+  }
+  const priceAmount = metadata?.price_amount ?? 5;
+  const currencyCode = metadata?.currency_code ?? 'USD';
+  const ceilingAmount = metadata?.ceiling_amount ?? Math.max(1000, priceAmount);
+  const askId = typeof metadata?.ask_id === 'string' ? metadata.ask_id.trim() : undefined;
+  void openAsk({
+    recipeId: bid,
+    askId: askId || undefined,
+    priceAmount,
+    currencyCode,
+    ceilingAmount,
+  });
+}
 
 
 // Helper function to get or create session ID
@@ -307,10 +338,10 @@ export function ChatView({
   onRecipeModalVoiceDockOverlapChange,
   onVoiceRecipePaywallRequested,
   onDiscoveryVoiceSessionChange,
-  recipeAccessMap = {},
   recipeAccessLoadingId = null,
   onPrefetchChatRecipeAccess,
 }: ChatViewProps) {
+  useSyncExternalStore(subscribeCommerceStore, getCommerceSnapshotVersion);
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const rollerMessages = useMemo<RollerMessage[]>(
     () =>
@@ -379,10 +410,10 @@ export function ChatView({
     if (!backendId) {
       return null;
     }
-    const access = recipeAccessMap[backendId] ?? null;
+    const access = getStoredRecipeAccess(backendId) ?? null;
     const isLoading = recipeAccessLoadingId === backendId;
     return getRecipeCommerceBadge(access, isLoading);
-  }, [recipeAccessMap, recipeAccessLoadingId]);
+  }, [recipeAccessLoadingId]);
 
   const resolveCommerceBadgeForRecipe = useCallback((recipe: Recipe): RecipeCommerceBadge | null => {
     return resolveCommerceBadgeForBackendId(recipe.backendId ?? null);
@@ -596,6 +627,13 @@ export function ChatView({
       }
     },
     onSpendMandateConsentRequested: (payload) => {
+      openAskFromConsentMetadata({
+        backend_recipe_id: payload.backend_recipe_id,
+        price_amount: payload.price_amount,
+        currency_code: payload.currency_code,
+        ceiling_amount: payload.ceiling_amount,
+        ask_id: payload.ask_id,
+      });
       applyStreamToVoiceMessage({
         type: 'spend_mandate_consent_requested',
         content: '',
@@ -606,8 +644,12 @@ export function ChatView({
           price_amount: payload.price_amount,
           currency_code: payload.currency_code,
           ceiling_amount: payload.ceiling_amount,
+          ask_id: payload.ask_id,
         },
       });
+    },
+    onSpendMandateConsentResolved: (payload) => {
+      resolveAsk(payload.backend_recipe_id, payload.approved);
     },
     onDone: () => {
       // Finalize the voice message
@@ -682,15 +724,14 @@ export function ChatView({
     const focusedId =
       recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : null;
     const accessState =
-      focusedId && recipeAccessMap[focusedId]?.accessState
-        ? recipeAccessMap[focusedId]?.accessState
+      focusedId && getStoredRecipeAccess(focusedId)?.accessState
+        ? getStoredRecipeAccess(focusedId)?.accessState
         : undefined;
     notifyFocusedRecipe(focusedId, accessState);
   }, [
     isVoiceConnected,
     recipeModalOpen,
     focusedRecipeBackendId,
-    recipeAccessMap,
     notifyFocusedRecipe,
   ]);
 
@@ -950,6 +991,7 @@ export function ChatView({
       for await (const event of chatWithAgent(text, sessionId, {
         focusedRecipeBackendId:
           recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : undefined,
+        userId: getStoredJamieAccessUserId(),
       })) {
         streamState = reduceChatStreamEvent(streamState, event);
         const streamPatch = messagePatchFromStreamState(streamState);
@@ -1038,6 +1080,9 @@ export function ChatView({
           || event.type === 'spend_mandate_consent_requested'
           || event.type === 'recipe_paywall_requested'
         ) {
+          if (event.type === 'spend_mandate_consent_requested') {
+            openAskFromConsentMetadata(event.metadata);
+          }
           if (event.type === 'recipe_paywall_requested') {
             const backendId = (event.metadata?.backend_recipe_id as string | undefined)?.trim();
             if (backendId) {
@@ -1398,6 +1443,14 @@ export function ChatView({
                 <SpendMandateConsentInline
                   backendRecipeId={mandateBackendId}
                   className="mt-3"
+                  placement="chat"
+                  recipeSheetOpenForRecipe={
+                    Boolean(
+                      recipeModalOpen
+                      && mandateBackendId
+                      && focusedRecipeBackendId === mandateBackendId,
+                    )
+                  }
                 />
               )}
             </div>
@@ -1537,6 +1590,14 @@ export function ChatView({
                 <SpendMandateConsentInline
                   backendRecipeId={mandateBackendId}
                   className="jamie-thread-card__payload"
+                  placement="chat"
+                  recipeSheetOpenForRecipe={
+                    Boolean(
+                      recipeModalOpen
+                      && mandateBackendId
+                      && focusedRecipeBackendId === mandateBackendId,
+                    )
+                  }
                 />
               ) : null;
 
