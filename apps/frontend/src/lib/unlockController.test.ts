@@ -9,6 +9,7 @@ import {
   configureUnlockController,
   confirmUnlock,
   declineUnlock,
+  requestCheckout,
   resetUnlockControllerForTests,
   startRecipeUnlock,
   type UnlockControllerConfig,
@@ -75,6 +76,7 @@ function setupConfig(
     onRecipeNotFound: vi.fn(),
     onAccessUnavailable: vi.fn(),
     onError: vi.fn(),
+    runCheckout: vi.fn().mockResolvedValue({ via: 'paywall', resolution: successOutcome().resolution }),
     ...overrides,
   };
 }
@@ -230,6 +232,79 @@ describe('unlockController', () => {
 
       expect(getUnlockState('fish-pie')).toBe('declined');
       expect(runPurchase).not.toHaveBeenCalled();
+    });
+
+    it('requestCheckout unlocks on completed paywall result', async () => {
+      const config = setupConfig(
+        vi.fn().mockResolvedValue({ via: 'tab_settlement_required', resolution: null }),
+        {
+          runCheckout: vi.fn().mockResolvedValue({
+            via: 'paywall',
+            resolution: successOutcome().resolution,
+          }),
+        },
+      );
+      configureUnlockController(config);
+
+      await requestCheckout('fish-pie');
+
+      expect(config.runCheckout).toHaveBeenCalledTimes(1);
+      expect(config.onPurchaseResolved).toHaveBeenCalledTimes(1);
+      expect(getUnlockState('fish-pie')).toBe('unlocked');
+    });
+
+    it('requestCheckout maps unavailable paywall result to noTab', async () => {
+      const config = setupConfig(
+        vi.fn().mockResolvedValue({ via: 'tab_settlement_required', resolution: null }),
+        {
+          runCheckout: vi.fn().mockResolvedValue({
+            via: 'unavailable',
+            resolution: null,
+          }),
+        },
+      );
+      configureUnlockController(config);
+
+      await requestCheckout('fish-pie');
+
+      expect(config.runCheckout).toHaveBeenCalledTimes(1);
+      expect(config.onUnavailable).toHaveBeenCalledTimes(1);
+      expect(getUnlockState('fish-pie')).toBe('noTab');
+    });
+
+    it('requestCheckout maps abandoned paywall result to failed', async () => {
+      const config = setupConfig(
+        vi.fn().mockResolvedValue({ via: 'tab_settlement_required', resolution: null }),
+        {
+          runCheckout: vi.fn().mockResolvedValue({
+            via: 'abandoned',
+            resolution: null,
+          }),
+        },
+      );
+      configureUnlockController(config);
+
+      await requestCheckout('fish-pie');
+
+      expect(config.runCheckout).toHaveBeenCalledTimes(1);
+      expect(getUnlockState('fish-pie')).toBe('failed');
+    });
+
+    it('requestCheckout dedupes concurrent settlement runs', async () => {
+      const runCheckout = vi.fn().mockImplementation(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 20));
+        return { via: 'paywall', resolution: successOutcome().resolution };
+      });
+      const config = setupConfig(
+        vi.fn().mockResolvedValue({ via: 'tab_settlement_required', resolution: null }),
+        { runCheckout },
+      );
+      configureUnlockController(config);
+
+      await Promise.all([requestCheckout('fish-pie'), requestCheckout('fish-pie')]);
+
+      expect(runCheckout).toHaveBeenCalledTimes(1);
+      expect(getUnlockState('fish-pie')).toBe('unlocked');
     });
   });
 });

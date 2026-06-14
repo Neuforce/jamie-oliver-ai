@@ -4,6 +4,7 @@ import { resolveAskWithServer, setUnlockState } from './commerceStore';
 import type { PurchaseRecipeOutcome } from './supertab';
 
 type UnlockTrigger = 'paywall_event' | 'consent_approve';
+type SettlementTrigger = UnlockTrigger | 'direct';
 
 export interface ConsentPromptParams {
   recipeId: string;
@@ -35,8 +36,11 @@ export interface UnlockControllerConfig {
   onRecipeNotFound: () => void;
   onAccessUnavailable: () => void;
   onError: (error: unknown) => void;
-  /** Opens the embedded Supertab checkout for the recipe (needsCheckout CTA). */
-  openCheckout?: (recipeId: string) => void;
+  /** Runs hosted settlement checkout for the recipe (needsCheckout CTA). */
+  runCheckout: (
+    recipe: Recipe,
+    access: RecipeAccessResponse,
+  ) => Promise<PurchaseRecipeOutcome>;
   /** Opens the Connect My Tab flow (noTab CTA). */
   connectTab?: () => void;
 }
@@ -47,7 +51,7 @@ export interface RunPurchaseOptions {
 }
 
 export interface StartUnlockOptions {
-  trigger: UnlockTrigger;
+  trigger: SettlementTrigger;
 }
 
 const inFlightByRecipe = new Map<string, Promise<void>>();
@@ -69,20 +73,12 @@ export function resetUnlockControllerForTests(): void {
   inFlightByRecipe.clear();
 }
 
-export function startRecipeUnlock(
-  backendRecipeId: string,
-  options: StartUnlockOptions,
-): Promise<void> {
-  const recipeId = backendRecipeId.trim();
-  if (!recipeId) {
-    return Promise.resolve();
-  }
+function runRecipeTask(recipeId: string, run: () => Promise<void>): Promise<void> {
   const current = inFlightByRecipe.get(recipeId);
   if (current) {
     return current;
   }
-
-  const task = runUnlock(recipeId, options).finally(() => {
+  const task = run().finally(() => {
     const active = inFlightByRecipe.get(recipeId);
     if (active === task) {
       inFlightByRecipe.delete(recipeId);
@@ -90,6 +86,14 @@ export function startRecipeUnlock(
   });
   inFlightByRecipe.set(recipeId, task);
   return task;
+}
+
+export function startRecipeUnlock(backendRecipeId: string, options: StartUnlockOptions): Promise<void> {
+  const recipeId = backendRecipeId.trim();
+  if (!recipeId) {
+    return Promise.resolve();
+  }
+  return runRecipeTask(recipeId, () => runUnlock(recipeId, options));
 }
 
 async function runUnlock(
@@ -135,7 +139,8 @@ async function runUnlock(
     // mandate as a guaranteed fallback. paywall_event: first attempt without
     // consent so it can never auto-mint; only after explicit approval do we
     // retry with consentGranted=true.
-    const consentAlreadyGranted = options.trigger === 'consent_approve';
+    const consentAlreadyGranted =
+      options.trigger === 'consent_approve' || options.trigger === 'direct';
     if (consentAlreadyGranted) {
       transition('processing');
     }
@@ -226,8 +231,59 @@ export async function declineUnlock(
 }
 
 /** View verb: complete checkout for the needsCheckout state. */
-export function requestCheckout(recipeId: string): void {
-  config?.openCheckout?.(recipeId);
+export function requestCheckout(recipeId: string): Promise<void> {
+  const id = recipeId.trim();
+  if (!id) {
+    return Promise.resolve();
+  }
+  return runRecipeTask(id, async () => {
+    const activeConfig = config;
+    if (!activeConfig) {
+      return;
+    }
+
+    const transition = (state: Parameters<typeof setUnlockState>[1]): void => {
+      console.info('[unlock] requestCheckout state', { recipeId: id, state });
+      setUnlockState(id, state);
+    };
+
+    try {
+      const recipe = await activeConfig.resolveRecipe(id);
+      if (!recipe) {
+        transition('failed');
+        activeConfig.onRecipeNotFound();
+        return;
+      }
+
+      const access = activeConfig.getCachedAccess?.(recipe) ?? await activeConfig.loadAccess(recipe);
+      if (!access) {
+        transition('failed');
+        activeConfig.onAccessUnavailable();
+        return;
+      }
+
+      transition('processing');
+      const outcome = await activeConfig.runCheckout(recipe, access);
+      console.info('[unlock] requestCheckout outcome', { recipeId: id, via: outcome.via });
+
+      if (outcome.via === 'unavailable') {
+        transition('noTab');
+        activeConfig.onUnavailable();
+        return;
+      }
+
+      if (outcome.resolution) {
+        transition('unlocked');
+        await activeConfig.onPurchaseResolved(recipe, access, outcome);
+        return;
+      }
+
+      transition('failed');
+    } catch (error) {
+      transition('failed');
+      activeConfig.onError(error);
+    }
+  });
 }
 
 /** View verb: connect a Tab for the noTab state. */

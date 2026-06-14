@@ -1,12 +1,11 @@
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Recipe } from '../data/recipes';
 import { ArrowLeft, RotateCcw, Lock, Clock, Users, ChefHat, Play, Share2 } from 'lucide-react';
-import { SupertabPurchaseButton, type SupertabPurchaseButtonHandle } from './SupertabPurchaseButton';
 import { toast } from './ui/sonner';
 import { useUnlockState } from '../lib/commerceStore';
 import type { RecipeAccessResponse } from '../lib/api';
 import { routeToUrl } from '../lib/permalinks';
-import type { RecipePurchaseResolution } from '../lib/supertab';
+import { startRecipeUnlock } from '../lib/unlockController';
 import { RecipeDetailsTabs } from './RecipeDetailsTabs';
 // @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
@@ -19,15 +18,9 @@ interface RecipeModalProps {
   isAccessLoading?: boolean;
   accessLoadFailed?: boolean;
   onRetryAccessLoad?: () => void;
-  onPurchaseResolved?: (resolution: RecipePurchaseResolution) => void;
   /** Extra bottom padding while the modal has portaled voice strip (launcher or active dock). */
   reserveBottomForVoiceDock?: boolean;
 }
-
-export type RecipeModalHandle = {
-  /** Opens the same Supertab checkout as tapping "Put it on my Tab" in this modal — no duplicate mount. */
-  openMyTabPurchaseFlow: () => Promise<void>;
-};
 
 /**
  * RecipeModal — pre-cook recipe detail surface.
@@ -63,8 +56,17 @@ export type RecipeModalHandle = {
  *     purchase widget sits directly below the title so the commerce
  *     flow stays explicit
  */
-export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(function RecipeModal(
-  {
+function formatUnlockPrice(access?: RecipeAccessResponse | null): string | null {
+  const amount = access?.offering?.priceAmount;
+  const currencyCode = access?.offering?.currencyCode;
+  if (typeof amount !== 'number') {
+    return null;
+  }
+  const symbol = currencyCode === 'GBP' ? '£' : currencyCode === 'EUR' ? '€' : '$';
+  return `${symbol}${(amount / 100).toFixed(2)}`;
+}
+
+export function RecipeModal({
   recipe,
   onClose,
   onCookWithJamie,
@@ -72,13 +74,9 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
   isAccessLoading = false,
   accessLoadFailed = false,
   onRetryAccessLoad,
-  onPurchaseResolved,
   reserveBottomForVoiceDock = false,
-  },
-  ref,
-) {
+}: RecipeModalProps) {
   const [savedSession, setSavedSession] = useState<any>(null);
-  const purchaseButtonRef = useRef<SupertabPurchaseButtonHandle | null>(null);
   // Reflect the shared unlock projection so the sheet shows an unlocking state
   // and flips to owned from the same store — no manual syncing.
   const unlockState = useUnlockState(recipe?.backendId ?? null);
@@ -106,19 +104,6 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
       setSavedSession(null);
     }
   }, [recipe]);
-
-  useImperativeHandle(ref, () => ({
-    openMyTabPurchaseFlow: async () => {
-      if (!recipe) {
-        return;
-      }
-      // Voice path: App already verified locked access — do not gate on stale recipeAccess props.
-      document
-        .querySelector('[data-supertab-pane]')
-        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      await purchaseButtonRef.current?.openPurchaseExperience();
-    },
-  }), [recipe]);
 
   const handleShare = useCallback(async () => {
     if (!recipe?.backendId) {
@@ -160,6 +145,7 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
     : null;
 
   const isLocked = recipeAccess?.accessState === 'locked';
+  const unlockPriceLabel = formatUnlockPrice(recipeAccess);
   const canCook = recipeAccess?.accessState === 'free' || recipeAccess?.accessState === 'owned';
   const canResumeSavedSession = !!savedSession && canCook;
 
@@ -203,9 +189,10 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
           type="button"
           className="jamie-recipe-modal__header-pill"
           onClick={() => {
-            document
-              .querySelector('[data-supertab-pane]')
-              ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            if (!recipe.backendId) {
+              return;
+            }
+            void startRecipeUnlock(recipe.backendId, { trigger: 'direct' });
           }}
           aria-label="Unlock recipe"
         >
@@ -487,11 +474,28 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
               className="jamie-recipe-modal__supertab"
               data-supertab-pane="true"
             >
-              <SupertabPurchaseButton
-                ref={purchaseButtonRef}
-                access={recipeAccess}
-                onResolved={onPurchaseResolved}
-              />
+              <div className="jamie-recipe-modal__unlock-pane space-y-3">
+                <p className="text-sm text-[#5C5C5C] leading-relaxed">
+                  Unlock this recipe to cook with Jamie step by step.
+                  {unlockPriceLabel ? ` This unlock is ${unlockPriceLabel}.` : ''}
+                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <button
+                    type="button"
+                    className="jamie-recipe-modal__header-pill"
+                    disabled={unlockState === 'processing' || !recipe.backendId}
+                    onClick={() => {
+                      if (!recipe.backendId) {
+                        return;
+                      }
+                      void startRecipeUnlock(recipe.backendId, { trigger: 'direct' });
+                    }}
+                  >
+                    {unlockState === 'processing' ? 'Unlocking…' : 'Unlock this recipe'}
+                  </button>
+                </div>
+                <p className="text-xs text-[#9A9A9A]">Secured by Supertab</p>
+              </div>
             </div>
           )}
 
@@ -509,5 +513,4 @@ export const RecipeModal = forwardRef<RecipeModalHandle, RecipeModalProps>(funct
       </div>
     </div>
     );
-});
-RecipeModal.displayName = 'RecipeModal';
+}
