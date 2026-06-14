@@ -36,6 +36,34 @@ def test_create_purchase_returns_existing_row_on_unique_violation():
     repository.get_purchase_by_provider_id.assert_called_once_with("supertab", "purchase-1")
 
 
+def _build_claim_client(returned_rows):
+    client = MagicMock()
+    query = MagicMock()
+    query.update.return_value = query
+    query.eq.return_value = query
+    query.is_.return_value = query
+    query.execute.return_value = SimpleNamespace(data=returned_rows)
+    client.table.return_value = query
+    return client, query
+
+
+def test_claim_purchase_for_mandate_consumption_wins_on_single_row():
+    client, query = _build_claim_client([{"id": "purchase-1"}])
+    repository = MonetizationRepository(client=client)
+
+    assert repository.claim_purchase_for_mandate_consumption("purchase-1") is True
+    query.eq.assert_any_call("id", "purchase-1")
+    query.eq.assert_any_call("status", "completed")
+    query.is_.assert_called_once_with("mandate_consumed_at", "null")
+
+
+def test_claim_purchase_for_mandate_consumption_loses_when_no_row_updated():
+    client, _ = _build_claim_client([])
+    repository = MonetizationRepository(client=client)
+
+    assert repository.claim_purchase_for_mandate_consumption("purchase-1") is False
+
+
 def test_get_active_mandate_filters_expired_records():
     client = MagicMock()
     query = MagicMock()

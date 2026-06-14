@@ -292,7 +292,6 @@ class MonetizationRepository:
             .eq("id", purchase_id)
             .eq("status", "completed")
             .is_("mandate_consumed_at", "null")
-            .select("id")
             .execute()
         )
         rows = getattr(response, "data", None) or []
