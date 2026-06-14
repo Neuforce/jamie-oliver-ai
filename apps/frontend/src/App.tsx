@@ -70,6 +70,10 @@ import {
   setAccess as setStoredRecipeAccess,
   subscribeCommerceStore,
 } from './lib/commerceStore';
+import {
+  configureUnlockController,
+  startRecipeUnlock,
+} from './lib/unlockController';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -123,7 +127,6 @@ export default function App() {
   const [recipeModalVoiceDockOverlap, setRecipeModalVoiceDockOverlap] = useState(false);
   const recipeModalRef = useRef<RecipeModalHandle>(null);
   const pendingEmbeddedPurchaseRef = useRef<((resolution: RecipePurchaseResolution) => void) | null>(null);
-  const voiceRecipeUnlockInFlightRef = useRef(false);
   /** Keeps ChatView (and `/ws/chat-voice`) alive when switching tabs with voice or an open recipe sheet. */
   const [discoveryVoiceSessionActive, setDiscoveryVoiceSessionActive] = useState(false);
 
@@ -837,137 +840,133 @@ export default function App() {
     await applyRecipePurchaseOutcome(recipe, resolution);
   }, [applyRecipePurchaseOutcome]);
 
-  const handleVoiceRecipePaywallRequested = useCallback(
-    async (backendId: string) => {
-      const bid = (backendId || '').trim();
-      if (!bid || voiceRecipeUnlockInFlightRef.current) {
-        return;
-      }
+  useEffect(() => {
+    configureUnlockController({
+      resolveRecipe: async (backendRecipeId) => {
+        let recipe: Recipe | null =
+          selectedRecipe?.backendId === backendRecipeId ? selectedRecipe : null;
 
-      let recipe: Recipe | null =
-        selectedRecipe?.backendId === bid ? selectedRecipe : null;
-
-      if (!recipe) {
-        recipe = loadedRecipesByBackendId.get(bid) ?? null;
-      }
-      if (!recipe) {
-        recipe = await loadRecipeBySlug(bid);
-      }
-      if (!recipe) {
-        toast.error('Checkout did not match this recipe', {
-          description: 'Close the modal and open the recipe again, or tap Unlock on screen.',
-        });
-        return;
-      }
-
-      const sheetAlreadyOpen = selectedRecipe?.backendId === bid;
-      if (!sheetAlreadyOpen && activeView !== 'chat') {
-        setSelectedRecipe(recipe);
-        navigateToRecipe(recipe, { replace: true });
-      }
-
-      let access =
-        getStoredRecipeAccess(getRecipeAccessKey(recipe)) ??
-        (await loadRecipeAccess(recipe));
-      if (!access) {
-        toast.error('Could not check recipe access', {
-          description: 'Please try opening checkout from the Unlock button.',
-        });
-        return;
-      }
-      if (access.accessState !== 'locked') {
-        if (canStartCookingWithAccess(access)) {
-          toast.success('You already have this recipe', {
-            description: 'Jamie is ready to start cooking with you.',
-          });
-          startCookingOverlay(recipe);
+        if (!recipe) {
+          recipe = loadedRecipesByBackendId.get(backendRecipeId) ?? null;
         }
-        return;
-      }
-
-      voiceRecipeUnlockInFlightRef.current = true;
-      try {
-        const outcome = await purchaseRecipe(access, {
+        if (!recipe) {
+          recipe = await loadRecipeBySlug(backendRecipeId);
+        }
+        return recipe;
+      },
+      ensureRecipeVisible: async (recipe, backendRecipeId) => {
+        const sheetAlreadyOpen = selectedRecipe?.backendId === backendRecipeId;
+        if (!sheetAlreadyOpen && activeView !== 'chat') {
+          setSelectedRecipe(recipe);
+          navigateToRecipe(recipe, { replace: true });
+        }
+      },
+      getCachedAccess: (recipe) => getStoredRecipeAccess(getRecipeAccessKey(recipe)),
+      loadAccess: async (recipe) => loadRecipeAccess(recipe),
+      openConsentAsk: ({ recipeId, askId, priceAmount, currencyCode, ceilingAmount }) => (
+        openAsk({
+          recipeId,
+          askId,
+          priceAmount,
+          currencyCode,
+          ceilingAmount,
+        })
+      ),
+      runPurchase: async (recipe, access) => (
+        purchaseRecipe(access, {
           agentic: true,
-          requestSpendMandateConsent: async ({ ceilingAmount, currencyCode, priceAmount }) =>
-            openAsk({
-              recipeId: bid,
-              ceilingAmount,
-              currencyCode,
-              priceAmount,
-            }),
           openEmbeddedCheckout: async () => {
             await recipeModalRef.current?.openMyTabPurchaseFlow();
           },
           waitForEmbeddedResolution: () => waitForEmbeddedPurchaseResolution(),
+        })
+      ),
+      onAlreadyUnlocked: async (recipe) => {
+        toast.success('You already have this recipe', {
+          description: 'Jamie is ready to start cooking with you.',
         });
-
-        if (outcome.via === 'unavailable') {
-          toast.info('Connect My Tab to unlock recipes', {
-            description: 'Open the menu and connect your Tab — it only takes a moment.',
-            action: {
-              label: 'Connect My Tab',
-              onClick: () => {
-                void openMyTab();
-              },
+        startCookingOverlay(recipe);
+      },
+      onPurchaseResolved: async (recipe, access, outcome) => {
+        if (!outcome.resolution) {
+          return;
+        }
+        await applyRecipePurchaseOutcome(recipe, outcome.resolution);
+        if (outcome.resolution.state.purchase) {
+          const priceLabel =
+            typeof access.offering?.priceAmount === 'number' && access.offering?.currencyCode
+              ? formatConsentPrice(access.offering.priceAmount, access.offering.currencyCode)
+              : '$0.05';
+          setReceipt(access.recipeId, {
+            recipeTitle: recipe.title,
+            priceLabel,
+          });
+        }
+        const userId = outcome.resolution.snapshot.userId ?? getStoredJamieAccessUserId();
+        if (userId) {
+          await refreshSpendMandate(userId);
+        }
+      },
+      onUnavailable: () => {
+        toast.info('Connect My Tab to unlock recipes', {
+          description: 'Open the menu and connect your Tab — it only takes a moment.',
+          action: {
+            label: 'Connect My Tab',
+            onClick: () => {
+              void openMyTab();
             },
-          });
-          return;
-        }
-
-        if (outcome.via === 'tab_settlement_required') {
-          toast.message('Settle your Tab to unlock', {
-            description: 'Complete the checkout on screen to put this recipe on your Tab.',
-          });
-          return;
-        }
-
-        if (outcome.resolution) {
-          await applyRecipePurchaseOutcome(recipe, outcome.resolution);
-          if (outcome.resolution.state.purchase) {
-            const priceLabel =
-              typeof access.offering?.priceAmount === 'number' && access.offering?.currencyCode
-                ? formatConsentPrice(access.offering.priceAmount, access.offering.currencyCode)
-                : '$0.05';
-            setReceipt(bid, {
-              recipeTitle: recipe.title,
-              priceLabel,
-            });
-          }
-          const userId = outcome.resolution.snapshot.userId ?? getStoredJamieAccessUserId();
-          if (userId) {
-            await refreshSpendMandate(userId);
-          }
-          return;
-        }
-
-        if (outcome.via === 'abandoned') {
-          toast.message('No problem — nothing was charged', {
-            description: 'The recipe stays locked. Ask me again or tap Unlock whenever you\'re ready.',
-          });
-          return;
-        }
-      } catch (error) {
+          },
+        });
+      },
+      onSettlementRequired: () => {
+        toast.message('Settle your Tab to unlock', {
+          description: 'Complete the checkout on screen to put this recipe on your Tab.',
+        });
+      },
+      onDeclinedOrAbandoned: () => {
+        toast.message('No problem — nothing was charged', {
+          description: 'The recipe stays locked. Ask me again or tap Unlock whenever you\'re ready.',
+        });
+      },
+      onRecipeNotFound: () => {
+        toast.error('Checkout did not match this recipe', {
+          description: 'Close the modal and open the recipe again, or tap Unlock on screen.',
+        });
+      },
+      onAccessUnavailable: () => {
+        toast.error('Could not check recipe access', {
+          description: 'Please try opening checkout from the Unlock button.',
+        });
+      },
+      onError: (error) => {
         console.error('Voice-triggered purchase failed:', error);
         toast.error('Could not unlock via My Tab', {
           description: 'Please try again or use Unlock on screen.',
         });
-      } finally {
-        voiceRecipeUnlockInFlightRef.current = false;
+      },
+    });
+  }, [
+    activeView,
+    applyRecipePurchaseOutcome,
+    getRecipeAccessKey,
+    loadRecipeAccess,
+    loadedRecipesByBackendId,
+    navigateToRecipe,
+    refreshSpendMandate,
+    selectedRecipe,
+    startCookingOverlay,
+    waitForEmbeddedPurchaseResolution,
+  ]);
+
+  const handleVoiceRecipePaywallRequested = useCallback(
+    async (backendId: string) => {
+      const bid = (backendId || '').trim();
+      if (!bid) {
+        return;
       }
+      await startRecipeUnlock(bid, { trigger: 'paywall_event' });
     },
-    [
-      activeView,
-      applyRecipePurchaseOutcome,
-      getRecipeAccessKey,
-      loadRecipeAccess,
-      loadedRecipesByBackendId,
-      navigateToRecipe,
-      refreshSpendMandate,
-      selectedRecipe,
-      startCookingOverlay,
-      waitForEmbeddedPurchaseResolution,
-    ],
+    [],
   );
 
   const selectedRecipeBackendId = selectedRecipe?.backendId ?? null;

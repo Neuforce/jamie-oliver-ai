@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react';
+import { useState, useSyncExternalStore } from 'react';
 import {
   formatConsentPrice,
   getCommerceState,
@@ -6,6 +6,7 @@ import {
   subscribeCommerceStore,
 } from '../lib/commerceStore';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
+import { startRecipeUnlock } from '../lib/unlockController';
 
 function usePendingAskForRecipe(recipeId?: string) {
   return useSyncExternalStore(
@@ -40,6 +41,7 @@ export function SpendMandateConsentInline({
   recipeSheetOpenForRecipe = false,
 }: SpendMandateConsentInlineProps) {
   const pendingAsk = usePendingAskForRecipe(backendRecipeId);
+  const [isResolving, setIsResolving] = useState(false);
 
   if (!pendingAsk) {
     return null;
@@ -61,6 +63,34 @@ export function SpendMandateConsentInline({
   const ceilingLabel = formatConsentPrice(pendingAsk.ceilingAmount, pendingAsk.currencyCode);
   const recipeId = pendingAsk.recipeId;
 
+  const handleApprove = async () => {
+    if (isResolving) {
+      return;
+    }
+    setIsResolving(true);
+    try {
+      const granted = await resolveAskWithServer(recipeId, true, getStoredJamieAccessUserId());
+      if (!granted) {
+        return;
+      }
+      await startRecipeUnlock(recipeId, { trigger: 'consent_approve' });
+    } finally {
+      setIsResolving(false);
+    }
+  };
+
+  const handleDecline = async () => {
+    if (isResolving) {
+      return;
+    }
+    setIsResolving(true);
+    try {
+      await resolveAskWithServer(recipeId, false, getStoredJamieAccessUserId());
+    } finally {
+      setIsResolving(false);
+    }
+  };
+
   return (
     <div
       className={
@@ -80,14 +110,16 @@ export function SpendMandateConsentInline({
         <button
           type="button"
           className="jamie-recipe-modal__header-pill"
-          onClick={() => void resolveAskWithServer(recipeId, true, getStoredJamieAccessUserId())}
+          disabled={isResolving}
+          onClick={() => void handleApprove()}
         >
           Yes, put it on my Tab
         </button>
         <button
           type="button"
           className="rounded-full border border-[#D4CFC8] bg-white px-4 py-2 text-sm font-semibold text-[#5C5C5C] transition hover:bg-[#F5F3F0]"
-          onClick={() => void resolveAskWithServer(recipeId, false, getStoredJamieAccessUserId())}
+          disabled={isResolving}
+          onClick={() => void handleDecline()}
         >
           Not now
         </button>

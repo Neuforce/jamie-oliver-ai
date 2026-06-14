@@ -97,6 +97,31 @@ describe('commerceStore', () => {
     await expect(second).resolves.toBe(true);
   });
 
+  it('openAsk merges metadata when same recipe is already pending', () => {
+    openAsk({
+      recipeId: 'fish-chips',
+      priceAmount: 5,
+      currencyCode: 'USD',
+      ceilingAmount: 1000,
+    });
+
+    openAsk({
+      recipeId: 'fish-chips',
+      askId: 'ask-123',
+      priceAmount: 25,
+      currencyCode: 'GBP',
+      ceilingAmount: 1200,
+    });
+
+    expect(getActiveAsk()).toMatchObject({
+      recipeId: 'fish-chips',
+      askId: 'ask-123',
+      priceAmount: 25,
+      currencyCode: 'GBP',
+      ceilingAmount: 1200,
+    });
+  });
+
   it('setAccess updates owned state for badges', () => {
     setAccess('rainbow-salad', lockedAccess('rainbow-salad'));
     expect(getRecipeAccess('rainbow-salad')?.accessState).toBe('locked');
