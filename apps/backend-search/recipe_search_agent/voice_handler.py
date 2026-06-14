@@ -44,6 +44,7 @@ from ccai.core.audio_interface.audio_output.websocket_audio_output import WebSoc
 from ccai.core.logger import configure_logger
 
 from recipe_search_agent.chat_agent import DiscoveryChatAgent
+from recipe_search_agent.focused_recipe_context import build_focused_recipe_context_suffix
 
 logger = configure_logger(__name__)
 _TTS_MIN_CHUNK_WORDS = 4
@@ -179,6 +180,7 @@ class DiscoveryVoiceHandler:
         self.connection_started_at = connection_started_at or time.perf_counter()
         # Backend slug for focused recipe modal; set via WS `focused_recipe` event.
         self._focused_backend_recipe_id: Optional[str] = None
+        self._focused_recipe_access_state: Optional[str] = None
 
         # ── queues (mirrors SimpleVoiceAssistant) ──────────────────────────
         self._brain_queue: asyncio.Queue[str] = asyncio.Queue()
@@ -402,12 +404,20 @@ class DiscoveryVoiceHandler:
             try:
                 event_type = await asyncio.wait_for(self.control_queue.get(), timeout=0.5)
                 if isinstance(event_type, str) and event_type.startswith("__focus_recipe__|"):
-                    slug = event_type.split("|", 1)[1].strip()
+                    payload = event_type.split("|", 1)[1]
+                    slug = payload.strip()
+                    access_state = None
+                    if "|access:" in payload:
+                        slug, _, access_state = payload.partition("|access:")
+                        slug = slug.strip()
+                        access_state = access_state.strip() or None
                     self._focused_backend_recipe_id = slug or None
+                    self._focused_recipe_access_state = access_state
                     logger.info(
-                        "Focused recipe updated [%s]: %s",
+                        "Focused recipe updated [%s]: %s (access=%s)",
                         self.session_id,
                         self._focused_backend_recipe_id,
+                        self._focused_recipe_access_state,
                     )
                 elif event_type in ("interrupt", "cancel"):
                     logger.info("Client control event [%s]: %s", self.session_id, event_type)
@@ -437,12 +447,9 @@ class DiscoveryVoiceHandler:
                 transcript_for_agent = transcription
                 if self._focused_backend_recipe_id:
                     bid = self._focused_backend_recipe_id
-                    transcript_for_agent = (
-                        f"{transcription}\n\n"
-                        "[Context for tools only: The full recipe sheet is focused on backend recipe "
-                        f"id `{bid}`. When the user clearly asks to unlock, purchase, pay, put something "
-                        "on My Tab, open checkout, or buy this recipe for money, call `request_supertab_unlock` "
-                        f"with recipe_backend_id exactly `{bid}`.]"
+                    transcript_for_agent = transcription + build_focused_recipe_context_suffix(
+                        bid,
+                        access_state=self._focused_recipe_access_state,
                     )
 
                 # Generate a per-turn response ID so the frontend can correlate

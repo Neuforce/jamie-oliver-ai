@@ -190,6 +190,10 @@ class ChatRequest(BaseModel):
 
     message: str = Field(..., description="User message to send to Jamie", example="I'm feeling tired, what should I cook?")
     session_id: str = Field(..., description="Session ID for conversation continuity", example="user-123-abc")
+    focused_recipe_backend_id: Optional[str] = Field(
+        None,
+        description="When the recipe sheet is open, backend slug for agent tool context",
+    )
 
 
 class ChatResponse(BaseModel):
@@ -951,7 +955,11 @@ async def chat(request: ChatRequest):
         async def event_generator():
             """Generate SSE events from chat agent."""
             try:
-                async for event in chat_agent.chat(request.message, request.session_id):
+                async for event in chat_agent.chat(
+                    request.message,
+                    request.session_id,
+                    focused_recipe_backend_id=request.focused_recipe_backend_id,
+                ):
                     # Format as SSE
                     data = {
                         "type": event.type,

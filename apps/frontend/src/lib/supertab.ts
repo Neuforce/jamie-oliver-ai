@@ -1,6 +1,7 @@
 import { loadSupertab } from '@getsupertab/supertab-js';
 import {
   bootstrapSupertabIdentity,
+  createOnetimeOffering,
   createSpendMandate,
   getCurrentSpendMandate,
   getRecipeAccess,
@@ -686,7 +687,7 @@ export async function ensureSpendMandateForAgenticPurchase(
     ceiling_amount: ceiling,
     currency_code: currency,
     session_id: getSpendMandateSessionId(),
-    source: 'voice',
+    source: 'agentic',
   });
   return mandate.id;
 }
@@ -732,11 +733,6 @@ export async function purchaseRecipeOnTab(
     }
   }
 
-  const offeringId = await resolveRecipeOfferingId(client, access);
-  if (!offeringId) {
-    return { status: 'unavailable', userId };
-  }
-
   const customer = await client.api.retrieveCustomer().catch(() => null);
   const currencyCode = customer?.tab?.currency?.code || access.offering.currencyCode || 'USD';
 
@@ -756,8 +752,35 @@ export async function purchaseRecipeOnTab(
     };
   }
 
+  const priceAmount = access.offering.priceAmount ?? 5;
+  let onetimeOfferingId: string | undefined;
+  try {
+    const minted = await createOnetimeOffering({
+      content_key: access.offering.contentKey,
+      price_amount: priceAmount,
+      currency_code: currencyCode,
+      description: `Cook with Jamie: ${access.recipeId}`,
+      recipe_slug: access.recipeId,
+      user_id: userId,
+      metadata: {
+        source: options.agentic ? 'agent-silent-tab' : 'jamie-on-tab',
+      },
+    });
+    onetimeOfferingId = minted?.offering?.id;
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    if (/Failed to create one-time offering:\s5\d{2}\b/.test(message)) {
+      return { status: 'unavailable', userId };
+    }
+    throw error;
+  }
+
+  if (!onetimeOfferingId) {
+    return { status: 'unavailable', userId };
+  }
+
   const result = await client.api.purchase({
-    offeringId,
+    onetimeOfferingId,
     currencyCode,
     metadata: {
       jamieUserId: userId,
@@ -840,11 +863,15 @@ export async function purchaseRecipe(
     };
   }
 
-  if (onTabResult.status === 'action_required' && options.agentic) {
-    return { via: 'tab_settlement_required', resolution: null };
-  }
-
-  if (onTabResult.status === 'abandoned' && options.agentic) {
+  if (onTabResult.status === 'action_required') {
+    const canSettleViaEmbed =
+      canEmbedRecipePurchaseButton(access)
+      && options.openEmbeddedCheckout
+      && options.waitForEmbeddedResolution;
+    if (!canSettleViaEmbed) {
+      return { via: 'tab_settlement_required', resolution: null };
+    }
+  } else if (onTabResult.status === 'abandoned' && options.agentic) {
     return { via: 'abandoned', resolution: null };
   }
 

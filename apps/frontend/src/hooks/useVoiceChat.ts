@@ -77,6 +77,15 @@ export interface UseVoiceChatOptions {
     tool_call_id?: string;
     response_id?: string;
   }) => void;
+  /** Spend mandate consent card metadata for inline rendering */
+  onSpendMandateConsentRequested?: (payload: {
+    backend_recipe_id?: string;
+    tool_call_id?: string;
+    response_id?: string;
+    price_amount?: number;
+    currency_code?: string;
+    ceiling_amount?: number;
+  }) => void;
   /** Callback when response is complete */
   onDone?: () => void;
   /** Callback on error */
@@ -414,6 +423,20 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         break;
       }
 
+      case 'spend_mandate_consent_requested': {
+        if (!isCurrentResponse(responseId)) return;
+        callbacks.onSpendMandateConsentRequested?.({
+          backend_recipe_id:
+            typeof data?.backend_recipe_id === 'string' ? data.backend_recipe_id.trim() : undefined,
+          tool_call_id: typeof data?.tool_call_id === 'string' ? data.tool_call_id : undefined,
+          response_id: typeof data?.response_id === 'string' ? data.response_id : responseId,
+          price_amount: typeof data?.price_amount === 'number' ? data.price_amount : undefined,
+          currency_code: typeof data?.currency_code === 'string' ? data.currency_code : undefined,
+          ceiling_amount: typeof data?.ceiling_amount === 'number' ? data.ceiling_amount : undefined,
+        });
+        break;
+      }
+
       case 'tool_call':
         console.log('🔧 Tool called:', data?.name);
         break;
@@ -586,9 +609,15 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
 
   /** Tell the discovery voice backend which recipe sheet is focused (modal). */
   const notifyFocusedRecipe = useCallback(
-    (backendRecipeId: string | null | undefined) => {
+    (
+      backendRecipeId: string | null | undefined,
+      accessState?: 'free' | 'locked' | 'owned' | null,
+    ) => {
       const trimmed = backendRecipeId?.trim() ?? '';
-      sendSocketEvent('focused_recipe', { backendRecipeId: trimmed });
+      sendSocketEvent('focused_recipe', {
+        backendRecipeId: trimmed,
+        ...(accessState ? { accessState } : {}),
+      });
     },
     [sendSocketEvent],
   );

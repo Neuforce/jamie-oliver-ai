@@ -8,6 +8,8 @@ from typing import Any, Optional
 
 from supabase import Client, create_client
 
+DEFAULT_RECIPE_PRICE_CENTS = 5
+
 
 def create_service_role_client() -> Client:
     """Create a Supabase client using backend service-role credentials."""
@@ -137,7 +139,7 @@ class MonetizationRepository:
             desired_content_key = f"recipe:{slug}:cook"
             if existing.get("content_key") != desired_content_key:
                 updates["content_key"] = desired_content_key
-            desired_price = 0 if is_free else 199
+            desired_price = 0 if is_free else DEFAULT_RECIPE_PRICE_CENTS
             if existing.get("price_amount") != desired_price:
                 updates["price_amount"] = desired_price
             if existing.get("currency_code") != "USD":
@@ -162,7 +164,7 @@ class MonetizationRepository:
             "content_key": f"recipe:{slug}:cook",
             "status": "active",
             "currency_code": "USD",
-            "price_amount": 0 if is_free else 199,
+            "price_amount": 0 if is_free else DEFAULT_RECIPE_PRICE_CENTS,
             "metadata": desired_metadata,
         }
         response = self._client.table("recipe_offerings").insert(payload).execute()

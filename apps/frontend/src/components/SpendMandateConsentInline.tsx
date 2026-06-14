@@ -3,14 +3,23 @@ import {
   formatConsentPrice,
   getPendingSpendMandateConsent,
   resolveSpendMandateConsent,
-  subscribeSpendMandateConsent,
-} from '../lib/spendMandateConsentGate';
+  shouldRenderCommerceInline,
+  subscribeAgentActionSurface,
+} from '../lib/agentActionSurfaceStore';
 
 function usePendingConsent() {
   return useSyncExternalStore(
-    subscribeSpendMandateConsent,
+    subscribeAgentActionSurface,
     getPendingSpendMandateConsent,
     () => null,
+  );
+}
+
+function useShowInlineCommerce() {
+  return useSyncExternalStore(
+    subscribeAgentActionSurface,
+    shouldRenderCommerceInline,
+    () => true,
   );
 }
 
@@ -18,6 +27,8 @@ interface SpendMandateConsentInlineProps {
   /** When set, only show if pending consent matches this recipe. */
   backendRecipeId?: string;
   className?: string;
+  /** When true, skip active-surface gating (used by AgentActionSurface portal). */
+  bypassSurfaceGate?: boolean;
 }
 
 /**
@@ -26,10 +37,12 @@ interface SpendMandateConsentInlineProps {
 export function SpendMandateConsentInline({
   backendRecipeId,
   className,
+  bypassSurfaceGate = false,
 }: SpendMandateConsentInlineProps) {
   const pending = usePendingConsent();
+  const showInline = useShowInlineCommerce();
 
-  if (!pending) {
+  if ((!bypassSurfaceGate && !showInline) || !pending) {
     return null;
   }
 

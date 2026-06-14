@@ -54,7 +54,13 @@ import {
   type MyTabStatus,
 } from './lib/supertab';
 import { markAppLoadStage, startAppLoadSession } from './lib/appLoadMetrics';
-import { requestSpendMandateConsent as waitForSpendMandateConsent } from './lib/spendMandateConsentGate';
+import {
+  formatConsentPrice,
+  requestSpendMandateConsent as waitForSpendMandateConsent,
+} from './lib/spendMandateConsentGate';
+import { addPurchaseReceipt } from './lib/purchaseReceiptStore';
+import { AgentActionSurface } from './components/AgentActionSurface';
+import { setActiveSurface } from './lib/agentActionSurfaceStore';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -863,6 +869,12 @@ export default function App() {
         return;
       }
       if (access.accessState !== 'locked') {
+        if (canStartCookingWithAccess(access)) {
+          toast.success('You already have this recipe', {
+            description: 'Jamie is ready to start cooking with you.',
+          });
+          startCookingOverlay(recipe);
+        }
         return;
       }
 
@@ -877,25 +889,45 @@ export default function App() {
               priceAmount,
               backendRecipeId: bid,
             }),
+          openEmbeddedCheckout: async () => {
+            await recipeModalRef.current?.openMyTabPurchaseFlow();
+          },
+          waitForEmbeddedResolution: () => waitForEmbeddedPurchaseResolution(),
         });
 
         if (outcome.via === 'unavailable') {
-          toast.error('Could not open My Tab', {
-            description: 'Sign in to Supertab or set the client ID for this environment.',
+          toast.info('Connect My Tab to unlock recipes', {
+            description: 'Open the menu and connect your Tab — it only takes a moment.',
+            action: {
+              label: 'Connect My Tab',
+              onClick: () => {
+                void openMyTab();
+              },
+            },
           });
           return;
         }
 
         if (outcome.via === 'tab_settlement_required') {
-          toast.error('Your Tab needs settling first', {
-            description:
-              "Tap Unlock on the recipe to pay now — I can't charge silently until your Tab has headroom.",
+          toast.message('Settle your Tab to unlock', {
+            description: 'Complete the checkout on screen to put this recipe on your Tab.',
           });
           return;
         }
 
         if (outcome.resolution) {
           await applyRecipePurchaseOutcome(recipe, outcome.resolution);
+          if (outcome.resolution.state.purchase) {
+            const priceLabel =
+              typeof access.offering?.priceAmount === 'number' && access.offering?.currencyCode
+                ? formatConsentPrice(access.offering.priceAmount, access.offering.currencyCode)
+                : '$0.05';
+            addPurchaseReceipt({
+              backendRecipeId: bid,
+              recipeTitle: recipe.title,
+              priceLabel,
+            });
+          }
           const userId = outcome.resolution.snapshot.userId ?? getStoredJamieAccessUserId();
           if (userId) {
             await refreshSpendMandate(userId);
@@ -904,6 +936,9 @@ export default function App() {
         }
 
         if (outcome.via === 'abandoned') {
+          toast.message('No problem — nothing was charged', {
+            description: 'The recipe stays locked. Ask me again or tap Unlock whenever you\'re ready.',
+          });
           return;
         }
       } catch (error) {
@@ -924,6 +959,8 @@ export default function App() {
       recipeAccessMap,
       refreshSpendMandate,
       selectedRecipe,
+      startCookingOverlay,
+      waitForEmbeddedPurchaseResolution,
     ],
   );
 
@@ -935,6 +972,18 @@ export default function App() {
     }
     void loadRecipeAccessByBackendId(selectedRecipeBackendId);
   }, [selectedRecipeBackendId, loadRecipeAccessByBackendId]);
+
+  useEffect(() => {
+    if (selectedRecipeBackendId) {
+      setActiveSurface({ kind: 'recipe_sheet', backendRecipeId: selectedRecipeBackendId });
+      return;
+    }
+    if (activeView === 'chat') {
+      setActiveSurface({ kind: 'chat' });
+      return;
+    }
+    setActiveSurface({ kind: 'none' });
+  }, [selectedRecipeBackendId, activeView]);
 
   const selectedRecipeAccess = selectedRecipe
     ? recipeAccessMap[getRecipeAccessKey(selectedRecipe)] ?? null
@@ -1521,7 +1570,7 @@ export default function App() {
                           >
                             <div className="jamie-shell-width jamie-surface-panel jamie-filter-panel">
                               <div className="jamie-filter-panel__head">
-                                <span className="jamie-filter-panel__label">Cuisine</span>
+                                <span className="jamie-filter-panel__label">Category</span>
                                 {selectedCategory !== 'All' && (
                                   <button
                                     type="button"
@@ -1686,6 +1735,8 @@ export default function App() {
           reserveBottomForVoiceDock={recipeModalVoiceDockOverlap}
         />
       )}
+
+      <AgentActionSurface mode="portal" backendRecipeId={selectedRecipeBackendId} />
 
       {/* Toaster */}
       <Toaster />

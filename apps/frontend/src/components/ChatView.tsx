@@ -336,6 +336,10 @@ export function ChatView({
   /** Fresh messages for voice callbacks without stale closures (NEU-620). */
   const messagesRef = useRef<Message[]>(messages);
   messagesRef.current = messages;
+  const recipeModalOpenRef = useRef(recipeModalOpen);
+  recipeModalOpenRef.current = recipeModalOpen;
+  const focusedRecipeBackendIdRef = useRef(focusedRecipeBackendId);
+  focusedRecipeBackendIdRef.current = focusedRecipeBackendId;
   /** Set after hook init so transcripts can invoke interrupt without reordering deps. */
   const interruptVoiceRef = useRef<() => void>(() => {});
 
@@ -475,11 +479,14 @@ export function ChatView({
       }
 
       if (isFinal && normalizedText) {
-        const openDetail = getRecipeDetailForOpenIntent(
-          messagesRef.current,
-          normalizedText,
-        );
-        if (openDetail && shouldOpenRecipeFromVoiceUtterance(normalizedText)) {
+        const openMessages = messagesRef.current;
+        const openDetail = getRecipeDetailForOpenIntent(openMessages, normalizedText, {
+          focusedBackendId:
+            recipeModalOpenRef.current && focusedRecipeBackendIdRef.current
+              ? focusedRecipeBackendIdRef.current
+              : undefined,
+        });
+        if (openDetail && shouldOpenRecipeFromVoiceUtterance(normalizedText, openMessages)) {
           interruptVoiceRef.current();
           const userMessage: Message = {
             id: Date.now().toString(),
@@ -588,6 +595,20 @@ export function ChatView({
         onVoiceRecipePaywallRequested?.(payload.backend_recipe_id);
       }
     },
+    onSpendMandateConsentRequested: (payload) => {
+      applyStreamToVoiceMessage({
+        type: 'spend_mandate_consent_requested',
+        content: '',
+        metadata: {
+          backend_recipe_id: payload.backend_recipe_id,
+          tool_call_id: payload.tool_call_id,
+          response_id: payload.response_id,
+          price_amount: payload.price_amount,
+          currency_code: payload.currency_code,
+          ceiling_amount: payload.ceiling_amount,
+        },
+      });
+    },
     onDone: () => {
       // Finalize the voice message
       if (voiceMessageIdRef.current) {
@@ -658,13 +679,18 @@ export function ChatView({
 
   useEffect(() => {
     if (!isVoiceConnected) return;
-    notifyFocusedRecipe(
-      recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : null,
-    );
+    const focusedId =
+      recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : null;
+    const accessState =
+      focusedId && recipeAccessMap[focusedId]?.accessState
+        ? recipeAccessMap[focusedId]?.accessState
+        : undefined;
+    notifyFocusedRecipe(focusedId, accessState);
   }, [
     isVoiceConnected,
     recipeModalOpen,
     focusedRecipeBackendId,
+    recipeAccessMap,
     notifyFocusedRecipe,
   ]);
 
@@ -862,8 +888,11 @@ export function ChatView({
     const text = messageText || inputValue.trim();
     if (!text) return;
 
-    if (userAffirmsGoToFullRecipe(text)) {
-      const focusedDetail = getRecipeDetailForOpenIntent(messages, text);
+    if (userAffirmsGoToFullRecipe(text, messages)) {
+      const focusedDetail = getRecipeDetailForOpenIntent(messages, text, {
+        focusedBackendId:
+          recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : undefined,
+      });
       if (focusedDetail) {
         if (abortControllerRef.current) {
           abortControllerRef.current.abort();
@@ -918,7 +947,10 @@ export function ChatView({
     let streamState = createChatTurnStreamState();
 
     try {
-      for await (const event of chatWithAgent(text, sessionId)) {
+      for await (const event of chatWithAgent(text, sessionId, {
+        focusedRecipeBackendId:
+          recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : undefined,
+      })) {
         streamState = reduceChatStreamEvent(streamState, event);
         const streamPatch = messagePatchFromStreamState(streamState);
         fullResponse = streamState.text;
@@ -1231,10 +1263,12 @@ export function ChatView({
                 resolveCommerceBadgeForBackendId(payload.recipe.recipe_id),
               )}
             </div>
-            {(payload.recipe.estimated_time ||
+            {Boolean(
+              payload.recipe.estimated_time ||
               payload.recipe.difficulty ||
               payload.recipe.ingredient_count ||
-              payload.recipe.step_count) && (
+              payload.recipe.step_count,
+            ) && (
               <div
                 style={{
                   padding: '0 20px 12px',

@@ -30,6 +30,7 @@ from recipe_search_agent.discovery_tools import (
     set_search_agent,
 )
 from recipe_search_agent.guardrails import evaluate_message, reset_gate_blocked, set_gate_blocked
+from recipe_search_agent.focused_recipe_context import build_focused_recipe_context_suffix
 
 logger = logging.getLogger(__name__)
 
@@ -215,6 +216,7 @@ class DiscoveryChatAgent:
         self,
         message: str,
         session_id: str,
+        focused_recipe_backend_id: Optional[str] = None,
     ) -> AsyncGenerator[ChatEvent, None]:
         """
         Process a chat message and stream responses.
@@ -262,6 +264,11 @@ class DiscoveryChatAgent:
 
         set_gate_blocked(False)
 
+        agent_message = message
+        focused_id = (focused_recipe_backend_id or "").strip()
+        if focused_id:
+            agent_message = message + build_focused_recipe_context_suffix(focused_id)
+
         # Create brain with session's memory
         brain = SimpleBrain(
             llm=self._create_llm(),
@@ -270,7 +277,7 @@ class DiscoveryChatAgent:
         )
 
         # Create user message - identical processing for text and voice
-        user_msg = UserMessage(content=message)
+        user_msg = UserMessage(content=agent_message)
 
         logger.info(f"Processing message for session {session_id}: {message[:50]}...")
 

@@ -530,7 +530,9 @@ def request_supertab_unlock(recipe_backend_id: str) -> str:
             }
         )
 
-    recipe_row = catalog.get_recipe_row(rid)
+    agent = get_search_agent()
+    response = agent.client.table("recipes").select("*").eq("slug", rid).execute()
+    recipe_row = response.data[0] if response.data else None
     recipe_detail = build_recipe_detail_payload(recipe_row) if recipe_row else None
 
     purchase_intent = {
