@@ -381,6 +381,18 @@ function normalizePriorEntitlements(priorEntitlement: unknown): Array<Record<str
   return [];
 }
 
+function hasMatchingPriorEntitlement(
+  priorEntitlements: Array<Record<string, unknown>>,
+  contentKey?: string | null,
+): boolean {
+  if (!contentKey) {
+    return false;
+  }
+  return priorEntitlements.some((entitlement) => (
+    entitlement?.contentKey === contentKey && Boolean(entitlement?.hasEntitlement)
+  ));
+}
+
 async function resolvePurchaseOutcome(
   access: RecipeAccessResponse,
   state: SupertabPurchaseButtonState,
@@ -567,9 +579,17 @@ export async function mountRecipePurchaseButton({
   }
 
   if (syncInitialOutcome && 'initialState' in button && button.initialState) {
-    void resolvePurchaseOutcome(access, button.initialState, onResolved).catch((error) => {
-      console.error('Failed to process Supertab initial purchase state:', error);
-    });
+    const initialPriorEntitlements = normalizePriorEntitlements(button.initialState.priorEntitlement);
+    const hasCompletedPurchase = button.initialState.purchase?.status === 'completed';
+    const hasInitialEntitlement = hasMatchingPriorEntitlement(
+      initialPriorEntitlements,
+      access.offering?.contentKey,
+    );
+    if (hasCompletedPurchase || hasInitialEntitlement) {
+      void resolvePurchaseOutcome(access, button.initialState, onResolved).catch((error) => {
+        console.error('Failed to process Supertab initial purchase state:', error);
+      });
+    }
   }
 
   return {
@@ -1007,7 +1027,16 @@ export async function launchRecipePaywall(access: RecipeAccessResponse): Promise
     };
   }
 
+  console.info('[unlock] launchRecipePaywall show', {
+    recipeId: access.recipeId,
+    experienceId,
+  });
   const state = await paywall.show();
+  console.info('[unlock] launchRecipePaywall state', {
+    recipeId: access.recipeId,
+    hasPurchase: Boolean(state?.purchase),
+    priorEntitlementCount: (state?.priorEntitlement || []).length,
+  });
 
   if (!state?.purchase && !(state?.priorEntitlement || []).length) {
     return { status: 'abandoned', userId };

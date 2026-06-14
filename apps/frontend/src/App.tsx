@@ -3,7 +3,7 @@ import { flushSync } from 'react-dom';
 import { recipes, categories, Recipe, initializeRecipes, getCategories } from './data/recipes';
 import { hydrateRecipe } from './data/recipeLoader';
 import { RecipeCard } from './components/RecipeCard';
-import { RecipeModal, type RecipeModalHandle } from './components/RecipeModal';
+import { RecipeModal } from './components/RecipeModal';
 import { CookWithJamie } from './components/CookWithJamie';
 import { ChatView } from './components/ChatView';
 import { clearChatHistory } from './lib/chatStorage';
@@ -44,6 +44,7 @@ import {
   getStoredJamieAccessUserId,
   openMyTab,
   purchaseRecipe,
+  launchRecipePaywall,
   pollRecipeAccessUntilUnlocked,
   canStartCookingWithAccess,
   type MyTabAccountSummary,
@@ -125,7 +126,6 @@ export default function App() {
   const [isHeaderScrolled, setIsHeaderScrolled] = useState(false);
   const normalizedSearchQuery = typeof searchQuery === 'string' ? searchQuery : '';
   const [recipeModalVoiceDockOverlap, setRecipeModalVoiceDockOverlap] = useState(false);
-  const recipeModalRef = useRef<RecipeModalHandle>(null);
   /** Keeps ChatView (and `/ws/chat-voice`) alive when switching tabs with voice or an open recipe sheet. */
   const [discoveryVoiceSessionActive, setDiscoveryVoiceSessionActive] = useState(false);
 
@@ -800,8 +800,10 @@ export default function App() {
       startCookingOverlay(hydratedRecipe);
     }
 
-    await loadRecipeAccess(recipe, { force: true });
-    prefetchChatRecipeAccess(visibleChatRecipeBackendIdsRef.current, { force: true });
+    if (purchaseCompleted || alreadyOwned) {
+      await loadRecipeAccess(recipe, { force: true });
+      prefetchChatRecipeAccess(visibleChatRecipeBackendIdsRef.current, { force: true });
+    }
   }, [
     getRecipeAccessKey,
     hydrateJamieUser,
@@ -811,13 +813,6 @@ export default function App() {
     startCookingOverlay,
     upsertLoadedRecipe,
   ]);
-
-  const handleRecipePurchaseResolved = useCallback(async (
-    recipe: Recipe,
-    resolution: RecipePurchaseResolution
-  ) => {
-    await applyRecipePurchaseOutcome(recipe, resolution);
-  }, [applyRecipePurchaseOutcome]);
 
   useEffect(() => {
     configureUnlockController({
@@ -919,8 +914,33 @@ export default function App() {
         // The in-card 'failed' state is the primary surface; keep logging here.
         console.error('Voice-triggered purchase failed:', error);
       },
-      openCheckout: () => {
-        void recipeModalRef.current?.openMyTabPurchaseFlow();
+      runCheckout: async (_recipe, access) => {
+        console.info('[unlock] launchRecipePaywall start', { recipeId: access.recipeId });
+        const paywallResult = await launchRecipePaywall(access);
+        console.info('[unlock] launchRecipePaywall resolved', {
+          recipeId: access.recipeId,
+          status: paywallResult.status,
+        });
+
+        if (paywallResult.status === 'unavailable' || paywallResult.status === 'abandoned') {
+          return { via: paywallResult.status, resolution: null, paywallResult };
+        }
+
+        return {
+          via: 'paywall',
+          resolution: {
+            snapshot: await loadMyTabSnapshot(),
+            refreshedAccess: paywallResult.refreshedAccess ?? null,
+            state: {
+              purchase: paywallResult.status === 'completed' ? { status: 'completed' } : undefined,
+              priorEntitlement:
+                paywallResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [],
+            },
+            priorEntitlements:
+              paywallResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [],
+          },
+          paywallResult,
+        };
       },
       connectTab: () => {
         void openMyTab();
@@ -1703,7 +1723,6 @@ export default function App() {
       {/* Recipe Modal */}
       {selectedRecipe && (
         <RecipeModal
-          ref={recipeModalRef}
           recipe={selectedRecipe}
           onClose={() => {
             setSelectedRecipe(null);
@@ -1718,7 +1737,6 @@ export default function App() {
               void loadRecipeAccess(selectedRecipe, { force: true });
             }
           }}
-          onPurchaseResolved={(resolution) => handleRecipePurchaseResolved(selectedRecipe, resolution)}
           reserveBottomForVoiceDock={recipeModalVoiceDockOverlap}
         />
       )}
