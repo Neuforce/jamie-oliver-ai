@@ -1,0 +1,23 @@
+---
+description: Raise-the-bar engineering principles; every change must strengthen the foundation, not add patches or tech debt
+alwaysApply: true
+---
+
+# Engineering principles - raise the bar every iteration
+
+Apply these to every plan, change, and review. If a change cannot satisfy them, say so explicitly and propose the foundational alternative.
+
+## Invariants and ownership
+- Name the invariant a change enforces, and the single component that owns it. Do not scatter one invariant across layers.
+- One source of truth per fact. Never duplicate authoritative state (especially money, ledger, access, auth).
+
+## Trust boundaries
+- No client-trusted decisions for money, authorization, or access. Move trust-sensitive decisions to the signed/server edge (webhooks, server APIs), never the browser.
+
+## Foundation over patches
+- Prefer fixing the foundation over adding a workaround. If an interim shim is truly unavoidable, label it clearly in code/PR and link the durable follow-up that removes it.
+- Every change must hold or reduce net complexity. Delete dead or duplicate paths you touch instead of leaving them.
+
+## Self-check before finishing
+- Does this raise the bar, or is it a patch? If a patch, is it labeled and is the durable follow-up tracked?
+- What invariant did I enforce, who owns it, and is there exactly one source of truth?
