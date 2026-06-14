@@ -776,6 +776,34 @@ export interface PurchaseRecipeOnTabResult {
   actionRequired?: boolean;
 }
 
+type SupertabPurchaseRecord = { status?: string | null; [key: string]: unknown };
+
+/**
+ * The SDK's `api.purchase` resolves to one of two shapes: a single `{ purchase }`
+ * or a plural `{ purchases: [...] }` (the latter is returned when a silent on-tab
+ * charge settles directly). Read both so a successful purchase is never misread as
+ * `null` (which previously collapsed to a false `abandoned`).
+ */
+export function extractPurchaseFromResult(result: unknown): SupertabPurchaseRecord | null {
+  if (!result || typeof result !== 'object') {
+    return null;
+  }
+  const single = (result as { purchase?: SupertabPurchaseRecord | null }).purchase;
+  if (single) {
+    return single;
+  }
+  const many = (result as { purchases?: SupertabPurchaseRecord[] }).purchases;
+  if (Array.isArray(many) && many.length > 0) {
+    return (
+      many.find((p) => p?.status === 'completed')
+      ?? many.find((p) => p?.status === 'pending')
+      ?? many[0]
+      ?? null
+    );
+  }
+  return null;
+}
+
 /**
  * Modal-free purchase via Supertab Customer API `api.purchase`.
  * Falls back to paywall when `actionRequired` is true.
@@ -876,17 +904,43 @@ export async function purchaseRecipeOnTab(
       source: options.agentic ? 'agent-silent-tab' : 'jamie-on-tab',
     },
   });
+  const purchase = extractPurchaseFromResult(result);
   console.info('[unlock] client.api.purchase result', {
     actionRequired: Boolean(result?.actionRequired),
-    purchaseStatus: result?.purchase?.status ?? null,
+    purchaseStatus: purchase?.status ?? null,
+    shape: (result as { purchase?: unknown })?.purchase
+      ? 'single'
+      : Array.isArray((result as { purchases?: unknown })?.purchases)
+        ? 'array'
+        : 'empty',
+    actionRequiredReason: (result as { actionRequiredDetails?: { reason?: string } })
+      ?.actionRequiredDetails?.reason ?? null,
   });
 
   if (result?.actionRequired) {
     return { status: 'action_required', userId, actionRequired: true };
   }
 
-  const purchase = result?.purchase ?? null;
+  // No action required and no purchase payload: the silent charge may still have
+  // settled on the tab (the SDK occasionally omits the record). Verify entitlement
+  // before treating this as abandoned so we never re-charge a recipe that already
+  // unlocked, and never report a successful purchase as a failure.
   if (!purchase) {
+    const postCheck = await client.api
+      .checkEntitlement({ contentKey: access.offering.contentKey })
+      .catch(() => null);
+    if (postCheck?.hasEntitlement) {
+      await syncSupertabPurchase({
+        user_id: userId,
+        recipe_id: access.recipeId,
+        prior_entitlement: [{ contentKey: access.offering.contentKey, hasEntitlement: true }],
+      });
+      return {
+        status: 'prior-entitlement',
+        userId,
+        refreshedAccess: await getRecipeAccess(access.recipeId, userId),
+      };
+    }
     return { status: 'abandoned', userId };
   }
 
@@ -897,8 +951,11 @@ export async function purchaseRecipeOnTab(
     prior_entitlement: [],
   });
 
+  // `completed` settles immediately; `pending` settles asynchronously on the tab
+  // but is still a successful authorization, so both unlock the recipe.
+  const purchaseSucceeded = purchase.status === 'completed' || purchase.status === 'pending';
   return {
-    status: purchase.status === 'completed' ? 'completed' : 'abandoned',
+    status: purchaseSucceeded ? 'completed' : 'abandoned',
     userId,
     purchase,
     refreshedAccess: await getRecipeAccess(access.recipeId, userId),
