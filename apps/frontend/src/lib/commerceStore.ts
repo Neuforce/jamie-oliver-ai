@@ -17,6 +17,45 @@ export interface PurchaseReceipt {
 
 export type AskStatus = 'requested' | 'granted' | 'declined';
 
+/**
+ * Per-recipe unlock surface state. This is a PROJECTION, not a second source of
+ * truth: the unlock controller owns the transitions and access/entitlement
+ * remains the canonical "owned" signal. Shaped to be reusable as a projection
+ * of a future backend transaction (Slice 2).
+ */
+export type UnlockState =
+  | 'locked'
+  | 'requested'
+  | 'processing'
+  | 'unlocked'
+  | 'needsCheckout'
+  | 'noTab'
+  | 'declined'
+  | 'failed';
+
+/** Ask metadata that must survive past ask resolution so the card can keep rendering. */
+export interface UnlockAskMeta {
+  askId?: string;
+  priceAmount: number;
+  currencyCode: string;
+  ceilingAmount: number;
+}
+
+/** States in which the consent/unlock surface should remain visible. */
+const UNLOCK_SURFACE_STATES: ReadonlySet<UnlockState> = new Set<UnlockState>([
+  'requested',
+  'processing',
+  'unlocked',
+  'needsCheckout',
+  'noTab',
+  'declined',
+  'failed',
+]);
+
+export function isUnlockSurfaceState(state: UnlockState): boolean {
+  return UNLOCK_SURFACE_STATES.has(state);
+}
+
 export interface ActiveAsk {
   askId?: string;
   recipeId: string;
@@ -37,6 +76,8 @@ export interface OpenAskParams {
 export interface RecipeCommerceEntry {
   access: RecipeAccessResponse | null;
   receipt: PurchaseReceipt | null;
+  unlockState: UnlockState;
+  askMeta: UnlockAskMeta | null;
 }
 
 export interface CommerceStateSnapshot {
@@ -45,6 +86,8 @@ export interface CommerceStateSnapshot {
   /** Active ask when it targets this recipe and is still pending. */
   pendingAsk: ActiveAsk | null;
   mandate: SpendMandate | null;
+  unlockState: UnlockState;
+  askMeta: UnlockAskMeta | null;
 }
 
 type StoreListener = () => void;
@@ -142,7 +185,12 @@ function ensureRecipeEntry(recipeId: string): RecipeCommerceEntry {
   if (existing) {
     return existing;
   }
-  const entry: RecipeCommerceEntry = { access: null, receipt: null };
+  const entry: RecipeCommerceEntry = {
+    access: null,
+    receipt: null,
+    unlockState: 'locked',
+    askMeta: null,
+  };
   recipeCommerce = { ...recipeCommerce, [recipeId]: entry };
   return entry;
 }
@@ -168,6 +216,33 @@ export function getRecipeReceipt(recipeId: string): PurchaseReceipt | null {
   return recipeCommerce[recipeId]?.receipt ?? null;
 }
 
+export function getUnlockState(recipeId?: string | null): UnlockState {
+  if (!recipeId) {
+    return 'locked';
+  }
+  return recipeCommerce[recipeId]?.unlockState ?? 'locked';
+}
+
+export function getUnlockAskMeta(recipeId?: string | null): UnlockAskMeta | null {
+  if (!recipeId) {
+    return null;
+  }
+  return recipeCommerce[recipeId]?.askMeta ?? null;
+}
+
+/** Set the per-recipe unlock projection state. Owned by the unlock controller. */
+export function setUnlockState(recipeId: string, state: UnlockState): void {
+  const entry = ensureRecipeEntry(recipeId);
+  if (entry.unlockState === state) {
+    return;
+  }
+  recipeCommerce = {
+    ...recipeCommerce,
+    [recipeId]: { ...entry, unlockState: state },
+  };
+  notifyListeners();
+}
+
 export function getCommerceState(recipeId?: string | null): CommerceStateSnapshot {
   const entry = recipeId ? recipeCommerce[recipeId] : undefined;
   const pendingAsk =
@@ -180,6 +255,8 @@ export function getCommerceState(recipeId?: string | null): CommerceStateSnapsho
     receipt: entry?.receipt ?? null,
     pendingAsk,
     mandate,
+    unlockState: entry?.unlockState ?? 'locked',
+    askMeta: entry?.askMeta ?? null,
   };
 }
 
@@ -233,8 +310,29 @@ export function setMandate(nextMandate: SpendMandate | null): void {
   notifyListeners();
 }
 
+/** Project the ask onto the per-recipe entry so the unlock surface can render
+ * from the store even after the ask itself resolves. */
+function projectRequestedAsk(params: OpenAskParams): void {
+  const entry = ensureRecipeEntry(params.recipeId);
+  recipeCommerce = {
+    ...recipeCommerce,
+    [params.recipeId]: {
+      ...entry,
+      unlockState: 'requested',
+      askMeta: {
+        askId: params.askId,
+        priceAmount: params.priceAmount,
+        currencyCode: params.currencyCode,
+        ceilingAmount: params.ceilingAmount,
+      },
+    },
+  };
+}
+
 function supersedePendingAsk(): void {
   stopAskReconciliation();
+  const supersededRecipeId =
+    activeAsk && activeAsk.status === 'requested' ? activeAsk.recipeId : null;
   if (askResolve) {
     const resolve = askResolve;
     askResolve = null;
@@ -242,6 +340,17 @@ function supersedePendingAsk(): void {
     resolve(false);
   }
   activeAsk = null;
+  // A still-pending ask that gets superseded by another recipe's ask should
+  // collapse its surface back to locked rather than linger as 'requested'.
+  if (supersededRecipeId) {
+    const entry = recipeCommerce[supersededRecipeId];
+    if (entry && entry.unlockState === 'requested') {
+      recipeCommerce = {
+        ...recipeCommerce,
+        [supersededRecipeId]: { ...entry, unlockState: 'locked' },
+      };
+    }
+  }
 }
 
 export function openAsk(params: OpenAskParams): Promise<boolean> {
@@ -259,6 +368,7 @@ export function openAsk(params: OpenAskParams): Promise<boolean> {
       currencyCode: params.currencyCode,
       ceilingAmount: params.ceilingAmount,
     };
+    projectRequestedAsk({ ...params, askId: nextAskId || activeAsk.askId });
     notifyListeners();
     if (shouldReconcile && nextAskId) {
       startAskReconciliation(nextAskId, params.recipeId);
@@ -277,6 +387,7 @@ export function openAsk(params: OpenAskParams): Promise<boolean> {
       currencyCode: params.currencyCode,
       ceilingAmount: params.ceilingAmount,
     };
+    projectRequestedAsk(params);
     askResolve = resolve;
     notifyListeners();
   });
@@ -351,6 +462,24 @@ export function useCommerceState(recipeId?: string | null): CommerceStateSnapsho
     subscribeCommerceStore,
     () => getCommerceState(recipeId),
     () => getCommerceState(recipeId),
+  );
+}
+
+/** Subscribe to the per-recipe unlock projection state (primitive — stable snapshot). */
+export function useUnlockState(recipeId?: string | null): UnlockState {
+  return useSyncExternalStore(
+    subscribeCommerceStore,
+    () => getUnlockState(recipeId),
+    () => 'locked',
+  );
+}
+
+/** Subscribe to the per-recipe ask metadata (stable stored reference). */
+export function useUnlockAskMeta(recipeId?: string | null): UnlockAskMeta | null {
+  return useSyncExternalStore(
+    subscribeCommerceStore,
+    () => getUnlockAskMeta(recipeId),
+    () => null,
   );
 }
 

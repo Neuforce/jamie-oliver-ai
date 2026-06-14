@@ -7,12 +7,16 @@ import {
   getMandate,
   getRecipeAccess,
   getRecipeReceipt,
+  getUnlockAskMeta,
+  getUnlockState,
+  isUnlockSurfaceState,
   openAsk,
   resetCommerceStoreForTests,
   resolveAsk,
   setAccess,
   setMandate,
   setReceipt,
+  setUnlockState,
 } from './commerceStore';
 import { getCurrentSpendMandate, getSpendMandateAsk } from './api';
 
@@ -164,6 +168,66 @@ describe('commerceStore', () => {
     clearActiveAsk();
     await expect(pending).resolves.toBe(false);
     expect(getActiveAsk()).toBeNull();
+  });
+
+  it('getUnlockState defaults to locked and setUnlockState updates it', () => {
+    expect(getUnlockState('fish-chips')).toBe('locked');
+    setUnlockState('fish-chips', 'processing');
+    expect(getUnlockState('fish-chips')).toBe('processing');
+    expect(getCommerceState('fish-chips').unlockState).toBe('processing');
+  });
+
+  it('openAsk projects requested unlockState + askMeta for the recipe', () => {
+    openAsk({
+      recipeId: 'fish-chips',
+      askId: 'ask-1',
+      priceAmount: 5,
+      currencyCode: 'USD',
+      ceilingAmount: 1000,
+    });
+
+    expect(getUnlockState('fish-chips')).toBe('requested');
+    expect(getUnlockAskMeta('fish-chips')).toMatchObject({
+      askId: 'ask-1',
+      priceAmount: 5,
+      currencyCode: 'USD',
+      ceilingAmount: 1000,
+    });
+    expect(getCommerceState('fish-chips').unlockState).toBe('requested');
+  });
+
+  it('askMeta survives ask resolution so the surface can keep rendering', () => {
+    openAsk({
+      recipeId: 'fish-chips',
+      priceAmount: 5,
+      currencyCode: 'USD',
+      ceilingAmount: 1000,
+    });
+    resolveAsk('fish-chips', true);
+
+    // The ask itself is gone, but the projected metadata persists for the card.
+    expect(getActiveAsk()).toBeNull();
+    expect(getUnlockAskMeta('fish-chips')).toMatchObject({ priceAmount: 5 });
+  });
+
+  it('superseding a pending ask collapses the old recipe surface to locked', () => {
+    openAsk({ recipeId: 'salad-a', priceAmount: 5, currencyCode: 'USD', ceilingAmount: 1000 });
+    expect(getUnlockState('salad-a')).toBe('requested');
+
+    openAsk({ recipeId: 'salad-b', priceAmount: 5, currencyCode: 'USD', ceilingAmount: 1000 });
+    expect(getUnlockState('salad-a')).toBe('locked');
+    expect(getUnlockState('salad-b')).toBe('requested');
+  });
+
+  it('isUnlockSurfaceState distinguishes locked from active surfaces', () => {
+    expect(isUnlockSurfaceState('locked')).toBe(false);
+    expect(isUnlockSurfaceState('requested')).toBe(true);
+    expect(isUnlockSurfaceState('processing')).toBe(true);
+    expect(isUnlockSurfaceState('unlocked')).toBe(true);
+    expect(isUnlockSurfaceState('needsCheckout')).toBe(true);
+    expect(isUnlockSurfaceState('noTab')).toBe(true);
+    expect(isUnlockSurfaceState('declined')).toBe(true);
+    expect(isUnlockSurfaceState('failed')).toBe(true);
   });
 
   it('setMandate updates global mandate snapshot', () => {
