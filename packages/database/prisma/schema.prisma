@@ -295,6 +295,7 @@ model Purchase {
   currencyCode       String?          @map("currency_code") @db.VarChar(10)
   purchasedAt        DateTime?        @map("purchased_at")
   completedAt        DateTime?        @map("completed_at")
+  mandateConsumedAt  DateTime?        @map("mandate_consumed_at")
   providerPayload    Json?            @map("provider_payload")
   metadata           Json             @default("{}")
   createdAt          DateTime         @default(now()) @map("created_at")
@@ -305,7 +306,7 @@ model Purchase {
   @@index([userId])
   @@index([recipeOfferingId])
   @@index([status])
-  @@index([provider, providerPurchaseId])
+  @@unique([provider, providerPurchaseId])
   @@map("purchases")
 }
 

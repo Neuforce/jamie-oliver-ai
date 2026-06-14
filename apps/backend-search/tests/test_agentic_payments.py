@@ -14,7 +14,7 @@ from recipe_search_agent.payment_provider import ReconcileEvent, SupertabProvide
 from recipe_search_agent.purchase_sync_service import PurchaseSyncService
 from recipe_search_agent.spend_mandate_service import SpendMandateService
 from recipe_search_agent.webhook_service import WebhookService
-from test_foundations_services import FakeMonetizationRepository
+from test_foundations_services import FakeMonetizationRepository, FakeSpendMandateService
 
 
 class FakeWebhookRepository:
@@ -96,7 +96,7 @@ def test_purchase_sync_reconcile_from_webhook_event():
         "is_free": False,
         "recipe_id": "recipe-uuid-1",
     }
-    service = PurchaseSyncService(repository=repository)
+    service = PurchaseSyncService(repository=repository, spend_mandate_service=FakeSpendMandateService())
     event = ReconcileEvent(
         provider="supertab",
         event_id="evt-1",
@@ -140,15 +140,11 @@ def test_webhook_service_is_idempotent(monkeypatch: pytest.MonkeyPatch):
         "recipe_id": "recipe-uuid-1",
     }
     webhook_repo = FakeWebhookRepository()
-    purchase_sync = PurchaseSyncService(repository=repository)
-    spend_repo = FakeSpendMandateRepository()
-    spend_service = SpendMandateService(repository=spend_repo)
-    spend_service.create_mandate(user_id="user-1", ceiling_amount=1000)
+    purchase_sync = PurchaseSyncService(repository=repository, spend_mandate_service=FakeSpendMandateService())
 
     service = WebhookService(
         webhook_repository=webhook_repo,
         purchase_sync_service=purchase_sync,
-        spend_mandate_service=spend_service,
     )
 
     body = {

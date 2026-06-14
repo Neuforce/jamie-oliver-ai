@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 import uuid
+from datetime import datetime, timezone
 from typing import Any, Optional
 
 from supabase import Client, create_client
@@ -33,6 +34,15 @@ def is_uuid(value: str) -> bool:
         return True
     except ValueError:
         return False
+
+
+def _is_unique_violation_error(exc: Exception) -> bool:
+    """Best-effort detection for Postgres unique constraint violations."""
+    code = getattr(exc, "code", None)
+    if code == "23505":
+        return True
+    message = str(exc)
+    return "23505" in message or "duplicate key value violates unique constraint" in message
 
 
 class IdentityRepository:
@@ -258,8 +268,34 @@ class MonetizationRepository:
         return getattr(response, "data", None) or []
 
     def create_purchase(self, payload: dict[str, Any]) -> dict[str, Any]:
-        response = self._client.table("purchases").insert(payload).execute()
-        return first_row(response) or payload
+        try:
+            response = self._client.table("purchases").insert(payload).execute()
+            return first_row(response) or payload
+        except Exception as exc:
+            if (
+                _is_unique_violation_error(exc)
+                and payload.get("provider")
+                and payload.get("provider_purchase_id")
+            ):
+                existing = self.get_purchase_by_provider_id(
+                    payload["provider"],
+                    payload["provider_purchase_id"],
+                )
+                if existing:
+                    return existing
+            raise
+
+    def claim_purchase_for_mandate_consumption(self, purchase_id: str) -> bool:
+        response = (
+            self._client.table("purchases")
+            .update({"mandate_consumed_at": datetime.now(timezone.utc).isoformat()})
+            .eq("id", purchase_id)
+            .eq("status", "completed")
+            .is_("mandate_consumed_at", "null")
+            .execute()
+        )
+        rows = getattr(response, "data", None) or []
+        return len(rows) == 1
 
     def get_active_entitlement_by_content_key(self, user_id: str, content_key: str) -> Optional[dict[str, Any]]:
         response = (
@@ -333,11 +369,13 @@ class SpendMandateRepository:
         self._client = client or create_service_role_client()
 
     def get_active_mandate(self, user_id: str) -> Optional[dict[str, Any]]:
+        now_iso = datetime.now(timezone.utc).isoformat()
         response = (
             self._client.table("spend_mandates")
             .select("*")
             .eq("user_id", user_id)
             .eq("status", "active")
+            .or_(f"expires_at.is.null,expires_at.gt.{now_iso}")
             .order("granted_at", desc=True)
             .limit(1)
             .execute()

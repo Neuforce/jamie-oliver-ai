@@ -3,12 +3,11 @@
 from __future__ import annotations
 
 import uuid
-from typing import Any, Optional
+from typing import Any
 
-from recipe_search_agent.payment_provider import ReconcileEvent, get_payment_provider
+from recipe_search_agent.payment_provider import get_payment_provider
 from recipe_search_agent.purchase_sync_service import PurchaseSyncService
 from recipe_search_agent.repositories import WebhookEventRepository
-from recipe_search_agent.spend_mandate_service import SpendMandateService
 
 
 class WebhookService:
@@ -19,11 +18,9 @@ class WebhookService:
         *,
         webhook_repository: WebhookEventRepository | None = None,
         purchase_sync_service: PurchaseSyncService | None = None,
-        spend_mandate_service: SpendMandateService | None = None,
     ):
         self._webhook_repository = webhook_repository or WebhookEventRepository()
         self._purchase_sync = purchase_sync_service or PurchaseSyncService()
-        self._spend_mandate = spend_mandate_service or SpendMandateService()
 
     def process_webhook(
         self,
@@ -61,7 +58,6 @@ class WebhookService:
             return {"status": "ignored", "event_id": event_id, "event_type": event_type}
 
         result = self._purchase_sync.reconcile(reconcile_event)
-        self._maybe_consume_mandate(reconcile_event)
         self._webhook_repository.mark_processed(provider, event_id)
 
         return {
@@ -71,9 +67,3 @@ class WebhookService:
             "reconcile": result,
         }
 
-    def _maybe_consume_mandate(self, event: ReconcileEvent) -> None:
-        if not event.user_id or not event.price_amount:
-            return
-        mandate = self._spend_mandate.get_current_mandate(event.user_id)
-        if mandate and mandate.get("status") == "active":
-            self._spend_mandate.consume_mandate(mandate, event.price_amount)
