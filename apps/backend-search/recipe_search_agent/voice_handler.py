@@ -169,6 +169,7 @@ class DiscoveryVoiceHandler:
         chat_agent: DiscoveryChatAgent,
         config: VoiceConfig,
         session_id: str = "",
+        jamie_user_id: Optional[str] = None,
         connection_started_at: Optional[float] = None,
     ):
         self.input_channel  = input_channel
@@ -177,6 +178,7 @@ class DiscoveryVoiceHandler:
         self.chat_agent     = chat_agent
         self.config         = config
         self.session_id     = session_id or f"voice_{id(self)}"
+        self.jamie_user_id  = jamie_user_id
         self.connection_started_at = connection_started_at or time.perf_counter()
         # Backend slug for focused recipe modal; set via WS `focused_recipe` event.
         self._focused_backend_recipe_id: Optional[str] = None
@@ -504,6 +506,61 @@ class DiscoveryVoiceHandler:
                 logger.error("Brain queue processor error: %s", exc)
                 await asyncio.sleep(0.1)
 
+    async def _try_verbal_consent_resolution(self, transcription: str) -> bool:
+        """Resolve a pending server-side consent ask from spoken yes/no (NEU-671)."""
+        from recipe_search_agent.commerce_context import set_commerce_context
+        from recipe_search_agent.consent_intent import classify_consent_utterance
+        from recipe_search_agent.spend_mandate_ask_service import SpendMandateAskService
+
+        set_commerce_context(self.session_id, self.jamie_user_id)
+        ask_service = SpendMandateAskService()
+        ask = ask_service.get_open_ask_for_session(self.session_id)
+        if not ask:
+            return False
+
+        intent = classify_consent_utterance(transcription)
+        if intent == "ambiguous":
+            prompt = (
+                "Just to be sure — do you want me to put this on your Tab? "
+                "Please say yes or no."
+            )
+            await self._send("text_chunk", prompt, response_id=self._current_response_id)
+            await self.synth_and_send(prompt)
+            return True
+
+        user_id = self.jamie_user_id
+        result = ask_service.resolve_ask(
+            ask["id"],
+            grant=intent == "grant",
+            user_id=user_id,
+            source="voice",
+        )
+        approved = intent == "grant" and result.get("ok") and not result.get("error")
+
+        await self._send(
+            "spend_mandate_consent_resolved",
+            {
+                "backend_recipe_id": ask.get("backend_recipe_id"),
+                "ask_id": ask.get("id"),
+                "approved": approved,
+            },
+            response_id=self._current_response_id,
+        )
+
+        if approved:
+            message = "Great — I've put that on your Tab."
+        elif intent == "grant" and result.get("error") == "user_id_required_for_grant":
+            message = (
+                "I need you connected to My Tab first — tap Yes on screen, "
+                "or connect your Tab in the menu."
+            )
+        else:
+            message = "No problem — we can skip that for now."
+
+        await self._send("text_chunk", message, response_id=self._current_response_id)
+        await self.synth_and_send(message)
+        return True
+
     async def _brain_process_internal(self, transcription: str) -> str:
         """
         Stream response from DiscoveryChatAgent and queue TTS sentences.
@@ -517,8 +574,19 @@ class DiscoveryVoiceHandler:
         buffer       = ""
         full_content = ""
 
+        if await self._try_verbal_consent_resolution(transcription):
+            return full_content
+
         try:
-            async for event in self.chat_agent.chat(transcription, self.session_id):
+            from recipe_search_agent.commerce_context import set_commerce_context
+
+            set_commerce_context(self.session_id, self.jamie_user_id)
+
+            async for event in self.chat_agent.chat(
+                transcription,
+                self.session_id,
+                user_id=self.jamie_user_id,
+            ):
                 if self.interrupt_requested.is_set():
                     logger.info(
                         "Brain processing interrupted mid-stream [%s]", self.session_id

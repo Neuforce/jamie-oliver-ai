@@ -90,6 +90,7 @@ export interface ChatEvent {
     price_amount?: number;
     currency_code?: string;
     ceiling_amount?: number;
+    ask_id?: string;
   };
 }
 
@@ -332,7 +333,7 @@ export async function getRecipeById(recipeId: string): Promise<RecipeByIdRespons
 export async function* chatWithAgent(
   message: string,
   sessionId: string,
-  options?: { focusedRecipeBackendId?: string | null },
+  options?: { focusedRecipeBackendId?: string | null; userId?: string | null },
 ): AsyncGenerator<ChatEvent, void, unknown> {
   const response = await fetch(`${API_BASE_URL}/api/v1/chat`, {
     method: 'POST',
@@ -342,6 +343,7 @@ export async function* chatWithAgent(
     body: JSON.stringify({
       message,
       session_id: sessionId,
+      user_id: options?.userId?.trim() || undefined,
       focused_recipe_backend_id: options?.focusedRecipeBackendId?.trim() || undefined,
     }),
   });
@@ -609,6 +611,51 @@ export async function revokeCurrentSpendMandate(userId: string): Promise<{ revok
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Failed to revoke spend mandate: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}
+
+export interface SpendMandateAsk {
+  id: string;
+  userId?: string | null;
+  sessionId?: string | null;
+  backendRecipeId: string;
+  priceAmount: number;
+  currencyCode: string;
+  ceilingAmount: number;
+  status: string;
+  mandateId?: string | null;
+}
+
+export async function getSpendMandateAsk(askId: string): Promise<SpendMandateAsk> {
+  const response = await fetch(`${API_BASE_URL}/api/v1/spend-mandate-asks/${encodeURIComponent(askId)}`);
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to get spend mandate ask: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}
+
+export async function resolveSpendMandateAsk(
+  askId: string,
+  decision: 'grant' | 'decline',
+  userId?: string,
+): Promise<{ ask: SpendMandateAsk; mandate?: SpendMandate }> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/v1/spend-mandate-asks/${encodeURIComponent(askId)}/resolve`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        decision,
+        user_id: userId,
+        source: 'agentic',
+      }),
+    },
+  );
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to resolve spend mandate ask: ${response.status} ${errorText}`);
   }
   return response.json();
 }

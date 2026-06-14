@@ -4,11 +4,10 @@ import { SpendMandateConsentInline } from './SpendMandateConsentInline';
 import { PurchaseReceiptChip } from './PurchaseReceiptChip';
 import {
   focusedBackendRecipeId,
-  getPendingSpendMandateConsent,
-  shouldRenderCommerceInline,
   shouldRenderCommercePortaled,
   subscribeAgentActionSurface,
 } from '../lib/agentActionSurfaceStore';
+import { getActiveAsk, subscribeCommerceStore } from '../lib/commerceStore';
 
 export type AgentActionSurfaceMode = 'inline' | 'portal';
 
@@ -27,20 +26,8 @@ function useCommercePortaled() {
   );
 }
 
-function useCommerceInline() {
-  return useSyncExternalStore(
-    subscribeAgentActionSurface,
-    shouldRenderCommerceInline,
-    () => true,
-  );
-}
-
-function usePendingConsent() {
-  return useSyncExternalStore(
-    subscribeAgentActionSurface,
-    getPendingSpendMandateConsent,
-    () => null,
-  );
+function useActiveAsk() {
+  return useSyncExternalStore(subscribeCommerceStore, getActiveAsk, () => null);
 }
 
 function useFocusedRecipeId(fallback?: string | null) {
@@ -52,7 +39,7 @@ function useFocusedRecipeId(fallback?: string | null) {
 }
 
 /**
- * Renders agent-driven consent + receipt in the active surface (chat inline or recipe portal).
+ * Renders agent-driven consent + receipt in the recipe sheet portal.
  */
 export function AgentActionSurface({
   mode,
@@ -60,17 +47,13 @@ export function AgentActionSurface({
   className,
 }: AgentActionSurfaceProps) {
   const showPortaled = useCommercePortaled();
-  const showInline = useCommerceInline();
-  const pending = usePendingConsent();
+  const activeAsk = useActiveAsk();
   const recipeId = useFocusedRecipeId(backendRecipeId);
 
   if (mode === 'portal' && !showPortaled) {
     return null;
   }
-  if (mode === 'inline' && !showInline) {
-    return null;
-  }
-  if (!pending && !recipeId) {
+  if (!activeAsk && !recipeId) {
     return null;
   }
 
@@ -83,11 +66,12 @@ export function AgentActionSurface({
       }
       aria-live="polite"
     >
-      {pending ? (
+      {activeAsk?.status === 'requested' ? (
         <SpendMandateConsentInline
           backendRecipeId={recipeId}
           className={mode === 'portal' ? 'shadow-lg' : undefined}
-          bypassSurfaceGate={mode === 'portal'}
+          placement="sheet"
+          recipeSheetOpenForRecipe={showPortaled}
         />
       ) : null}
       {recipeId ? (

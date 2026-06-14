@@ -9,6 +9,7 @@ import {
   type PurchaseIntent,
   type RecipeAccessResponse,
 } from './api';
+import { getMandate } from './commerceStore';
 
 const JAMIE_USER_ID_KEY = 'jamie-supertab-user-id';
 const JAMIE_SUBJECT_ID_KEY = 'jamie-supertab-subject-id';
@@ -680,6 +681,24 @@ export async function ensureSpendMandateForAgenticPurchase(
     : false;
   if (!approved) {
     return null;
+  }
+
+  const mandateFromStore = getMandate();
+  if (
+    mandateFromStore
+    && mandateFromStore.remainingAmount >= price
+    && mandateFromStore.currencyCode === currency
+  ) {
+    return mandateFromStore.id;
+  }
+
+  const refreshedMandate = await getCurrentSpendMandate(userId).catch(() => null);
+  if (
+    refreshedMandate
+    && refreshedMandate.remainingAmount >= price
+    && refreshedMandate.currencyCode === currency
+  ) {
+    return refreshedMandate.id;
   }
 
   const mandate = await createSpendMandate({

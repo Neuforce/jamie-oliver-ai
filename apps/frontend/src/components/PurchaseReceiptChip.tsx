@@ -1,7 +1,11 @@
 import { Check } from 'lucide-react';
 import { useSyncExternalStore } from 'react';
 import {
-  getPurchaseReceipts,
+  getCommerceSnapshotVersion,
+  getRecipeReceipt,
+  subscribeCommerceStore,
+} from '../lib/commerceStore';
+import {
   shouldRenderCommercePortaled,
   subscribeAgentActionSurface,
 } from '../lib/agentActionSurfaceStore';
@@ -14,7 +18,6 @@ interface PurchaseReceiptChipProps {
 }
 
 const BASE_CLASS_NAME = 'rounded-2xl border border-[#E8E4DF] bg-[#FAFAF8] px-4 py-3';
-const EMPTY_RECEIPTS = [];
 
 export function PurchaseReceiptChip({
   backendRecipeId,
@@ -26,19 +29,13 @@ export function PurchaseReceiptChip({
     shouldRenderCommercePortaled,
     () => false,
   );
-  const receipts = useSyncExternalStore(
-    subscribeAgentActionSurface,
-    getPurchaseReceipts,
-    () => EMPTY_RECEIPTS,
-  );
+  useSyncExternalStore(subscribeCommerceStore, getCommerceSnapshotVersion);
 
   if (!bypassSurfaceGate && !showPortaled) {
     return null;
   }
 
-  const receipt = backendRecipeId
-    ? receipts.find((item) => item.backendRecipeId === backendRecipeId) ?? null
-    : receipts[0] ?? null;
+  const receipt = backendRecipeId ? getRecipeReceipt(backendRecipeId) : null;
 
   if (!receipt) {
     return null;

@@ -190,6 +190,10 @@ class ChatRequest(BaseModel):
 
     message: str = Field(..., description="User message to send to Jamie", example="I'm feeling tired, what should I cook?")
     session_id: str = Field(..., description="Session ID for conversation continuity", example="user-123-abc")
+    user_id: Optional[str] = Field(
+        None,
+        description="Jamie internal user ID when known (binds server-side consent asks)",
+    )
     focused_recipe_backend_id: Optional[str] = Field(
         None,
         description="When the recipe sheet is open, backend slug for agent tool context",
@@ -211,6 +215,7 @@ _access_service = None
 _purchase_sync_service = None
 _webhook_service = None
 _spend_mandate_service = None
+_spend_mandate_ask_service = None
 _supertab_merchant_client = None
 
 
@@ -292,6 +297,16 @@ def get_spend_mandate_service() -> SpendMandateService:
     return _spend_mandate_service
 
 
+def get_spend_mandate_ask_service() -> "SpendMandateAskService":
+    """Get or create the spend mandate ask service singleton."""
+    global _spend_mandate_ask_service
+    if _spend_mandate_ask_service is None:
+        from recipe_search_agent.spend_mandate_ask_service import SpendMandateAskService
+
+        _spend_mandate_ask_service = SpendMandateAskService()
+    return _spend_mandate_ask_service
+
+
 def get_supertab_merchant_client() -> SupertabMerchantClient:
     """Get or create the Supertab Merchant API client singleton."""
     global _supertab_merchant_client
@@ -340,6 +355,38 @@ class SpendMandateCreateRequest(BaseModel):
 class SpendMandateResponse(BaseModel):
     id: str
     userId: str
+    sessionId: Optional[str] = None
+    ceilingAmount: int
+    currencyCode: str
+    consumedAmount: int
+    status: str
+    source: str
+    grantedAt: Optional[str] = None
+    expiresAt: Optional[str] = None
+    remainingAmount: int
+
+
+class SpendMandateAskResponse(BaseModel):
+    id: str
+    userId: Optional[str] = None
+    sessionId: Optional[str] = None
+    backendRecipeId: str
+    priceAmount: int
+    currencyCode: str
+    ceilingAmount: int
+    status: str
+    mandateId: Optional[str] = None
+    toolCallId: Optional[str] = None
+    responseId: Optional[str] = None
+    requestedAt: Optional[str] = None
+    resolvedAt: Optional[str] = None
+    expiresAt: Optional[str] = None
+
+
+class SpendMandateAskResolveRequest(BaseModel):
+    decision: str = Field(..., description="grant or decline")
+    user_id: Optional[str] = Field(None, description="Jamie user ID required for grant")
+    source: str = "agentic"
     sessionId: Optional[str] = None
     ceilingAmount: int
     currencyCode: str
@@ -525,6 +572,25 @@ def _map_spend_mandate(mandate: dict) -> SpendMandateResponse:
     )
 
 
+def _map_spend_mandate_ask(ask: dict) -> SpendMandateAskResponse:
+    return SpendMandateAskResponse(
+        id=ask["id"],
+        userId=ask.get("user_id"),
+        sessionId=ask.get("session_id"),
+        backendRecipeId=ask.get("backend_recipe_id", ""),
+        priceAmount=int(ask.get("price_amount") or 0),
+        currencyCode=ask.get("currency_code") or "USD",
+        ceilingAmount=int(ask.get("ceiling_amount") or 0),
+        status=ask.get("status", "requested"),
+        mandateId=ask.get("mandate_id"),
+        toolCallId=ask.get("tool_call_id"),
+        responseId=ask.get("response_id"),
+        requestedAt=ask.get("requested_at"),
+        resolvedAt=ask.get("resolved_at"),
+        expiresAt=ask.get("expires_at"),
+    )
+
+
 @app.post("/api/v1/webhooks/{provider}")
 async def receive_provider_webhook(provider: str, request: Request):
     """Generic provider webhook endpoint with signature verification and idempotent reconciliation."""
@@ -587,6 +653,59 @@ async def revoke_current_spend_mandate(user_id: str = Query(..., description="Ja
     except Exception as e:
         logger.error(f"Failed to revoke spend mandate: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to revoke spend mandate: {str(e)}")
+
+
+@app.get("/api/v1/spend-mandate-asks/{ask_id}", response_model=SpendMandateAskResponse)
+async def get_spend_mandate_ask(ask_id: str):
+    """Return server-side consent ask status."""
+    try:
+        ask = get_spend_mandate_ask_service().get_ask(ask_id)
+        if not ask:
+            raise HTTPException(status_code=404, detail="Ask not found")
+        return _map_spend_mandate_ask(ask)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to get spend mandate ask {ask_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to get spend mandate ask: {str(e)}")
+
+
+@app.post("/api/v1/spend-mandate-asks/{ask_id}/resolve")
+async def resolve_spend_mandate_ask(ask_id: str, request: SpendMandateAskResolveRequest):
+    """Grant or decline a consent ask; grant mints the spend mandate server-side."""
+    try:
+        decision = (request.decision or "").strip().lower()
+        grant = decision in ("grant", "approve", "yes", "true")
+        if decision in ("decline", "deny", "no", "false"):
+            grant = False
+        elif not grant:
+            raise HTTPException(status_code=400, detail="decision must be grant or decline")
+
+        result = get_spend_mandate_ask_service().resolve_ask(
+            ask_id,
+            grant=grant,
+            user_id=request.user_id,
+            source=request.source,
+        )
+        if not result.get("ok"):
+            error = result.get("error")
+            if error == "ask_not_found":
+                raise HTTPException(status_code=404, detail="Ask not found")
+            if error == "user_id_required_for_grant":
+                raise HTTPException(status_code=400, detail="user_id required to grant ask")
+            raise HTTPException(status_code=400, detail=str(error))
+
+        payload: dict = {
+            "ask": _map_spend_mandate_ask(result["ask"]).model_dump(),
+        }
+        if result.get("mandate"):
+            payload["mandate"] = _map_spend_mandate(result["mandate"]).model_dump()
+        return payload
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to resolve spend mandate ask {ask_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to resolve spend mandate ask: {str(e)}")
 
 
 @app.post("/api/v1/offerings/onetime")
@@ -959,6 +1078,7 @@ async def chat(request: ChatRequest):
                     request.message,
                     request.session_id,
                     focused_recipe_backend_id=request.focused_recipe_backend_id,
+                    user_id=request.user_id,
                 ):
                     # Format as SSE
                     data = {
@@ -1126,6 +1246,7 @@ async def voice_chat_websocket(websocket: WebSocket):
         await audio_interface.start()
 
         session_id = audio_interface._input_service.session_id or f"voice_{id(websocket)}"
+        jamie_user_id = getattr(audio_interface._input_service, "jamie_user_id", None)
         _log_voice_latency(
             "voice_ws_handshake_complete",
             connection_started_at,
@@ -1145,6 +1266,7 @@ async def voice_chat_websocket(websocket: WebSocket):
             chat_agent=chat_agent,
             config=config,
             session_id=session_id,
+            jamie_user_id=jamie_user_id,
             connection_started_at=connection_started_at,
         )
         await handler.handle()
