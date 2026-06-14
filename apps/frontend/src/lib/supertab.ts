@@ -28,6 +28,23 @@ let siteOfferingsCache: Array<{ id: string; contentKey?: string | null; descript
 
 const DEFAULT_AGENTIC_MANDATE_CEILING_CENTS = 1000;
 const SPEND_MANDATE_SESSION_KEY = 'jamie-spend-mandate-session';
+/** Hard cap so a hanging Supertab SDK call can't freeze the checkout widget forever. */
+const PURCHASE_BUTTON_MOUNT_TIMEOUT_MS = 12_000;
+
+/** Reject if `promise` does not settle within `ms` so callers never await forever. */
+async function withTimeout<T>(promise: Promise<T>, ms: number, label: string): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  const timeout = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => reject(new Error(`${label} timed out after ${ms}ms`)), ms);
+  });
+  try {
+    return await Promise.race([promise, timeout]);
+  } finally {
+    if (timer) {
+      clearTimeout(timer);
+    }
+  }
+}
 
 export type MyTabStatus = 'unavailable' | 'signed_out' | 'signed_in';
 export type MyTabMessageTone = 'neutral' | 'error';
@@ -474,21 +491,39 @@ export async function mountRecipePurchaseButton({
   }
 
   containerElement.innerHTML = '';
-  const button = await client.createPurchaseButton({
-    containerElement,
-    experienceId,
-    purchaseMetadata: {
-      recipeId: access.recipeId,
-      contentKey: access.offering.contentKey,
-      jamieUserId: getStoredJamieUserId(),
-    },
-    onDone: (state) => {
-      void resolvePurchaseOutcome(access, state, onResolved).catch((error) => {
-        console.error('Failed to process Supertab purchase result:', error);
-        onError?.('We could not sync your Supertab purchase back to Jamie.');
-      });
-    },
-  }) as SupertabPurchaseButtonHandle;
+  console.info('[unlock] createPurchaseButton start', {
+    hasExperienceId: Boolean(experienceId),
+    contentKey: access.offering.contentKey,
+    recipeId: access.recipeId,
+  });
+  let button: SupertabPurchaseButtonHandle;
+  try {
+    button = (await withTimeout(
+      client.createPurchaseButton({
+        containerElement,
+        experienceId,
+        purchaseMetadata: {
+          recipeId: access.recipeId,
+          contentKey: access.offering.contentKey,
+          jamieUserId: getStoredJamieUserId(),
+        },
+        onDone: (state) => {
+          void resolvePurchaseOutcome(access, state, onResolved).catch((error) => {
+            console.error('Failed to process Supertab purchase result:', error);
+            onError?.('We could not sync your Supertab purchase back to Jamie.');
+          });
+        },
+      }),
+      PURCHASE_BUTTON_MOUNT_TIMEOUT_MS,
+      'createPurchaseButton',
+    )) as SupertabPurchaseButtonHandle;
+    console.info('[unlock] createPurchaseButton success');
+  } catch (error) {
+    console.info('[unlock] createPurchaseButton error/timeout', {
+      message: error instanceof Error ? error.message : String(error),
+    });
+    throw error;
+  }
 
   let isLaunchingFromShow = false;
   let detachShowHandler = () => undefined;
@@ -735,9 +770,15 @@ export async function purchaseRecipeOnTab(
 
   const client = await getSupertabClient();
   const authStatus = await client.auth.status;
+  console.info('[unlock] purchaseRecipeOnTab auth', {
+    authStatus,
+    agentic: Boolean(options.agentic),
+    recipeId: access.recipeId,
+  });
   if (authStatus !== 'valid') {
     const silent = await client.auth.start({ silently: true }).catch(() => null);
     if (!silent) {
+      console.info('[unlock] purchaseRecipeOnTab unavailable: silent auth failed');
       return { status: 'unavailable' };
     }
   }
@@ -749,6 +790,10 @@ export async function purchaseRecipeOnTab(
       access,
       options.mandateConsentGranted ?? false,
     );
+    console.info('[unlock] ensureSpendMandate', {
+      mandateId: mandateId ?? null,
+      consentGranted: options.mandateConsentGranted ?? false,
+    });
     if (!mandateId) {
       return { status: 'abandoned', userId };
     }
@@ -795,6 +840,7 @@ export async function purchaseRecipeOnTab(
     }
     throw error;
   }
+  console.info('[unlock] createOnetimeOffering', { onetimeOfferingId: onetimeOfferingId ?? null });
 
   if (!onetimeOfferingId) {
     return { status: 'unavailable', userId };
@@ -809,6 +855,10 @@ export async function purchaseRecipeOnTab(
       contentKey: access.offering.contentKey,
       source: options.agentic ? 'agent-silent-tab' : 'jamie-on-tab',
     },
+  });
+  console.info('[unlock] client.api.purchase result', {
+    actionRequired: Boolean(result?.actionRequired),
+    purchaseStatus: result?.purchase?.status ?? null,
   });
 
   if (result?.actionRequired) {
