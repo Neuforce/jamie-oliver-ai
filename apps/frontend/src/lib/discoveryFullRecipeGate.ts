@@ -19,15 +19,56 @@ export type CarouselRecipeRef = Readonly<{
 
 export type MessageRecipeContext = ReadonlyArray<{
   type: string;
+  content?: string;
   recipeDetail?: RecipeDetailData | null;
   recipes?: ReadonlyArray<CarouselRecipeRef> | null;
 }>;
+
+export type RecipeOpenIntentOptions = Readonly<{
+  /** When the recipe sheet is already open in the app. */
+  focusedBackendId?: string | null;
+}>;
+
+const FULL_RECIPE_OFFER =
+  /\bfull\s+recipe\b|\brecipe\s+(view|screen|page)\b|\btake\s+(you|me)\s+there\b|\bopen\s+the\s+full\b|\bwould you like to go\b|\bgo\s+to\s+the\s+full\b/iu;
+
+/** Jamie's last turn offered navigating to the full recipe sheet (not just "fancy trying it?"). */
+export function jamieRecentlyOfferedFullRecipeView(messages: MessageRecipeContext): boolean {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const msg = messages[i];
+    if (msg.type === 'user') return false;
+    if (msg.type === 'jamie' && msg.content?.trim()) {
+      return FULL_RECIPE_OFFER.test(msg.content);
+    }
+  }
+  return false;
+}
 
 /** Most recent Jamie turn that contains structured recipe_detail (slug-backed). */
 export function getFocusedRecipeDetail(messages: MessageRecipeContext): RecipeDetailData | null {
   for (let i = messages.length - 1; i >= 0; i--) {
     const msg = messages[i];
     if (msg.type !== 'jamie') continue;
+    const d = msg.recipeDetail;
+    if (d?.recipe_id && d.title) return d;
+  }
+  return null;
+}
+
+/**
+ * Prefer the newest search carousel (single result) over older recipe_detail tiles
+ * from prior sessions still in localStorage — fixes wrong-recipe opens on bare "yes".
+ */
+export function getLatestSingleRecipeFromConversation(
+  messages: MessageRecipeContext,
+): RecipeDetailData | null {
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const msg = messages[i];
+    if (msg.type !== 'jamie') continue;
+    const list = msg.recipes?.filter((r) => Boolean(r.backendId?.trim() && r.title?.trim())) ?? [];
+    if (list.length === 1) {
+      return carouselRecipeToDetail(list[0]);
+    }
     const d = msg.recipeDetail;
     if (d?.recipe_id && d.title) return d;
   }
@@ -65,6 +106,35 @@ function carouselRecipeToDetail(ref: CarouselRecipeRef): RecipeDetailData | null
     recipe_id: id,
     title,
     description: (ref.description?.trim() || title),
+    ingredients: [],
+    steps: [],
+  };
+}
+
+function recipeDetailFromBackendId(
+  messages: MessageRecipeContext,
+  backendId: string,
+): RecipeDetailData | null {
+  const id = backendId.trim();
+  if (!id) return null;
+
+  for (let i = messages.length - 1; i >= 0; i--) {
+    const msg = messages[i];
+    if (msg.type !== 'jamie') continue;
+    if (msg.recipeDetail?.recipe_id === id && msg.recipeDetail.title) {
+      return msg.recipeDetail;
+    }
+    for (const ref of msg.recipes ?? []) {
+      if (ref.backendId?.trim() === id && ref.title?.trim()) {
+        return carouselRecipeToDetail(ref);
+      }
+    }
+  }
+
+  return {
+    recipe_id: id,
+    title: id.replace(/-/g, ' '),
+    description: '',
     ingredients: [],
     steps: [],
   };
@@ -157,20 +227,30 @@ export function userRequestsSpecificRecipeOpen(text: string): boolean {
 }
 
 /** True when we should open RecipeModal from a final voice transcript (client-side). */
-export function shouldOpenRecipeFromVoiceUtterance(text: string): boolean {
-  return userAffirmsGoToFullRecipe(text) || userRequestsSpecificRecipeOpen(text);
+export function shouldOpenRecipeFromVoiceUtterance(
+  text: string,
+  messages: MessageRecipeContext,
+): boolean {
+  if (userRequestsSpecificRecipeOpen(text)) return true;
+  return userAffirmsGoToFullRecipe(text, messages);
 }
 
 /**
  * Resolve which recipe to open. Carousel match wins when the user names a dish;
- * short affirmations ("yes", "open it") use the latest get_recipe_details tile.
+ * short affirmations ("yes", "open it") use the latest carousel / detail, not stale history.
  */
 export function getRecipeDetailForOpenIntent(
   messages: MessageRecipeContext,
   userUtterance: string,
+  options?: RecipeOpenIntentOptions,
 ): RecipeDetailData | null {
   const u = userUtterance.trim();
   if (!u) return null;
+
+  const focusedId = options?.focusedBackendId?.trim();
+  if (focusedId && userExplicitlyRequestsFullRecipe(u)) {
+    return recipeDetailFromBackendId(messages, focusedId);
+  }
 
   const carouselMatch = findCarouselMatchInRecentJamieTurns(messages, u);
 
@@ -178,8 +258,12 @@ export function getRecipeDetailForOpenIntent(
     return carouselMatch;
   }
 
-  if (userAffirmsGoToFullRecipe(u)) {
-    return getFocusedRecipeDetail(messages) ?? carouselMatch;
+  if (userAffirmsGoToFullRecipe(u, messages)) {
+    return (
+      carouselMatch
+      ?? getLatestSingleRecipeFromConversation(messages)
+      ?? getFocusedRecipeDetail(messages)
+    );
   }
 
   return null;
@@ -196,8 +280,8 @@ export function backendSummaryFromRecipeDetail(detail: RecipeDetailData): Backen
   };
 }
 
-/** True when user clearly wants to see the full recipe sheet (RecipeModal path). Conservative for bare "yes"-style replies — requires short utterances. */
-export function userAffirmsGoToFullRecipe(text: string): boolean {
+/** Explicit navigation to the full recipe sheet (always opens when resolvable). */
+export function userExplicitlyRequestsFullRecipe(text: string): boolean {
   const t = text.trim().toLowerCase().replace(/\s+/g, ' ');
   if (!t.length || t.length > 220) return false;
 
@@ -205,20 +289,43 @@ export function userAffirmsGoToFullRecipe(text: string): boolean {
     /\b(no|nope|not\s+now|not\s+yet|nothing|later|stop|different\s+recipe|another\s+one|nothing\s+else|don't|dont)\b/;
   if (negative.test(t)) return false;
 
-  const explicit =
-    /\bfull\s+recipe\b|\brecipe\s+page\b|\brecipe\s+screen\b|receta\s+completa|ll[eé]vame\b|ll[eé]va\s+a\s+(la\s+)?receta|mostr[aá]r?me\b|quiero\s+ver(\s+la)?\s+receta\b|\btake\s+me\b|\b(open|show)\s+(me\s+)?(the\s+)?recipe\b|\bopen\s+(it|that|one|this|them)\b|\bshow\s+(me\s+)?(it|that|one|this)\b|\bi\s*(?:want|would like|'?d like)\s+to\s+(open|see)(?:\s+(the|a|that))?\s*(?:recipe)?\b|\b(let\s+me\s+)?(see|view)\s+(the\s+)?recipe\b/iu;
-  if (explicit.test(t)) return true;
+  return (
+    /\bfull\s+recipe\b|\brecipe\s+page\b|\brecipe\s+screen\b|receta\s+completa|ll[eé]vame\b|ll[eé]va\s+a\s+(la\s+)?receta|mostr[aá]r?me\b|quiero\s+ver(\s+la)?\s+receta\b|\btake\s+me\b|\b(open|show)\s+(me\s+)?(the\s+)?recipe\b|\bopen\s+(it|that|one|this|them)\b|\bshow\s+(me\s+)?(it|that|one|this)\b|\bi\s*(?:want|would like|'?d like)\s+to\s+(open|see)(?:\s+(the|a|that))?\s*(?:recipe)?\b|\b(let\s+me\s+)?(see|view)\s+(the\s+)?recipe\b|\bplease\s+open\b/iu.test(
+      t,
+    )
+  );
+}
+
+/** Short "yes" only counts when Jamie just offered the full recipe sheet — not "fancy trying it?". */
+export function userAffirmsGoToFullRecipe(
+  text: string,
+  messages: MessageRecipeContext,
+): boolean {
+  if (userExplicitlyRequestsFullRecipe(text)) return true;
+
+  const t = text.trim().toLowerCase().replace(/\s+/g, ' ');
+  if (!t.length || t.length > 220) return false;
+
+  const negative =
+    /\b(no|nope|not\s+now|not\s+yet|nothing|later|stop|different\s+recipe|another\s+one|nothing\s+else|don't|dont)\b/;
+  if (negative.test(t)) return false;
 
   const wordCount = t.split(/\s+/).filter(Boolean).length;
   if (t.length > 64 || wordCount > 12) return false;
 
+  const normalized = t.replace(/,/g, '').trim();
+
   const shortAffirm =
-    /^(yes|yeah|yep|yup|sure|okay|ok|please|Absolutely|certainly|go\s+ahead)([.!?]*)?$|^(yes\s+please|yeah\s+sure)$/i.test(
-      t,
+    /^(yes|yeah|yep|yup|sure|okay|ok|please|absolutely|certainly|go\s+ahead)([.!?]*)?$|^(yes\s+please|yeah\s+sure)$/i.test(
+      normalized,
     );
 
   const esAffirm =
-    /^(si|sí)(\s+[a-záéíóúñ.!?]{0,32})?$|^(vale|claro|dale|perfecto)([.!?]*)?$|^por\s+favor([.!?]*)?$/iu.test(t);
+    /^(si|sí)(\s+[a-záéíóúñ.!?]{0,32})?$|^(vale|claro|dale|perfecto)([.!?]*)?$|^por\s+favor([.!?]*)?$/iu.test(
+      normalized,
+    );
 
-  return shortAffirm || esAffirm;
+  if (!shortAffirm && !esAffirm) return false;
+
+  return jamieRecentlyOfferedFullRecipeView(messages);
 }

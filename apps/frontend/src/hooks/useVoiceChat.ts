@@ -609,9 +609,15 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
 
   /** Tell the discovery voice backend which recipe sheet is focused (modal). */
   const notifyFocusedRecipe = useCallback(
-    (backendRecipeId: string | null | undefined) => {
+    (
+      backendRecipeId: string | null | undefined,
+      accessState?: 'free' | 'locked' | 'owned' | null,
+    ) => {
       const trimmed = backendRecipeId?.trim() ?? '';
-      sendSocketEvent('focused_recipe', { backendRecipeId: trimmed });
+      sendSocketEvent('focused_recipe', {
+        backendRecipeId: trimmed,
+        ...(accessState ? { accessState } : {}),
+      });
     },
     [sendSocketEvent],
   );

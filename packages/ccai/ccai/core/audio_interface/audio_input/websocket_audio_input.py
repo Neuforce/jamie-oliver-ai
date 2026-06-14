@@ -89,11 +89,16 @@ class WebSocketAudioInput(AudioInputService):
                     # Arbitrary delimiter; recipe slugs contain no '|' today.
                     data = message.get("data") or ""
                     slug = ""
+                    access_state = ""
                     if isinstance(data, dict):
                         slug = str(data.get("backendRecipeId") or data.get("backendId") or "").strip()
+                        access_state = str(data.get("accessState") or "").strip()
                     elif isinstance(data, str):
                         slug = data.strip()
-                    await self.control_queue.put(f"__focus_recipe__|{slug}")
+                    focus_token = f"__focus_recipe__|{slug}"
+                    if access_state:
+                        focus_token = f"{focus_token}|access:{access_state}"
+                    await self.control_queue.put(focus_token)
 
         except WebSocketDisconnect:
             self.logger.warning("WebSocket disconnected")

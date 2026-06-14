@@ -467,6 +467,29 @@ function extractCategory(
   return 'Main Course';
 }
 
+/**
+ * Browse/filter category for catalog cards. Prefers title/description heuristics
+ * (Salads, Soups, Italian, …) over Supabase metadata slugs (chicken, eggs, …).
+ * NEU-629 summary catalog only had metadata — filters looked like ingredients.
+ */
+export function resolveBrowseCategory(
+  title: string | undefined,
+  description: string | undefined,
+  apiCategory?: string | null,
+): string {
+  const hintIngredients = description?.trim()
+    ? [{ name: description.trim() }]
+    : undefined;
+  const fromHeuristic = extractCategory(title, hintIngredients);
+  if (fromHeuristic !== 'Main Course') {
+    return fromHeuristic;
+  }
+  if (apiCategory?.trim()) {
+    return formatCategoryLabel(apiCategory.trim());
+  }
+  return fromHeuristic;
+}
+
 // Transform jamie-oliver-ai recipe to joui format
 export function transformRecipe(
   jamieRecipe: BackendRecipePayload,
@@ -527,16 +550,15 @@ export function transformRecipe(
 /** Card-level recipe from GET /api/v1/recipes (no full_recipe). */
 export function transformApiSummary(apiRecipe: ApiRecipeListItem, index: number): Recipe {
   const recipeId = apiRecipe.recipe_id?.trim() || `recipe-${index + 1}`;
-  const category =
-    typeof apiRecipe.category === 'string' && apiRecipe.category.trim() !== ''
-      ? formatCategoryLabel(apiRecipe.category.trim())
-      : 'Main Course';
+  const title = apiRecipe.title?.trim() || slugToTitle(recipeId);
+  const description = apiRecipe.description?.trim() || '';
+  const category = resolveBrowseCategory(title, description, apiRecipe.category);
 
   return {
     id: index + 1,
     backendId: recipeId,
-    title: apiRecipe.title?.trim() || slugToTitle(recipeId),
-    description: apiRecipe.description?.trim() || '',
+    title,
+    description,
     category,
     difficulty: mapDifficulty(apiRecipe.complexity),
     time: '30 mins',

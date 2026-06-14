@@ -336,6 +336,10 @@ export function ChatView({
   /** Fresh messages for voice callbacks without stale closures (NEU-620). */
   const messagesRef = useRef<Message[]>(messages);
   messagesRef.current = messages;
+  const recipeModalOpenRef = useRef(recipeModalOpen);
+  recipeModalOpenRef.current = recipeModalOpen;
+  const focusedRecipeBackendIdRef = useRef(focusedRecipeBackendId);
+  focusedRecipeBackendIdRef.current = focusedRecipeBackendId;
   /** Set after hook init so transcripts can invoke interrupt without reordering deps. */
   const interruptVoiceRef = useRef<() => void>(() => {});
 
@@ -475,11 +479,14 @@ export function ChatView({
       }
 
       if (isFinal && normalizedText) {
-        const openDetail = getRecipeDetailForOpenIntent(
-          messagesRef.current,
-          normalizedText,
-        );
-        if (openDetail && shouldOpenRecipeFromVoiceUtterance(normalizedText)) {
+        const openMessages = messagesRef.current;
+        const openDetail = getRecipeDetailForOpenIntent(openMessages, normalizedText, {
+          focusedBackendId:
+            recipeModalOpenRef.current && focusedRecipeBackendIdRef.current
+              ? focusedRecipeBackendIdRef.current
+              : undefined,
+        });
+        if (openDetail && shouldOpenRecipeFromVoiceUtterance(normalizedText, openMessages)) {
           interruptVoiceRef.current();
           const userMessage: Message = {
             id: Date.now().toString(),
@@ -672,13 +679,18 @@ export function ChatView({
 
   useEffect(() => {
     if (!isVoiceConnected) return;
-    notifyFocusedRecipe(
-      recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : null,
-    );
+    const focusedId =
+      recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : null;
+    const accessState =
+      focusedId && recipeAccessMap[focusedId]?.accessState
+        ? recipeAccessMap[focusedId]?.accessState
+        : undefined;
+    notifyFocusedRecipe(focusedId, accessState);
   }, [
     isVoiceConnected,
     recipeModalOpen,
     focusedRecipeBackendId,
+    recipeAccessMap,
     notifyFocusedRecipe,
   ]);
 
@@ -876,8 +888,11 @@ export function ChatView({
     const text = messageText || inputValue.trim();
     if (!text) return;
 
-    if (userAffirmsGoToFullRecipe(text)) {
-      const focusedDetail = getRecipeDetailForOpenIntent(messages, text);
+    if (userAffirmsGoToFullRecipe(text, messages)) {
+      const focusedDetail = getRecipeDetailForOpenIntent(messages, text, {
+        focusedBackendId:
+          recipeModalOpen && focusedRecipeBackendId ? focusedRecipeBackendId : undefined,
+      });
       if (focusedDetail) {
         if (abortControllerRef.current) {
           abortControllerRef.current.abort();

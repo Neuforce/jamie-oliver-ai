@@ -30,6 +30,7 @@ from recipe_search_agent.discovery_tools import (
     set_search_agent,
 )
 from recipe_search_agent.guardrails import evaluate_message, reset_gate_blocked, set_gate_blocked
+from recipe_search_agent.focused_recipe_context import build_focused_recipe_context_suffix
 
 logger = logging.getLogger(__name__)
 
@@ -266,13 +267,7 @@ class DiscoveryChatAgent:
         agent_message = message
         focused_id = (focused_recipe_backend_id or "").strip()
         if focused_id:
-            agent_message = (
-                f"{message}\n\n"
-                "[Context for tools only: The full recipe sheet is focused on backend recipe "
-                f"id `{focused_id}`. When the user clearly asks to unlock, purchase, pay, put something "
-                "on My Tab, open checkout, or buy this recipe for money, call `request_supertab_unlock` "
-                f"with recipe_backend_id exactly `{focused_id}`.]"
-            )
+            agent_message = message + build_focused_recipe_context_suffix(focused_id)
 
         # Create brain with session's memory
         brain = SimpleBrain(

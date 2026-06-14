@@ -1557,7 +1557,7 @@ export default function App() {
                           >
                             <div className="jamie-shell-width jamie-surface-panel jamie-filter-panel">
                               <div className="jamie-filter-panel__head">
-                                <span className="jamie-filter-panel__label">Cuisine</span>
+                                <span className="jamie-filter-panel__label">Category</span>
                                 {selectedCategory !== 'All' && (
                                   <button
                                     type="button"

@@ -201,5 +201,9 @@ def build_recipe_detail_payload(recipe_row: dict[str, Any]) -> Optional[dict[str
         "ingredients": [],
         "steps": [],
         "notes": "",
-        "next_step_hint": "Open the full recipe view for ingredients, steps, and cook mode.",
+        "access_hint": (
+            "Summary only in discovery chat. Full ingredient list and step-by-step method "
+            "appear on the recipe sheet; locked recipes require Unlock / My Tab before cooking."
+        ),
+        "next_step_hint": "Open the full recipe view for ingredients, steps, and cook mode (Unlock if locked).",
     }
