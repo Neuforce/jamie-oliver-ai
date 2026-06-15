@@ -25,6 +25,7 @@ import { useAudioPlayback } from './useAudioPlayback';
 import type { VoiceTurnState } from './voiceTurnUtils';
 import { VOICE_WS_URL } from '../lib/runtimeConfig';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
+import type { VoiceSpendMandateConsentResolvedPayload } from '../lib/voiceSpendMandateConsentResolved';
 
 type VoiceLatencyTurnMetrics = {
   transcriptFinalAt: number;
@@ -89,11 +90,7 @@ export interface UseVoiceChatOptions {
     ask_id?: string;
   }) => void;
   /** Server resolved a consent ask (e.g. verbal yes/no in voice) */
-  onSpendMandateConsentResolved?: (payload: {
-    backend_recipe_id: string;
-    approved: boolean;
-    ask_id?: string;
-  }) => void;
+  onSpendMandateConsentResolved?: (payload: VoiceSpendMandateConsentResolvedPayload) => void;
   /** Callback when response is complete */
   onDone?: () => void;
   /** Callback on error */
@@ -455,6 +452,8 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
           backend_recipe_id: bid,
           approved: Boolean(data?.approved),
           ask_id: typeof data?.ask_id === 'string' ? data.ask_id : undefined,
+          mandate: data?.mandate,
+          reason: typeof data?.reason === 'string' ? data.reason : undefined,
         });
         break;
       }

@@ -511,6 +511,7 @@ class DiscoveryVoiceHandler:
         from recipe_search_agent.commerce_context import set_commerce_context
         from recipe_search_agent.consent_intent import classify_consent_utterance
         from recipe_search_agent.spend_mandate_ask_service import SpendMandateAskService
+        from recipe_search_agent.spend_mandate_serialization import serialize_spend_mandate
 
         set_commerce_context(self.session_id, self.jamie_user_id)
         ask_service = SpendMandateAskService()
@@ -536,6 +537,16 @@ class DiscoveryVoiceHandler:
             source="voice",
         )
         approved = intent == "grant" and result.get("ok") and not result.get("error")
+        error = result.get("error")
+        mandate = result.get("mandate")
+        reason = None
+        if not approved:
+            if intent == "decline":
+                reason = "declined"
+            elif error == "user_id_required_for_grant":
+                reason = "needs_tab"
+            elif error == "ask_expired":
+                reason = "expired"
 
         await self._send(
             "spend_mandate_consent_resolved",
@@ -543,13 +554,15 @@ class DiscoveryVoiceHandler:
                 "backend_recipe_id": ask.get("backend_recipe_id"),
                 "ask_id": ask.get("id"),
                 "approved": approved,
+                "mandate": serialize_spend_mandate(mandate) if mandate else None,
+                "reason": reason,
             },
             response_id=self._current_response_id,
         )
 
         if approved:
             message = "Great — I've put that on your Tab."
-        elif intent == "grant" and result.get("error") == "user_id_required_for_grant":
+        elif intent == "grant" and error == "user_id_required_for_grant":
             message = (
                 "I need you connected to My Tab first — tap Yes on screen, "
                 "or connect your Tab in the menu."

@@ -35,6 +35,7 @@ from recipe_search_agent.access_service import AccessService
 from recipe_search_agent.purchase_sync_service import PurchaseSyncService
 from recipe_search_agent.webhook_service import WebhookService
 from recipe_search_agent.spend_mandate_service import SpendMandateService
+from recipe_search_agent.spend_mandate_serialization import serialize_spend_mandate
 from recipe_search_agent.supertab_merchant import SupertabMerchantClient
 from recipe_search_agent.supertab_token_verifier import SupertabTokenVerifier
 from recipe_search_agent.commerce_capability import (
@@ -555,21 +556,7 @@ async def sync_supertab_purchase(request: SupertabPurchaseSyncRequest):
 
 
 def _map_spend_mandate(mandate: dict) -> SpendMandateResponse:
-    ceiling = mandate.get("ceiling_amount", 0)
-    consumed = mandate.get("consumed_amount", 0)
-    return SpendMandateResponse(
-        id=mandate["id"],
-        userId=mandate["user_id"],
-        sessionId=mandate.get("session_id"),
-        ceilingAmount=ceiling,
-        currencyCode=mandate.get("currency_code", "USD"),
-        consumedAmount=consumed,
-        status=mandate.get("status", "active"),
-        source=mandate.get("source", "voice"),
-        grantedAt=mandate.get("granted_at"),
-        expiresAt=mandate.get("expires_at"),
-        remainingAmount=max(0, ceiling - consumed),
-    )
+    return SpendMandateResponse(**serialize_spend_mandate(mandate))
 
 
 def _map_spend_mandate_ask(ask: dict) -> SpendMandateAskResponse:
@@ -699,7 +686,7 @@ async def resolve_spend_mandate_ask(ask_id: str, request: SpendMandateAskResolve
             "ask": _map_spend_mandate_ask(result["ask"]).model_dump(),
         }
         if result.get("mandate"):
-            payload["mandate"] = _map_spend_mandate(result["mandate"]).model_dump()
+            payload["mandate"] = serialize_spend_mandate(result["mandate"])
         return payload
     except HTTPException:
         raise
