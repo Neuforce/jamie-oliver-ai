@@ -28,9 +28,9 @@ import {
   getCommerceSnapshotVersion,
   getRecipeAccess as getStoredRecipeAccess,
   openAsk,
-  resolveAsk,
   subscribeCommerceStore,
 } from '../lib/commerceStore';
+import { handleVoiceSpendMandateConsentResolved } from '../lib/voiceSpendMandateConsentResolved';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
 // @ts-expect-error - Vite resolves figma:asset imports
@@ -648,9 +648,7 @@ export function ChatView({
         },
       });
     },
-    onSpendMandateConsentResolved: (payload) => {
-      resolveAsk(payload.backend_recipe_id, payload.approved);
-    },
+    onSpendMandateConsentResolved: handleVoiceSpendMandateConsentResolved,
     onDone: () => {
       // Finalize the voice message
       if (voiceMessageIdRef.current) {
