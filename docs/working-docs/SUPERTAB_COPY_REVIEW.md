@@ -56,8 +56,25 @@
 
 ---
 
+## 6. Voice (spoken) consent  [NEW — NEU-671]
+
+Voice renders the same consent card as Section 1; these are the additional
+spoken (TTS) lines when the user resolves the ask by voice.
+
+| Trigger | Spoken line |
+|---|---|
+| Ask (offer) | Inherits Section 1 (card copy read aloud) |
+| Ambiguous | "Just to be sure — do you want me to put this on your Tab? Please say yes or no." |
+| Grant | "Great — I've put that on your Tab." |
+| Not connected | "I need you connected to My Tab first — tap Yes on screen, or connect your Tab in the menu." |
+| Decline | "No problem — we can skip that for now." |
+
+---
+
 ## Open questions for Supertab
 
 1. Preferred verb: "Put it on my Tab" vs canonical Supertab phrasing?
 2. Settle-and-pay branch wording when Tab needs settlement?
 3. Void/refund unsettled tab lines for 30s undo (NEU-672)?
+4. Voice confirmation timing: is "I've put that on your Tab" acceptable at grant time, or should the spoken confirmation wait until the charge actually settles (today it is spoken before the purchase completes)?
+5. Canonical spoken decline wording — align voice ("we can skip that for now") with the card's decline copy ("No problem — nothing was charged")?
