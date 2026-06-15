@@ -146,8 +146,12 @@ class AssistantFactory:
         assistant = CookingVoiceAssistant(
             stt=DeepgramSTTService(
                 api_key=settings.DEEPGRAM_API_KEY,
+                model=settings.STT_MODEL,
                 sample_rate=settings.SAMPLE_RATE,
                 language=settings.STT_LANGUAGE,
+                smart_format=settings.STT_SMART_FORMAT,
+                punctuate=settings.STT_PUNCTUATE,
+                numerals=settings.STT_NUMERALS,
                 interim_results=settings.STT_INTERIM_RESULTS,
                 utterance_end_ms=settings.STT_UTTERANCE_END_MS,
                 endpointing=settings.STT_ENDPOINTING_MS,

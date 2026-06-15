@@ -34,6 +34,13 @@ for env_file in env_files:
         loaded_from = str(env_file)
         break  # Stop after finding the first .env file
 
+
+def _env_bool(name: str, default: bool) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() != "false"
+
 # Debug: Log where we loaded from (only in development)
 if os.getenv("ENVIRONMENT", "").lower() == "development" and loaded_from:
     import logging
@@ -80,9 +87,13 @@ class Settings:
     # Audio Configuration
     SAMPLE_RATE: int = 16000  # 16kHz - standard for speech recognition
     
-    # STT Configuration (Deepgram)
+    # STT Configuration (Deepgram) — generic tuning only (no domain keyterms)
     STT_LANGUAGE: str = os.getenv("STT_LANGUAGE", "en-US").strip()
-    STT_INTERIM_RESULTS: bool = os.getenv("STT_INTERIM_RESULTS", "true").strip().lower() != "false"
+    STT_MODEL: str = os.getenv("STT_MODEL", "nova-3").strip()
+    STT_SMART_FORMAT: bool = _env_bool("STT_SMART_FORMAT", True)
+    STT_PUNCTUATE: bool = _env_bool("STT_PUNCTUATE", True)
+    STT_NUMERALS: bool = _env_bool("STT_NUMERALS", True)
+    STT_INTERIM_RESULTS: bool = _env_bool("STT_INTERIM_RESULTS", True)
     STT_UTTERANCE_END_MS: int = int(os.getenv("STT_UTTERANCE_END_MS", "1000"))
     STT_ENDPOINTING_MS: int = int(os.getenv("STT_ENDPOINTING_MS", "200"))  # milliseconds of silence before considering speech complete
     

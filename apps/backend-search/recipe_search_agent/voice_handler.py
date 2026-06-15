@@ -50,6 +50,13 @@ logger = configure_logger(__name__)
 _TTS_MIN_CHUNK_WORDS = 4
 
 
+def _env_bool(name: str, default: bool) -> bool:
+    raw = os.getenv(name)
+    if raw is None:
+        return default
+    return raw.strip().lower() != "false"
+
+
 # ── configuration ─────────────────────────────────────────────────────────────
 
 class VoiceConfig:
@@ -65,6 +72,10 @@ class VoiceConfig:
         tts_output_format: str = "pcm_16000",
         tts_speed: float = 1.0,
         stt_language: str = "en-US",
+        stt_model: str = "nova-3",
+        stt_smart_format: bool = True,
+        stt_punctuate: bool = True,
+        stt_numerals: bool = True,
         stt_interim_results: bool = True,
         stt_utterance_end_ms: int = 900,
         stt_endpointing_ms: int = 450,
@@ -77,6 +88,10 @@ class VoiceConfig:
         self.tts_output_format = tts_output_format
         self.tts_speed = tts_speed
         self.stt_language = stt_language
+        self.stt_model = stt_model
+        self.stt_smart_format = stt_smart_format
+        self.stt_punctuate = stt_punctuate
+        self.stt_numerals = stt_numerals
         self.stt_interim_results = stt_interim_results
         self.stt_utterance_end_ms = stt_utterance_end_ms
         self.stt_endpointing_ms = stt_endpointing_ms
@@ -106,7 +121,11 @@ def get_voice_config() -> VoiceConfig:
         sample_rate=int(os.getenv("VOICE_SAMPLE_RATE", "16000")),
         tts_speed=float(os.getenv("TTS_SPEED", "0.8")),
         stt_language=os.getenv("STT_LANGUAGE", "en-US"),
-        stt_interim_results=os.getenv("STT_INTERIM_RESULTS", "true").strip().lower() != "false",
+        stt_model=os.getenv("STT_MODEL", "nova-3"),
+        stt_smart_format=_env_bool("STT_SMART_FORMAT", True),
+        stt_punctuate=_env_bool("STT_PUNCTUATE", True),
+        stt_numerals=_env_bool("STT_NUMERALS", True),
+        stt_interim_results=_env_bool("STT_INTERIM_RESULTS", True),
         stt_utterance_end_ms=int(os.getenv("STT_UTTERANCE_END_MS", "900")),
         stt_endpointing_ms=int(os.getenv("STT_ENDPOINTING_MS", "450")),
     )
@@ -204,8 +223,12 @@ class DiscoveryVoiceHandler:
         # ── voice services ─────────────────────────────────────────────────
         self.stt = DeepgramSTTService(
             api_key=config.deepgram_api_key,
+            model=config.stt_model,
             sample_rate=config.sample_rate,
             language=config.stt_language,
+            smart_format=config.stt_smart_format,
+            punctuate=config.stt_punctuate,
+            numerals=config.stt_numerals,
             interim_results=config.stt_interim_results,
             utterance_end_ms=config.stt_utterance_end_ms,
             endpointing=config.stt_endpointing_ms,

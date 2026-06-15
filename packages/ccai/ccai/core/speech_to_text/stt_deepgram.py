@@ -9,6 +9,22 @@ from .models import Transcription
 logger = configure_logger(__name__)
 
 
+def join_transcript_segments(existing: str, segment: str) -> str:
+    """
+    Join Deepgram partial/final segments with a single space.
+
+    Prevents merged word boundaries when is_final chunks arrive separately
+    (e.g. "tell me" + "what" → "tell me what", not "tell mewhat").
+    """
+    segment = (segment or "").strip()
+    if not segment:
+        return (existing or "").strip()
+    existing = (existing or "").strip()
+    if not existing:
+        return segment
+    return f"{existing} {segment}"
+
+
 class DeepgramSTTService(BaseSpeechToText):
     """
     A speech-to-text service using Deepgram's real-time transcription API.
@@ -31,6 +47,8 @@ class DeepgramSTTService(BaseSpeechToText):
         model: str = "nova-3",
         language: str = "es-US",
         smart_format: bool = True,
+        punctuate: bool = True,
+        numerals: bool = True,
         encoding: str = "linear16",
         channels: int = 1,
         sample_rate: int = 8000,
@@ -49,6 +67,8 @@ class DeepgramSTTService(BaseSpeechToText):
             model (str): Deepgram model to use.
             language (str): Language code.
             smart_format (bool): Whether to apply smart formatting.
+            punctuate (bool): Add punctuation to transcripts.
+            numerals (bool): Format spoken numbers as digits where appropriate.
             encoding (str): Audio encoding format.
             channels (int): Number of audio channels.
             sample_rate (int): Sample rate of the audio.
@@ -85,6 +105,8 @@ class DeepgramSTTService(BaseSpeechToText):
             "model": model,
             "language": language,
             "smart_format": smart_format,
+            "punctuate": punctuate,
+            "numerals": numerals,
             "encoding": encoding,
             "channels": channels,
             "sample_rate": sample_rate,
@@ -383,7 +405,18 @@ class DeepgramSTTService(BaseSpeechToText):
                 pass
             self._dg_connection = None
 
-    async def preprocess_transcription(self, transcript) -> Transcription:
+    @staticmethod
+    def _extract_alternative(transcript) -> tuple[str, Optional[float]]:
+        channel = getattr(transcript, "channel", None)
+        alternatives = getattr(channel, "alternatives", None) if channel else None
+        if not alternatives:
+            return "", None
+        alt = alternatives[0]
+        text = (getattr(alt, "transcript", None) or "").strip()
+        confidence = getattr(alt, "confidence", None)
+        return text, confidence
+
+    async def preprocess_transcription(self, transcript) -> Optional[Transcription]:
         """
         Preprocess the transcription result.
 
@@ -401,9 +434,14 @@ class DeepgramSTTService(BaseSpeechToText):
             return None
 
         # Perform any necessary preprocessing here
-        if transcript.type == "Results" and not transcript.is_final:
+        # Non-final partials only — speech_final is handled below with buffer flush.
+        if transcript.type == "Results" and not transcript.is_final and not transcript.speech_final:
+            sentence, confidence = self._extract_alternative(transcript)
+            if not sentence:
+                return None
             return Transcription(
-                content=transcript.channel.alternatives[0].transcript,
+                content=sentence,
+                confidence=confidence,
                 is_final=False,
             )
 
@@ -439,37 +477,29 @@ class DeepgramSTTService(BaseSpeechToText):
         # else:
         #     return
 
-        sentence = transcript.channel.alternatives[0].transcript
+        sentence, confidence = self._extract_alternative(transcript)
 
         if transcript.speech_final:
-            # logger.debug("Detected final speech.")
-            # logger.debug(f"Existing buffer: {self.buffer}")
-            # logger.debug(f"New result: {sentence}")
-
-            # self.needs_utterance = False
-            full_speech = self.buffer + " " + sentence
+            full_speech = join_transcript_segments(self.buffer, sentence)
             self.buffer = ""
 
             if not full_speech.strip():
-                return
+                return None
 
             return Transcription(
                 content=full_speech,
+                confidence=confidence,
                 is_final=True,
             )
 
         if transcript.is_final:
-            # self.needs_utterance = True
-            self.buffer += sentence
+            self.buffer = join_transcript_segments(self.buffer, sentence)
 
         if not self.buffer:
-            return
-
-        # logger.debug("Detected interim speech.")
-        # logger.debug(f"Existing buffer: {self.buffer}")
-        # logger.debug(f"New result: {sentence}")
+            return None
 
         return Transcription(
             content=self.buffer,
+            confidence=confidence,
             is_final=False,
         )
