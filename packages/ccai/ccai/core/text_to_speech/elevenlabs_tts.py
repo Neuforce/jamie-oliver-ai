@@ -37,6 +37,15 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
         self.speaker_boost = speaker_boost
         self.output_format = output_format
         self.speed = speed
+        # Persistent session so the TCP/TLS connection to ElevenLabs is kept alive
+        # and reused across sentences instead of paying a new handshake per synthesis.
+        self._session: Optional[aiohttp.ClientSession] = None
+
+    def _get_session(self) -> aiohttp.ClientSession:
+        """Lazily create (and reuse) a keep-alive HTTP session bound to the loop."""
+        if self._session is None or self._session.closed:
+            self._session = aiohttp.ClientSession()
+        return self._session
 
     @observe_speech_processing("synthesis", "elevenlabs")
     async def synthesize(self, text: str):
@@ -68,20 +77,20 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
         first_chunk = True
 
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.post(
-                    url, json=payload, headers=headers, params=querystring
-                ) as response:
-                    response.raise_for_status()
-                    if response.status == 200:
-                        async for chunk in response.content.iter_any():
-                            if first_chunk:
-                                logger.info(
-                                    f"Time to first chunk: {time.perf_counter() - start:.2f}s - Text: {text}"
-                                )
-                                first_chunk = False
+            session = self._get_session()
+            async with session.post(
+                url, json=payload, headers=headers, params=querystring
+            ) as response:
+                response.raise_for_status()
+                if response.status == 200:
+                    async for chunk in response.content.iter_any():
+                        if first_chunk:
+                            logger.info(
+                                f"Time to first chunk: {time.perf_counter() - start:.2f}s - Text: {text}"
+                            )
+                            first_chunk = False
 
-                            yield chunk
+                        yield chunk
 
         except aiohttp.ClientResponseError as e:
             if e.status == 401:
@@ -114,4 +123,6 @@ class ElevenLabsTextToSpeech(BaseTextToSpeech):
             raise
 
     async def close(self):
-        pass
+        if self._session is not None and not self._session.closed:
+            await self._session.close()
+        self._session = None

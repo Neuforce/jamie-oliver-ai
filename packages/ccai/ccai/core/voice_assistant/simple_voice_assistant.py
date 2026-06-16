@@ -387,7 +387,12 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
                     logger.debug(f"Skipping FunctionCallResponse: {event.function_name}")
                     continue
 
-                sentence, remainder = self.contains_punctuation(buffer)
+                # Flush the very first chunk as soon as we have a short punctuated
+                # phrase (lower word threshold) to minimise time-to-first-audio,
+                # then use the normal threshold for natural phrasing afterwards.
+                sentence, remainder = self.contains_punctuation(
+                    buffer, min_words=4 if first_chunk else 8
+                )
                 if self.interrupt_requested.is_set():
                     logger.info("Stopping brain processing because an interrupt was requested")
                     break
@@ -433,12 +438,17 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         await self.audio_queue.put({"command": "synthesize", "text": text})
 
     @staticmethod
-    def contains_punctuation(sentence: str) -> Tuple[Optional[str], Optional[str]]:
+    def contains_punctuation(
+        sentence: str, min_words: int = 8
+    ) -> Tuple[Optional[str], Optional[str]]:
         """
         Check if the sentence contains punctuation and split it.
 
         Args:
             sentence (str): The sentence to check.
+            min_words (int): Minimum word count before a punctuated chunk is
+                flushed to TTS. A lower value for the first chunk reduces
+                time-to-first-audio; a higher value afterwards keeps prosody natural.
 
         Returns:
             Tuple[Optional[str], Optional[str]]:
@@ -447,7 +457,7 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
         """
         punctuation_pattern = r"([.,;:?!])([ \n]|$)"
         matches = list(re.finditer(punctuation_pattern, sentence))
-        if matches and len(sentence.split()) > 8:
+        if matches and len(sentence.split()) > min_words:
             last_match = matches[-1]
             end_index = last_match.end()
             sentence_with_punctuation = sentence[:end_index].strip()
@@ -486,3 +496,11 @@ class SimpleVoiceAssistant(BaseVoiceAssistant):
 
         # Clear any remaining items in the queue
         self._clear_audio_queue()
+
+        # Release the TTS keep-alive HTTP session, if the backend keeps one.
+        close = getattr(self.tts, "close", None)
+        if callable(close):
+            try:
+                await close()
+            except Exception as exc:  # noqa: BLE001 - cleanup must not raise
+                logger.warning(f"Error closing TTS during shutdown: {exc}")

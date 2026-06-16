@@ -83,12 +83,15 @@ class RecipeSearchAgent:
             self.project_root = Path(__file__).resolve().parents[3] / "data" / "recipes"
         
     def _generate_embedding(self, text: str) -> List[float]:
-        """Generate an embedding for text."""
-        from fastembed import TextEmbedding
-        
-        model = TextEmbedding(model_name=self.embedding_model)
-        embeddings = list(model.embed([text]))
-        return embeddings[0].tolist()
+        """Generate an embedding for text.
+
+        Delegates to the shared, process-cached loader in ``recipe_pdf_agent.embed``
+        so the fastembed model is loaded once per process (not per query) and query
+        vectors are produced by the exact same code path as the indexed vectors.
+        """
+        from recipe_pdf_agent.embed import embed_text
+
+        return embed_text(text, model_name=self.embedding_model)
     
     def _load_recipe_json(self, file_path: str) -> Optional[Dict[str, Any]]:
         """Load full recipe JSON from file_path."""

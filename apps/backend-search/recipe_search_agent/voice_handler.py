@@ -48,6 +48,8 @@ from recipe_search_agent.focused_recipe_context import build_focused_recipe_cont
 
 logger = configure_logger(__name__)
 _TTS_MIN_CHUNK_WORDS = 4
+# First audio chunk uses a lower threshold to minimise time-to-first-audio.
+_TTS_FIRST_CHUNK_MIN_WORDS = 2
 
 
 # ── configuration ─────────────────────────────────────────────────────────────
@@ -114,18 +116,25 @@ def get_voice_config() -> VoiceConfig:
 
 # ── text helpers (module-level, no state) ─────────────────────────────────────
 
-def _contains_punctuation(text: str) -> Tuple[Optional[str], Optional[str]]:
+def _contains_punctuation(
+    text: str, min_words: int = _TTS_MIN_CHUNK_WORDS
+) -> Tuple[Optional[str], Optional[str]]:
     """
     Check if the text contains a natural sentence boundary and split there.
 
-    Mirrors SimpleVoiceAssistant.contains_punctuation() exactly.
+    Mirrors SimpleVoiceAssistant.contains_punctuation().
+
+    Args:
+        text: Accumulated buffer to inspect.
+        min_words: Minimum word count before a punctuated chunk is flushed. A
+            lower value for the first chunk reduces time-to-first-audio.
 
     Returns (sentence_up_to_boundary, remainder) or (None, None) if the
     buffer is too short to flush yet.
     """
     pattern = r"([.,;:?!])([ \n]|$)"
     matches = list(re.finditer(pattern, text))
-    if matches and len(text.split()) >= _TTS_MIN_CHUNK_WORDS:
+    if matches and len(text.split()) >= min_words:
         last_match = matches[-1]
         end_index = last_match.end()
         sentence = text[:end_index].strip()
@@ -339,6 +348,11 @@ class DiscoveryVoiceHandler:
                     await task
                 except asyncio.CancelledError:
                     pass
+            # Release the TTS keep-alive HTTP session for this session.
+            try:
+                await self.tts.close()
+            except Exception as exc:  # noqa: BLE001 - cleanup must not raise
+                logger.warning("Error closing TTS for session %s: %s", self.session_id, exc)
 
         logger.info("Voice session ended: %s", self.session_id)
 
@@ -624,7 +638,13 @@ class DiscoveryVoiceHandler:
                         )
                     await self._send("text_chunk", event.content, response_id=self._current_response_id)
 
-                    sentence, remainder = _contains_punctuation(buffer)
+                    # Lower the word threshold for the first chunk so the very
+                    # first audio starts sooner; normal threshold afterwards.
+                    first_chunk_pending = self._first_tts_queued_at is None
+                    sentence, remainder = _contains_punctuation(
+                        buffer,
+                        min_words=_TTS_FIRST_CHUNK_MIN_WORDS if first_chunk_pending else _TTS_MIN_CHUNK_WORDS,
+                    )
                     if sentence:
                         if self._first_tts_queued_at is None:
                             self._first_tts_queued_at = time.perf_counter()

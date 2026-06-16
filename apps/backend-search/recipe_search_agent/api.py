@@ -805,7 +805,9 @@ async def search_recipes(
         start_time = time.time()
         cid = x_correlation_id or str(uuid.uuid4())
 
-        gate = evaluate_message_sync(request.query.strip() or "", correlation_id=cid)
+        gate = await asyncio.to_thread(
+            evaluate_message_sync, request.query.strip() or "", correlation_id=cid
+        )
         if gate.blocked:
             return SearchResponse(
                 query=request.query,
@@ -832,15 +834,19 @@ async def search_recipes(
             ingredients_query=request.ingredients_query,
         )
 
-        # Search
+        # Search. agent.search() is fully synchronous (embedding + Supabase RPC +
+        # disk I/O); run it off the event loop so concurrent requests and the voice
+        # WebSocket are not blocked while one search is in flight.
         agent = get_search_agent()
-        results = agent.search(
-            query=request.query,
-            filters=filters,
-            top_k=request.top_k,
-            include_full_recipe=request.include_full_recipe,
-            include_chunks=request.include_chunks,
-            similarity_threshold=request.similarity_threshold,
+        results = await asyncio.to_thread(
+            lambda: agent.search(
+                query=request.query,
+                filters=filters,
+                top_k=request.top_k,
+                include_full_recipe=request.include_full_recipe,
+                include_chunks=request.include_chunks,
+                similarity_threshold=request.similarity_threshold,
+            )
         )
 
         elapsed_ms = (time.time() - start_time) * 1000
@@ -887,9 +893,11 @@ async def get_recipe(recipe_id: str, include_chunks: bool = Query(False)):
             raise HTTPException(status_code=404, detail=f"Recipe not found: {recipe_id}")
 
         agent = get_search_agent()
+        # Select only the columns this handler reads, instead of SELECT *, so we
+        # don't transfer unused/heavy columns alongside the (already large) recipe_json.
         recipes_response = (
             agent.client.table("recipes")
-            .select("*")
+            .select("slug, metadata, quality_score, status, recipe_json")
             .eq("slug", recipe_id)
             .eq("status", "published")
             .execute()

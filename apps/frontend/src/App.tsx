@@ -510,13 +510,13 @@ export default function App() {
   });
 
   const startCookingOverlay = useCallback((recipe: Recipe) => {
-    setIsLoading(true);
+    // Transition straight into the cook overlay. CookWithJamie renders its own
+    // connection/mic loading state, so the previous fixed 500ms skeleton was pure
+    // artificial latency on every cook start with no animation dependency.
     setSelectedRecipe(null);
-    setTimeout(() => {
-      setCookingRecipe(recipe);
-      setIsLoading(false);
-      navigateToCook(recipe, { replace: true });
-    }, 500);
+    setIsLoading(false);
+    setCookingRecipe(recipe);
+    navigateToCook(recipe, { replace: true });
   }, [navigateToCook]);
 
   startCookingOverlayRef.current = startCookingOverlay;

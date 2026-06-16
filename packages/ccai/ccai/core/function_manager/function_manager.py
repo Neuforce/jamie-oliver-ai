@@ -46,5 +46,10 @@ class FunctionManager(BaseFunctionManager):
         
         if asyncio.iscoroutinefunction(func):
             return await traced_func(**arguments)
-        else:
-            return traced_func(**arguments)
+
+        # Run synchronous tools in a worker thread so a blocking tool (DB query,
+        # embedding, HTTP call) never stalls the event loop. On the voice path the
+        # same loop streams the audio WebSocket, so a sync tool blocking it would
+        # freeze playback/capture. asyncio.to_thread copies the current contextvars
+        # into the worker thread, preserving session_id and tracing context.
+        return await asyncio.to_thread(lambda: traced_func(**arguments))
