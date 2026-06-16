@@ -21,6 +21,7 @@ import {
   getVoiceRichCardPreview,
   shouldShowVoiceCompactPreview,
   resolveVoiceFeatured,
+  isVoiceExpandableMessage,
 } from '../lib/voiceRichCard';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
 import { VoiceThinkingBubble } from './VoiceThinkingBubble';
