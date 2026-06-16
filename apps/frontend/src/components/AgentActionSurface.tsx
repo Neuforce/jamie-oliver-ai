@@ -81,8 +81,7 @@ export function AgentActionSurface({
           placement="sheet"
           recipeSheetOpenForRecipe={showPortaled}
         />
-      ) : null}
-      {recipeId ? (
+      ) : recipeId ? (
         <PurchaseReceiptChip
           backendRecipeId={recipeId}
           className={mode === 'portal' ? 'shadow-lg' : undefined}

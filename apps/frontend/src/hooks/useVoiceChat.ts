@@ -79,6 +79,11 @@ export interface UseVoiceChatOptions {
     backend_recipe_id: string;
     tool_call_id?: string;
     response_id?: string;
+    auto_charge?: boolean;
+    mandate?: unknown;
+    price_amount?: number;
+    currency_code?: string;
+    ceiling_amount?: number;
   }) => void;
   /** Spend mandate consent card metadata for inline rendering */
   onSpendMandateConsentRequested?: (payload: {
@@ -438,6 +443,11 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
           backend_recipe_id: bid,
           tool_call_id: typeof data?.tool_call_id === 'string' ? data.tool_call_id : undefined,
           response_id: typeof data?.response_id === 'string' ? data.response_id : responseId,
+          auto_charge: data?.auto_charge === true ? true : undefined,
+          mandate: data?.mandate,
+          price_amount: typeof data?.price_amount === 'number' ? data.price_amount : undefined,
+          currency_code: typeof data?.currency_code === 'string' ? data.currency_code : undefined,
+          ceiling_amount: typeof data?.ceiling_amount === 'number' ? data.ceiling_amount : undefined,
         });
         break;
       }

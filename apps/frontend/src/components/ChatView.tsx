@@ -31,6 +31,7 @@ import {
   subscribeCommerceStore,
 } from '../lib/commerceStore';
 import { handleVoiceSpendMandateConsentResolved } from '../lib/voiceSpendMandateConsentResolved';
+import type { RecipePaywallMetadata } from '../lib/recipePaywallHandler';
 import { finalizeVoiceBubbleMessages } from '../lib/voiceBubbleFinalize';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
@@ -111,7 +112,7 @@ interface ChatViewProps {
   focusedRecipeBackendId?: string | null;
   /** True while RecipeModal is open — bottom padding for portaled launcher or voice dock. */
   onRecipeModalVoiceDockOverlapChange?: (overlap: boolean) => void;
-  onVoiceRecipePaywallRequested?: (backendRecipeId: string) => void;
+  onVoiceRecipePaywallRequested?: (metadata: RecipePaywallMetadata) => void;
   /** Notifies parent when discovery voice mode is connected (keeps ChatView mounted across tabs). */
   onDiscoveryVoiceSessionChange?: (active: boolean) => void;
   recipeAccessLoadingId?: string | null;
@@ -647,9 +648,22 @@ export function ChatView({
             backend_recipe_id: payload.backend_recipe_id,
             tool_call_id: payload.tool_call_id,
             response_id: payload.response_id,
+            auto_charge: payload.auto_charge,
+            mandate: payload.mandate,
+            price_amount: payload.price_amount,
+            currency_code: payload.currency_code,
+            ceiling_amount: payload.ceiling_amount,
           },
         });
-        onVoiceRecipePaywallRequested?.(payload.backend_recipe_id);
+        const paywallMetadata: RecipePaywallMetadata = {
+          backend_recipe_id: payload.backend_recipe_id,
+          auto_charge: payload.auto_charge,
+          mandate: payload.mandate,
+          price_amount: payload.price_amount,
+          currency_code: payload.currency_code,
+          ceiling_amount: payload.ceiling_amount,
+        };
+        onVoiceRecipePaywallRequested?.(paywallMetadata);
       }
     },
     onSpendMandateConsentRequested: (payload) => {
@@ -1109,10 +1123,14 @@ export function ChatView({
             openAskFromConsentMetadata(event.metadata);
           }
           if (event.type === 'recipe_paywall_requested') {
-            const backendId = (event.metadata?.backend_recipe_id as string | undefined)?.trim();
-            if (backendId) {
-              onVoiceRecipePaywallRequested?.(backendId);
-            }
+            onVoiceRecipePaywallRequested?.({
+              backend_recipe_id: event.metadata?.backend_recipe_id as string | undefined,
+              auto_charge: event.metadata?.auto_charge as boolean | undefined,
+              mandate: event.metadata?.mandate,
+              price_amount: event.metadata?.price_amount as number | undefined,
+              currency_code: event.metadata?.currency_code as string | undefined,
+              ceiling_amount: event.metadata?.ceiling_amount as number | undefined,
+            });
           }
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId) return msg;

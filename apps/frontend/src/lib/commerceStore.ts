@@ -71,6 +71,8 @@ export interface OpenAskParams {
   priceAmount: number;
   currencyCode: string;
   ceilingAmount: number;
+  /** When true, allow projecting requested even if unlock is processing (auto-charge fallback). */
+  force?: boolean;
 }
 
 export interface RecipeCommerceEntry {
@@ -354,6 +356,14 @@ function supersedePendingAsk(): void {
 }
 
 export function openAsk(params: OpenAskParams): Promise<boolean> {
+  const existingUnlockState = getUnlockState(params.recipeId);
+  if (
+    !params.force
+    && (existingUnlockState === 'processing' || existingUnlockState === 'unlocked')
+  ) {
+    return askPromise ?? Promise.resolve(false);
+  }
+
   if (
     activeAsk?.recipeId === params.recipeId
     && activeAsk.status === 'requested'

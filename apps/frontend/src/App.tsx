@@ -73,8 +73,11 @@ import {
 } from './lib/commerceStore';
 import {
   configureUnlockController,
-  startRecipeUnlock,
 } from './lib/unlockController';
+import {
+  handleRecipePaywallRequested,
+  type RecipePaywallMetadata,
+} from './lib/recipePaywallHandler';
 // @ts-ignore - Vite handles image imports
 import jamieAvatarImport from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 // Vite returns the image URL as a string
@@ -837,13 +840,14 @@ export default function App() {
       },
       getCachedAccess: (recipe) => getStoredRecipeAccess(getRecipeAccessKey(recipe)),
       loadAccess: async (recipe) => loadRecipeAccess(recipe),
-      openConsentAsk: ({ recipeId, askId, priceAmount, currencyCode, ceilingAmount }) => (
+      openConsentAsk: ({ recipeId, askId, priceAmount, currencyCode, ceilingAmount, force }) => (
         openAsk({
           recipeId,
           askId,
           priceAmount,
           currencyCode,
           ceilingAmount,
+          force,
         })
       ),
       runPurchase: async (recipe, access, purchaseOptions) => (
@@ -959,12 +963,8 @@ export default function App() {
   ]);
 
   const handleVoiceRecipePaywallRequested = useCallback(
-    async (backendId: string) => {
-      const bid = (backendId || '').trim();
-      if (!bid) {
-        return;
-      }
-      await startRecipeUnlock(bid, { trigger: 'paywall_event' });
+    async (metadata: RecipePaywallMetadata) => {
+      await handleRecipePaywallRequested(metadata);
     },
     [],
   );

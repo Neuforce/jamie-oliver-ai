@@ -148,6 +148,9 @@ export function RecipeModal({
   const unlockPriceLabel = formatUnlockPrice(recipeAccess);
   const canCook = recipeAccess?.accessState === 'free' || recipeAccess?.accessState === 'owned';
   const canResumeSavedSession = !!savedSession && canCook;
+  const agentUnlockActive =
+    isLocked
+    && (unlockState === 'requested' || unlockState === 'processing' || unlockState === 'unlocked');
 
   const resumeStepsCount = recipe.instructions.length;
   const resumeCurrentStep = savedSession
@@ -171,17 +174,8 @@ export function RecipeModal({
         </button>
       );
     }
-    if (isLocked && unlockState === 'processing') {
-      return (
-        <button
-          type="button"
-          className="jamie-recipe-modal__header-pill"
-          disabled
-          aria-label="Unlocking recipe"
-        >
-          Unlocking…
-        </button>
-      );
+    if (isLocked && agentUnlockActive) {
+      return null;
     }
     if (isLocked) {
       return (
@@ -469,7 +463,7 @@ export function RecipeModal({
            * is never ambiguous. The header pill scrolls to this pane
            * when tapped while locked.
            */}
-          {isLocked && recipeAccess && (
+          {isLocked && recipeAccess && !agentUnlockActive && (
             <div
               className="jamie-recipe-modal__supertab"
               data-supertab-pane="true"

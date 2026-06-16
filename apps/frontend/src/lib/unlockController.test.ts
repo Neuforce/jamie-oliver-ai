@@ -134,6 +134,52 @@ describe('unlockController', () => {
     expect(getUnlockState('fish-pie')).toBe('unlocked');
   });
 
+  it('auto-charge unlock charges silently without opening ask', async () => {
+    const runPurchase = vi.fn().mockResolvedValue(successOutcome());
+    const config = setupConfig(runPurchase);
+    configureUnlockController(config);
+
+    await startRecipeUnlock('fish-pie', { trigger: 'auto_charge' });
+
+    expect(config.openConsentAsk).not.toHaveBeenCalled();
+    expect(runPurchase).toHaveBeenCalledTimes(1);
+    expect(runPurchase.mock.calls[0][2]).toEqual({ consentGranted: true });
+    expect(getUnlockState('fish-pie')).toBe('unlocked');
+  });
+
+  it('auto-charge abandoned falls back to consent ask', async () => {
+    const runPurchase = vi
+      .fn()
+      .mockResolvedValueOnce({ via: 'abandoned', resolution: null })
+      .mockResolvedValueOnce(successOutcome());
+    const openConsentAsk = vi.fn().mockResolvedValue(true);
+    const config = setupConfig(runPurchase, { openConsentAsk });
+    configureUnlockController(config);
+
+    await startRecipeUnlock('fish-pie', { trigger: 'auto_charge' });
+
+    expect(openConsentAsk).toHaveBeenCalledTimes(1);
+    expect(openConsentAsk.mock.calls[0][0]).toMatchObject({ force: true });
+    expect(runPurchase).toHaveBeenCalledTimes(2);
+    expect(getUnlockState('fish-pie')).toBe('unlocked');
+  });
+
+  it('auto-charge unavailable falls back to consent ask', async () => {
+    const runPurchase = vi
+      .fn()
+      .mockResolvedValueOnce({ via: 'unavailable', resolution: null })
+      .mockResolvedValueOnce(successOutcome());
+    const openConsentAsk = vi.fn().mockResolvedValue(true);
+    const config = setupConfig(runPurchase, { openConsentAsk });
+    configureUnlockController(config);
+
+    await startRecipeUnlock('fish-pie', { trigger: 'auto_charge' });
+
+    expect(openConsentAsk).toHaveBeenCalledTimes(1);
+    expect(runPurchase).toHaveBeenCalledTimes(2);
+    expect(getUnlockState('fish-pie')).toBe('unlocked');
+  });
+
   it('retries once after consent-triggered abandoned outcome', async () => {
     const runPurchase = vi
       .fn()
