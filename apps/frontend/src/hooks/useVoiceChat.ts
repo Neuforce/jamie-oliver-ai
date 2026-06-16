@@ -26,6 +26,7 @@ import type { VoiceTurnState } from './voiceTurnUtils';
 import { VOICE_WS_URL } from '../lib/runtimeConfig';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
 import type { VoiceSpendMandateConsentResolvedPayload } from '../lib/voiceSpendMandateConsentResolved';
+import { resolveVoiceDoneAction } from '../lib/voiceBubbleFinalize';
 
 type VoiceLatencyTurnMetrics = {
   transcriptFinalAt: number;
@@ -91,8 +92,10 @@ export interface UseVoiceChatOptions {
   }) => void;
   /** Server resolved a consent ask (e.g. verbal yes/no in voice) */
   onSpendMandateConsentResolved?: (payload: VoiceSpendMandateConsentResolvedPayload) => void;
-  /** Callback when response is complete */
-  onDone?: () => void;
+  /** Callback when a voice response turn should finalize its chat bubble */
+  onDone?: (responseId?: string) => void;
+  /** Callback when the backend assigns a responseId to the in-flight turn */
+  onProcessing?: (responseId: string) => void;
   /** Callback on error */
   onError?: (error: string) => void;
   /** Sample rate for audio capture (default: 16000) */
@@ -131,6 +134,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   const isAudioPlayingRef = useRef(false);
   // Deferred state transitions while audio is still playing
   const pendingDoneRef   = useRef(false);
+  const pendingDoneResponseIdRef = useRef<string | null>(null);
   const pendingListenRef = useRef(false);
   // Track the active response so stale audio from a previous turn is discarded
   const activeResponseIdRef = useRef<string | null>(null);
@@ -262,6 +266,15 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     activeResponseIdRef.current = null;
   }, []);
 
+  const finalizeTurn = useCallback((responseId?: string) => {
+    pendingDoneRef.current = false;
+    pendingDoneResponseIdRef.current = null;
+    resetActiveResponse();
+    setState('listening');
+    setCurrentTranscript('');
+    callbacksRef.current.onDone?.(responseId);
+  }, [resetActiveResponse]);
+
   const isCurrentResponse = useCallback((responseId?: string) => {
     const activeId = activeResponseIdRef.current;
     if (!activeId) return false;
@@ -378,6 +391,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         activeResponseIdRef.current = responseId;
         setState('processing');
         markProcessingLatency(responseId);
+        callbacks.onProcessing?.(responseId);
         break;
 
       case 'text_chunk':
@@ -462,25 +476,35 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
         console.log('🔧 Tool called:', data?.name);
         break;
 
-      case 'done':
-        if (!isCurrentResponse(responseId)) return;
-        pendingDoneRef.current = true;
-        if (!isAudioPlayingRef.current) {
-          pendingDoneRef.current = false;
-          resetActiveResponse();
-          setState('listening');
-          setCurrentTranscript('');
-          callbacks.onDone?.();
+      case 'done': {
+        // Finalize even when a later turn reset activeResponseIdRef — ChatView
+        // matches bubbles by responseId so late done events stay turn-safe.
+        const doneAction = resolveVoiceDoneAction(
+          responseId,
+          activeResponseIdRef.current,
+          isAudioPlayingRef.current,
+        );
+        if (doneAction.type === 'defer') {
+          pendingDoneRef.current = true;
+          pendingDoneResponseIdRef.current = doneAction.responseId ?? null;
+          break;
         }
+        finalizeTurn(doneAction.responseId);
         break;
+      }
 
-      case 'interrupted':
+      case 'interrupted': {
         // Server confirmed barge-in or cancel – stop local playback immediately.
+        const interruptedResponseId = activeResponseIdRef.current ?? undefined;
         stopAllAudio();
+        pendingDoneRef.current = false;
+        pendingDoneResponseIdRef.current = null;
         resetActiveResponse();
         setState('listening');
         setCurrentTranscript('');
+        callbacks.onDone?.(interruptedResponseId);
         break;
+      }
 
       case 'error':
         setError(data || 'Unknown error');
@@ -498,6 +522,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
     markProcessingLatency,
     markTranscriptFinalLatency,
     playAudio,
+    finalizeTurn,
     resetActiveResponse,
     stopAllAudio,
   ]);
@@ -505,23 +530,24 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   // ── pending state transitions (audio drain) ────────────────────────────
   useEffect(() => {
     if (isAudioPlaying) return;
-    const callbacks = callbacksRef.current;
     if (pendingDoneRef.current) {
-      pendingDoneRef.current  = false;
+      const responseId = pendingDoneResponseIdRef.current ?? undefined;
       pendingListenRef.current = false;
-      resetActiveResponse();
-      setState('listening');
-      setCurrentTranscript('');
-      callbacks.onDone?.();
+      finalizeTurn(responseId);
       return;
     }
     if (pendingListenRef.current) {
+      const responseId = activeResponseIdRef.current ?? undefined;
       pendingListenRef.current = false;
-      resetActiveResponse();
-      setState('listening');
-      setCurrentTranscript('');
+      if (responseId) {
+        finalizeTurn(responseId);
+      } else {
+        resetActiveResponse();
+        setState('listening');
+        setCurrentTranscript('');
+      }
     }
-  }, [isAudioPlaying, resetActiveResponse]);
+  }, [finalizeTurn, isAudioPlaying, resetActiveResponse]);
 
   // ── connect / disconnect ───────────────────────────────────────────────
   const connect = useCallback(async () => {
@@ -651,6 +677,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
   const disconnect = useCallback(() => {
     isVoiceModeActiveRef.current = false;
     pendingDoneRef.current   = false;
+    pendingDoneResponseIdRef.current = null;
     pendingListenRef.current = false;
     resetActiveResponse();
     latencyRef.current = null;
