@@ -259,6 +259,36 @@ function previewFromFeaturedSelection(
   }
 }
 
+export type VoiceStackRole = 'top' | 'middle' | 'back';
+
+export function hasVoiceRecipePayload(message: VoiceRichMessageSource): boolean {
+  return Boolean(
+    (message.recipes && message.recipes.length > 0)
+    || (message.recipeDetail?.recipe_id && message.recipeDetail.title),
+  );
+}
+
+/**
+ * Whether voice mode should render the compact rich-card preview instead of
+ * the full featured surface.
+ *
+ * - Top card: compact when collapsed (including recipes); full when expanded.
+ * - Middle/back: compact for non-recipe rich cards only (recipes stay full-size).
+ */
+export function shouldShowVoiceCompactPreview(
+  message: VoiceRichMessageSource,
+  voiceRole: VoiceStackRole | undefined,
+  voiceExpanded: boolean,
+): boolean {
+  if (!isVoiceExpandableMessage(message) || !getVoiceRichCardPreview(message)) {
+    return false;
+  }
+  if (voiceRole === 'top') {
+    return !voiceExpanded;
+  }
+  return !hasVoiceRecipePayload(message);
+}
+
 export function isVoiceExpandableMessage(message: VoiceRichMessageSource): boolean {
   return resolveVoiceFeatured(message) !== null;
 }
