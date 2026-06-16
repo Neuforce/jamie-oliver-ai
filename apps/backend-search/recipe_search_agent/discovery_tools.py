@@ -11,6 +11,7 @@ from typing import List, Optional, Dict, Any
 from ccai.core.function_manager.function_manager import FunctionManager
 
 logger = logging.getLogger(__name__)
+MIN_SIMILARITY = 0.45  # relevance floor; below this we treat the query as a no-match
 
 # LLM often pluralises or paraphrases course; Supabase filter expects singular slugs.
 _COURSE_ALIASES: dict[str, str] = {
@@ -137,23 +138,6 @@ def search_recipes(
         )
         results = run_search(SearchFilters(), q=search_query, threshold=0.3)
 
-    # 3) Still empty — relax similarity (vector + filter edge cases)
-    if not results:
-        logger.warning(
-            "search_recipes: 0 hits after category relax — retry threshold=0.14 query=%r",
-            search_query[:120],
-        )
-        results = run_search(SearchFilters(), q=search_query, threshold=0.14)
-
-    # 4) Last resort — repeat user intent with explicit course token in the query for embedding
-    if not results and course_key:
-        boosted = f"{course_key} sweet treat {query}".strip() if course_key == "dessert" else f"{course_key} {query}".strip()
-        logger.warning(
-            "search_recipes: 0 hits — final boost query=%r",
-            boosted[:120],
-        )
-        results = run_search(SearchFilters(), q=boosted, threshold=0.12)
-    
     def _matches_cuisine(match, cuisine_value: str) -> bool:
         if not cuisine_value:
             return True
@@ -205,6 +189,8 @@ def search_recipes(
                 cuisine,
                 len(results),
             )
+
+    results = [match for match in results if match.similarity_score >= MIN_SIMILARITY]
 
     if not results:
         return json.dumps({
