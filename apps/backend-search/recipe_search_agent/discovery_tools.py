@@ -13,6 +13,11 @@ from ccai.core.function_manager.function_manager import FunctionManager
 logger = logging.getLogger(__name__)
 MIN_SIMILARITY = 0.45  # relevance floor; below this we treat the query as a no-match
 
+from recipe_search_agent.commerce_context import get_commerce_user_id
+from recipe_search_agent.recipe_pricing import resolve_recipe_price
+from recipe_search_agent.spend_mandate_serialization import serialize_spend_mandate
+from recipe_search_agent.spend_mandate_service import SpendMandateService
+
 # LLM often pluralises or paraphrases course; Supabase filter expects singular slugs.
 _COURSE_ALIASES: dict[str, str] = {
     "desserts": "dessert",
@@ -533,6 +538,25 @@ def request_supertab_unlock(recipe_backend_id: str) -> str:
         },
     }
 
+    # Backend-authoritative consent decision: if the current user has an active
+    # spend mandate with headroom >= price, the client will auto-charge silently
+    # and the agent must narrate accordingly rather than asking for confirmation.
+    auto_charge = False
+    serialized_mandate: Optional[dict[str, Any]] = None
+    remaining_amount = 0
+    guidance = "Ask: Mind if I put this on your Tab? Yes / Not now."
+
+    user_id = get_commerce_user_id()
+    if user_id:
+        price_amount, _currency_code = resolve_recipe_price(rid)
+        can_charge, mandate, _reason = SpendMandateService().can_charge(user_id, price_amount)
+        auto_charge = bool(can_charge)
+        if mandate:
+            serialized_mandate = serialize_spend_mandate(mandate)
+            remaining_amount = int(serialized_mandate.get("remainingAmount") or 0)
+        if auto_charge:
+            guidance = "Tell them you're putting it on their Tab now (present tense, no confirmation needed)."
+
     return json.dumps(
         {
             "ok": True,
@@ -540,6 +564,10 @@ def request_supertab_unlock(recipe_backend_id: str) -> str:
             "recipe_detail": recipe_detail,
             "purchase_intent": purchase_intent,
             "hint": "Client executes purchase_intent via silent on-tab purchase when mandate allows.",
+            "auto_charge": auto_charge,
+            "mandate": serialized_mandate,
+            "remaining_amount": remaining_amount,
+            "guidance": guidance,
         }
     )
 

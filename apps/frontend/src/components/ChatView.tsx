@@ -19,7 +19,7 @@ import type { RollerMessage, StackRole, RollerRenderContext } from './VoiceModeR
 import { VoiceRichCardPreview } from './VoiceRichCardPreview';
 import {
   getVoiceRichCardPreview,
-  isVoiceExpandableMessage,
+  shouldShowVoiceCompactPreview,
   resolveVoiceFeatured,
 } from '../lib/voiceRichCard';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
@@ -32,6 +32,7 @@ import {
 } from '../lib/commerceStore';
 import { handleVoiceSpendMandateConsentResolved } from '../lib/voiceSpendMandateConsentResolved';
 import type { RecipePaywallMetadata } from '../lib/recipePaywallHandler';
+import { finalizeVoiceBubbleMessages } from '../lib/voiceBubbleFinalize';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
 // @ts-expect-error - Vite resolves figma:asset imports
@@ -76,6 +77,7 @@ interface Message {
   content: string;
   toolParts?: ToolInvocationPart[];
   responseId?: string;
+  voiceResponseId?: string;
   recipes?: Recipe[];
   mealPlan?: MealPlanData;
   recipeDetail?: RecipeDetailData;
@@ -471,6 +473,30 @@ export function ChatView({
     );
   }, []);
 
+  const finalizeVoiceMessage = useCallback((responseId?: string) => {
+    const currentMessageId = voiceMessageIdRef.current;
+    const accumulatedText = voiceResponseAccumulatorRef.current;
+    let shouldClearRefs = false;
+
+    setMessages(prev => {
+      const { messages: next, finalizedCurrentMessage } = finalizeVoiceBubbleMessages(prev, {
+        responseId,
+        currentMessageId,
+        accumulatedText,
+      });
+      shouldClearRefs = finalizedCurrentMessage || (!responseId && Boolean(currentMessageId));
+      return next;
+    });
+
+    if (shouldClearRefs) {
+      voiceMessageIdRef.current = null;
+      voiceResponseAccumulatorRef.current = '';
+      voiceStreamStateRef.current = createChatTurnStreamState();
+      setIsTyping(false);
+      setThinkingStatus(null);
+    }
+  }, []);
+
   /*
    * Mute toggle for the mic in voice mode. We expose this as a click-target
    * on the Jamie avatar inside the floating voice dock so the user can
@@ -663,27 +689,22 @@ export function ChatView({
       });
     },
     onSpendMandateConsentResolved: handleVoiceSpendMandateConsentResolved,
-    onDone: () => {
-      // Finalize the voice message
-      if (voiceMessageIdRef.current) {
-        const messageId = voiceMessageIdRef.current;
-        const accumulatedText = voiceResponseAccumulatorRef.current;
-
-        console.log('🎤 Voice response done:', { messageId, textLength: accumulatedText.length });
-
-        setMessages(prev => prev.map(msg => {
-          if (msg.id === messageId) {
-            const content = (msg.content || accumulatedText || '').trim();
-            return { ...msg, content, isStreaming: false };
-          }
-          return msg;
-        }));
-      }
-      voiceMessageIdRef.current = null;
-      voiceResponseAccumulatorRef.current = '';
-      voiceStreamStateRef.current = createChatTurnStreamState();
-      setIsTyping(false);
-      setThinkingStatus(null);
+    onProcessing: (responseId) => {
+      const messageId = voiceMessageIdRef.current;
+      if (!messageId) return;
+      setMessages(prev =>
+        prev.map(msg =>
+          msg.id === messageId ? { ...msg, voiceResponseId: responseId } : msg,
+        ),
+      );
+    },
+    onDone: (responseId) => {
+      console.log('🎤 Voice response done:', {
+        responseId,
+        messageId: voiceMessageIdRef.current,
+        textLength: voiceResponseAccumulatorRef.current.length,
+      });
+      finalizeVoiceMessage(responseId);
     },
     onError: (error) => {
       console.error('Voice chat error:', error);
@@ -702,6 +723,12 @@ export function ChatView({
     },
   });
   interruptVoiceRef.current = interrupt;
+
+  useEffect(() => {
+    if (!isVoiceActive || isSpeaking || isProcessing || !isListening) return;
+    if (!voiceMessageIdRef.current) return;
+    finalizeVoiceMessage();
+  }, [finalizeVoiceMessage, isListening, isProcessing, isSpeaking, isVoiceActive]);
 
   useEffect(() => {
     // Reserve RecipeModal scroll space whenever the sheet is open — launcher strip or active dock.
@@ -1389,20 +1416,13 @@ export function ChatView({
 
     if (voiceMode && message.type === 'jamie') {
       const richPreview = getVoiceRichCardPreview(message);
-      const isRichCard = isVoiceExpandableMessage(message);
-      const hasRecipePayload = Boolean(
-        (message.recipes && message.recipes.length > 0)
-        || (message.recipeDetail?.recipe_id && message.recipeDetail.title),
+      const showCompactPreview = shouldShowVoiceCompactPreview(
+        message,
+        voiceRole,
+        voiceExpanded,
       );
-      // Recipe results must stay visible on the top card — collapsing them into
-      // the tiny preview bubble hid cards users thought were missing entirely.
-      const showCompactPreview =
-        isRichCard &&
-        richPreview &&
-        !hasRecipePayload &&
-        (voiceRole !== 'top' || !voiceExpanded);
 
-      if (showCompactPreview) {
+      if (showCompactPreview && richPreview) {
         const primaryBackendId =
           message.recipes?.[0]?.backendId
           ?? message.recipeDetail?.recipe_id

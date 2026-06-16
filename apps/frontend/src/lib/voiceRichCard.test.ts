@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import {
   getVoiceRichCardPreview,
+  hasVoiceRecipePayload,
   isVoiceExpandableMessage,
   resolveVoiceFeatured,
+  shouldShowVoiceCompactPreview,
 } from './voiceRichCard';
 import type { Recipe } from '../data/recipes';
 import type { MealPlanData } from './api';
@@ -72,5 +74,37 @@ describe('voiceRichCard', () => {
 
   it('plain text Jamie turns are not expandable', () => {
     expect(isVoiceExpandableMessage({ type: 'jamie' })).toBe(false);
+  });
+
+  it('detects recipe payloads on messages', () => {
+    expect(hasVoiceRecipePayload({ type: 'jamie', recipes: [sampleRecipe] })).toBe(true);
+    expect(hasVoiceRecipePayload({ type: 'jamie', mealPlan })).toBe(false);
+  });
+
+  describe('shouldShowVoiceCompactPreview', () => {
+    const recipeMessage = { type: 'jamie' as const, recipes: [sampleRecipe] };
+    const mealPlanMessage = { type: 'jamie' as const, mealPlan };
+
+    it('shows compact preview for collapsed top recipe cards', () => {
+      expect(shouldShowVoiceCompactPreview(recipeMessage, 'top', false)).toBe(true);
+    });
+
+    it('keeps expanded top recipe cards full-size', () => {
+      expect(shouldShowVoiceCompactPreview(recipeMessage, 'top', true)).toBe(false);
+    });
+
+    it('keeps middle/back recipe cards full-size', () => {
+      expect(shouldShowVoiceCompactPreview(recipeMessage, 'middle', false)).toBe(false);
+      expect(shouldShowVoiceCompactPreview(recipeMessage, 'back', false)).toBe(false);
+    });
+
+    it('shows compact preview for non-recipe rich cards in middle/back slots', () => {
+      expect(shouldShowVoiceCompactPreview(mealPlanMessage, 'middle', false)).toBe(true);
+      expect(shouldShowVoiceCompactPreview(mealPlanMessage, 'back', false)).toBe(true);
+    });
+
+    it('shows compact preview for collapsed top non-recipe rich cards', () => {
+      expect(shouldShowVoiceCompactPreview(mealPlanMessage, 'top', false)).toBe(true);
+    });
   });
 });

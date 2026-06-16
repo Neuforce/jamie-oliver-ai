@@ -7,6 +7,7 @@ from typing import Any, Optional
 
 from recipe_search_agent.chat_events import ChatEvent
 from recipe_search_agent.recipe_catalog import get_published_catalog
+from recipe_search_agent.recipe_pricing import resolve_recipe_price
 
 logger = logging.getLogger(__name__)
 
@@ -131,77 +132,74 @@ def tool_result_to_chat_events(
                 )
             )
 
-        from recipe_search_agent.repositories import DEFAULT_RECIPE_PRICE_CENTS, MonetizationRepository
+        # Backend-authoritative decision computed in the tool. When auto_charge
+        # is true the client charges silently against the active mandate, so we
+        # MUST NOT create a server-side ask or emit a consent request.
+        auto_charge = bool(result.get("auto_charge"))
+        serialized_mandate = result.get("mandate") if isinstance(result.get("mandate"), dict) else None
 
-        price_amount = DEFAULT_RECIPE_PRICE_CENTS
-        currency_code = "USD"
-        try:
-
-            row = get_published_catalog().get_recipe_row(rid)
-            if row and row.get("id"):
-                offering = MonetizationRepository().get_active_offering(row["id"])
-                if offering:
-                    price_amount = int(offering.get("price_amount") or price_amount)
-                    currency_code = offering.get("currency_code") or currency_code
-        except Exception:
-            pass
-
+        price_amount, currency_code = resolve_recipe_price(rid)
         ceiling_amount = max(1000, price_amount)
 
-        ask_id: Optional[str] = None
-        try:
-            from recipe_search_agent.commerce_context import get_commerce_session_id, get_commerce_user_id
-            from recipe_search_agent.spend_mandate_ask_service import SpendMandateAskService
+        if not auto_charge:
+            ask_id: Optional[str] = None
+            try:
+                from recipe_search_agent.commerce_context import get_commerce_session_id, get_commerce_user_id
+                from recipe_search_agent.spend_mandate_ask_service import SpendMandateAskService
 
-            session_id = get_commerce_session_id()
-            if session_id:
-                ask = SpendMandateAskService().create_ask(
-                    backend_recipe_id=rid,
-                    price_amount=price_amount,
-                    currency_code=currency_code,
-                    ceiling_amount=ceiling_amount,
-                    session_id=session_id,
-                    user_id=get_commerce_user_id(),
-                    tool_call_id=tool_call_id,
-                    response_id=response_id,
+                session_id = get_commerce_session_id()
+                if session_id:
+                    ask = SpendMandateAskService().create_ask(
+                        backend_recipe_id=rid,
+                        price_amount=price_amount,
+                        currency_code=currency_code,
+                        ceiling_amount=ceiling_amount,
+                        session_id=session_id,
+                        user_id=get_commerce_user_id(),
+                        tool_call_id=tool_call_id,
+                        response_id=response_id,
+                    )
+                    ask_id = ask.get("id")
+            except Exception:
+                logger.exception("Failed to create server-side spend mandate ask for recipe %s", rid)
+
+            consent_metadata: dict[str, Any] = {
+                "backend_recipe_id": rid,
+                "price_amount": price_amount,
+                "currency_code": currency_code,
+                "ceiling_amount": ceiling_amount,
+            }
+            if ask_id:
+                consent_metadata["ask_id"] = ask_id
+            else:
+                consent_metadata["ask_degraded"] = True
+
+            events.append(
+                ChatEvent(
+                    type="spend_mandate_consent_requested",
+                    content="",
+                    metadata=_with_correlation(
+                        consent_metadata,
+                        tool_call_id=tool_call_id,
+                        response_id=response_id,
+                    ),
                 )
-                ask_id = ask.get("id")
-        except Exception:
-            logger.exception("Failed to create server-side spend mandate ask for recipe %s", rid)
-
-        consent_metadata: dict[str, Any] = {
-            "backend_recipe_id": rid,
-            "price_amount": price_amount,
-            "currency_code": currency_code,
-            "ceiling_amount": ceiling_amount,
-        }
-        if ask_id:
-            consent_metadata["ask_id"] = ask_id
-        else:
-            consent_metadata["ask_degraded"] = True
-
-        events.append(
-            ChatEvent(
-                type="spend_mandate_consent_requested",
-                content="",
-                metadata=_with_correlation(
-                    consent_metadata,
-                    tool_call_id=tool_call_id,
-                    response_id=response_id,
-                ),
             )
-        )
 
         purchase_intent = result.get("purchase_intent")
+        paywall_metadata: dict[str, Any] = {
+            "backend_recipe_id": rid,
+            "auto_charge": auto_charge,
+            **({"purchase_intent": purchase_intent} if purchase_intent else {}),
+        }
+        if auto_charge:
+            paywall_metadata["mandate"] = serialized_mandate
         events.append(
             ChatEvent(
                 type="recipe_paywall_requested",
                 content="",
                 metadata=_with_correlation(
-                    {
-                        "backend_recipe_id": rid,
-                        **({"purchase_intent": purchase_intent} if purchase_intent else {}),
-                    },
+                    paywall_metadata,
                     tool_call_id=tool_call_id,
                     response_id=response_id,
                 ),
