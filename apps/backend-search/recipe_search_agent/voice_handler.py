@@ -79,7 +79,7 @@ class VoiceConfig:
         stt_punctuate: bool = True,
         stt_numerals: bool = True,
         stt_interim_results: bool = True,
-        stt_utterance_end_ms: int = 900,
+        stt_utterance_end_ms: int = 1000,
         stt_endpointing_ms: int = 450,
     ):
         self.deepgram_api_key = deepgram_api_key
@@ -128,7 +128,7 @@ def get_voice_config() -> VoiceConfig:
         stt_punctuate=_env_bool("STT_PUNCTUATE", True),
         stt_numerals=_env_bool("STT_NUMERALS", True),
         stt_interim_results=_env_bool("STT_INTERIM_RESULTS", True),
-        stt_utterance_end_ms=int(os.getenv("STT_UTTERANCE_END_MS", "900")),
+        stt_utterance_end_ms=int(os.getenv("STT_UTTERANCE_END_MS", "1000")),
         stt_endpointing_ms=int(os.getenv("STT_ENDPOINTING_MS", "450")),
     )
 

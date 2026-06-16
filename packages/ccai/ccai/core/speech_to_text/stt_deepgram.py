@@ -41,6 +41,10 @@ class DeepgramSTTService(BaseSpeechToText):
     MAX_RECONNECT_DELAY = 30.0  # seconds
     BACKOFF_MULTIPLIER = 2.0
 
+    # Deepgram rejects the live connection (HTTP 400) when utterance_end_ms is
+    # below this value, so any smaller setting is clamped up to it.
+    MIN_UTTERANCE_END_MS = 1000
+
     def __init__(
         self,
         api_key: str,
@@ -128,7 +132,16 @@ class DeepgramSTTService(BaseSpeechToText):
         # )
 
         if utterance_end_ms:
-            self.options["utterance_end_ms"] = utterance_end_ms
+            coerced_utterance_end_ms = int(utterance_end_ms)
+            if coerced_utterance_end_ms < self.MIN_UTTERANCE_END_MS:
+                logger.warning(
+                    "utterance_end_ms=%s is below Deepgram's minimum of %sms; "
+                    "clamping to avoid an HTTP 400 connection rejection.",
+                    coerced_utterance_end_ms,
+                    self.MIN_UTTERANCE_END_MS,
+                )
+                coerced_utterance_end_ms = self.MIN_UTTERANCE_END_MS
+            self.options["utterance_end_ms"] = coerced_utterance_end_ms
 
         if endpointing:
             self.options["endpointing"] = endpointing
