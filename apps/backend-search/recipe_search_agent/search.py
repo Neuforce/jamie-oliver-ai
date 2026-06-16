@@ -529,59 +529,6 @@ class RecipeSearchAgent:
                     )
                 raise
 
-            # Fallback: if we get too few results, relax threshold to improve recall
-            min_results_for_fallback = min(3, top_k)
-            if len(results_data) < min_results_for_fallback:
-                relaxed_threshold = max(0.15, similarity_threshold * 0.5)
-                logger.info(
-                    f"Low result count ({len(results_data)}). "
-                    f"Retrying with relaxed similarity_threshold={relaxed_threshold}"
-                )
-                try:
-                    fallback_response = self.client.rpc(
-                        "hybrid_recipe_search",
-                        {
-                            "query_embedding": query_embedding,
-                            "query_text": filters.ingredients_query,
-                            "filter_category": filters.category,
-                            "filter_mood": filters.mood,
-                            "filter_complexity": filters.complexity,
-                            "filter_cost": filters.cost,
-                            "match_count": top_k,
-                            "similarity_threshold": relaxed_threshold,
-                        }
-                    ).execute()
-                    fallback_data = fallback_response.data or []
-                except Exception as rpc_error:
-                    if self._is_missing_rpc_error(rpc_error, "hybrid_recipe_search"):
-                        logger.warning(
-                            "Relaxed hybrid_recipe_search RPC also unavailable; using existing results only"
-                        )
-                        fallback_data = []
-                    else:
-                        raise
-                if fallback_data:
-                    # Merge, keeping highest combined_score per recipe_id
-                    merged_by_id = {row["recipe_id"]: row for row in results_data}
-                    for row in fallback_data:
-                        existing = merged_by_id.get(row["recipe_id"])
-                        if not existing or row.get("combined_score", 0) > existing.get("combined_score", 0):
-                            merged_by_id[row["recipe_id"]] = row
-                    results_data = list(merged_by_id.values())
-                    results_data.sort(key=lambda r: r.get("combined_score", 0), reverse=True)
-                    results_data = results_data[:top_k]
-
-            if not results_data:
-                logger.info(
-                    "Hybrid search returned no rows; using recipes-table ranking"
-                )
-                return self._search_from_recipes_table(
-                    query=query,
-                    filters=filters,
-                    top_k=top_k,
-                    include_full_recipe=include_full_recipe,
-                )
-            
             # 4. Enrich results
             from recipe_search_agent.recipe_catalog import get_published_catalog
 
@@ -635,18 +582,16 @@ class RecipeSearchAgent:
             
         except Exception as e:
             logger.error(f"Search failed: {e}", exc_info=True)
-            fb = self._search_from_recipes_table(
-                query,
-                effective_filters,
-                top_k,
-                include_full_recipe,
-            )
-            if fb:
+            if self._is_missing_rpc_error(e, "hybrid_recipe_search"):
                 logger.warning(
-                    "Returning %d recipes-table hits after hybrid search error",
-                    len(fb),
+                    "hybrid_recipe_search missing in outer error path; using recipes-table fallback"
                 )
-                return fb
+                return self._search_from_recipes_table(
+                    query,
+                    effective_filters,
+                    top_k,
+                    include_full_recipe,
+                )
             raise
 
 
