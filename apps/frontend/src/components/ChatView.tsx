@@ -19,7 +19,7 @@ import type { RollerMessage, StackRole, RollerRenderContext } from './VoiceModeR
 import { VoiceRichCardPreview } from './VoiceRichCardPreview';
 import {
   getVoiceRichCardPreview,
-  isVoiceExpandableMessage,
+  shouldShowVoiceCompactPreview,
   resolveVoiceFeatured,
 } from '../lib/voiceRichCard';
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
@@ -1398,20 +1398,13 @@ export function ChatView({
 
     if (voiceMode && message.type === 'jamie') {
       const richPreview = getVoiceRichCardPreview(message);
-      const isRichCard = isVoiceExpandableMessage(message);
-      const hasRecipePayload = Boolean(
-        (message.recipes && message.recipes.length > 0)
-        || (message.recipeDetail?.recipe_id && message.recipeDetail.title),
+      const showCompactPreview = shouldShowVoiceCompactPreview(
+        message,
+        voiceRole,
+        voiceExpanded,
       );
-      // Recipe results must stay visible on the top card — collapsing them into
-      // the tiny preview bubble hid cards users thought were missing entirely.
-      const showCompactPreview =
-        isRichCard &&
-        richPreview &&
-        !hasRecipePayload &&
-        (voiceRole !== 'top' || !voiceExpanded);
 
-      if (showCompactPreview) {
+      if (showCompactPreview && richPreview) {
         const primaryBackendId =
           message.recipes?.[0]?.backendId
           ?? message.recipeDetail?.recipe_id
