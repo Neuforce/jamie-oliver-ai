@@ -45,6 +45,7 @@ if "recipe_search_agent.guardrails" not in sys.modules:
 from recipe_search_agent.discovery_tools import (
     MIN_SIMILARITY,
     get_recipe_details,
+    request_supertab_unlock,
     search_recipes,
     set_search_agent,
 )
@@ -95,6 +96,14 @@ class _FakeRecipeSearchAgent:
 class _AlwaysPublishedCatalog:
     def is_published(self, _slug):
         return True
+
+
+class _PublishedCatalogWithRow(_AlwaysPublishedCatalog):
+    def __init__(self, row):
+        self._row = row
+
+    def get_recipe_row(self, _slug):
+        return self._row
 
 
 def test_get_recipe_details_returns_summary_only_payload():
@@ -203,3 +212,116 @@ def test_search_recipes_enforces_min_similarity_floor(monkeypatch):
     assert len(payload["recipes"]) == 1
     assert all(recipe["similarity_score"] >= MIN_SIMILARITY for recipe in payload["recipes"])
     assert payload["recipes"][0]["recipe_id"] == "strong-match"
+
+
+def _unlock_recipe_row(recipe_uuid):
+    return {
+        "id": recipe_uuid,
+        "slug": "basic-tomato-sauce",
+        "status": "published",
+        "recipe_json": {"recipe": {"title": "Basic Tomato Sauce"}},
+    }
+
+
+def test_request_supertab_unlock_returns_auto_charge_with_mandate(monkeypatch):
+    recipe_row = _unlock_recipe_row("recipe-uuid-1")
+    set_search_agent(_FakeSearchAgent(recipe_row))
+
+    monkeypatch.setattr(
+        "recipe_search_agent.recipe_catalog.get_published_catalog",
+        lambda: _PublishedCatalogWithRow(recipe_row),
+    )
+    monkeypatch.setattr("recipe_search_agent.discovery_tools.get_commerce_user_id", lambda: "user-123")
+    monkeypatch.setattr("recipe_search_agent.discovery_tools.resolve_recipe_price", lambda _rid: (199, "USD"))
+
+    mandate = {
+        "id": "mandate-1",
+        "user_id": "user-123",
+        "session_id": "sess-1",
+        "ceiling_amount": 1000,
+        "currency_code": "USD",
+        "consumed_amount": 200,
+        "status": "active",
+        "source": "voice",
+    }
+
+    class _FakeSpendMandateService:
+        def can_charge(self, user_id, amount):
+            assert user_id == "user-123"
+            assert amount == 199
+            return True, mandate, "within_ceiling"
+
+    monkeypatch.setattr(
+        "recipe_search_agent.discovery_tools.SpendMandateService",
+        lambda: _FakeSpendMandateService(),
+    )
+
+    payload = json.loads(request_supertab_unlock("basic-tomato-sauce"))
+
+    assert payload["ok"] is True
+    assert payload["auto_charge"] is True
+    assert payload["remaining_amount"] == 800
+    assert payload["mandate"]["id"] == "mandate-1"
+    assert payload["mandate"]["remainingAmount"] == 800
+    assert "Tab" in payload["guidance"]
+
+
+def test_request_supertab_unlock_auto_charge_false_without_user_id(monkeypatch):
+    recipe_row = _unlock_recipe_row("recipe-uuid-2")
+    set_search_agent(_FakeSearchAgent(recipe_row))
+
+    monkeypatch.setattr(
+        "recipe_search_agent.recipe_catalog.get_published_catalog",
+        lambda: _PublishedCatalogWithRow(recipe_row),
+    )
+    monkeypatch.setattr("recipe_search_agent.discovery_tools.get_commerce_user_id", lambda: None)
+
+    payload = json.loads(request_supertab_unlock("basic-tomato-sauce"))
+
+    assert payload["ok"] is True
+    assert payload["auto_charge"] is False
+    assert payload["mandate"] is None
+    assert payload["remaining_amount"] == 0
+    assert payload["guidance"] == "Ask: Mind if I put this on your Tab? Yes / Not now."
+
+
+def test_request_supertab_unlock_auto_charge_false_when_headroom_insufficient(monkeypatch):
+    recipe_row = _unlock_recipe_row("recipe-uuid-3")
+    set_search_agent(_FakeSearchAgent(recipe_row))
+
+    monkeypatch.setattr(
+        "recipe_search_agent.recipe_catalog.get_published_catalog",
+        lambda: _PublishedCatalogWithRow(recipe_row),
+    )
+    monkeypatch.setattr("recipe_search_agent.discovery_tools.get_commerce_user_id", lambda: "user-321")
+    monkeypatch.setattr("recipe_search_agent.discovery_tools.resolve_recipe_price", lambda _rid: (499, "USD"))
+
+    mandate = {
+        "id": "mandate-2",
+        "user_id": "user-321",
+        "session_id": "sess-2",
+        "ceiling_amount": 300,
+        "currency_code": "USD",
+        "consumed_amount": 200,
+        "status": "active",
+        "source": "voice",
+    }
+
+    class _FakeSpendMandateService:
+        def can_charge(self, user_id, amount):
+            assert user_id == "user-321"
+            assert amount == 499
+            return False, mandate, "exceeds_ceiling"
+
+    monkeypatch.setattr(
+        "recipe_search_agent.discovery_tools.SpendMandateService",
+        lambda: _FakeSpendMandateService(),
+    )
+
+    payload = json.loads(request_supertab_unlock("basic-tomato-sauce"))
+
+    assert payload["ok"] is True
+    assert payload["auto_charge"] is False
+    assert payload["mandate"]["id"] == "mandate-2"
+    assert payload["remaining_amount"] == 100
+    assert payload["guidance"] == "Ask: Mind if I put this on your Tab? Yes / Not now."
