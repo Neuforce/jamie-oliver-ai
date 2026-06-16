@@ -3,6 +3,7 @@ import { Loader2, Check, Lock, AlertCircle } from 'lucide-react';
 import {
   formatConsentPrice,
   getActiveAsk,
+  getRecipeReceipt,
   getUnlockAskMeta,
   getUnlockState,
   setUnlockState,
@@ -44,6 +45,14 @@ function useAskMetaFor(recipeId?: string) {
   );
 }
 
+function useReceiptFor(recipeId?: string) {
+  return useSyncExternalStore(
+    subscribeCommerceStore,
+    () => (recipeId ? getRecipeReceipt(recipeId) : null),
+    () => null,
+  );
+}
+
 interface SpendMandateConsentInlineProps {
   /** When set, only show if the unlock surface matches this recipe. */
   backendRecipeId?: string;
@@ -71,6 +80,7 @@ export function SpendMandateConsentInline({
 
   const unlockState = useUnlockStateFor(recipeId);
   const askMeta = useAskMetaFor(recipeId);
+  const receipt = useReceiptFor(recipeId);
 
   // Collapse transient terminal states back to 'locked' (card unmounts). The
   // recipe card badge already shows Unlocked from the access projection.
@@ -164,10 +174,17 @@ export function SpendMandateConsentInline({
 
   if (unlockState === 'unlocked') {
     return wrap(
-      <div className="flex items-center gap-2 text-sm font-medium text-[#10B981]">
-        <Check size={16} aria-hidden="true" />
-        <span>Added to your Tab — recipe unlocked</span>
-      </div>,
+      <>
+        <div className="flex items-center gap-2 text-sm font-medium text-[#10B981]">
+          <Check size={16} aria-hidden="true" />
+          <span>Added to your Tab — recipe unlocked</span>
+        </div>
+        {receipt ? (
+          <p className="mt-1 text-xs text-[#9A9A9A]">
+            {receipt.recipeTitle} — {receipt.priceLabel} on your Tab · Secured by Supertab
+          </p>
+        ) : null}
+      </>,
     );
   }
 

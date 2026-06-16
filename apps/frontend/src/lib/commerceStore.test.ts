@@ -244,6 +244,43 @@ describe('commerceStore', () => {
 
     expect(getCommerceState().mandate?.id).toBe('mandate-1');
   });
+
+  it('openAsk is a no-op when unlock is processing or unlocked', async () => {
+    setUnlockState('fish-chips', 'processing');
+    const processingPending = openAsk({
+      recipeId: 'fish-chips',
+      priceAmount: 5,
+      currencyCode: 'USD',
+      ceilingAmount: 1000,
+    });
+    await expect(processingPending).resolves.toBe(false);
+    expect(getUnlockState('fish-chips')).toBe('processing');
+    expect(getActiveAsk()).toBeNull();
+
+    setUnlockState('salad-a', 'unlocked');
+    const unlockedPending = openAsk({
+      recipeId: 'salad-a',
+      priceAmount: 5,
+      currencyCode: 'USD',
+      ceilingAmount: 1000,
+    });
+    await expect(unlockedPending).resolves.toBe(false);
+    expect(getUnlockState('salad-a')).toBe('unlocked');
+    expect(getActiveAsk()).toBeNull();
+  });
+
+  it('openAsk with force bypasses processing guard for auto-charge fallback', () => {
+    setUnlockState('fish-chips', 'processing');
+    openAsk({
+      recipeId: 'fish-chips',
+      priceAmount: 5,
+      currencyCode: 'USD',
+      ceilingAmount: 1000,
+      force: true,
+    });
+    expect(getUnlockState('fish-chips')).toBe('requested');
+    expect(getActiveAsk()?.recipeId).toBe('fish-chips');
+  });
 });
 
 describe('commerceStore ask reconciliation', () => {

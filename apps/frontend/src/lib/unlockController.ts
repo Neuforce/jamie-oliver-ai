@@ -3,7 +3,7 @@ import type { RecipeAccessResponse } from './api';
 import { resolveAskWithServer, setUnlockState } from './commerceStore';
 import type { PurchaseRecipeOutcome } from './supertab';
 
-type UnlockTrigger = 'paywall_event' | 'consent_approve';
+type UnlockTrigger = 'paywall_event' | 'consent_approve' | 'auto_charge';
 type SettlementTrigger = UnlockTrigger | 'direct';
 
 export interface ConsentPromptParams {
@@ -12,6 +12,8 @@ export interface ConsentPromptParams {
   priceAmount: number;
   currencyCode: string;
   ceilingAmount: number;
+  /** Bypass openAsk guard when falling back from auto-charge processing. */
+  force?: boolean;
 }
 
 export interface UnlockControllerConfig {
@@ -135,32 +137,44 @@ async function runUnlock(
       return;
     }
 
-    // consent_approve: the user already approved, so the purchase may mint a
-    // mandate as a guaranteed fallback. paywall_event: first attempt without
-    // consent so it can never auto-mint; only after explicit approval do we
-    // retry with consentGranted=true.
+    // consent_approve / auto_charge: purchase may use mandate headroom immediately.
+    // paywall_event: first attempt without consent; only after explicit approval
+    // do we retry with consentGranted=true.
     const consentAlreadyGranted =
-      options.trigger === 'consent_approve' || options.trigger === 'direct';
+      options.trigger === 'consent_approve'
+      || options.trigger === 'direct'
+      || options.trigger === 'auto_charge';
     if (consentAlreadyGranted) {
       transition('processing');
     }
     let outcome = await activeConfig.runPurchase(recipe, access, {
       consentGranted: consentAlreadyGranted,
     });
+
+    const consentFallbackParams = (): ConsentPromptParams => ({
+      recipeId: backendRecipeId,
+      priceAmount: access.offering?.priceAmount ?? 5,
+      currencyCode: access.offering?.currencyCode ?? 'USD',
+      ceilingAmount: Math.max(1000, access.offering?.priceAmount ?? 5),
+      force: options.trigger === 'auto_charge',
+    });
+
+    const retryAfterConsentFallback = async (): Promise<typeof outcome> => {
+      const approved = await activeConfig.openConsentAsk(consentFallbackParams());
+      if (!approved) {
+        transition('declined');
+        return { via: 'abandoned' as const, resolution: null };
+      }
+      transition('processing');
+      return activeConfig.runPurchase(recipe, access, { consentGranted: true });
+    };
+
     if (outcome.via === 'abandoned') {
-      if (options.trigger === 'paywall_event') {
-        const approved = await activeConfig.openConsentAsk({
-          recipeId: backendRecipeId,
-          priceAmount: access.offering?.priceAmount ?? 5,
-          currencyCode: access.offering?.currencyCode ?? 'USD',
-          ceilingAmount: Math.max(1000, access.offering?.priceAmount ?? 5),
-        });
-        if (!approved) {
-          transition('declined');
+      if (options.trigger === 'paywall_event' || options.trigger === 'auto_charge') {
+        outcome = await retryAfterConsentFallback();
+        if (!outcome.resolution && outcome.via === 'abandoned') {
           return;
         }
-        transition('processing');
-        outcome = await activeConfig.runPurchase(recipe, access, { consentGranted: true });
       } else {
         // Consent was just granted; retry once in case mandate projection is still settling.
         outcome = await activeConfig.runPurchase(recipe, access, { consentGranted: true });
@@ -170,9 +184,21 @@ async function runUnlock(
     console.info('[unlock] runUnlock outcome', { recipeId: backendRecipeId, via: outcome.via });
 
     if (outcome.via === 'unavailable') {
-      transition('noTab');
-      activeConfig.onUnavailable();
-      return;
+      if (options.trigger === 'auto_charge') {
+        outcome = await retryAfterConsentFallback();
+        if (!outcome.resolution && (outcome.via === 'abandoned' || outcome.via === 'unavailable')) {
+          if (outcome.via === 'abandoned') {
+            return;
+          }
+          transition('noTab');
+          activeConfig.onUnavailable();
+          return;
+        }
+      } else {
+        transition('noTab');
+        activeConfig.onUnavailable();
+        return;
+      }
     }
 
     if (outcome.via === 'tab_settlement_required') {
