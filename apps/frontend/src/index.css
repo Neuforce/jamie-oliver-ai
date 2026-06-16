@@ -2960,14 +2960,16 @@ html {
 
 /* Critical: Full height chain for flex layout */
 html, body {
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
   margin: 0;
   padding: 0;
   overflow: hidden; /* Prevent body scroll */
 }
 
 #root {
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
 }
@@ -3500,7 +3502,8 @@ html, body {
 
 /* --- Page foundation ------------------------------------------------------ */
 html, body, #root {
-  height: 100%;
+  height: 100vh;
+  height: 100dvh;
 }
 
 html {
@@ -3908,6 +3911,25 @@ body {
   border-radius: var(--jamie-radius-xl);
   box-shadow: var(--jamie-shadow-soft);
   border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+@media (max-height: 700px) {
+  .jamie-onboarding-panel {
+    padding-top: 1.25rem;
+    padding-bottom: 1rem;
+  }
+
+  .jamie-onboarding-hero {
+    margin-bottom: 1.25rem;
+  }
+
+  .jamie-onboarding-voice {
+    margin-bottom: 1rem;
+  }
+
+  .jamie-onboarding-divider {
+    margin-bottom: 0.75rem;
+  }
 }
 
 .jamie-floating-card {
@@ -4869,7 +4891,7 @@ body {
 
 /* --- Composer / chat input ------------------------------------------------ */
 .jamie-composer-shell {
-  padding: 12px 0 18px;
+  padding: 12px 0 max(18px, env(safe-area-inset-bottom));
   flex-shrink: 0;
 }
 
