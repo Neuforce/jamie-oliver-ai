@@ -23,10 +23,10 @@ import jamieAvatarLarge from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd572
 const CONTENT_MAX_WIDTH = 360;
 
 const STARTERS = [
-  'What can I cook in 30 minutes?',
-  'A simple pasta for tonight',
-  'What can I make with chicken thighs?',
-  'Plan my dinners for the week',
+  'What can I cook in 20 minutes?',
+  'Help me use up some chicken thighs',
+  'Something comforting for tonight',
+  'Plan a dinner party for friends',
 ] as const;
 
 type VoiceButtonState = TalkToJamiePillState;
@@ -56,14 +56,14 @@ export function OnboardingEmptyState({
   return (
     <div className="jamie-scroll-area">
       <div className="jamie-shell-width">
-        <div className="jamie-surface-panel relative z-10 px-5 py-7">
+        <div className="jamie-surface-panel jamie-onboarding-panel relative z-10 px-5 py-7">
 
           {/* ── Avatar + Greeting ───────────────────────────────────── */}
           <motion.div
             initial={{ scale: 0.92, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-            className="flex flex-col items-center mb-8"
+            className="jamie-onboarding-hero flex flex-col items-center mb-8"
           >
             <AvatarWithOrganicGlow
               src={jamieAvatarLarge}
@@ -117,7 +117,7 @@ export function OnboardingEmptyState({
               initial={{ y: 16, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.36, duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-              className="flex flex-col items-center mb-6"
+              className="jamie-onboarding-voice flex flex-col items-center mb-6"
             >
               <TalkToJamiePillButton
                 state={voiceState}
@@ -132,7 +132,7 @@ export function OnboardingEmptyState({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.44, duration: 0.4 }}
-            className="flex items-center mx-auto mb-5"
+            className="jamie-onboarding-divider flex items-center mx-auto mb-5"
             style={{ maxWidth: `${CONTENT_MAX_WIDTH}px`, width: '100%', gap: '12px' }}
           >
             <span
