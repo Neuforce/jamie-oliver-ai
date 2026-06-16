@@ -289,6 +289,7 @@ class DiscoveryChatAgent:
         pending_tool_calls: Dict[str, str] = {}  # tool_call_id -> function_name
         tool_calls_seen: set[str] = set()
         tool_results_emitted = False
+        unlock_auto_charge: Optional[bool] = None
 
         # Track whether the LLM actually produced any prose. Used below to
         # decide whether we need to synthesise a short intro for tool-only
@@ -373,6 +374,8 @@ class DiscoveryChatAgent:
                         result = json.loads(msg.content)
                         if not isinstance(result, dict):
                             continue
+                        if func_name == "request_supertab_unlock":
+                            unlock_auto_charge = bool(result.get("auto_charge"))
                         for structured in tool_result_to_chat_events(
                             func_name,
                             tool_call_id,
@@ -413,10 +416,10 @@ class DiscoveryChatAgent:
                 elif "get_recipe_details" in tool_calls_seen:
                     intro = "Here are the details for that recipe."
                 elif "request_supertab_unlock" in tool_calls_seen:
-                    intro = (
-                        "Getting My Tab checkout going — if the sheet doesn’t pop up, "
-                        "tap **Put it on my Tab** on this recipe."
-                    )
+                    if unlock_auto_charge:
+                        intro = "Lovely — I’m putting this on your Tab now."
+                    else:
+                        intro = "Mind if I put this on your Tab? Choose Yes or Not now."
                 elif "create_shopping_list" in tool_calls_seen:
                     intro = "Here’s your shopping list."
                 else:

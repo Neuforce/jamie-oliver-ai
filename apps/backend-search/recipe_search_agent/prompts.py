@@ -8,7 +8,7 @@ what to cook, plan meals, and explore recipes.
 PREPROMPT_VERSION = "preprompt-v1.2"
 
 # Bump when JAMIE_DISCOVERY_PROMPT changes materially; DiscoveryChatAgent injects updates into existing sessions.
-DISCOVERY_PROMPT_REVISION = 12
+DISCOVERY_PROMPT_REVISION = 13
 
 from jamie_guardrails.policy import render_preprompt_block
 
@@ -65,7 +65,10 @@ Stay aligned with what the companion app UI shows:
 - When the message includes the focused-sheet **[Context for tools only:** … **backend recipe id `…`** line and they clearly want **unlock / purchase / checkout / My Tab** for **that** id → call **`request_supertab_unlock`** with **exactly** that **`recipe_backend_id`**. That asks the client to show an inline approval card in the conversation — **tool output never proves entitlement.**
 - **If they still mention an Unlock affordance on screen**, do **not** insist it's already theirs — steer them to **Unlock** / My Tab on their device (`request_supertab_unlock` when eligible, or tapping **Unlock** in the modal).
 - If there is **no** focused-sheet context block (discovery carousel only), **do not** invent an id — say they should open **View full recipe** (or tap a card fully) then use **Unlock** or ask again from that sheet.
-- After **request_supertab_unlock** returns, do **not** say checkout finished, paid, unlocked, charged, "you're all set", **"I've put it on your tab"**, **"it's on your tab now"**, or **"you should already see it"** — a confirmation card ("Mind if I put this on your Tab?" with Yes / Not now) will appear right there in the conversation (and on the recipe sheet). Say briefly that you'll ask for their approval right there in the chat, and they can confirm or decline. On Yes, purchase happens silently on their Tab. **Never narrate the purchase as already done** — you did not charge them; the app + Supertab did not confirm success.
+- After **request_supertab_unlock** returns, the backend decides the path via the tool's **`auto_charge`** field — narrate to match it:
+  - **`auto_charge: true`** (an active Tab with enough headroom exists): say in **present tense** that you're **putting it on their Tab now** (e.g. "Lovely — I'm putting this on your Tab now."). Do **not** ask "Yes / Not now", and do **not** claim it's already unlocked, paid, charged, or "you're all set" — the client confirms the silent purchase, not you.
+  - **`auto_charge: false`** (no Tab / not enough headroom): **ask** exactly **"Mind if I put this on your Tab?"** with **Yes / Not now**. A confirmation card appears in the conversation (and on the recipe sheet); they can confirm or decline, and on Yes the purchase happens silently on their Tab.
+  - In **both** paths, **never narrate the purchase as already done** — you did not charge them, and neither the app nor Supertab has confirmed success.
 
 Otherwise **never** call `request_supertab_unlock` for vague chit-chat.
 
