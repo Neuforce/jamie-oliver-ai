@@ -36,6 +36,20 @@ export function resolveUnlockSurfaceRecipeId(input: {
 }
 
 /** Whether SpendMandateConsentInline should mount for this Jamie turn. */
+/** Pin active unlock surface when it is not already on the last Jamie turn. */
+export function resolvePinnedUnlockRecipeId(
+  activeUnlockRecipeId: string | null | undefined,
+  lastMessageSurfaceRecipeId: string | null | undefined,
+): string | null {
+  if (!activeUnlockRecipeId) {
+    return null;
+  }
+  if (activeUnlockRecipeId === lastMessageSurfaceRecipeId) {
+    return null;
+  }
+  return activeUnlockRecipeId;
+}
+
 export function shouldMountSpendMandateConsentInline(input: {
   toolParts?: ToolInvocationPart[];
   recipeDetail?: RecipeDetailData;

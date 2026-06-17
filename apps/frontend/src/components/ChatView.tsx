@@ -31,6 +31,7 @@ import {
   getUnlockState,
   openAsk,
   subscribeCommerceStore,
+  useActiveUnlockRecipeId,
 } from '../lib/commerceStore';
 import { handleVoiceSpendMandateConsentResolved } from '../lib/voiceSpendMandateConsentResolved';
 import type { RecipePaywallMetadata } from '../lib/recipePaywallHandler';
@@ -76,6 +77,7 @@ import {
 import {
   getRecipeDetailViewLabel,
   isRecipeDetailViewDisabled,
+  resolvePinnedUnlockRecipeId,
   resolveUnlockSurfaceRecipeId,
   shouldMountSpendMandateConsentInline,
 } from '../lib/unlockSurfaceInline';
@@ -355,6 +357,7 @@ export function ChatView({
   onPrefetchChatRecipeAccess,
 }: ChatViewProps) {
   useSyncExternalStore(subscribeCommerceStore, getCommerceSnapshotVersion);
+  const activeUnlockRecipeId = useActiveUnlockRecipeId();
   const [messages, setMessages] = useState<Message[]>(loadMessagesFromStorage);
   const rollerMessages = useMemo<RollerMessage[]>(
     () =>
@@ -366,6 +369,29 @@ export function ChatView({
         voiceExpandable: isVoiceExpandableMessage(message),
       })),
     [messages],
+  );
+  const lastJamieMessage = useMemo(() => {
+    for (let i = messages.length - 1; i >= 0; i -= 1) {
+      if (messages[i].type === 'jamie') {
+        return messages[i];
+      }
+    }
+    return null;
+  }, [messages]);
+  const lastJamieMessageId = lastJamieMessage?.id ?? null;
+  const lastMessageSurfaceRecipeId = useMemo(() => {
+    if (!lastJamieMessage) {
+      return null;
+    }
+    return resolveUnlockSurfaceRecipeId({
+      toolParts: lastJamieMessage.toolParts,
+      recipeDetail: lastJamieMessage.recipeDetail,
+      recipes: lastJamieMessage.recipes,
+    }) ?? null;
+  }, [lastJamieMessage]);
+  const pinnedRecipeId = useMemo(
+    () => resolvePinnedUnlockRecipeId(activeUnlockRecipeId, lastMessageSurfaceRecipeId),
+    [activeUnlockRecipeId, lastMessageSurfaceRecipeId],
   );
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -1418,11 +1444,13 @@ export function ChatView({
   const renderMessageContent = useCallback((message: Message, options?: {
     voiceMode?: boolean;
     voiceContext?: RollerRenderContext;
+    isLastJamieMessage?: boolean;
   }) => {
     const voiceMode = options?.voiceMode ?? false;
     const voiceRole = options?.voiceContext?.role;
     const voiceExpanded = options?.voiceContext?.expanded ?? false;
     const onVoiceToggleExpand = options?.voiceContext?.onToggleExpand;
+    const isLastJamieMessage = options?.isLastJamieMessage ?? false;
 
     if (voiceMode && message.type === 'jamie') {
       const richPreview = getVoiceRichCardPreview(message);
@@ -1469,6 +1497,8 @@ export function ChatView({
         recipeDetail: message.recipeDetail,
         recipes: message.recipes,
       });
+      const showUnlockSurfaceOnMessage = showUnlockSurfaceInline
+        && (voiceMode || isLastJamieMessage);
 
       return (
         <>
@@ -1488,7 +1518,7 @@ export function ChatView({
                 })}
                 className={voiceMode ? 'process-card--embedded' : undefined}
               />
-              {showUnlockSurfaceInline && (
+              {showUnlockSurfaceOnMessage && (
                 <SpendMandateConsentInline
                   backendRecipeId={unlockSurfaceRecipeId}
                   className="mt-3"
@@ -1635,7 +1665,7 @@ export function ChatView({
               const hideAuxiliaryPayloadBlocks =
                 voiceMode && voiceExpanded && Boolean(voiceFeatured);
 
-              const mandateConsentBlock = showUnlockSurfaceInline ? (
+              const mandateConsentBlock = showUnlockSurfaceOnMessage ? (
                 <SpendMandateConsentInline
                   backendRecipeId={unlockSurfaceRecipeId}
                   className="jamie-thread-card__payload"
@@ -1792,7 +1822,7 @@ export function ChatView({
         </p>
       </div>
     );
-  }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion, resolveCommerceBadgeForBackendId, resolveCommerceBadgeForRecipe]);
+  }, [expandedMessageIds, renderFeaturedPayload, onRecipeClick, toggleMessageExpansion, resolveCommerceBadgeForBackendId, resolveCommerceBadgeForRecipe, recipeModalOpen, focusedRecipeBackendId]);
 
   return (
     <div
@@ -1853,7 +1883,9 @@ export function ChatView({
                 {index > 0 && (
                   <div className="h-px w-full bg-[rgba(35,66,82,0.06)] my-4" />
                 )}
-                {renderMessageContent(message)}
+                {renderMessageContent(message, {
+                  isLastJamieMessage: message.id === lastJamieMessageId,
+                })}
               </div>
             ))}
 
@@ -2107,6 +2139,29 @@ export function ChatView({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Pinned active-unlock surface — text mode only, above composer */}
+      {!isVoiceActive && pinnedRecipeId && (
+        <div
+          className="jamie-shell-width"
+          style={{
+            position: 'sticky',
+            bottom: 0,
+            flexShrink: 0,
+            marginTop: 8,
+            padding: '0 0 4px',
+            zIndex: 10,
+          }}
+        >
+          <SpendMandateConsentInline
+            backendRecipeId={pinnedRecipeId}
+            placement="chat"
+            recipeSheetOpenForRecipe={Boolean(
+              recipeModalOpen && focusedRecipeBackendId === pinnedRecipeId,
+            )}
+          />
+        </div>
+      )}
 
       {/* Chat Input - Always at bottom */}
       {!isVoiceActive && (
