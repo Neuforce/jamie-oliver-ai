@@ -2,24 +2,13 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { Clock, Users, ChefHat, ChevronRight } from 'lucide-react';
 import type { MealPlanData, ToolRecipe } from '../lib/api';
+import { formatDuration } from '../lib/formatDuration';
 
 interface MealPlanCardProps {
   mealPlan: MealPlanData;
   onViewRecipe: (recipeId: string) => void;
   onCookRecipe: (recipeId: string) => void;
 }
-
-// Helper to format duration
-const formatDuration = (isoTime?: string): string => {
-  if (!isoTime) return '';
-  const match = isoTime.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
-  if (!match) return isoTime;
-  const hours = match[1] ? parseInt(match[1]) : 0;
-  const minutes = match[2] ? parseInt(match[2]) : 0;
-  if (hours > 0 && minutes > 0) return `${hours}h ${minutes}m`;
-  if (hours > 0) return `${hours}h`;
-  return `${minutes}min`;
-};
 
 // Course display names
 const courseNames: Record<string, string> = {

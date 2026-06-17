@@ -481,12 +481,12 @@ export function RecipeModal({
               className="jamie-recipe-modal__supertab"
               data-supertab-pane="true"
             >
-              <div className="jamie-recipe-modal__unlock-pane space-y-3">
-                <p className="text-sm text-[#5C5C5C] leading-relaxed">
+              <div className="jamie-recipe-modal__unlock-pane">
+                <p className="jamie-recipe-modal__unlock-copy">
                   Unlock this recipe to cook with Jamie step by step.
                   {unlockPriceLabel ? ` This unlock is ${unlockPriceLabel}.` : ''}
                 </p>
-                <div className="flex flex-wrap items-center gap-3">
+                <div className="jamie-recipe-modal__unlock-actions">
                   <button
                     type="button"
                     className="jamie-recipe-modal__header-pill"
@@ -503,7 +503,7 @@ export function RecipeModal({
                       : 'Unlock this recipe'}
                   </button>
                 </div>
-                <p className="text-xs text-[#9A9A9A]">Secured by Supertab</p>
+                <p className="jamie-recipe-modal__unlock-trust">Secured by Supertab</p>
               </div>
             </div>
           )}

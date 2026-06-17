@@ -3600,7 +3600,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: stretch;
-  padding: 12px 0 180px;
+  padding: max(12px, env(safe-area-inset-top, 0px)) 0 180px;
   overflow: hidden;
   /* Prevent iOS rubber-band scroll on the body from stealing the drag. */
   overscroll-behavior: contain;
@@ -3932,6 +3932,17 @@ body {
   }
 }
 
+@media (max-width: 390px) {
+  .jamie-onboarding-panel {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+
+  .jamie-onboarding-hero {
+    margin-bottom: 1.5rem;
+  }
+}
+
 .jamie-floating-card {
   background: var(--jamie-surface);
   border-radius: var(--jamie-radius-lg);
@@ -4249,6 +4260,92 @@ body {
 
 .jamie-chip[data-active]:hover {
   background: #2f5a59;
+}
+
+/*
+ * Static recipe metadata chip — time, difficulty, ingredient/step counts.
+ * Non-interactive counterpart to `.jamie-chip` (filter pills). Used on
+ * voice rich cards, compact previews, and recipe detail payloads.
+ */
+.recipe-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(61, 110, 108, 0.08);
+  border: 1px solid rgba(61, 110, 108, 0.1);
+  color: var(--jamie-ink-teal, #3d6e6c);
+  font-family: var(--jamie-font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+
+/* Voice / thread recipe detail payload (no double white surface). */
+.voice-recipe-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.voice-recipe-detail__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+}
+
+.voice-recipe-detail__title {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--font-display, Poppins, sans-serif);
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--jamie-text-heading, #2c5f5d);
+  text-transform: uppercase;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.voice-recipe-detail__badge {
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+.voice-recipe-detail__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 12px;
+}
+
+.voice-recipe-detail__meta-row .recipe-meta-chip:nth-child(n + 4) {
+  display: none;
+}
+
+.voice-recipe-detail__description p {
+  margin: 0 0 14px;
+  font-family: var(--font-display, Poppins, sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--jamie-text-primary, #234252);
+}
+
+.voice-recipe-detail__actions {
+  padding-top: 2px;
 }
 
 .jamie-page-shell {
@@ -5190,6 +5287,75 @@ body {
 
   .jamie-browse-grid { grid-template-columns: 1fr; }
 
+  .jamie-voice-stage {
+    padding-bottom: calc(168px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .jamie-app-header-shell {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+
+  .jamie-thread-card--jamie {
+    padding: 18px 16px;
+  }
+
+  .jamie-thread-card--user {
+    max-width: min(86%, 320px);
+    padding: 12px 16px;
+  }
+
+  .jamie-thread-stack {
+    gap: 14px;
+  }
+
+  .jamie-composer-shell {
+    padding: 8px 0 max(12px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .jamie-composer {
+    min-height: 56px;
+  }
+
+  .voice-recipe-detail__header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .voice-recipe-detail__badge {
+    align-self: flex-start;
+  }
+
+  .voice-recipe-detail__meta-row .recipe-meta-chip:nth-child(n + 3) {
+    display: none;
+  }
+
+  .jamie-onboarding-panel {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .jamie-recipe-modal-body {
+    gap: 16px;
+    padding-bottom: max(40px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .jamie-recipe-modal__title {
+    font-size: 24px;
+    margin-top: 4px;
+  }
+
+  .jamie-recipe-modal__header-pill {
+    height: 38px;
+    padding: 0 16px;
+    font-size: 13px;
+  }
+
+  .jamie-recipe-modal__unlock-actions .jamie-recipe-modal__header-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
   .jamie-voice-dock-shell {
     padding: 4px var(--jamie-shell-gutter, 16px) max(6px, env(safe-area-inset-bottom, 0px));
   }
@@ -6079,10 +6245,39 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 12px;
+  padding: 14px 16px;
   background: rgba(61, 110, 108, 0.04);
   border: 1px solid rgba(61, 110, 108, 0.12);
   border-radius: 16px;
+}
+
+.jamie-recipe-modal__unlock-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.jamie-recipe-modal__unlock-copy {
+  margin: 0;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 14px;
+  line-height: 1.55;
+  color: #5c5c5c;
+}
+
+.jamie-recipe-modal__unlock-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.jamie-recipe-modal__unlock-trust {
+  margin: 0;
+  font-family: var(--jamie-font-sans, 'Poppins', sans-serif);
+  font-size: 12px;
+  line-height: 1.4;
+  color: #9a9a9a;
 }
 
 /* --- Segmented pill tab control ------------------------------------------- */
