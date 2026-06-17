@@ -3,6 +3,7 @@ import type { RecipeAccessResponse, SpendMandate } from './api';
 import {
   clearActiveAsk,
   getActiveAsk,
+  getActiveUnlockRecipeId,
   getCommerceState,
   getMandate,
   getRecipeAccess,
@@ -280,6 +281,33 @@ describe('commerceStore', () => {
     });
     expect(getUnlockState('fish-chips')).toBe('requested');
     expect(getActiveAsk()?.recipeId).toBe('fish-chips');
+  });
+
+  it('getActiveUnlockRecipeId tracks the most recent surface transition', () => {
+    expect(getActiveUnlockRecipeId()).toBeNull();
+
+    setUnlockState('salad-a', 'processing');
+    expect(getActiveUnlockRecipeId()).toBe('salad-a');
+
+    setUnlockState('fish-chips', 'requested');
+    expect(getActiveUnlockRecipeId()).toBe('fish-chips');
+  });
+
+  it('getActiveUnlockRecipeId clears when the active recipe resolves to locked', () => {
+    setUnlockState('fish-chips', 'processing');
+    expect(getActiveUnlockRecipeId()).toBe('fish-chips');
+
+    setUnlockState('fish-chips', 'locked');
+    expect(getActiveUnlockRecipeId()).toBeNull();
+  });
+
+  it('getActiveUnlockRecipeId prefers recency when two recipes are in surface states', () => {
+    setUnlockState('salad-a', 'processing');
+    setUnlockState('fish-chips', 'requested');
+    expect(getActiveUnlockRecipeId()).toBe('fish-chips');
+
+    setUnlockState('salad-a', 'unlocked');
+    expect(getActiveUnlockRecipeId()).toBe('salad-a');
   });
 });
 

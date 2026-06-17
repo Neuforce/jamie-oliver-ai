@@ -104,6 +104,8 @@ let reconcileToken = 0;
 const ASK_RECONCILE_INTERVAL_MS = 2500;
 const ASK_RECONCILE_MAX_ATTEMPTS = 24; // ~60s ceiling
 let snapshotVersion = 0;
+/** Most recently transitioned unlock-surface recipe (recency tie-break). */
+let lastUnlockSurfaceRecipeId: string | null = null;
 
 const listeners = new Set<StoreListener>();
 
@@ -242,7 +244,29 @@ export function setUnlockState(recipeId: string, state: UnlockState): void {
     ...recipeCommerce,
     [recipeId]: { ...entry, unlockState: state },
   };
+  if (isUnlockSurfaceState(state) && state !== 'locked') {
+    lastUnlockSurfaceRecipeId = recipeId;
+  } else if (state === 'locked' && lastUnlockSurfaceRecipeId === recipeId) {
+    lastUnlockSurfaceRecipeId = null;
+  }
   notifyListeners();
+}
+
+/** Active unlock-surface recipe: recency-first, then first surface state in store order. */
+export function getActiveUnlockRecipeId(): string | null {
+  if (lastUnlockSurfaceRecipeId) {
+    const lastState = getUnlockState(lastUnlockSurfaceRecipeId);
+    if (isUnlockSurfaceState(lastState) && lastState !== 'locked') {
+      return lastUnlockSurfaceRecipeId;
+    }
+  }
+  for (const recipeId of Object.keys(recipeCommerce)) {
+    const state = recipeCommerce[recipeId]?.unlockState ?? 'locked';
+    if (isUnlockSurfaceState(state) && state !== 'locked') {
+      return recipeId;
+    }
+  }
+  return null;
 }
 
 export function getCommerceState(recipeId?: string | null): CommerceStateSnapshot {
@@ -475,6 +499,15 @@ export function useCommerceState(recipeId?: string | null): CommerceStateSnapsho
   );
 }
 
+/** Subscribe to the currently active unlock-surface recipe id. */
+export function useActiveUnlockRecipeId(): string | null {
+  return useSyncExternalStore(
+    subscribeCommerceStore,
+    getActiveUnlockRecipeId,
+    () => null,
+  );
+}
+
 /** Subscribe to the per-recipe unlock projection state (primitive — stable snapshot). */
 export function useUnlockState(recipeId?: string | null): UnlockState {
   return useSyncExternalStore(
@@ -503,5 +536,6 @@ export function resetCommerceStoreForTests(): void {
   askPromise = null;
   reconcileTimer = null;
   snapshotVersion = 0;
+  lastUnlockSurfaceRecipeId = null;
   listeners.clear();
 }

@@ -2,6 +2,7 @@ import { describe, expect, it, beforeEach } from 'vitest';
 import {
   getRecipeDetailViewLabel,
   isRecipeDetailViewDisabled,
+  resolvePinnedUnlockRecipeId,
   resolveUnlockSurfaceRecipeId,
   shouldMountSpendMandateConsentInline,
 } from './unlockSurfaceInline';
@@ -96,5 +97,18 @@ describe('unlockSurfaceInline', () => {
   it('keeps View full recipe enabled when not processing', () => {
     expect(isRecipeDetailViewDisabled('fish-pie')).toBe(false);
     expect(getRecipeDetailViewLabel('fish-pie')).toBe('View full recipe');
+  });
+
+  it('resolvePinnedUnlockRecipeId returns null when active matches last message', () => {
+    expect(resolvePinnedUnlockRecipeId('fish-pie', 'fish-pie')).toBeNull();
+  });
+
+  it('resolvePinnedUnlockRecipeId returns active when it differs from last message', () => {
+    expect(resolvePinnedUnlockRecipeId('fish-pie', 'rainbow-salad')).toBe('fish-pie');
+  });
+
+  it('resolvePinnedUnlockRecipeId returns null when active is null', () => {
+    expect(resolvePinnedUnlockRecipeId(null, 'fish-pie')).toBeNull();
+    expect(resolvePinnedUnlockRecipeId(undefined, 'fish-pie')).toBeNull();
   });
 });
