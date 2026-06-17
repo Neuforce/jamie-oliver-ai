@@ -28,6 +28,7 @@ import { VoiceThinkingBubble } from './VoiceThinkingBubble';
 import {
   getCommerceSnapshotVersion,
   getRecipeAccess as getStoredRecipeAccess,
+  getUnlockState,
   openAsk,
   subscribeCommerceStore,
 } from '../lib/commerceStore';
@@ -69,8 +70,15 @@ import type { RecipeAccessResponse } from '../lib/api';
 import {
   getRecipeCommerceBadge,
   RECIPE_COMMERCE_BADGE_STYLES,
+  RECIPE_COMMERCE_PROCESSING_BADGE,
   type RecipeCommerceBadge,
 } from '../lib/recipeAccessDisplay';
+import {
+  getRecipeDetailViewLabel,
+  isRecipeDetailViewDisabled,
+  resolveUnlockSurfaceRecipeId,
+  shouldMountSpendMandateConsentInline,
+} from '../lib/unlockSurfaceInline';
 
 interface Message {
   id: string;
@@ -414,6 +422,9 @@ export function ChatView({
     if (!backendId) {
       return null;
     }
+    if (getUnlockState(backendId) === 'processing') {
+      return RECIPE_COMMERCE_PROCESSING_BADGE;
+    }
     const access = getStoredRecipeAccess(backendId) ?? null;
     const isLoading = recipeAccessLoadingId === backendId;
     return getRecipeCommerceBadge(access, isLoading);
@@ -437,6 +448,9 @@ export function ChatView({
           ...RECIPE_COMMERCE_BADGE_STYLES[badge.tone],
         }}
       >
+        {badge.tone === 'processing' ? (
+          <Loader2 className="size-3 animate-spin" aria-hidden="true" />
+        ) : null}
         {badge.label}
       </span>
     );
@@ -1394,9 +1408,10 @@ export function ChatView({
                 type="button"
                 className="jamie-recipe-modal__header-pill"
                 aria-label="View full recipe details"
+                disabled={isRecipeDetailViewDisabled(payload.recipe.recipe_id)}
                 onClick={() => void openRecipeModalFromDetail(payload.recipe)}
               >
-                View full recipe
+                {getRecipeDetailViewLabel(payload.recipe.recipe_id)}
               </button>
             </div>
           </div>
@@ -1450,13 +1465,16 @@ export function ChatView({
     }
 
     if (message.type === 'jamie') {
-      const mandateConsentPart = message.toolParts?.find(
-        (part) => part.outputKind === 'mandate_consent',
-      );
-      const mandateBackendId =
-        mandateConsentPart?.paywallBackendId
-        ?? message.recipeDetail?.recipe_id
-        ?? undefined;
+      const unlockSurfaceRecipeId = resolveUnlockSurfaceRecipeId({
+        toolParts: message.toolParts,
+        recipeDetail: message.recipeDetail,
+        recipes: message.recipes,
+      });
+      const showUnlockSurfaceInline = shouldMountSpendMandateConsentInline({
+        toolParts: message.toolParts,
+        recipeDetail: message.recipeDetail,
+        recipes: message.recipes,
+      });
 
       return (
         <>
@@ -1476,16 +1494,16 @@ export function ChatView({
                 })}
                 className={voiceMode ? 'process-card--embedded' : undefined}
               />
-              {mandateConsentPart && (
+              {showUnlockSurfaceInline && (
                 <SpendMandateConsentInline
-                  backendRecipeId={mandateBackendId}
+                  backendRecipeId={unlockSurfaceRecipeId}
                   className="mt-3"
                   placement="chat"
                   recipeSheetOpenForRecipe={
                     Boolean(
                       recipeModalOpen
-                      && mandateBackendId
-                      && focusedRecipeBackendId === mandateBackendId,
+                      && unlockSurfaceRecipeId
+                      && focusedRecipeBackendId === unlockSurfaceRecipeId,
                     )
                   }
                 />
@@ -1623,16 +1641,16 @@ export function ChatView({
               const hideAuxiliaryPayloadBlocks =
                 voiceMode && voiceExpanded && Boolean(voiceFeatured);
 
-              const mandateConsentBlock = mandateConsentPart ? (
+              const mandateConsentBlock = showUnlockSurfaceInline ? (
                 <SpendMandateConsentInline
-                  backendRecipeId={mandateBackendId}
+                  backendRecipeId={unlockSurfaceRecipeId}
                   className="jamie-thread-card__payload"
                   placement="chat"
                   recipeSheetOpenForRecipe={
                     Boolean(
                       recipeModalOpen
-                      && mandateBackendId
-                      && focusedRecipeBackendId === mandateBackendId,
+                      && unlockSurfaceRecipeId
+                      && focusedRecipeBackendId === unlockSurfaceRecipeId,
                     )
                   }
                 />
