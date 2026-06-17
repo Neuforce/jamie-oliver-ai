@@ -109,9 +109,7 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
     <span
       className="inline-flex items-center gap-1 text-white text-[10px] font-semibold uppercase tracking-[0.08em]"
       style={{
-        position: 'absolute',
-        top: 12,
-        right: 12,
+        flexShrink: 0,
         height: '24px',
         padding: '4px 10px',
         borderRadius: '33554400px',
@@ -153,23 +151,43 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
           className="w-full h-full object-cover transition-transform duration-300 hover:scale-[1.03]"
         />
 
-        {/* Category / In-Progress badge — top-left, same teal pill as the feed card */}
-        <span
-          className="absolute top-3 left-3 inline-flex items-center gap-1.5 text-white text-xs font-semibold"
-          style={hasSession
-            ? { ...badgeStyle, background: '#10B981' }
-            : badgeStyle}
+        {/* Top badge bar — category left, commerce right; never overlap */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            display: 'flex',
+            alignItems: 'flex-start',
+            justifyContent: 'space-between',
+            gap: '8px',
+            padding: '12px',
+            pointerEvents: 'none',
+          }}
         >
-          {hasSession ? (
-            <>
-              <Clock className="size-3" />
-              In Progress
-            </>
-          ) : (
-            recipe.category.toUpperCase()
-          )}
-        </span>
-        {CommerceBadge}
+          <span
+            className="inline-flex items-center gap-1.5 text-white text-xs font-semibold"
+            style={{
+              ...(hasSession ? { ...badgeStyle, background: '#10B981' } : badgeStyle),
+              minWidth: 0,
+              maxWidth: '60%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {hasSession ? (
+              <>
+                <Clock className="size-3 shrink-0" />
+                In Progress
+              </>
+            ) : (
+              recipe.category.toUpperCase()
+            )}
+          </span>
+          {CommerceBadge}
+        </div>
       </div>
 
       {/* White body — fixed-height title row so all cards in a row align.

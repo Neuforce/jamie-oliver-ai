@@ -487,13 +487,15 @@ def plan_meal(
 
 def request_supertab_unlock(recipe_backend_id: str) -> str:
     """
-    Request opening the Supertab / My Tab paywall on the client's focused recipe sheet.
+    Request My Tab unlock for a published recipe in chat or on the recipe sheet.
 
     Use ONLY after the user clearly asks to unlock, purchase, pay, put something
-    \"on My Tab\", or checkout for a locked recipe whose **backend slug** matches
-    the recipe currently shown in their full-recipe modal. The client decides
-    whether to open checkout; tool output never proves purchase or entitlement — do
-    not tell the user they already own the recipe unless they stated that themselves.
+    \"on My Tab\", or checkout for a locked recipe. The **backend slug** must come
+    from a verified source — the focused recipe sheet context, `search_recipes`,
+    or `get_recipe_details` — never guessed or invented. The client shows an inline
+    approval card in chat (or handles auto-charge when eligible); tool output never
+    proves purchase or entitlement — do not tell the user they already own the recipe
+    unless they stated that themselves.
 
     Args:
         recipe_backend_id: Supabase/backend recipe slug (same id as discovery tools).
