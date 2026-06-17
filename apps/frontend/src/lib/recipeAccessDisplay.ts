@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { RecipeAccessResponse } from './api';
 
-export type RecipeCommerceBadgeTone = 'loading' | 'locked' | 'free' | 'owned';
+export type RecipeCommerceBadgeTone = 'loading' | 'locked' | 'free' | 'owned' | 'processing';
 
 export interface RecipeCommerceBadge {
   label: string;
@@ -18,6 +18,11 @@ export function formatRecipeAccessPrice(access: RecipeAccessResponse): string | 
   const symbol = code === 'USD' || code === 'US' ? '$' : code === 'GBP' ? '£' : code === 'EUR' ? '€' : '$';
   return `${symbol}${(amount / 100).toFixed(2)}`;
 }
+
+export const RECIPE_COMMERCE_PROCESSING_BADGE: RecipeCommerceBadge = {
+  label: 'Putting on Tab…',
+  tone: 'processing',
+};
 
 export function getRecipeCommerceBadge(
   access: RecipeAccessResponse | null | undefined,
@@ -58,5 +63,9 @@ export const RECIPE_COMMERCE_BADGE_STYLES: Record<RecipeCommerceBadgeTone, CSSPr
   },
   owned: {
     background: '#10B981',
+  },
+  processing: {
+    background: '#7C5AC3',
+    boxShadow: '0 8px 18px rgba(124, 90, 195, 0.35)',
   },
 };

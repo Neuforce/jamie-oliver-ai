@@ -6,6 +6,7 @@ import { useUnlockState } from '../lib/commerceStore';
 import type { RecipeAccessResponse } from '../lib/api';
 import { routeToUrl } from '../lib/permalinks';
 import { startRecipeUnlock } from '../lib/unlockController';
+import { RECIPE_UNLOCK_PROCESSING_LABEL } from '../lib/unlockSurfaceInline';
 import { RecipeDetailsTabs } from './RecipeDetailsTabs';
 // @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
@@ -171,6 +172,18 @@ export function RecipeModal({
           aria-label="Checking access"
         >
           Checking…
+        </button>
+      );
+    }
+    if (isLocked && unlockState === 'processing') {
+      return (
+        <button
+          type="button"
+          className="jamie-recipe-modal__header-pill"
+          disabled
+          aria-label={RECIPE_UNLOCK_PROCESSING_LABEL}
+        >
+          {RECIPE_UNLOCK_PROCESSING_LABEL}
         </button>
       );
     }
@@ -463,7 +476,7 @@ export function RecipeModal({
            * is never ambiguous. The header pill scrolls to this pane
            * when tapped while locked.
            */}
-          {isLocked && recipeAccess && !agentUnlockActive && (
+          {isLocked && recipeAccess && (!agentUnlockActive || unlockState === 'processing') && (
             <div
               className="jamie-recipe-modal__supertab"
               data-supertab-pane="true"
@@ -485,7 +498,9 @@ export function RecipeModal({
                       void startRecipeUnlock(recipe.backendId, { trigger: 'direct' });
                     }}
                   >
-                    {unlockState === 'processing' ? 'Unlocking…' : 'Unlock this recipe'}
+                    {unlockState === 'processing'
+                      ? RECIPE_UNLOCK_PROCESSING_LABEL
+                      : 'Unlock this recipe'}
                   </button>
                 </div>
                 <p className="text-xs text-[#9A9A9A]">Secured by Supertab</p>

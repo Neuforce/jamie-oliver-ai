@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Recipe } from '../data/recipes';
-import { Clock, Users, ChefHat, Lock } from 'lucide-react';
+import { Clock, Users, ChefHat, Lock, Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
 import type { RecipeCommerceBadge } from '../lib/recipeAccessDisplay';
 import { RECIPE_COMMERCE_BADGE_STYLES } from '../lib/recipeAccessDisplay';
@@ -17,6 +17,7 @@ interface RecipeCardProps {
 export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPill = false, showInProgress = false, commerceBadge = null }: RecipeCardProps) {
   const [hasSession, setHasSession] = useState(false);
   const [sessionProgress, setSessionProgress] = useState(0);
+  const isProcessingCommerce = commerceBadge?.tone === 'processing';
   const badgeStyle: React.CSSProperties = {
     height: '27px',
     padding: '6px 12px',
@@ -118,6 +119,9 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
       }}
     >
       {commerceBadge.tone === 'locked' && <Lock className="size-3" aria-hidden="true" />}
+      {commerceBadge.tone === 'processing' && (
+        <Loader2 className="size-3 animate-spin" aria-hidden="true" />
+      )}
       {commerceBadge.label}
     </span>
   ) : null;
@@ -225,9 +229,10 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
   if (variant === 'chat') {
     return (
       <motion.div
-        whileTap={{ scale: 0.98 }}
-        className="cursor-pointer w-full"
-        onClick={onClick}
+        whileTap={isProcessingCommerce ? undefined : { scale: 0.98 }}
+        className={isProcessingCommerce ? 'w-full pointer-events-none opacity-90' : 'cursor-pointer w-full'}
+        onClick={isProcessingCommerce ? undefined : onClick}
+        aria-disabled={isProcessingCommerce || undefined}
       >
         <CompactCard maxWidth={335} />
       </motion.div>
