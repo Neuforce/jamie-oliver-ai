@@ -40,7 +40,7 @@ export function VoiceRichCardPreview({
         {preview.chips.length > 0 && (
           <ul className="voice-rich-preview__chips" aria-label="Recipe details">
             {preview.chips.map((chip) => (
-              <li key={chip} className="voice-rich-preview__chip">
+              <li key={chip} className="recipe-meta-chip">
                 {chip}
               </li>
             ))}

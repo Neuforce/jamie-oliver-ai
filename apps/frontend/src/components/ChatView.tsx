@@ -79,6 +79,7 @@ import {
   resolveUnlockSurfaceRecipeId,
   shouldMountSpendMandateConsentInline,
 } from '../lib/unlockSurfaceInline';
+import { formatDuration } from '../lib/formatDuration';
 
 interface Message {
   id: string;
@@ -1351,59 +1352,51 @@ export function ChatView({
             <ShoppingListCard shoppingList={payload.shoppingList} />
           </div>
         );
-      case 'recipe_detail':
+      case 'recipe_detail': {
+        const metaChips: string[] = [];
+        if (payload.recipe.estimated_time) {
+          metaChips.push(formatDuration(payload.recipe.estimated_time));
+        }
+        if (payload.recipe.difficulty) {
+          metaChips.push(payload.recipe.difficulty);
+        }
+        if (payload.recipe.ingredient_count) {
+          metaChips.push(`${payload.recipe.ingredient_count} ingredients`);
+        }
+        if (payload.recipe.step_count) {
+          metaChips.push(`${payload.recipe.step_count} steps`);
+        }
+
         return (
           <div
-            className="bg-white overflow-hidden"
+            className="voice-recipe-detail"
             data-voice-expandable-card="true"
-            style={{ borderRadius: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}
           >
-            <div style={{ padding: '16px 20px 12px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '12px' }}>
-              <h3 style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)', fontSize: '16px', fontWeight: 700, color: 'var(--jamie-text-heading, #2C5F5D)', textTransform: 'uppercase', margin: 0, flex: 1 }}>
+            <div className="voice-recipe-detail__header">
+              <h3 className="voice-recipe-detail__title">
                 {payload.recipe.title}
               </h3>
-              {renderCommerceBadgeChip(
-                resolveCommerceBadgeForBackendId(payload.recipe.recipe_id),
-              )}
+              <div className="voice-recipe-detail__badge">
+                {renderCommerceBadgeChip(
+                  resolveCommerceBadgeForBackendId(payload.recipe.recipe_id),
+                )}
+              </div>
             </div>
-            {Boolean(
-              payload.recipe.estimated_time ||
-              payload.recipe.difficulty ||
-              payload.recipe.ingredient_count ||
-              payload.recipe.step_count,
-            ) && (
-              <div
-                style={{
-                  padding: '0 20px 12px',
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '8px',
-                }}
-              >
-                {payload.recipe.estimated_time && (
-                  <span className="jamie-chip">{payload.recipe.estimated_time}</span>
-                )}
-                {payload.recipe.difficulty && (
-                  <span className="jamie-chip">{payload.recipe.difficulty}</span>
-                )}
-                {payload.recipe.ingredient_count ? (
-                  <span className="jamie-chip">
-                    {payload.recipe.ingredient_count} ingredients
+            {metaChips.length > 0 && (
+              <div className="voice-recipe-detail__meta-row">
+                {metaChips.map((chip) => (
+                  <span key={chip} className="recipe-meta-chip">
+                    {chip}
                   </span>
-                ) : null}
-                {payload.recipe.step_count ? (
-                  <span className="jamie-chip">{payload.recipe.step_count} steps</span>
-                ) : null}
+                ))}
               </div>
             )}
             {payload.recipe.description && (
-              <div style={{ padding: '0 20px 16px' }}>
-                <p style={{ fontFamily: 'var(--font-display, Poppins, sans-serif)', fontSize: '14px', color: 'var(--jamie-text-primary, #234252)', margin: 0, lineHeight: 1.55 }}>
-                  {payload.recipe.description}
-                </p>
+              <div className="voice-recipe-detail__description">
+                <p>{payload.recipe.description}</p>
               </div>
             )}
-            <div style={{ padding: '0 20px 20px' }}>
+            <div className="voice-recipe-detail__actions">
               <button
                 type="button"
                 className="jamie-recipe-modal__header-pill"
@@ -1416,6 +1409,7 @@ export function ChatView({
             </div>
           </div>
         );
+      }
       default:
         return null;
     }

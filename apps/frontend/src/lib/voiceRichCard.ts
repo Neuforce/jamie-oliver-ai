@@ -3,6 +3,7 @@ import type { Recipe } from '../data/recipes';
 import type { ProcessCardState } from '../components/ProcessCardTypes';
 import type { FeaturedPayload } from '../components/ProcessCardTypes';
 import { selectFeatured } from '../components/ProcessCard';
+import { formatDuration } from './formatDuration';
 import { type ToolInvocationPart } from './chatStream';
 
 export type VoiceRichCardKind =
@@ -185,7 +186,7 @@ function chipsFromRecipe(recipe: Recipe): string[] {
 
 function chipsFromRecipeDetail(detail: RecipeDetailData): string[] {
   const chips: string[] = [];
-  if (detail.estimated_time) chips.push(detail.estimated_time);
+  if (detail.estimated_time) chips.push(formatDuration(detail.estimated_time));
   if (detail.difficulty) chips.push(detail.difficulty);
   if (detail.ingredient_count) chips.push(`${detail.ingredient_count} ingredients`);
   return chips.slice(0, 3);

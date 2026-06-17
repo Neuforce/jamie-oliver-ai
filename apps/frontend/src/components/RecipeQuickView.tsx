@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Clock, Users, ChefHat, ArrowRight } from 'lucide-react';
 import type { RecipeDetailData } from '../lib/api';
+import { formatDuration } from '../lib/formatDuration';
 
 interface RecipeQuickViewProps {
   recipe: RecipeDetailData;
@@ -10,18 +11,6 @@ interface RecipeQuickViewProps {
   onViewFull: (recipeId: string) => void;
   onCook: (recipeId: string) => void;
 }
-
-// Helper to format duration
-const formatDuration = (isoTime?: string): string => {
-  if (!isoTime) return '';
-  const match = isoTime.match(/PT(?:(\d+)H)?(?:(\d+)M)?/);
-  if (!match) return isoTime;
-  const hours = match[1] ? parseInt(match[1]) : 0;
-  const minutes = match[2] ? parseInt(match[2]) : 0;
-  if (hours > 0 && minutes > 0) return `${hours}h ${minutes}m`;
-  if (hours > 0) return `${hours}h`;
-  return `${minutes} min`;
-};
 
 export const RecipeQuickView: React.FC<RecipeQuickViewProps> = ({
   recipe,
