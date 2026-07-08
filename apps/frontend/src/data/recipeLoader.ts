@@ -285,7 +285,7 @@ export function formatCategoryLabel(raw: string): string {
 
 function extractCategory(
   title: string | undefined | null,
-  ingredients?: BackendRecipePayload['ingredients'],
+  ingredients?: Array<{ name: string }>,
 ): string {
   if (title == null || typeof title !== 'string') {
     return 'Main Course';

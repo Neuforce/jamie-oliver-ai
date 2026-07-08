@@ -91,6 +91,10 @@ export interface ChatEvent {
     currency_code?: string;
     ceiling_amount?: number;
     ask_id?: string;
+    // Recipe paywall (auto-charge vs interactive ask)
+    auto_charge?: boolean;
+    mandate?: SpendMandate;
+    hold?: PurchaseHold;
   };
 }
 
@@ -181,8 +185,15 @@ export interface SupertabBootstrapResponse {
 export interface SupertabPurchaseSyncRequest {
   user_id: string;
   recipe_id: string;
-  purchase?: Record<string, unknown> | null;
-  prior_entitlement?: Array<Record<string, unknown>>;
+  /*
+   * These are opaque SDK response fragments (Supertab's own `Purchase`/
+   * `EntitlementStatus` types, which lack an index signature) forwarded
+   * verbatim as a JSON request body — `unknown` is the honest type here,
+   * not `Record<string, unknown>` (which SDK interfaces can't structurally
+   * satisfy without a cast at every call site).
+   */
+  purchase?: unknown;
+  prior_entitlement?: unknown[];
 }
 
 export interface SupertabPurchaseSyncResponse {
@@ -636,11 +647,28 @@ export async function getSpendMandateAsk(askId: string): Promise<SpendMandateAsk
   return response.json();
 }
 
+export interface PurchaseHold {
+  id: string;
+  userId: string | null;
+  sessionId: string | null;
+  backendRecipeId: string;
+  priceAmount: number;
+  currencyCode: string;
+  status: 'holding' | 'committed' | 'undone' | 'failed';
+  askId: string | null;
+  mandateId: string | null;
+  holdExpiresAt: string | null;
+  committedAt: string | null;
+  undoneAt: string | null;
+  purchaseId: string | null;
+  createdAt: string | null;
+}
+
 export async function resolveSpendMandateAsk(
   askId: string,
   decision: 'grant' | 'decline',
   userId?: string,
-): Promise<{ ask: SpendMandateAsk; mandate?: SpendMandate }> {
+): Promise<{ ask: SpendMandateAsk; mandate?: SpendMandate; hold?: PurchaseHold }> {
   const response = await fetch(
     `${API_BASE_URL}/api/v1/spend-mandate-asks/${encodeURIComponent(askId)}/resolve`,
     {
@@ -656,6 +684,50 @@ export async function resolveSpendMandateAsk(
   if (!response.ok) {
     const errorText = await response.text();
     throw new Error(`Failed to resolve spend mandate ask: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}
+
+export async function getPurchaseHold(holdId: string): Promise<PurchaseHold> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/v1/purchase-holds/${encodeURIComponent(holdId)}`,
+  );
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to get purchase hold: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}
+
+export async function commitPurchaseHold(
+  holdId: string,
+): Promise<{ hold: PurchaseHold; alreadyCommitted?: boolean }> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/v1/purchase-holds/${encodeURIComponent(holdId)}/commit`,
+    { method: 'POST' },
+  );
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to commit purchase hold: ${response.status} ${errorText}`);
+  }
+  return response.json();
+}
+
+export async function undoPurchaseHold(
+  holdId: string,
+  params: { channel: 'chat' | 'voice'; decision_detail?: string; user_id?: string | null },
+): Promise<{ hold: PurchaseHold }> {
+  const response = await fetch(
+    `${API_BASE_URL}/api/v1/purchase-holds/${encodeURIComponent(holdId)}/undo`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    },
+  );
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Failed to undo purchase hold: ${response.status} ${errorText}`);
   }
   return response.json();
 }

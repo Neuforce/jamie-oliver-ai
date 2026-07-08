@@ -5,6 +5,7 @@ import {
   getActiveAsk,
   getActiveUnlockRecipeId,
   getCommerceState,
+  getHoldMeta,
   getMandate,
   getRecipeAccess,
   getRecipeReceipt,
@@ -14,16 +15,19 @@ import {
   openAsk,
   resetCommerceStoreForTests,
   resolveAsk,
+  resolveAskWithServer,
   setAccess,
+  setHoldMeta,
   setMandate,
   setReceipt,
   setUnlockState,
 } from './commerceStore';
-import { getCurrentSpendMandate, getSpendMandateAsk } from './api';
+import { getCurrentSpendMandate, getSpendMandateAsk, resolveSpendMandateAsk } from './api';
 
 vi.mock('./api', () => ({
   getSpendMandateAsk: vi.fn(),
   getCurrentSpendMandate: vi.fn(),
+  resolveSpendMandateAsk: vi.fn(),
 }));
 
 function lockedAccess(recipeId: string): RecipeAccessResponse {
@@ -32,12 +36,14 @@ function lockedAccess(recipeId: string): RecipeAccessResponse {
     recipeUuid: 'uuid-1',
     accessState: 'locked',
     offering: {
+      id: `offering-${recipeId}`,
+      isFree: false,
       priceAmount: 5,
       currencyCode: 'USD',
       contentKey: `recipe:${recipeId}:cook`,
     },
     entitlement: null,
-    session: null,
+    activeSession: null,
   };
 }
 
@@ -223,12 +229,73 @@ describe('commerceStore', () => {
   it('isUnlockSurfaceState distinguishes locked from active surfaces', () => {
     expect(isUnlockSurfaceState('locked')).toBe(false);
     expect(isUnlockSurfaceState('requested')).toBe(true);
+    expect(isUnlockSurfaceState('holding')).toBe(true);
     expect(isUnlockSurfaceState('processing')).toBe(true);
     expect(isUnlockSurfaceState('unlocked')).toBe(true);
     expect(isUnlockSurfaceState('needsCheckout')).toBe(true);
     expect(isUnlockSurfaceState('noTab')).toBe(true);
     expect(isUnlockSurfaceState('declined')).toBe(true);
+    expect(isUnlockSurfaceState('undone')).toBe(true);
     expect(isUnlockSurfaceState('failed')).toBe(true);
+  });
+
+  it('setHoldMeta and getHoldMeta round-trip per recipe', () => {
+    setHoldMeta('fish-chips', {
+      holdId: 'hold-1',
+      holdExpiresAt: '2026-01-01T00:00:30.000Z',
+      priceAmount: 500,
+      currencyCode: 'USD',
+    });
+
+    expect(getHoldMeta('fish-chips')).toMatchObject({ holdId: 'hold-1' });
+    expect(getCommerceState('fish-chips').holdMeta).toMatchObject({ holdId: 'hold-1' });
+
+    setHoldMeta('fish-chips', null);
+    expect(getHoldMeta('fish-chips')).toBeNull();
+  });
+
+  it('resolveAskWithServer parses and returns hold from server response', async () => {
+    openAsk({
+      recipeId: 'fish-chips',
+      askId: 'ask-1',
+      priceAmount: 5,
+      currencyCode: 'USD',
+      ceilingAmount: 1000,
+    });
+    vi.mocked(resolveSpendMandateAsk).mockResolvedValue({
+      ask: {
+        id: 'ask-1',
+        backendRecipeId: 'fish-chips',
+        priceAmount: 5,
+        currencyCode: 'USD',
+        ceilingAmount: 1000,
+        status: 'active',
+      },
+      hold: {
+        id: 'hold-1',
+        userId: 'user-1',
+        sessionId: null,
+        backendRecipeId: 'fish-chips',
+        priceAmount: 500,
+        currencyCode: 'USD',
+        status: 'holding',
+        askId: 'ask-1',
+        mandateId: 'mandate-1',
+        holdExpiresAt: '2026-01-01T00:00:30.000Z',
+        committedAt: null,
+        undoneAt: null,
+        purchaseId: null,
+        createdAt: '2026-01-01T00:00:00.000Z',
+      },
+    });
+
+    const result = await resolveAskWithServer('fish-chips', true, 'user-1');
+
+    expect(result).toEqual({
+      approved: true,
+      hold: expect.objectContaining({ id: 'hold-1', backendRecipeId: 'fish-chips' }),
+    });
+    expect(getActiveAsk()).toBeNull();
   });
 
   it('setMandate updates global mandate snapshot', () => {

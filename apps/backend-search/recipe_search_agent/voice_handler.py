@@ -548,7 +548,10 @@ class DiscoveryVoiceHandler:
         from recipe_search_agent.commerce_context import set_commerce_context
         from recipe_search_agent.consent_intent import classify_consent_utterance
         from recipe_search_agent.spend_mandate_ask_service import SpendMandateAskService
-        from recipe_search_agent.spend_mandate_serialization import serialize_spend_mandate
+        from recipe_search_agent.spend_mandate_serialization import (
+            serialize_purchase_hold,
+            serialize_spend_mandate,
+        )
 
         set_commerce_context(self.session_id, self.jamie_user_id)
         ask_service = SpendMandateAskService()
@@ -572,6 +575,8 @@ class DiscoveryVoiceHandler:
             grant=intent == "grant",
             user_id=user_id,
             source="voice",
+            channel="voice",
+            decision_detail=transcription,
         )
         approved = intent == "grant" and result.get("ok") and not result.get("error")
         error = result.get("error")
@@ -592,6 +597,11 @@ class DiscoveryVoiceHandler:
                 "ask_id": ask.get("id"),
                 "approved": approved,
                 "mandate": serialize_spend_mandate(mandate) if mandate else None,
+                "hold": (
+                    serialize_purchase_hold(hold)
+                    if (hold := result.get("hold")) and isinstance(hold, dict)
+                    else None
+                ),
                 "reason": reason,
             },
             response_id=self._current_response_id,
@@ -611,6 +621,50 @@ class DiscoveryVoiceHandler:
         await self.synth_and_send(message)
         return True
 
+    async def _try_verbal_undo_resolution(self, transcription: str) -> bool:
+        """Resolve a pending purchase hold from spoken undo/cancel phrases."""
+        from recipe_search_agent.commerce_context import set_commerce_context
+        from recipe_search_agent.purchase_hold_service import PurchaseHoldService
+        from recipe_search_agent.undo_intent import classify_undo_utterance
+
+        set_commerce_context(self.session_id, self.jamie_user_id)
+        hold_service = PurchaseHoldService()
+        hold = hold_service.get_open_hold_for_session(self.session_id)
+        if not hold:
+            return False
+
+        if not classify_undo_utterance(transcription):
+            return False
+
+        result = hold_service.undo_hold(
+            hold["id"],
+            channel="voice",
+            decision_detail=transcription,
+            user_id=self.jamie_user_id,
+        )
+
+        await self._send(
+            "purchase_hold_resolved",
+            {
+                "hold_id": hold["id"],
+                "backend_recipe_id": hold.get("backend_recipe_id"),
+                "status": result["hold"]["status"] if result.get("ok") else hold.get("status"),
+                "error": result.get("error"),
+            },
+            response_id=self._current_response_id,
+        )
+
+        if result.get("ok"):
+            message = "No problem - I've cancelled that, nothing was charged."
+        elif result.get("error") == "already_committed":
+            message = "That one's already gone through, sorry - I can't undo it now."
+        else:
+            message = "Sorry, I couldn't undo that right now."
+
+        await self._send("text_chunk", message, response_id=self._current_response_id)
+        await self.synth_and_send(message)
+        return True
+
     async def _brain_process_internal(self, transcription: str) -> str:
         """
         Stream response from DiscoveryChatAgent and queue TTS sentences.
@@ -625,6 +679,8 @@ class DiscoveryVoiceHandler:
         full_content = ""
 
         if await self._try_verbal_consent_resolution(transcription):
+            return full_content
+        elif await self._try_verbal_undo_resolution(transcription):
             return full_content
 
         try:

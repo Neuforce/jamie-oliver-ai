@@ -3,9 +3,7 @@ import { Recipe } from '../data/recipes';
 import { RecipeCarousel } from './RecipeCarousel';
 import { ArrowUp } from 'lucide-react';
 import { motion } from 'motion/react';
-// @ts-expect-error - Vite resolves figma:asset imports via alias configuration
 import imgImage11 from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
-// @ts-expect-error - Vite resolves figma:asset imports via alias configuration
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 import { searchRecipes } from '../lib/api';
 import { transformRecipeMatch, loadRecipeFromLocal } from '../data/recipeTransformer';

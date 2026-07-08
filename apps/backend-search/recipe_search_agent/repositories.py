@@ -448,3 +448,66 @@ class SpendMandateAskRepository:
             .execute()
         )
         return first_row(response)
+
+
+class PurchaseHoldRepository:
+    """Persistence for server-side purchase hold transitions."""
+
+    def __init__(self, client: Client | None = None):
+        self._client = client or create_service_role_client()
+
+    def create_hold(self, payload: dict[str, Any]) -> dict[str, Any]:
+        response = self._client.table("purchase_holds").insert(payload).execute()
+        return first_row(response) or payload
+
+    def get_hold(self, hold_id: str) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("purchase_holds")
+            .select("*")
+            .eq("id", hold_id)
+            .limit(1)
+            .execute()
+        )
+        return first_row(response)
+
+    def get_open_hold_for_session(self, session_id: str) -> Optional[dict[str, Any]]:
+        response = (
+            self._client.table("purchase_holds")
+            .select("*")
+            .eq("session_id", session_id)
+            .eq("status", "holding")
+            .order("created_at", desc=True)
+            .limit(1)
+            .execute()
+        )
+        return first_row(response)
+
+    def claim_hold_transition(
+        self,
+        hold_id: str,
+        *,
+        from_status: str,
+        to_status: str,
+        extra_updates: dict[str, Any],
+    ) -> Optional[dict[str, Any]]:
+        now_iso = datetime.now(timezone.utc).isoformat()
+        response = (
+            self._client.table("purchase_holds")
+            .update({**extra_updates, "status": to_status, "updated_at": now_iso})
+            .eq("id", hold_id)
+            .eq("status", from_status)
+            .execute()
+        )
+        rows = getattr(response, "data", None) or []
+        return rows[0] if len(rows) == 1 else None
+
+
+class AgentActionReceiptRepository:
+    """Persistence for auditable agent action receipts."""
+
+    def __init__(self, client: Client | None = None):
+        self._client = client or create_service_role_client()
+
+    def create_receipt(self, payload: dict[str, Any]) -> dict[str, Any]:
+        response = self._client.table("agent_action_receipts").insert(payload).execute()
+        return first_row(response) or payload

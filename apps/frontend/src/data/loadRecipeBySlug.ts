@@ -27,7 +27,7 @@ export async function loadRecipeBySlug(slug: string): Promise<Recipe | null> {
           match_explanation: '',
           matching_chunks: [],
         },
-        response.full_recipe as JamieOliverRecipe,
+        response.full_recipe as unknown as JamieOliverRecipe,
         0,
       );
     }

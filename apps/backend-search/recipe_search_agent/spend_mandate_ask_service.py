@@ -3,13 +3,17 @@
 from __future__ import annotations
 
 import uuid
+import logging
 from datetime import datetime, timedelta, timezone
 from typing import Any, Optional
 
+from recipe_search_agent.agent_action_receipts import AgentActionReceiptInput, record_agent_action_receipt
+from recipe_search_agent.purchase_hold_service import PurchaseHoldService
 from recipe_search_agent.repositories import SpendMandateAskRepository
 from recipe_search_agent.spend_mandate_service import SpendMandateService
 
 ASK_TTL_MINUTES = 5
+logger = logging.getLogger(__name__)
 
 
 def _utc_now_iso() -> str:
@@ -81,6 +85,8 @@ class SpendMandateAskService:
         grant: bool,
         user_id: Optional[str] = None,
         source: str = "agentic",
+        channel: Optional[str] = None,
+        decision_detail: Optional[str] = None,
     ) -> dict[str, Any]:
         ask = self._repository.get_ask(ask_id)
         if not ask:
@@ -117,6 +123,23 @@ class SpendMandateAskService:
                 ask_id,
                 {"status": "declined", "resolved_at": resolved_at, "updated_at": resolved_at},
             )
+            record_agent_action_receipt(
+                AgentActionReceiptInput(
+                    action_name="request_supertab_unlock",
+                    kind="write",
+                    channel=(channel or "chat"),
+                    outcome="decline",
+                    decision_detail=decision_detail,
+                    backend_recipe_id=ask.get("backend_recipe_id"),
+                    ask_id=ask_id,
+                    standing_authorization_mandate_id=None,
+                    session_id=ask.get("session_id"),
+                    user_id=user_id or ask.get("user_id"),
+                    tool_call_id=ask.get("tool_call_id"),
+                    response_id=ask.get("response_id"),
+                    metadata={},
+                )
+            )
             return {"ok": True, "ask": updated or ask, "mandate": None}
 
         effective_user_id = user_id or ask.get("user_id")
@@ -140,4 +163,37 @@ class SpendMandateAskService:
                 "updated_at": resolved_at,
             },
         )
-        return {"ok": True, "ask": updated or ask, "mandate": mandate}
+        record_agent_action_receipt(
+            AgentActionReceiptInput(
+                action_name="request_supertab_unlock",
+                kind="write",
+                channel=(channel or "chat"),
+                outcome="accept",
+                decision_detail=decision_detail,
+                backend_recipe_id=ask.get("backend_recipe_id"),
+                ask_id=ask_id,
+                standing_authorization_mandate_id=None,
+                session_id=ask.get("session_id"),
+                user_id=effective_user_id,
+                tool_call_id=ask.get("tool_call_id"),
+                response_id=ask.get("response_id"),
+                metadata={},
+            )
+        )
+        hold = None
+        try:
+            hold = PurchaseHoldService().create_hold(
+                user_id=effective_user_id,
+                session_id=ask.get("session_id"),
+                backend_recipe_id=ask.get("backend_recipe_id"),
+                price_amount=int(ask.get("price_amount") or 0),
+                currency_code=ask.get("currency_code") or "USD",
+                ask_id=ask_id,
+                mandate_id=mandate["id"],
+                tool_call_id=ask.get("tool_call_id"),
+                response_id=ask.get("response_id"),
+            )
+        except Exception:
+            logger.exception("Failed to create purchase hold for ask %s", ask_id)
+
+        return {"ok": True, "ask": updated or ask, "mandate": mandate, "hold": hold}

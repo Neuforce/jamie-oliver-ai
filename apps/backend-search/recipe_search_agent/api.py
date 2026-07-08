@@ -34,8 +34,9 @@ from recipe_search_agent.identity_service import IdentityService
 from recipe_search_agent.access_service import AccessService
 from recipe_search_agent.purchase_sync_service import PurchaseSyncService
 from recipe_search_agent.webhook_service import WebhookService
+from recipe_search_agent.purchase_hold_service import PurchaseHoldService
 from recipe_search_agent.spend_mandate_service import SpendMandateService
-from recipe_search_agent.spend_mandate_serialization import serialize_spend_mandate
+from recipe_search_agent.spend_mandate_serialization import serialize_purchase_hold, serialize_spend_mandate
 from recipe_search_agent.supertab_merchant import SupertabMerchantClient
 from recipe_search_agent.supertab_token_verifier import SupertabTokenVerifier
 from recipe_search_agent.commerce_capability import (
@@ -217,6 +218,7 @@ _purchase_sync_service = None
 _webhook_service = None
 _spend_mandate_service = None
 _spend_mandate_ask_service = None
+_purchase_hold_service = None
 _supertab_merchant_client = None
 
 
@@ -308,6 +310,14 @@ def get_spend_mandate_ask_service() -> "SpendMandateAskService":
     return _spend_mandate_ask_service
 
 
+def get_purchase_hold_service() -> PurchaseHoldService:
+    """Get or create the purchase hold service singleton."""
+    global _purchase_hold_service
+    if _purchase_hold_service is None:
+        _purchase_hold_service = PurchaseHoldService()
+    return _purchase_hold_service
+
+
 def get_supertab_merchant_client() -> SupertabMerchantClient:
     """Get or create the Supertab Merchant API client singleton."""
     global _supertab_merchant_client
@@ -397,6 +407,29 @@ class SpendMandateAskResolveRequest(BaseModel):
     grantedAt: Optional[str] = None
     expiresAt: Optional[str] = None
     remainingAmount: int
+
+
+class PurchaseHoldResponse(BaseModel):
+    id: str
+    userId: Optional[str] = None
+    sessionId: Optional[str] = None
+    backendRecipeId: str
+    priceAmount: int
+    currencyCode: str
+    status: str
+    askId: Optional[str] = None
+    mandateId: Optional[str] = None
+    holdExpiresAt: Optional[str] = None
+    committedAt: Optional[str] = None
+    undoneAt: Optional[str] = None
+    purchaseId: Optional[str] = None
+    createdAt: Optional[str] = None
+
+
+class PurchaseHoldUndoRequest(BaseModel):
+    channel: str = "chat"
+    decision_detail: Optional[str] = None
+    user_id: Optional[str] = None
 
 
 class OnetimeOfferingRequest(BaseModel):
@@ -578,6 +611,10 @@ def _map_spend_mandate_ask(ask: dict) -> SpendMandateAskResponse:
     )
 
 
+def _map_purchase_hold(hold: dict) -> PurchaseHoldResponse:
+    return PurchaseHoldResponse(**serialize_purchase_hold(hold))
+
+
 @app.post("/api/v1/webhooks/{provider}")
 async def receive_provider_webhook(provider: str, request: Request):
     """Generic provider webhook endpoint with signature verification and idempotent reconciliation."""
@@ -673,6 +710,8 @@ async def resolve_spend_mandate_ask(ask_id: str, request: SpendMandateAskResolve
             grant=grant,
             user_id=request.user_id,
             source=request.source,
+            channel="chat",
+            decision_detail=f"button:{decision}",
         )
         if not result.get("ok"):
             error = result.get("error")
@@ -687,12 +726,79 @@ async def resolve_spend_mandate_ask(ask_id: str, request: SpendMandateAskResolve
         }
         if result.get("mandate"):
             payload["mandate"] = serialize_spend_mandate(result["mandate"])
+        if result.get("hold"):
+            payload["hold"] = _map_purchase_hold(result["hold"]).model_dump()
         return payload
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Failed to resolve spend mandate ask {ask_id}: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Failed to resolve spend mandate ask: {str(e)}")
+
+
+@app.get("/api/v1/purchase-holds/{hold_id}", response_model=PurchaseHoldResponse)
+async def get_purchase_hold(hold_id: str):
+    """Return server-side purchase hold status."""
+    try:
+        hold = get_purchase_hold_service().get_hold(hold_id)
+        if not hold:
+            raise HTTPException(status_code=404, detail="Purchase hold not found")
+        return _map_purchase_hold(hold)
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to get purchase hold {hold_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to get purchase hold: {str(e)}")
+
+
+@app.post("/api/v1/purchase-holds/{hold_id}/commit")
+async def commit_purchase_hold(hold_id: str):
+    """Commit a purchase hold once the server-side hold window has elapsed."""
+    try:
+        result = get_purchase_hold_service().commit_hold(hold_id)
+        if not result.get("ok"):
+            error = result.get("error")
+            if error == "hold_not_found":
+                raise HTTPException(status_code=404, detail="Purchase hold not found")
+            if error in ("not_yet_expired", "already_undone", "already_failed"):
+                raise HTTPException(status_code=409, detail=str(error))
+            raise HTTPException(status_code=400, detail=str(error))
+
+        payload: dict = {"hold": _map_purchase_hold(result["hold"]).model_dump()}
+        if result.get("already_committed"):
+            payload["alreadyCommitted"] = True
+        return payload
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to commit purchase hold {hold_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to commit purchase hold: {str(e)}")
+
+
+@app.post("/api/v1/purchase-holds/{hold_id}/undo")
+async def undo_purchase_hold(hold_id: str, request: PurchaseHoldUndoRequest):
+    """Undo a still-open purchase hold before commit."""
+    try:
+        result = get_purchase_hold_service().undo_hold(
+            hold_id,
+            channel=request.channel,
+            decision_detail=request.decision_detail,
+            user_id=request.user_id,
+        )
+        if not result.get("ok"):
+            error = result.get("error")
+            if error == "hold_not_found":
+                raise HTTPException(status_code=404, detail="Purchase hold not found")
+            if error in ("already_committed", "already_failed"):
+                raise HTTPException(status_code=409, detail=str(error))
+            raise HTTPException(status_code=400, detail=str(error))
+
+        return {"hold": _map_purchase_hold(result["hold"]).model_dump()}
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Failed to undo purchase hold {hold_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail=f"Failed to undo purchase hold: {str(e)}")
 
 
 @app.post("/api/v1/offerings/onetime")

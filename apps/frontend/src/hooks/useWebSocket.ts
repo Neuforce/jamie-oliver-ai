@@ -128,7 +128,6 @@ export function useWebSocket(options: UseWebSocketOptions = {}) {
 
   // Get WebSocket URL from environment
   const getWebSocketUrl = useCallback(() => {
-    // @ts-expect-error - Vite provides import.meta.env but TypeScript types may not be fully loaded
     const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
     return wsUrl;
   }, []);

@@ -24,14 +24,14 @@ export function shouldFinalizeVoiceBubble(
   return false;
 }
 
-export function finalizeVoiceBubbleMessages(
-  messages: VoiceBubbleMessage[],
+export function finalizeVoiceBubbleMessages<T extends VoiceBubbleMessage>(
+  messages: T[],
   options: {
     responseId?: string;
     currentMessageId?: string | null;
     accumulatedText?: string;
   },
-): { messages: VoiceBubbleMessage[]; finalizedCurrentMessage: boolean } {
+): { messages: T[]; finalizedCurrentMessage: boolean } {
   const { responseId, currentMessageId, accumulatedText = '' } = options;
   let finalizedCurrentMessage = false;
 

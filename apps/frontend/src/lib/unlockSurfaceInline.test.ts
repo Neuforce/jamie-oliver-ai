@@ -19,7 +19,7 @@ describe('unlockSurfaceInline', () => {
       {
         toolCallId: 'call-unlock',
         toolName: 'request_supertab_unlock',
-        status: 'completed',
+        status: 'complete',
         outputKind: 'paywall',
         paywallBackendId: 'fish-pie',
       },
@@ -28,7 +28,7 @@ describe('unlockSurfaceInline', () => {
     expect(
       resolveUnlockSurfaceRecipeId({
         toolParts,
-        recipeDetail: { recipe_id: 'fish-pie', title: 'Fish pie' },
+        recipeDetail: { recipe_id: 'fish-pie', title: 'Fish pie', description: '', ingredients: [], steps: [] },
       }),
     ).toBe('fish-pie');
   });
@@ -40,7 +40,7 @@ describe('unlockSurfaceInline', () => {
       {
         toolCallId: 'call-unlock',
         toolName: 'request_supertab_unlock',
-        status: 'completed',
+        status: 'complete',
         outputKind: 'paywall',
         paywallBackendId: 'fish-pie',
       },
@@ -49,7 +49,7 @@ describe('unlockSurfaceInline', () => {
     expect(
       shouldMountSpendMandateConsentInline({
         toolParts,
-        recipeDetail: { recipe_id: 'fish-pie', title: 'Fish pie' },
+        recipeDetail: { recipe_id: 'fish-pie', title: 'Fish pie', description: '', ingredients: [], steps: [] },
       }),
     ).toBe(true);
   });
@@ -59,7 +59,7 @@ describe('unlockSurfaceInline', () => {
       {
         toolCallId: 'call-unlock',
         toolName: 'request_supertab_unlock',
-        status: 'completed',
+        status: 'complete',
         outputKind: 'paywall',
         paywallBackendId: 'fish-pie',
       },
@@ -68,7 +68,7 @@ describe('unlockSurfaceInline', () => {
     expect(
       shouldMountSpendMandateConsentInline({
         toolParts,
-        recipeDetail: { recipe_id: 'fish-pie', title: 'Fish pie' },
+        recipeDetail: { recipe_id: 'fish-pie', title: 'Fish pie', description: '', ingredients: [], steps: [] },
       }),
     ).toBe(false);
   });

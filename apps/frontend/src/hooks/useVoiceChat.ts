@@ -81,6 +81,7 @@ export interface UseVoiceChatOptions {
     response_id?: string;
     auto_charge?: boolean;
     mandate?: unknown;
+    hold?: unknown;
     price_amount?: number;
     currency_code?: string;
     ceiling_amount?: number;
@@ -97,6 +98,13 @@ export interface UseVoiceChatOptions {
   }) => void;
   /** Server resolved a consent ask (e.g. verbal yes/no in voice) */
   onSpendMandateConsentResolved?: (payload: VoiceSpendMandateConsentResolvedPayload) => void;
+  /** Server resolved an open purchase hold (e.g. verbal undo in voice) */
+  onPurchaseHoldResolved?: (payload: {
+    hold_id?: string;
+    backend_recipe_id?: string;
+    status?: string;
+    error?: string;
+  }) => void;
   /** Callback when a voice response turn should finalize its chat bubble */
   onDone?: (responseId?: string) => void;
   /** Callback when the backend assigns a responseId to the in-flight turn */
@@ -448,6 +456,7 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
           price_amount: typeof data?.price_amount === 'number' ? data.price_amount : undefined,
           currency_code: typeof data?.currency_code === 'string' ? data.currency_code : undefined,
           ceiling_amount: typeof data?.ceiling_amount === 'number' ? data.ceiling_amount : undefined,
+          hold: data?.hold,
         });
         break;
       }
@@ -478,6 +487,19 @@ export function useVoiceChat(options: UseVoiceChatOptions) {
           ask_id: typeof data?.ask_id === 'string' ? data.ask_id : undefined,
           mandate: data?.mandate,
           reason: typeof data?.reason === 'string' ? data.reason : undefined,
+          hold: data?.hold,
+        });
+        break;
+      }
+
+      case 'purchase_hold_resolved': {
+        if (!isCurrentResponse(responseId)) return;
+        callbacks.onPurchaseHoldResolved?.({
+          hold_id: typeof data?.hold_id === 'string' ? data.hold_id : undefined,
+          backend_recipe_id:
+            typeof data?.backend_recipe_id === 'string' ? data.backend_recipe_id.trim() : undefined,
+          status: typeof data?.status === 'string' ? data.status : undefined,
+          error: typeof data?.error === 'string' ? data.error : undefined,
         });
         break;
       }

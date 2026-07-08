@@ -976,10 +976,13 @@ async function buildResolutionFromPaywallResult(
   return {
     snapshot,
     refreshedAccess: paywallResult.refreshedAccess ?? null,
+    // Synthesizes only the fields `resolvePurchaseOutcome`/`applyRecipePurchaseOutcome`
+    // actually read — not the full SDK widget state shape (see the analogous
+    // comment in `runCheckout` in App.tsx).
     state: {
       purchase: paywallResult.status === 'completed' ? { status: 'completed' } : undefined,
       priorEntitlement: priorEntitlements,
-    },
+    } as unknown as SupertabPurchaseButtonState,
     priorEntitlements,
   };
 }
@@ -1000,11 +1003,12 @@ export async function purchaseRecipe(
       resolution: {
         snapshot,
         refreshedAccess: onTabResult.refreshedAccess ?? null,
+        // Same synthetic-state note as `buildResolutionFromPaywallResult` above.
         state: {
           purchase: onTabResult.purchase || { status: 'completed' },
           priorEntitlement:
             onTabResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [],
-        },
+        } as unknown as SupertabPurchaseButtonState,
         priorEntitlements:
           onTabResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [],
       },

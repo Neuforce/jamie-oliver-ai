@@ -10,7 +10,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { OnboardingEmptyState } from './OnboardingEmptyState';
 import { ProcessCard, selectFeatured } from './ProcessCard';
 import type { ProcessCardState, ProcessStep, ToolName, FeaturedPayload } from './ProcessCardTypes';
-import { TOOL_STEP_DISPLAY } from './ProcessCardTypes';
+import { TOOL_STEP_DISPLAY, finalizeUnlockStep } from './ProcessCardTypes';
 import { JamieHeart } from './JamieHeart';
 import { SpendMandateConsentInline } from './SpendMandateConsentInline';
 import { VoiceModeRoller } from './VoiceModeRoller';
@@ -26,6 +26,7 @@ import {
 import { VoiceModeButton, StopGenerationButton } from './VoiceModeIndicator';
 import { VoiceThinkingBubble } from './VoiceThinkingBubble';
 import {
+  formatConsentPrice,
   getCommerceSnapshotVersion,
   getRecipeAccess as getStoredRecipeAccess,
   getUnlockState,
@@ -34,11 +35,11 @@ import {
   useActiveUnlockRecipeId,
 } from '../lib/commerceStore';
 import { handleVoiceSpendMandateConsentResolved } from '../lib/voiceSpendMandateConsentResolved';
+import { syncPurchaseHoldResolutionFromVoice } from '../lib/unlockController';
 import type { RecipePaywallMetadata } from '../lib/recipePaywallHandler';
 import { finalizeVoiceBubbleMessages } from '../lib/voiceBubbleFinalize';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
-// @ts-expect-error - Vite resolves figma:asset imports
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 import {
   chatWithAgent,
@@ -67,7 +68,7 @@ import {
 import type { ChatEvent } from '../lib/api';
 import { CHAT_STORAGE_KEY, SESSION_ID_KEY } from '../lib/chatStorage';
 import { markAppLoadStage } from '../lib/appLoadMetrics';
-import type { RecipeAccessResponse } from '../lib/api';
+import type { RecipeAccessResponse, SpendMandate } from '../lib/api';
 import {
   getRecipeCommerceBadge,
   RECIPE_COMMERCE_BADGE_STYLES,
@@ -264,7 +265,7 @@ const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
           match_explanation: '',
           matching_chunks: [],
         },
-        response.full_recipe as JamieOliverRecipe,
+        response.full_recipe as unknown as JamieOliverRecipe,
         recipe.id - 1
       );
     }
@@ -313,7 +314,7 @@ const loadRecipeForSelection = async (recipeId: string): Promise<Recipe | null> 
           match_explanation: '',
           matching_chunks: [],
         },
-        response.full_recipe as JamieOliverRecipe,
+        response.full_recipe as unknown as JamieOliverRecipe,
         0
       );
     }
@@ -691,7 +692,7 @@ export function ChatView({
             tool_call_id: payload.tool_call_id,
             response_id: payload.response_id,
             auto_charge: payload.auto_charge,
-            mandate: payload.mandate,
+            mandate: payload.mandate as SpendMandate | undefined,
             price_amount: payload.price_amount,
             currency_code: payload.currency_code,
             ceiling_amount: payload.ceiling_amount,
@@ -731,6 +732,11 @@ export function ChatView({
       });
     },
     onSpendMandateConsentResolved: handleVoiceSpendMandateConsentResolved,
+    onPurchaseHoldResolved: (payload) => {
+      const bid = payload.backend_recipe_id?.trim();
+      if (!bid || !payload.status) return;
+      syncPurchaseHoldResolutionFromVoice(bid, payload.status);
+    },
     onProcessing: (responseId) => {
       const messageId = voiceMessageIdRef.current;
       if (!messageId) return;
@@ -1097,6 +1103,7 @@ export function ChatView({
             'get_recipe_details',
             'plan_meal',
             'create_shopping_list',
+            'request_supertab_unlock',
           ];
           if (knownTools.includes(toolName)) {
             // ProcessCard owns the executing label — clear thinkingStatus immediately
@@ -1176,19 +1183,38 @@ export function ChatView({
           }
           setMessages(prev => prev.map(msg => {
             if (msg.id !== streamingMessageId) return msg;
-            const featured = msg.process
-              ? selectFeatured({
-                  tool: msg.process.tool,
-                  recipes: streamPatch.recipes,
-                  mealPlan: streamPatch.mealPlan,
-                  recipeDetail: streamPatch.recipeDetail,
-                  shoppingList: streamPatch.shoppingList,
-                })
-              : undefined;
+            if (!msg.process) {
+              return { ...msg, ...streamPatch };
+            }
+            const featured = selectFeatured({
+              tool: msg.process.tool,
+              recipes: streamPatch.recipes,
+              mealPlan: streamPatch.mealPlan,
+              recipeDetail: streamPatch.recipeDetail,
+              shoppingList: streamPatch.shoppingList,
+            });
+            const process = event.type === 'recipe_paywall_requested'
+              ? {
+                  ...msg.process,
+                  featured,
+                  steps: finalizeUnlockStep(
+                    msg.process.steps,
+                    event.metadata?.tool_call_id as string | undefined,
+                    {
+                      auto_charge: event.metadata?.auto_charge as boolean | undefined,
+                      mandate: event.metadata?.mandate as {
+                        ceilingAmount?: number;
+                        currencyCode?: string;
+                      } | undefined,
+                    },
+                    formatConsentPrice,
+                  ),
+                }
+              : { ...msg.process, featured };
             return {
               ...msg,
               ...streamPatch,
-              process: msg.process ? { ...msg.process, featured } : msg.process,
+              process,
             };
           }));
         } else if (event.type === 'done') {

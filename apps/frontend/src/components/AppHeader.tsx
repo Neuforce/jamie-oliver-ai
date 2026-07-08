@@ -1,6 +1,5 @@
 import React from 'react';
 import { BookOpen, Menu, MessageCircle } from 'lucide-react';
-// @ts-expect-error - Vite resolves figma:asset imports
 import logoImage from 'figma:asset/36d2b220ecc79c7cc02eeec9462a431d28659cd4.png';
 import { IconButton } from '../design-system/primitives';
 import type { TabView } from './TabNav';

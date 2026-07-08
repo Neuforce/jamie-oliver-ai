@@ -1,19 +1,43 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Recipe } from '../data/recipes';
-import type { RecipeAccessResponse } from './api';
+import type { PurchaseHold, RecipeAccessResponse } from './api';
 import {
+  getHoldMeta,
   getUnlockState,
+  openAsk,
   resetCommerceStoreForTests,
+  setHoldMeta,
+  setUnlockState,
 } from './commerceStore';
 import {
+  beginPurchaseHold,
+  commitPurchaseHold,
   configureUnlockController,
   confirmUnlock,
   declineUnlock,
   requestCheckout,
   resetUnlockControllerForTests,
   startRecipeUnlock,
+  syncPurchaseHoldResolutionFromVoice,
+  undoPurchaseHoldForRecipe,
   type UnlockControllerConfig,
 } from './unlockController';
+
+vi.mock('./api', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('./api')>();
+  return {
+    ...actual,
+    commitPurchaseHold: vi.fn(),
+    undoPurchaseHold: vi.fn(),
+    resolveSpendMandateAsk: vi.fn(),
+  };
+});
+
+import {
+  commitPurchaseHold as commitPurchaseHoldRequest,
+  resolveSpendMandateAsk as resolveSpendMandateAskRequest,
+  undoPurchaseHold as undoPurchaseHoldRequest,
+} from './api';
 
 const recipe: Recipe = {
   id: 1,
@@ -59,6 +83,25 @@ function successOutcome() {
   };
 }
 
+function sampleHold(recipeId: string, expiresInMs: number): PurchaseHold {
+  return {
+    id: 'hold-1',
+    userId: 'user-1',
+    sessionId: null,
+    backendRecipeId: recipeId,
+    priceAmount: 500,
+    currencyCode: 'USD',
+    status: 'holding',
+    askId: 'ask-1',
+    mandateId: 'mandate-1',
+    holdExpiresAt: new Date(Date.now() + expiresInMs).toISOString(),
+    committedAt: null,
+    undoneAt: null,
+    purchaseId: null,
+    createdAt: new Date().toISOString(),
+  };
+}
+
 function setupConfig(
   runPurchase: UnlockControllerConfig['runPurchase'],
   overrides: Partial<UnlockControllerConfig> = {},
@@ -85,6 +128,8 @@ describe('unlockController', () => {
   beforeEach(() => {
     resetUnlockControllerForTests();
     resetCommerceStoreForTests();
+    vi.mocked(commitPurchaseHoldRequest).mockReset();
+    vi.mocked(undoPurchaseHoldRequest).mockReset();
   });
 
   it('dedupes concurrent unlock calls per recipe', async () => {
@@ -270,6 +315,26 @@ describe('unlockController', () => {
       expect(getUnlockState('fish-pie')).toBe('unlocked');
     });
 
+    it('confirmUnlock surfaces failed (not a stuck processing state) when the server-side resolve call throws for a real pending ask', async () => {
+      const runPurchase = vi.fn().mockResolvedValue(successOutcome());
+      configureUnlockController(setupConfig(runPurchase));
+
+      // A real pending ask must exist so confirmUnlock's `hadPendingAsk` guard is true.
+      void openAsk({
+        recipeId: 'fish-pie',
+        askId: 'ask-1',
+        priceAmount: 500,
+        currencyCode: 'USD',
+        ceilingAmount: 1000,
+      });
+      vi.mocked(resolveSpendMandateAskRequest).mockRejectedValueOnce(new Error('network down'));
+
+      await confirmUnlock('fish-pie', 'user-1');
+
+      expect(runPurchase).not.toHaveBeenCalled();
+      expect(getUnlockState('fish-pie')).toBe('failed');
+    });
+
     it('declineUnlock sets declined', async () => {
       const runPurchase = vi.fn().mockResolvedValue(successOutcome());
       configureUnlockController(setupConfig(runPurchase));
@@ -351,6 +416,96 @@ describe('unlockController', () => {
 
       expect(runCheckout).toHaveBeenCalledTimes(1);
       expect(getUnlockState('fish-pie')).toBe('unlocked');
+    });
+  });
+
+  describe('purchase hold', () => {
+    beforeEach(() => {
+      vi.useFakeTimers();
+      const runPurchase = vi.fn().mockResolvedValue(successOutcome());
+      configureUnlockController(setupConfig(runPurchase));
+      vi.mocked(commitPurchaseHoldRequest).mockResolvedValue({
+        hold: { ...sampleHold('fish-pie', 0), status: 'committed' },
+      });
+      vi.mocked(undoPurchaseHoldRequest).mockResolvedValue({
+        hold: { ...sampleHold('fish-pie', 0), status: 'undone' },
+      });
+    });
+
+    afterEach(() => {
+      vi.useRealTimers();
+    });
+
+    it('beginPurchaseHold sets holding state and holdMeta', () => {
+      beginPurchaseHold('fish-pie', sampleHold('fish-pie', 30_000));
+
+      expect(getUnlockState('fish-pie')).toBe('holding');
+      expect(getHoldMeta('fish-pie')).toMatchObject({
+        holdId: 'hold-1',
+        priceAmount: 500,
+        currencyCode: 'USD',
+      });
+    });
+
+    it('auto-commits after hold expiry', async () => {
+      beginPurchaseHold('fish-pie', sampleHold('fish-pie', 5_000));
+
+      await vi.advanceTimersByTimeAsync(5_000);
+      await vi.runAllTimersAsync();
+
+      expect(commitPurchaseHoldRequest).toHaveBeenCalledWith('hold-1');
+      expect(getUnlockState('fish-pie')).toBe('unlocked');
+      expect(getHoldMeta('fish-pie')).toBeNull();
+    });
+
+    it('undoPurchaseHoldForRecipe cancels pending auto-commit', async () => {
+      beginPurchaseHold('fish-pie', sampleHold('fish-pie', 5_000));
+
+      await undoPurchaseHoldForRecipe('fish-pie', 'user-1');
+
+      expect(undoPurchaseHoldRequest).toHaveBeenCalledWith('hold-1', {
+        channel: 'chat',
+        user_id: 'user-1',
+      });
+      expect(getUnlockState('fish-pie')).toBe('undone');
+      expect(getHoldMeta('fish-pie')).toBeNull();
+
+      await vi.advanceTimersByTimeAsync(10_000);
+      expect(commitPurchaseHoldRequest).not.toHaveBeenCalled();
+    });
+
+    it("syncPurchaseHoldResolutionFromVoice('undone') updates local state without API calls", () => {
+      setHoldMeta('fish-pie', {
+        holdId: 'hold-1',
+        holdExpiresAt: new Date(Date.now() + 30_000).toISOString(),
+        priceAmount: 500,
+        currencyCode: 'USD',
+      });
+      setUnlockState('fish-pie', 'holding');
+
+      syncPurchaseHoldResolutionFromVoice('fish-pie', 'undone');
+
+      expect(getUnlockState('fish-pie')).toBe('undone');
+      expect(getHoldMeta('fish-pie')).toBeNull();
+      expect(commitPurchaseHoldRequest).not.toHaveBeenCalled();
+      expect(undoPurchaseHoldRequest).not.toHaveBeenCalled();
+    });
+
+    it("syncPurchaseHoldResolutionFromVoice('committed') starts unlock without API calls", async () => {
+      setHoldMeta('fish-pie', {
+        holdId: 'hold-1',
+        holdExpiresAt: new Date(Date.now() + 30_000).toISOString(),
+        priceAmount: 500,
+        currencyCode: 'USD',
+      });
+      setUnlockState('fish-pie', 'holding');
+
+      syncPurchaseHoldResolutionFromVoice('fish-pie', 'committed');
+      await vi.runAllTimersAsync();
+
+      expect(getUnlockState('fish-pie')).toBe('unlocked');
+      expect(getHoldMeta('fish-pie')).toBeNull();
+      expect(commitPurchaseHoldRequest).not.toHaveBeenCalled();
     });
   });
 });

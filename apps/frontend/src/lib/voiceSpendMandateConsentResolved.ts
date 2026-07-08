@@ -1,6 +1,7 @@
 import type { SpendMandate } from './api';
 import { resolveAsk, setMandate, setUnlockState } from './commerceStore';
-import { startRecipeUnlock } from './unlockController';
+import { parsePurchaseHold } from './purchaseHold';
+import { beginPurchaseHold, startRecipeUnlock } from './unlockController';
 
 export interface VoiceSpendMandateConsentResolvedPayload {
   backend_recipe_id: string;
@@ -9,6 +10,7 @@ export interface VoiceSpendMandateConsentResolvedPayload {
   /** Opaque server mandate snapshot — pass straight to setMandate. */
   mandate?: unknown;
   reason?: string;
+  hold?: unknown;
 }
 
 /**
@@ -28,6 +30,11 @@ export function handleVoiceSpendMandateConsentResolved(
       setMandate(payload.mandate as SpendMandate);
     }
     resolveAsk(bid, true);
+    const hold = parsePurchaseHold(payload.hold);
+    if (hold) {
+      beginPurchaseHold(bid, hold);
+      return;
+    }
     void startRecipeUnlock(bid, { trigger: 'consent_approve' });
     return;
   }
