@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { Recipe } from '../data/recipes';
 import { RecipeCard } from './RecipeCard';
 import { Button } from './ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { safeTransition, cardMorphTransition } from '../design-system/motion';
 import type { StackRole } from './VoiceModeRoller';
 
 const SWIPE_THRESHOLD_PX = 36;
@@ -229,16 +231,25 @@ export function RecipeCarousel({
                   }
                 : undefined)}
             >
-              {visibleRecipes.map((recipe) => (
-                <div key={recipe.id} className="w-full">
-                  <RecipeCard
-                    recipe={recipe}
-                    onClick={() => onRecipeClick(recipe)}
-                    variant="chat"
-                    commerceBadge={resolveCommerceBadge?.(recipe) ?? null}
-                  />
-                </div>
-              ))}
+              <AnimatePresence mode="wait">
+                {visibleRecipes.map((recipe) => (
+                  <motion.div
+                    key={recipe.id}
+                    className="w-full"
+                    initial={{ opacity: 0, x: 12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -12 }}
+                    transition={safeTransition(cardMorphTransition)}
+                  >
+                    <RecipeCard
+                      recipe={recipe}
+                      onClick={() => onRecipeClick(recipe)}
+                      variant="chat"
+                      commerceBadge={resolveCommerceBadge?.(recipe) ?? null}
+                    />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
 
             {isTopVoiceCard && recipes.length > slidesToShow && (
