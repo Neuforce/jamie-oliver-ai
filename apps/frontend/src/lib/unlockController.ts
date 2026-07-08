@@ -307,7 +307,12 @@ export async function confirmUnlock(
   }
   if (approved || !hadPendingAsk) {
     await startRecipeUnlock(id, { trigger: 'consent_approve' });
+    return;
   }
+  // A real pending ask existed but the server-side resolve call itself failed
+  // (network/API error) — surface 'failed' so the user has a retry path
+  // instead of being stuck at 'processing' forever.
+  setUnlockState(id, 'failed');
 }
 
 /** View verb: the user declined. Resolves the ask (decline) and shows declined. */

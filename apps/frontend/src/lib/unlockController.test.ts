@@ -4,6 +4,7 @@ import type { PurchaseHold, RecipeAccessResponse } from './api';
 import {
   getHoldMeta,
   getUnlockState,
+  openAsk,
   resetCommerceStoreForTests,
   setHoldMeta,
   setUnlockState,
@@ -28,10 +29,15 @@ vi.mock('./api', async (importOriginal) => {
     ...actual,
     commitPurchaseHold: vi.fn(),
     undoPurchaseHold: vi.fn(),
+    resolveSpendMandateAsk: vi.fn(),
   };
 });
 
-import { commitPurchaseHold as commitPurchaseHoldRequest, undoPurchaseHold as undoPurchaseHoldRequest } from './api';
+import {
+  commitPurchaseHold as commitPurchaseHoldRequest,
+  resolveSpendMandateAsk as resolveSpendMandateAskRequest,
+  undoPurchaseHold as undoPurchaseHoldRequest,
+} from './api';
 
 const recipe: Recipe = {
   id: 1,
@@ -307,6 +313,26 @@ describe('unlockController', () => {
       expect(runPurchase).toHaveBeenCalledTimes(1);
       expect(runPurchase.mock.calls[0][2]).toEqual({ consentGranted: true });
       expect(getUnlockState('fish-pie')).toBe('unlocked');
+    });
+
+    it('confirmUnlock surfaces failed (not a stuck processing state) when the server-side resolve call throws for a real pending ask', async () => {
+      const runPurchase = vi.fn().mockResolvedValue(successOutcome());
+      configureUnlockController(setupConfig(runPurchase));
+
+      // A real pending ask must exist so confirmUnlock's `hadPendingAsk` guard is true.
+      void openAsk({
+        recipeId: 'fish-pie',
+        askId: 'ask-1',
+        priceAmount: 500,
+        currencyCode: 'USD',
+        ceilingAmount: 1000,
+      });
+      vi.mocked(resolveSpendMandateAskRequest).mockRejectedValueOnce(new Error('network down'));
+
+      await confirmUnlock('fish-pie', 'user-1');
+
+      expect(runPurchase).not.toHaveBeenCalled();
+      expect(getUnlockState('fish-pie')).toBe('failed');
     });
 
     it('declineUnlock sets declined', async () => {
