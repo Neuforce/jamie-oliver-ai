@@ -67,11 +67,22 @@ def test_verbal_consent_grant_emits_approved_with_serialized_mandate(monkeypatch
         def get_open_ask_for_session(self, session_id: str):
             return ask
 
-        def resolve_ask(self, ask_id: str, *, grant: bool, user_id: str | None, source: str):
+        def resolve_ask(
+            self,
+            ask_id: str,
+            *,
+            grant: bool,
+            user_id: str | None,
+            source: str,
+            channel: str | None = None,
+            decision_detail: str | None = None,
+        ):
             assert ask_id == "ask-1"
             assert grant is True
             assert user_id == "user-1"
             assert source == "voice"
+            assert channel == "voice"
+            assert decision_detail == "yes"
             return {"ok": True, "ask": ask, "mandate": mandate}
 
     monkeypatch.setattr(
@@ -107,8 +118,19 @@ def test_verbal_consent_decline_emits_declined_reason(monkeypatch):
         def get_open_ask_for_session(self, session_id: str):
             return ask
 
-        def resolve_ask(self, ask_id: str, *, grant: bool, user_id: str | None, source: str):
+        def resolve_ask(
+            self,
+            ask_id: str,
+            *,
+            grant: bool,
+            user_id: str | None,
+            source: str,
+            channel: str | None = None,
+            decision_detail: str | None = None,
+        ):
             assert grant is False
+            assert channel == "voice"
+            assert decision_detail == "no"
             return {"ok": True, "ask": ask, "mandate": None}
 
     monkeypatch.setattr(
@@ -145,7 +167,16 @@ def test_verbal_consent_grant_without_user_id_emits_needs_tab_and_no_mandate(mon
         def get_open_ask_for_session(self, session_id: str):
             return ask
 
-        def resolve_ask(self, ask_id: str, *, grant: bool, user_id: str | None, source: str):
+        def resolve_ask(
+            self,
+            ask_id: str,
+            *,
+            grant: bool,
+            user_id: str | None,
+            source: str,
+            channel: str | None = None,
+            decision_detail: str | None = None,
+        ):
             if grant and not user_id:
                 return {"ok": False, "error": "user_id_required_for_grant", "ask": ask, "mandate": None}
             self.minted_count += 1
@@ -184,7 +215,16 @@ def test_verbal_consent_grant_on_expired_ask_emits_expired_reason(monkeypatch):
         def get_open_ask_for_session(self, session_id: str):
             return ask
 
-        def resolve_ask(self, ask_id: str, *, grant: bool, user_id: str | None, source: str):
+        def resolve_ask(
+            self,
+            ask_id: str,
+            *,
+            grant: bool,
+            user_id: str | None,
+            source: str,
+            channel: str | None = None,
+            decision_detail: str | None = None,
+        ):
             return {"ok": False, "error": "ask_expired", "ask": ask, "mandate": None}
 
     monkeypatch.setattr(
@@ -221,7 +261,16 @@ def test_verbal_consent_double_grant_is_idempotent_no_second_mandate_minted(monk
         def get_open_ask_for_session(self, session_id: str):
             return self.ask
 
-        def resolve_ask(self, ask_id: str, *, grant: bool, user_id: str | None, source: str):
+        def resolve_ask(
+            self,
+            ask_id: str,
+            *,
+            grant: bool,
+            user_id: str | None,
+            source: str,
+            channel: str | None = None,
+            decision_detail: str | None = None,
+        ):
             if self.ask["status"] == "active":
                 return {
                     "ok": True,
