@@ -7,8 +7,10 @@ from typing import Any, Optional
 
 from recipe_search_agent.agent_action_receipts import AgentActionReceiptInput, record_agent_action_receipt
 from recipe_search_agent.chat_events import ChatEvent
+from recipe_search_agent.purchase_hold_service import PurchaseHoldService
 from recipe_search_agent.recipe_catalog import get_published_catalog
 from recipe_search_agent.recipe_pricing import resolve_recipe_price
+from recipe_search_agent.spend_mandate_serialization import serialize_purchase_hold
 
 logger = logging.getLogger(__name__)
 
@@ -187,6 +189,10 @@ def tool_result_to_chat_events(
                 )
             )
         else:
+            from recipe_search_agent.commerce_context import get_commerce_session_id, get_commerce_user_id
+
+            session_id = get_commerce_session_id()
+            user_id = get_commerce_user_id()
             try:
                 record_agent_action_receipt(
                     AgentActionReceiptInput(
@@ -200,8 +206,8 @@ def tool_result_to_chat_events(
                         standing_authorization_mandate_id=(
                             serialized_mandate.get("id") if serialized_mandate else None
                         ),
-                        session_id=None,
-                        user_id=None,
+                        session_id=session_id,
+                        user_id=user_id,
                         tool_call_id=tool_call_id,
                         response_id=response_id,
                         metadata={},
@@ -218,6 +224,22 @@ def tool_result_to_chat_events(
         }
         if auto_charge:
             paywall_metadata["mandate"] = serialized_mandate
+            hold = None
+            try:
+                hold = PurchaseHoldService().create_hold(
+                    user_id=user_id,
+                    session_id=session_id,
+                    backend_recipe_id=rid,
+                    price_amount=price_amount,
+                    currency_code=currency_code,
+                    ask_id=None,
+                    mandate_id=(serialized_mandate.get("id") if serialized_mandate else None),
+                    tool_call_id=tool_call_id,
+                    response_id=response_id,
+                )
+            except Exception:
+                logger.exception("Failed to create auto-charge purchase hold for recipe %s", rid)
+            paywall_metadata["hold"] = serialize_purchase_hold(hold) if hold else None
         events.append(
             ChatEvent(
                 type="recipe_paywall_requested",

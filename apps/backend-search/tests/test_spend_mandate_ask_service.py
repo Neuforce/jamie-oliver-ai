@@ -227,3 +227,80 @@ def test_receipt_repository_failure_does_not_break_resolve_decline():
     assert result["ok"] is True
     assert result["ask"]["status"] == "declined"
     assert result["mandate"] is None
+
+
+def test_grant_creates_purchase_hold_and_includes_it_in_result():
+    repo = MagicMock()
+    repo.get_ask.return_value = {
+        "id": "ask-1",
+        "status": "requested",
+        "backend_recipe_id": "salad",
+        "price_amount": 500,
+        "ceiling_amount": 1000,
+        "currency_code": "USD",
+        "session_id": "session-1",
+        "user_id": "user-1",
+        "tool_call_id": "tc-1",
+        "response_id": "resp-1",
+    }
+    repo.update_ask.return_value = {
+        "id": "ask-1",
+        "status": "active",
+        "backend_recipe_id": "salad",
+        "mandate_id": "mandate-1",
+    }
+    mandate_service = MagicMock()
+    mandate_service.create_mandate.return_value = {
+        "id": "mandate-1",
+        "user_id": "user-1",
+    }
+    service = SpendMandateAskService(repository=repo, mandate_service=mandate_service)
+
+    with patch("recipe_search_agent.spend_mandate_ask_service.PurchaseHoldService") as hold_service_cls:
+        hold_service_cls.return_value.create_hold.return_value = {
+            "id": "hold-1",
+            "status": "holding",
+        }
+        result = service.resolve_ask("ask-1", grant=True, user_id="user-1")
+
+    assert result["ok"] is True
+    assert result["mandate"]["id"] == "mandate-1"
+    assert result["hold"]["id"] == "hold-1"
+    hold_service_cls.return_value.create_hold.assert_called_once()
+
+
+def test_hold_creation_failure_does_not_break_resolve_grant():
+    repo = MagicMock()
+    repo.get_ask.return_value = {
+        "id": "ask-1",
+        "status": "requested",
+        "backend_recipe_id": "salad",
+        "price_amount": 500,
+        "ceiling_amount": 1000,
+        "currency_code": "USD",
+        "session_id": "session-1",
+        "user_id": "user-1",
+    }
+    repo.update_ask.return_value = {
+        "id": "ask-1",
+        "status": "active",
+        "backend_recipe_id": "salad",
+        "mandate_id": "mandate-1",
+    }
+    mandate_service = MagicMock()
+    mandate_service.create_mandate.return_value = {
+        "id": "mandate-1",
+        "user_id": "user-1",
+    }
+    service = SpendMandateAskService(repository=repo, mandate_service=mandate_service)
+
+    with patch(
+        "recipe_search_agent.spend_mandate_ask_service.PurchaseHoldService.create_hold",
+        side_effect=RuntimeError("db unavailable"),
+    ):
+        result = service.resolve_ask("ask-1", grant=True, user_id="user-1")
+
+    assert result["ok"] is True
+    assert result["ask"]["status"] == "active"
+    assert result["mandate"]["id"] == "mandate-1"
+    assert result["hold"] is None
