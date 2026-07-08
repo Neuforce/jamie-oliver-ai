@@ -673,6 +673,8 @@ async def resolve_spend_mandate_ask(ask_id: str, request: SpendMandateAskResolve
             grant=grant,
             user_id=request.user_id,
             source=request.source,
+            channel="chat",
+            decision_detail=f"button:{decision}",
         )
         if not result.get("ok"):
             error = result.get("error")

@@ -5,6 +5,7 @@ from __future__ import annotations
 import logging
 from typing import Any, Optional
 
+from recipe_search_agent.agent_action_receipts import AgentActionReceiptInput, record_agent_action_receipt
 from recipe_search_agent.chat_events import ChatEvent
 from recipe_search_agent.recipe_catalog import get_published_catalog
 from recipe_search_agent.recipe_pricing import resolve_recipe_price
@@ -185,6 +186,29 @@ def tool_result_to_chat_events(
                     ),
                 )
             )
+        else:
+            try:
+                record_agent_action_receipt(
+                    AgentActionReceiptInput(
+                        action_name="request_supertab_unlock",
+                        kind="write",
+                        channel="auto",
+                        outcome="accept",
+                        decision_detail=None,
+                        backend_recipe_id=rid,
+                        ask_id=None,
+                        standing_authorization_mandate_id=(
+                            serialized_mandate.get("id") if serialized_mandate else None
+                        ),
+                        session_id=None,
+                        user_id=None,
+                        tool_call_id=tool_call_id,
+                        response_id=response_id,
+                        metadata={},
+                    )
+                )
+            except Exception:
+                logger.exception("Failed to record auto-charge action receipt for recipe %s", rid)
 
         purchase_intent = result.get("purchase_intent")
         paywall_metadata: dict[str, Any] = {

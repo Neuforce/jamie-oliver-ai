@@ -572,6 +572,8 @@ class DiscoveryVoiceHandler:
             grant=intent == "grant",
             user_id=user_id,
             source="voice",
+            channel="voice",
+            decision_detail=transcription,
         )
         approved = intent == "grant" and result.get("ok") and not result.get("error")
         error = result.get("error")
