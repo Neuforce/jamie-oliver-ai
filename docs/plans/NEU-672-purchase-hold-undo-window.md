@@ -28,7 +28,7 @@ todos:
     status: in_progress
   - id: pr6-tests-and-docs
     content: "Consolidated FSM/motion test pass, this doc, manual prod verification script"
-    status: in_progress
+    status: completed
   - id: prod-verify
     content: "Prod walkthrough: commit path, undo path (chat + voice), and a resolve-failure retry"
     status: pending
@@ -144,7 +144,38 @@ not yet a committed scope item here) would be either (a) a lightweight resume-on
 load check (`GET /purchase-holds?session_id=...` for an open hold and resume the
 countdown), or (b) a server-side sweep job. Neither is implemented in this plan.
 
-## PR5 — motion polish pass (in progress)
+## PR6 — consolidated verification pass (this doc + fixes below)
+
+Running the full backend + frontend suites together (not just each PR's own
+touched files in isolation) surfaced two issues, both fixed directly on this
+branch rather than in a separate PR:
+
+1. **Real regression, fixed:** PR1 added `channel`/`decision_detail` keyword
+   arguments to `SpendMandateAskService.resolve_ask`. The pre-existing NEU-671
+   voice verbal-consent test doubles (`tests/test_voice_handler_verbal_consent.py`,
+   predating this plan) were never updated to accept them — every test in that
+   file raised `TypeError` on the actual `resolve_ask` call once run, even
+   though the file collected fine. This had gone unnoticed since PR1 merged
+   because nothing had re-run that specific file end-to-end until this
+   consolidated pass. Fixed by updating the `FakeAskService` stubs.
+2. **Pre-existing, out of scope, flagged for follow-up:** `tests/test_discovery_tools.py`
+   permanently stubs `sys.modules["ccai"]`, `sys.modules["ccai.core"]`, and
+   `sys.modules["recipe_search_agent.guardrails"]` with bare `ModuleType`
+   objects at import time, with no teardown. Because pytest imports test
+   modules once per session, any test file collected/run *after*
+   `test_discovery_tools.py` alphabetically (e.g. every `test_guardrails_*.py`
+   file, and `test_voice_handler_verbal_consent.py` via `voice_handler.py`'s
+   real `ccai.core.speech_to_text` import) then fails, because the stub
+   modules shadow the real packages for the rest of the process and lack a
+   `__path__` for real submodule resolution. This predates this plan entirely
+   (verified: fails identically with or without any of PR1–5's changes) and is
+   unrelated to agent-action receipts or purchase holds — it's a general
+   backend test-suite hygiene gap. **Not fixed here** (out of scope for this
+   plan); recommend a follow-up ticket to scope the stubs to
+   `monkeypatch.setitem(sys.modules, ...)` (auto-reverted per-test) or give the
+   stub packages a real `__path__` so genuine submodules still resolve.
+
+## PR5 — motion polish pass
 
 Applies the `design-system/motion.ts` tokens introduced in PR4 to the two
 pre-existing rough transitions called out in the original design review:
