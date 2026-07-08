@@ -176,6 +176,7 @@ model User {
   spendMandates   SpendMandate[]
   spendMandateAsks SpendMandateAsk[]
   agentActionReceipts AgentActionReceipt[]
+  purchaseHolds   PurchaseHold[]
 
   @@index([email])
   @@index([status])
@@ -199,6 +200,7 @@ model SpendMandate {
   updatedAt      DateTime            @updatedAt @map("updated_at")
   spendMandateAsks SpendMandateAsk[]
   agentActionReceipts AgentActionReceipt[]
+  purchaseHolds   PurchaseHold[]
 
   @@index([userId, status])
   @@map("spend_mandates")
@@ -225,10 +227,41 @@ model SpendMandateAsk {
   createdAt        DateTime               @default(now()) @map("created_at")
   updatedAt        DateTime               @updatedAt @map("updated_at")
   agentActionReceipts AgentActionReceipt[]
+  purchaseHolds       PurchaseHold[]
 
   @@index([userId, status])
   @@index([sessionId, status])
   @@map("spend_mandate_asks")
+}
+
+model PurchaseHold {
+  id              String             @id @default(uuid()) @db.Uuid
+  userId          String?            @map("user_id") @db.Uuid
+  user            User?              @relation(fields: [userId], references: [id], onDelete: SetNull)
+  sessionId       String?            @map("session_id") @db.VarChar(255)
+  backendRecipeId String             @map("backend_recipe_id") @db.VarChar(255)
+  askId           String?            @map("ask_id") @db.Uuid
+  ask             SpendMandateAsk?   @relation(fields: [askId], references: [id], onDelete: SetNull)
+  mandateId       String?            @map("mandate_id") @db.Uuid
+  mandate         SpendMandate?      @relation(fields: [mandateId], references: [id], onDelete: SetNull)
+  priceAmount     Int                @map("price_amount")
+  currencyCode    String             @default("USD") @map("currency_code") @db.VarChar(8)
+  status          PurchaseHoldStatus @default(holding)
+  holdExpiresAt   DateTime           @map("hold_expires_at")
+  committedAt     DateTime?          @map("committed_at")
+  undoneAt        DateTime?          @map("undone_at")
+  purchaseId      String?            @map("purchase_id") @db.Uuid
+  purchase        Purchase?          @relation(fields: [purchaseId], references: [id], onDelete: SetNull)
+  toolCallId      String?            @map("tool_call_id") @db.VarChar(128)
+  responseId      String?            @map("response_id") @db.VarChar(128)
+  metadata        Json               @default("{}")
+  createdAt       DateTime           @default(now()) @map("created_at")
+  updatedAt       DateTime           @updatedAt @map("updated_at")
+
+  @@index([sessionId])
+  @@index([userId])
+  @@index([status])
+  @@map("purchase_holds")
 }
 
 model AgentActionReceipt {
@@ -330,6 +363,7 @@ model Purchase {
   metadata           Json             @default("{}")
   createdAt          DateTime         @default(now()) @map("created_at")
   updatedAt          DateTime         @updatedAt @map("updated_at")
+  purchaseHolds      PurchaseHold[]
 
   entitlements Entitlement[]
 
@@ -506,4 +540,13 @@ enum AgentActionOutcome {
   cancel
 
   @@map("agent_action_outcome")
+}
+
+enum PurchaseHoldStatus {
+  holding
+  committed
+  undone
+  failed
+
+  @@map("purchase_hold_status")
 }
