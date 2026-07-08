@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Recipe } from '../data/recipes';
 import { Clock, Users, ChefHat, Lock, Loader2 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import type { RecipeCommerceBadge } from '../lib/recipeAccessDisplay';
 import { RECIPE_COMMERCE_BADGE_STYLES } from '../lib/recipeAccessDisplay';
+import { safeTransition, fadeTransition } from '../design-system/motion';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -105,23 +106,32 @@ export function RecipeCard({ recipe, onClick, variant = 'grid', showDifficultyPi
     );
   }
 
-  const CommerceBadge = commerceBadge && variant === 'chat' ? (
-    <span
-      className="inline-flex items-center gap-1 text-white text-[10px] font-semibold uppercase tracking-[0.08em]"
-      style={{
-        flexShrink: 0,
-        height: '24px',
-        padding: '4px 10px',
-        borderRadius: '33554400px',
-        ...RECIPE_COMMERCE_BADGE_STYLES[commerceBadge.tone],
-      }}
-    >
-      {commerceBadge.tone === 'locked' && <Lock className="size-3" aria-hidden="true" />}
-      {commerceBadge.tone === 'processing' && (
-        <Loader2 className="size-3 animate-spin" aria-hidden="true" />
-      )}
-      {commerceBadge.label}
-    </span>
+  const CommerceBadge = variant === 'chat' ? (
+    <AnimatePresence mode="wait">
+      {commerceBadge ? (
+        <motion.span
+          key={commerceBadge.tone}
+          className="inline-flex items-center gap-1 text-white text-[10px] font-semibold uppercase tracking-[0.08em]"
+          style={{
+            flexShrink: 0,
+            height: '24px',
+            padding: '4px 10px',
+            borderRadius: '33554400px',
+            ...RECIPE_COMMERCE_BADGE_STYLES[commerceBadge.tone],
+          }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={safeTransition(fadeTransition)}
+        >
+          {commerceBadge.tone === 'locked' && <Lock className="size-3" aria-hidden="true" />}
+          {commerceBadge.tone === 'processing' && (
+            <Loader2 className="size-3 animate-spin" aria-hidden="true" />
+          )}
+          {commerceBadge.label}
+        </motion.span>
+      ) : null}
+    </AnimatePresence>
   ) : null;
 
   // Shared compact card body — used by both `grid` and `chat` variants.

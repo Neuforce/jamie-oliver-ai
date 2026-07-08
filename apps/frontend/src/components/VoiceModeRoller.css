@@ -15,6 +15,12 @@
  */
 
 .voice-roller {
+  --motion-duration-fast: 180ms;
+  --motion-duration-base: 320ms;
+  --motion-duration-slow: 420ms;
+  --motion-ease-drag: cubic-bezier(0.32, 0.72, 0, 1);
+  --motion-ease-standard: ease;
+
   position: relative;
   width: 100%;
   flex: 1;
@@ -29,10 +35,10 @@
 
 /* Bounce container — moves the whole stack a few px at boundaries. */
 .voice-roller[data-bounce='top'] .voice-roller__stack {
-  animation: voice-roller-bounce-up 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  animation: voice-roller-bounce-up var(--motion-duration-base) var(--motion-ease-drag);
 }
 .voice-roller[data-bounce='bottom'] .voice-roller__stack {
-  animation: voice-roller-bounce-down 320ms cubic-bezier(0.32, 0.72, 0, 1);
+  animation: voice-roller-bounce-down var(--motion-duration-base) var(--motion-ease-drag);
 }
 
 @keyframes voice-roller-bounce-up {
@@ -111,11 +117,11 @@
   padding: 0;
   box-shadow: none;
   transition:
-    width 420ms cubic-bezier(0.32, 0.72, 0, 1),
-    filter 420ms cubic-bezier(0.32, 0.72, 0, 1),
-    opacity 420ms ease,
-    margin-bottom 420ms cubic-bezier(0.32, 0.72, 0, 1),
-    box-shadow 420ms ease;
+    width var(--motion-duration-slow) var(--motion-ease-drag),
+    filter var(--motion-duration-slow) var(--motion-ease-drag),
+    opacity var(--motion-duration-slow) var(--motion-ease-standard),
+    margin-bottom var(--motion-duration-slow) var(--motion-ease-drag),
+    box-shadow var(--motion-duration-slow) var(--motion-ease-standard);
   will-change: width, transform, filter, opacity;
 }
 

@@ -10,6 +10,7 @@ import React, {
 } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowDown, ChevronUp } from 'lucide-react';
+import { safeTransition, cardMorphTransition } from '../design-system/motion';
 import './VoiceModeRoller.css';
 
 /**
@@ -443,7 +444,7 @@ export function VoiceModeRoller({
             initial={{ y: -40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -40, opacity: 0 }}
-            transition={{ duration: 0.32, ease: [0.32, 0.72, 0, 1] }}
+            transition={safeTransition(cardMorphTransition)}
           >
             <ArrowDown size={12} />
             {unseenCount === 1 ? '1 new' : `${unseenCount} new`}
