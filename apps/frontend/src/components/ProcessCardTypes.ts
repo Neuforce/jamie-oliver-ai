@@ -19,7 +19,8 @@ export type ToolName =
   | 'suggest_recipes_for_mood'
   | 'get_recipe_details'
   | 'plan_meal'
-  | 'create_shopping_list';
+  | 'create_shopping_list'
+  | 'request_supertab_unlock';
 
 export type ProcessStepIcon =
   | 'search'
@@ -27,7 +28,8 @@ export type ProcessStepIcon =
   | 'chef'
   | 'recipe'
   | 'plan'
-  | 'list';
+  | 'list'
+  | 'unlock';
 
 /**
  * Display metadata per tool. Unlike the previous revision, we do NOT
@@ -69,6 +71,11 @@ export const TOOL_STEP_DISPLAY: Record<ToolName, ToolStepDisplay> = {
     executingLabel: 'Building shopping list',
     doneLabel: 'Built shopping list',
     icon: 'list',
+  },
+  request_supertab_unlock: {
+    executingLabel: 'Requesting to put it on your Tab',
+    doneLabel: 'Requested to put it on your Tab',
+    icon: 'unlock',
   },
 };
 
@@ -117,3 +124,47 @@ export type FeaturedPayload =
   | { kind: 'recipe_detail'; recipe: RecipeDetailData }
   | { kind: 'meal_plan'; mealPlan: MealPlanData }
   | { kind: 'shopping_list'; shoppingList: ShoppingListData };
+
+/** Metadata on `recipe_paywall_requested` used to finalize the unlock step row. */
+export interface UnlockStepFinalizationMetadata {
+  auto_charge?: boolean;
+  mandate?: {
+    ceilingAmount?: number;
+    currencyCode?: string;
+  };
+}
+
+export function deriveUnlockStepFinalization(
+  metadata: UnlockStepFinalizationMetadata | undefined,
+  formatPrice: (amountCents: number, currencyCode: string) => string,
+): { label: string; status: 'done' } {
+  if (metadata?.auto_charge === true) {
+    const ceiling = metadata.mandate?.ceilingAmount;
+    const currency = metadata.mandate?.currencyCode;
+    let label = 'Putting it on your Tab — using your standing approval';
+    if (typeof ceiling === 'number' && typeof currency === 'string') {
+      label += `, up to ${formatPrice(ceiling, currency)}`;
+    }
+    return { label, status: 'done' };
+  }
+  return { label: 'Asked to put it on your Tab', status: 'done' };
+}
+
+export function finalizeUnlockStep(
+  steps: ProcessStep[],
+  toolCallId: string | undefined,
+  metadata: UnlockStepFinalizationMetadata | undefined,
+  formatPrice: (amountCents: number, currencyCode: string) => string,
+): ProcessStep[] {
+  if (!toolCallId) {
+    return steps;
+  }
+  const matchIndex = steps.findIndex((step) => step.id === toolCallId);
+  if (matchIndex === -1) {
+    return steps;
+  }
+  const { label, status } = deriveUnlockStepFinalization(metadata, formatPrice);
+  return steps.map((step, index) =>
+    index === matchIndex ? { ...step, label, status } : step,
+  );
+}
