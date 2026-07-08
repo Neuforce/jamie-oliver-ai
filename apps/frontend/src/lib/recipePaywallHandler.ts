@@ -1,6 +1,7 @@
 import type { SpendMandate } from './api';
 import { setMandate, setUnlockState } from './commerceStore';
-import { startRecipeUnlock } from './unlockController';
+import { parsePurchaseHold } from './purchaseHold';
+import { beginPurchaseHold, startRecipeUnlock } from './unlockController';
 
 export interface RecipePaywallMetadata {
   backend_recipe_id?: string;
@@ -10,6 +11,7 @@ export interface RecipePaywallMetadata {
   ask_id?: string;
   auto_charge?: boolean;
   mandate?: unknown;
+  hold?: unknown;
 }
 
 function parseSpendMandate(raw: unknown): SpendMandate | null {
@@ -59,6 +61,11 @@ export async function handleRecipePaywallRequested(metadata: RecipePaywallMetada
     const mandate = parseSpendMandate(metadata.mandate);
     if (mandate) {
       setMandate(mandate);
+      const hold = parsePurchaseHold(metadata.hold);
+      if (hold) {
+        beginPurchaseHold(bid, hold);
+        return;
+      }
       setUnlockState(bid, 'processing');
       await startRecipeUnlock(bid, { trigger: 'auto_charge' });
       return;

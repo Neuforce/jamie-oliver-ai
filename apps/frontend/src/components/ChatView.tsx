@@ -35,6 +35,7 @@ import {
   useActiveUnlockRecipeId,
 } from '../lib/commerceStore';
 import { handleVoiceSpendMandateConsentResolved } from '../lib/voiceSpendMandateConsentResolved';
+import { syncPurchaseHoldResolutionFromVoice } from '../lib/unlockController';
 import type { RecipePaywallMetadata } from '../lib/recipePaywallHandler';
 import { finalizeVoiceBubbleMessages } from '../lib/voiceBubbleFinalize';
 import { useVoiceChat } from '../hooks/useVoiceChat';
@@ -731,6 +732,11 @@ export function ChatView({
       });
     },
     onSpendMandateConsentResolved: handleVoiceSpendMandateConsentResolved,
+    onPurchaseHoldResolved: (payload) => {
+      const bid = payload.backend_recipe_id?.trim();
+      if (!bid || !payload.status) return;
+      syncPurchaseHoldResolutionFromVoice(bid, payload.status);
+    },
     onProcessing: (responseId) => {
       const messageId = voiceMessageIdRef.current;
       if (!messageId) return;
