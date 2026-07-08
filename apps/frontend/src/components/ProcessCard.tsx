@@ -1,7 +1,7 @@
 import React, { useState, useCallback, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import ReactMarkdown from 'react-markdown';
-import { CheckCircle2, ChefHat, ChevronDown, ClipboardList, CookingPot, Search, Soup } from 'lucide-react';
+import { CheckCircle2, ChefHat, ChevronDown, ClipboardList, CookingPot, Lock, Search, Soup } from 'lucide-react';
 import type {
   ProcessCardState,
   ProcessStep,
@@ -259,6 +259,8 @@ function StepIcon({ icon }: { icon: ProcessStepIcon }) {
     case 'plan':
     case 'list':
       return <ClipboardList size={14} />;
+    case 'unlock':
+      return <Lock size={14} />;
     case 'search':
     default:
       return <Search size={14} />;
