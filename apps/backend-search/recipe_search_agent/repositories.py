@@ -448,3 +448,14 @@ class SpendMandateAskRepository:
             .execute()
         )
         return first_row(response)
+
+
+class AgentActionReceiptRepository:
+    """Persistence for auditable agent action receipts."""
+
+    def __init__(self, client: Client | None = None):
+        self._client = client or create_service_role_client()
+
+    def create_receipt(self, payload: dict[str, Any]) -> dict[str, Any]:
+        response = self._client.table("agent_action_receipts").insert(payload).execute()
+        return first_row(response) or payload

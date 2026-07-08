@@ -175,6 +175,7 @@ model User {
   cookingSessions CookingSession[]
   spendMandates   SpendMandate[]
   spendMandateAsks SpendMandateAsk[]
+  agentActionReceipts AgentActionReceipt[]
 
   @@index([email])
   @@index([status])
@@ -197,6 +198,7 @@ model SpendMandate {
   createdAt      DateTime            @default(now()) @map("created_at")
   updatedAt      DateTime            @updatedAt @map("updated_at")
   spendMandateAsks SpendMandateAsk[]
+  agentActionReceipts AgentActionReceipt[]
 
   @@index([userId, status])
   @@map("spend_mandates")
@@ -222,10 +224,38 @@ model SpendMandateAsk {
   expiresAt        DateTime?              @map("expires_at")
   createdAt        DateTime               @default(now()) @map("created_at")
   updatedAt        DateTime               @updatedAt @map("updated_at")
+  agentActionReceipts AgentActionReceipt[]
 
   @@index([userId, status])
   @@index([sessionId, status])
   @@map("spend_mandate_asks")
+}
+
+model AgentActionReceipt {
+  id                             String              @id @default(uuid()) @db.Uuid
+  userId                         String?             @map("user_id") @db.Uuid
+  user                           User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  sessionId                      String?             @map("session_id") @db.VarChar(255)
+  actionName                     String              @map("action_name") @db.VarChar(128)
+  kind                           AgentActionKind     @map("kind")
+  channel                        AgentActionChannel  @map("channel")
+  outcome                        AgentActionOutcome  @map("outcome")
+  decisionDetail                 String?             @map("decision_detail")
+  backendRecipeId                String?             @map("backend_recipe_id") @db.VarChar(255)
+  askId                          String?             @map("ask_id") @db.Uuid
+  ask                            SpendMandateAsk?    @relation(fields: [askId], references: [id], onDelete: SetNull)
+  standingAuthorizationMandateId String?             @map("standing_authorization_mandate_id") @db.Uuid
+  standingAuthorizationMandate   SpendMandate?       @relation(fields: [standingAuthorizationMandateId], references: [id], onDelete: SetNull)
+  toolCallId                     String?             @map("tool_call_id") @db.VarChar(128)
+  responseId                     String?             @map("response_id") @db.VarChar(128)
+  metadata                       Json                @default("{}")
+  recordedAt                     DateTime            @default(now()) @map("recorded_at")
+  createdAt                      DateTime            @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@index([sessionId])
+  @@index([actionName])
+  @@map("agent_action_receipts")
 }
 
 model WebhookEvent {
@@ -453,4 +483,27 @@ enum SpendMandateAskStatus {
   expired
 
   @@map("spend_mandate_ask_status")
+}
+
+enum AgentActionKind {
+  read
+  write
+
+  @@map("agent_action_kind")
+}
+
+enum AgentActionChannel {
+  chat
+  voice
+  auto
+
+  @@map("agent_action_channel")
+}
+
+enum AgentActionOutcome {
+  accept
+  decline
+  cancel
+
+  @@map("agent_action_outcome")
 }
