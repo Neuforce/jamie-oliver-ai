@@ -12,12 +12,14 @@ function lockedAccess(): RecipeAccessResponse {
     recipeUuid: 'uuid-1',
     accessState: 'locked',
     offering: {
+      id: 'offering-fish-pie',
+      isFree: false,
       priceAmount: 299,
       currencyCode: 'GBP',
       contentKey: 'recipe:fish-pie:cook',
     },
     entitlement: null,
-    session: null,
+    activeSession: null,
   };
 }
 

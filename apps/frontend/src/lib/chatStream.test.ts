@@ -34,7 +34,7 @@ describe('chatStream', () => {
       metadata: {
         tool_call_id: 'call-unlock',
         response_id: 'turn-1',
-        recipe: { recipe_id: 'fish-chips-mushy-peas', title: 'Fish & chips', description: 'x' },
+        recipe: { recipe_id: 'fish-chips-mushy-peas', title: 'Fish & chips', description: 'x', ingredients: [], steps: [] },
       },
     });
     state = reduceChatStreamEvent(state, {

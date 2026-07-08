@@ -21,7 +21,6 @@ const resolveApiBaseUrl = (): string => {
   return '';
 };
 
-// @ts-expect-error - Vite provides import.meta.env at runtime
 export const API_BASE_URL: string =
   (import.meta.env.VITE_API_BASE_URL as string | undefined)?.replace(/\/$/, '') || resolveApiBaseUrl();
 

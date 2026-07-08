@@ -105,7 +105,7 @@ export default function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [permalinkNotFound, setPermalinkNotFound] = useState<{ slug: string } | null>(null);
   const [permalinkResolving, setPermalinkResolving] = useState(false);
-  const [recipeAccessErrorIds, setRecipeAccessErrorIds] = useState<Record<string, true>>({});
+  const [recipeAccessErrorIds, setRecipeAccessErrorIds] = useState<Record<string, boolean>>({});
   const [recipeAccessLoadingId, setRecipeAccessLoadingId] = useState<string | null>(null);
 
   // Data state
@@ -478,7 +478,7 @@ export default function App() {
   const ownedRecipeCollection = useMemo(() => {
     return myRecipes
       .map((ownedRecipe) => loadedRecipesByBackendId.get(ownedRecipe.recipeId))
-      .filter((recipe): recipe is Recipe => Boolean(recipe));
+      .filter((recipe): recipe is Recipe & { backendId: string } => Boolean(recipe));
   }, [loadedRecipesByBackendId, myRecipes]);
 
   const {
@@ -932,6 +932,15 @@ export default function App() {
 
         return {
           via: 'paywall',
+          /*
+           * This bridges the voice-triggered checkout path into the same
+           * `applyRecipePurchaseOutcome` handler the embedded purchase
+           * button uses. It only synthesizes the fields that handler
+           * actually reads (`state.purchase.status`, `priorEntitlements`,
+           * `snapshot`, `refreshedAccess`) — not the full Supertab SDK
+           * widget state shape (`authStatus`/`purchasedOffering`/`tab`/
+           * `paymentResult`), which this path never produces or needs.
+           */
           resolution: {
             snapshot: await loadMyTabSnapshot(),
             refreshedAccess: paywallResult.refreshedAccess ?? null,
@@ -942,7 +951,7 @@ export default function App() {
             },
             priorEntitlements:
               paywallResult.status === 'prior-entitlement' ? [{ hasEntitlement: true }] : [],
-          },
+          } as unknown as RecipePurchaseResolution,
           paywallResult,
         };
       },

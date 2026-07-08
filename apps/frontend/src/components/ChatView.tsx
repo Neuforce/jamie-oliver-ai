@@ -39,7 +39,6 @@ import type { RecipePaywallMetadata } from '../lib/recipePaywallHandler';
 import { finalizeVoiceBubbleMessages } from '../lib/voiceBubbleFinalize';
 import { useVoiceChat } from '../hooks/useVoiceChat';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
-// @ts-expect-error - Vite resolves figma:asset imports
 import imgJamieAvatar from 'figma:asset/dbe757ff22db65b8c6e8255fc28d6a6a29240332.png';
 import {
   chatWithAgent,
@@ -68,7 +67,7 @@ import {
 import type { ChatEvent } from '../lib/api';
 import { CHAT_STORAGE_KEY, SESSION_ID_KEY } from '../lib/chatStorage';
 import { markAppLoadStage } from '../lib/appLoadMetrics';
-import type { RecipeAccessResponse } from '../lib/api';
+import type { RecipeAccessResponse, SpendMandate } from '../lib/api';
 import {
   getRecipeCommerceBadge,
   RECIPE_COMMERCE_BADGE_STYLES,
@@ -265,7 +264,7 @@ const ensureRecipeHasPayload = async (recipe: Recipe): Promise<Recipe> => {
           match_explanation: '',
           matching_chunks: [],
         },
-        response.full_recipe as JamieOliverRecipe,
+        response.full_recipe as unknown as JamieOliverRecipe,
         recipe.id - 1
       );
     }
@@ -314,7 +313,7 @@ const loadRecipeForSelection = async (recipeId: string): Promise<Recipe | null> 
           match_explanation: '',
           matching_chunks: [],
         },
-        response.full_recipe as JamieOliverRecipe,
+        response.full_recipe as unknown as JamieOliverRecipe,
         0
       );
     }
@@ -692,7 +691,7 @@ export function ChatView({
             tool_call_id: payload.tool_call_id,
             response_id: payload.response_id,
             auto_charge: payload.auto_charge,
-            mandate: payload.mandate,
+            mandate: payload.mandate as SpendMandate | undefined,
             price_amount: payload.price_amount,
             currency_code: payload.currency_code,
             ceiling_amount: payload.ceiling_amount,

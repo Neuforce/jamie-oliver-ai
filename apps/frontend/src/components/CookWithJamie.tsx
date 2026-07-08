@@ -929,7 +929,6 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
 
       if (stepId) {
         try {
-          // @ts-expect-error - Vite provides import.meta.env
           const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
           // Derive API base URL from WebSocket URL
           const apiBaseUrl = wsUrl
@@ -975,7 +974,6 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     }
 
     try {
-      // @ts-expect-error - Vite provides import.meta.env
       const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
       const apiBaseUrl = wsUrl
         .replace('wss://', 'https://')
@@ -1025,7 +1023,6 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
     }
 
     try {
-      // @ts-expect-error - Vite provides import.meta.env
       const wsUrl = import.meta.env.VITE_WS_URL || 'wss://jamie-backend-alb-685777308.us-east-1.elb.amazonaws.com/ws/voice';
       const apiBaseUrl = wsUrl
         .replace('wss://', 'https://')
@@ -1522,7 +1519,7 @@ export function CookWithJamie({ recipe, onClose, onBackToChat, onExploreRecipes 
             avatarState={
               isMicMuted
                 ? 'muted'
-                : assistantTurnState === 'speaking'
+                : assistantTurnState === 'assistant_speaking'
                   ? 'speaking'
                   : assistantTurnState === 'listening'
                     ? 'listening'

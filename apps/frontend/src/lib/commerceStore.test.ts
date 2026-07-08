@@ -32,12 +32,14 @@ function lockedAccess(recipeId: string): RecipeAccessResponse {
     recipeUuid: 'uuid-1',
     accessState: 'locked',
     offering: {
+      id: `offering-${recipeId}`,
+      isFree: false,
       priceAmount: 5,
       currencyCode: 'USD',
       contentKey: `recipe:${recipeId}:cook`,
     },
     entitlement: null,
-    session: null,
+    activeSession: null,
   };
 }
 

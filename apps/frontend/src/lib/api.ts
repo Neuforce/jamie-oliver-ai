@@ -91,6 +91,9 @@ export interface ChatEvent {
     currency_code?: string;
     ceiling_amount?: number;
     ask_id?: string;
+    // Recipe paywall (auto-charge vs interactive ask)
+    auto_charge?: boolean;
+    mandate?: SpendMandate;
   };
 }
 
@@ -181,8 +184,15 @@ export interface SupertabBootstrapResponse {
 export interface SupertabPurchaseSyncRequest {
   user_id: string;
   recipe_id: string;
-  purchase?: Record<string, unknown> | null;
-  prior_entitlement?: Array<Record<string, unknown>>;
+  /*
+   * These are opaque SDK response fragments (Supertab's own `Purchase`/
+   * `EntitlementStatus` types, which lack an index signature) forwarded
+   * verbatim as a JSON request body — `unknown` is the honest type here,
+   * not `Record<string, unknown>` (which SDK interfaces can't structurally
+   * satisfy without a cast at every call site).
+   */
+  purchase?: unknown;
+  prior_entitlement?: unknown[];
 }
 
 export interface SupertabPurchaseSyncResponse {

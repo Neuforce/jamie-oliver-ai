@@ -151,10 +151,6 @@ export function useAudioPlayback(options: UseAudioPlaybackOptions = {}) {
           }, PLAYBACK_GAP_TOLERANCE_MS);
         }
       };
-      
-      source.onerror = (err) => {
-        console.error('❌ Audio source error:', err);
-      };
     } catch (err) {
       console.error('❌ Error playing audio:', err);
     }

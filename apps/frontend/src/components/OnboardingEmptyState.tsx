@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { AvatarWithOrganicGlow } from '../design-system/components/AvatarWithOrganicGlow';
 import { TalkToJamiePillButton, type TalkToJamiePillState } from './TalkToJamiePillButton';
-// @ts-expect-error - Vite resolves figma:asset imports
 import jamieAvatarLarge from 'figma:asset/9998d3c8aa18fde4e634353cc1af4c783bd57297.png';
 
 /**
