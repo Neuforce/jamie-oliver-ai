@@ -5,7 +5,8 @@
  */
 
 import { useSyncExternalStore } from 'react';
-import type { RecipeAccessResponse, SpendMandate } from './api';
+import type { PurchaseHold, RecipeAccessResponse, SpendMandate } from './api';
+import { parsePurchaseHold } from './purchaseHold';
 
 export interface PurchaseReceipt {
   id: string;
@@ -26,11 +27,13 @@ export type AskStatus = 'requested' | 'granted' | 'declined';
 export type UnlockState =
   | 'locked'
   | 'requested'
+  | 'holding'
   | 'processing'
   | 'unlocked'
   | 'needsCheckout'
   | 'noTab'
   | 'declined'
+  | 'undone'
   | 'failed';
 
 /** Ask metadata that must survive past ask resolution so the card can keep rendering. */
@@ -41,14 +44,23 @@ export interface UnlockAskMeta {
   ceilingAmount: number;
 }
 
+export interface HoldMeta {
+  holdId: string;
+  holdExpiresAt: string;
+  priceAmount: number;
+  currencyCode: string;
+}
+
 /** States in which the consent/unlock surface should remain visible. */
 const UNLOCK_SURFACE_STATES: ReadonlySet<UnlockState> = new Set<UnlockState>([
   'requested',
+  'holding',
   'processing',
   'unlocked',
   'needsCheckout',
   'noTab',
   'declined',
+  'undone',
   'failed',
 ]);
 
@@ -80,6 +92,7 @@ export interface RecipeCommerceEntry {
   receipt: PurchaseReceipt | null;
   unlockState: UnlockState;
   askMeta: UnlockAskMeta | null;
+  holdMeta: HoldMeta | null;
 }
 
 export interface CommerceStateSnapshot {
@@ -90,6 +103,7 @@ export interface CommerceStateSnapshot {
   mandate: SpendMandate | null;
   unlockState: UnlockState;
   askMeta: UnlockAskMeta | null;
+  holdMeta: HoldMeta | null;
 }
 
 type StoreListener = () => void;
@@ -194,6 +208,7 @@ function ensureRecipeEntry(recipeId: string): RecipeCommerceEntry {
     receipt: null,
     unlockState: 'locked',
     askMeta: null,
+    holdMeta: null,
   };
   recipeCommerce = { ...recipeCommerce, [recipeId]: entry };
   return entry;
@@ -234,6 +249,13 @@ export function getUnlockAskMeta(recipeId?: string | null): UnlockAskMeta | null
   return recipeCommerce[recipeId]?.askMeta ?? null;
 }
 
+export function getHoldMeta(recipeId?: string | null): HoldMeta | null {
+  if (!recipeId) {
+    return null;
+  }
+  return recipeCommerce[recipeId]?.holdMeta ?? null;
+}
+
 /** Set the per-recipe unlock projection state. Owned by the unlock controller. */
 export function setUnlockState(recipeId: string, state: UnlockState): void {
   const entry = ensureRecipeEntry(recipeId);
@@ -249,6 +271,25 @@ export function setUnlockState(recipeId: string, state: UnlockState): void {
   } else if (state === 'locked' && lastUnlockSurfaceRecipeId === recipeId) {
     lastUnlockSurfaceRecipeId = null;
   }
+  notifyListeners();
+}
+
+export function setHoldMeta(recipeId: string, meta: HoldMeta | null): void {
+  const entry = ensureRecipeEntry(recipeId);
+  if (entry.holdMeta === meta || (
+    entry.holdMeta
+    && meta
+    && entry.holdMeta.holdId === meta.holdId
+    && entry.holdMeta.holdExpiresAt === meta.holdExpiresAt
+    && entry.holdMeta.priceAmount === meta.priceAmount
+    && entry.holdMeta.currencyCode === meta.currencyCode
+  )) {
+    return;
+  }
+  recipeCommerce = {
+    ...recipeCommerce,
+    [recipeId]: { ...entry, holdMeta: meta },
+  };
   notifyListeners();
 }
 
@@ -283,6 +324,7 @@ export function getCommerceState(recipeId?: string | null): CommerceStateSnapsho
     mandate,
     unlockState: entry?.unlockState ?? 'locked',
     askMeta: entry?.askMeta ?? null,
+    holdMeta: entry?.holdMeta ?? null,
   };
 }
 
@@ -458,12 +500,13 @@ export async function resolveAskWithServer(
   recipeId: string,
   approved: boolean,
   userId?: string | null,
-): Promise<boolean> {
+): Promise<{ approved: boolean; hold: PurchaseHold | null }> {
   const ask = getActiveAsk();
   if (!ask || ask.recipeId !== recipeId || ask.status !== 'requested') {
-    return false;
+    return { approved: false, hold: null };
   }
 
+  let hold: PurchaseHold | null = null;
   if (ask.askId && userId) {
     try {
       const { resolveSpendMandateAsk } = await import('./api');
@@ -475,15 +518,18 @@ export async function resolveAskWithServer(
       if (result.mandate) {
         setMandate(result.mandate);
       }
+      if (result.hold) {
+        hold = parsePurchaseHold(result.hold);
+      }
     } catch (error) {
       console.error('Failed to resolve spend mandate ask on server:', error);
       resolveAsk(recipeId, false);
-      return false;
+      return { approved: false, hold: null };
     }
   }
 
   resolveAsk(recipeId, approved);
-  return approved;
+  return { approved, hold };
 }
 
 export function formatConsentPrice(amountCents: number, currencyCode: string): string {
@@ -522,6 +568,14 @@ export function useUnlockAskMeta(recipeId?: string | null): UnlockAskMeta | null
   return useSyncExternalStore(
     subscribeCommerceStore,
     () => getUnlockAskMeta(recipeId),
+    () => null,
+  );
+}
+
+export function useHoldMeta(recipeId?: string | null): HoldMeta | null {
+  return useSyncExternalStore(
+    subscribeCommerceStore,
+    () => getHoldMeta(recipeId),
     () => null,
   );
 }

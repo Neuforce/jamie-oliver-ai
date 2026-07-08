@@ -1,9 +1,20 @@
 import type { Recipe } from '../data/recipes';
-import type { RecipeAccessResponse } from './api';
-import { resolveAskWithServer, setUnlockState } from './commerceStore';
+import type { PurchaseHold, RecipeAccessResponse } from './api';
+import {
+  commitPurchaseHold as commitPurchaseHoldRequest,
+  undoPurchaseHold as undoPurchaseHoldRequest,
+} from './api';
+import {
+  getActiveAsk,
+  getHoldMeta,
+  resolveAskWithServer,
+  setHoldMeta,
+  setUnlockState,
+} from './commerceStore';
+import { msUntilHoldExpiry } from './purchaseHold';
 import type { PurchaseRecipeOutcome } from './supertab';
 
-type UnlockTrigger = 'paywall_event' | 'consent_approve' | 'auto_charge';
+type UnlockTrigger = 'paywall_event' | 'consent_approve' | 'auto_charge' | 'hold_committed';
 type SettlementTrigger = UnlockTrigger | 'direct';
 
 export interface ConsentPromptParams {
@@ -57,7 +68,47 @@ export interface StartUnlockOptions {
 }
 
 const inFlightByRecipe = new Map<string, Promise<void>>();
+const holdCommitTimers = new Map<string, ReturnType<typeof setTimeout>>();
+const holdGenerations = new Map<string, number>();
 let config: UnlockControllerConfig | null = null;
+
+function clearHoldTimer(recipeId: string): number {
+  const existing = holdCommitTimers.get(recipeId);
+  if (existing) {
+    clearTimeout(existing);
+    holdCommitTimers.delete(recipeId);
+  }
+  const nextGeneration = (holdGenerations.get(recipeId) ?? 0) + 1;
+  holdGenerations.set(recipeId, nextGeneration);
+  return nextGeneration;
+}
+
+function getPurchaseHoldErrorCode(error: unknown): string | null {
+  if (!(error instanceof Error)) {
+    return null;
+  }
+  const message = error.message;
+  const jsonStart = message.indexOf('{');
+  if (jsonStart >= 0) {
+    try {
+      const parsed = JSON.parse(message.slice(jsonStart)) as Record<string, unknown>;
+      if (typeof parsed.detail === 'string') {
+        return parsed.detail;
+      }
+      if (typeof parsed.error === 'string') {
+        return parsed.error;
+      }
+    } catch {
+      // fall through to substring checks
+    }
+  }
+  for (const code of ['already_undone', 'already_committed', 'already_failed', 'not_yet_expired', 'hold_not_found']) {
+    if (message.includes(code)) {
+      return code;
+    }
+  }
+  return null;
+}
 
 function canStartCooking(access: RecipeAccessResponse | null | undefined): boolean {
   if (!access) {
@@ -71,6 +122,11 @@ export function configureUnlockController(nextConfig: UnlockControllerConfig): v
 }
 
 export function resetUnlockControllerForTests(): void {
+  for (const timer of holdCommitTimers.values()) {
+    clearTimeout(timer);
+  }
+  holdCommitTimers.clear();
+  holdGenerations.clear();
   config = null;
   inFlightByRecipe.clear();
 }
@@ -143,7 +199,8 @@ async function runUnlock(
     const consentAlreadyGranted =
       options.trigger === 'consent_approve'
       || options.trigger === 'direct'
-      || options.trigger === 'auto_charge';
+      || options.trigger === 'auto_charge'
+      || options.trigger === 'hold_committed';
     if (consentAlreadyGranted) {
       transition('processing');
     }
@@ -238,9 +295,24 @@ export async function confirmUnlock(
   if (!id) {
     return;
   }
+  const hadPendingAsk = (() => {
+    const ask = getActiveAsk();
+    return Boolean(ask && ask.recipeId === id && ask.status === 'requested');
+  })();
   setUnlockState(id, 'processing');
-  await resolveAskWithServer(id, true, userId);
-  await startRecipeUnlock(id, { trigger: 'consent_approve' });
+  const { approved, hold } = await resolveAskWithServer(id, true, userId);
+  if (approved && hold) {
+    beginPurchaseHold(id, hold);
+    return;
+  }
+  if (approved || !hadPendingAsk) {
+    await startRecipeUnlock(id, { trigger: 'consent_approve' });
+    return;
+  }
+  // A real pending ask existed but the server-side resolve call itself failed
+  // (network/API error) — surface 'failed' so the user has a retry path
+  // instead of being stuck at 'processing' forever.
+  setUnlockState(id, 'failed');
 }
 
 /** View verb: the user declined. Resolves the ask (decline) and shows declined. */
@@ -315,4 +387,102 @@ export function requestCheckout(recipeId: string): Promise<void> {
 /** View verb: connect a Tab for the noTab state. */
 export function connectTab(): void {
   config?.connectTab?.();
+}
+
+export function beginPurchaseHold(recipeId: string, hold: PurchaseHold): void {
+  const id = recipeId.trim();
+  if (!id) {
+    return;
+  }
+  const generation = clearHoldTimer(id);
+  setHoldMeta(id, {
+    holdId: hold.id,
+    holdExpiresAt: hold.holdExpiresAt ?? new Date().toISOString(),
+    priceAmount: hold.priceAmount,
+    currencyCode: hold.currencyCode,
+  });
+  setUnlockState(id, 'holding');
+  const delayMs = msUntilHoldExpiry(hold);
+  const timer = setTimeout(() => {
+    if (holdGenerations.get(id) !== generation) {
+      return;
+    }
+    void commitPurchaseHold(id);
+  }, delayMs);
+  holdCommitTimers.set(id, timer);
+}
+
+export async function commitPurchaseHold(recipeId: string): Promise<void> {
+  const id = recipeId.trim();
+  if (!id) {
+    return;
+  }
+  clearHoldTimer(id);
+
+  const meta = getHoldMeta(id);
+  if (!meta) {
+    return;
+  }
+
+  setUnlockState(id, 'processing');
+  try {
+    await commitPurchaseHoldRequest(meta.holdId);
+    setHoldMeta(id, null);
+    await startRecipeUnlock(id, { trigger: 'hold_committed' });
+  } catch (error) {
+    const code = getPurchaseHoldErrorCode(error);
+    if (code === 'already_undone') {
+      return;
+    }
+    console.error('[unlock] commitPurchaseHold failed', { recipeId: id, code, error });
+    setUnlockState(id, 'failed');
+  }
+}
+
+export async function undoPurchaseHoldForRecipe(
+  recipeId: string,
+  userId?: string | null,
+): Promise<void> {
+  const id = recipeId.trim();
+  if (!id) {
+    return;
+  }
+  clearHoldTimer(id);
+
+  const meta = getHoldMeta(id);
+  if (!meta) {
+    return;
+  }
+
+  try {
+    await undoPurchaseHoldRequest(meta.holdId, { channel: 'chat', user_id: userId });
+    setHoldMeta(id, null);
+    setUnlockState(id, 'undone');
+  } catch (error) {
+    const code = getPurchaseHoldErrorCode(error);
+    if (code === 'already_committed') {
+      return;
+    }
+    console.error('[unlock] undoPurchaseHoldForRecipe failed', { recipeId: id, code, error });
+  }
+}
+
+export function syncPurchaseHoldResolutionFromVoice(recipeId: string, status: string): void {
+  const id = recipeId.trim();
+  if (!id) {
+    return;
+  }
+  clearHoldTimer(id);
+
+  if (status === 'undone') {
+    setHoldMeta(id, null);
+    setUnlockState(id, 'undone');
+    return;
+  }
+
+  if (status === 'committed') {
+    setHoldMeta(id, null);
+    setUnlockState(id, 'processing');
+    void startRecipeUnlock(id, { trigger: 'hold_committed' });
+  }
 }

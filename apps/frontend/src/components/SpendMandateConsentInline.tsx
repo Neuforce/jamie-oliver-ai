@@ -1,4 +1,5 @@
-import { useEffect, useSyncExternalStore, type ReactNode } from 'react';
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { Loader2, Check, Lock, AlertCircle } from 'lucide-react';
 import {
   formatConsentPrice,
@@ -8,18 +9,23 @@ import {
   getUnlockState,
   setUnlockState,
   subscribeCommerceStore,
+  useHoldMeta,
   type UnlockState,
 } from '../lib/commerceStore';
+import { safeTransition, cardMorphTransition } from '../design-system/motion';
 import { getStoredJamieAccessUserId } from '../lib/supertab';
 import {
   confirmUnlock,
   connectTab,
   declineUnlock,
   requestCheckout,
+  undoPurchaseHoldForRecipe,
 } from '../lib/unlockController';
 
 /** How long a terminal-but-transient state stays before the card collapses. */
 const COLLAPSE_DELAY_MS = 1800;
+const PURCHASE_HOLD_SECONDS = 30;
+const HOLD_TICK_MS = 250;
 
 function useActiveAskRecipeId(): string | null {
   return useSyncExternalStore(
@@ -53,6 +59,38 @@ function useReceiptFor(recipeId?: string) {
   );
 }
 
+function useHoldCountdown(holdExpiresAt: string | undefined, active: boolean): {
+  remainingSeconds: number;
+  progressFraction: number;
+} {
+  const [remainingMs, setRemainingMs] = useState(0);
+
+  useEffect(() => {
+    if (!active || !holdExpiresAt) {
+      setRemainingMs(0);
+      return;
+    }
+
+    const update = (): void => {
+      const expiresAt = new Date(holdExpiresAt).getTime();
+      const nextRemaining = Number.isNaN(expiresAt)
+        ? 0
+        : Math.max(0, expiresAt - Date.now());
+      setRemainingMs(nextRemaining);
+    };
+
+    update();
+    const timer = setInterval(update, HOLD_TICK_MS);
+    return () => clearInterval(timer);
+  }, [active, holdExpiresAt]);
+
+  const totalMs = PURCHASE_HOLD_SECONDS * 1000;
+  return {
+    remainingSeconds: Math.ceil(remainingMs / 1000),
+    progressFraction: Math.min(1, remainingMs / totalMs),
+  };
+}
+
 interface SpendMandateConsentInlineProps {
   /** When set, only show if the unlock surface matches this recipe. */
   backendRecipeId?: string;
@@ -80,7 +118,12 @@ export function SpendMandateConsentInline({
 
   const unlockState = useUnlockStateFor(recipeId);
   const askMeta = useAskMetaFor(recipeId);
+  const holdMeta = useHoldMeta(recipeId);
   const receipt = useReceiptFor(recipeId);
+  const { remainingSeconds, progressFraction } = useHoldCountdown(
+    holdMeta?.holdExpiresAt,
+    unlockState === 'holding',
+  );
 
   // Collapse transient terminal states back to 'locked' (card unmounts). The
   // recipe card badge already shows Unlocked from the access projection.
@@ -88,7 +131,7 @@ export function SpendMandateConsentInline({
     if (!recipeId) {
       return;
     }
-    if (unlockState !== 'unlocked' && unlockState !== 'declined') {
+    if (unlockState !== 'unlocked' && unlockState !== 'declined' && unlockState !== 'undone') {
       return;
     }
     const timer = setTimeout(() => {
@@ -122,16 +165,27 @@ export function SpendMandateConsentInline({
   const ceilingLabel = askMeta
     ? formatConsentPrice(askMeta.ceilingAmount, askMeta.currencyCode)
     : null;
+  const holdPriceLabel = holdMeta
+    ? formatConsentPrice(holdMeta.priceAmount, holdMeta.currencyCode)
+    : null;
 
   const wrap = (children: ReactNode) => (
-    <div
-      className={containerClassName}
-      role="group"
-      aria-label="Agent spending consent"
-      aria-live="polite"
-    >
-      {children}
-    </div>
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={unlockState}
+        layout
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={safeTransition(cardMorphTransition)}
+        className={containerClassName}
+        role="group"
+        aria-label="Agent spending consent"
+        aria-live="polite"
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
   );
 
   if (unlockState === 'requested') {
@@ -157,6 +211,35 @@ export function SpendMandateConsentInline({
             onClick={() => void declineUnlock(recipeId, userId)}
           >
             Not now
+          </button>
+        </div>
+      </>,
+    );
+  }
+
+  if (unlockState === 'holding' && holdMeta) {
+    return wrap(
+      <>
+        <p className="text-sm leading-relaxed text-[#2C2C2C]">
+          Putting {holdPriceLabel ? <strong>{holdPriceLabel}</strong> : 'it'} on your Tab in{' '}
+          <strong>{remainingSeconds}s</strong> — you can still undo.
+        </p>
+        <div
+          className="mt-3 h-1.5 overflow-hidden rounded-full bg-[#E8E4DF]"
+          aria-hidden="true"
+        >
+          <div
+            className="h-full rounded-full bg-[#7C5AC3] transition-[width] duration-200 ease-out"
+            style={{ width: `${Math.round(progressFraction * 100)}%` }}
+          />
+        </div>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <button
+            type="button"
+            className="rounded-full border border-[#D4CFC8] bg-white px-4 py-2 text-sm font-semibold text-[#5C5C5C] transition hover:bg-[#F5F3F0]"
+            onClick={() => void undoPurchaseHoldForRecipe(recipeId, userId)}
+          >
+            Undo
           </button>
         </div>
       </>,
@@ -251,6 +334,15 @@ export function SpendMandateConsentInline({
       <div className="flex items-center gap-2 text-sm text-[#5C5C5C]">
         <Lock size={16} aria-hidden="true" />
         <span>No problem — ask me again anytime.</span>
+      </div>,
+    );
+  }
+
+  if (unlockState === 'undone') {
+    return wrap(
+      <div className="flex items-center gap-2 text-sm text-[#5C5C5C]">
+        <Lock size={16} aria-hidden="true" />
+        <span>No problem — nothing was charged.</span>
       </div>,
     );
   }
